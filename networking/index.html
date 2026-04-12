@@ -298,6 +298,7 @@
 
   /* ── Deep Dive View ── */
   #view-deepdive { overflow-y: auto; padding-top: 60px; height: 100vh; }
+  #view-usecase { overflow-y: auto; padding-top: 60px; height: 100vh; }
   .dd-grid {
     display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
     gap: 20px; padding: 24px 32px; max-width: 1400px; margin: 0 auto;
@@ -342,6 +343,81 @@
   .dd-kp span { color: #8b949e; }
   .dd-nav { display: flex; gap: 10px; justify-content: center; margin-top: 20px; }
   .dd-nav button { padding: 8px 20px; }
+
+  /* ── Use Case Flow ── */
+  .uc-flow { max-width: 960px; margin: 0 auto; padding: 32px; }
+  .uc-flow h2 { font-size: 22px; color: #58a6ff; margin-bottom: 4px; }
+  .uc-flow .uc-subtitle { font-size: 13px; color: #8b949e; margin-bottom: 20px; }
+  .uc-step-container { position: relative; }
+  .uc-step {
+    display: flex; align-items: flex-start; gap: 16px; padding: 16px;
+    background: #161b22; border: 1px solid #30363d; border-radius: 12px;
+    margin-bottom: 8px; opacity: 0.3; transition: all .4s; cursor: pointer;
+    position: relative;
+  }
+  .uc-step.active { opacity: 1; border-color: #58a6ff; box-shadow: 0 0 20px rgba(88,166,255,0.15); }
+  .uc-step.done { opacity: 0.85; border-color: #3fb950; }
+  .uc-step.done .uc-badge { background: #3fb950; }
+  .uc-step .uc-badge {
+    width: 36px; height: 36px; border-radius: 50%; background: #30363d;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 700; color: #0d1117; flex-shrink: 0;
+    transition: background .3s;
+  }
+  .uc-step.active .uc-badge { background: #58a6ff; }
+  .uc-step .uc-body { flex: 1; }
+  .uc-step .uc-title { font-size: 14px; font-weight: 600; color: #c9d1d9; }
+  .uc-step .uc-component { font-size: 11px; color: #f0883e; margin-top: 2px; font-weight: 600; }
+  .uc-step .uc-detail {
+    font-size: 12px; color: #8b949e; line-height: 1.6; margin-top: 6px;
+    max-height: 0; overflow: hidden; transition: max-height .4s ease;
+  }
+  .uc-step.active .uc-detail { max-height: 300px; }
+  .uc-step .uc-proto {
+    display: inline-block; font-size: 10px; padding: 2px 8px; border-radius: 4px;
+    background: #0d1117; border: 1px solid #30363d; color: #7ee787; margin-top: 6px;
+    font-family: 'Courier New', monospace;
+  }
+  .uc-connector {
+    width: 2px; height: 8px; background: #30363d; margin: 0 0 0 33px;
+    transition: background .3s;
+  }
+  .uc-connector.done { background: #3fb950; }
+  .uc-flow-controls {
+    display: flex; gap: 10px; justify-content: center; margin: 20px 0 10px;
+  }
+  .uc-flow-controls button {
+    padding: 8px 20px; border-radius: 6px; border: 1px solid #30363d;
+    background: #21262d; color: #c9d1d9; font-size: 13px; cursor: pointer;
+    transition: all .2s;
+  }
+  .uc-flow-controls button:hover { border-color: #58a6ff; color: #58a6ff; }
+  .uc-flow-controls button.primary { background: #1f6feb; border-color: #58a6ff; color: #fff; }
+  .uc-legend {
+    display: flex; gap: 16px; flex-wrap: wrap; margin-top: 16px; padding: 12px 16px;
+    background: #0d1117; border: 1px solid #30363d; border-radius: 8px; font-size: 11px;
+  }
+  .uc-legend span { display: flex; align-items: center; gap: 6px; color: #8b949e; }
+  .uc-legend .dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+  .uc-back-btn {
+    background: none; border: 1px solid #30363d; color: #58a6ff; padding: 8px 16px;
+    border-radius: 8px; cursor: pointer; font-size: 13px; margin-bottom: 16px;
+    transition: all 0.2s;
+  }
+  .uc-back-btn:hover { background: #161b22; border-color: #58a6ff; }
+  .uc-code {
+    margin-top: 10px; padding: 10px 14px; background: #0d1117; border: 1px solid #30363d;
+    border-radius: 6px; font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+    font-size: 11px; color: #7ee787; line-height: 1.5; overflow-x: auto; white-space: pre;
+  }
+  .uc-refs {
+    margin-top: 8px; display: flex; flex-wrap: wrap; gap: 6px;
+  }
+  .uc-refs a {
+    display: inline-block; padding: 3px 10px; background: #161b22; border: 1px solid #30363d;
+    border-radius: 4px; font-size: 10px; color: #79c0ff; text-decoration: none; transition: all .2s;
+  }
+  .uc-refs a:hover { border-color: #58a6ff; color: #58a6ff; background: #0d1117; }
 
   /* ── Tracker Panel ── */
   #tracker-panel {
@@ -470,6 +546,16 @@
     .dd-section .dd-formula { font-size: 12px; padding: 8px 10px; }
     .dd-nav button { padding: 6px 14px; font-size: 12px; }
 
+    /* Use Cases */
+    .uc-flow { padding: 16px; }
+    .uc-flow h2 { font-size: 18px; }
+    .uc-step { padding: 12px; gap: 10px; }
+    .uc-step .uc-badge { width: 28px; height: 28px; font-size: 12px; }
+    .uc-connector { margin-left: 25px; }
+    .uc-flow-controls { flex-wrap: wrap; }
+    .uc-flow-controls button { font-size: 12px; padding: 6px 14px; }
+    .uc-legend { font-size: 10px; gap: 10px; }
+
     /* Appendix */
     #view-appendix { margin-top: 48px; height: calc(100vh - 48px); }
     #appendix-container { padding: 12px 8px 40px; }
@@ -525,6 +611,7 @@
       <button class="tab" data-view="graph" onclick="switchTab('graph')">🔗 Topic Graph</button>
       <button class="tab" data-view="deepdive" onclick="switchTab('deepdive')">📚 Deep Dives</button>
       <button class="tab" data-view="appendix" onclick="switchTab('appendix')">📹 Appendix</button>
+      <button class="tab" data-view="usecase" onclick="switchTab('usecase')">🔬 Use Cases</button>
     </div>
     <div class="actions">
       <button class="btn" onclick="toggleTracker()">📊 Tracker</button>
@@ -620,6 +707,13 @@
 <div id="view-appendix" class="view">
   <div id="appendix-container"></div>
 </div>
+<div id="view-usecase" class="view">
+  <div id="uc-card-grid" class="dd-grid"></div>
+  <div id="uc-detail-container" style="display:none"></div>
+  <div class="canvas-controls" id="usecase-controls" style="display:none">
+    <button class="cbtn" id="btn-back-uc" onclick="showUseCaseGrid()">← Back to All</button>
+  </div>
+</div>
 
 <!-- Tracker Panel (left side) -->
 <div id="tracker-panel">
@@ -685,6 +779,7 @@ var switchTab = function(tab) {
   document.getElementById('mindmap-controls').style.display  = tab === 'mindmap'  ? 'flex' : 'none';
   document.getElementById('graph-controls').style.display    = tab === 'graph'    ? 'flex' : 'none';
   document.getElementById('deepdive-controls').style.display = 'none';
+  document.getElementById('usecase-controls').style.display  = 'none';
 
   // Learning Path button in header — only on graph tab
   document.getElementById('btn-path').style.display = tab === 'graph' ? '' : 'none';
@@ -2959,6 +3054,9 @@ switchTab = function(tab) {
   if (tab === 'appendix' && document.getElementById('appendix-container').children.length === 0) {
     buildAppendix();
   }
+  if (tab === 'usecase' && document.getElementById('uc-card-grid').children.length === 0) {
+    buildUseCaseCards();
+  }
 };
 
 // ═══════════════════════════════════════════════════════════════════════
@@ -3460,12 +3558,265 @@ function filterAppendix() {
   }
 }
 
-function toggleUnit(headerRow) {
-  var unit = headerRow.dataset.unit;
-  var collapsed = headerRow.classList.toggle('collapsed');
-  var rows = document.querySelectorAll('#appendix-tbody tr.vid-row[data-unit="' + unit + '"]');
-  rows.forEach(function(r) { r.style.display = collapsed ? 'none' : ''; });
+// ═══════════════════════════════════════════════════════════════════════
+// USE CASE TAB
+// ═══════════════════════════════════════════════════════════════════════
+
+const useCases = [
+  {
+    id: "send-message",
+    title: "Sending a Chat Message",
+    desc: "What happens when you type 'Hello!' in a messaging app and press Send — every hop, protocol, and decision point.",
+    icon: "💬",
+    color: "#58a6ff",
+    steps: [
+      { title: "User types message & taps Send", component: "Application (Messaging App)", detail: "The app serializes your message into a JSON or protobuf payload. It targets the server endpoint (e.g., api.messenger.com). The app calls the OS socket API to initiate a connection.", proto: "HTTPS / WebSocket", refs: [{ label: "MDN: WebSocket API", url: "https://developer.mozilla.org/en-US/docs/Web/API/WebSocket" }, { label: "RFC 6455 — WebSocket", url: "https://tools.ietf.org/html/rfc6455" }], code: "# Python — send a message over WebSocket\nimport websockets, asyncio, json\nasync def send():\n    async with websockets.connect('wss://api.messenger.com/ws') as ws:\n        await ws.send(json.dumps({'text': 'Hello!'}))" },
+      { title: "DNS Resolution", component: "Stub Resolver → Recursive Resolver → Root/TLD/Auth NS", detail: "The OS checks /etc/hosts, then its local DNS cache. On cache miss, the stub resolver asks the configured recursive resolver (e.g., 8.8.8.8). The recursive resolver walks the hierarchy: Root NS → .com TLD NS → messenger.com authoritative NS. It returns an A/AAAA record (e.g., 157.240.1.35). Result is cached with TTL.", proto: "DNS (UDP:53 or TCP:53 for large responses)", refs: [{ label: "RFC 1035 — DNS", url: "https://tools.ietf.org/html/rfc1035" }, { label: "Wikipedia: DNS", url: "https://en.wikipedia.org/wiki/Domain_Name_System" }], code: "dig api.messenger.com A +short" },
+      { title: "TCP Three-Way Handshake", component: "Transport Layer (OS Kernel)", detail: "Client sends SYN with a random sequence number. Server replies SYN-ACK with its own sequence number + acknowledgment. Client sends ACK. Connection is now ESTABLISHED. This takes 1 RTT before any data flows.", proto: "TCP (SYN → SYN-ACK → ACK)", refs: [{ label: "RFC 793 — TCP", url: "https://tools.ietf.org/html/rfc793" }, { label: "RFC 9293 — TCP (updated)", url: "https://tools.ietf.org/html/rfc9293" }], code: "# Capture the 3-way handshake\ntcpdump -i eth0 'tcp[tcpflags] & (tcp-syn|tcp-ack) != 0' -c 3" },
+      { title: "TLS Handshake", component: "Transport Security Layer", detail: "Client sends ClientHello with supported cipher suites & TLS version. Server responds with ServerHello, its certificate, and key exchange params. Client verifies cert chain (Root CA → Intermediate CA → server cert). Both sides derive session keys. With TLS 1.3, this completes in 1 RTT (0-RTT on resumption).", proto: "TLS 1.3 (ClientHello → ServerHello → Finished)", refs: [{ label: "RFC 8446 — TLS 1.3", url: "https://tools.ietf.org/html/rfc8446" }, { label: "Wikipedia: TLS", url: "https://en.wikipedia.org/wiki/Transport_Layer_Security" }], code: "openssl s_client -connect api.messenger.com:443 -tls1_3" },
+      { title: "HTTP Request (Application Data)", component: "Application Layer", detail: "The message payload is wrapped in an HTTP POST (or sent via an existing WebSocket frame). Headers include Host, Content-Type, Authorization (bearer token), Content-Length. The entire HTTP message is encrypted by TLS before passing down.", proto: "HTTP/2 or WebSocket over TLS", refs: [{ label: "RFC 9113 — HTTP/2", url: "https://tools.ietf.org/html/rfc9113" }, { label: "MDN: HTTP Headers", url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers" }], code: "curl -X POST https://api.messenger.com/v1/messages \\\n  -H 'Authorization: Bearer TOKEN' \\\n  -H 'Content-Type: application/json' \\\n  -d '{\"text\":\"Hello!\"}'" },
+      { title: "TCP Segmentation", component: "Transport Layer (OS Kernel)", detail: "The TCP stack splits the data into segments fitting the MSS (typically 1460 bytes for Ethernet). Each segment gets a sequence number, checksum, and window size. Nagle's algorithm may buffer small writes. The send buffer queues segments for transmission.", proto: "TCP Segment (20B header + payload)", refs: [{ label: "RFC 9293 — TCP", url: "https://tools.ietf.org/html/rfc9293" }, { label: "RFC 896 — Nagle's Algorithm", url: "https://tools.ietf.org/html/rfc896" }], code: "# Check current MSS on a connection\nss -i dst api.messenger.com" },
+      { title: "IP Packetization", component: "Network Layer (OS Kernel)", detail: "Each TCP segment is wrapped in an IP packet. Source IP = your device's IP (e.g., 192.168.1.42). Destination IP = server IP from DNS (157.240.1.35). TTL is set (typically 64). The routing table is consulted: destination is not on local subnet, so the default gateway (router) is the next hop.", proto: "IPv4 (20B header) / IPv6 (40B header)", refs: [{ label: "RFC 791 — IPv4", url: "https://tools.ietf.org/html/rfc791" }, { label: "RFC 8200 — IPv6", url: "https://tools.ietf.org/html/rfc8200" }], code: "ip route get 157.240.1.35" },
+      { title: "ARP Resolution (if needed)", component: "Link Layer", detail: "To reach the default gateway (e.g., 192.168.1.1), the device needs its MAC address. ARP cache is checked first. On miss, an ARP broadcast 'Who has 192.168.1.1?' goes out. The router replies with its MAC. The mapping is cached.", proto: "ARP (broadcast on local Ethernet)", refs: [{ label: "RFC 826 — ARP", url: "https://tools.ietf.org/html/rfc826" }, { label: "Wikipedia: ARP", url: "https://en.wikipedia.org/wiki/Address_Resolution_Protocol" }], code: "# View ARP cache\narp -a\n# Watch ARP traffic live\ntcpdump -i eth0 arp" },
+      { title: "Ethernet Frame", component: "Link Layer / NIC Driver", detail: "The IP packet is wrapped in an Ethernet frame. Source MAC = your NIC's MAC. Destination MAC = router's MAC (from ARP). EtherType = 0x0800 (IPv4). A 4-byte FCS (CRC-32) is appended for error detection. Frame is queued in the NIC's transmit ring buffer.", proto: "Ethernet II (14B header + FCS)", refs: [{ label: "IEEE 802.3 — Ethernet", url: "https://en.wikipedia.org/wiki/IEEE_802.3" }], code: "# Wireshark display filter for Ethernet frames to a host\neth.dst == aa:bb:cc:dd:ee:ff" },
+      { title: "Physical Transmission (Wi-Fi or Ethernet)", component: "Physical Layer / NIC", detail: "Wi-Fi: Frame is modulated (e.g., OFDM for 802.11ac), CSMA/CA checks the channel is clear, RTS/CTS for hidden node avoidance. Ethernet: NIC signals on the wire (1000BASE-T uses all 4 pairs). Bits become electrical signals or radio waves.", proto: "802.11ac (Wi-Fi) / 802.3 (Ethernet)", refs: [{ label: "IEEE 802.11 — Wi-Fi", url: "https://en.wikipedia.org/wiki/IEEE_802.11" }, { label: "Wikipedia: Ethernet PHY", url: "https://en.wikipedia.org/wiki/Ethernet_physical_layer" }] },
+      { title: "Home Router (NAT + Forwarding)", component: "Network Layer (Router)", detail: "Router receives the frame, strips Ethernet header, reads IP packet. NAT translates your private IP:port (192.168.1.42:54321) to the router's public IP:port (73.15.2.99:40001) and records the mapping. Routing table lookup determines the next hop toward the ISP. A new Ethernet frame is created for the WAN interface.", proto: "NAT (NAPT) + IP Forwarding", refs: [{ label: "RFC 3022 — NAT", url: "https://tools.ietf.org/html/rfc3022" }], code: "# View NAT table (Linux router with nftables)\nconntrack -L -p tcp --dport 443" },
+      { title: "ISP Network (Multiple Hops)", component: "ISP Edge → Core Routers", detail: "The packet traverses the ISP's network through multiple routers. Each router: (1) decrements TTL, (2) looks up destination in its forwarding table (longest prefix match), (3) forwards to the next hop. MPLS labels may be used for fast switching in the core. BGP determines inter-AS routing between ISPs. Typically 5-15 router hops.", proto: "IP + MPLS + BGP routing decisions", refs: [{ label: "RFC 4271 — BGP-4", url: "https://tools.ietf.org/html/rfc4271" }, { label: "RFC 3031 — MPLS", url: "https://tools.ietf.org/html/rfc3031" }], code: "traceroute -n 157.240.1.35" },
+      { title: "Internet Exchange Point (IXP) / Peering", component: "Network Layer (IXP)", detail: "If the destination is on a different ISP/network, traffic may pass through an IXP — a physical location where networks connect. Large content providers (Meta, Google) peer directly at IXPs or have private peering links, reducing hops. The BGP path determines which peering point is used.", proto: "BGP Peering + Ethernet at IXP", refs: [{ label: "Wikipedia: IXP", url: "https://en.wikipedia.org/wiki/Internet_exchange_point" }, { label: "PeeringDB", url: "https://www.peeringdb.com/" }], code: "# Look up AS path to destination\nwhois -h whois.radb.net 157.240.1.35" },
+      { title: "Destination Data Center Edge", component: "Load Balancer / Edge Router", detail: "The packet arrives at the server's data center. Edge router receives it. An L4 load balancer (e.g., ECMP or Maglev) distributes the connection to one of many backend servers. The load balancer may use consistent hashing on the TCP 4-tuple. The server's IP was actually a VIP (Virtual IP) shared across many machines.", proto: "ECMP / L4 Load Balancing", refs: [{ label: "Wikipedia: ECMP", url: "https://en.wikipedia.org/wiki/Equal-cost_multi-path_routing" }] },
+      { title: "Server Receives & Processes", component: "Application Server", detail: "The server's NIC receives the frame → kernel processes IP/TCP → delivers to the application's socket. The TLS session decrypts the payload. The application server parses the HTTP request, authenticates the user (JWT/session), validates the message, stores it in the database, and queues delivery to the recipient.", proto: "HTTP/2 → App Logic → DB Write" },
+      { title: "Server Sends HTTP Response", component: "Application Server → Transport", detail: "The server sends back an HTTP 200 OK (or 201 Created) with metadata (message ID, timestamp). This response traverses the exact reverse path: TLS encrypt → TCP segment → IP packet → through routers → NAT translation (using saved mapping) → back to your device.", proto: "HTTP 200 OK (reverse path)", refs: [{ label: "RFC 9110 — HTTP Semantics", url: "https://tools.ietf.org/html/rfc9110" }] },
+      { title: "Push to Recipient", component: "Application Server → Push Infrastructure", detail: "The server pushes the message to the recipient via their persistent WebSocket/MQTT connection (if online) or via push notification services (APNs for iOS, FCM for Android). If the recipient is offline, the message is stored and delivered on their next connection.", proto: "WebSocket / MQTT / APNs / FCM", refs: [{ label: "RFC 6455 — WebSocket", url: "https://tools.ietf.org/html/rfc6455" }, { label: "Wikipedia: MQTT", url: "https://en.wikipedia.org/wiki/MQTT" }] },
+      { title: "Delivery Confirmation", component: "End-to-End", detail: "The recipient's app sends a delivery receipt back to the server. The server relays this to your app. Your app updates the UI: single check (sent) → double check (delivered) → blue check (read). Each of these is another round-trip through the full stack.", proto: "Application-level ACK" }
+    ]
+  },
+  {
+    id: "load-webpage",
+    title: "Loading a Web Page",
+    desc: "From typing a URL to seeing rendered content — DNS, TCP, TLS, HTTP, CDN, rendering pipeline, and resource loading.",
+    icon: "🌐",
+    color: "#3fb950",
+    steps: [
+      { title: "User enters URL in browser", component: "Browser (UI Process)", detail: "The browser parses the URL into scheme, host, path. The HSTS preload list is checked — if the domain is listed, HTTP is upgraded to HTTPS. The browser checks its HTTP cache, service worker cache, and preconnect hints before initiating a network request.", proto: "URL Parsing + HSTS check", refs: [{ label: "RFC 6797 — HSTS", url: "https://tools.ietf.org/html/rfc6797" }, { label: "MDN: URL API", url: "https://developer.mozilla.org/en-US/docs/Web/API/URL" }] },
+      { title: "DNS Resolution (with caching layers)", component: "Browser Cache → OS Cache → Recursive Resolver", detail: "Browser DNS cache → OS stub resolver cache → router cache → ISP recursive resolver. If all miss, a full recursive walk: Root NS → TLD NS → Authoritative NS. Modern browsers use DNS-over-HTTPS (DoH) to encrypt queries. CNAME chains may redirect to CDN domains (e.g., example.com → d1234.cloudfront.net).", proto: "DNS (DoH / UDP:53)", refs: [{ label: "RFC 8484 — DNS over HTTPS", url: "https://tools.ietf.org/html/rfc8484" }, { label: "RFC 1035 — DNS", url: "https://tools.ietf.org/html/rfc1035" }], code: "# Trace the full resolution chain\ndig +trace example.com\n# Query with DoH\ncurl -sH 'accept: application/dns-json' \\\n  'https://dns.google/resolve?name=example.com'" },
+      { title: "TCP + TLS Handshake", component: "Transport + Security Layer", detail: "TCP 3-way handshake (1 RTT), then TLS 1.3 handshake (1 RTT). With TLS 1.3 0-RTT resumption, returning visitors skip the TLS round-trip. The browser may have pre-connected (via <link rel='preconnect'>) to save time. ALPN negotiation selects HTTP/2 or HTTP/3.", proto: "TCP + TLS 1.3 (ALPN: h2)", refs: [{ label: "RFC 8446 — TLS 1.3", url: "https://tools.ietf.org/html/rfc8446" }, { label: "RFC 7301 — ALPN", url: "https://tools.ietf.org/html/rfc7301" }], code: "# Inspect TLS handshake and ALPN\nopenssl s_client -connect example.com:443 -alpn h2 2>&1 | grep -E 'Protocol|ALPN'" },
+      { title: "HTTP Request to CDN/Origin", component: "Application Layer", detail: "Browser sends GET / HTTP/2 with headers: Host, Accept, Accept-Encoding (br, gzip), Cookie, If-None-Match (ETag). If a CDN edge node has a cached copy and it's fresh, it responds directly (cache HIT). Otherwise, the CDN fetches from the origin server (cache MISS).", proto: "HTTP/2 GET (multiplexed streams)", refs: [{ label: "RFC 9113 — HTTP/2", url: "https://tools.ietf.org/html/rfc9113" }, { label: "MDN: HTTP Caching", url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Caching" }], code: "curl -I -H 'Accept-Encoding: br,gzip' https://example.com/ 2>&1 | grep -iE 'cache|etag|age|x-cache'" },
+      { title: "Server generates response", component: "Origin / CDN Edge Server", detail: "Static content: served directly from disk/memory. Dynamic content: app server processes the request — queries database, runs template engine, generates HTML. Response headers include Cache-Control, ETag, Content-Encoding. Brotli compression reduces payload by 15-25% vs gzip.", proto: "HTTP 200 OK + HTML payload", refs: [{ label: "RFC 9110 — HTTP Semantics", url: "https://tools.ietf.org/html/rfc9110" }, { label: "RFC 7932 — Brotli", url: "https://tools.ietf.org/html/rfc7932" }], code: "# Compare gzip vs brotli response sizes\ncurl -so /dev/null -w '%{size_download}' -H 'Accept-Encoding: gzip' https://example.com/\ncurl -so /dev/null -w '%{size_download}' -H 'Accept-Encoding: br' https://example.com/" },
+      { title: "HTML Parsing & DOM Construction", component: "Browser (Renderer Process)", detail: "The browser's HTML parser tokenizes the HTML and builds the DOM tree incrementally. When it encounters <link>, <script>, or <img> tags, it initiates parallel resource fetches. The preload scanner looks ahead in unparsed HTML to find resources early. <script> tags without async/defer block parsing.", proto: "HTML5 Parser → DOM Tree", refs: [{ label: "HTML Spec: Parsing", url: "https://html.spec.whatwg.org/multipage/parsing.html" }, { label: "MDN: DOM", url: "https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model" }], code: "// Chrome DevTools — measure DOM parse time\nperformance.getEntriesByType('navigation')[0].domInteractive" },
+      { title: "CSS Parsing & CSSOM", component: "Browser (Renderer Process)", detail: "CSS files are parsed into the CSSOM (CSS Object Model). Selectors are matched to DOM nodes (right-to-left matching). Specificity and cascade rules resolve conflicts. Render-blocking: the browser won't paint until critical CSS is processed. @import chains can cause sequential loading.", proto: "CSS Parser → CSSOM Tree", refs: [{ label: "MDN: CSSOM", url: "https://developer.mozilla.org/en-US/docs/Web/API/CSS_Object_Model" }, { label: "W3C: CSS Cascade", url: "https://www.w3.org/TR/css-cascade-5/" }] },
+      { title: "JavaScript Execution", component: "Browser (V8/SpiderMonkey)", detail: "JS files are parsed → compiled to bytecode → JIT compiled to machine code. Scripts can modify DOM/CSSOM, trigger style recalculation and layout. async scripts execute when ready; defer scripts execute after parsing. Long tasks (>50ms) block the main thread and cause jank.", proto: "JS Engine (Parse → Compile → Execute)", refs: [{ label: "MDN: Script loading", url: "https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script" }], code: "// Detect long tasks in the browser\nnew PerformanceObserver(list => {\n  list.getEntries().forEach(e => console.log('Long task:', e.duration, 'ms'));\n}).observe({ type: 'longtask', buffered: true });" },
+      { title: "Render Tree & Layout", component: "Browser (Renderer Process)", detail: "DOM + CSSOM are combined into the Render Tree (only visible nodes). Layout (reflow) calculates exact position and size of every element. This is expensive for complex pages. Flexbox/Grid layout algorithms run here. Layout is invalidated when DOM or styles change.", proto: "Render Tree → Layout (Reflow)", refs: [{ label: "MDN: Rendering performance", url: "https://developer.mozilla.org/en-US/docs/Web/Performance/How_browsers_work" }] },
+      { title: "Paint & Compositing", component: "Browser (GPU Process)", detail: "Paint records draw commands for each layer (text, borders, shadows, images). Layers are rasterized into bitmaps (tiles). The compositor thread combines layers on the GPU, handling transforms and opacity cheaply. The final frame is sent to the display. First Contentful Paint (FCP) metric fires here.", proto: "Paint → Raster → Composite → Display", refs: [{ label: "MDN: FCP", url: "https://developer.mozilla.org/en-US/docs/Glossary/First_contentful_paint" }, { label: "web.dev: Rendering", url: "https://web.dev/articles/rendering-performance" }], code: "// Measure FCP in the browser\nnew PerformanceObserver(list => {\n  list.getEntries().forEach(e => console.log('FCP:', e.startTime, 'ms'));\n}).observe({ type: 'paint', buffered: true });" },
+      { title: "Sub-resource Loading (parallel)", component: "Browser Network Stack", detail: "While rendering, the browser fetches images, fonts, JS bundles, API data in parallel (HTTP/2 multiplexing). Priority hints and fetchpriority attributes control ordering. Lazy-loaded images (loading='lazy') defer until near the viewport. Service workers can intercept and cache responses.", proto: "HTTP/2 multiplexed streams", refs: [{ label: "MDN: Resource hints", url: "https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/rel/preload" }, { label: "MDN: Service Worker", url: "https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API" }], code: "# List all HTTP/2 streams to a host\n# Wireshark display filter:\nhttp2 && ip.dst == 93.184.216.34" },
+      { title: "Page Interactive (TTI)", component: "Browser (Main Thread)", detail: "Time to Interactive (TTI): the page is visually rendered AND the main thread is idle enough to handle user input within 50ms. Hydration (for SSR frameworks) attaches event listeners to server-rendered HTML. The page is now fully usable.", proto: "Event listeners active, main thread idle", refs: [{ label: "web.dev: TTI", url: "https://web.dev/articles/tti" }], code: "// Check all Web Vitals from the console\nJSON.stringify(performance.getEntriesByType('navigation')[0], null, 2)" }
+    ]
+  },
+  {
+    id: "video-call",
+    title: "Starting a Video Call",
+    desc: "How real-time video flows — STUN/TURN, ICE candidates, WebRTC, RTP, codecs, and NAT traversal.",
+    icon: "📹",
+    color: "#d2a8ff",
+    steps: [
+      { title: "User clicks 'Start Call'", component: "Application (Browser/App)", detail: "The app requests camera/microphone permissions via getUserMedia(). The browser prompts the user. On approval, raw video frames and audio samples are captured. A signaling connection to the server (usually WebSocket) is already established.", proto: "WebRTC getUserMedia API", refs: [{ label: "MDN: getUserMedia", url: "https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia" }, { label: "WebRTC Spec", url: "https://www.w3.org/TR/webrtc/" }], code: "// Request camera + microphone\nconst stream = await navigator.mediaDevices.getUserMedia({\n  video: { width: 1280, height: 720 },\n  audio: true\n});" },
+      { title: "Signaling — SDP Offer/Answer", component: "Signaling Server (WebSocket)", detail: "Caller creates an SDP (Session Description Protocol) offer describing supported codecs (VP8/VP9/H.264 for video, Opus for audio), ICE credentials, and media capabilities. This offer is sent to the callee via the signaling server. The callee generates an SDP answer with its capabilities.", proto: "SDP over WebSocket (signaling)", refs: [{ label: "RFC 8866 — SDP", url: "https://tools.ietf.org/html/rfc8866" }, { label: "RFC 3264 — Offer/Answer", url: "https://tools.ietf.org/html/rfc3264" }], code: "// Create and inspect an SDP offer\nconst pc = new RTCPeerConnection();\nconst offer = await pc.createOffer();\nconsole.log(offer.sdp);" },
+      { title: "ICE Candidate Gathering", component: "STUN/TURN Servers", detail: "Both peers gather ICE candidates — possible network paths to reach each other. Host candidates: local IP addresses. Server-reflexive: public IP discovered via STUN server (sends a request, STUN server echoes back the observed IP:port). Relay candidates: allocated port on a TURN server as fallback.", proto: "STUN (UDP:3478) / TURN (UDP/TCP:3478)", refs: [{ label: "RFC 8445 — ICE", url: "https://tools.ietf.org/html/rfc8445" }, { label: "RFC 5389 — STUN", url: "https://tools.ietf.org/html/rfc5389" }, { label: "RFC 5766 — TURN", url: "https://tools.ietf.org/html/rfc5766" }], code: "// Watch ICE candidates as they're gathered\npc.onicecandidate = e => {\n  if (e.candidate) console.log(e.candidate.candidate);\n};" },
+      { title: "NAT Traversal & Connectivity Checks", component: "ICE Agent (Browser)", detail: "ICE agents on both sides test candidate pairs. They send STUN binding requests to each candidate. Types of NAT affect success: Full Cone NAT (easy) → Restricted Cone → Port Restricted → Symmetric (hardest, needs TURN). The fastest working pair is selected. ~85% of calls connect peer-to-peer; ~15% need TURN relay.", proto: "ICE Connectivity Checks (STUN Binding)", refs: [{ label: "RFC 8445 — ICE", url: "https://tools.ietf.org/html/rfc8445" }, { label: "Wikipedia: NAT traversal", url: "https://en.wikipedia.org/wiki/NAT_traversal" }], code: "# Wireshark filter for STUN traffic\nstun && udp.port == 3478" },
+      { title: "DTLS Handshake (Encryption)", component: "Security Layer", detail: "Once a candidate pair works, DTLS (Datagram TLS) runs over the UDP connection. This establishes encryption keys for the media stream. DTLS is like TLS but for UDP — it handles packet loss and reordering. SRTP keys are derived from the DTLS handshake.", proto: "DTLS 1.2 → SRTP key derivation", refs: [{ label: "RFC 6347 — DTLS 1.2", url: "https://tools.ietf.org/html/rfc6347" }, { label: "RFC 5764 — DTLS-SRTP", url: "https://tools.ietf.org/html/rfc5764" }], code: "# Wireshark filter — DTLS handshake\ndtls.handshake.type" },
+      { title: "Media Encoding", component: "Encoder (Hardware/Software)", detail: "Raw video frames (e.g., 1280x720 @ 30fps) are encoded using VP8/VP9/H.264/AV1. The encoder adapts bitrate based on available bandwidth (congestion control feedback). Key frames are sent periodically and on-demand (PLI requests). Audio is encoded with Opus codec (20ms frames, 6-510 kbps).", proto: "VP9/H.264 (video) + Opus (audio)", refs: [{ label: "RFC 6716 — Opus", url: "https://tools.ietf.org/html/rfc6716" }, { label: "Wikipedia: VP9", url: "https://en.wikipedia.org/wiki/VP9" }], code: "// Check active codec in a running call\nconst stats = await pc.getStats();\nstats.forEach(s => {\n  if (s.type === 'outbound-rtp') console.log(s.codecId, s.bytesSent);\n});" },
+      { title: "RTP Packetization", component: "Transport (WebRTC Stack)", detail: "Encoded frames are split into RTP packets (typically < 1200 bytes to avoid IP fragmentation). Each packet gets a sequence number, timestamp, and SSRC (source identifier). RTCP companion packets carry statistics: round-trip time, packet loss, jitter. These feed back into the congestion controller.", proto: "SRTP (encrypted RTP) + RTCP", refs: [{ label: "RFC 3550 — RTP", url: "https://tools.ietf.org/html/rfc3550" }, { label: "RFC 3711 — SRTP", url: "https://tools.ietf.org/html/rfc3711" }], code: "# Wireshark filter — RTP traffic\nrtp && rtp.ssrc == 0x12345678" },
+      { title: "UDP Transmission & Network Path", component: "Network Stack → Internet", detail: "RTP packets are sent as UDP datagrams. UDP has no retransmission — lost packets are gone (acceptable for real-time media). Packets traverse the same router/ISP/IXP path as TCP traffic, but may take different routes. QoS/DSCP bits may prioritize voice/video traffic on managed networks.", proto: "UDP (no retransmission, low latency)", refs: [{ label: "RFC 768 — UDP", url: "https://tools.ietf.org/html/rfc768" }, { label: "RFC 2474 — DiffServ (DSCP)", url: "https://tools.ietf.org/html/rfc2474" }], code: "# Capture UDP media traffic on a port range\ntcpdump -i eth0 udp portrange 10000-60000 -c 50" },
+      { title: "Jitter Buffer & Decoding", component: "Receiver (Browser)", detail: "Incoming packets arrive with variable delay (jitter). The jitter buffer holds packets briefly to reorder and smooth playback. Too small = choppy audio; too large = noticeable delay. Packets are reassembled into frames, decoded (VP9 → raw pixels, Opus → PCM audio), and rendered to <video>/<audio> elements.", proto: "Jitter Buffer → Decoder → Render", refs: [{ label: "Wikipedia: Jitter buffer", url: "https://en.wikipedia.org/wiki/Jitter_buffer" }] },
+      { title: "Congestion Control (ongoing)", component: "WebRTC Stack (GCC/BBR)", detail: "Google Congestion Control (GCC) continuously monitors RTCP feedback (loss, delay). It adjusts the sending bitrate up or down. If bandwidth drops, the encoder reduces resolution/framerate. Bandwidth Estimation uses delay-based and loss-based signals. This runs throughout the entire call.", proto: "GCC / Transport-CC (RTCP feedback)", refs: [{ label: "RFC 8698 — GCC", url: "https://tools.ietf.org/html/rfc8698" }], code: "// Monitor bitrate changes live\nsetInterval(async () => {\n  const stats = await pc.getStats();\n  stats.forEach(s => {\n    if (s.type === 'outbound-rtp' && s.kind === 'video')\n      console.log('bitrate:', s.bytesSent);\n  });\n}, 2000);" }
+    ]
+  },
+  {
+    id: "dns-deep",
+    title: "DNS Resolution Deep Dive",
+    desc: "The complete DNS resolution journey — from browser cache to authoritative nameserver, including DNSSEC validation.",
+    icon: "🔍",
+    color: "#f0883e",
+    steps: [
+      { title: "Application requests domain resolution", component: "Application → libc / OS Resolver", detail: "App calls getaddrinfo('example.com'). The OS resolver checks /etc/hosts (or Windows hosts file) first. If no match, it checks the OS DNS cache (systemd-resolved on Linux, DNS Client service on Windows). Cached entries are returned immediately if TTL hasn't expired.", proto: "OS API (getaddrinfo / gethostbyname)", refs: [{ label: "man: getaddrinfo(3)", url: "https://man7.org/linux/man-pages/man3/getaddrinfo.3.html" }], code: "# Python — resolve a hostname\nimport socket\nprint(socket.getaddrinfo('example.com', 443, socket.AF_INET))" },
+      { title: "Stub Resolver → Recursive Resolver", component: "OS Stub Resolver", detail: "The stub resolver sends a DNS query to the configured recursive resolver (from DHCP or manual config — e.g., 8.8.8.8, 1.1.1.1, or ISP's resolver). The query contains: QNAME (example.com), QTYPE (A or AAAA), QCLASS (IN). The query is typically sent over UDP:53. If the response is truncated (TC flag), it retries over TCP:53.", proto: "DNS Query (UDP:53, fallback TCP:53)", refs: [{ label: "RFC 1035 — DNS", url: "https://tools.ietf.org/html/rfc1035" }, { label: "RFC 5452 — DNS Resilience", url: "https://tools.ietf.org/html/rfc5452" }], code: "# Query a specific recursive resolver\ndig @8.8.8.8 example.com A\n# See the raw query/response\ndig +qr +all example.com" },
+      { title: "Recursive Resolver checks its cache", component: "Recursive Resolver", detail: "The recursive resolver checks its own cache for example.com A record. It also checks for cached NS records for example.com, .com, or root hints that could shortcut the walk. Negative caching (NXDOMAIN) is also checked. If a valid cached answer exists, it's returned immediately.", proto: "DNS Cache Lookup", refs: [{ label: "RFC 2308 — Negative Caching", url: "https://tools.ietf.org/html/rfc2308" }], code: "# Check if a response is cached (look at TTL countdown)\ndig example.com A +noall +answer +ttlunits" },
+      { title: "Query Root Nameservers", component: "Recursive Resolver → Root NS", detail: "On full cache miss, the resolver queries a root nameserver (one of 13 root server identifiers, a-m.root-servers.net, with hundreds of anycast instances worldwide). The root NS doesn't know example.com, but responds with a referral: the NS records for .com TLD and their glue A records.", proto: "DNS Referral (root → .com NS list)", refs: [{ label: "Root Servers", url: "https://root-servers.org/" }, { label: "RFC 7720 — Root Server Ops", url: "https://tools.ietf.org/html/rfc7720" }], code: "# Query a root server directly\ndig @a.root-servers.net example.com A +norecurse" },
+      { title: "Query TLD Nameservers (.com)", component: "Recursive Resolver → TLD NS", detail: "The resolver queries a .com TLD nameserver (e.g., a.gtld-servers.net). The TLD NS responds with another referral: the authoritative nameservers for example.com (e.g., ns1.example.com, ns2.example.com) and their glue records if in-bailiwick.", proto: "DNS Referral (.com → example.com NS list)", refs: [{ label: "Wikipedia: TLD", url: "https://en.wikipedia.org/wiki/Top-level_domain" }], code: "# Query the .com TLD NS directly\ndig @a.gtld-servers.net example.com A +norecurse" },
+      { title: "Query Authoritative Nameserver", component: "Recursive Resolver → Auth NS", detail: "The resolver queries example.com's authoritative nameserver. This server has the actual zone file and returns the definitive answer: example.com A 93.184.216.34 with a TTL (e.g., 3600 seconds). If the domain uses CNAME, the resolver must follow the chain.", proto: "DNS Answer (A record + TTL)", refs: [{ label: "RFC 1034 — DNS Concepts", url: "https://tools.ietf.org/html/rfc1034" }], code: "# Find and query the authoritative NS\ndig NS example.com +short\ndig @ns1.example.com example.com A +norecurse" },
+      { title: "DNSSEC Validation (if enabled)", component: "Recursive Resolver (Validator)", detail: "If the zone is signed, the resolver validates the chain of trust: Root KSK → Root ZSK → .com DS → .com KSK → .com ZSK → example.com DS → example.com KSK → example.com ZSK → RRSIG over the A record. Any broken link = SERVFAIL. NSEC/NSEC3 records prove non-existence of queried names.", proto: "DNSSEC (RRSIG, DS, DNSKEY, NSEC)", refs: [{ label: "RFC 4033 — DNSSEC Intro", url: "https://tools.ietf.org/html/rfc4033" }, { label: "RFC 4034 — DNSSEC Records", url: "https://tools.ietf.org/html/rfc4034" }, { label: "RFC 4035 — DNSSEC Protocol", url: "https://tools.ietf.org/html/rfc4035" }], code: "# Verify DNSSEC chain\ndig example.com A +dnssec +multi\n# Check DS record at parent\ndig DS example.com @a.gtld-servers.net" },
+      { title: "Response cached & returned", component: "Recursive Resolver → Stub → App", detail: "The recursive resolver caches the answer (and all intermediate NS records) respecting TTL values. The answer is sent back to the stub resolver, which caches it in the OS cache. The application receives the IP address and can proceed with TCP connection. Total time for uncached resolution: typically 50-200ms.", proto: "DNS Response (UDP:53) → OS cache → App", refs: [{ label: "RFC 1035 — DNS", url: "https://tools.ietf.org/html/rfc1035" }], code: "# Measure full resolution time\ndig example.com A +stats | grep 'Query time'" }
+    ]
+  },
+  {
+    id: "file-download",
+    title: "Downloading a Large File",
+    desc: "How TCP manages a 1GB file download — slow start, congestion avoidance, flow control, and recovery from packet loss.",
+    icon: "📥",
+    color: "#f778ba",
+    steps: [
+      { title: "HTTP GET request for file", component: "Application Layer (Browser)", detail: "Browser sends GET /file.zip with Accept-Encoding and Range headers. If resuming a partial download, it includes Range: bytes=524288000- to request from where it left off. The server responds with 200 OK (full) or 206 Partial Content (range request) with Content-Length header.", proto: "HTTP/2 GET + Range headers", refs: [{ label: "RFC 9110 — HTTP Range Requests", url: "https://tools.ietf.org/html/rfc9110#section-14" }, { label: "MDN: Range", url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Range" }], code: "# Resume a partial download from byte offset\ncurl -C - -O https://example.com/file.zip\n# Explicit range request\ncurl -H 'Range: bytes=524288000-' -o file_part.zip https://example.com/file.zip" },
+      { title: "TCP Slow Start", component: "Transport Layer (Sender)", detail: "TCP doesn't blast data immediately. It starts with a small congestion window (cwnd), typically 10 segments (~14KB). For each ACK received, cwnd doubles (exponential growth). cwnd: 10 → 20 → 40 → 80 segments. This probes the network capacity without overwhelming it. Slow start continues until a loss event or ssthresh is reached.", proto: "TCP Slow Start (cwnd doubles per RTT)", refs: [{ label: "RFC 5681 — TCP Congestion Control", url: "https://tools.ietf.org/html/rfc5681" }, { label: "RFC 6928 — IW10", url: "https://tools.ietf.org/html/rfc6928" }], code: "# Monitor cwnd in real time (Linux)\nss -i dst example.com | grep -oP 'cwnd:\\d+'" },
+      { title: "Congestion Avoidance", component: "Transport Layer (Sender)", detail: "Once cwnd reaches ssthresh, TCP switches to congestion avoidance: cwnd increases by ~1 MSS per RTT (linear growth instead of exponential). This cautiously probes for more bandwidth. The sending rate stabilizes around the bottleneck bandwidth. Window sizes can reach 1MB+ on high-bandwidth links.", proto: "TCP Congestion Avoidance (AIMD)", refs: [{ label: "RFC 5681 — TCP Congestion Control", url: "https://tools.ietf.org/html/rfc5681" }, { label: "Wikipedia: AIMD", url: "https://en.wikipedia.org/wiki/Additive_increase/multiplicative_decrease" }], code: "# Watch congestion window over time (Linux)\nwatch -n 0.5 'ss -i dst example.com | grep cwnd'" },
+      { title: "Receiver Flow Control", component: "Transport Layer (Receiver)", detail: "The receiver advertises its receive window (rwnd) in every ACK — how much buffer space it has available. The sender never sends more than min(cwnd, rwnd). If the receiver is slow (disk write bottleneck), rwnd shrinks, throttling the sender. Window Scale option (negotiated in handshake) allows rwnd > 64KB.", proto: "TCP Flow Control (rwnd in ACK)", refs: [{ label: "RFC 7323 — TCP Window Scale", url: "https://tools.ietf.org/html/rfc7323" }, { label: "RFC 9293 — TCP", url: "https://tools.ietf.org/html/rfc9293" }], code: "# Wireshark filter — watch receive window\ntcp.stream eq 0 && tcp.window_size_value" },
+      { title: "Data flows through the network", component: "Network Path (multiple hops)", detail: "Each router has finite buffer space. As traffic increases, router queues fill up. Bufferbloat: oversized buffers add latency without improving throughput. Modern AQM algorithms (CoDel, PIE, fq_codel) drop packets early to signal congestion before buffers overflow. ECN-capable routers can mark packets instead of dropping.", proto: "IP Forwarding + AQM (CoDel/fq_codel)", refs: [{ label: "RFC 8289 — CoDel", url: "https://tools.ietf.org/html/rfc8289" }, { label: "RFC 3168 — ECN", url: "https://tools.ietf.org/html/rfc3168" }], code: "# Check current qdisc (queue discipline) on Linux\ntc qdisc show dev eth0\n# Enable fq_codel\ntc qdisc replace dev eth0 root fq_codel" },
+      { title: "Packet Loss Detection & Recovery", component: "Transport Layer (Sender)", detail: "Loss detected by: (1) Triple duplicate ACKs → Fast Retransmit: the lost segment is immediately resent without waiting for timeout. (2) Retransmission Timeout (RTO): if no ACKs arrive, exponential backoff kicks in. Fast Recovery (RFC 5681): after fast retransmit, cwnd is halved (not reset to 1) and linear growth resumes.", proto: "TCP Fast Retransmit + Fast Recovery", refs: [{ label: "RFC 5681 — TCP Congestion Control", url: "https://tools.ietf.org/html/rfc5681" }], code: "# Wireshark filter — retransmissions\ntcp.analysis.retransmission || tcp.analysis.fast_retransmission" },
+      { title: "Selective Acknowledgment (SACK)", component: "Transport Layer (Both sides)", detail: "Without SACK, a loss means retransmitting everything after the lost packet. With SACK (negotiated in handshake), the receiver tells the sender exactly which ranges it has received. The sender only retransmits the missing segments. Critical for high-bandwidth, lossy links. Most modern TCP stacks use SACK.", proto: "TCP SACK Option (RFC 2018)", refs: [{ label: "RFC 2018 — SACK", url: "https://tools.ietf.org/html/rfc2018" }, { label: "RFC 2883 — D-SACK", url: "https://tools.ietf.org/html/rfc2883" }], code: "# Wireshark filter — SACK blocks\ntcp.options.sack_le\n# Check SACK support on Linux\nsysctl net.ipv4.tcp_sack" },
+      { title: "Disk Write & Progress Update", component: "Application (Browser/Download Manager)", detail: "Received data is written to a temporary file on disk. The browser updates the progress bar based on bytes received vs Content-Length. If disk I/O is slow, the receive buffer fills, rwnd shrinks, and the sender is throttled. Download managers may use multiple TCP connections to parallelize (less useful with HTTP/2).", proto: "File I/O + Progress callback", code: "# Monitor download progress with curl\ncurl -# -o file.zip https://example.com/file.zip" },
+      { title: "Connection Teardown", component: "Transport Layer", detail: "After the last byte is received, TCP closes gracefully: FIN → ACK → FIN → ACK (4-way handshake). The connection enters TIME_WAIT state for 2×MSL (typically 60s) to handle delayed packets. The browser verifies the file (hash check if provided) and renames the temp file to the final name.", proto: "TCP FIN handshake + TIME_WAIT", refs: [{ label: "RFC 9293 — TCP", url: "https://tools.ietf.org/html/rfc9293" }], code: "# Count connections in TIME_WAIT\nss -s | grep timewait\n# Or with netstat\nnetstat -an | grep TIME_WAIT | wc -l" }
+    ]
+  },
+  {
+    id: "email-send",
+    title: "Sending an Email",
+    desc: "Your email's journey through SMTP relays, MX records, spam filters, and finally to the recipient's inbox.",
+    icon: "📧",
+    color: "#79c0ff",
+    steps: [
+      { title: "Compose & Send in email client", component: "Mail User Agent (MUA)", detail: "You click Send in Gmail/Outlook/Thunderbird. The client constructs a MIME message: headers (From, To, Subject, Date, Message-ID), body (text/plain + text/html multipart), and attachments (base64 encoded). For webmail, this is an HTTP POST to the provider's API.", proto: "MIME (RFC 2045) + HTTP API", refs: [{ label: "RFC 2045 — MIME", url: "https://tools.ietf.org/html/rfc2045" }, { label: "RFC 5322 — Internet Message Format", url: "https://tools.ietf.org/html/rfc5322" }] },
+      { title: "Submit to Outgoing Mail Server (MSA)", component: "Mail Submission Agent", detail: "Your email client connects to your provider's MSA (e.g., smtp.gmail.com:587). Authentication via SASL (LOGIN/PLAIN over TLS, or OAuth2). STARTTLS upgrades the connection to TLS. The MSA accepts the message and queues it for delivery. SPF/DKIM signing: the MSA adds a DKIM signature header using the domain's private key.", proto: "SMTP Submission (port 587 + STARTTLS)", refs: [{ label: "RFC 6409 — Message Submission", url: "https://tools.ietf.org/html/rfc6409" }, { label: "RFC 6376 — DKIM", url: "https://tools.ietf.org/html/rfc6376" }], code: "# Test SMTP submission with openssl\nopenssl s_client -starttls smtp -connect smtp.gmail.com:587" },
+      { title: "MX Record Lookup", component: "Outgoing MTA → DNS", detail: "The sending MTA extracts the recipient's domain (e.g., company.com) and queries DNS for MX records. MX records specify mail servers and priorities: 10 mail1.company.com, 20 mail2.company.com. Lower priority number = preferred. If no MX record exists, fall back to the A record of the domain.", proto: "DNS MX Query (UDP:53)", refs: [{ label: "RFC 5321 — SMTP", url: "https://tools.ietf.org/html/rfc5321" }, { label: "RFC 7505 — Null MX", url: "https://tools.ietf.org/html/rfc7505" }], code: "# Look up MX records for a domain\ndig MX company.com +short\n# Or with nslookup\nnslookup -type=mx company.com" },
+      { title: "SMTP Relay to Destination MTA", component: "Sending MTA → Receiving MTA", detail: "The sending MTA connects to the recipient's MTA (port 25). SMTP EHLO handshake. Opportunistic TLS (STARTTLS) encrypts the connection if supported. MAIL FROM, RCPT TO, DATA commands transfer the message. The receiving MTA may reject (550), defer (450), or accept (250) the message.", proto: "SMTP (port 25 + opportunistic TLS)", refs: [{ label: "RFC 5321 — SMTP", url: "https://tools.ietf.org/html/rfc5321" }, { label: "RFC 3207 — SMTP STARTTLS", url: "https://tools.ietf.org/html/rfc3207" }], code: "# Manually walk through an SMTP session\nopenssl s_client -starttls smtp -connect mail1.company.com:25\n# Then type: EHLO myserver.com / MAIL FROM:<me@my.com> / RCPT TO:<user@company.com>" },
+      { title: "Spam & Security Filtering", component: "Receiving MTA / Gateway", detail: "The receiving server runs multiple checks: SPF (is the sending IP authorized for the From domain?), DKIM (does the signature verify?), DMARC (do SPF/DKIM align with the From domain? What policy — none/quarantine/reject?). Content scanning: SpamAssassin, ML classifiers, URL reputation, attachment sandboxing.", proto: "SPF + DKIM + DMARC + Content Filters", refs: [{ label: "RFC 7208 — SPF", url: "https://tools.ietf.org/html/rfc7208" }, { label: "RFC 6376 — DKIM", url: "https://tools.ietf.org/html/rfc6376" }, { label: "RFC 7489 — DMARC", url: "https://tools.ietf.org/html/rfc7489" }], code: "# Check SPF record\ndig TXT example.com +short | grep spf\n# Check DMARC policy\ndig TXT _dmarc.example.com +short" },
+      { title: "Delivery to Mailbox (MDA)", component: "Mail Delivery Agent", detail: "The message passes all checks and the MDA delivers it to the recipient's mailbox. This may involve Sieve filters (user-defined rules), sorting into folders, flagging as important. The message is stored in the mail store (Maildir, database, or cloud storage). Server-side indexing enables search.", proto: "LMTP / Sieve Filters → Mailbox Store", refs: [{ label: "RFC 5228 — Sieve", url: "https://tools.ietf.org/html/rfc5228" }, { label: "RFC 2033 — LMTP", url: "https://tools.ietf.org/html/rfc2033" }] },
+      { title: "Recipient retrieves email", component: "Mail User Agent (MUA) → IMAP/POP", detail: "The recipient's email client syncs via IMAP (port 993, TLS). IMAP allows server-side folders, flags, search — the definitive copy stays on the server. POP3 (port 995) downloads and optionally deletes from server. Webmail accesses the mailbox via internal API. Push notifications alert the user on mobile.", proto: "IMAP4 (port 993 TLS) / POP3 / Push", refs: [{ label: "RFC 9051 — IMAP4rev2", url: "https://tools.ietf.org/html/rfc9051" }, { label: "RFC 1939 — POP3", url: "https://tools.ietf.org/html/rfc1939" }], code: "# Test IMAP connection\nopenssl s_client -connect imap.gmail.com:993\n# Then type: a1 LOGIN user@gmail.com password / a2 LIST \"\" \"*\"" },
+      { title: "Bounce & DSN (if delivery fails)", component: "MTA → Original Sender", detail: "If delivery fails permanently (user doesn't exist → 550), the receiving MTA sends a bounce (DSN — Delivery Status Notification) back to the envelope sender. Temporary failures (mailbox full → 452) cause retries with exponential backoff. After max retries (typically 4-5 days), a final bounce is sent.", proto: "SMTP DSN (RFC 3461) / Bounce Message", refs: [{ label: "RFC 3461 — SMTP DSN", url: "https://tools.ietf.org/html/rfc3461" }, { label: "RFC 3464 — DSN Format", url: "https://tools.ietf.org/html/rfc3464" }] }
+    ]
+  }
+];
+
+let ucCurrentIndex = -1;
+let ucCurrentStep = -1;
+let ucAutoPlayTimer = null;
+
+function buildUseCaseCards() {
+  const grid = document.getElementById('uc-card-grid');
+  grid.innerHTML = '';
+  useCases.forEach((uc, idx) => {
+    const card = document.createElement('div');
+    card.className = 'dd-card';
+    card.onclick = () => showUseCase(idx);
+    card.innerHTML = `
+      <div class="dd-card-img" style="background:${uc.color}11">
+        <span style="font-size:64px">${uc.icon}</span>
+      </div>
+      <div class="dd-card-body">
+        <div class="dd-card-num" style="color:${uc.color}">USE CASE ${idx + 1}</div>
+        <div class="dd-card-title">${uc.title}</div>
+        <div class="dd-card-desc">${uc.desc}</div>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
 }
+
+function showUseCase(idx) {
+  ucCurrentIndex = idx;
+  ucCurrentStep = 0;
+  const uc = useCases[idx];
+  document.getElementById('uc-card-grid').style.display = 'none';
+  document.getElementById('usecase-controls').style.display = 'flex';
+  const container = document.getElementById('uc-detail-container');
+
+  let html = '<div class="uc-flow">';
+  html += '<button class="uc-back-btn" onclick="showUseCaseGrid()">← Back to All Use Cases</button>';
+  html += `<h2>${uc.icon} ${uc.title}</h2>`;
+  html += `<div class="uc-subtitle">${uc.desc}</div>`;
+  html += '<div class="uc-flow-controls">';
+  html += '<button onclick="ucPrev()">← Previous</button>';
+  html += '<button class="primary" onclick="ucNext()">Next Step →</button>';
+  html += '<button onclick="ucAutoPlay()" id="uc-autoplay-btn">▶ Auto-Play</button>';
+  html += '<button onclick="ucReset()">↺ Reset</button>';
+  html += '</div>';
+  html += '<div class="uc-legend">';
+  html += '<span><span class="dot" style="background:#58a6ff"></span> Current step</span>';
+  html += '<span><span class="dot" style="background:#3fb950"></span> Completed</span>';
+  html += '<span><span class="dot" style="background:#30363d"></span> Upcoming</span>';
+  html += '</div>';
+  html += '<div class="uc-step-container" id="uc-steps">';
+
+  uc.steps.forEach((step, i) => {
+    if (i > 0) html += `<div class="uc-connector" id="uc-conn-${i}"></div>`;
+    html += `<div class="uc-step${i === 0 ? ' active' : ''}" id="uc-step-${i}" onclick="ucGoTo(${i})">`;
+    html += `<div class="uc-badge">${i + 1}</div>`;
+    html += '<div class="uc-body">';
+    html += `<div class="uc-title">${step.title}</div>`;
+    html += `<div class="uc-component">📍 ${step.component}</div>`;
+    let detailHtml = `<p>${step.detail}</p><span class="uc-proto">${step.proto}</span>`;
+    if (step.code) detailHtml += `<pre class="uc-code">${step.code}</pre>`;
+    if (step.refs && step.refs.length) {
+      detailHtml += '<div class="uc-refs">' + step.refs.map(r => `<a href="${r.url}" target="_blank" rel="noopener">${r.label}</a>`).join('') + '</div>';
+    }
+    html += `<div class="uc-detail">${detailHtml}</div>`;
+    html += '</div></div>';
+  });
+
+  html += '</div></div>';
+  container.innerHTML = html;
+  container.style.display = '';
+  document.getElementById('view-usecase').scrollTop = 0;
+}
+
+function ucGoTo(step) {
+  const uc = useCases[ucCurrentIndex];
+  if (step < 0 || step >= uc.steps.length) return;
+  ucCurrentStep = step;
+  uc.steps.forEach((_, i) => {
+    const el = document.getElementById('uc-step-' + i);
+    el.classList.remove('active', 'done');
+    if (i < step) el.classList.add('done');
+    else if (i === step) el.classList.add('active');
+    if (i > 0) {
+      const conn = document.getElementById('uc-conn-' + i);
+      conn.classList.toggle('done', i <= step);
+    }
+  });
+  // Scroll the active step into view
+  const activeEl = document.getElementById('uc-step-' + step);
+  if (activeEl) activeEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function ucNext() {
+  const uc = useCases[ucCurrentIndex];
+  if (ucCurrentStep < uc.steps.length - 1) ucGoTo(ucCurrentStep + 1);
+}
+function ucPrev() {
+  if (ucCurrentStep > 0) ucGoTo(ucCurrentStep - 1);
+}
+function ucReset() {
+  if (ucAutoPlayTimer) { clearInterval(ucAutoPlayTimer); ucAutoPlayTimer = null; }
+  var btn = document.getElementById('uc-autoplay-btn');
+  if (btn) btn.textContent = '▶ Auto-Play';
+  ucGoTo(0);
+}
+function ucAutoPlay() {
+  var btn = document.getElementById('uc-autoplay-btn');
+  if (ucAutoPlayTimer) {
+    clearInterval(ucAutoPlayTimer);
+    ucAutoPlayTimer = null;
+    btn.textContent = '▶ Auto-Play';
+    return;
+  }
+  btn.textContent = '⏸ Pause';
+  ucAutoPlayTimer = setInterval(function() {
+    var uc = useCases[ucCurrentIndex];
+    if (ucCurrentStep < uc.steps.length - 1) {
+      ucNext();
+    } else {
+      clearInterval(ucAutoPlayTimer);
+      ucAutoPlayTimer = null;
+      btn.textContent = '▶ Auto-Play';
+    }
+  }, 2500);
+}
+
+function showUseCaseGrid() {
+  document.getElementById('uc-card-grid').style.display = '';
+  document.getElementById('uc-detail-container').style.display = 'none';
+  document.getElementById('usecase-controls').style.display = 'none';
+  if (ucAutoPlayTimer) { clearInterval(ucAutoPlayTimer); ucAutoPlayTimer = null; }
+  ucCurrentIndex = -1;
+}
+
 </script>
 </body>
 </html>
