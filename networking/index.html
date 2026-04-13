@@ -61,6 +61,7 @@
   svg { width: 100vw; height: 100vh; }
   .view { display: none; }
   .view.active { display: block; }
+  .mobile-only { display: none !important; }
 
   /* Mindmap link paths - clickable */
   path.link { pointer-events: stroke; cursor: pointer; }
@@ -365,14 +366,14 @@
     transition: background .3s;
   }
   .uc-step.active .uc-badge { background: #58a6ff; }
-  .uc-step .uc-body { flex: 1; }
+  .uc-step .uc-body { flex: 1; min-width: 0; overflow: hidden; }
   .uc-step .uc-title { font-size: 14px; font-weight: 600; color: #c9d1d9; }
   .uc-step .uc-component { font-size: 11px; color: #f0883e; margin-top: 2px; font-weight: 600; }
   .uc-step .uc-detail {
     font-size: 12px; color: #8b949e; line-height: 1.6; margin-top: 6px;
     max-height: 0; overflow: hidden; transition: max-height .4s ease;
   }
-  .uc-step.active .uc-detail { max-height: 300px; }
+  .uc-step.active .uc-detail { max-height: 800px; }
   .uc-step .uc-proto {
     display: inline-block; font-size: 10px; padding: 2px 8px; border-radius: 4px;
     background: #0d1117; border: 1px solid #30363d; color: #7ee787; margin-top: 6px;
@@ -409,6 +410,7 @@
     margin-top: 10px; padding: 10px 14px; background: #0d1117; border: 1px solid #30363d;
     border-radius: 6px; font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
     font-size: 11px; color: #7ee787; line-height: 1.5; overflow-x: auto; white-space: pre;
+    max-width: 100%; box-sizing: border-box;
   }
   .uc-refs {
     margin-top: 8px; display: flex; flex-wrap: wrap; gap: 6px;
@@ -418,6 +420,11 @@
     border-radius: 4px; font-size: 10px; color: #79c0ff; text-decoration: none; transition: all .2s;
   }
   .uc-refs a:hover { border-color: #58a6ff; color: #58a6ff; background: #0d1117; }
+  .legend-close {
+    position: absolute; top: 8px; right: 8px; background: none; border: none;
+    color: #8b949e; font-size: 16px; cursor: pointer; line-height: 1; padding: 2px 6px;
+  }
+  .legend-close:hover { color: #c9d1d9; }
 
   /* ── Tracker Panel ── */
   #tracker-panel {
@@ -531,9 +538,11 @@
 
     /* Floating canvas controls on mobile */
     .canvas-controls { top: auto; bottom: 56px; right: 12px; }
+    .mobile-only { display: flex !important; }
 
     /* Deep Dives */
     #view-deepdive { padding-top: 58px; }
+    #view-usecase { margin-top: 48px; height: calc(100vh - 48px); }
     .dd-grid { grid-template-columns: 1fr; padding: 12px 10px; gap: 14px; }
     .dd-card-img { height: 150px; }
     .dd-card-title { font-size: 15px; }
@@ -555,6 +564,10 @@
     .uc-flow-controls { flex-wrap: wrap; }
     .uc-flow-controls button { font-size: 12px; padding: 6px 14px; }
     .uc-legend { font-size: 10px; gap: 10px; }
+    .uc-code { font-size: 10px; white-space: pre-wrap; word-break: break-all; padding: 8px 10px; }
+    .uc-refs { gap: 4px; }
+    .uc-refs a { font-size: 9px; padding: 2px 8px; }
+    .uc-step .uc-detail { max-width: 100%; overflow-x: hidden; }
 
     /* Appendix */
     #view-appendix { margin-top: 48px; height: calc(100vh - 48px); }
@@ -581,8 +594,13 @@
     .scribble-tools { margin-left: 0; border-left: none; padding-left: 0; flex-wrap: wrap; gap: 4px; border-top: 1px solid #30363d; padding-top: 6px; width: 100%; }
     .scribble-color { width: 18px; height: 18px; }
 
-    /* Legends hidden on mobile */
-    #legend, #legend-graph { display: none !important; }
+    /* Legends — collapsible on mobile instead of hidden */
+    #legend, #legend-graph {
+      position: fixed; bottom: 0; left: 0; right: 0; z-index: 15;
+      max-height: 40vh; overflow-y: auto; border-radius: 12px 12px 0 0;
+      border-bottom: none; display: none !important;
+    }
+    #legend.mobile-open, #legend-graph.mobile-open { display: block !important; }
     #source-link { bottom: 8px; right: 8px; font-size: 10px; padding: 5px 10px; }
     #tooltip { max-width: 260px; font-size: 12px; }
   }
@@ -626,6 +644,7 @@
     <button class="cbtn" onclick="expandAll()">⊞ Expand All</button>
     <button class="cbtn" onclick="collapseAll()">⊟ Collapse All</button>
     <button class="cbtn" onclick="resetView()">↻ Reset View</button>
+    <button class="cbtn mobile-only" onclick="toggleMobileLegend('legend')">📋 Index</button>
   </div>
 </div>
 <div id="view-graph" class="view">
@@ -634,6 +653,7 @@
     <button class="cbtn" onclick="resetGraphView()">↻ Reset View</button>
     <button class="cbtn" onclick="toggleLabels()">🏷️ Toggle Labels</button>
     <button class="cbtn" onclick="highlightReset()">✕ Clear Highlight</button>
+    <button class="cbtn mobile-only" onclick="toggleMobileLegend('legend-graph')">📋 Index</button>
   </div>
 </div>
 
@@ -666,6 +686,7 @@
 
 <!-- Mind Map Legend -->
 <div id="legend" class="legend-mindmap">
+  <button class="legend-close" onclick="this.parentElement.classList.remove('mobile-open')" title="Close">✕</button>
   <div style="font-weight:600; color:#58a6ff; margin-bottom:6px; font-size:12px;">Node Depth <span style="font-weight:400;color:#8b949e;font-size:10px;">— click to filter</span></div>
   <div class="legend-item" data-mm="depth-0" style="display:flex;align-items:center;gap:8px;margin:4px 0;cursor:pointer;padding:2px 4px;border-radius:4px"><span class="swatch" style="background:#58a6ff"></span> Course Root</div>
   <div class="legend-item" data-mm="depth-1" style="display:flex;align-items:center;gap:8px;margin:4px 0;cursor:pointer;padding:2px 4px;border-radius:4px"><span class="swatch" style="background:#f778ba"></span> Weekly Topics</div>
@@ -679,6 +700,7 @@
 
 <!-- Graph Legend -->
 <div id="legend-graph" style="display:none; position:fixed; bottom:16px; left:16px; z-index:10; background:rgba(22,27,34,0.92); border:1px solid #30363d; border-radius:8px; padding:12px 16px; font-size:12px;">
+  <button class="legend-close" onclick="this.parentElement.classList.remove('mobile-open')" title="Close">✕</button>
   <div style="font-weight:600; color:#58a6ff; margin-bottom:6px;">Node Categories <span style="font-weight:400;color:#8b949e;font-size:10px;">— click to filter</span></div>
   <div class="legend-item" data-cat="arch" style="display:flex;align-items:center;gap:8px;margin:4px 0;cursor:pointer;padding:2px 4px;border-radius:4px"><span class="swatch" style="background:#58a6ff;width:12px;height:12px;border-radius:50%;display:inline-block"></span> Architecture</div>
   <div class="legend-item" data-cat="transport" style="display:flex;align-items:center;gap:8px;margin:4px 0;cursor:pointer;padding:2px 4px;border-radius:4px"><span class="swatch" style="background:#f778ba;width:12px;height:12px;border-radius:50%;display:inline-block"></span> Transport</div>
@@ -3816,6 +3838,47 @@ function showUseCaseGrid() {
   if (ucAutoPlayTimer) { clearInterval(ucAutoPlayTimer); ucAutoPlayTimer = null; }
   ucCurrentIndex = -1;
 }
+
+// Mobile legend toggle
+function toggleMobileLegend(id) {
+  const el = document.getElementById(id);
+  el.classList.toggle('mobile-open');
+}
+
+// Tooltip bounds — keep tooltip inside viewport
+function clampTooltip(x, y) {
+  const el = document.getElementById('tooltip');
+  const rect = el.getBoundingClientRect();
+  const vw = window.innerWidth, vh = window.innerHeight;
+  const w = rect.width || 300, h = rect.height || 100;
+  if (x + w + 10 > vw) x = Math.max(4, vw - w - 10);
+  if (y + h + 10 > vh) y = Math.max(4, vh - h - 10);
+  if (x < 4) x = 4;
+  if (y < 4) y = 4;
+  return { x, y };
+}
+
+// Global: reposition tooltip on every mousemove so it stays in viewport
+document.addEventListener('mousemove', function(ev) {
+  var el = document.getElementById('tooltip');
+  if (!el || getComputedStyle(el).opacity === '0') return;
+  var c = clampTooltip(ev.clientX + 14, ev.clientY - 10);
+  el.style.left = c.x + 'px';
+  el.style.top = c.y + 'px';
+}, { passive: true });
+
+// Touch: reposition tooltip after it becomes visible
+document.addEventListener('touchstart', function(ev) {
+  setTimeout(function() {
+    var el = document.getElementById('tooltip');
+    if (!el || getComputedStyle(el).opacity === '0') return;
+    var t = ev.touches[0];
+    if (!t) return;
+    var c = clampTooltip(t.clientX + 14, t.clientY - 40);
+    el.style.left = c.x + 'px';
+    el.style.top = c.y + 'px';
+  }, 50);
+}, { passive: true });
 
 </script>
 </body>
