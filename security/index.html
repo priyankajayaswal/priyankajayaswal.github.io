@@ -51,6 +51,8 @@
     transition: all 0.2s; white-space: nowrap;
   }
   .canvas-controls .cbtn:hover { background: rgba(33,38,45,0.95); color: #c9d1d9; border-color: #58a6ff; }
+  .mobile-only { display: none !important; }
+  #legend, #legend-graph { position: relative; }
 
   /* ── Views ── */
   #canvas, #canvas-graph { width: 100vw; height: 100vh; }
@@ -171,6 +173,7 @@
 
   /* ── Deep Dives ── */
   #view-deepdive { overflow-y: auto; margin-top: 50px; height: calc(100vh - 50px); }
+  #view-usecase { overflow-y: auto; margin-top: 50px; height: calc(100vh - 50px); }
   .dd-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 20px; padding: 24px 32px; max-width: 1400px; margin: 0 auto; }
   .dd-card { background: #161b22; border: 1px solid #30363d; border-radius: 12px; cursor: pointer; overflow: hidden; transition: all .25s; }
   .dd-card:hover { border-color: #58a6ff; transform: translateY(-3px); box-shadow: 0 8px 30px rgba(0,0,0,.4); }
@@ -195,6 +198,68 @@
   .dd-kp span { color: #8b949e; }
   .dd-nav { display: flex; gap: 10px; justify-content: center; margin-top: 20px; }
   .dd-nav button { padding: 8px 20px; }
+
+  /* ── Use Cases ── */
+  .uc-flow { max-width: 960px; margin: 0 auto; padding: 32px; }
+  .uc-flow h2 { font-size: 22px; color: #58a6ff; margin-bottom: 4px; }
+  .uc-flow .uc-subtitle { font-size: 13px; color: #8b949e; margin-bottom: 20px; }
+  .uc-step {
+    display: flex; gap: 14px; padding: 16px; border-radius: 10px; border: 1px solid #30363d;
+    background: #161b22; cursor: pointer; transition: all .3s; opacity: 0.3;
+  }
+  .uc-step.active { opacity: 1; border-color: #58a6ff; box-shadow: 0 0 20px rgba(88,166,255,0.15); }
+  .uc-step.done { opacity: 0.8; border-color: #3fb950; }
+  .uc-step .uc-badge {
+    width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 700; background: #30363d; color: #8b949e; flex-shrink: 0;
+  }
+  .uc-step.active .uc-badge { background: #58a6ff; color: #fff; }
+  .uc-step.done .uc-badge { background: #3fb950; color: #fff; }
+  .uc-step .uc-body { flex: 1; min-width: 0; overflow: hidden; }
+  .uc-step .uc-title { font-weight: 600; color: #c9d1d9; font-size: 14px; }
+  .uc-step .uc-component { font-size: 11px; color: #8b949e; margin-top: 2px; }
+  .uc-step .uc-detail { display: none; margin-top: 10px; font-size: 12px; color: #c9d1d9; line-height: 1.6; }
+  .uc-step.active .uc-detail { display: block; }
+  .uc-step .uc-proto { display: inline-block; background: #0d1117; border: 1px solid #30363d; border-radius: 4px; padding: 2px 8px; font-size: 10px; color: #79c0ff; margin-top: 8px; }
+  .uc-connector { width: 2px; height: 24px; background: #30363d; margin-left: 31px; transition: background .3s; }
+  .uc-connector.done { background: #3fb950; }
+  .uc-flow-controls {
+    display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap;
+  }
+  .uc-flow-controls button {
+    padding: 8px 18px; border-radius: 8px; border: 1px solid #30363d; background: #161b22;
+    color: #c9d1d9; cursor: pointer; font-size: 13px; transition: all .2s;
+  }
+  .uc-flow-controls button:hover { border-color: #58a6ff; color: #58a6ff; }
+  .uc-flow-controls button.primary { background: #1f6feb; border-color: #58a6ff; color: #fff; }
+  .uc-legend {
+    display: flex; gap: 16px; flex-wrap: wrap; margin-top: 16px; padding: 12px 16px;
+    background: #0d1117; border: 1px solid #30363d; border-radius: 8px; font-size: 11px;
+  }
+  .uc-legend span { display: flex; align-items: center; gap: 6px; color: #8b949e; }
+  .uc-legend .dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+  .uc-back-btn {
+    background: none; border: 1px solid #30363d; color: #58a6ff; padding: 8px 16px;
+    border-radius: 8px; cursor: pointer; font-size: 13px; margin-bottom: 16px; transition: all 0.2s;
+  }
+  .uc-back-btn:hover { background: #161b22; border-color: #58a6ff; }
+  .uc-code {
+    margin-top: 10px; padding: 10px 14px; background: #0d1117; border: 1px solid #30363d;
+    border-radius: 6px; font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+    font-size: 11px; color: #7ee787; line-height: 1.5; overflow-x: auto; white-space: pre;
+    max-width: 100%; box-sizing: border-box;
+  }
+  .uc-refs { margin-top: 8px; display: flex; flex-wrap: wrap; gap: 6px; }
+  .uc-refs a {
+    display: inline-block; padding: 3px 10px; background: #161b22; border: 1px solid #30363d;
+    border-radius: 4px; font-size: 10px; color: #79c0ff; text-decoration: none; transition: all .2s;
+  }
+  .uc-refs a:hover { border-color: #58a6ff; color: #58a6ff; background: #0d1117; }
+  .legend-close {
+    position: absolute; top: 8px; right: 8px; background: none; border: none;
+    color: #8b949e; font-size: 16px; cursor: pointer; line-height: 1; padding: 2px 6px;
+  }
+  .legend-close:hover { color: #c9d1d9; }
 
   /* ── Tracker Panel ── */
   #tracker-panel {
@@ -268,11 +333,31 @@
     .toolbar-sep { display: none; }
     .canvas-controls { top: auto; bottom: 56px; right: 12px; }
     #view-deepdive { margin-top: 48px; height: calc(100vh - 48px); }
+    #view-usecase { margin-top: 48px; height: calc(100vh - 48px); }
     .dd-grid { grid-template-columns: 1fr; padding: 12px 10px; }
+    .uc-flow { padding: 16px; }
+    .uc-flow h2 { font-size: 18px; }
+    .uc-step { padding: 12px; gap: 10px; }
+    .uc-step .uc-badge { width: 28px; height: 28px; font-size: 12px; }
+    .uc-connector { margin-left: 25px; }
+    .uc-flow-controls { flex-wrap: wrap; }
+    .uc-flow-controls button { font-size: 12px; padding: 6px 14px; }
+    .uc-legend { font-size: 10px; gap: 10px; }
+    .uc-code { font-size: 10px; white-space: pre-wrap; word-break: break-all; padding: 8px 10px; }
+    .uc-refs { gap: 4px; }
+    .uc-refs a { font-size: 9px; padding: 2px 8px; }
+    .uc-step .uc-detail { max-width: 100%; overflow-x: hidden; }
     #view-appendix { margin-top: 48px; height: calc(100vh - 48px); }
     #tracker-panel { width: 100%; top: 48px; }
     #cmd-panel { width: 100% !important; right: 0 !important; }
-    #legend, #legend-graph { display: none !important; }
+    #legend, #legend-graph {
+      position: fixed; bottom: 0; left: 0; right: 0; z-index: 15;
+      max-height: 40vh; overflow-y: auto; border-radius: 12px 12px 0 0;
+      border-bottom: none; display: none !important;
+    }
+    #legend.mobile-open, #legend-graph.mobile-open { display: block !important; }
+    .mobile-only { display: flex !important; }
+    #tooltip { max-width: 260px; font-size: 12px; }
     #source-link { bottom: 8px; right: 8px; font-size: 10px; padding: 5px 10px; }
     #pdf-toolbar { flex-wrap: wrap; padding: 6px 8px; }
     .scribble-tools { margin-left: 0; border-left: none; padding-left: 0; flex-wrap: wrap; width: 100%; border-top: 1px solid #30363d; padding-top: 6px; }
@@ -306,6 +391,7 @@
     <button class="cbtn" onclick="expandAll()">⊞ Expand All</button>
     <button class="cbtn" onclick="collapseAll()">⊟ Collapse All</button>
     <button class="cbtn" onclick="resetView()">↻ Reset View</button>
+    <button class="cbtn mobile-only" onclick="toggleMobileLegend('legend')">📋 Index</button>
   </div>
 </div>
 
@@ -315,6 +401,7 @@
     <button class="cbtn" onclick="resetGraphView()">↻ Reset View</button>
     <button class="cbtn" onclick="toggleLabels()">🏷️ Toggle Labels</button>
     <button class="cbtn" onclick="highlightReset()">✕ Clear Highlight</button>
+    <button class="cbtn mobile-only" onclick="toggleMobileLegend('legend-graph')">📋 Index</button>
   </div>
 </div>
 
@@ -323,6 +410,14 @@
   <div id="dd-full-container"></div>
   <div class="canvas-controls" id="deepdive-controls" style="display:none">
     <button class="cbtn" id="btn-back-cards" onclick="showCardGrid()">← Back to All</button>
+  </div>
+</div>
+
+<div id="view-usecase" class="view">
+  <div id="uc-card-grid" class="dd-grid"></div>
+  <div id="uc-detail-container" style="display:none"></div>
+  <div class="canvas-controls" id="usecase-controls" style="display:none">
+    <button class="cbtn" id="btn-back-uc" onclick="showUseCaseGrid()">← Back to All</button>
   </div>
 </div>
 
@@ -1178,6 +1273,38 @@ const SAMPLE_CONFIG = {
     }
   ],
 
+  useCases: [
+    {
+      id: "sample-usecase-1", title: "Sample Use Case Alpha",
+      desc: "A step-by-step walkthrough of how process alpha works end to end.",
+      icon: "🔬", color: "#58a6ff",
+      steps: [
+        { title: "Step One — Initiation", component: "Component A", detail: "The process begins when the user triggers action alpha. The system validates input and prepares the request payload.", proto: "Protocol X",
+          code: "curl -X POST https://api.example.com/alpha \\\n  -H 'Content-Type: application/json' \\\n  -d '{\"action\":\"start\"}'",
+          refs: [{ label: "Sample RFC", url: "https://tools.ietf.org/html/rfc7231" }] },
+        { title: "Step Two — Processing", component: "Component B", detail: "The request is routed to the processing engine. Validation, transformation, and business logic are applied.", proto: "Protocol Y",
+          code: "# Monitor processing pipeline\ntail -f /var/log/pipeline.log | grep alpha",
+          refs: [{ label: "MDN: Fetch API", url: "https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API" }] },
+        { title: "Step Three — Response", component: "Component C", detail: "The result is packaged and returned to the caller. Caches are updated and logs are written.", proto: "Protocol Z",
+          refs: [{ label: "HTTP Caching", url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Caching" }] }
+      ]
+    },
+    {
+      id: "sample-usecase-2", title: "Sample Use Case Beta",
+      desc: "Walkthrough of process beta from trigger to completion.",
+      icon: "⚡", color: "#f778ba",
+      steps: [
+        { title: "Trigger Event", component: "Event Source", detail: "An external event triggers the beta pipeline. The event is validated and enriched with context.", proto: "Event Bus",
+          code: "# Publish event to message bus\naws sns publish --topic-arn arn:aws:sns:us-east-1:123:beta \\\n  --message '{\"event\":\"trigger\"}'",
+          refs: [{ label: "AWS SNS Docs", url: "https://docs.aws.amazon.com/sns/" }] },
+        { title: "Pipeline Execution", component: "Orchestrator", detail: "The orchestrator sequences the pipeline stages: parse, transform, enrich, persist. Each stage can retry on failure.", proto: "Message Queue",
+          code: "# Check queue depth\naws sqs get-queue-attributes \\\n  --queue-url https://sqs.us-east-1.amazonaws.com/123/beta \\\n  --attribute-names ApproximateNumberOfMessages" },
+        { title: "Notification", component: "Notification Service", detail: "Stakeholders are notified of the completed process. Channels include email, webhook, and in-app alerts.", proto: "SMTP / WebHook",
+          refs: [{ label: "RFC 6376 — DKIM", url: "https://tools.ietf.org/html/rfc6376" }] }
+      ]
+    }
+  ],
+
   youtube: {
     videos: [
       { unit: 1, id: "dQw4w9WgXcQ", topic: "Sample Video 1 — Introduction" },
@@ -1202,6 +1329,7 @@ const tabs = [];
 if (C.mindmap)                          tabs.push({ id: 'mindmap',  label: '📐 Mind Map' });
 if (C.graph && C.graph.nodes && C.graph.nodes.length) tabs.push({ id: 'graph',    label: '🔗 Topic Graph' });
 if (C.deepDives && C.deepDives.length)  tabs.push({ id: 'deepdive', label: '📚 Deep Dives' });
+if (C.useCases && C.useCases.length)    tabs.push({ id: 'usecase',  label: '🔬 Use Cases' });
 if (C.youtube && C.youtube.videos && C.youtube.videos.length) tabs.push({ id: 'appendix', label: '📹 Appendix' });
 
 document.getElementById('toolbar-title').textContent = '🧠 ' + C.course.code;
@@ -1240,6 +1368,11 @@ if (currentTab) document.getElementById('view-' + currentTab).classList.add('act
 // ═══════════════════════════════════════════════════════════════════════
 let graphInitialized = false;
 
+function toggleMobileLegend(id) {
+  const el = document.getElementById(id);
+  if (el) el.classList.toggle('mobile-open');
+}
+
 function switchTab(tab) {
   currentTab = tab;
   document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.view === tab));
@@ -1249,6 +1382,7 @@ function switchTab(tab) {
   document.getElementById('mindmap-controls').style.display  = tab === 'mindmap'  ? 'flex' : 'none';
   document.getElementById('graph-controls').style.display    = tab === 'graph'    ? 'flex' : 'none';
   document.getElementById('deepdive-controls').style.display = 'none';
+  document.getElementById('usecase-controls').style.display  = 'none';
   document.getElementById('btn-path').style.display = (tab === 'graph' && C.learningPath && C.learningPath.length) ? '' : 'none';
   document.querySelector('.legend-mindmap').style.display = tab === 'mindmap' ? '' : 'none';
   document.getElementById('legend-graph').style.display   = tab === 'graph'   ? '' : 'none';
@@ -1296,12 +1430,29 @@ function showTooltip(evt, name, tip, slides) {
 }
 
 function positionTooltip(evt) {
+  const pad = 8;
+  const tt = tooltip;
+  const vw = window.innerWidth, vh = window.innerHeight;
+  const tw = tt.offsetWidth || 300, th = tt.offsetHeight || 150;
   let x = evt.pageX + 16, y = evt.pageY - 10;
-  if (x + 400 > window.innerWidth) x = evt.pageX - 400;
-  if (y + 200 > window.innerHeight) y = evt.pageY - 200;
-  tooltip.style.left = x + 'px';
-  tooltip.style.top = y + 'px';
+  if (x + tw + pad > vw) x = Math.max(pad, vw - tw - pad);
+  if (y + th + pad > vh) y = Math.max(pad, vh - th - pad);
+  if (x < pad) x = pad;
+  if (y < pad) y = pad;
+  tt.style.left = x + 'px';
+  tt.style.top = y + 'px';
 }
+
+// Global listeners to keep tooltip within viewport on move/touch
+document.addEventListener('mousemove', function(e) {
+  if (tooltip.style.opacity === '1') positionTooltip(e);
+});
+document.addEventListener('touchstart', function(e) {
+  if (tooltip.style.opacity === '1') {
+    const t = e.touches[0];
+    setTimeout(() => positionTooltip({ pageX: t.pageX, pageY: t.pageY }), 50);
+  }
+}, { passive: true });
 
 function hideTooltip() {
   setTimeout(() => { if (!tooltip.matches(':hover')) tooltip.style.opacity = 0; }, 200);
@@ -1421,7 +1572,7 @@ function buildMindmapLegend() {
   const legend = document.getElementById('legend');
   legend.style.display = '';
   const labels = ['Course Root', 'Weekly Topics', 'Sub-Topics', 'Key Concepts', 'Labs'];
-  let html = '<div style="font-weight:600;color:#58a6ff;margin-bottom:6px;font-size:12px">Node Depth <span style="font-weight:400;color:#8b949e;font-size:10px">— click to filter</span></div>';
+  let html = '<button class="legend-close" onclick="this.parentElement.classList.remove(\'mobile-open\')" title="Close">✕</button><div style="font-weight:600;color:#58a6ff;margin-bottom:6px;font-size:12px">Node Depth <span style="font-weight:400;color:#8b949e;font-size:10px">— click to filter</span></div>';
   labels.forEach((l, i) => {
     html += `<div class="legend-item" data-mm="depth-${i}" style="display:flex;align-items:center;gap:8px;margin:4px 0;cursor:pointer;padding:2px 4px;border-radius:4px"><span class="swatch" style="background:${depthColors[i]}"></span> ${l}</div>`;
   });
@@ -1552,7 +1703,7 @@ function resetGraphView() { highlightReset(); d3.select("#canvas-graph").transit
 
 function buildGraphLegend() {
   const lg = document.getElementById('legend-graph');
-  let html = '<div style="font-weight:600;color:#58a6ff;margin-bottom:6px">Node Categories <span style="font-weight:400;color:#8b949e;font-size:10px">— click to filter</span></div>';
+  let html = '<button class="legend-close" onclick="this.parentElement.classList.remove(\'mobile-open\')" title="Close">✕</button><div style="font-weight:600;color:#58a6ff;margin-bottom:6px">Node Categories <span style="font-weight:400;color:#8b949e;font-size:10px">— click to filter</span></div>';
   Object.entries(C.graph.categories).forEach(([cat, color]) => {
     html += `<div class="legend-item" data-cat="${cat}" style="display:flex;align-items:center;gap:8px;margin:4px 0;cursor:pointer;padding:2px 4px;border-radius:4px"><span class="swatch" style="background:${color}"></span> ${cat}</div>`;
   });
@@ -1864,6 +2015,139 @@ function navDD(dir) {
   if (!n) return;
   currentDDIndex = (currentDDIndex + dir + n) % n;
   showDeepDive(currentDDIndex);
+}
+
+// ═══════════════════════════════════════════════════════════════════════
+// USE CASES
+// ═══════════════════════════════════════════════════════════════════════
+let ucCurrentIndex = -1;
+let ucCurrentStep = -1;
+let ucAutoPlayTimer = null;
+
+if (C.useCases && C.useCases.length) {
+  const ucGrid = document.getElementById('uc-card-grid');
+  C.useCases.forEach((uc, idx) => {
+    const card = document.createElement('div');
+    card.className = 'dd-card';
+    card.onclick = () => showUseCase(idx);
+    card.innerHTML = `
+      <div class="dd-card-img" style="background:${uc.color}11">
+        <span style="font-size:64px">${uc.icon}</span>
+      </div>
+      <div class="dd-card-body">
+        <div class="dd-card-num" style="color:${uc.color}">USE CASE ${idx + 1}</div>
+        <div class="dd-card-title">${uc.title}</div>
+        <div class="dd-card-desc">${uc.desc}</div>
+      </div>
+    `;
+    ucGrid.appendChild(card);
+  });
+}
+
+function showUseCase(idx) {
+  ucCurrentIndex = idx;
+  ucCurrentStep = 0;
+  if (ucAutoPlayTimer) { clearInterval(ucAutoPlayTimer); ucAutoPlayTimer = null; }
+  const uc = C.useCases[idx];
+  document.getElementById('uc-card-grid').style.display = 'none';
+  document.getElementById('usecase-controls').style.display = 'flex';
+  const container = document.getElementById('uc-detail-container');
+
+  let html = '<div class="uc-flow">';
+  html += '<button class="uc-back-btn" onclick="showUseCaseGrid()">← Back to All Use Cases</button>';
+  html += `<h2>${uc.icon} ${uc.title}</h2>`;
+  html += `<div class="uc-subtitle">${uc.desc}</div>`;
+  html += '<div class="uc-flow-controls">';
+  html += '<button onclick="ucPrev()">← Previous</button>';
+  html += '<button class="primary" onclick="ucNext()">Next Step →</button>';
+  html += '<button onclick="ucAutoPlay()" id="uc-autoplay-btn">▶ Auto-Play</button>';
+  html += '<button onclick="ucReset()">↺ Reset</button>';
+  html += '</div>';
+  html += '<div class="uc-legend">';
+  html += '<span><span class="dot" style="background:#58a6ff"></span> Current step</span>';
+  html += '<span><span class="dot" style="background:#3fb950"></span> Completed</span>';
+  html += '<span><span class="dot" style="background:#30363d"></span> Upcoming</span>';
+  html += '</div>';
+  html += '<div class="uc-step-container" id="uc-steps">';
+
+  uc.steps.forEach((step, i) => {
+    if (i > 0) html += `<div class="uc-connector" id="uc-conn-${i}"></div>`;
+    html += `<div class="uc-step${i === 0 ? ' active' : ''}" id="uc-step-${i}" onclick="ucGoTo(${i})">`;
+    html += `<div class="uc-badge">${i + 1}</div>`;
+    html += '<div class="uc-body">';
+    html += `<div class="uc-title">${step.title}</div>`;
+    html += `<div class="uc-component">📍 ${step.component}</div>`;
+    let detailHtml = `<p>${step.detail}</p><span class="uc-proto">${step.proto}</span>`;
+    if (step.code) detailHtml += `<pre class="uc-code">${step.code}</pre>`;
+    if (step.refs && step.refs.length) {
+      detailHtml += '<div class="uc-refs">' + step.refs.map(r => `<a href="${r.url}" target="_blank" rel="noopener">${r.label}</a>`).join('') + '</div>';
+    }
+    html += `<div class="uc-detail">${detailHtml}</div>`;
+    html += '</div></div>';
+  });
+
+  html += '</div></div>';
+  container.innerHTML = html;
+  container.style.display = '';
+  document.getElementById('view-usecase').scrollTop = 0;
+}
+
+function ucGoTo(step) {
+  const uc = C.useCases[ucCurrentIndex];
+  if (step < 0 || step >= uc.steps.length) return;
+  ucCurrentStep = step;
+  uc.steps.forEach((_, i) => {
+    const el = document.getElementById('uc-step-' + i);
+    el.classList.remove('active', 'done');
+    if (i < step) el.classList.add('done');
+    else if (i === step) el.classList.add('active');
+    if (i > 0) {
+      const conn = document.getElementById('uc-conn-' + i);
+      conn.classList.toggle('done', i <= step);
+    }
+  });
+  const activeEl = document.getElementById('uc-step-' + step);
+  if (activeEl) activeEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function ucNext() {
+  const uc = C.useCases[ucCurrentIndex];
+  if (ucCurrentStep < uc.steps.length - 1) ucGoTo(ucCurrentStep + 1);
+}
+
+function ucPrev() {
+  if (ucCurrentStep > 0) ucGoTo(ucCurrentStep - 1);
+}
+
+function ucAutoPlay() {
+  const btn = document.getElementById('uc-autoplay-btn');
+  if (ucAutoPlayTimer) {
+    clearInterval(ucAutoPlayTimer);
+    ucAutoPlayTimer = null;
+    btn.textContent = '▶ Auto-Play';
+    return;
+  }
+  btn.textContent = '⏸ Pause';
+  ucAutoPlayTimer = setInterval(() => {
+    const uc = C.useCases[ucCurrentIndex];
+    if (ucCurrentStep < uc.steps.length - 1) ucNext();
+    else { clearInterval(ucAutoPlayTimer); ucAutoPlayTimer = null; btn.textContent = '▶ Auto-Play'; }
+  }, 2500);
+}
+
+function ucReset() {
+  if (ucAutoPlayTimer) { clearInterval(ucAutoPlayTimer); ucAutoPlayTimer = null; }
+  const btn = document.getElementById('uc-autoplay-btn');
+  if (btn) btn.textContent = '▶ Auto-Play';
+  ucGoTo(0);
+}
+
+function showUseCaseGrid() {
+  ucCurrentIndex = -1;
+  if (ucAutoPlayTimer) { clearInterval(ucAutoPlayTimer); ucAutoPlayTimer = null; }
+  document.getElementById('uc-detail-container').style.display = 'none';
+  document.getElementById('uc-card-grid').style.display = '';
+  document.getElementById('usecase-controls').style.display = 'none';
 }
 
 // ═══════════════════════════════════════════════════════════════════════
