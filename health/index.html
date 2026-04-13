@@ -57,6 +57,12 @@
     transition: all 0.2s; white-space: nowrap;
   }
   .canvas-controls .cbtn:hover { background: rgba(33,38,45,0.95); color: #c9d1d9; border-color: #58a6ff; }
+  .mobile-only { display: none !important; }
+  .legend-close {
+    position: absolute; top: 8px; right: 8px; background: none; border: none;
+    color: #8b949e; font-size: 16px; cursor: pointer; line-height: 1; padding: 2px 6px;
+  }
+  .legend-close:hover { color: #c9d1d9; }
   .hint { font-size: 12px; color: #8b949e; margin-left: auto; display: flex; align-items: center; }
 
   svg { width: 100vw; height: 100vh; }
@@ -473,6 +479,16 @@
 
     /* Floating controls */
     .canvas-controls { top: auto; bottom: 56px; right: 12px; }
+
+    /* Legends — collapsible on mobile */
+    #legend, #legend-graph {
+      position: fixed; bottom: 0; left: 0; right: 0; z-index: 15;
+      max-height: 40vh; overflow-y: auto; border-radius: 12px 12px 0 0;
+      border-bottom: none; display: none !important;
+    }
+    #legend.mobile-open, #legend-graph.mobile-open { display: block !important; }
+    .mobile-only { display: flex !important; }
+    #tooltip { max-width: 260px; font-size: 12px; }
   }
 
   @media (max-width: 480px) {
@@ -508,6 +524,7 @@
 
 <!-- Mind Map Legend -->
 <div id="legend" class="legend-mindmap">
+  <button class="legend-close" onclick="this.parentElement.classList.remove('mobile-open')" title="Close">✕</button>
   <div style="font-weight:600; color:#58a6ff; margin-bottom:6px; font-size:12px;">Categories <span style="font-weight:400;color:#8b949e;font-size:10px;">— click to filter</span></div>
   <div class="legend-item" data-mm="depth-0" style="display:flex;align-items:center;gap:8px;margin:4px 0"><span class="swatch" style="background:#58a6ff"></span> Root</div>
   <div class="legend-item" data-mm="depth-1" style="display:flex;align-items:center;gap:8px;margin:4px 0"><span class="swatch" style="background:#f778ba"></span> Major Topics</div>
@@ -521,6 +538,7 @@
 
 <!-- Graph Legend -->
 <div id="legend-graph" style="display:none; position:fixed; bottom:16px; left:16px; z-index:10; background:rgba(22,27,34,0.92); border:1px solid #30363d; border-radius:8px; padding:12px 16px; font-size:12px;">
+  <button class="legend-close" onclick="this.parentElement.classList.remove('mobile-open')" title="Close">✕</button>
   <div style="font-weight:600; color:#58a6ff; margin-bottom:6px;">Topic Categories <span style="font-weight:400;color:#8b949e;font-size:10px;">— click to filter</span></div>
   <div class="legend-item" data-cat="body" style="display:flex;align-items:center;gap:8px;margin:4px 0"><span class="swatch" style="background:#58a6ff;width:12px;height:12px;border-radius:50%;display:inline-block"></span> Body Composition</div>
   <div class="legend-item" data-cat="nutrition" style="display:flex;align-items:center;gap:8px;margin:4px 0"><span class="swatch" style="background:#7ee787;width:12px;height:12px;border-radius:50%;display:inline-block"></span> Nutrition</div>
@@ -545,6 +563,7 @@
     <button class="cbtn" onclick="expandAll()">⊞ Expand All</button>
     <button class="cbtn" onclick="collapseAll()">⊟ Collapse All</button>
     <button class="cbtn" onclick="resetView()">↻ Reset View</button>
+    <button class="cbtn mobile-only" onclick="toggleMobileLegend('legend')">📋 Index</button>
   </div>
 </div>
 <div id="view-graph" class="view">
@@ -553,6 +572,7 @@
     <button class="cbtn" onclick="resetGraphView()">↻ Reset View</button>
     <button class="cbtn" onclick="toggleLabels()">🏷 Toggle Labels</button>
     <button class="cbtn" onclick="highlightReset()">✕ Clear Highlight</button>
+    <button class="cbtn mobile-only" onclick="toggleMobileLegend('legend-graph')">📋 Index</button>
   </div>
 </div>
 
@@ -2842,13 +2862,51 @@ const mmZoom = d3.zoom().scaleExtent([0.1, 4]).on("zoom", e => g.attr("transform
 svg.call(mmZoom);
 
 const tip = d3.select("#tooltip");
+const tipEl = document.getElementById("tooltip");
+
+function clampTooltip(x, y) {
+  const pad = 8;
+  const vw = window.innerWidth, vh = window.innerHeight;
+  const tw = tipEl.offsetWidth || 300, th = tipEl.offsetHeight || 150;
+  if (x + tw + pad > vw) x = Math.max(pad, vw - tw - pad);
+  if (y + th + pad > vh) y = Math.max(pad, vh - th - pad);
+  if (x < pad) x = pad;
+  if (y < pad) y = pad;
+  return { x, y };
+}
+
 function showTip(ev, d) {
   if (!d.data.tooltip) return;
   tip.select(".tt-title").text(d.data.name.replace(/\n/g, " "));
   tip.select(".tt-body").text(d.data.tooltip);
-  tip.style("opacity", 1).style("left", (ev.clientX + 14) + "px").style("top", (ev.clientY - 10) + "px");
+  const pos = clampTooltip(ev.clientX + 14, ev.clientY - 10);
+  tip.style("opacity", 1).style("left", pos.x + "px").style("top", pos.y + "px");
 }
 function hideTip() { tip.style("opacity", 0); }
+
+function toggleMobileLegend(id) {
+  const el = document.getElementById(id);
+  if (el) el.classList.toggle('mobile-open');
+}
+
+// Global listeners to keep tooltip within viewport
+document.addEventListener('mousemove', function(e) {
+  if (tipEl.style.opacity === '1') {
+    const pos = clampTooltip(e.clientX + 14, e.clientY - 10);
+    tipEl.style.left = pos.x + 'px';
+    tipEl.style.top = pos.y + 'px';
+  }
+});
+document.addEventListener('touchstart', function(e) {
+  if (tipEl.style.opacity === '1') {
+    const t = e.touches[0];
+    setTimeout(() => {
+      const pos = clampTooltip(t.clientX + 14, t.clientY - 10);
+      tipEl.style.left = pos.x + 'px';
+      tipEl.style.top = pos.y + 'px';
+    }, 50);
+  }
+}, { passive: true });
 
 const depthColors = ["#58a6ff", "#f778ba", "#7ee787", "#ffa657", "#d2a8ff", "#79c0ff"];
 function nodeColor(d) {
@@ -2888,7 +2946,7 @@ function update(source) {
     .on("click", (ev, d) => { toggle(d); update(d); })
     .on("dblclick", (ev, d) => { ev.stopPropagation(); openDetail(d); })
     .on("mouseover", showTip)
-    .on("mousemove", (ev) => { tip.style("left", (ev.clientX + 14) + "px").style("top", (ev.clientY - 10) + "px"); })
+    .on("mousemove", (ev) => { const p = clampTooltip(ev.clientX + 14, ev.clientY - 10); tip.style("left", p.x + "px").style("top", p.y + "px"); })
     .on("mouseout", hideTip);
 
   nodeEnter.append("circle")
@@ -3186,9 +3244,10 @@ function initGraph() {
     .on("mouseover", (ev, d) => {
       tip.select(".tt-title").text(d.label.replace(/\n/g, " "));
       tip.select(".tt-body").text(d.tip);
-      tip.style("opacity", 1).style("left", (ev.clientX + 14) + "px").style("top", (ev.clientY - 10) + "px");
+      const pos = clampTooltip(ev.clientX + 14, ev.clientY - 10);
+      tip.style("opacity", 1).style("left", pos.x + "px").style("top", pos.y + "px");
     })
-    .on("mousemove", (ev) => { tip.style("left", (ev.clientX + 14) + "px").style("top", (ev.clientY - 10) + "px"); })
+    .on("mousemove", (ev) => { const p = clampTooltip(ev.clientX + 14, ev.clientY - 10); tip.style("left", p.x + "px").style("top", p.y + "px"); })
     .on("mouseout", hideTip);
 
   nodeG.each(function(d) {
