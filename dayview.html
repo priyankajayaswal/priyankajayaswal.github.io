@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>📅 Day View — 22 habits, one sustainable day</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:#0d1117;color:#e6edf3;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;min-height:100vh;padding:28px 20px 80px;display:flex;flex-direction:column;align-items:center}
+  .wrap{max-width:1200px;width:100%}
+  h1{font-size:1.8rem;margin-bottom:4px;background:linear-gradient(135deg,#58a6ff,#d2a8ff,#f778ba);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+  h2{font-size:1.25rem;margin:28px 0 12px;color:#e6edf3;display:flex;align-items:center;gap:10px}
+  h2 .time{font-size:.85rem;color:#8b949e;font-weight:400;font-family:'SF Mono',Consolas,monospace}
+  .subtitle{color:#8b949e;font-size:.88rem;margin-bottom:18px}
+  a{color:#58a6ff;text-decoration:none}
+  a:hover{text-decoration:underline}
+
+  .stats{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:20px;padding:12px 16px;background:#161b22;border:1px solid #30363d;border-radius:10px;font-size:.85rem;color:#8b949e}
+  .stats b{color:#e6edf3}
+  .stats .progress{flex:1;min-width:200px;display:flex;align-items:center;gap:8px}
+  .bar{flex:1;height:6px;background:#21262d;border-radius:3px;overflow:hidden}
+  .bar-fill{height:100%;background:linear-gradient(90deg,#58a6ff,#7ee787);transition:width .3s}
+
+  .block{background:#161b22;border:1px solid #30363d;border-radius:10px;padding:0;margin-bottom:14px;overflow:hidden}
+  .block-head{padding:12px 18px;border-bottom:1px solid #21262d;display:flex;align-items:center;justify-content:space-between;gap:10px;background:#0d1117}
+  .block-title{font-size:1rem;font-weight:600;color:#e6edf3;display:flex;align-items:center;gap:8px}
+  .block-time{font-family:'SF Mono',Consolas,monospace;font-size:.82rem;color:#8b949e}
+  .block-tag{font-size:.7rem;padding:2px 8px;border-radius:10px;background:#21262d;color:#8b949e;text-transform:uppercase;letter-spacing:.5px}
+  .block.nonneg .block-tag{background:#7ee78722;color:#7ee787}
+  .block.stack .block-tag{background:#58a6ff22;color:#58a6ff}
+  .block.deep .block-tag{background:#f778ba22;color:#f778ba}
+  .block.learn .block-tag{background:#d2a8ff22;color:#d2a8ff}
+  .block.side .block-tag{background:#ffa65722;color:#ffa657}
+
+  .habits{padding:8px 0}
+  .habit{display:flex;align-items:center;gap:12px;padding:8px 18px;cursor:pointer;border-left:3px solid transparent;transition:background .15s}
+  .habit:hover{background:#0d1117}
+  .habit.done{opacity:.55}
+  .habit.done .h-text{text-decoration:line-through}
+  .habit input[type=checkbox]{width:18px;height:18px;cursor:pointer;accent-color:#7ee787;flex-shrink:0}
+  .h-main{flex:1;display:flex;flex-direction:column;gap:2px;min-width:0}
+  .h-text{font-size:.92rem;color:#e6edf3}
+  .h-note{font-size:.76rem;color:#8b949e}
+  .h-min{font-family:'SF Mono',Consolas,monospace;font-size:.72rem;color:#6e7681;padding:2px 7px;border-radius:4px;background:#21262d;flex-shrink:0}
+  .habit.core .h-min{color:#7ee787;background:#7ee78715}
+
+  .water-row{padding:12px 18px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:#0d1117;border-top:1px solid #21262d}
+  .water-row .label{font-size:.85rem;color:#8b949e}
+  .cup{width:26px;height:32px;border:2px solid #30363d;border-radius:3px 3px 6px 6px;cursor:pointer;transition:all .2s;position:relative;overflow:hidden}
+  .cup.filled{border-color:#58a6ff}
+  .cup.filled::after{content:'';position:absolute;inset:2px;background:linear-gradient(180deg,#58a6ff44,#58a6ff);border-radius:1px 1px 4px 4px}
+  .water-total{font-family:'SF Mono',Consolas,monospace;font-size:.82rem;color:#58a6ff;margin-left:auto}
+
+  .design{background:#161b22;border:1px solid #30363d;border-radius:10px;padding:18px 22px;margin-top:22px}
+  .design h3{font-size:1rem;color:#e6edf3;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+  .design p{font-size:.85rem;color:#8b949e;margin-bottom:8px;line-height:1.55}
+  .design ul{margin:6px 0 12px 22px;font-size:.85rem;color:#8b949e;line-height:1.65}
+  .design ul li b{color:#c9d1d9}
+  .design code{background:#0d1117;border:1px solid #30363d;padding:1px 6px;border-radius:3px;font-size:.8rem;color:#7ee787}
+
+  details.design{cursor:pointer}
+  details.design[open] summary{margin-bottom:10px}
+  details.design summary{list-style:none;display:flex;align-items:center;gap:8px;font-size:1rem;font-weight:600;color:#e6edf3}
+  details.design summary::before{content:'▶';font-size:.7rem;color:#8b949e;transition:transform .2s}
+  details.design[open] summary::before{transform:rotate(90deg)}
+
+  .reflect{background:#161b22;border:1px solid #30363d;border-radius:10px;padding:16px 20px;margin-top:18px}
+  .reflect h3{font-size:.95rem;margin-bottom:10px;color:#e6edf3}
+  .reflect textarea{width:100%;min-height:70px;background:#0d1117;border:1px solid #30363d;border-radius:6px;color:#e6edf3;padding:10px 12px;font-family:inherit;font-size:.88rem;resize:vertical}
+  .reflect .energy-row{display:flex;gap:6px;margin:10px 0;align-items:center}
+  .reflect .energy-row .label{font-size:.82rem;color:#8b949e;margin-right:6px}
+  .energy-dot{width:22px;height:22px;border-radius:50%;border:2px solid #30363d;cursor:pointer;transition:all .15s}
+  .energy-dot.on{background:#7ee787;border-color:#7ee787}
+  .energy-dot:hover{border-color:#7ee787}
+
+  .toolbar{display:flex;gap:8px;align-items:center;margin-left:auto}
+  .btn{padding:5px 12px;border:1px solid #30363d;background:#0d1117;color:#8b949e;border-radius:5px;cursor:pointer;font-size:.8rem}
+  .btn:hover{color:#58a6ff;border-color:#58a6ff}
+
+  .back{display:inline-block;margin-bottom:14px;color:#8b949e;font-size:.85rem}
+  .back:hover{color:#58a6ff}
+
+  /* ----- STREAK HEATMAP ----- */
+  .streak-wrap{background:#161b22;border:1px solid #30363d;border-radius:10px;padding:16px 20px;margin-bottom:20px}
+  .streak-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:8px}
+  .streak-head h3{font-size:1rem;color:#e6edf3;margin:0}
+  .streak-stats{display:flex;gap:16px;font-size:.82rem;color:#8b949e;flex-wrap:wrap}
+  .streak-stats b{color:#e6edf3;font-size:1rem}
+  .streak-stats .hot{color:#7ee787}
+  .heatmap{display:grid;grid-template-columns:repeat(30,1fr);gap:3px;margin-top:6px}
+  .hm-cell{aspect-ratio:1;border-radius:3px;background:#21262d;border:1px solid transparent;cursor:default;transition:transform .1s}
+  .hm-cell:hover{transform:scale(1.25);border-color:#58a6ff}
+  .hm-cell.l1{background:#0d4a2d}
+  .hm-cell.l2{background:#196c3a}
+  .hm-cell.l3{background:#2ea043}
+  .hm-cell.l4{background:#56d364}
+  .hm-cell.streak-day{outline:1px solid #7ee787;outline-offset:-1px}
+  .hm-cell.today{box-shadow:0 0 0 2px #f778ba}
+  .heatmap-legend{display:flex;align-items:center;gap:4px;font-size:.7rem;color:#6e7681;margin-top:8px;justify-content:flex-end}
+  .heatmap-legend .hm-cell{width:12px;height:12px;aspect-ratio:auto}
+
+  .timeline-wrap{background:#161b22;border:1px solid #30363d;border-radius:10px;padding:16px 20px;margin-bottom:20px;overflow-x:auto}
+  .timeline-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap;gap:8px}
+  .timeline-head h3{font-size:1rem;color:#e6edf3;margin:0}
+  .timeline-legend{display:flex;gap:12px;flex-wrap:wrap;font-size:.72rem;color:#8b949e}
+  .timeline-legend span{display:inline-flex;align-items:center;gap:4px}
+  .timeline-legend i{width:10px;height:10px;border-radius:2px;display:inline-block}
+  .timeline-svg{min-width:980px;width:100%;display:block}
+  .tl-hour-line{stroke:#21262d;stroke-width:1}
+  .tl-hour-line.major{stroke:#30363d}
+  .tl-hour-label{fill:#6e7681;font-size:10px;font-family:'SF Mono',Consolas,monospace}
+  .tl-row-label{fill:#8b949e;font-size:11px;font-weight:600}
+  .tl-bar{cursor:pointer;transition:opacity .15s}
+  .tl-bar:hover{opacity:.85}
+  .tl-bar-label{fill:#e6edf3;font-size:10.5px;pointer-events:none;font-weight:500}
+  .tl-bar.done rect{opacity:.4}
+  .tl-bar.done .tl-bar-label{text-decoration:line-through;opacity:.7}
+  .tl-now{stroke:#f778ba;stroke-width:2;stroke-dasharray:3,3}
+  .tl-now-label{fill:#f778ba;font-size:10px;font-weight:600;font-family:'SF Mono',Consolas,monospace}
+  .tl-arrow{stroke:#30363d;stroke-width:1;fill:none;stroke-dasharray:2,3;marker-end:url(#arrow)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a href="try.html" class="back">← Back to Hub</a>
+  <h1>📅 Day View</h1>
+  <div class="subtitle" id="today-sub">A realistic day template that fits all 22 habits without burning you out.</div>
+
+  <div class="stats">
+    <div class="progress">
+      <span>Completed <b id="done-count">0</b>/<b>22</b></span>
+      <div class="bar"><div class="bar-fill" id="bar"></div></div>
+      <span id="pct">0%</span>
+    </div>
+    <div>💧 Water <b id="water-ml">0</b>/3000 ml</div>
+    <div>🔥 Streak <b id="streak">0</b> days</div>
+    <button class="btn" onclick="resetDay()">Reset Day</button>
+  </div>
+
+  <!-- ───────────────── STREAK HEATMAP ───────────────── -->
+  <div class="streak-wrap">
+    <div class="streak-head">
+      <h3>📈 Streak — last 30 days</h3>
+      <div class="streak-stats">
+        <span>🔥 Current <b class="hot" id="s-current">0</b> d</span>
+        <span>🏆 Longest <b id="s-longest">0</b> d</span>
+        <span>📅 Logged <b id="s-logged">0</b>/30</span>
+        <span>⭐ Avg <b id="s-avg">0</b>%</span>
+      </div>
+    </div>
+    <div class="heatmap" id="heatmap"></div>
+    <div class="heatmap-legend">
+      30 days ago
+      <span class="hm-cell"></span>
+      <span class="hm-cell l1"></span>
+      <span class="hm-cell l2"></span>
+      <span class="hm-cell l3"></span>
+      <span class="hm-cell l4"></span>
+      today
+    </div>
+  </div>
+
+  <!-- ───────────────── TIMELINE ───────────────── -->
+  <div class="timeline-wrap">
+    <div class="timeline-head">
+      <h3>🗺️ Recommended Sequence — 8 am to midnight</h3>
+      <div class="timeline-legend">
+        <span><i style="background:#58a6ff"></i>stack</span>
+        <span><i style="background:#f778ba"></i>deep work</span>
+        <span><i style="background:#7ee787"></i>office</span>
+        <span><i style="background:#d2a8ff"></i>learning</span>
+        <span><i style="background:#ffa657"></i>side-project</span>
+        <span><i style="background:#79c0ff"></i>recovery</span>
+        <span><i style="background:#6e7681"></i>anchor</span>
+      </div>
+    </div>
+    <svg id="timeline" class="timeline-svg" viewBox="0 0 1000 320" preserveAspectRatio="xMidYMid meet">
+      <defs>
+        <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M0,0 L10,5 L0,10 z" fill="#30363d"/>
+        </marker>
+      </defs>
+    </svg>
+  </div>
+
+  <!-- ───────────────── MORNING — WAKE STACK ───────────────── -->
+  <div class="block stack">
+    <div class="block-head">
+      <div class="block-title">☀️ Morning Stack <span class="block-time">8:30 – 9:50</span></div>
+      <span class="block-tag">stack · ~80 min · 🎧 Murli</span>
+    </div>
+    <div class="habits" data-block="morning"></div>
+    <div class="water-row">
+      <span class="label">💧 500 ml on wake</span>
+      <div class="cup" data-cup="0"></div>
+      <div class="cup" data-cup="1"></div>
+      <span class="water-total" id="wr-morning">0 ml</span>
+    </div>
+  </div>
+
+  <!-- ───────────────── DEEP WORK ───────────────── -->
+  <div class="block deep nonneg">
+    <div class="block-head">
+      <div class="block-title">🧠 Deep Work Block <span class="block-time">9:50 – 12:50</span></div>
+      <span class="block-tag">non-negotiable · 3 h · 🎧 3h meditation</span>
+    </div>
+    <div class="habits" data-block="deep"></div>
+    <div class="water-row">
+      <span class="label">💧 500 ml mid-block</span>
+      <div class="cup" data-cup="2"></div>
+      <span class="water-total" id="wr-deep">0 ml</span>
+    </div>
+  </div>
+
+  <!-- ───────────────── OFFICE ───────────────── -->
+  <div class="block">
+    <div class="block-head">
+      <div class="block-title">💼 Office Block <span class="block-time">12:50 – 13:45</span></div>
+      <span class="block-tag">work · 75 min</span>
+    </div>
+    <div class="habits" data-block="office"></div>
+    <div class="water-row">
+      <span class="label">💧 500 ml pre-lunch</span>
+      <div class="cup" data-cup="3"></div>
+      <span class="water-total" id="wr-office">0 ml</span>
+    </div>
+  </div>
+
+  <!-- ───────────────── LUNCH + WALK ───────────────── -->
+  <div class="block">
+    <div class="block-head">
+      <div class="block-title">🚶 Lunch + Walk <span class="block-time">13:45 – 14:50</span></div>
+      <span class="block-tag">🎧 DS podcast / audiobook</span>
+    </div>
+    <div class="habits" data-block="midday"></div>
+    <div class="water-row">
+      <span class="label">💧 500 ml with lunch</span>
+      <div class="cup" data-cup="4"></div>
+      <span class="water-total" id="wr-midday">0 ml</span>
+    </div>
+  </div>
+
+  <!-- ───────────────── LEARNING ───────────────── -->
+  <div class="block learn">
+    <div class="block-head">
+      <div class="block-title">📚 Learning Block <span class="block-time">14:50 – 16:25</span></div>
+      <span class="block-tag">learn · 95 min (5 micro-slots)</span>
+    </div>
+    <div class="habits" data-block="learn"></div>
+  </div>
+
+  <!-- ───────────────── SIDE PROJECTS ───────────────── -->
+  <div class="block side">
+    <div class="block-head">
+      <div class="block-title">🛠️ Side-Project of the Day <span class="block-time">16:25 – 17:25</span></div>
+      <span class="block-tag">rotate · 60 min · 🎧 lo-fi</span>
+    </div>
+    <div class="habits" data-block="side"></div>
+  </div>
+
+  <!-- ───────────────── WRAP-UP ───────────────── -->
+  <div class="block">
+    <div class="block-head">
+      <div class="block-title">✅ Afternoon Wrap <span class="block-time">17:25 – 17:45</span></div>
+      <span class="block-tag">🎉 21/22 done by 5:45 pm · 15 min</span>
+    </div>
+    <div class="habits" data-block="wrap"></div>
+    <div class="water-row">
+      <span class="label">💧 500 ml afternoon</span>
+      <div class="cup" data-cup="5"></div>
+      <span class="water-total" id="wr-wrap">0 ml</span>
+    </div>
+  </div>
+
+  <!-- ───────────────── EVENING (FREE + SLEEP ANCHOR) ───────────────── -->
+  <div class="block">
+    <div class="block-head">
+      <div class="block-title">🌙 Evening — protect recovery <span class="block-time">after 17:45</span></div>
+      <span class="block-tag">free · sleep anchor</span>
+    </div>
+    <div class="habits" data-block="night"></div>
+  </div>
+
+  <!-- ───────────────── REFLECTION ───────────────── -->
+  <div class="reflect">
+    <h3>📝 Daily Reflection</h3>
+    <div class="energy-row">
+      <span class="label">Energy today:</span>
+      <span class="energy-dot" data-e="1" title="Drained"></span>
+      <span class="energy-dot" data-e="2" title="Low"></span>
+      <span class="energy-dot" data-e="3" title="OK"></span>
+      <span class="energy-dot" data-e="4" title="Good"></span>
+      <span class="energy-dot" data-e="5" title="Peak"></span>
+    </div>
+    <textarea id="reflect-text" placeholder="What worked? What got dropped? Adjust tomorrow..."></textarea>
+  </div>
+
+  <!-- ───────────────── DESIGN RATIONALE ───────────────── -->
+  <details class="design" open>
+    <summary>💡 How this day-design actually works</summary>
+    <p><b>The core idea.</b> 22 habits × 2 min min = 44 min minimum, but several are long (3 h deep work, 30 m walk, 60 m side-project). Total realistic load: ~9 h of focused time. It only fits if you <b>front-load</b> (beat end-of-day fatigue), <b>stack</b> small things, <b>anchor</b> them to existing routines, and <b>protect</b> the deep-work block.</p>
+
+    <h3>🎧 Audio Pairings (club habits with audio)</h3>
+    <p>Audio turns a solo physical routine into a twofer and makes the 3 h deep-work block actually <i>feel</i> like 3 h. Pair deliberately — choose audio that matches the cognitive load of the task.</p>
+    <ul>
+      <li><b>Morning stack (8:30–9:50) → 🕉️ Murli</b> — Play the day's Brahma Kumaris Murli while stretching, planking, wall-sit, burpees, skipping. ~30–40 min audio covers the whole physical sequence. Search: <code>YouTube "Today Murli English"</code> or <code>BK Shivani Murli Class</code>. You get spiritual discourse + physical movement in the same 80 min — the single highest-ROI stack of the day.</li>
+      <li><b>Deep work (9:50–12:50) → 🧘 3 h meditation track</b> — Ambient, non-vocal. Options:
+        <ul>
+          <li><code>YouTube: "3 hour meditation music binaural 40Hz"</code> — gamma-wave focus</li>
+          <li><code>"3 hour Tibetan singing bowls"</code> — steady, no dynamics</li>
+          <li><code>"3 hour Brahma Kumaris meditation music"</code> — peaceful, instrumental</li>
+          <li><code>Ambient: Brian Eno — "Music for Airports"</code> looped</li>
+          <li>Or use <b>noisli.com</b> / <b>mynoise.net</b> (rain + thunder) for 3 h exactly</li>
+        </ul>
+      </li>
+      <li><b>Office block (12:50–13:45) → silence or soft ambient</b> — PR reviews need language processing; lyrics/vocals interfere. Use <code>"focus music instrumental"</code> if total silence feels off.</li>
+      <li><b>Lunch + walk (13:45–14:50) → podcasts / audiobooks</b> — Eating & walking are rote, so spend audio budget on semi-learning:
+        <ul>
+          <li><code>Signals and Threads</code> (Jane Street — distributed systems)</li>
+          <li><code>Software Engineering Daily</code>, <code>The Pragmatic Engineer</code></li>
+          <li><code>Tim Ferriss Show</code> — interviews w/ founders/researchers</li>
+          <li>Audiobook: <i>Designing Data-Intensive Applications</i> or <i>Staff Engineer</i></li>
+        </ul>
+      </li>
+      <li><b>Learning block (14:50–16:25) → no pairing</b> — You're actively watching YT lectures or reading PMPP. Audio pairing would halve your comprehension.</li>
+      <li><b>Side-project (16:25–17:25) → lo-fi / instrumental hip-hop</b> — Light cognitive load, audio can be more energetic: <code>Lofi Girl</code>, <code>ChilledCow</code>, <code>Chillhop Radio</code>.</li>
+      <li><b>Evening wind-down → 🕉️ Murli or bhajans</b> — If you want a second spiritual slot, evening (after 9 pm) is ideal. <code>"Om Shanti Bhajans"</code> or <code>Awakening with Brahma Kumaris</code>.</li>
+    </ul>
+    <p style="font-size:.8rem;color:#6e7681">Rule: <b>audio should never compete with the task for the same cognitive resource</b>. Murli (language) + burpees (motor) = OK. Murli + PR review (both language) = bad. Meditation music (no language, no dynamics) + deep work = ideal.</p>
+
+    <h3>⏰ Why everything lands before 6 pm</h3>
+    <p>Willpower and focus both decay through the day. Front-loading means you've banked the win by late afternoon — evening fatigue can't derail a day that's already done.</p>
+    <ul>
+      <li><b>8:30 wake</b> (realistic) → morning stack ends by 9:50 (8 habits done in the first 80 min).</li>
+      <li><b>Deep work 9:50–12:50</b> uses peak cognition before the post-lunch dip.</li>
+      <li><b>Office block</b> is a short 75 min pre-lunch — enough for 2 PRs + exploration + 1 doc.</li>
+      <li><b>Walk is post-lunch</b>, not evening. Better digestion, step count secured before you're tired.</li>
+      <li><b>Learning is mid-afternoon</b> (14:50–16:25) — five 15–30 min micro-slots while brain is still warm. One side-project slot follows.</li>
+      <li><b>Plan tomorrow at 5:25 pm</b> (not at night). Decisions made when you're still functional are better decisions.</li>
+      <li><b>By 5:45 pm, 21 of 22 are done.</b> The evening holds only one anchor: sleep by midnight.</li>
+    </ul>
+
+    <h3>🧩 Four mechanics making this sustainable</h3>
+    <ul>
+      <li><b>Habit stacking</b> — morning physical stack (stretch → plank → wall-chair → burpees → skipping) runs back-to-back in ~20 min. Don't spread these across the day.</li>
+      <li><b>Anchor pairing</b> — each water cup is tied to an existing trigger (wake, mid-work, pre-lunch, with-lunch, afternoon). No willpower needed.</li>
+      <li><b>Rotation for side-projects</b> — Gov / Chausar / Transparency don't all happen daily. Pick one per day (see rotation below) and keep the others warm with a 2-min "ping".</li>
+      <li><b>"≥2 min" as floor, not ceiling</b> — On a bad day, open PMPP and read one paragraph. The streak is what compounds.</li>
+    </ul>
+
+    <h3>⏱ Time budget snapshot</h3>
+    <ul>
+      <li><b>Fixed physical</b> (burpees + plank + wall-chair + stretch + skipping + walk) ≈ <code>55 min</code></li>
+      <li><b>Deep work protected</b> ≈ <code>180 min</code> (phone on airplane mode; no Slack)</li>
+      <li><b>Office</b> (PR review + code exploration + office doc) ≈ <code>75 min</code></li>
+      <li><b>Learning</b> (MDS + YT + perf + net + PMPP) ≈ <code>95 min</code></li>
+      <li><b>Side-project of the day</b> ≈ <code>60 min</code></li>
+      <li><b>Planning + reflection</b> ≈ <code>15 min</code></li>
+      <li>Everything finished between <b>8:30 am and 5:45 pm</b> — a ~9 h day. Evening stays free.</li>
+    </ul>
+
+    <h3>🚨 Where this will break first (and fixes)</h3>
+    <ul>
+      <li><b>Deep work gets eaten by meetings</b> → hold 9:50–12:50 as a calendar block. If unavoidable, compress learning to 3 items and push deep work to afternoon. The 3h must survive.</li>
+      <li><b>Walk skipped when it rains</b> → 30-min indoor pacing + mobility flow counts. Never let the step count slip.</li>
+      <li><b>No-sugar fails around 4 pm</b> → pre-commit: chia + fruit snack at 15:30 removes the decision.</li>
+      <li><b>Learning block loses to side-projects</b> → never let side-projects eat the Learning block. If out of time, drop the side-project instead.</li>
+      <li><b>All 22 feels impossible on day 3</b> → use the "Minimum Viable Day": hit only the green (core) ones. Streak survives.</li>
+    </ul>
+
+    <h3>📌 Rules of thumb</h3>
+    <ul>
+      <li>One physical stack, one learning stack, one deep-work block per day. Everything else is a quick check-in.</li>
+      <li>Water cups map to wake + meals. Eat → drink. No willpower needed.</li>
+      <li>If you miss a day, resume — don't "make up". Missed days &lt; 2/week is fine.</li>
+      <li>Weekly review (Sun 5 pm): cut any habit that's 0/7 three weeks running. Honest pruning beats aspirational bloat.</li>
+    </ul>
+  </details>
+
+  <div class="design">
+    <h3>🔁 Side-project weekly rotation</h3>
+    <ul>
+      <li><b>Mon / Thu</b> — Gov website progress</li>
+      <li><b>Tue / Fri</b> — Chausar progress</li>
+      <li><b>Wed / Sat</b> — Transparency tooling program</li>
+      <li><b>Sun</b> — Catch-up / weekly review / pick next week's focus</li>
+    </ul>
+    <p style="font-size:.82rem;color:#6e7681">Each one gets a real 60-min slot on its day and a 2-min "keep-alive" ping (open repo, add one line to notes) on off-days. All three stay warm without demanding daily bandwidth.</p>
+  </div>
+</div>
+
+<script>
+const TODAY = new Date().toISOString().slice(0,10);
+const KEY = 'dayview_' + TODAY;
+const STREAK_KEY = 'dayview_streak';
+
+// Habit definitions — each habit has id, text, minutes, note, block, core flag
+// start/end are hours (floats) for the timeline view
+const HABITS = [
+  // MORNING STACK
+  { id:'wake',      block:'morning', core:true,  text:'Wake up (target 8:30)',                min:'anchor', note:'Realistic target. Phone out of bedroom so you can\'t snooze.', start:8.50, end:8.55, short:'Wake', color:'#6e7681' },
+  { id:'chia',      block:'morning', core:false, text:'Chia seeds (soak on wake, eat at breakfast)', min:'2m', note:'Pre-soak 1 tbsp in water — zero willpower cost.', start:8.55, end:9.00, short:'Chia', color:'#58a6ff' },
+  { id:'stretch',   block:'morning', core:false, text:'Stretching',                           min:'5m', note:'Hip flexors, hamstrings, thoracic — counters sitting.', start:9.00, end:9.10, short:'Stretch', color:'#58a6ff' },
+  { id:'plank',     block:'morning', core:false, text:'Plank',                                min:'2m', note:'One set, hold until form breaks.', start:9.10, end:9.15, short:'Plank', color:'#58a6ff' },
+  { id:'wallchair', block:'morning', core:false, text:'Wall-chair (wall sit)',                min:'2m', note:'90° knees, back flat on wall.', start:9.15, end:9.20, short:'Wall-sit', color:'#58a6ff' },
+  { id:'burpees',   block:'morning', core:false, text:'50 burpees',                           min:'5m', note:'Break into sets of 10 if needed.', start:9.20, end:9.30, short:'50 Burpees', color:'#58a6ff' },
+  { id:'skipping',  block:'morning', core:false, text:'Skipping',                             min:'3m', note:'3 × 1 min, rest 30s between.', start:9.30, end:9.35, short:'Skip', color:'#58a6ff' },
+  { id:'nosugar',   block:'morning', core:true,  text:'No-sugar pledge for the day',          min:'decide', note:'Commit at breakfast. Pre-logged snack for 4 pm.', start:9.35, end:9.50, short:'No-sugar', color:'#6e7681' },
+
+  // DEEP WORK
+  { id:'deepwork',  block:'deep',    core:true,  text:'3 h deep work (single most important task)', min:'180m', note:'Airplane mode. One task. Timer running.', start:9.50, end:12.50, short:'🧠 3 h Deep Work — one task, airplane mode', color:'#f778ba' },
+
+  // OFFICE
+  { id:'pr',        block:'office',  core:false, text:'Review 1–2 office PRs',                min:'30m', note:'Timebox 15 min each. Substantive comments, not nits.', start:12.50, end:13.00, short:'PR Review', color:'#7ee787' },
+  { id:'explore',   block:'office',  core:false, text:'Office code exploration',              min:'30m', note:'Read one unfamiliar module — take a 3-line note.', start:13.00, end:13.50, short:'Code Explore', color:'#7ee787' },
+  { id:'officedoc', block:'office',  core:false, text:'Read 1 office doc (to study its style)', min:'15m', note:'Highlight 1 phrasing pattern to copy in your next doc.', start:13.50, end:13.75, short:'Office Doc', color:'#7ee787' },
+
+  // LUNCH + WALK
+  { id:'walk',      block:'midday',  core:false, text:'Walking (30+ min) — post-lunch',       min:'30m', note:'Right after lunch. Digestion + step count. No podcast OK — let brain wander.', start:14.25, end:14.85, short:'🚶 Walk 30 m (post-lunch)', color:'#79c0ff' },
+
+  // LEARNING (mid-afternoon, front-loaded so evening stays free)
+  { id:'mds',       block:'learn',   core:false, text:'MDS — 1 topic deep dive',              min:'30m', note:'Open study/mit-distributed-systems. One paper section.', start:14.85, end:15.35, short:'MDS', color:'#d2a8ff' },
+  { id:'yt',        block:'learn',   core:false, text:'Distributed systems YT course',        min:'20m', note:'One lecture. Notes while watching — no passive mode.', start:15.35, end:15.70, short:'DS YT', color:'#d2a8ff' },
+  { id:'perf',      block:'learn',   core:false, text:'Perf tool — 1 usage',                  min:'15m', note:'Pick one: perf / flamegraph / bcc. Profile something real.', start:15.70, end:15.95, short:'Perf', color:'#d2a8ff' },
+  { id:'netw',      block:'learn',   core:false, text:'Networking tool — 1 usage',            min:'15m', note:'tcpdump / ss / mtr / bpftrace — capture + interpret.', start:15.95, end:16.20, short:'Net', color:'#d2a8ff' },
+  { id:'pmpp',      block:'learn',   core:false, text:'PMPP book — 1 page',                   min:'15m', note:'One page + one hand-written summary line.', start:16.20, end:16.45, short:'PMPP', color:'#d2a8ff' },
+
+  // SIDE
+  { id:'sideproj',  block:'side',    core:false, text:'Today\'s side project (see rotation below)', min:'60m', note:'Gov / Chausar / Transparency — rotate by weekday.', start:16.45, end:17.45, short:'Side-project (rotate by day)', color:'#ffa657' },
+
+  // WRAP
+  { id:'timeblock', block:'wrap',    core:true,  text:'Daily task time-block for tomorrow',   min:'10m', note:'Plan tomorrow\'s deep-work task + 3 must-dos. Do it NOW while fresh.', start:17.45, end:17.65, short:'Plan tmrw', color:'#6e7681' },
+  { id:'reflect',   block:'wrap',    core:false, text:'Log reflection (below) + energy',      min:'3m',  note:'60 seconds. Pattern emerges over weeks.', start:17.65, end:17.75, short:'Reflect', color:'#6e7681' },
+
+  // NIGHT
+  { id:'sleep',     block:'night',   core:true,  text:'Lights out by midnight',               min:'anchor', note:'Protects tomorrow\'s 8:30 wake. Non-negotiable.', start:23.75, end:24.00, short:'😴 Sleep', color:'#6e7681' }
+];
+
+// Load state
+function loadState() {
+  try { return JSON.parse(localStorage.getItem(KEY)) || { done:{}, water:0, energy:0, reflection:'' }; }
+  catch { return { done:{}, water:0, energy:0, reflection:'' }; }
+}
+function saveState(s) { localStorage.setItem(KEY, JSON.stringify(s)); }
+
+let state = loadState();
+
+function render() {
+  // Clear blocks
+  document.querySelectorAll('.habits').forEach(el => el.innerHTML = '');
+  HABITS.forEach(h => {
+    const container = document.querySelector('.habits[data-block="'+h.block+'"]');
+    if (!container) return;
+    const row = document.createElement('div');
+    row.className = 'habit' + (h.core?' core':'') + (state.done[h.id]?' done':'');
+    row.innerHTML = `
+      <input type="checkbox" ${state.done[h.id]?'checked':''} data-id="${h.id}">
+      <div class="h-main">
+        <div class="h-text">${h.text}</div>
+        <div class="h-note">${h.note}</div>
+      </div>
+      <span class="h-min">${h.min}</span>
+    `;
+    row.querySelector('input').addEventListener('change', e => {
+      state.done[h.id] = e.target.checked;
+      saveState(state);
+      render();
+      updateStats();
+    });
+    container.appendChild(row);
+  });
+  // Water cups
+  document.querySelectorAll('.cup').forEach(c => {
+    const idx = parseInt(c.dataset.cup);
+    c.classList.toggle('filled', idx < state.water);
+    c.onclick = () => {
+      state.water = (idx < state.water) ? idx : idx + 1;
+      saveState(state);
+      render();
+      updateStats();
+    };
+  });
+  // Water row totals per block (informational)
+  const counts = { morning:[0,1], deep:[2], office:[3,4], evening:[5] };
+  Object.entries(counts).forEach(([blk, cups]) => {
+    const filled = cups.filter(i => i < state.water).length;
+    const el = document.getElementById('wr-'+blk);
+    if (el) el.textContent = (filled*500) + ' ml';
+  });
+  // Energy dots
+  document.querySelectorAll('.energy-dot').forEach(d => {
+    d.classList.toggle('on', parseInt(d.dataset.e) <= state.energy);
+    d.onclick = () => {
+      state.energy = (state.energy === parseInt(d.dataset.e)) ? 0 : parseInt(d.dataset.e);
+      saveState(state);
+      render();
+    };
+  });
+  // Reflection
+  const ta = document.getElementById('reflect-text');
+  ta.value = state.reflection || '';
+  ta.oninput = () => { state.reflection = ta.value; saveState(state); };
+}
+
+function updateStats() {
+  const done = Object.values(state.done).filter(Boolean).length;
+  document.getElementById('done-count').textContent = done;
+  const pct = Math.round((done / HABITS.length) * 100);
+  document.getElementById('bar').style.width = pct + '%';
+  document.getElementById('pct').textContent = pct + '%';
+  document.getElementById('water-ml').textContent = state.water * 500;
+  // Streak comes from history aggregation now
+  renderHeatmap();
+}
+
+// ─────────────── STREAK HEATMAP ───────────────
+const CORE_IDS = HABITS.filter(h => h.core).map(h => h.id);
+
+function loadDay(dateStr) {
+  try { return JSON.parse(localStorage.getItem('dayview_' + dateStr)) || null; }
+  catch { return null; }
+}
+
+function dayQualifies(d) {
+  // A day "qualifies" for the streak if all core habits done + ≥2.5L water
+  if (!d) return false;
+  const done = d.done || {};
+  const allCore = CORE_IDS.every(id => done[id]);
+  return allCore && (d.water || 0) >= 5;
+}
+
+function dayCompletionPct(d) {
+  if (!d) return 0;
+  const done = Object.values(d.done || {}).filter(Boolean).length;
+  return Math.round((done / HABITS.length) * 100);
+}
+
+function computeHistory() {
+  const days = [];
+  for (let i = 29; i >= 0; i--) {
+    const dt = new Date(Date.now() - i * 86400000);
+    const dateStr = dt.toISOString().slice(0, 10);
+    const data = loadDay(dateStr);
+    days.push({
+      date: dateStr,
+      dayOfWeek: dt.toLocaleDateString(undefined, { weekday:'short' }),
+      pretty: dt.toLocaleDateString(undefined, { month:'short', day:'numeric' }),
+      data,
+      qualifies: dayQualifies(data),
+      pct: dayCompletionPct(data),
+      isToday: dateStr === TODAY
+    });
+  }
+  return days;
+}
+
+function renderHeatmap() {
+  const days = computeHistory();
+  const hm = document.getElementById('heatmap');
+  hm.innerHTML = '';
+  days.forEach(d => {
+    const cell = document.createElement('div');
+    let lvl = '';
+    if (d.pct >= 85) lvl = 'l4';
+    else if (d.pct >= 60) lvl = 'l3';
+    else if (d.pct >= 35) lvl = 'l2';
+    else if (d.pct > 0)  lvl = 'l1';
+    cell.className = 'hm-cell ' + lvl + (d.qualifies ? ' streak-day' : '') + (d.isToday ? ' today' : '');
+    const doneCount = d.data ? Object.values(d.data.done || {}).filter(Boolean).length : 0;
+    cell.title = `${d.pretty} (${d.dayOfWeek})\n${doneCount}/${HABITS.length} habits · ${d.pct}%\n${(d.data?.water||0)*500} ml water${d.qualifies ? '\n✓ streak day' : ''}`;
+    hm.appendChild(cell);
+  });
+  // Current streak — count back from today (or yesterday if today not yet qualified) while qualifies
+  let current = 0;
+  for (let i = days.length - 1; i >= 0; i--) {
+    if (days[i].qualifies) current++;
+    else if (days[i].isToday) continue; // allow not-yet-qualified today to not break streak
+    else break;
+  }
+  // Longest streak over the 30-day window
+  let longest = 0, run = 0;
+  days.forEach(d => {
+    if (d.qualifies) { run++; if (run > longest) longest = run; }
+    else run = 0;
+  });
+  const logged = days.filter(d => d.data).length;
+  const avg = logged > 0
+    ? Math.round(days.filter(d => d.data).reduce((s, d) => s + d.pct, 0) / logged)
+    : 0;
+  document.getElementById('s-current').textContent = current;
+  document.getElementById('s-longest').textContent = longest;
+  document.getElementById('s-logged').textContent = logged;
+  document.getElementById('s-avg').textContent = avg;
+  document.getElementById('streak').textContent = current;
+}
+
+function resetDay() {
+  if (!confirm('Reset today\'s progress? (streak preserved)')) return;
+  localStorage.removeItem(KEY);
+  state = loadState();
+  render();
+  updateStats();
+  renderTimeline();
+}
+
+// ─────────────── TIMELINE (SVG) ───────────────
+const BLOCK_ROWS = [
+  { id:'morning', label:'Morning',  y:30  },
+  { id:'deep',    label:'Deep Work',y:70  },
+  { id:'office',  label:'Office',   y:110 },
+  { id:'learn',   label:'Learning', y:150 },
+  { id:'side',    label:'Side',     y:190 },
+  { id:'evening', label:'Evening',  y:230 },
+  { id:'night',   label:'Night',    y:270 }
+];
+const TL_START = 8, TL_END = 24;   // hours
+const TL_LEFT = 60, TL_RIGHT = 980;
+const hourW = (TL_RIGHT - TL_LEFT) / (TL_END - TL_START);
+
+function xForHour(h) { return TL_LEFT + (h - TL_START) * hourW; }
+
+function renderTimeline() {
+  const svg = document.getElementById('timeline');
+  // Clear children except defs
+  [...svg.querySelectorAll(':scope > *:not(defs)')].forEach(n => n.remove());
+  const ns = 'http://www.w3.org/2000/svg';
+
+  // Hour grid + labels
+  for (let h = TL_START; h <= TL_END; h++) {
+    const x = xForHour(h);
+    const line = document.createElementNS(ns,'line');
+    line.setAttribute('x1',x); line.setAttribute('x2',x);
+    line.setAttribute('y1',20); line.setAttribute('y2',305);
+    line.setAttribute('class', 'tl-hour-line' + (h%3===0?' major':''));
+    svg.appendChild(line);
+    const lbl = document.createElementNS(ns,'text');
+    lbl.setAttribute('x',x); lbl.setAttribute('y',14);
+    lbl.setAttribute('text-anchor','middle');
+    lbl.setAttribute('class','tl-hour-label');
+    const hr12 = h>12 ? h-12 : (h===0?12:h);
+    const ampm = h>=12 ? 'p' : 'a';
+    lbl.textContent = hr12+ampm;
+    svg.appendChild(lbl);
+  }
+
+  // Row labels
+  BLOCK_ROWS.forEach(r => {
+    const t = document.createElementNS(ns,'text');
+    t.setAttribute('x', 8); t.setAttribute('y', r.y + 18);
+    t.setAttribute('class','tl-row-label');
+    t.textContent = r.label;
+    svg.appendChild(t);
+    // row baseline
+    const bl = document.createElementNS(ns,'line');
+    bl.setAttribute('x1',TL_LEFT); bl.setAttribute('x2',TL_RIGHT);
+    bl.setAttribute('y1',r.y+30); bl.setAttribute('y2',r.y+30);
+    bl.setAttribute('stroke','#21262d'); bl.setAttribute('stroke-width','1');
+    svg.appendChild(bl);
+  });
+
+  // Habit bars
+  HABITS.forEach(h => {
+    const row = BLOCK_ROWS.find(r => r.id === h.block);
+    if (!row) return;
+    const x1 = xForHour(h.start);
+    const x2 = xForHour(h.end);
+    const w = Math.max(x2 - x1, 10);
+    const y = row.y + 5;
+    const g = document.createElementNS(ns,'g');
+    g.setAttribute('class', 'tl-bar' + (state.done[h.id] ? ' done' : ''));
+    g.setAttribute('data-id', h.id);
+    g.onclick = () => {
+      state.done[h.id] = !state.done[h.id];
+      saveState(state);
+      render(); updateStats(); renderTimeline();
+      // scroll to the habit row
+      const row = document.querySelector('.habit input[data-id="'+h.id+'"]');
+      if (row) row.closest('.habit').scrollIntoView({behavior:'smooth', block:'center'});
+    };
+    const rect = document.createElementNS(ns,'rect');
+    rect.setAttribute('x',x1); rect.setAttribute('y',y);
+    rect.setAttribute('width',w); rect.setAttribute('height',22);
+    rect.setAttribute('rx',3);
+    rect.setAttribute('fill', h.color);
+    rect.setAttribute('fill-opacity', 0.85);
+    g.appendChild(rect);
+    // Tooltip as native title
+    const title = document.createElementNS(ns,'title');
+    title.textContent = `${h.text}\n${formatTime(h.start)} – ${formatTime(h.end)}\n${h.note}`;
+    g.appendChild(title);
+    // Label (only if bar wide enough)
+    if (w > 40) {
+      const lbl = document.createElementNS(ns,'text');
+      lbl.setAttribute('x', x1 + 6);
+      lbl.setAttribute('y', y + 15);
+      lbl.setAttribute('class','tl-bar-label');
+      // truncate if needed
+      const maxChars = Math.floor(w / 6.2);
+      lbl.textContent = h.short.length > maxChars ? h.short.slice(0, maxChars-1)+'…' : h.short;
+      g.appendChild(lbl);
+    }
+    svg.appendChild(g);
+  });
+
+  // Sequence arrows within the morning stack (visual nudge)
+  const seq = ['wake','chia','stretch','plank','wallchair','burpees','skipping','nosugar'];
+  for (let i=0; i<seq.length-1; i++) {
+    const a = HABITS.find(x=>x.id===seq[i]);
+    const b = HABITS.find(x=>x.id===seq[i+1]);
+    if (!a || !b) continue;
+    const row = BLOCK_ROWS.find(r=>r.id==='morning');
+    const ax = xForHour(a.end), bx = xForHour(b.start);
+    if (bx - ax < 1) continue;
+    const path = document.createElementNS(ns,'path');
+    path.setAttribute('d',`M${ax} ${row.y+16} L${bx} ${row.y+16}`);
+    path.setAttribute('class','tl-arrow');
+    svg.appendChild(path);
+  }
+
+  // "Now" marker
+  const now = new Date();
+  const nowH = now.getHours() + now.getMinutes()/60;
+  if (nowH >= TL_START && nowH <= TL_END) {
+    const nx = xForHour(nowH);
+    const nl = document.createElementNS(ns,'line');
+    nl.setAttribute('x1',nx); nl.setAttribute('x2',nx);
+    nl.setAttribute('y1',20); nl.setAttribute('y2',305);
+    nl.setAttribute('class','tl-now');
+    svg.appendChild(nl);
+    const nt = document.createElementNS(ns,'text');
+    nt.setAttribute('x',nx); nt.setAttribute('y',312);
+    nt.setAttribute('text-anchor','middle');
+    nt.setAttribute('class','tl-now-label');
+    nt.textContent = '▼ now ' + formatTime(nowH);
+    svg.appendChild(nt);
+  }
+}
+
+function formatTime(h) {
+  const hh = Math.floor(h);
+  const mm = Math.round((h - hh) * 60);
+  const h12 = hh > 12 ? hh - 12 : (hh === 0 ? 12 : hh);
+  const ampm = hh >= 12 ? 'pm' : 'am';
+  return `${h12}:${mm.toString().padStart(2,'0')} ${ampm}`;
+}
+
+// Update subtitle with today's date
+document.getElementById('today-sub').textContent =
+  new Date().toLocaleDateString(undefined, { weekday:'long', month:'long', day:'numeric' })
+  + ' · A realistic day template that fits all 22 habits without burning you out.';
+
+render();
+updateStats();
+renderTimeline();
+// Refresh the 'now' marker every minute
+setInterval(renderTimeline, 60000);
+</script>
+</body>
+</html>
