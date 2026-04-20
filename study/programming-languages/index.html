@@ -717,10 +717,19 @@ const COURSE_CONFIG = {
       { unit: 1, id: "a1fkhDjCHB8", topic: "1 - Course Introduction" },      { unit: 1, id: "sxY_UgNIXcM", topic: "3 - ML Variable Bindings and Expressions" },      { unit: 1, id: "98k0wQY_L1E", topic: "2 - Introduction About Programming Languages" },      { unit: 1, id: "2_UGL4XWkMU", topic: "4 - Rules for Expressions" },      { unit: 1, id: "HWnvrrin600", topic: "5 - The REPL and Errors" },      { unit: 1, id: "aAnHGC262ig", topic: "6 - Shadowing" },      { unit: 1, id: "mJc4qn_oQa0", topic: "7 - Functions Informally" },      { unit: 1, id: "zL_VtsDc21E", topic: "8 - Functions Formally" },      { unit: 1, id: "jGnQYaL-0EE", topic: "9 - Pairs and Other Tuples" },      { unit: 2, id: "0J9BY6Q-rrM", topic: "10 - Introducing Lists" },      { unit: 2, id: "LUea0SeSv0s", topic: "11 - List Functions" },      { unit: 2, id: "4rnH5AMUmc8", topic: "12 - Let Expressions" },      { unit: 2, id: "3Vf-NZwQnPQ", topic: "13 - Nested Functions" },      { unit: 2, id: "auIXAjvBNwk", topic: "14 - Let and Efficiency" },      { unit: 2, id: "HjDUlQ4L7W4", topic: "15 - Options" },      { unit: 2, id: "O23YzgH08AY", topic: "16 - Booleans and Comparison Operations" },      { unit: 2, id: "CzDO18hhPPc", topic: "17 - Benefits of No Mutation" },      { unit: 2, id: "tWX8veORfLw", topic: "18 - Optional Java Mutation" },      { unit: 3, id: "LmrINKRlZTY", topic: "19 - Pieces of a Language" }
     ],
     unitNames: { 1: "Unit 1: Lectures 1-9", 2: "Unit 2: Lectures 10-18", 3: "Unit 3: Lectures 19-19" }
-  }
+  },
+
+  learningPath: [
+    { title: "Step 1 — Semantic Foundations", desc: "Before syntax, understand meaning: operational, denotational, and axiomatic semantics that give programs their definition.", nodes: ["semantics"], week: "Week 1" },
+    { title: "Step 2 — Functional Core", desc: "Master the functional toolkit: first-class higher-order functions, closures capturing environments, and pattern matching on algebraic data.", nodes: ["hof", "closures", "pattern-match"], week: "Week 2-3" },
+    { title: "Step 3 — Evaluation & Effects", desc: "Contrast eager vs. lazy evaluation and see how mutation changes reasoning about programs.", nodes: ["lazy-eval", "mutation"], week: "Week 4" },
+    { title: "Step 4 — Type Systems", desc: "Study static vs. dynamic typing, Hindley–Milner type inference, and subtyping relations that structure modern languages.", nodes: ["static-typing", "dynamic-typing", "type-inference", "subtyping"], week: "Week 5-6" },
+    { title: "Step 5 — Object-Oriented & Duck Typing", desc: "Look at OO dispatch and structural ('duck') typing as an alternative discipline to nominal static types.", nodes: ["duck-typing"], week: "Week 7" },
+    { title: "Step 6 — Metaprogramming", desc: "Finish with programs that write programs: hygienic macros as syntactic abstraction in Lisp and Scheme families.", nodes: ["macros"], week: "Week 8" }
+  ]
 };
 
-// ─── Sample data (remove when using real config) ─────────────────────
+// ─── Sample data(remove when using real config) ─────────────────────
 const SAMPLE_CONFIG = {
   schemaVersion: 1,
   course: { code: "CS 101", title: "Sample Course", term: "Fall 2025" },

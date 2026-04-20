@@ -791,10 +791,19 @@ const COURSE_CONFIG = {
       { unit: 1, id: "cQP8WApzIQQ", topic: "Lecture 1: Introduction" },      { unit: 1, id: "gA4YXUJX7t8", topic: "Lecture 2: RPC and Threads" },      { unit: 1, id: "EpIgvowZr00", topic: "Lecture 3: GFS" },      { unit: 1, id: "M_teob23ZzY", topic: "Lecture 4: Primary-Backup Replication" },      { unit: 1, id: "UzzcUS2OHqo", topic: "Lecture 5: Go, Threads, and Raft" },      { unit: 1, id: "64Zp3tzNbpE", topic: "Lecture 6: Fault Tolerance: Raft (1)" },      { unit: 1, id: "4r8Mz3MMivY", topic: "Lecture 7: Fault Tolerance: Raft (2)" },      { unit: 1, id: "pbmyrNjzdDk", topic: "Lecture 8: Zookeeper" },      { unit: 1, id: "IXHzbCuADt0", topic: "Lecture 9: More Replication, CRAQ" },      { unit: 1, id: "jJSh54J1s5o", topic: "Lecture 10: Cloud Replicated DB, Aurora" },      { unit: 2, id: "-pKNCjUhPjQ", topic: "Lecture 11: Cache Consistency: Frangipani" },      { unit: 2, id: "aDp99WDIM_4", topic: "Lecture 12: Distributed Transactions" },      { unit: 2, id: "4eW5SWBi7vs", topic: "Lecture 13: Spanner" },      { unit: 2, id: "Cw6Nj2evjSs", topic: "Lecture 14: Optimistic Concurrency Control" },      { unit: 2, id: "mzIoSW-cInA", topic: "Lecture 15: Big Data: Spark" },      { unit: 2, id: "Myp8z0ybdzM", topic: "Lecture 16: Cache Consistency: Memcached at Facebook" },      { unit: 2, id: "fR_NB714EAI", topic: "Lecture 17: COPS, Causal Consistency" },      { unit: 2, id: "UKdLJ7-0iFM", topic: "Lecture 18: Fork Consistency, Certificate Transparency" },      { unit: 2, id: "K_euhRou98Y", topic: "Lecture 19: Bitcoin" },      { unit: 2, id: "XvXK_vZ0BNw", topic: "Lecture 20: Blockstack" }
     ],
     unitNames: { 1: "Unit 1: Lectures 1-10", 2: "Unit 2: Lectures 11-20" }
-  }
+  },
+
+  learningPath: [
+    { title: "Step 1 — Primitives & Failure Models", desc: "Start with the building blocks: RPC as the communication substrate and fault-tolerance assumptions that shape every design.", nodes: ["rpc", "fault-tolerance"], week: "Week 1" },
+    { title: "Step 2 — Storage & Replication", desc: "How large systems store data: GFS-style big-file storage, chain replication for strong consistency, and causal stores like COPS.", nodes: ["gfs", "chain-replication", "cops"], week: "Week 2-3" },
+    { title: "Step 3 — Consensus & Consistency", desc: "The theoretical heart: linearizability as the gold-standard correctness condition, implemented via Raft and coordination services like ZooKeeper.", nodes: ["linearizability", "raft", "zookeeper"], week: "Week 4-5" },
+    { title: "Step 4 — Distributed Transactions", desc: "Span multiple shards atomically: two-phase commit, Google Spanner's TrueTime, and RDMA-accelerated FaRM.", nodes: ["2pc", "spanner", "farm"], week: "Week 6-7" },
+    { title: "Step 5 — Large-Scale Applications", desc: "Systems built on the primitives: MapReduce and Spark for batch, and memcached for low-latency caching.", nodes: ["mapreduce", "spark", "memcached"], week: "Week 8-9" },
+    { title: "Step 6 — Peer-to-Peer & Byzantine", desc: "Finish with trustless systems: Bitcoin's Byzantine-fault-tolerant consensus over an open network.", nodes: ["bitcoin"], week: "Week 10" }
+  ]
 };
 
-// ─── Sample data (remove when using real config) ─────────────────────
+// ─── Sample data(remove when using real config) ─────────────────────
 const SAMPLE_CONFIG = {
   schemaVersion: 1,
   course: { code: "CS 101", title: "Sample Course", term: "Fall 2025" },

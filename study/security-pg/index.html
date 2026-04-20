@@ -714,10 +714,19 @@ const COURSE_CONFIG = {
       { unit: 1, id: "GqmQg-cszw4", topic: "1. Introduction, Threat Models" },      { unit: 1, id: "r4KjHEgg9Wg", topic: "2. Control Hijacking Attacks" },      { unit: 1, id: "xSQxaie_h1o", topic: "3. Buffer Overflow Exploits and Defenses" },      { unit: 1, id: "dNl22h1kW1k", topic: "4. Privilege Separation" },      { unit: 1, id: "TQhmua7Z2cY", topic: "6. Capabilities" },      { unit: 1, id: "I0Psvvky-44", topic: "7. Sandboxing Native Code" },      { unit: 1, id: "eRJ_r8WF1Y0", topic: "8. Web Security Model" },      { unit: 2, id: "WlmKwIe9z1Q", topic: "9. Securing Web Applications" },      { unit: 2, id: "yRVZPvHYHzw", topic: "10. Symbolic Execution" },      { unit: 2, id: "XMEFdofERLI", topic: "11. Ur/Web" },      { unit: 2, id: "BZTWXl9QNK8", topic: "12. Network Security" },      { unit: 2, id: "QOtA76ga_fY", topic: "13. Network Protocols" },      { unit: 2, id: "q1OF_0ICt9A", topic: "14. SSL and HTTPS" },      { unit: 2, id: "bA3xCpYLA34", topic: "15. Medical Software" },      { unit: 3, id: "3v5Von-oNUg", topic: "16. Side-Channel Attacks" },      { unit: 3, id: "MT7X17ZRo1U", topic: "17. User Authentication" },      { unit: 3, id: "YTWXAFJf8bw", topic: "18. Private Browsing" },      { unit: 3, id: "OgGTJIgNewE", topic: "19. Anonymous Communication" },      { unit: 3, id: "uT7BXusDgDM", topic: "20. Mobile Phone Security" },      { unit: 3, id: "WG5UbMrUiLU", topic: "21. Data Tracking" },      { unit: 3, id: "2PO8h1pVW50", topic: "22. Guest Lecture by MIT IS&T" },      { unit: 4, id: "8PdnOZI7H5E", topic: "23. Security Economics" }
     ],
     unitNames: { 1: "Unit 1: Lectures 1-7", 2: "Unit 2: Lectures 8-14", 3: "Unit 3: Lectures 15-21", 4: "Unit 4: Lectures 22-22" }
-  }
+  },
+
+  learningPath: [
+    { title: "Step 1 — Memory Safety & Exploitation", desc: "Begin with the classic low-level attacks: stack smashing buffer overflows and the ASLR defense that probabilistically defeats them.", nodes: ["buffer-overflow", "aslr"], week: "Week 1" },
+    { title: "Step 2 — Systems Isolation", desc: "Contain untrusted code: process sandboxing and mandatory access control via SELinux policy.", nodes: ["sandboxing", "selinux"], week: "Week 2" },
+    { title: "Step 3 — Web Security", desc: "Move up the stack to web apps: cross-site scripting and CSRF as the canonical browser-trust attacks.", nodes: ["xss", "csrf"], week: "Week 3" },
+    { title: "Step 4 — Cryptographic Protocols", desc: "Real-world crypto in use: the TLS handshake and Kerberos ticket-based authentication in enterprise networks.", nodes: ["tls", "kerberos"], week: "Week 4" },
+    { title: "Step 5 — Side Channels & Privacy", desc: "Subtler threats: microarchitectural leaks like Spectre, and anonymity systems like Tor onion routing.", nodes: ["spectre", "tor"], week: "Week 5" },
+    { title: "Step 6 — Advanced Program Analysis", desc: "Research-grade techniques: symbolic execution for bug-finding and formal verification for strong correctness guarantees.", nodes: ["symbolic-exec", "formal-verify"], week: "Week 6" }
+  ]
 };
 
-// ─── Sample data (remove when using real config) ─────────────────────
+// ─── Sample data(remove when using real config) ─────────────────────
 const SAMPLE_CONFIG = {
   schemaVersion: 1,
   course: { code: "CS 101", title: "Sample Course", term: "Fall 2025" },

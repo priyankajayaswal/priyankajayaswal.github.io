@@ -736,10 +736,18 @@ const COURSE_CONFIG = {
       { unit: 1, id: "kmJlnUfMd7I", topic: "CS50 Cybersecurity - Introduction" },      { unit: 1, id: "kUovJpWqEMk", topic: "CS50 Cybersecurity - Lecture 0 - Securing Accounts" },      { unit: 1, id: "X3DVaMnl5n8", topic: "CS50 Cybersecurity - Lecture 1 - Securing Data" },      { unit: 1, id: "9phdZjF8qOk", topic: "CS50 Cybersecurity - Lecture 2 - Securing Systems" },      { unit: 1, id: "5rsKrTh3fAo", topic: "CS50 Cybersecurity - Lecture 3 - Securing Software" },      { unit: 1, id: "6IeqJtudKnk", topic: "CS50 Cybersecurity - Lecture 4 - Preserving Privacy" }
     ],
     unitNames: { 1: "Unit 1: Lectures 1-6" }
-  }
+  },
+
+  learningPath: [
+    { title: "Step 1 — Authentication Basics", desc: "Start with how users prove identity: strong password hygiene and multi-factor authentication as the first line of defense.", nodes: ["passwords", "mfa"], week: "Week 1" },
+    { title: "Step 2 — Cryptography Essentials", desc: "The math behind security: symmetric/asymmetric encryption, cryptographic hashing, and HTTPS as the everyday application.", nodes: ["encryption", "hashing", "https"], week: "Week 2" },
+    { title: "Step 3 — Common Attacks", desc: "Know your adversary: SQL injection and XSS on the web, plus malware and phishing as the dominant endpoint threats.", nodes: ["sqli", "xss", "malware", "phishing"], week: "Week 3" },
+    { title: "Step 4 — Network Defenses", desc: "Protect the perimeter: firewalls that filter traffic and VPNs that secure remote access.", nodes: ["firewalls", "vpn"], week: "Week 4" },
+    { title: "Step 5 — Incident Response", desc: "When prevention fails: the incident-response lifecycle of detect, contain, eradicate, recover, and learn.", nodes: ["ir"], week: "Week 5" }
+  ]
 };
 
-// ─── Sample data (remove when using real config) ─────────────────────
+// ─── Sample data(remove when using real config) ─────────────────────
 const SAMPLE_CONFIG = {
   schemaVersion: 1,
   course: { code: "CS 101", title: "Sample Course", term: "Fall 2025" },
