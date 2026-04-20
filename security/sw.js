@@ -1,4 +1,4 @@
-const CACHE_NAME = 'cs161-v1';
+const CACHE_NAME = 'studytool-v1';
 const ASSETS = [
   './',
   './index.html',

@@ -4,9 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#0d1117">
-<link rel="manifest" href="manifest.json">
-<link rel="apple-touch-icon" href="icons/icon-192.png">
-<title>Study Tool Template</title>
+
+<title>CS143 Compilers — Stanford University</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background: #0d1117; color: #c9d1d9; overflow: hidden; }
@@ -344,6 +343,15 @@
   .prob-tag.code   { background: #7ee78720; color: #7ee787; }
   .prob-tag.derive { background: #ffa65720; color: #ffa657; }
   .appendix-table .watch-link:hover { color: #ff0000; text-decoration: underline; }
+  /* ── Progress checkbox ── */
+  .appendix-table .vid-check { width: 18px; height: 18px; cursor: pointer; accent-color: #7ee787; vertical-align: middle; }
+  .appendix-table tr.watched td { opacity: 0.5; }
+  .appendix-table tr.watched td:not(:first-child):not(:last-child) { text-decoration: line-through; }
+  .progress-bar { flex: 1; min-width: 120px; max-width: 240px; height: 6px; background: #21262d; border-radius: 3px; overflow: hidden; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, #7ee787, #58a6ff); transition: width 0.3s; }
+  .progress-actions { display: flex; gap: 8px; margin-left: auto; }
+  .progress-actions button { background: #21262d; border: 1px solid #30363d; color: #c9d1d9; padding: 3px 10px; border-radius: 6px; font-size: 11px; cursor: pointer; }
+  .progress-actions button:hover { border-color: #58a6ff; color: #58a6ff; }
 
   /* ── Mobile ── */
   @media (max-width: 768px) {
@@ -538,660 +546,186 @@
 // ═══════════════════════════════════════════════════════════════════════
 const COURSE_CONFIG = {
   schemaVersion: 1,
-  course: { code: 'CS 161', title: 'Computer Security', term: 'UC Berkeley' },
-  storageKey: 'cs161',
-  sourceLink: {
-    url: 'https://www.youtube.com/watch?v=prfnPGZdsuU&list=PLfBkt1-_BHX_VxOWlmstguFxojSN742vz',
-    label: '\u25b6 CS 161 Lecture Playlist'
-  },
-  depthColors: ['#58a6ff','#f778ba','#7ee787','#ffa657','#d2a8ff','#79c0ff'],
+  course: { code: "CS143", title: "Compilers", term: "Stanford University" },
+  storageKey: "compilers",
+  sourceLink: { url: "https://www.youtube.com/playlist?list=PL6Xpj9I5qXYGhsvMWM53ZLfwUInzvYWsm", label: "\u25b6 Stanford CS143" },
+  depthColors: ["#58a6ff", "#f778ba", "#7ee787", "#ffa657", "#d2a8ff", "#79c0ff"],
 
   mindmap: {
-    name: 'CS 161\nComputer Security\nUC Berkeley',
-    tooltip: 'CS 161: Computer Security at UC Berkeley. Covers security principles, memory safety, cryptography, web security, and network security.',
+    name: "Compilers",
+    tooltip: "Stanford CS143 — Principles of compiler construction from lexing to code generation",
     children: [
       {
-        name: 'Security\nFoundations',
-        tooltip: 'General principles for secure system design \u2014 threat models, defense strategies, and the trusted computing base.',
+        name: "Lexical Analysis",
+        tooltip: "Tokens, regular expressions, finite automata, lexer generators",
         children: [
-          { name: 'Know Your\nThreat Model', tooltip: 'Model who your attacker is, what resources they have, and what they want.' },
-          { name: 'Consider\nHuman Factors', tooltip: 'Security systems must be usable \u2014 if they inconvenience users, users will bypass them.' },
-          { name: 'Security is\nEconomics', tooltip: 'No system is 100% secure; the expected benefit of defense should be proportional to the expected cost of attack.' },
-          { name: "Detect if You\nCan't Prevent", tooltip: "If you can't prevent an attack, at least detect it and prepare for recovery." },
-          { name: 'Defense in Depth', tooltip: 'Layer multiple defenses so an attacker must breach all of them.' },
-          { name: 'Least Privilege', tooltip: 'Give each component only the minimum access it needs to do its job.' },
-          { name: 'Separation of\nResponsibility', tooltip: 'Split up privilege so no one person or program has complete power.' },
-          { name: 'Ensure Complete\nMediation', tooltip: 'Check every access to every object \u2014 use a reference monitor.' },
-          { name: "Shannon's Maxim", tooltip: 'The enemy knows the system. Security should not depend on secrecy of the design.' },
-          { name: 'Fail-Safe Defaults', tooltip: 'When a system fails, it should default to secure behavior, not insecure.' },
-          { name: 'Design Security\nfrom the Start', tooltip: 'Retrofitting security to an existing system is much harder than building it in.' },
-          { name: 'Trusted Computing\nBase (TCB)', tooltip: 'The TCB is the portion of the system that must be correct for security to hold. Keep it small, simple, and verifiable.' },
-          { name: 'TOCTTOU\nVulnerabilities', tooltip: 'Time-Of-Check To Time-Of-Use \u2014 state can change between checking and using a value.' }
+          { name: "Tokens", tooltip: "Lexical units of a programming language" },
+          { name: "Regular Expressions", tooltip: "Patterns for specifying token structure" },
+          { name: "Finite Automata", tooltip: "NFA and DFA for pattern matching" },
+          { name: "Lexer Generators", tooltip: "Tools like Flex that generate lexers from specifications" }
         ]
       },
       {
-        name: 'Memory\nSafety',
-        tooltip: 'Software security \u2014 memory safety vulnerabilities in C and their mitigations.',
+        name: "Parsing",
+        tooltip: "CFGs, LL parsing, LR parsing, parser generators, ASTs",
         children: [
-          { name: 'x86 Assembly &\nCall Stack', tooltip: 'x86 assembly, registers (eip, ebp, esp), C memory layout, calling conventions, and stack frames.', children: [
-            { name: 'Number\nRepresentation', tooltip: "Binary, hex, two's complement for signed integers." },
-            { name: 'Compiler \u2192\nAssembler \u2192\nLinker \u2192 Loader', tooltip: 'The compilation pipeline from C source to running binary.' },
-            { name: 'C Memory Layout', tooltip: 'Stack, heap, static data, and code segments in process memory.' },
-            { name: 'Little-Endian', tooltip: 'x86 stores least-significant byte at the lowest address.' },
-            { name: 'Registers\n(eip, ebp, esp)', tooltip: 'eip = instruction pointer, ebp = base pointer (sfp), esp = stack pointer.' },
-            { name: 'Stack Push/Pop', tooltip: 'Push decrements esp and writes; pop reads and increments esp.' },
-            { name: 'x86 Calling\nConvention', tooltip: 'How arguments, return addresses, and saved frame pointers are managed on the stack.' }
-          ]},
-          { name: 'Memory Safety\nVulnerabilities', tooltip: 'Bugs that let attackers read or write unintended memory locations.', children: [
-            { name: 'Buffer Overflow', tooltip: 'Writing past the end of a buffer \u2014 the most classic memory safety bug.' },
-            { name: 'Stack Smashing', tooltip: 'Overflow a stack buffer to overwrite the return address (rip) with attacker-controlled value.' },
-            { name: 'Format String\nVulnerabilities', tooltip: 'Uncontrolled format strings in printf() allow reading/writing arbitrary memory.' },
-            { name: 'Integer Conversion', tooltip: 'Signed/unsigned confusion and integer overflow can bypass size checks.' },
-            { name: 'Off-by-One', tooltip: 'Writing one byte past the end \u2014 can overwrite null terminator or saved frame pointer.' },
-            { name: 'Heap Overflow &\nUse-After-Free', tooltip: 'Corrupting heap metadata or using freed memory leads to arbitrary code execution.' }
-          ]},
-          { name: 'Mitigating\nMemory Safety', tooltip: 'Defenses against memory safety exploits \u2014 from language choice to runtime mitigations.', children: [
-            { name: 'Memory-Safe\nLanguages', tooltip: 'Rust, Java, Python \u2014 eliminate memory safety bugs by design.' },
-            { name: 'Non-Executable\nPages (W\u2295X)', tooltip: 'Mark memory as either writable or executable, never both.' },
-            { name: 'Return-to-libc', tooltip: 'Bypass W\u2295X by jumping to existing library functions (e.g., system()) instead of injected code.' },
-            { name: 'Return-Oriented\nProgramming (ROP)', tooltip: "Chain small existing code snippets (gadgets) ending in 'ret' to build arbitrary computation." },
-            { name: 'Stack Canaries', tooltip: 'Place a random value before the return address \u2014 if it changes, a buffer overflow occurred.' },
-            { name: 'Pointer\nAuthentication', tooltip: 'ARM PAC \u2014 cryptographically sign pointers to detect tampering.' },
-            { name: 'ASLR', tooltip: 'Address Space Layout Randomization \u2014 randomize where code, stack, heap are placed in memory.' }
-          ]}
+          { name: "CFGs", tooltip: "Context-free grammars for language syntax" },
+          { name: "LL Parsing", tooltip: "Top-down predictive parsing" },
+          { name: "LR Parsing", tooltip: "Bottom-up shift-reduce parsing" },
+          { name: "Parser Generators", tooltip: "Tools like Bison that generate parsers" },
+          { name: "ASTs", tooltip: "Abstract syntax trees as intermediate representation" }
         ]
       },
       {
-        name: 'Cryptography',
-        tooltip: 'Cryptographic tools for confidentiality, integrity, and authenticity \u2014 from symmetric ciphers to public-key infrastructure.',
+        name: "Semantic Analysis",
+        tooltip: "Type checking, scope, symbol tables, attribute grammars",
         children: [
-          { name: 'Intro to\nCryptography', tooltip: "Definitions, history, Alice/Bob/Eve/Mallory, Kerckhoff's principle, and threat models.", children: [
-            { name: 'Confidentiality,\nIntegrity,\nAuthenticity', tooltip: 'The three core security goals that cryptography addresses.' },
-            { name: "Kerckhoff's\nPrinciple", tooltip: 'A cryptosystem should be secure even if everything except the key is public knowledge.' },
-            { name: 'Threat Models', tooltip: 'Ciphertext-only, known-plaintext, chosen-plaintext, chosen-ciphertext attacks.' }
-          ]},
-          { name: 'Symmetric-Key\nEncryption', tooltip: 'Same key for encryption and decryption \u2014 AES, block cipher modes, IND-CPA security.', children: [
-            { name: 'One Time Pad', tooltip: 'XOR with a random key as long as the message \u2014 perfectly secret but impractical.' },
-            { name: 'Block Ciphers\n(AES)', tooltip: 'AES: 128-bit blocks, keyed permutation. The workhorse of symmetric crypto.' },
-            { name: 'Modes of Operation\n(ECB, CBC, CTR)', tooltip: 'How to encrypt messages longer than one block. ECB is insecure; CBC and CTR are standard.' },
-            { name: 'IND-CPA Security', tooltip: 'Indistinguishability under Chosen Plaintext Attack \u2014 the standard definition of encryption security.' }
-          ]},
-          { name: 'Cryptographic\nHashes', tooltip: 'One-way functions: preimage resistance, second-preimage resistance, collision resistance.', children: [
-            { name: 'SHA-256', tooltip: 'Widely used hash function producing a 256-bit digest.' },
-            { name: 'Collision\nResistance', tooltip: 'Computationally infeasible to find two inputs with the same hash output.' },
-            { name: 'Preimage\nResistance', tooltip: 'Given h(x), infeasible to find x.' }
-          ]},
-          { name: 'MACs', tooltip: 'Message Authentication Codes \u2014 verify integrity and authenticity of messages.', children: [
-            { name: 'HMAC', tooltip: 'Hash-based MAC \u2014 HMAC(K, M) = H((K\u2295opad) || H((K\u2295ipad) || M)).' },
-            { name: 'AES-EMAC', tooltip: 'MAC built from AES in CBC mode \u2014 encrypt and take the final block as the tag.' },
-            { name: 'Authenticated\nEncryption (AEAD)', tooltip: 'Combined encryption + integrity in one operation. AES-GCM is the gold standard.' }
-          ]},
-          { name: 'PRNGs &\nStream Ciphers', tooltip: 'Pseudorandom number generators, entropy, HMAC-DRBG, and stream ciphers.', children: [
-            { name: 'Entropy & Seeds', tooltip: 'True randomness from hardware; PRNGs expand a seed into a long pseudorandom stream.' },
-            { name: 'HMAC-DRBG', tooltip: 'Deterministic Random Bit Generator based on HMAC \u2014 NIST recommended.' },
-            { name: 'Stream Ciphers', tooltip: 'Encrypt byte-by-byte using a pseudorandom keystream (e.g., ChaCha20).' }
-          ]},
-          { name: 'Diffie-Hellman\nKey Exchange', tooltip: 'Two parties agree on a shared secret over an insecure channel using discrete logarithms.', children: [
-            { name: 'Discrete Log\nProblem', tooltip: 'Given g^a mod p, finding a is computationally hard.' },
-            { name: 'Elliptic-Curve DH', tooltip: 'ECDH \u2014 same idea on elliptic curves for shorter keys and faster computation.' },
-            { name: 'MITM Attack\non DH', tooltip: 'Without authentication, an attacker can intercept and substitute their own keys.' }
-          ]},
-          { name: 'Public-Key\nEncryption', tooltip: 'Asymmetric encryption \u2014 anyone can encrypt with the public key; only the private key holder can decrypt.', children: [
-            { name: 'RSA Encryption', tooltip: 'Based on the hardness of factoring large numbers. Encrypt: c = m^e mod n.' },
-            { name: 'El Gamal', tooltip: 'Based on discrete logarithms \u2014 randomized encryption.' },
-            { name: 'Hybrid Encryption', tooltip: 'Use public-key crypto to exchange a symmetric session key, then use AES for bulk data.' }
-          ]},
-          { name: 'Digital\nSignatures', tooltip: 'Prove a message was signed by a specific private key holder \u2014 non-repudiation.', children: [
-            { name: 'RSA Signatures', tooltip: 'Sign: \u03c3 = H(m)^d mod n. Verify: check \u03c3^e mod n = H(m).' },
-            { name: 'EU-CMA Security', tooltip: 'Existential Unforgeability under Chosen Message Attack \u2014 the standard signature security definition.' }
-          ]},
-          { name: 'Certificates\n& PKI', tooltip: 'How to trust public keys \u2014 certificate authorities, chains of trust, and revocation.', children: [
-            { name: 'Certificate\nAuthorities (CA)', tooltip: 'Trusted third parties that sign certificates binding identities to public keys.' },
-            { name: 'Certificate Chains', tooltip: 'Hierarchical trust: root CA \u2192 intermediate CA \u2192 end-entity certificate.' },
-            { name: 'Revocation\n(CRL, OCSP)', tooltip: 'How to invalidate compromised certificates before they expire.' },
-            { name: 'Web of Trust', tooltip: "Decentralized alternative to CAs \u2014 users sign each other's keys (PGP model)." }
-          ]},
-          { name: 'Passwords', tooltip: 'Authentication via shared secrets \u2014 risks, hashing, salting, and alternatives.', children: [
-            { name: 'Password Hashing\n(bcrypt, scrypt)', tooltip: 'Use slow, memory-hard hash functions to make brute-force expensive.' },
-            { name: 'Salting', tooltip: 'Add a random value per user so identical passwords produce different hashes.' },
-            { name: 'Rainbow Tables', tooltip: 'Precomputed hash lookup tables \u2014 defeated by salting.' },
-            { name: 'Two-Factor Auth', tooltip: 'Something you know (password) + something you have (phone/token).' }
-          ]},
-          { name: 'Bitcoin &\nBlockchain', tooltip: 'Decentralized digital currency using hash chains, proof of work, and consensus.', children: [
-            { name: 'Hash Chains', tooltip: 'Each block contains the hash of the previous block \u2014 tamper-evident ledger.' },
-            { name: 'Proof of Work', tooltip: 'Miners solve computational puzzles to add blocks \u2014 prevents Sybil attacks.' },
-            { name: 'Consensus &\nDouble Spend', tooltip: "The longest chain wins; miners enforce that coins aren't spent twice." }
-          ]}
+          { name: "Type Checking", tooltip: "Verifying type correctness of programs" },
+          { name: "Scope", tooltip: "Visibility and lifetime of names" },
+          { name: "Symbol Tables", tooltip: "Data structures mapping names to attributes" },
+          { name: "Attribute Grammars", tooltip: "Grammars augmented with semantic rules" }
         ]
       },
       {
-        name: 'Web\nSecurity',
-        tooltip: 'Attacks and defenses for web applications \u2014 injection, cross-site attacks, and browser security.',
+        name: "Intermediate Representation",
+        tooltip: "Three-address code, SSA, control flow graphs",
         children: [
-          { name: 'SQL Injection', tooltip: 'Injecting SQL commands through unsanitized user input to manipulate databases.', children: [
-            { name: 'Code Injection', tooltip: 'General category: injecting executable code through data channels.' },
-            { name: 'Prepared\nStatements', tooltip: 'Parameterized SQL queries \u2014 the definitive defense against SQL injection.' },
-            { name: 'Input Escaping', tooltip: 'Escape special characters to prevent them from being interpreted as SQL syntax.' }
-          ]},
-          { name: 'Web Fundamentals', tooltip: 'URLs, HTTP request/response model, HTML, CSS, JavaScript, and the DOM.', children: [
-            { name: 'HTTP\n(GET, POST)', tooltip: 'GET retrieves data; POST submits data. Stateless request-response protocol.' },
-            { name: 'HTML / CSS /\nJavaScript', tooltip: 'Structure (HTML), presentation (CSS), and behavior (JavaScript) of web pages.' },
-            { name: 'DOM', tooltip: "Document Object Model \u2014 JavaScript's interface to the rendered page." }
-          ]},
-          { name: 'Same-Origin\nPolicy (SOP)', tooltip: 'Browser security: scripts from one origin cannot access data from another origin (scheme + host + port).', children: [
-            { name: 'Origin =\nScheme + Host + Port', tooltip: 'Two URLs have the same origin if all three components match.' },
-            { name: 'CORS', tooltip: 'Cross-Origin Resource Sharing \u2014 controlled exceptions to SOP via server headers.' }
-          ]},
-          { name: 'Cookies &\nSessions', tooltip: 'HTTP cookies for state management \u2014 attributes, policies, and session tokens.', children: [
-            { name: 'Cookie Attributes', tooltip: 'Domain, Path, Secure, HttpOnly, SameSite, Expires \u2014 control cookie scope and security.' },
-            { name: 'Session\nManagement', tooltip: 'Server-side sessions identified by a random token stored in a cookie.' }
-          ]},
-          { name: 'CSRF', tooltip: 'Cross-Site Request Forgery \u2014 trick a logged-in user into making unintended requests.', children: [
-            { name: 'CSRF Tokens', tooltip: "Include a secret token in forms that the attacker can't guess." },
-            { name: 'SameSite Cookie', tooltip: "Browser won't send cookie on cross-site requests \u2014 effective CSRF defense." },
-            { name: 'Referer\nValidation', tooltip: 'Check the Referer header to verify requests come from your own site.' }
-          ]},
-          { name: 'XSS', tooltip: 'Cross-Site Scripting \u2014 inject malicious JavaScript into pages viewed by other users.', children: [
-            { name: 'Stored XSS', tooltip: 'Malicious script permanently stored on the server (e.g., in a database).' },
-            { name: 'Reflected XSS', tooltip: 'Malicious script reflected back from the server via URL parameters.' },
-            { name: 'Input Sanitization', tooltip: 'Escape or strip HTML/JS from user input before rendering.' },
-            { name: 'Content Security\nPolicy (CSP)', tooltip: 'HTTP header that restricts what scripts can execute \u2014 whitelist trusted sources.' }
-          ]},
-          { name: 'Clickjacking', tooltip: 'Trick users into clicking hidden elements by overlaying transparent iframes.', children: [
-            { name: 'X-Frame-Options', tooltip: 'HTTP header to prevent your site from being embedded in iframes.' }
-          ]},
-          { name: 'CAPTCHAs', tooltip: 'Automated tests to tell humans and bots apart \u2014 reCAPTCHA and accessibility challenges.' }
+          { name: "Three-Address Code", tooltip: "Low-level IR with at most three operands" },
+          { name: "SSA", tooltip: "Static single assignment form" },
+          { name: "Control Flow Graphs", tooltip: "Graph representation of program control flow" }
         ]
       },
       {
-        name: 'Network\nSecurity',
-        tooltip: 'Securing network protocols from link layer to application layer \u2014 attacks and defenses.',
+        name: "Optimization",
+        tooltip: "Data flow analysis, constant folding, dead code elimination, loop optimization",
         children: [
-          { name: 'Networking\nFundamentals', tooltip: 'OSI/TCP-IP model, MAC/IP/port addressing, packets vs connections, network adversaries.', children: [
-            { name: 'OSI / TCP-IP\nModel', tooltip: 'Layered network architecture: Physical, Link, Network, Transport, Application.' },
-            { name: 'MAC, IP, Ports', tooltip: 'Three addressing levels: hardware (MAC), logical (IP), application (port).' },
-            { name: 'On-Path vs\nOff-Path Attackers', tooltip: 'On-path can read and modify traffic; off-path can only inject blind packets.' }
-          ]},
-          { name: 'ARP', tooltip: 'Address Resolution Protocol \u2014 maps IP to MAC addresses on local networks. Vulnerable to spoofing.', children: [
-            { name: 'ARP Spoofing', tooltip: "Send fake ARP replies to poison victims' caches and redirect traffic." },
-            { name: 'Switches as\nDefense', tooltip: 'Managed switches can restrict ARP behavior and isolate traffic.' }
-          ]},
-          { name: 'DHCP', tooltip: 'Dynamic Host Configuration Protocol \u2014 automatic IP assignment. Rogue DHCP servers are a threat.', children: [
-            { name: 'NAT', tooltip: 'Network Address Translation \u2014 many private IPs share one public IP.' },
-            { name: 'Rogue DHCP', tooltip: "Attacker runs a fake DHCP server to redirect victims' traffic." }
-          ]},
-          { name: 'WPA2', tooltip: 'WiFi Protected Access 2 \u2014 securing wireless networks with 4-way handshake and encryption.', children: [
-            { name: '4-Way Handshake\n(PTK, GTK)', tooltip: 'Derives per-session encryption keys (PTK for unicast, GTK for broadcast).' },
-            { name: 'KRACK Attack', tooltip: 'Key Reinstallation Attack \u2014 force nonce reuse by replaying handshake messages.' }
-          ]},
-          { name: 'BGP', tooltip: 'Border Gateway Protocol \u2014 inter-domain routing. Vulnerable to prefix hijacking.', children: [
-            { name: 'Prefix Hijacking', tooltip: "Malicious AS announces routes for IP prefixes it doesn't own." },
-            { name: 'RPKI', tooltip: 'Resource Public Key Infrastructure \u2014 cryptographic validation of route announcements.' }
-          ]},
-          { name: 'TCP & UDP', tooltip: "Transport layer protocols \u2014 TCP's 3-way handshake and packet injection attacks.", children: [
-            { name: '3-Way Handshake\n(SYN, ACK)', tooltip: 'SYN \u2192 SYN-ACK \u2192 ACK to establish a reliable TCP connection.' },
-            { name: 'TCP Packet\nInjection', tooltip: 'Attacker injects packets with guessed sequence numbers to hijack connections.' },
-            { name: 'Random ISN', tooltip: 'Random Initial Sequence Numbers make injection harder for off-path attackers.' }
-          ]},
-          { name: 'TLS', tooltip: 'Transport Layer Security \u2014 encrypted and authenticated connections using certificates and key exchange.', children: [
-            { name: 'TLS Handshake', tooltip: 'Client Hello \u2192 Server Hello + cert \u2192 key exchange \u2192 encrypted application data.' },
-            { name: 'Forward Secrecy', tooltip: "Ephemeral DH keys ensure past sessions can't be decrypted if long-term key leaks." },
-            { name: 'Replay Attacks', tooltip: 'Re-sending captured TLS data \u2014 prevented by nonces and sequence numbers.' }
-          ]},
-          { name: 'DNS', tooltip: 'Domain Name System \u2014 hierarchical name resolution. Vulnerable to cache poisoning and spoofing.', children: [
-            { name: 'Name Server\nHierarchy', tooltip: 'Root \u2192 TLD (.com, .edu) \u2192 authoritative servers for each domain.' },
-            { name: 'Bailiwick Rule', tooltip: 'Only accept DNS answers that are within the authority of the responding server.' },
-            { name: 'Kaminsky Attack', tooltip: "Flood fake responses with random query IDs to poison the resolver's cache." }
-          ]},
-          { name: 'DNSSEC', tooltip: 'DNS Security Extensions \u2014 cryptographic signatures on DNS records to prevent spoofing.', children: [
-            { name: 'RRSIG / DNSKEY', tooltip: "RRSIG signs record sets; DNSKEY holds the zone's public key." },
-            { name: 'KSK & ZSK', tooltip: 'Key Signing Key signs the ZSK; Zone Signing Key signs actual records.' },
-            { name: 'Chain of Trust', tooltip: "DS records in the parent zone authenticate the child's KSK \u2014 all the way to the root." },
-            { name: 'NSEC / NSEC3', tooltip: 'Prove that a domain does NOT exist \u2014 authenticated denial of existence.' }
-          ]},
-          { name: 'Denial of\nService (DoS)', tooltip: 'Overwhelm a target to make it unavailable \u2014 SYN floods, amplification, botnets.', children: [
-            { name: 'SYN Flood', tooltip: 'Send many SYN packets without completing handshakes to exhaust server resources.' },
-            { name: 'DDoS & Botnets', tooltip: 'Distributed attacks from thousands of compromised machines.' },
-            { name: 'SYN Cookies', tooltip: 'Encode state in the SYN-ACK sequence number to avoid storing half-open connections.' }
-          ]},
-          { name: 'Firewalls', tooltip: 'Network access control \u2014 stateful/stateless packet filters, default-deny policies.', children: [
-            { name: 'Stateful vs\nStateless', tooltip: 'Stateless filters per-packet by rules; stateful tracks connection state.' },
-            { name: 'Default-Deny', tooltip: 'Drop all traffic except what is explicitly allowed \u2014 fail-safe design.' },
-            { name: 'DMZ', tooltip: 'Demilitarized Zone \u2014 isolated network segment for public-facing servers.' }
-          ]},
-          { name: 'Intrusion\nDetection', tooltip: 'Detect attacks in progress or after the fact \u2014 signature-based, anomaly-based, specification-based.', children: [
-            { name: 'NIDS / HIDS', tooltip: 'Network IDS monitors traffic; Host IDS monitors system calls and logs.' },
-            { name: 'Signature vs\nAnomaly Detection', tooltip: 'Signatures match known patterns; anomaly detection flags deviations from baseline.' },
-            { name: 'False Positives\n& Negatives', tooltip: 'Balancing alert fatigue (false positives) against missed attacks (false negatives).' }
-          ]},
-          { name: 'Malware', tooltip: 'Viruses, worms, trojans \u2014 self-replicating and polymorphic malicious software.', children: [
-            { name: 'Viruses & Worms', tooltip: 'Viruses need a host program; worms self-propagate across networks.' },
-            { name: 'Polymorphic /\nMetamorphic', tooltip: 'Malware that changes its code on each infection to evade signature detection.' }
-          ]},
-          { name: 'Anonymity\n& Tor', tooltip: 'Onion routing for anonymous communication \u2014 relays, circuits, and traffic analysis attacks.', children: [
-            { name: 'Onion Routing', tooltip: 'Encrypt message in layers; each relay peels one layer and forwards to the next.' },
-            { name: 'Traffic Analysis', tooltip: 'Correlating timing/volume of entry and exit traffic to de-anonymize users.' }
-          ]}
+          { name: "Data Flow Analysis", tooltip: "Framework for analyzing program behavior" },
+          { name: "Constant Folding", tooltip: "Evaluating constant expressions at compile time" },
+          { name: "Dead Code Elimination", tooltip: "Removing unreachable or unused code" },
+          { name: "Loop Optimization", tooltip: "Techniques like unrolling, invariant code motion" }
+        ]
+      },
+      {
+        name: "Code Generation",
+        tooltip: "Register allocation, instruction selection, instruction scheduling",
+        children: [
+          { name: "Register Allocation", tooltip: "Mapping variables to hardware registers" },
+          { name: "Instruction Selection", tooltip: "Choosing target machine instructions" },
+          { name: "Instruction Scheduling", tooltip: "Reordering instructions for pipeline efficiency" }
+        ]
+      },
+      {
+        name: "Runtime Systems",
+        tooltip: "Stack frames, heap, garbage collection, calling conventions",
+        children: [
+          { name: "Stack Frames", tooltip: "Activation records for function calls" },
+          { name: "Heap", tooltip: "Dynamic memory allocation region" },
+          { name: "Garbage Collection", tooltip: "Automatic memory reclamation" },
+          { name: "Calling Conventions", tooltip: "Rules for function parameter passing and return" }
+        ]
+      },
+      {
+        name: "Advanced Topics",
+        tooltip: "JIT compilation, link-time optimization, polyhedral optimization",
+        children: [
+          { name: "JIT Compilation", tooltip: "Just-in-time compilation at runtime" },
+          { name: "Link-Time Optimization", tooltip: "Optimizing across translation units at link time" },
+          { name: "Polyhedral Optimization", tooltip: "Mathematical framework for loop nest optimization" }
+        ]
+      },
+      {
+        name: "Error Recovery",
+        tooltip: "Panic mode, phrase-level, error productions",
+        children: [
+          { name: "Panic Mode", tooltip: "Discarding tokens until a synchronizing token" },
+          { name: "Phrase-Level", tooltip: "Local correction of errors in input" },
+          { name: "Error Productions", tooltip: "Grammar rules anticipating common errors" }
+        ]
+      },
+      {
+        name: "Language Design",
+        tooltip: "Type systems, closures, polymorphism, memory safety",
+        children: [
+          { name: "Type Systems", tooltip: "Formal systems for classifying expressions by type" },
+          { name: "Closures", tooltip: "Functions capturing their lexical environment" },
+          { name: "Polymorphism", tooltip: "Code that operates on multiple types" },
+          { name: "Memory Safety", tooltip: "Guarantees against memory errors" }
         ]
       }
     ]
   },
 
   graph: {
-    categories: { foundations: '#58a6ff', memory: '#f778ba', crypto: '#7ee787', web: '#ffa657', network: '#d2a8ff' },
-    edgeColors: { depends: '#58a6ff', implements: '#f778ba', enables: '#7ee787', related: '#ffa657' },
+    categories: { frontend: "#58a6ff", middle: "#7ee787", backend: "#f778ba", runtime: "#ffa657" },
+    edgeColors: { depends: "#58a6ff", implements: "#f778ba", enables: "#7ee787", related: "#ffa657" },
     nodes: [
-      { id: 'threat_model',   label: 'Threat\nModeling',         cat: 'foundations', tip: "Identify who your attacker is, their capabilities, and what assets you're protecting." },
-      { id: 'defense_depth',  label: 'Defense\nin Depth',        cat: 'foundations', tip: 'Layer multiple defenses so an attacker must breach all of them.' },
-      { id: 'least_priv',     label: 'Least\nPrivilege',         cat: 'foundations', tip: 'Give each component only the minimum access it needs.' },
-      { id: 'tcb',            label: 'Trusted\nComputing Base',  cat: 'foundations', tip: 'The minimal set of components that must be correct for security to hold.' },
-      { id: 'shannons',       label: "Shannon's\nMaxim",         cat: 'foundations', tip: 'The enemy knows the system \u2014 security should not depend on design secrecy.' },
-      { id: 'complete_med',   label: 'Complete\nMediation',      cat: 'foundations', tip: 'Check every access to every object via a reference monitor.' },
-      { id: 'buf_overflow',   label: 'Buffer\nOverflow',         cat: 'memory', tip: 'Writing past buffer boundaries \u2014 the classic memory safety bug.' },
-      { id: 'stack_smash',    label: 'Stack\nSmashing',          cat: 'memory', tip: 'Overflow a stack buffer to overwrite the return address.' },
-      { id: 'format_str',     label: 'Format String\nVuln',      cat: 'memory', tip: 'Uncontrolled format strings in printf() allow arbitrary memory read/write.' },
-      { id: 'use_after_free', label: 'Use-After-Free\n& Heap',   cat: 'memory', tip: 'Using freed memory or corrupting heap metadata for code execution.' },
-      { id: 'wx',             label: 'W\u2295X\n(DEP/NX)',       cat: 'memory', tip: 'Memory is either writable or executable, never both.' },
-      { id: 'rop',            label: 'ROP',                      cat: 'memory', tip: 'Return-Oriented Programming \u2014 chain existing code gadgets to bypass W\u2295X.' },
-      { id: 'aslr',           label: 'ASLR',                     cat: 'memory', tip: 'Address Space Layout Randomization \u2014 randomize memory layout.' },
-      { id: 'canaries',       label: 'Stack\nCanaries',          cat: 'memory', tip: 'Random values before return addresses to detect buffer overflows.' },
-      { id: 'safe_lang',      label: 'Memory-Safe\nLanguages',   cat: 'memory', tip: 'Rust, Java, Python \u2014 eliminate memory bugs by design.' },
-      { id: 'sym_enc',        label: 'Symmetric\nEncryption',    cat: 'crypto', tip: 'AES, block cipher modes \u2014 same key for encryption and decryption.' },
-      { id: 'pub_enc',        label: 'Public-Key\nEncryption',   cat: 'crypto', tip: 'RSA, El Gamal \u2014 asymmetric encryption with public/private key pairs.' },
-      { id: 'hash',           label: 'Cryptographic\nHashes',    cat: 'crypto', tip: 'SHA-256 \u2014 one-way functions with collision resistance.' },
-      { id: 'mac',            label: 'MACs\n(HMAC)',             cat: 'crypto', tip: 'Message Authentication Codes \u2014 verify integrity and authenticity.' },
-      { id: 'signatures',     label: 'Digital\nSignatures',      cat: 'crypto', tip: 'RSA/ECDSA signatures \u2014 prove authenticity and non-repudiation.' },
-      { id: 'dh',             label: 'Diffie-Hellman\nKey Exchange', cat: 'crypto', tip: 'Agree on a shared secret over an insecure channel.' },
-      { id: 'certs',          label: 'Certificates\n& PKI',      cat: 'crypto', tip: 'Certificate authorities and chains of trust for public key binding.' },
-      { id: 'passwords',      label: 'Passwords\n& Hashing',     cat: 'crypto', tip: 'bcrypt/scrypt, salting, rainbow tables, and two-factor auth.' },
-      { id: 'aead',           label: 'Authenticated\nEncryption', cat: 'crypto', tip: 'AES-GCM \u2014 combined encryption + integrity in one operation.' },
-      { id: 'sqli',           label: 'SQL\nInjection',           cat: 'web', tip: 'Inject SQL commands through unsanitized user input.' },
-      { id: 'xss',            label: 'XSS',                      cat: 'web', tip: 'Cross-Site Scripting \u2014 inject malicious JavaScript into pages.' },
-      { id: 'csrf',           label: 'CSRF',                     cat: 'web', tip: 'Cross-Site Request Forgery \u2014 trick users into unintended requests.' },
-      { id: 'sop',            label: 'Same-Origin\nPolicy',      cat: 'web', tip: 'Browser isolates scripts from different origins (scheme+host+port).' },
-      { id: 'cookies',        label: 'Cookies &\nSessions',      cat: 'web', tip: 'HTTP cookies for state management and session tokens.' },
-      { id: 'csp',            label: 'Content\nSecurity Policy',  cat: 'web', tip: 'HTTP header restricting what scripts can execute.' },
-      { id: 'sanitize',       label: 'Input\nSanitization',      cat: 'web', tip: 'Escape or strip dangerous content from user input.' },
-      { id: 'tls',            label: 'TLS',                      cat: 'network', tip: 'Transport Layer Security \u2014 encrypted, authenticated connections.' },
-      { id: 'dns',            label: 'DNS',                      cat: 'network', tip: 'Domain Name System \u2014 name resolution, vulnerable to spoofing.' },
-      { id: 'dnssec',         label: 'DNSSEC',                   cat: 'network', tip: 'Cryptographic authentication of DNS records.' },
-      { id: 'tcp',            label: 'TCP',                      cat: 'network', tip: 'Transmission Control Protocol \u2014 3-way handshake, packet injection.' },
-      { id: 'arp',            label: 'ARP',                      cat: 'network', tip: 'Address Resolution Protocol \u2014 vulnerable to spoofing attacks.' },
-      { id: 'firewall',       label: 'Firewalls',                cat: 'network', tip: 'Stateful/stateless packet filtering, default-deny policies.' },
-      { id: 'dos',            label: 'DoS / DDoS',               cat: 'network', tip: 'Denial of Service \u2014 SYN floods, amplification, botnets.' },
-      { id: 'tor',            label: 'Tor &\nAnonymity',         cat: 'network', tip: 'Onion routing for anonymous communication.' },
-      { id: 'ids',            label: 'Intrusion\nDetection',     cat: 'network', tip: 'NIDS/HIDS \u2014 signature vs anomaly detection of attacks.' },
-      { id: 'wpa2',           label: 'WPA2',                     cat: 'network', tip: 'WiFi security \u2014 4-way handshake, KRACK attack.' }
+      { id: "lexer", label: "Lexer", cat: "frontend", tip: "Converts source text into tokens — regular expressions, finite automata" },
+      { id: "parser", label: "Parser", cat: "frontend", tip: "Builds parse tree from tokens — LL, LR, recursive descent algorithms" },
+      { id: "ast", label: "AST", cat: "frontend", tip: "Abstract Syntax Tree — intermediate tree representation of program structure" },
+      { id: "typechecker", label: "Type Checker", cat: "frontend", tip: "Static analysis verifying type correctness — inference, polymorphism" },
+      { id: "ir", label: "IR", cat: "middle", tip: "Intermediate Representation — platform-independent code (three-address, SSA)" },
+      { id: "ssa", label: "SSA", cat: "middle", tip: "Static Single Assignment — each variable assigned exactly once, enables optimizations" },
+      { id: "optimizer", label: "Optimizer", cat: "middle", tip: "Code transformations — constant folding, dead code elimination, inlining" },
+      { id: "regalloc", label: "Register Alloc", cat: "backend", tip: "Register Allocation — mapping virtual registers to physical CPU registers" },
+      { id: "codegen", label: "Code Gen", cat: "backend", tip: "Code Generation — translating IR to target machine instructions" },
+      { id: "gc", label: "GC", cat: "runtime", tip: "Garbage Collection — automatic memory management, mark-sweep, generational" }
     ],
     edges: [
-      { source: 'threat_model', target: 'defense_depth', type: 'enables', label: 'informs' },
-      { source: 'threat_model', target: 'least_priv', type: 'enables', label: 'guides' },
-      { source: 'defense_depth', target: 'tcb', type: 'related', label: 'minimizes' },
-      { source: 'least_priv', target: 'complete_med', type: 'enables', label: 'enforced by' },
-      { source: 'shannons', target: 'threat_model', type: 'related', label: 'design principle' },
-      { source: 'buf_overflow', target: 'stack_smash', type: 'enables', label: 'leads to' },
-      { source: 'buf_overflow', target: 'use_after_free', type: 'related', label: 'related class' },
-      { source: 'stack_smash', target: 'wx', type: 'related', label: 'mitigated by' },
-      { source: 'stack_smash', target: 'canaries', type: 'related', label: 'detected by' },
-      { source: 'wx', target: 'rop', type: 'enables', label: 'bypassed by' },
-      { source: 'rop', target: 'aslr', type: 'related', label: 'mitigated by' },
-      { source: 'aslr', target: 'canaries', type: 'related', label: 'complementary' },
-      { source: 'safe_lang', target: 'buf_overflow', type: 'related', label: 'eliminates' },
-      { source: 'format_str', target: 'buf_overflow', type: 'related', label: 'similar class' },
-      { source: 'defense_depth', target: 'wx', type: 'implements', label: 'applied as' },
-      { source: 'defense_depth', target: 'aslr', type: 'implements', label: 'applied as' },
-      { source: 'defense_depth', target: 'canaries', type: 'implements', label: 'applied as' },
-      { source: 'sym_enc', target: 'aead', type: 'enables', label: 'extended to' },
-      { source: 'mac', target: 'aead', type: 'enables', label: 'combined in' },
-      { source: 'hash', target: 'mac', type: 'depends', label: 'used by HMAC' },
-      { source: 'hash', target: 'signatures', type: 'depends', label: 'hashed before signing' },
-      { source: 'hash', target: 'passwords', type: 'depends', label: 'used for hashing' },
-      { source: 'pub_enc', target: 'signatures', type: 'related', label: 'same math' },
-      { source: 'dh', target: 'sym_enc', type: 'enables', label: 'establishes key' },
-      { source: 'dh', target: 'tls', type: 'implements', label: 'used in handshake' },
-      { source: 'signatures', target: 'certs', type: 'enables', label: 'signs certificates' },
-      { source: 'pub_enc', target: 'dh', type: 'related', label: 'key agreement' },
-      { source: 'shannons', target: 'sym_enc', type: 'related', label: "Kerckhoff's principle" },
-      { source: 'certs', target: 'tls', type: 'depends', label: 'authenticates server' },
-      { source: 'sym_enc', target: 'tls', type: 'depends', label: 'bulk encryption' },
-      { source: 'mac', target: 'tls', type: 'depends', label: 'integrity' },
-      { source: 'signatures', target: 'dnssec', type: 'implements', label: 'signs records' },
-      { source: 'sym_enc', target: 'wpa2', type: 'depends', label: 'encrypts frames' },
-      { source: 'sop', target: 'xss', type: 'related', label: 'bypassed by' },
-      { source: 'sop', target: 'csrf', type: 'related', label: "doesn't prevent" },
-      { source: 'cookies', target: 'csrf', type: 'enables', label: 'exploits auto-send' },
-      { source: 'cookies', target: 'sop', type: 'related', label: 'separate policy' },
-      { source: 'xss', target: 'csp', type: 'related', label: 'mitigated by' },
-      { source: 'xss', target: 'sanitize', type: 'related', label: 'prevented by' },
-      { source: 'sqli', target: 'sanitize', type: 'related', label: 'prevented by' },
-      { source: 'complete_med', target: 'sanitize', type: 'implements', label: 'check all input' },
-      { source: 'least_priv', target: 'sop', type: 'implements', label: 'browser isolation' },
-      { source: 'tcp', target: 'tls', type: 'depends', label: 'runs over' },
-      { source: 'dns', target: 'dnssec', type: 'enables', label: 'authenticated by' },
-      { source: 'dns', target: 'tls', type: 'related', label: 'resolves names for' },
-      { source: 'firewall', target: 'ids', type: 'related', label: 'complementary' },
-      { source: 'firewall', target: 'dos', type: 'related', label: 'mitigates' },
-      { source: 'tcp', target: 'dos', type: 'related', label: 'SYN flood target' },
-      { source: 'arp', target: 'tcp', type: 'depends', label: 'resolves for' },
-      { source: 'tor', target: 'tls', type: 'depends', label: 'uses for relays' },
-      { source: 'tls', target: 'cookies', type: 'enables', label: 'secures transport' },
-      { source: 'certs', target: 'cookies', type: 'related', label: 'enables HTTPS' },
-      { source: 'passwords', target: 'cookies', type: 'related', label: 'auth \u2192 session' },
-      { source: 'threat_model', target: 'sqli', type: 'related', label: 'attacker injects' },
-      { source: 'threat_model', target: 'dos', type: 'related', label: 'availability threat' },
-      { source: 'defense_depth', target: 'firewall', type: 'implements', label: 'network layer' }
+      { source: "lexer", target: "parser", type: "enables" },
+      { source: "parser", target: "ast", type: "enables" },
+      { source: "ast", target: "typechecker", type: "implements" },
+      { source: "typechecker", target: "ir", type: "implements" },
+      { source: "ir", target: "ssa", type: "implements" },
+      { source: "ssa", target: "optimizer", type: "enables" },
+      { source: "optimizer", target: "regalloc", type: "enables" },
+      { source: "regalloc", target: "codegen", type: "enables" },
+      { source: "codegen", target: "gc", type: "related" }
     ]
   },
 
-  learningPath: [
-    { title: 'Security Mindset & Threat Models', desc: 'Start here \u2014 understand who attackers are, what they want, and the core principles that guide every security decision.', nodes: ['threat_model','defense_depth','least_priv','tcb','shannons','complete_med'], week: 'Week 1-2' },
-    { title: 'x86 Memory & Buffer Overflows', desc: 'Learn how C programs use memory, then see how buffer overflows and stack smashing let attackers hijack control flow.', nodes: ['buf_overflow','stack_smash','format_str','use_after_free'], week: 'Week 3-4' },
-    { title: 'Memory Safety Mitigations', desc: 'The arms race: W\u2295X prevents shellcode, ROP bypasses it, ASLR randomizes layout, canaries detect corruption.', nodes: ['wx','rop','aslr','canaries','safe_lang'], week: 'Week 4-5' },
-    { title: 'Symmetric Cryptography', desc: 'AES block ciphers, modes of operation, and MACs for integrity. Combine them into authenticated encryption (AES-GCM).', nodes: ['sym_enc','mac','hash','aead'], week: 'Week 6' },
-    { title: 'Public-Key Cryptography', desc: 'RSA encryption, Diffie-Hellman key exchange, and digital signatures for secure communication without pre-shared keys.', nodes: ['pub_enc','dh','signatures'], week: 'Week 7' },
-    { title: 'Certificates, PKI & Passwords', desc: 'How to trust public keys via certificate authorities, and how to securely store passwords.', nodes: ['certs','passwords'], week: 'Week 8' },
-    { title: 'Web Security Foundations', desc: 'HTTP, the Same-Origin Policy, cookies, and sessions. Understand the browser security model.', nodes: ['sop','cookies','sanitize'], week: 'Week 9' },
-    { title: 'Web Attacks & Defenses', desc: 'SQL injection, XSS, and CSRF \u2014 the three most important web vulnerabilities and their defenses.', nodes: ['sqli','xss','csrf','csp'], week: 'Week 10' },
-    { title: 'Network Protocols & Attacks', desc: 'TCP, DNS, ARP \u2014 how network protocols work and how attackers exploit them.', nodes: ['tcp','dns','arp','wpa2'], week: 'Week 11' },
-    { title: 'TLS & DNSSEC', desc: 'How cryptography secures the network: TLS handshakes and DNSSEC for authenticated name resolution.', nodes: ['tls','dnssec'], week: 'Week 12' },
-    { title: 'Network Defenses & Advanced Topics', desc: 'Firewalls, intrusion detection, DDoS mitigation, and anonymous communication with Tor.', nodes: ['firewall','ids','dos','tor'], week: 'Week 13-14' }
-  ],
-
   deepDives: [
     {
-      id: 'dd-bufoverflow', num: 'Concept 1 of 5', title: 'Buffer Overflow & Stack Smashing',
-      desc: 'The classic memory exploit — overwrite the return address to hijack control flow.', color: '#f778ba', icon: '💥',
-      svg: function(w, h) {
-        var m = 30, cw = w - 2*m, ch = h - 2*m;
-        var s = '<svg viewBox="0 0 '+w+' '+h+'" xmlns="http://www.w3.org/2000/svg" style="background:#0d1117">';
-        // Stack frame diagram
-        var bx = m + cw*0.15, bw = cw*0.3, sy = m + 10, sh = (ch - 20) / 7;
-        var labels = ['Local vars','buf[64]','Saved EBP (SFP)','Return Addr (RIP)','Caller frame','...','...'];
-        var fills  = ['#21262d','#f778ba20','#ffa65720','#ff764420','#21262d','#21262d','#21262d'];
-        var strokes= ['#30363d','#f778ba','#ffa657','#ff7644','#30363d','#30363d','#30363d'];
-        for (var i = 0; i < 7; i++) {
-          s += '<rect x="'+bx+'" y="'+(sy+i*sh)+'" width="'+bw+'" height="'+sh+'" rx="3" fill="'+fills[i]+'" stroke="'+strokes[i]+'" stroke-width="1"/>';
-          s += '<text x="'+(bx+bw/2)+'" y="'+(sy+i*sh+sh/2+4)+'" text-anchor="middle" fill="#e6edf3" font-size="10" font-weight="500">'+labels[i]+'</text>';
-        }
-        s += '<text x="'+(bx+bw/2)+'" y="'+(sy - 2)+'" text-anchor="middle" fill="#8b949e" font-size="9">HIGH ADDR ↑</text>';
-        // Overflow arrow
-        var ax = bx + bw + 20, ay1 = sy + sh*0.5, ay2 = sy + sh*3.5;
-        s += '<line x1="'+ax+'" y1="'+ay1+'" x2="'+ax+'" y2="'+ay2+'" stroke="#f778ba" stroke-width="2" marker-end="url(#arrowPink)"/>';
-        s += '<defs><marker id="arrowPink" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#f778ba"/></marker></defs>';
-        s += '<text x="'+(ax+8)+'" y="'+(ay1+sh)+'" fill="#f778ba" font-size="10" font-weight="600">Overflow</text>';
-        s += '<text x="'+(ax+8)+'" y="'+(ay1+sh+14)+'" fill="#f778ba" font-size="9">writes past buf</text>';
-        // Attack payload on right
-        var rx = m + cw*0.62, ry = sy + sh;
-        s += '<rect x="'+rx+'" y="'+ry+'" width="'+(cw*0.32)+'" height="'+(sh*4.5)+'" rx="6" fill="#f778ba08" stroke="#f778ba" stroke-width="1" stroke-dasharray="4"/>';
-        s += '<text x="'+(rx+cw*0.16)+'" y="'+(ry+20)+'" text-anchor="middle" fill="#f778ba" font-size="11" font-weight="700">Attack Payload</text>';
-        var steps = ['1. Fill buf with NOP sled','2. Overwrite SFP','3. Overwrite RIP → shellcode','4. CPU jumps to attacker code'];
-        for (var j = 0; j < 4; j++) {
-          s += '<text x="'+(rx+10)+'" y="'+(ry+42+j*22)+'" fill="#e6edf3" font-size="9">'+steps[j]+'</text>';
-        }
-        s += '</svg>';
-        return s;
-      },
+      icon: "\ud83d\udd24",
+      title: "Regular Expressions \u2192 NFA \u2192 DFA",
       sections: [
-        { title: 'How It Works', text: 'When a C function uses a fixed-size buffer on the stack (e.g., char buf[64]) and copies user input without bounds checking (strcpy, gets), the attacker can write past the buffer boundary. This overwrites the saved frame pointer (SFP) and the return address (RIP) on the stack. When the function returns, the CPU jumps to the attacker-controlled address instead of the legitimate caller.' },
-        { title: 'The Exploit Chain', text: '① Attacker sends input larger than the buffer. ② The overflow overwrites the return address with the address of injected shellcode (or a known function like system()). ③ When the function executes "ret", EIP is set to the attacker\'s address. ④ Shellcode executes with the privileges of the vulnerable program.' },
-        { title: 'Key Formula', formula: 'offset = &buf + sizeof(buf) + sizeof(SFP) → points to RIP on stack' },
-        { title: 'Mitigations', text: 'Stack canaries detect overwrites before the function returns. W⊕X (NX/DEP) prevents executing injected code on the stack. ASLR randomizes memory layout so the attacker can\'t predict addresses. Using memory-safe languages (Rust, Go, Java) eliminates the bug class entirely.' }
-      ],
-      keypoints: [
-        { title: 'Root Cause', text: 'C/C++ perform no automatic bounds checking on array accesses.' },
-        { title: 'Attacker Goal', text: 'Overwrite the return address to redirect execution to attacker-controlled code.' },
-        { title: 'Classic Functions', text: 'gets(), strcpy(), sprintf() — all copy without length limits.' },
-        { title: 'Defense Layers', text: 'Canaries + W⊕X + ASLR together make exploitation much harder (defense in depth).' }
+        { heading: "Thompson Construction", body: "Converts a regular expression into an equivalent NFA using systematic construction rules. Each regex operator (concatenation, alternation, Kleene star) maps to a specific NFA fragment pattern." },
+        { heading: "Subset Construction", body: "Converts an NFA to a DFA by computing \u03b5-closures and tracking sets of NFA states as single DFA states. Each DFA state represents a set of NFA states reachable on the same input." }
       ]
     },
     {
-      id: 'dd-aes', num: 'Concept 2 of 5', title: 'AES & Symmetric Encryption',
-      desc: 'The workhorse of modern cryptography — how AES encrypts data and why modes matter.', color: '#7ee787', icon: '🔐',
-      svg: function(w, h) {
-        var s = '<svg viewBox="0 0 '+w+' '+h+'" xmlns="http://www.w3.org/2000/svg" style="background:#0d1117">';
-        var cx = w/2, bw = 90, bh = 36;
-        // CTR mode diagram
-        s += '<text x="'+cx+'" y="28" text-anchor="middle" fill="#7ee787" font-size="13" font-weight="700">CTR Mode Encryption</text>';
-        // Three blocks
-        for (var i = 0; i < 3; i++) {
-          var bx = 60 + i * (w-120)/2.5;
-          var ny = 48;
-          // Nonce || Counter
-          s += '<rect x="'+bx+'" y="'+ny+'" width="'+bw+'" height="24" rx="4" fill="#7ee78715" stroke="#7ee787" stroke-width="1"/>';
-          s += '<text x="'+(bx+bw/2)+'" y="'+(ny+16)+'" text-anchor="middle" fill="#7ee787" font-size="9" font-weight="600">Nonce ∥ ctr='+(i+1)+'</text>';
-          // Arrow down
-          s += '<line x1="'+(bx+bw/2)+'" y1="'+(ny+24)+'" x2="'+(bx+bw/2)+'" y2="'+(ny+44)+'" stroke="#7ee787" stroke-width="1.5" marker-end="url(#arrowG)"/>';
-          // AES box
-          s += '<rect x="'+bx+'" y="'+(ny+44)+'" width="'+bw+'" height="'+bh+'" rx="4" fill="#7ee78725" stroke="#7ee787" stroke-width="1.5"/>';
-          s += '<text x="'+(bx+bw/2)+'" y="'+(ny+44+bh/2+4)+'" text-anchor="middle" fill="#e6edf3" font-size="11" font-weight="700">AES_K</text>';
-          // Arrow down to XOR
-          s += '<line x1="'+(bx+bw/2)+'" y1="'+(ny+44+bh)+'" x2="'+(bx+bw/2)+'" y2="'+(ny+44+bh+20)+'" stroke="#7ee787" stroke-width="1.5" marker-end="url(#arrowG)"/>';
-          // XOR circle
-          var xy = ny+44+bh+20;
-          s += '<circle cx="'+(bx+bw/2)+'" cy="'+(xy+10)+'" r="12" fill="none" stroke="#ffa657" stroke-width="1.5"/>';
-          s += '<text x="'+(bx+bw/2)+'" y="'+(xy+14)+'" text-anchor="middle" fill="#ffa657" font-size="14" font-weight="700">⊕</text>';
-          // Plaintext arrow from left
-          s += '<line x1="'+(bx-10)+'" y1="'+(xy+10)+'" x2="'+(bx+bw/2-14)+'" y2="'+(xy+10)+'" stroke="#ffa657" stroke-width="1" marker-end="url(#arrowO)"/>';
-          s += '<text x="'+(bx-14)+'" y="'+(xy+6)+'" text-anchor="end" fill="#ffa657" font-size="8">P'+(i+1)+'</text>';
-          // Ciphertext arrow down
-          s += '<line x1="'+(bx+bw/2)+'" y1="'+(xy+22)+'" x2="'+(bx+bw/2)+'" y2="'+(xy+44)+'" stroke="#58a6ff" stroke-width="1.5" marker-end="url(#arrowB)"/>';
-          s += '<rect x="'+(bx+10)+'" y="'+(xy+44)+'" width="'+(bw-20)+'" height="20" rx="3" fill="#58a6ff15" stroke="#58a6ff" stroke-width="1"/>';
-          s += '<text x="'+(bx+bw/2)+'" y="'+(xy+58)+'" text-anchor="middle" fill="#58a6ff" font-size="9" font-weight="600">C'+(i+1)+'</text>';
-        }
-        // Key label
-        s += '<rect x="'+(w-115)+'" y="'+(h-32)+'" width="100" height="20" rx="4" fill="#7ee78718" stroke="#7ee787" stroke-width="1"/>';
-        s += '<text x="'+(w-65)+'" y="'+(h-18)+'" text-anchor="middle" fill="#7ee787" font-size="9" font-weight="600">Key K (128-bit)</text>';
-        s += '<defs><marker id="arrowG" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#7ee787"/></marker>';
-        s += '<marker id="arrowO" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#ffa657"/></marker>';
-        s += '<marker id="arrowB" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#58a6ff"/></marker></defs>';
-        s += '</svg>';
-        return s;
-      },
+      icon: "\ud83d\udccb",
+      title: "LR Parsing",
       sections: [
-        { title: 'AES Block Cipher', text: 'AES (Advanced Encryption Standard) is a keyed permutation that encrypts exactly one 128-bit block at a time. With a secret key K, AES is a bijection: every input maps to a unique output, and the mapping looks random without K. AES supports 128, 192, or 256-bit keys and runs through 10/12/14 rounds of SubBytes, ShiftRows, MixColumns, and AddRoundKey transformations.' },
-        { title: 'Why Modes Matter', text: 'ECB mode encrypts each block independently — identical plaintext blocks produce identical ciphertext blocks, leaking patterns. CBC chains blocks together using XOR with the previous ciphertext, but requires sequential encryption. CTR mode turns AES into a stream cipher by encrypting Nonce∥Counter values and XORing with plaintext — fully parallelizable and the basis of AES-GCM.' },
-        { title: 'IND-CPA Security', formula: 'Adv[A, E] = |Pr[A outputs 1 in real] − Pr[A outputs 1 in random]| ≤ negligible' },
-        { title: 'Authenticated Encryption', text: 'Encryption alone provides confidentiality but NOT integrity. AES-GCM combines CTR-mode encryption with a GHASH MAC to provide both — this is Authenticated Encryption with Associated Data (AEAD). Always use AEAD in practice; encrypt-then-MAC is the safe composition order.' }
-      ],
-      keypoints: [
-        { title: 'Never Use ECB', text: 'ECB leaks patterns because identical plaintext blocks → identical ciphertext blocks.' },
-        { title: 'CTR Advantage', text: 'Parallelizable, no padding needed, random-access decryption, and basis for GCM.' },
-        { title: 'Nonce Reuse = Catastrophe', text: 'Reusing a nonce in CTR/GCM completely breaks confidentiality (XOR of two plaintexts leaks).' },
-        { title: 'Always AEAD', text: 'Use AES-GCM or ChaCha20-Poly1305 — encryption without authentication is dangerous.' }
+        { heading: "Shift-Reduce Parsing", body: "Bottom-up parsing technique that shifts input tokens onto a stack and reduces sequences matching grammar rule right-hand sides. Uses a parse table to decide between shift and reduce actions." },
+        { heading: "LR(0) Items", body: "Grammar productions with a dot indicating parsing progress. The set of all items forms the basis for constructing LR parse tables." },
+        { heading: "SLR/LALR/CLR Tables", body: "Increasingly powerful parse table construction methods. SLR uses FOLLOW sets, LALR merges states with same cores, and CLR tracks full lookahead sets for maximum precision." }
       ]
     },
     {
-      id: 'dd-tls', num: 'Concept 3 of 5', title: 'TLS Handshake & Secure Channels',
-      desc: 'How HTTPS works — certificates, key exchange, and encrypted communication.', color: '#58a6ff', icon: '🔒',
-      svg: function(w, h) {
-        var s = '<svg viewBox="0 0 '+w+' '+h+'" xmlns="http://www.w3.org/2000/svg" style="background:#0d1117">';
-        var lx = w*0.18, rx = w*0.82, my = 38, step = (h - my - 20) / 6;
-        // Client and Server labels
-        s += '<rect x="'+(lx-35)+'" y="8" width="70" height="22" rx="4" fill="#58a6ff20" stroke="#58a6ff" stroke-width="1"/>';
-        s += '<text x="'+lx+'" y="23" text-anchor="middle" fill="#58a6ff" font-size="11" font-weight="700">Client</text>';
-        s += '<rect x="'+(rx-35)+'" y="8" width="70" height="22" rx="4" fill="#7ee78720" stroke="#7ee787" stroke-width="1"/>';
-        s += '<text x="'+rx+'" y="23" text-anchor="middle" fill="#7ee787" font-size="11" font-weight="700">Server</text>';
-        // Vertical lines
-        s += '<line x1="'+lx+'" y1="32" x2="'+lx+'" y2="'+(h-8)+'" stroke="#58a6ff" stroke-width="1" stroke-dasharray="3"/>';
-        s += '<line x1="'+rx+'" y1="32" x2="'+rx+'" y2="'+(h-8)+'" stroke="#7ee787" stroke-width="1" stroke-dasharray="3"/>';
-        // Messages
-        var msgs = [
-          { dir: 1, label: 'ClientHello (nonce, ciphers)', color: '#58a6ff' },
-          { dir: -1, label: 'ServerHello + Certificate + g^b', color: '#7ee787' },
-          { dir: 0, label: '— Verify cert chain via CA —', color: '#ffa657' },
-          { dir: 1, label: 'g^a  (DH share) + Finished', color: '#58a6ff' },
-          { dir: 0, label: '— Both derive session key: K = g^(ab) —', color: '#d2a8ff' },
-          { dir: 0, label: '✅ Encrypted application data (AES-GCM)', color: '#7ee787' }
-        ];
-        for (var i = 0; i < msgs.length; i++) {
-          var y = my + i * step + step/2;
-          var m = msgs[i];
-          if (m.dir === 1) {
-            s += '<line x1="'+(lx+5)+'" y1="'+y+'" x2="'+(rx-5)+'" y2="'+y+'" stroke="'+m.color+'" stroke-width="1.5" marker-end="url(#ah'+i+')"/>';
-          } else if (m.dir === -1) {
-            s += '<line x1="'+(rx-5)+'" y1="'+y+'" x2="'+(lx+5)+'" y2="'+y+'" stroke="'+m.color+'" stroke-width="1.5" marker-end="url(#ah'+i+')"/>';
-          }
-          s += '<text x="'+((lx+rx)/2)+'" y="'+(y-6)+'" text-anchor="middle" fill="'+m.color+'" font-size="9" font-weight="'+(m.dir===0?'700':'500')+'">'+m.label+'</text>';
-          if (m.dir !== 0) s += '<defs><marker id="ah'+i+'" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="'+m.color+'"/></marker></defs>';
-        }
-        s += '</svg>';
-        return s;
-      },
+      icon: "\ud83d\udd00",
+      title: "SSA Form",
       sections: [
-        { title: 'The Handshake', text: 'TLS 1.3 completes in just one round trip: ① Client sends ClientHello with supported ciphersuites, a random nonce, and its ephemeral DH share g^a. ② Server responds with ServerHello, its certificate (signed by a CA), and its DH share g^b. ③ Both sides compute the shared secret g^(ab) and derive symmetric session keys. ④ All subsequent data is encrypted with AES-GCM using these keys.' },
-        { title: 'Certificate Verification', text: 'The client verifies the server\'s identity by checking: (1) the certificate is signed by a trusted CA, (2) the certificate hasn\'t expired or been revoked, (3) the domain name matches. This chain of trust goes from the server cert → intermediate CA → root CA (pre-installed in the browser/OS).' },
-        { title: 'Forward Secrecy', text: 'TLS 1.3 mandates ephemeral Diffie-Hellman. Even if the server\'s long-term private key is later compromised, past session keys cannot be recovered because the ephemeral DH values were discarded. This property is called Perfect Forward Secrecy (PFS).' }
-      ],
-      keypoints: [
-        { title: 'One RTT', text: 'TLS 1.3 completes the handshake in a single round trip (vs 2 in TLS 1.2).' },
-        { title: 'Forward Secrecy', text: 'Ephemeral DH keys mean compromised long-term keys can\'t decrypt past sessions.' },
-        { title: 'AEAD Required', text: 'TLS 1.3 only allows AEAD ciphers (AES-GCM, ChaCha20-Poly1305) — no CBC+HMAC.' },
-        { title: 'Certificate Pinning', text: 'Clients can pin expected certificates to detect rogue CA-issued certs (MITM defense).' }
+        { heading: "\u03c6-Functions", body: "Special merge functions inserted at join points in control flow where different definitions of a variable converge. Each \u03c6-function selects the appropriate value based on the incoming control flow edge." },
+        { heading: "Dominance Frontiers", body: "The dominance frontier of a node N is the set of nodes where N\u2019s dominance ends. Used to determine optimal placement of \u03c6-functions during SSA construction." },
+        { heading: "Use-Def Chains", body: "In SSA form, every use of a variable has exactly one reaching definition, making use-def chains trivial. This simplifies many optimizations like constant propagation and dead code elimination." }
       ]
     },
     {
-      id: 'dd-xss', num: 'Concept 4 of 5', title: 'Cross-Site Scripting (XSS)',
-      desc: 'Injecting malicious JavaScript into web pages viewed by other users.', color: '#ffa657', icon: '🕷️',
-      svg: function(w, h) {
-        var s = '<svg viewBox="0 0 '+w+' '+h+'" xmlns="http://www.w3.org/2000/svg" style="background:#0d1117">';
-        // Three boxes: Attacker, Server, Victim
-        var y1 = 20, bw = w*0.22, bh = 32;
-        var ax = w*0.08, sx = w*0.39, vx = w*0.70;
-        // Attacker
-        s += '<rect x="'+ax+'" y="'+y1+'" width="'+bw+'" height="'+bh+'" rx="6" fill="#ff764420" stroke="#ff7644" stroke-width="1.5"/>';
-        s += '<text x="'+(ax+bw/2)+'" y="'+(y1+20)+'" text-anchor="middle" fill="#ff7644" font-size="11" font-weight="700">🕷️ Attacker</text>';
-        // Server
-        s += '<rect x="'+sx+'" y="'+y1+'" width="'+bw+'" height="'+bh+'" rx="6" fill="#7ee78720" stroke="#7ee787" stroke-width="1.5"/>';
-        s += '<text x="'+(sx+bw/2)+'" y="'+(y1+20)+'" text-anchor="middle" fill="#7ee787" font-size="11" font-weight="700">🖥️ Server</text>';
-        // Victim
-        s += '<rect x="'+vx+'" y="'+y1+'" width="'+bw+'" height="'+bh+'" rx="6" fill="#58a6ff20" stroke="#58a6ff" stroke-width="1.5"/>';
-        s += '<text x="'+(vx+bw/2)+'" y="'+(y1+20)+'" text-anchor="middle" fill="#58a6ff" font-size="11" font-weight="700">👤 Victim</text>';
-        // Stored XSS flow
-        var fy = y1 + bh + 18;
-        s += '<text x="'+(w/2)+'" y="'+(fy)+'" text-anchor="middle" fill="#ffa657" font-size="11" font-weight="700">Stored XSS Attack Flow</text>';
-        fy += 12;
-        // Step 1: Attacker → Server
-        s += '<line x1="'+(ax+bw)+'" y1="'+(fy+15)+'" x2="'+sx+'" y2="'+(fy+15)+'" stroke="#ff7644" stroke-width="1.5" marker-end="url(#axss1)"/>';
-        s += '<text x="'+((ax+bw+sx)/2)+'" y="'+(fy+10)+'" text-anchor="middle" fill="#ff7644" font-size="8">① POST &lt;script&gt;evil()&lt;/script&gt;</text>';
-        s += '<defs><marker id="axss1" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#ff7644"/></marker></defs>';
-        // Step 2: Server stores
-        s += '<text x="'+(sx+bw/2)+'" y="'+(fy+38)+'" text-anchor="middle" fill="#7ee787" font-size="8">② Stored in DB</text>';
-        // Step 3: Victim → Server
-        fy += 45;
-        s += '<line x1="'+vx+'" y1="'+(fy+5)+'" x2="'+(sx+bw)+'" y2="'+(fy+5)+'" stroke="#58a6ff" stroke-width="1.5" marker-end="url(#axss2)"/>';
-        s += '<text x="'+((sx+bw+vx)/2)+'" y="'+(fy)+'" text-anchor="middle" fill="#58a6ff" font-size="8">③ GET /page</text>';
-        s += '<defs><marker id="axss2" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#58a6ff"/></marker></defs>';
-        // Step 4: Server → Victim (with script)
-        fy += 22;
-        s += '<line x1="'+(sx+bw)+'" y1="'+(fy+5)+'" x2="'+vx+'" y2="'+(fy+5)+'" stroke="#ffa657" stroke-width="1.5" marker-end="url(#axss3)"/>';
-        s += '<text x="'+((sx+bw+vx)/2)+'" y="'+(fy)+'" text-anchor="middle" fill="#ffa657" font-size="8">④ HTML + &lt;script&gt;evil()&lt;/script&gt;</text>';
-        s += '<defs><marker id="axss3" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#ffa657"/></marker></defs>';
-        // Step 5: Script runs
-        fy += 22;
-        s += '<text x="'+(vx+bw/2)+'" y="'+(fy+8)+'" text-anchor="middle" fill="#ff7644" font-size="8" font-weight="600">⑤ Script steals cookies!</text>';
-        s += '</svg>';
-        return s;
-      },
+      icon: "\ud83d\udce6",
+      title: "Register Allocation",
       sections: [
-        { title: 'What is XSS?', text: 'Cross-Site Scripting occurs when an attacker injects malicious JavaScript into a web page that other users view. The browser executes the script in the context of the vulnerable site, giving the attacker access to cookies, session tokens, and the DOM — effectively impersonating the victim.' },
-        { title: 'Types of XSS', text: 'Stored XSS: The malicious script is permanently saved on the server (e.g., in a comment or profile field) and served to every visitor. Reflected XSS: The script is embedded in a URL parameter and reflected back in the server\'s response — the attacker tricks the victim into clicking a crafted link. DOM-based XSS: The vulnerability is entirely in client-side JavaScript that unsafely processes URL fragments or other DOM data.' },
-        { title: 'Why SOP Doesn\'t Help', text: 'The Same-Origin Policy is the browser\'s primary defense, but XSS bypasses it because the injected script runs within the same origin as the vulnerable site. From the browser\'s perspective, the malicious script is indistinguishable from the site\'s legitimate JavaScript.' }
-      ],
-      keypoints: [
-        { title: 'Input Sanitization', text: 'Escape HTML special characters (&lt; → &amp;lt;) before rendering user content.' },
-        { title: 'Content Security Policy', text: 'CSP headers restrict which scripts can execute — whitelist trusted sources only.' },
-        { title: 'HttpOnly Cookies', text: 'HttpOnly flag prevents JavaScript from reading cookies, limiting XSS damage.' },
-        { title: 'Never innerHTML', text: 'Use textContent or DOM APIs instead of innerHTML to prevent script injection.' }
-      ]
-    },
-    {
-      id: 'dd-rsa', num: 'Concept 5 of 5', title: 'RSA & Digital Signatures',
-      desc: 'Public-key crypto for encryption and non-repudiation — the math behind HTTPS certificates.', color: '#d2a8ff', icon: '✍️',
-      svg: function(w, h) {
-        var s = '<svg viewBox="0 0 '+w+' '+h+'" xmlns="http://www.w3.org/2000/svg" style="background:#0d1117">';
-        var cx = w/2;
-        // Title
-        s += '<text x="'+cx+'" y="24" text-anchor="middle" fill="#d2a8ff" font-size="12" font-weight="700">RSA Digital Signature Scheme</text>';
-        // Key Generation box
-        var kx = w*0.05, ky = 38, kw = w*0.28, kh = h*0.7;
-        s += '<rect x="'+kx+'" y="'+ky+'" width="'+kw+'" height="'+kh+'" rx="6" fill="#d2a8ff08" stroke="#d2a8ff" stroke-width="1"/>';
-        s += '<text x="'+(kx+kw/2)+'" y="'+(ky+18)+'" text-anchor="middle" fill="#d2a8ff" font-size="10" font-weight="700">Key Generation</text>';
-        var klines = ['p, q ← large primes','n = p × q','φ(n) = (p−1)(q−1)','e: gcd(e, φ(n)) = 1','d = e⁻¹ mod φ(n)','','Public: (e, n)','Private: (d, n)'];
-        for (var i = 0; i < klines.length; i++) {
-          var clr = i >= 6 ? (i===6 ? '#7ee787' : '#f778ba') : '#e6edf3';
-          s += '<text x="'+(kx+12)+'" y="'+(ky+36+i*16)+'" fill="'+clr+'" font-size="9">'+klines[i]+'</text>';
-        }
-        // Sign flow
-        var sx2 = w*0.38, sy = 42, sw = w*0.58, sh = h*0.32;
-        s += '<rect x="'+sx2+'" y="'+sy+'" width="'+sw+'" height="'+sh+'" rx="6" fill="#f778ba08" stroke="#f778ba" stroke-width="1"/>';
-        s += '<text x="'+(sx2+sw/2)+'" y="'+(sy+18)+'" text-anchor="middle" fill="#f778ba" font-size="10" font-weight="700">Sign (Private Key)</text>';
-        s += '<text x="'+(sx2+14)+'" y="'+(sy+38)+'" fill="#e6edf3" font-size="9">1. Compute hash: h = H(m)</text>';
-        s += '<text x="'+(sx2+14)+'" y="'+(sy+56)+'" fill="#e6edf3" font-size="9">2. Sign: σ = h^d mod n</text>';
-        s += '<text x="'+(sx2+14)+'" y="'+(sy+74)+'" fill="#e6edf3" font-size="9">3. Send (m, σ)</text>';
-        // Verify flow
-        var vy2 = sy + sh + 14;
-        s += '<rect x="'+sx2+'" y="'+vy2+'" width="'+sw+'" height="'+sh+'" rx="6" fill="#7ee78708" stroke="#7ee787" stroke-width="1"/>';
-        s += '<text x="'+(sx2+sw/2)+'" y="'+(vy2+18)+'" text-anchor="middle" fill="#7ee787" font-size="10" font-weight="700">Verify (Public Key)</text>';
-        s += '<text x="'+(sx2+14)+'" y="'+(vy2+38)+'" fill="#e6edf3" font-size="9">1. Compute hash: h\' = H(m)</text>';
-        s += '<text x="'+(sx2+14)+'" y="'+(vy2+56)+'" fill="#e6edf3" font-size="9">2. Check: σ^e mod n  =?=  h\'</text>';
-        s += '<text x="'+(sx2+14)+'" y="'+(vy2+74)+'" fill="#e6edf3" font-size="9">3. Accept if equal ✅</text>';
-        // Arrow between
-        s += '<line x1="'+(sx2+sw/2)+'" y1="'+(sy+sh)+'" x2="'+(sx2+sw/2)+'" y2="'+vy2+'" stroke="#d2a8ff" stroke-width="1.5" marker-end="url(#arsa)"/>';
-        s += '<defs><marker id="arsa" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#d2a8ff"/></marker></defs>';
-        s += '</svg>';
-        return s;
-      },
-      sections: [
-        { title: 'RSA Key Generation', text: 'Choose two large random primes p and q (each ~1024 bits). Compute n = p×q and φ(n) = (p−1)(q−1). Choose e (commonly 65537) such that gcd(e, φ(n)) = 1. Compute d = e⁻¹ mod φ(n) using the Extended Euclidean Algorithm. The public key is (e, n); the private key is (d, n). Security relies on the difficulty of factoring n back into p and q.' },
-        { title: 'Signing & Verification', text: 'To sign message m: compute the hash h = H(m), then σ = h^d mod n. To verify: compute h\' = H(m) and check that σ^e mod n = h\'. This works because (h^d)^e = h^(de) = h^1 = h (mod n) by Euler\'s theorem. Only the private key holder can produce σ, but anyone with the public key can verify it.' },
-        { title: 'Security Definition', formula: 'EU-CMA: No efficient adversary can forge a valid signature on a new message, even after seeing signatures on chosen messages.' },
-        { title: 'RSA for Encryption', text: 'RSA can also encrypt: c = m^e mod n (encrypt with public key), m = c^d mod n (decrypt with private key). In practice, RSA encryption is used in hybrid mode — encrypt a random AES key with RSA, then encrypt the actual data with AES. This combines the key-distribution advantage of public-key crypto with the speed of symmetric crypto.' }
-      ],
-      keypoints: [
-        { title: 'Hash Then Sign', text: 'Always hash before signing — signing raw messages is insecure and slow.' },
-        { title: 'Key Size', text: 'RSA-2048 minimum (≈112-bit security); RSA-4096 for long-term security.' },
-        { title: 'Non-Repudiation', text: 'Unlike MACs, signatures prove WHO signed — the signer cannot deny it later.' },
-        { title: 'Certificates Use This', text: 'HTTPS certificates are RSA/ECDSA signatures by CAs binding domain names to public keys.' }
+        { heading: "Graph Coloring", body: "Models register allocation as a graph coloring problem. Each variable is a node, and edges connect simultaneously live variables. The goal is to color the graph with k colors (registers)." },
+        { heading: "Interference Graph", body: "A graph where nodes represent live ranges and edges represent conflicts between variables that are simultaneously live. Two variables connected by an edge cannot share a register." },
+        { heading: "Spilling", body: "When the interference graph cannot be colored with k registers, some variables are spilled to memory. Spill cost heuristics determine which variables to spill to minimize performance impact." }
       ]
     }
   ],
 
   youtube: {
     videos: [
-      { unit: 1, id: 'prfnPGZdsuU', topic: 'Lecture 1 \u2014 Introduction and Security Principles' },
-      { unit: 2, id: '6MKpnBtEFG8', topic: 'Lecture 2 \u2014 x86 Assembly and Call Stack' },
-      { unit: 2, id: 'G4Eob-xcYMc', topic: 'Lecture 4 \u2014 More Memory Safety Vulnerabilities' },
-      { unit: 2, id: '4UfKp369WDQ', topic: 'Lecture 5 \u2014 Mitigating Memory Safety Vulnerabilities' },
-      { unit: 3, id: 'EOzeqHtW8JI', topic: 'Lecture 6 \u2014 Intro to Cryptography' },
-      { unit: 3, id: '1rQtdZN5siY', topic: 'Lecture 7 \u2014 Block Ciphers' },
-      { unit: 3, id: 'mduCXHgFQDA', topic: 'Lecture 8 \u2014 Block Cipher Modes of Operation' },
-      { unit: 3, id: 'h_56lIClkU0', topic: 'Lecture 9 \u2014 Cryptographic Hashes and MACs' },
-      { unit: 3, id: '-WQdk1ChPfU', topic: 'Lecture 10 \u2014 PRNGs and Diffie-Hellman Key Exchange' },
-      { unit: 3, id: 'mYP67-DRfQk', topic: 'Lecture 11 \u2014 Public-Key Encryption and Digital Signatures' },
-      { unit: 3, id: 'e0doJMzdKpc', topic: 'Lecture 12 \u2014 Certificates, Passwords, and Case Studies' },
-      { unit: 4, id: 'wuvTNUgsv20', topic: 'Lecture 13 \u2014 Intro to Web' },
-      { unit: 4, id: 'Z01ULHIoDrI', topic: 'Lecture 14 \u2014 Cookies and CSRF' },
-      { unit: 4, id: 'GwmSJVZFQSs', topic: 'Lecture 15 \u2014 XSS and UI Attacks' },
-      { unit: 4, id: 'QArihCrF8qI', topic: 'Lecture 16 \u2014 SQL Injection and CAPTCHAs' },
-      { unit: 5, id: '7IZYGLNSwuY', topic: 'Lecture 17 \u2014 Intro to Networking' },
-      { unit: 5, id: '3ZdOCaCUT78', topic: 'Lecture 18 \u2014 Low-Level Network Attacks' },
-      { unit: 5, id: 'uv7r-EGq8SA', topic: 'Lecture 19 \u2014 Transport Layer: TCP and UDP' },
-      { unit: 5, id: '6B1dL4q3HLs', topic: 'Lecture 20 \u2014 TLS' },
-      { unit: 5, id: 'O8BDHK32dsg', topic: 'Lecture 21 \u2014 DNS' },
-      { unit: 5, id: 'WzSvxjCcn68', topic: 'Lecture 22 \u2014 DNSSEC' },
-      { unit: 5, id: 'qUxW53UjhQA', topic: 'Lecture 23 \u2014 Denial of Service and Firewalls' },
-      { unit: 5, id: 'VHB4bDcPW3I', topic: 'Lecture 24 \u2014 Intrusion Detection' },
-      { unit: 5, id: 'kQ_xGyh021s', topic: 'Lecture 25 \u2014 Malware and Hardware Vulnerabilities' },
-      { unit: 5, id: 'EL1A8TEsoao', topic: 'Lecture 26 \u2014 Tor' },
-      { unit: 5, id: 'f3lA905NHKA', topic: 'Lecture 27 \u2014 Bitcoin' }
+      { unit: 1, id: "stuU2TK3t0Q", topic: "Intelligence Artificielle [1.1] : Agents intelligents - motivation" },      { unit: 1, id: "kol5g04vAUo", topic: "Intelligence Artificielle [1.2] : Agents intelligents - définition" },      { unit: 1, id: "p4Xg4dlIpS0", topic: "Artificial Intelligence [1.3]: Intelligent Agents - Types of Environments" },      { unit: 1, id: "TUHAVbaBLlg", topic: "Artificial Intelligence [1.4]: Intelligent Agents - Types of Agents" },      { unit: 1, id: "BngSOcOaR1E", topic: "Artificial Intelligence [1.5]: Intelligent Agents - Example" },      { unit: 1, id: "LBEkOoICj20", topic: "Intelligence Artificielle [2.1] : Recherche heuristique - motivation" },      { unit: 1, id: "ooOrlgM0L8Q", topic: "Artificial Intelligence [2.2]: Heuristic search - search in a graph" },      { unit: 1, id: "8_dGurEKXDk", topic: "Intelligence Artificielle [2.3] : Recherche heuristique - A*" },      { unit: 1, id: "5RcAYMzT6jY", topic: "Artificial Intelligence [2.4]: Heuristic Search - Example" },      { unit: 2, id: "2Ej8ZufX-w8", topic: "Artificial Intelligence [2.5]: Heuristic Search - Theoretical Properties" },      { unit: 2, id: "BSvzs8aARag", topic: "Artificial Intelligence [2.6]: Heuristic Search - Variations and Applications" },      { unit: 2, id: "kBzcpuCyK48", topic: "Artificial Intelligence [3.1]: Local search - motivation" },      { unit: 2, id: "2DnYUh8UXAY", topic: "Intelligence Artificielle [3.2] : Recherche locale - hill climbing" },      { unit: 2, id: "yxtbuK3dM7Y", topic: "Intelligence Artificielle [3.3] : Recherche locale - simulated annealing" },      { unit: 2, id: "9tCySY6TLk8", topic: "Artificial Intelligence [3.4]: Local search - genetic algorithm" },      { unit: 2, id: "8XL2ebvEOOg", topic: "Artificial Intelligence [4.1]: Two-opponent games - motivation" },      { unit: 2, id: "QTw8VJzRW6g", topic: "Intelligence Artificielle [4.2] : Jeux à deux adversaires - algorithme minimax" },      { unit: 2, id: "KS2QkHe-hpE", topic: "Artificial Intelligence [4.3]: Two-player games - alpha-beta pruning" },      { unit: 3, id: "j4bFdwkAll0", topic: "Intelligence Artificielle [4.4] : Jeux à deux adversaires - exemple" },      { unit: 3, id: "mtpHNFC11oM", topic: "Intelligence Artificielle [4.5] : Jeux à deux adversaires - décisions en temps réel" },      { unit: 3, id: "R3c6evPDhdY", topic: "Artificial Intelligence [5.1]: Constraint satisfaction - motivation" },      { unit: 3, id: "pbRmvSG6_fU", topic: "Artificial Intelligence [5.2]: Constraint satisfaction - definition" },      { unit: 3, id: "T3EsJRtDNt0", topic: "Intelligence Artificielle [5.3] : Satisfaction de contraintes - backtracking search" },      { unit: 3, id: "oRS7OndJ_m0", topic: "Intelligence Artificielle [5.4] : Satisfaction de contraintes - améliorations à backtracking search" },      { unit: 3, id: "JUfEyiPKSa8", topic: "Intelligence Artificielle [5.5] : Satisfaction de contraintes - algorithme AC-3" },      { unit: 3, id: "YgSw8_memRg", topic: "Artificial Intelligence [5.6]: Constraint satisfaction - local search" },      { unit: 3, id: "TQ5F4mf_HPU", topic: "Artificial Intelligence [6.1]: First-order logic - motivation" },      { unit: 4, id: "1PfuTidp-Qk", topic: "Artificial Intelligence [6.2]: First-order logic - syntax" },      { unit: 4, id: "0Th7WqxGDC0", topic: "Artificial Intelligence [6.3]: First-order logic - inference" },      { unit: 4, id: "zyGP8ix5opE", topic: "Intelligence Artificielle [6.4] : Logique du premier order - substitution" },      { unit: 4, id: "yhH6gT3olnM", topic: "Artificial Intelligence [6.5]: First-order logic - unification" },      { unit: 4, id: "v0Emj4LeQug", topic: "Intelligence Artificielle [6.6] : Logique du premier order - forme normale conjonctive" },      { unit: 4, id: "ApHFWV7iin0", topic: "Intelligence Artificielle [6.7] : Logique du premier order - preuve par résolution" },      { unit: 4, id: "_K-IyzhHydQ", topic: "Intelligence Artificielle [6.8] : Logique du premier order - autres concepts" },      { unit: 4, id: "wIHv5ylN9ZY", topic: "Intelligence Artificielle [7.1] : Raisonnement probabiliste - motivation" },      { unit: 4, id: "Rfc6A5S8tx8", topic: "Artificial Intelligence [7.2]: Probabilistic Reasoning - Definitions" },      { unit: 5, id: "hpzb2UpafHs", topic: "Intelligence Artificielle [7.3] : Raisonnement probabiliste - calcul de probabilités" },      { unit: 5, id: "Dc6TdcbWris", topic: "Artificial Intelligence [7.4]: Probabilistic Reasoning - Probability Distribution" },      { unit: 5, id: "fME09p3XMWY", topic: "Intelligence Artificielle [7.5] : Raisonnement probabiliste - règles de chaînage et de Bayes" },      { unit: 5, id: "mUwkilyUOSk", topic: "Artificial Intelligence [7.6]: Probabilistic Reasoning - Independence" },      { unit: 5, id: "bXyTTtEeVTs", topic: "Intelligence Artificielle [8.1] : Réseaux bayésiens - motivation" },      { unit: 5, id: "M7dFPkdwAB8", topic: "Artificial Intelligence [8.2]: Bayesian Networks - definition" },      { unit: 5, id: "gYVpFLEluXg", topic: "Intelligence Artificielle [8.3] : Réseaux bayésiens - calcul de probabilités" },      { unit: 5, id: "Ry_7z67xEpU", topic: "Intelligence Artificielle [8.4] : Réseaux bayésiens - indépendance" },      { unit: 5, id: "TTMeGpaio_M", topic: "Intelligence Artificielle [8.5] : Réseaux bayésiens - D-séparation" },      { unit: 6, id: "EeEs0hABG0c", topic: "Intelligence Artificielle [8.6] : Réseaux bayésiens - inférence" },      { unit: 6, id: "vPXXMrMtmpQ", topic: "Artificial Intelligence [8.7]: Bayesian Networks - specifying probability tables" },      { unit: 6, id: "fvMm17s00HY", topic: "Intelligence Artificielle [8.8] : Réseaux bayésiens - spécifier la structure" },      { unit: 6, id: "i7rQjR1sbLo", topic: "Intelligence Artificielle [9.1] : Réseaux bayésiens dynamiques - motivation" },      { unit: 6, id: "qY9_eTYPjbg", topic: "Artificial Intelligence [9.2]: Dynamic Bayesian Networks - Definitions" },      { unit: 6, id: "4M0pznWvFhg", topic: "Intelligence Artificielle [9.3] : Réseaux bayésiens dynamiques - type d'inférences" },      { unit: 6, id: "KM1S2P6SO0s", topic: "Intelligence Artificielle [9.4] : Réseaux bayésiens dynamiques - chaîne de Markov" },      { unit: 6, id: "SGmMIEMJYwg", topic: "Intelligence Artificielle [9.5] : Réseaux bayésiens dynamiques - modèle de Markov caché" },      { unit: 6, id: "hEczL504Eqg", topic: "Intelligence Artificielle [9.6] : Réseaux bayésiens dynamiques - probabilité marginale et filtrage" },      { unit: 7, id: "Ie81iPCDHA0", topic: "Intelligence Artificielle [9.7] : Réseaux bayésiens dynamiques - lissage" },      { unit: 7, id: "EBoiC2sc5LY", topic: "Intelligence Artificielle [9.8] : Réseaux bayésiens dynamiques - prédiction" },      { unit: 7, id: "QLwhFEHtHXg", topic: "Intelligence Artificielle [9.9] : Réseaux bayésiens dynamiques - explication la plus plausible" },      { unit: 7, id: "ni4a4HO6E8E", topic: "Artificial Intelligence [10.1]: Natural Language Processing - Motivation" },      { unit: 7, id: "Xk-GQU0hQrI", topic: "Intelligence Artificielle [10.2] : Traitement automatique du langage - classification de documents" },      { unit: 7, id: "usJwQGwZflU", topic: "Intelligence Artificielle [10.3] : Traitement automatique du langage - apprentissage classif. doc." },      { unit: 7, id: "tfPUl2Hv1Kg", topic: "Intelligence Artificielle [10.4] : Traitement automatique du langage - modèle de langage" },      { unit: 7, id: "m19ya57qCbo", topic: "Intelligence Artificielle [10.5] : Traitement automatique du langage - évaluation modèle langage" },      { unit: 7, id: "xBkjehSDJx8", topic: "Intelligence Artificielle [10.6] : Traitement automatique du langage - étiquetage syntaxique" },      { unit: 8, id: "IA_bLvZBm2g", topic: "Intelligence Artificielle [10.7] : Traitement automatique du langage - extraction d'information" },      { unit: 8, id: "KXrGs5T9fwU", topic: "Intelligence Artificielle [11.1] : Processus de décision markovien - motivation" },      { unit: 8, id: "mxHhrP4fVmM", topic: "Intelligence Artificielle [11.2] : Processus de décision markovien - définitions" },      { unit: 8, id: "x10PqzjDVdM", topic: "Intelligence Artificielle [11.3] : Processus de décision markovien - valeur d'un plan" },      { unit: 8, id: "iiUVbKn1XZs", topic: "Intelligence Artificielle [11.4] : Processus de décision markovien - itération par valeurs" },      { unit: 8, id: "9DZPeyR98jw", topic: "Intelligence Artificielle [11.5] : Processus de décision markovien - itération par politiques" },      { unit: 8, id: "m1GRBCCJprE", topic: "Intelligence Artificielle [12.1] : Apprentissage automatique - motivation" },      { unit: 8, id: "bybQvF0VJrI", topic: "Intelligence Artificielle [12.2] : Apprentissage automatique - définitions" },      { unit: 8, id: "BJvg5o7MSSI", topic: "Artificial Intelligence [12.3]: Machine learning - k nearest neighbors" },      { unit: 9, id: "L7WNYvbvGBc", topic: "Intelligence Artificielle [12.4] : Apprentissage automatique - perceptron" },      { unit: 9, id: "nZjg8DjrWVo", topic: "Intelligence Artificielle [12.5] : Apprentissage automatique - exemple du perceptron" },      { unit: 9, id: "AFVn-J9gV8E", topic: "Intelligence Artificielle [12.6] : Apprentissage automatique - propriétés du perceptron" },      { unit: 9, id: "tdouYphUi-w", topic: "Intelligence Artificielle [12.7] : Apprentissage automatique - dérivées" },      { unit: 9, id: "HniO8Apx95A", topic: "Intelligence Artificielle [12.8] : Apprentissage automatique - dérivées partielles et gradient" },      { unit: 9, id: "diiP1ydlyss", topic: "Intelligence Artificielle [12.9] : Apprentissage automatique - minimisation de perte" },      { unit: 9, id: "af1j0ogiUak", topic: "Intelligence Artificielle [12.10] : Apprentissage automatique - régression logistique" },      { unit: 9, id: "ngTF9NxEx7c", topic: "Intelligence Artificielle [12.11] : Apprentissage automatique - réseau de neurones" },      { unit: 9, id: "NgwvhX0xBs0", topic: "Intelligence Artificielle [12.12] : Apprentissage automatique - rétropropagation" },      { unit: 10, id: "0jh-jlWfKwo", topic: "Artificial Intelligence [12.13]: Machine learning - example of a neural network" },      { unit: 10, id: "B9OjPEZ4yuA", topic: "Intelligence Artificielle [12.14] : Apprentissage automatique - généralisation" },      { unit: 10, id: "1QyGL9u5BxA", topic: "Artificial Intelligence [13.1]: Reinforcement Learning - Motivation" },      { unit: 10, id: "9fZ0B6FTWiU", topic: "Artificial Intelligence [13.2]: Reinforcement Learning - Direct Estimation" },      { unit: 10, id: "QqHBFTRcLUo", topic: "Artificial Intelligence [13.3]: Reinforcement Learning - Adaptive Dynamic Programming" },      { unit: 10, id: "lDNUB7ywaWc", topic: "Artificial Intelligence [13.4]: Reinforcement Learning - Time Difference" },      { unit: 10, id: "wsX5IvQw1h4", topic: "Artificial Intelligence [13.5]: Reinforcement Learning - Passive vs. Active" },      { unit: 10, id: "9XDrr6MeQf0", topic: "Intelligence Artificielle [13.6] : Apprentissage par renforcement - exploration vs. exploitation" },      { unit: 10, id: "r-Q0wgJzD98", topic: "Intelligence Artificielle [13.7] : Apprentissage par renforcement - Q-learning" },      { unit: 11, id: "TG5JA__l5K0", topic: "Intelligence Artificielle [13.8] : Apprentissage par renforcement - recherche de plan" },      { unit: 11, id: "GsLz4_xXKt0", topic: "Intelligence Artificielle [13.9] : Apprentissage par renforcement - généralisation" },      { unit: 11, id: "G3slg71mGuY", topic: "Intelligence Artificielle [14.1] : Vision par ordinateur - motivation" },      { unit: 11, id: "xTrlSYU_yEM", topic: "Intelligence Artificielle [14.2] : Vision par ordinateur - représentation d'images" },      { unit: 11, id: "dGh1lBQsUT4", topic: "Artificial Intelligence [14.3]: Computer Vision - Image Gradients" },      { unit: 11, id: "0XT1PQm26T4", topic: "Artificial Intelligence [14.4]: Computer Vision - Image Contours" },      { unit: 11, id: "IN4UY1CBqto", topic: "Artificial Intelligence [14.5]: Computer Vision - Gradient Histograms" },      { unit: 11, id: "mj_e3BPWhaA", topic: "Intelligence Artificielle [14.6] : Vision par ordinateur - reconnaissance d'objets" }
     ],
-    unitNames: {
-      1: 'Unit 1: Security Foundations',
-      2: 'Unit 2: Memory Safety',
-      3: 'Unit 3: Cryptography',
-      4: 'Unit 4: Web Security',
-      5: 'Unit 5: Network Security'
-    }
+    unitNames: { 1: "Unit 1: Lectures 1-9", 2: "Unit 2: Lectures 10-18", 3: "Unit 3: Lectures 19-27", 4: "Unit 4: Lectures 28-36", 5: "Unit 5: Lectures 37-45", 6: "Unit 6: Lectures 46-54", 7: "Unit 7: Lectures 55-63", 8: "Unit 8: Lectures 64-72", 9: "Unit 9: Lectures 73-81", 10: "Unit 10: Lectures 82-90", 11: "Unit 11: Lectures 91-98" }
   }
 };
 
@@ -1993,28 +1527,47 @@ if (C.deepDives && C.deepDives.length) {
   const fullContainer = document.getElementById('dd-full-container');
 
   C.deepDives.forEach((dd, idx) => {
+    // Ensure each dive has an id for DOM mapping
+    if (!dd.id) dd.id = 'dd-' + idx;
     // Card
     const card = document.createElement('div'); card.className = 'dd-card'; card.onclick = () => showDeepDive(idx);
     const imgDiv = document.createElement('div'); imgDiv.className = 'dd-card-img'; imgDiv.style.background = dd.color + '10';
     if (dd.svg) imgDiv.innerHTML = dd.svg(360, 200);
     else imgDiv.innerHTML = `<span style="font-size:64px">${dd.icon || '📘'}</span>`;
     const body = document.createElement('div'); body.className = 'dd-card-body';
-    body.innerHTML = `<div class="dd-card-num" style="color:${dd.color}">${dd.num}</div><div class="dd-card-title">${dd.title}</div><div class="dd-card-desc">${dd.desc}</div>`;
+    let descPreview = dd.desc || dd.markdown || dd.body || dd.content || dd.detail || '';
+    if (!descPreview && dd.cards && dd.cards.length) {
+      descPreview = dd.cards.map(c => (c.term || c.title || '') + ': ' + (c.detail || c.text || c.body || '')).join(' · ');
+    }
+    if (!descPreview && dd.sections && dd.sections.length) {
+      descPreview = dd.sections.map(s => s.text || s.body || s.content || '').join(' · ');
+    }
+    const descTrim = descPreview.length > 140 ? descPreview.slice(0,140) + '…' : descPreview;
+    body.innerHTML = `<div class="dd-card-num" style="color:${dd.color || '#58a6ff'}">${dd.num || ''}</div><div class="dd-card-title">${dd.title}</div><div class="dd-card-desc">${descTrim}</div>`;
     card.appendChild(imgDiv); card.appendChild(body); grid.appendChild(card);
 
     // Full view
     const full = document.createElement('div'); full.className = 'dd-full'; full.id = 'dd-full-' + dd.id;
-    let fhtml = `<div class="dd-infographic"><h2 style="color:${dd.color}">${dd.icon || ''} ${dd.title}</h2><div class="dd-subtitle">${dd.num} · ${dd.desc}</div>`;
+    let fhtml = `<div class="dd-infographic"><h2 style="color:${dd.color}">${dd.icon || ''} ${dd.title}</h2><div class="dd-subtitle">${dd.num || ''}${dd.num && dd.desc ? ' · ' : ''}${dd.desc || ''}</div>`;
     if (dd.svg) fhtml += dd.svg(800, 300);
+    // Render top-level content fields (markdown/body/content) as a single section
+    const topText = dd.markdown || dd.body || dd.content || dd.detail;
+    if (topText) fhtml += `<div class="dd-section"><p>${topText}</p></div>`;
     (dd.sections || []).forEach(s => {
-      fhtml += `<div class="dd-section"><h3>${s.title}</h3>`;
+      fhtml += `<div class="dd-section"><h3>${s.title || s.heading || ''}</h3>`;
       if (s.formula) fhtml += `<div class="dd-formula">${s.formula}</div>`;
-      else fhtml += `<p>${s.text}</p>`;
+      else fhtml += `<p>${s.text || s.body || s.content || ''}</p>`;
       fhtml += '</div>';
     });
+    // cards[] schema: { term, detail } pairs
+    if (dd.cards && dd.cards.length) {
+      fhtml += '<div class="dd-keypoints">';
+      dd.cards.forEach(c => { fhtml += `<div class="dd-kp"><strong>${c.term || c.title || ''}</strong><span>${c.detail || c.text || c.body || ''}</span></div>`; });
+      fhtml += '</div>';
+    }
     if (dd.keypoints && dd.keypoints.length) {
       fhtml += '<div class="dd-keypoints">';
-      dd.keypoints.forEach(kp => { fhtml += `<div class="dd-kp"><strong>${kp.title}</strong><span>${kp.text}</span></div>`; });
+      dd.keypoints.forEach(kp => { fhtml += `<div class="dd-kp"><strong>${kp.title}</strong><span>${kp.text || kp.body || ''}</span></div>`; });
       fhtml += '</div>';
     }
     fhtml += `<div class="dd-nav"><button class="btn" onclick="navDD(-1)">← Prev</button><button class="btn" onclick="showCardGrid()">Grid</button><button class="btn" onclick="navDD(1)">Next →</button></div></div>`;
@@ -2320,32 +1873,93 @@ function buildAppendix() {
   const unitNames = C.youtube.unitNames || {};
   const unitColors = ["","#58a6ff","#f778ba","#7ee787","#ffa657","#d2a8ff","#7ee787","#ffa657","#ff7b72","#c9d1d9"];
 
+  const progKey = 'progress_' + (C.storageKey || (C.course && C.course.code) || 'default');
+  let watched = {};
+  try { watched = JSON.parse(localStorage.getItem(progKey) || '{}'); } catch(e) {}
+
   const unitCounts = {};
   videos.forEach(v => { unitCounts[v.unit] = (unitCounts[v.unit]||0) + 1; });
 
-  let html = `<div class="appendix-stats"><strong style="color:#c9d1d9">${videos.length} videos</strong>`;
+  const total = videos.length;
+  const done = videos.filter(v => watched[v.id]).length;
+  const pct = total ? Math.round(done/total*100) : 0;
+
+  let html = `<div class="appendix-stats">
+    <strong style="color:#c9d1d9">${total} videos</strong>
+    <span class="stat-pill" id="progress-stat" style="border-color:#7ee78740"><span style="color:#7ee787">✓ Watched</span>: <span id="progress-count">${done}</span>/${total} (<span id="progress-pct">${pct}</span>%)</span>
+    <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:${pct}%"></div></div>`;
   Object.keys(unitCounts).forEach(u => {
     const color = unitColors[u] || '#8b949e';
     html += `<span class="stat-pill" style="border-color:${color}40"><span style="color:${color}">${unitNames[u] || 'Unit '+u}</span>: ${unitCounts[u]}</span>`;
   });
+  html += `<div class="progress-actions">
+    <button onclick="markAllWatched(true)">✓ Mark all</button>
+    <button onclick="markAllWatched(false)">↺ Reset</button>
+  </div>`;
   html += '</div>';
   html += '<input type="text" class="appendix-filter" id="appendix-filter-input" placeholder="🔍 Filter videos by title..." oninput="filterAppendix()">';
-  html += '<table class="appendix-table"><thead><tr><th style="width:40px">#</th><th>Video Title</th><th style="width:160px">Unit</th><th style="width:80px">Watch</th></tr></thead><tbody id="appendix-tbody">';
+  html += '<table class="appendix-table"><thead><tr><th style="width:36px">✓</th><th style="width:40px">#</th><th>Video Title</th><th style="width:160px">Unit</th><th style="width:80px">Watch</th></tr></thead><tbody id="appendix-tbody">';
 
   let num = 0, curUnit = 0;
   videos.forEach(v => {
     if (v.unit !== curUnit) {
       curUnit = v.unit;
       const color = unitColors[v.unit] || '#8b949e';
-      html += `<tr class="unit-group" data-unit="${v.unit}" onclick="toggleUnit(this)"><td colspan="4" style="color:${color};border-bottom-color:${color}40"><span class="unit-toggle">▾</span> ${unitNames[v.unit]||'Unit '+v.unit} <span style="color:#8b949e;font-weight:400;font-size:12px">(${unitCounts[v.unit]} videos)</span></td></tr>`;
+      html += `<tr class="unit-group" data-unit="${v.unit}" onclick="toggleUnit(this)"><td colspan="5" style="color:${color};border-bottom-color:${color}40"><span class="unit-toggle">▾</span> ${unitNames[v.unit]||'Unit '+v.unit} <span style="color:#8b949e;font-weight:400;font-size:12px">(${unitCounts[v.unit]} videos)</span></td></tr>`;
     }
     num++;
     const url = `https://www.youtube.com/watch?v=${v.id}`;
-    html += `<tr class="vid-row" data-unit="${v.unit}" data-topic="${v.topic.toLowerCase()}"><td class="vid-num">${num}</td><td>${v.topic}</td><td style="color:${unitColors[v.unit]||'#8b949e'};font-size:12px">${unitNames[v.unit]||'Unit '+v.unit}</td><td><a class="watch-link" href="${url}" target="_blank">▶ Watch</a></td></tr>`;
+    const checked = watched[v.id] ? 'checked' : '';
+    const rowClass = watched[v.id] ? 'vid-row watched' : 'vid-row';
+    const safeTopic = (v.topic||'').replace(/"/g, '&quot;').toLowerCase();
+    html += `<tr class="${rowClass}" data-unit="${v.unit}" data-vid="${v.id}" data-topic="${safeTopic}"><td><input type="checkbox" class="vid-check" ${checked} onchange="toggleWatched('${v.id}', this)"></td><td class="vid-num">${num}</td><td>${v.topic}</td><td style="color:${unitColors[v.unit]||'#8b949e'};font-size:12px">${unitNames[v.unit]||'Unit '+v.unit}</td><td><a class="watch-link" href="${url}" target="_blank">▶ Watch</a></td></tr>`;
   });
 
   html += '</tbody></table>';
   container.innerHTML = html;
+}
+
+function _getProgKey() {
+  return 'progress_' + (C.storageKey || (C.course && C.course.code) || 'default');
+}
+
+function toggleWatched(vid, el) {
+  const key = _getProgKey();
+  let w = {};
+  try { w = JSON.parse(localStorage.getItem(key) || '{}'); } catch(e) {}
+  if (el.checked) w[vid] = 1; else delete w[vid];
+  localStorage.setItem(key, JSON.stringify(w));
+  const row = el.closest('tr');
+  if (row) row.classList.toggle('watched', el.checked);
+  _updateProgressStat();
+}
+
+function markAllWatched(mark) {
+  const key = _getProgKey();
+  const w = {};
+  if (mark) C.youtube.videos.forEach(v => { w[v.id] = 1; });
+  localStorage.setItem(key, JSON.stringify(w));
+  document.querySelectorAll('#appendix-tbody tr.vid-row').forEach(row => {
+    const cb = row.querySelector('.vid-check');
+    if (cb) cb.checked = mark;
+    row.classList.toggle('watched', mark);
+  });
+  _updateProgressStat();
+}
+
+function _updateProgressStat() {
+  const key = _getProgKey();
+  let w = {};
+  try { w = JSON.parse(localStorage.getItem(key) || '{}'); } catch(e) {}
+  const total = C.youtube.videos.length;
+  const done = Object.keys(w).length;
+  const pct = total ? Math.round(done/total*100) : 0;
+  const dc = document.getElementById('progress-count');
+  const pc = document.getElementById('progress-pct');
+  const pf = document.getElementById('progress-fill');
+  if (dc) dc.textContent = done;
+  if (pc) pc.textContent = pct;
+  if (pf) pf.style.width = pct + '%';
 }
 
 function filterAppendix() {
@@ -2371,14 +1985,9 @@ function toggleUnit(headerRow) {
   document.querySelectorAll(`#appendix-tbody tr.vid-row[data-unit="${unit}"]`).forEach(r => { r.style.display = collapsed ? 'none' : ''; });
 }
 
-// ═══════════════════════════════════════════════════════════════════════
-// PWA — Register service worker
-// ═══════════════════════════════════════════════════════════════════════
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('./sw.js').catch(() => {});
-}
 
-window.PROBLEMS_DATA=[{week:'Cryptography',title:'Symmetric & Public-Key',items:[{tag:'debug',text:'Alice encrypts the same message M twice with AES-CBC using the same key but different random IVs. What does an attacker learn? What if same IV is reused?',hint:'IV reuse in CBC leaks M1 XOR M2.'},{tag:'design',text:'Build a password-reset flow for a web app. What is stored server-side? What does the reset email contain? How long is the token valid? Draw the threat model.'},{tag:'derive',text:'RSA: given n=pq and phi=(p-1)(q-1), prove that `m^(ed) ≡ m (mod n)` when `ed ≡ 1 (mod phi)`. Use Fermat-Euler.'}]},{week:'Web & Systems',title:'XSS, CSRF, SQLi, Auth',items:[{tag:'debug',text:'A site escapes `<` and `>` but not quotes. Find an XSS payload using only unquoted-attribute context.',hint:'`onerror=alert(1)` after an `src=` with no quotes.'},{tag:'design',text:'Design a rate-limit defense against credential stuffing. What counter key? Where do you leak info if you reject vs drop vs delay?'}]},{week:'Network Security',title:'TLS, DNS, Firewalls',items:[{tag:'derive',text:'Why does TLS 1.3 drop RSA key-exchange in favor of (EC)DHE-only? What property does forward secrecy guarantee, and what does RSA-KE lose?'}]}];
+
+window.PROBLEMS_DATA=[{week:'Lexing & Parsing',title:'Regex, NFA, LL/LR',items:[{tag:'derive',text:'Build an NFA for `a(b|c)*d`, convert to DFA via subset construction, minimize. How many states each step?'},{tag:'design',text:'Write an LL(1) grammar for arithmetic: + - * / with correct precedence and left-associativity. Show why `E -> E + T` directly causes LL(1) conflict. Fix with left-recursion elimination.'}]},{week:'Semantics & IR',title:'Type Checking, SSA',items:[{tag:'code',text:'Implement SSA conversion for a simple while-loop CFG. Show where phi-nodes are inserted. Why is SSA minimal form unique?'},{tag:'debug',text:'A naive dominator-tree algorithm is O(N^3). Show how Lengauer-Tarjan achieves O(N*alpha(N)).'}]},{week:'Optimization & Codegen',title:'Dataflow, Register Allocation',items:[{tag:'derive',text:'Graph coloring for register allocation is NP-hard in general. Why does Chaitin\\\'s heuristic work in practice? When does it spill?'},{tag:'design',text:'Design a loop-invariant code motion pass. Which conditions must hold for an expression to be hoisted? Walk through an example with a potentially aliasing store.'},{tag:'paper',text:'Before reading the LLVM Mem2Reg pass: predict what it does with a `store` followed by a `load` to the same alloca. Then read and compare.'}]}];
 // ═══════════════════════════════════════════════════════════════════════
 // PRACTICE PROBLEMS (Problem-First learning)
 // ═══════════════════════════════════════════════════════════════════════
