@@ -1,0 +1,2022 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0d1117">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<title>Mathematics Study Tool</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background: #0d1117; color: #c9d1d9; overflow: hidden; }
+
+  /* ── Toolbar ── */
+  #toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 10;
+    background: rgba(13,17,23,0.92); backdrop-filter: blur(8px);
+    padding: 0 24px; display: flex; align-items: stretch; gap: 0;
+    border-bottom: 1px solid #30363d; height: 50px;
+  }
+  #toolbar h1 { font-size: 18px; font-weight: 600; color: #58a6ff; white-space: nowrap; display: flex; align-items: center; margin-right: 24px; }
+  .tab-group { display: flex; gap: 0; align-items: stretch; margin-right: 20px; }
+  .tab {
+    background: none; border: none; border-bottom: 2px solid transparent;
+    color: #8b949e; padding: 0 16px; font-size: 13px; font-weight: 500;
+    cursor: pointer; transition: all .2s; display: flex; align-items: center;
+  }
+  .tab:hover { color: #c9d1d9; }
+  .tab.active { color: #58a6ff; border-bottom-color: #58a6ff; }
+  .actions { display: flex; align-items: center; gap: 8px; }
+  .btn { background: #21262d; border: 1px solid #30363d; color: #c9d1d9; padding: 5px 12px; border-radius: 6px; cursor: pointer; font-size: 12px; }
+  .btn:hover { background: #30363d; border-color: #58a6ff; }
+  .toolbar-sep { width: 1px; height: 24px; background: #30363d; align-self: center; margin: 0 6px; flex-shrink: 0; }
+  .hint { font-size: 12px; color: #8b949e; margin-left: auto; display: flex; align-items: center; }
+  #toolbar-menu { display: contents; }
+  #hamburger {
+    display: none; background: none; border: 1px solid #30363d; color: #c9d1d9;
+    font-size: 20px; padding: 4px 10px; border-radius: 6px; cursor: pointer; line-height: 1;
+  }
+  #hamburger:hover { border-color: #58a6ff; color: #58a6ff; }
+
+  /* ── Floating Controls ── */
+  .canvas-controls {
+    position: fixed; top: 62px; right: 16px; z-index: 8;
+    display: flex; flex-direction: column; gap: 4px;
+  }
+  .canvas-controls .cbtn {
+    background: rgba(22,27,34,0.85); backdrop-filter: blur(8px);
+    border: 1px solid #30363d; color: #8b949e; padding: 6px 12px;
+    border-radius: 8px; cursor: pointer; font-size: 11px; text-align: left;
+    transition: all 0.2s; white-space: nowrap;
+  }
+  .canvas-controls .cbtn:hover { background: rgba(33,38,45,0.95); color: #c9d1d9; border-color: #58a6ff; }
+
+  /* ── Views ── */
+  #canvas, #canvas-graph { width: 100vw; height: 100vh; }
+  .view { display: none; }
+  .view.active { display: block; }
+
+  /* Mindmap */
+  path.link { pointer-events: stroke; cursor: pointer; }
+  path.link:hover { stroke-opacity: 0.7 !important; stroke-width: 3 !important; }
+
+  /* ── Tooltip ── */
+  #tooltip {
+    position: fixed; pointer-events: none; opacity: 0;
+    background: #161b22; border: 1px solid #30363d; border-radius: 8px;
+    padding: 10px 14px; max-width: 380px; font-size: 13px; line-height: 1.5;
+    box-shadow: 0 8px 24px rgba(0,0,0,.4); transition: opacity .15s; z-index: 20;
+  }
+  #tooltip.has-slides { pointer-events: auto; }
+  #tooltip .tt-title { color: #58a6ff; font-weight: 600; margin-bottom: 4px; }
+  #tooltip .tt-body  { color: #8b949e; }
+  #tooltip .tt-slides { margin-top: 6px; padding-top: 5px; border-top: 1px solid #30363d; }
+  #tooltip .tt-slides:empty { display: none; }
+  #tooltip .tt-slides a {
+    display: inline-block; margin: 2px 4px 2px 0; padding: 2px 8px; border-radius: 4px;
+    background: rgba(88,166,255,0.1); color: #58a6ff; text-decoration: none;
+    font-size: 11px; font-weight: 500; cursor: pointer; border: 1px solid rgba(88,166,255,0.2);
+  }
+  #tooltip .tt-slides a:hover { background: rgba(88,166,255,0.2); border-color: #58a6ff; }
+
+  #source-link {
+    position: fixed; bottom: 16px; right: 16px; z-index: 10;
+    background: rgba(22,27,34,0.92); border: 1px solid #30363d; border-radius: 8px;
+    padding: 8px 14px; font-size: 12px; font-weight: 600;
+    color: #ff0000; text-decoration: none;
+  }
+  #source-link:hover { background: rgba(255,0,0,0.1); border-color: #ff0000; }
+
+  /* ── Legend ── */
+  #legend {
+    position: fixed; bottom: 16px; left: 16px; z-index: 10;
+    background: rgba(22,27,34,0.92); border: 1px solid #30363d; border-radius: 8px;
+    padding: 12px 16px; font-size: 12px;
+  }
+  #legend div { display: flex; align-items: center; gap: 8px; margin: 4px 0; }
+  #legend span.swatch { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
+  #legend .swatch-line { width: 20px; height: 3px; border-radius: 2px; display: inline-block; }
+  .legend-item:hover { background: rgba(88,166,255,0.1); }
+  .legend-item.active-filter { background: rgba(88,166,255,0.18); outline: 1px solid #58a6ff; }
+
+  /* ── Graph ── */
+  .graph-link { fill: none; stroke-opacity: 0.45; }
+  .graph-link:hover { stroke-opacity: 0.9; }
+  .graph-node-label { font-size: 11px; fill: #c9d1d9; pointer-events: none; paint-order: stroke; stroke: #0d1117; stroke-width: 3.5px; }
+  .graph-link-label { font-size: 9.5px; fill: #8b949e; pointer-events: auto; cursor: pointer; paint-order: stroke; stroke: #0d1117; stroke-width: 3px; }
+  .graph-link-label:hover { fill: #58a6ff; }
+  .graph-link-hit { fill: none; stroke: transparent; stroke-width: 16; pointer-events: stroke; cursor: pointer; }
+
+  /* ── Learning Path Panel ── */
+  #path-panel {
+    position: fixed; top: 56px; right: 0; bottom: 0; width: 340px; z-index: 10;
+    background: rgba(13,17,23,0.95); border-left: 1px solid #30363d;
+    overflow-y: auto; padding: 20px; display: none; backdrop-filter: blur(8px);
+  }
+  #path-panel.open { display: block; }
+  #path-panel h2 { font-size: 15px; color: #58a6ff; margin-bottom: 4px; }
+  #path-panel .subtitle { font-size: 12px; color: #8b949e; margin-bottom: 16px; }
+  .path-step { display: flex; gap: 12px; padding: 10px; border-radius: 8px; cursor: pointer; transition: background .2s; margin-bottom: 2px; position: relative; }
+  .path-step:hover { background: rgba(88,166,255,0.08); }
+  .path-step.active { background: rgba(88,166,255,0.14); }
+  .step-badge { flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%; border: 2px solid #30363d; background: #161b22; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: #c9d1d9; }
+  .path-step.active .step-badge { border-color: #58a6ff; background: #58a6ff; color: #0d1117; }
+  .path-step.completed .step-badge { background: #238636; border-color: #238636; color: #fff; }
+  .path-step.completed .step-connector { background: #238636; }
+  .path-step.active .step-connector { background: #58a6ff; }
+  .step-content { flex: 1; min-width: 0; }
+  .step-title { font-size: 13px; font-weight: 600; color: #c9d1d9; }
+  .step-desc  { font-size: 11px; color: #8b949e; margin-top: 2px; line-height: 1.4; }
+  .step-connector { position: absolute; left: 33px; top: 38px; bottom: -4px; width: 2px; background: #30363d; }
+  .path-step:last-child .step-connector { display: none; }
+  .path-controls { display: flex; gap: 8px; margin-bottom: 14px; }
+  .path-btn { flex: 1; padding: 7px 10px; border-radius: 6px; border: 1px solid #30363d; background: #21262d; color: #c9d1d9; font-size: 12px; cursor: pointer; text-align: center; }
+  .path-btn:hover { background: #30363d; border-color: #58a6ff; }
+
+  /* ── Command Panel (Comments/Tags) ── */
+  #cmd-panel {
+    position: fixed; top: 56px; right: 0; bottom: 0; width: 380px; z-index: 15;
+    background: rgba(13,17,23,0.97); border-left: 1px solid #30363d;
+    display: none; flex-direction: column; backdrop-filter: blur(10px);
+  }
+  #cmd-panel.open { display: flex; }
+  #cmd-panel-header { padding: 16px 18px 12px; border-bottom: 1px solid #30363d; display: flex; align-items: flex-start; gap: 12px; }
+  #cmd-panel-header .cp-title { flex: 1; }
+  #cmd-panel-header .cp-name { font-size: 15px; font-weight: 600; color: #c9d1d9; }
+  #cmd-panel-header .cp-tip  { font-size: 11px; color: #8b949e; margin-top: 3px; line-height: 1.4; }
+  #cmd-panel-close { background: none; border: none; color: #8b949e; font-size: 20px; cursor: pointer; padding: 0 4px; line-height: 1; }
+  #cmd-panel-close:hover { color: #c9d1d9; }
+  #cmd-tags { padding: 8px 18px; display: flex; flex-wrap: wrap; gap: 6px; min-height: 20px; }
+  .cmd-tag { display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: 500; }
+  .cmd-tag.tag-done     { background: #23863633; color: #7ee787; border: 1px solid #23863666; }
+  .cmd-tag.tag-todo     { background: #1f6feb33; color: #79c0ff; border: 1px solid #1f6feb66; }
+  .cmd-tag.tag-confused  { background: #da363333; color: #ff7b72; border: 1px solid #da363366; }
+  .cmd-tag.tag-important { background: #9e6a0333; color: #ffa657; border: 1px solid #9e6a0366; }
+  .cmd-tag.tag-custom    { background: #30363d; color: #c9d1d9; border: 1px solid #484f58; }
+  #cmd-comments { flex: 1; overflow-y: auto; padding: 10px 18px; }
+  .cmd-comment { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 10px 12px; margin-bottom: 8px; position: relative; }
+  .cmd-comment .cc-text { font-size: 13px; color: #c9d1d9; line-height: 1.5; white-space: pre-wrap; }
+  .cmd-comment .cc-time { font-size: 10px; color: #484f58; margin-top: 4px; }
+  .cmd-comment .cc-del { position: absolute; top: 6px; right: 8px; background: none; border: none; color: #484f58; cursor: pointer; font-size: 14px; }
+  .cmd-comment .cc-del:hover { color: #ff7b72; }
+  .cmd-empty { color: #484f58; font-size: 12px; font-style: italic; text-align: center; padding: 20px; }
+  #cmd-input-area { padding: 12px 18px; border-top: 1px solid #30363d; }
+  #cmd-input { width: 100%; background: #0d1117; border: 1px solid #30363d; border-radius: 8px; color: #c9d1d9; padding: 10px 12px; font-size: 13px; font-family: inherit; resize: none; outline: none; min-height: 60px; }
+  #cmd-input:focus { border-color: #58a6ff; }
+  #cmd-input-hint { font-size: 10px; color: #484f58; margin-top: 6px; line-height: 1.5; }
+  #cmd-input-hint code { background: #161b22; padding: 1px 4px; border-radius: 3px; color: #8b949e; }
+  .comment-badge { font-size: 9px; fill: #0d1117; pointer-events: none; }
+  .has-comment-ring { fill: none; stroke: #ffa657; stroke-width: 2; stroke-dasharray: 3 2; }
+
+  /* ── Deep Dives ── */
+  #view-deepdive { overflow-y: auto; margin-top: 50px; height: calc(100vh - 50px); }
+  .dd-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 20px; padding: 24px 32px; max-width: 1400px; margin: 0 auto; }
+  .dd-card { background: #161b22; border: 1px solid #30363d; border-radius: 12px; cursor: pointer; overflow: hidden; transition: all .25s; }
+  .dd-card:hover { border-color: #58a6ff; transform: translateY(-3px); box-shadow: 0 8px 30px rgba(0,0,0,.4); }
+  .dd-card-img { width: 100%; height: 200px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+  .dd-card-img svg { width: 100%; height: 100%; display: block; }
+  .dd-card-body { padding: 16px; }
+  .dd-card-num { font-size: 11px; color: #58a6ff; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+  .dd-card-title { font-size: 17px; font-weight: 700; color: #c9d1d9; margin: 4px 0 6px; }
+  .dd-card-desc { font-size: 12px; color: #8b949e; line-height: 1.5; }
+  .dd-full { display: none; padding: 20px 0 40px; overflow-y: auto; }
+  .dd-full.active { display: block; }
+  .dd-infographic { max-width: 900px; margin: 0 auto; padding: 32px; background: #161b22; border: 1px solid #30363d; border-radius: 16px; }
+  .dd-infographic h2 { font-size: 24px; color: #58a6ff; margin-bottom: 4px; }
+  .dd-infographic .dd-subtitle { font-size: 13px; color: #8b949e; margin-bottom: 24px; }
+  .dd-section { margin-top: 24px; }
+  .dd-section h3 { font-size: 15px; color: #ffa657; margin-bottom: 8px; }
+  .dd-section p { font-size: 13px; color: #c9d1d9; line-height: 1.7; }
+  .dd-section .dd-formula { background: #0d1117; border: 1px solid #30363d; border-radius: 8px; padding: 12px 16px; font-family: 'Courier New', monospace; font-size: 14px; color: #7ee787; margin: 10px 0; text-align: center; }
+  .dd-keypoints { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 12px; }
+  .dd-kp { background: #0d1117; border: 1px solid #30363d; border-radius: 8px; padding: 12px; font-size: 12px; }
+  .dd-kp strong { color: #58a6ff; display: block; margin-bottom: 4px; }
+  .dd-kp span { color: #8b949e; }
+  .dd-nav { display: flex; gap: 10px; justify-content: center; margin-top: 20px; }
+  .dd-nav button { padding: 8px 20px; }
+
+  /* ── Tracker Panel ── */
+  #tracker-panel {
+    position: fixed; top: 56px; left: 0; bottom: 0; width: 320px; z-index: 12;
+    background: rgba(13,17,23,0.97); border-right: 1px solid #30363d;
+    display: none; flex-direction: column; backdrop-filter: blur(10px); overflow: hidden;
+  }
+  #tracker-panel.open { display: flex; }
+  #tracker-header { padding: 16px 18px 10px; border-bottom: 1px solid #30363d; display: flex; align-items: center; justify-content: space-between; }
+  #tracker-header h3 { font-size: 14px; color: #58a6ff; font-weight: 600; }
+  #tracker-header button { background: none; border: none; color: #8b949e; font-size: 18px; cursor: pointer; }
+  #tracker-stats { padding: 10px 18px; display: flex; gap: 10px; border-bottom: 1px solid #21262d; }
+  .tracker-stat { flex: 1; background: #0d1117; border-radius: 8px; padding: 8px 10px; text-align: center; }
+  .tracker-stat .ts-num { font-size: 20px; font-weight: 700; }
+  .tracker-stat .ts-label { font-size: 10px; color: #8b949e; }
+  #tracker-list { flex: 1; overflow-y: auto; padding: 8px 12px; }
+  .tracker-item { display: flex; align-items: flex-start; gap: 10px; padding: 8px 10px; border-radius: 8px; cursor: pointer; margin-bottom: 2px; }
+  .tracker-item:hover { background: rgba(88,166,255,0.08); }
+  .tracker-filter { padding: 8px 18px; border-bottom: 1px solid #21262d; display: flex; gap: 6px; flex-wrap: wrap; }
+  .tf-chip { padding: 3px 10px; border-radius: 12px; font-size: 11px; cursor: pointer; border: 1px solid #30363d; background: #21262d; color: #8b949e; }
+  .tf-chip:hover, .tf-chip.active { border-color: #58a6ff; color: #58a6ff; background: rgba(88,166,255,0.1); }
+
+  /* ── PDF Viewer ── */
+  #pdf-viewer {
+    display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+    z-index: 50; background: #0d1117; flex-direction: column;
+  }
+  #pdf-viewer.open { display: flex; }
+  #pdf-toolbar { display: flex; align-items: center; gap: 10px; padding: 8px 16px; background: #161b22; border-bottom: 1px solid #30363d; flex-shrink: 0; }
+  #pdf-toolbar .pdf-title { flex: 1; color: #c9d1d9; font-size: 13px; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  #pdf-iframe { width: 100%; height: 100%; border: none; background: #1e1e1e; }
+  #scribble-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; cursor: crosshair; z-index: 2; display: none; }
+  #scribble-canvas.active { display: block; }
+  #pdf-body { position: relative; flex: 1; overflow: hidden; }
+  .scribble-tools { display: flex; align-items: center; gap: 6px; margin-left: 8px; border-left: 1px solid #30363d; padding-left: 10px; }
+  .scribble-tools .btn { font-size: 11px; padding: 3px 8px; }
+  .scribble-tools .btn.active-tool { background: #58a6ff; color: #0d1117; }
+  .scribble-color { width: 20px; height: 20px; border-radius: 50%; border: 2px solid #30363d; cursor: pointer; display: inline-block; }
+  .scribble-color.sel { border-color: #c9d1d9; }
+  .scribble-size { width: 50px; accent-color: #58a6ff; }
+
+  /* ── Appendix ── */
+  #appendix-container { position: relative; top: 0; width: 100%; max-width: 1100px; margin: 0 auto; padding: 24px 16px 60px; }
+  #view-appendix { overflow-y: auto; height: calc(100vh - 50px); margin-top: 50px; }
+  .appendix-stats { color: #8b949e; font-size: 13px; margin-bottom: 12px; display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; }
+  .appendix-stats .stat-pill { background: #21262d; border: 1px solid #30363d; border-radius: 12px; padding: 2px 10px; font-size: 12px; }
+  .appendix-filter { width: 100%; max-width: 400px; padding: 8px 12px; margin-bottom: 16px; background: #0d1117; border: 1px solid #30363d; border-radius: 6px; color: #c9d1d9; font-size: 14px; outline: none; }
+  .appendix-filter:focus { border-color: #58a6ff; }
+  .appendix-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .appendix-table thead th { position: sticky; top: 0; background: #161b22; color: #8b949e; text-align: left; padding: 8px 12px; border-bottom: 2px solid #30363d; font-weight: 600; z-index: 2; }
+  .appendix-table tbody tr { border-bottom: 1px solid #21262d; }
+  .appendix-table tbody tr:hover { background: rgba(88,166,255,0.06); }
+  .appendix-table tbody td { padding: 7px 12px; color: #c9d1d9; }
+  .appendix-table .unit-group { background: #161b22; }
+  .appendix-table .unit-group td { padding: 10px 12px; font-weight: 700; font-size: 14px; border-bottom: 2px solid #30363d; cursor: pointer; user-select: none; }
+  .appendix-table .unit-group:hover td { background: rgba(88,166,255,0.04); }
+  .unit-toggle { display: inline-block; width: 18px; transition: transform 0.2s; font-size: 12px; }
+  .unit-group.collapsed .unit-toggle { transform: rotate(-90deg); }
+  .appendix-table .watch-link { color: #ff4444; text-decoration: none; font-weight: 600; }
+  /* ── Practice Problems (Problem-First) ── */
+  #problems-container { position: relative; top: 0; width: 100%; max-width: 1100px; margin: 0 auto; padding: 24px 16px 60px; }
+  #view-problems { overflow-y: auto; height: calc(100vh - 50px); margin-top: 50px; }
+  .prob-intro { background: #161b22; border: 1px solid #30363d; border-left: 3px solid #7ee787; border-radius: 6px; padding: 14px 18px; margin-bottom: 22px; color: #c9d1d9; font-size: 14px; line-height: 1.6; }
+  .prob-intro strong { color: #7ee787; }
+  .prob-section { margin-bottom: 22px; border: 1px solid #30363d; border-radius: 8px; background: #161b22; overflow: hidden; }
+  .prob-section > summary { padding: 14px 18px; font-size: 15px; font-weight: 600; color: #e6edf3; cursor: pointer; list-style: none; display: flex; align-items: center; gap: 10px; user-select: none; transition: background .15s; }
+  .prob-section > summary::-webkit-details-marker { display: none; }
+  .prob-section > summary::before { content: '▸'; color: #8b949e; font-size: 11px; transition: transform .2s; }
+  .prob-section[open] > summary::before { transform: rotate(90deg); }
+  .prob-section > summary:hover { background: rgba(88,166,255,0.04); }
+  .prob-section .wk { color: #8b949e; font-size: 12px; font-weight: 500; background: #0d1117; padding: 2px 8px; border-radius: 10px; border: 1px solid #30363d; }
+  .prob-body { padding: 6px 20px 18px 40px; }
+  .prob-body > ol { padding-left: 22px; margin: 8px 0 4px; }
+  .prob-body > ol > li { margin: 12px 0; color: #c9d1d9; font-size: 14px; line-height: 1.55; }
+  .prob-body > ol > li::marker { color: #7ee787; font-weight: 600; }
+  .prob-hint { display: block; margin-top: 4px; color: #8b949e; font-size: 12.5px; font-style: italic; }
+  .prob-hint::before { content: '💡 '; font-style: normal; }
+  .prob-tag { display: inline-block; font-size: 10px; font-weight: 600; padding: 1px 7px; border-radius: 8px; margin-right: 6px; vertical-align: middle; text-transform: uppercase; letter-spacing: .4px; }
+  .prob-tag.design { background: #58a6ff20; color: #58a6ff; }
+  .prob-tag.debug  { background: #f8514920; color: #f85149; }
+  .prob-tag.paper  { background: #d2a8ff20; color: #d2a8ff; }
+  .prob-tag.code   { background: #7ee78720; color: #7ee787; }
+  .prob-tag.derive { background: #ffa65720; color: #ffa657; }
+  .appendix-table .watch-link:hover { color: #ff0000; text-decoration: underline; }
+
+  /* ── Mobile ── */
+  @media (max-width: 768px) {
+    #toolbar { flex-wrap: nowrap; height: 48px; padding: 0 10px; }
+    #toolbar h1 { font-size: 15px; margin-right: auto; }
+    #hamburger { display: block; }
+    .tab-group { display: none; position: fixed; top: 48px; left: 0; right: 0; flex-direction: column; background: rgba(13,17,23,0.97); backdrop-filter: blur(12px); border-bottom: 1px solid #30363d; z-index: 20; padding: 8px 0; }
+    .tab-group.open { display: flex; }
+    .tab { padding: 12px 20px; font-size: 14px; border-bottom: none; border-left: 3px solid transparent; justify-content: flex-start; }
+    .tab.active { border-left-color: #58a6ff; border-bottom: none; }
+    .toolbar-sep { display: none; }
+    .canvas-controls { top: auto; bottom: 56px; right: 12px; }
+    #view-deepdive { margin-top: 48px; height: calc(100vh - 48px); }
+    .dd-grid { grid-template-columns: 1fr; padding: 12px 10px; }
+    #view-appendix { margin-top: 48px; height: calc(100vh - 48px); }
+    #tracker-panel { width: 100%; top: 48px; }
+    #cmd-panel { width: 100% !important; right: 0 !important; }
+    #legend, #legend-graph { display: none !important; }
+    #source-link { bottom: 8px; right: 8px; font-size: 10px; padding: 5px 10px; }
+    #pdf-toolbar { flex-wrap: wrap; padding: 6px 8px; }
+    .scribble-tools { margin-left: 0; border-left: none; padding-left: 0; flex-wrap: wrap; width: 100%; border-top: 1px solid #30363d; padding-top: 6px; }
+  }
+  @media (max-width: 480px) {
+    #toolbar h1 { font-size: 13px; }
+    .dd-card-img { height: 120px; }
+    .dd-keypoints { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════ TOOLBAR ═══════════════ -->
+<div id="toolbar">
+  <h1 id="toolbar-title"></h1>
+  <button id="hamburger" onclick="toggleMobileMenu()">☰</button>
+  <div id="toolbar-menu">
+    <div class="tab-group" id="tab-group"></div>
+    <div class="actions">
+      <button class="btn" onclick="toggleTracker()">📊 Tracker</button>
+      <button class="btn" id="btn-path" onclick="togglePathPanel()" style="display:none;background:#1f6feb;border-color:#58a6ff;color:#fff">🧭 Learning Path</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ VIEWS ═══════════════ -->
+<div id="view-mindmap" class="view">
+  <svg id="canvas"></svg>
+  <div class="canvas-controls" id="mindmap-controls">
+    <button class="cbtn" onclick="expandAll()">⊞ Expand All</button>
+    <button class="cbtn" onclick="collapseAll()">⊟ Collapse All</button>
+    <button class="cbtn" onclick="resetView()">↻ Reset View</button>
+  </div>
+</div>
+
+<div id="view-graph" class="view">
+  <svg id="canvas-graph"></svg>
+  <div class="canvas-controls" id="graph-controls" style="display:none">
+    <button class="cbtn" onclick="resetGraphView()">↻ Reset View</button>
+    <button class="cbtn" onclick="toggleLabels()">🏷️ Toggle Labels</button>
+    <button class="cbtn" onclick="highlightReset()">✕ Clear Highlight</button>
+  </div>
+</div>
+
+<div id="view-deepdive" class="view">
+  <div id="dd-card-grid" class="dd-grid"></div>
+  <div id="dd-full-container"></div>
+  <div class="canvas-controls" id="deepdive-controls" style="display:none">
+    <button class="cbtn" id="btn-back-cards" onclick="showCardGrid()">← Back to All</button>
+  </div>
+</div>
+
+<div id="view-appendix" class="view">
+  <div id="appendix-container"></div>
+</div>
+<div id="view-problems" class="view">
+  <div id="problems-container"></div>
+</div>
+
+<!-- ═══════════════ SHARED OVERLAYS ═══════════════ -->
+<div id="tooltip"><div class="tt-title"></div><div class="tt-body"></div><div class="tt-slides"></div></div>
+<a id="source-link" href="#" target="_blank" style="display:none"></a>
+
+<!-- Legends (populated by JS) -->
+<div id="legend" class="legend-mindmap" style="display:none"></div>
+<div id="legend-graph" style="display:none; position:fixed; bottom:16px; left:16px; z-index:10; background:rgba(22,27,34,0.92); border:1px solid #30363d; border-radius:8px; padding:12px 16px; font-size:12px;"></div>
+
+<!-- PDF Viewer -->
+<div id="pdf-viewer">
+  <div id="pdf-toolbar">
+    <button class="btn" onclick="closePdfViewer()">← Back</button>
+    <span class="pdf-title" id="pdf-title"></span>
+    <div class="scribble-tools">
+      <button class="btn" id="scribble-toggle" onclick="toggleScribble()">✏️ Scribble</button>
+      <span class="scribble-color sel" style="background:#ff6b6b" onclick="setScribbleColor(this,'#ff6b6b')"></span>
+      <span class="scribble-color" style="background:#58a6ff" onclick="setScribbleColor(this,'#58a6ff')"></span>
+      <span class="scribble-color" style="background:#7ee787" onclick="setScribbleColor(this,'#7ee787')"></span>
+      <span class="scribble-color" style="background:#ffa657" onclick="setScribbleColor(this,'#ffa657')"></span>
+      <span class="scribble-color" style="background:#ffffff" onclick="setScribbleColor(this,'#ffffff')"></span>
+      <input type="range" class="scribble-size" min="1" max="12" value="3" oninput="scribbleCtx.lineWidth=+this.value" title="Pen size">
+      <button class="btn" onclick="undoScribble()">↩</button>
+      <button class="btn" onclick="clearScribble()">🗑️</button>
+    </div>
+    <button class="btn" id="pdf-open-ext" onclick="openPdfExternal()">↗ Open</button>
+  </div>
+  <div id="pdf-body">
+    <iframe id="pdf-iframe"></iframe>
+    <canvas id="scribble-canvas"></canvas>
+  </div>
+</div>
+
+<!-- Tracker Panel -->
+<div id="tracker-panel">
+  <div id="tracker-header">
+    <h3>📊 Comment Tracker</h3>
+    <button onclick="toggleTracker()">✕</button>
+  </div>
+  <div id="tracker-stats"></div>
+  <div class="tracker-filter" id="tracker-filter"></div>
+  <div id="tracker-list"></div>
+</div>
+
+<!-- Learning Path Panel -->
+<div id="path-panel">
+  <div style="display:flex;justify-content:space-between;align-items:flex-start">
+    <h2>🧭 Recommended Learning Path</h2>
+    <button onclick="togglePathPanel()" style="background:none;border:none;color:#8b949e;font-size:18px;cursor:pointer">✕</button>
+  </div>
+  <div class="subtitle">Follow this sequence to build understanding layer by layer.</div>
+  <div class="path-controls">
+    <button class="path-btn" id="btn-autoplay" onclick="autoPlay()">▶ Auto-Play</button>
+    <button class="path-btn" onclick="resetPath()">↺ Reset</button>
+  </div>
+  <div id="path-steps"></div>
+</div>
+
+<!-- Command Panel (Comments/Tags) -->
+<div id="cmd-panel">
+  <div id="cmd-panel-header">
+    <div class="cp-title">
+      <div class="cp-name" id="cp-name"></div>
+      <div class="cp-tip" id="cp-tip"></div>
+    </div>
+    <button id="cmd-panel-close" onclick="closeCmdPanel()">✕</button>
+  </div>
+  <div id="cmd-tags"></div>
+  <div id="cmd-comments"></div>
+  <div id="cmd-input-area">
+    <textarea id="cmd-input" placeholder="Add a comment or type a / command…" rows="2"></textarea>
+    <div id="cmd-input-hint">
+      Press <code>Enter</code> to submit · <code>Shift+Enter</code> for newline<br>
+      <code>/done</code> <code>/todo</code> <code>/confused</code> <code>/important</code> <code>/tag name</code><br>
+      <code>/color #hex</code> <code>/rename New Name</code> <code>/clear</code> <code>/reset</code>
+    </div>
+  </div>
+</div>
+
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script>
+// ═══════════════════════════════════════════════════════════════════════
+// COURSE_CONFIG — Replace this block with your course data.
+// Omit any section (mindmap, graph, deepDives, youtube) to hide that tab.
+// ═══════════════════════════════════════════════════════════════════════
+const COURSE_CONFIG = {
+  schemaVersion: 1,
+  course: { code: "MATH", title: "Mathematics Syllabus", term: "Complete" },
+  storageKey: "math-study",
+  depthColors: ["#58a6ff","#f778ba","#7ee787","#ffa657","#d2a8ff","#79c0ff"],
+
+  mindmap: {
+    name: "Mathematics",
+    tooltip: "Complete mathematics syllabus — 36 subjects across 6 categories",
+    children: [
+      {
+        name: "Foundations",
+        tooltip: "Core undergraduate mathematics",
+        children: [
+          { name: "Mathematics-I", tooltip: "Calculus, ODEs, sequences, complex variables", children: [
+            { name: "Differential Calculus", tooltip: "Rolle's, MVT, Taylor's, Maclaurin's, curvature, Lagrange multipliers" },
+            { name: "ODEs", tooltip: "First order, second order, variation of parameters, Euler's equations" },
+            { name: "Sequences & Series", tooltip: "Convergence tests, absolute/conditional convergence, power series" },
+            { name: "Complex Variables", tooltip: "Cauchy-Riemann, Cauchy integral, Taylor/Laurent series, residue theorem" }
+          ]},
+          { name: "Mathematics-II", tooltip: "Linear algebra, integral/vector calculus, numerical analysis", children: [
+            { name: "Linear Algebra Intro", tooltip: "Vector spaces, basis, eigenvalues, Hermitian/unitary matrices" },
+            { name: "Integral Calculus", tooltip: "Beta/gamma functions, improper integrals, double/triple integrals" },
+            { name: "Vector Calculus", tooltip: "Gradient, curl, divergence, Green's/Gauss/Stokes theorems" },
+            { name: "Numerical Analysis Intro", tooltip: "Finite differences, interpolation, Simpson's rule, Newton-Raphson" }
+          ]},
+          { name: "Transform Calculus", tooltip: "Laplace, Fourier, Z-transform, wavelets", children: [
+            { name: "Laplace Transform", tooltip: "Shifting properties, convolution, solving IVP/BVP" },
+            { name: "Fourier Series & Transform", tooltip: "Full/half range, Parseval's identity, convolution" },
+            { name: "Other Transforms", tooltip: "Z-transform, Mellin transform, wavelet transform" }
+          ]},
+          { name: "PDEs", tooltip: "Partial differential equations, Bessel, Legendre", children: [
+            { name: "First Order PDEs", tooltip: "Lagrange's method, Charpit's method, classification" },
+            { name: "Second Order PDEs", tooltip: "Classification, canonical form, Cauchy/Neumann/Dirichlet" },
+            { name: "Solution Methods", tooltip: "Separation of variables, Fourier series, integral transforms" },
+            { name: "Special Functions", tooltip: "Bessel functions, Legendre polynomials, hypergeometric" }
+          ]}
+        ]
+      },
+      {
+        name: "Pure Mathematics",
+        tooltip: "Abstract and theoretical mathematics",
+        children: [
+          { name: "Linear Algebra Adv", tooltip: "Vector spaces over fields, dual spaces, Cayley-Hamilton, quadratic forms", children: [
+            { name: "Vector Spaces & Duals", tooltip: "Basis, dimension, inner products, linear functionals" },
+            { name: "Operators", tooltip: "Normal, unitary, Hermitian, skew-Hermitian operators" },
+            { name: "Cayley-Hamilton", tooltip: "Every matrix satisfies its own characteristic equation" }
+          ]},
+          { name: "Real Analysis", tooltip: "Rigorous foundations of calculus", children: [
+            { name: "Real Number System", tooltip: "Dedekind construction, field/order axioms, countable/uncountable sets" },
+            { name: "Convergence", tooltip: "Bolzano-Weierstrass, Heine-Borel, Cauchy sequences, compact sets" },
+            { name: "Integration", tooltip: "Riemann integration, improper integrals, uniform convergence" }
+          ]},
+          { name: "Modern Algebra", tooltip: "Groups, rings, fields, homomorphisms", children: [
+            { name: "Group Theory", tooltip: "Cyclic groups, cosets, Lagrange's theorem, Cayley's theorem" },
+            { name: "Ring Theory", tooltip: "Integral domains, ideals, PID, Euclidean domain" },
+            { name: "Field Extensions", tooltip: "Splitting fields, polynomial rings over fields" }
+          ]},
+          { name: "Functional Analysis", tooltip: "Banach/Hilbert spaces, key theorems", children: [
+            { name: "Banach Spaces", tooltip: "Contraction mapping, Hahn-Banach, open mapping, closed graph" },
+            { name: "Hilbert Spaces", tooltip: "Orthonormal sets, Riesz representation, bounded operators" }
+          ]},
+          { name: "Measure Theory", tooltip: "Lebesgue measure and integration", children: [
+            { name: "Lebesgue Measure", tooltip: "Outer measure, measurable sets/functions, Littlewood's principles" },
+            { name: "Lebesgue Integral", tooltip: "Bounded/non-negative/general, convergence in measure" },
+            { name: "Advanced Topics", tooltip: "Radon-Nikodym, Fubini, Lp spaces, Hahn-Jordan decomposition" }
+          ]},
+          { name: "Topology", tooltip: "Topological spaces, compactness, connectedness", children: [
+            { name: "Topological Spaces", tooltip: "Hausdorff, subspace/product/quotient topology" },
+            { name: "Compactness", tooltip: "Compact and locally compact spaces, separation axioms" },
+            { name: "Connectedness", tooltip: "Path connected spaces, equivalence classes of paths" }
+          ]},
+          { name: "Number Theory", tooltip: "Primes, congruences, Diophantine equations", children: [
+            { name: "Divisibility & Primes", tooltip: "Fundamental theorem of arithmetic, distribution of primes" },
+            { name: "Congruences", tooltip: "Quadratic residues, reciprocity, Jacobi symbol" },
+            { name: "Algebraic Numbers", tooltip: "Algebraic number fields, continued fractions, Diophantine equations" }
+          ]}
+        ]
+      },
+      {
+        name: "Applied Mathematics",
+        tooltip: "Mathematical methods, fluid mechanics, variational methods",
+        children: [
+          { name: "Mathematical Methods", tooltip: "BVP, Green's functions, special functions, tensors, stability", children: [
+            { name: "BVP & Green's Functions", tooltip: "Two-point BVP, Sturm-Liouville, eigenfunction expansions" },
+            { name: "Special Functions", tooltip: "Hypergeometric, Legendre, Bessel, orthogonality" },
+            { name: "Stability & Tensors", tooltip: "Lyapunov method, limit cycles, covariant/contravariant tensors" }
+          ]},
+          { name: "Fluid Mechanics", tooltip: "Euler, Navier-Stokes, boundary layers", children: [
+            { name: "Inviscid Flows", tooltip: "Euler/Bernoulli equations, potential flows, stream functions" },
+            { name: "2D & 3D Flows", tooltip: "Complex potential, Milne-Thomson, Blasius, conformal maps" },
+            { name: "Viscous Flows", tooltip: "Navier-Stokes, Prandtl boundary layer, Karman equation" }
+          ]},
+          { name: "Integral Eqs & Variations", tooltip: "Volterra, Fredholm, calculus of variations", children: [
+            { name: "Volterra Equations", tooltip: "Resolvent kernel, successive approximations, Abel equation" },
+            { name: "Fredholm Equations", tooltip: "Determinants, degenerate kernels, Fredholm alternative" },
+            { name: "Calculus of Variations", tooltip: "Euler-Lagrange, transversality, Galerkin's method" }
+          ]}
+        ]
+      },
+      {
+        name: "Probability & Statistics",
+        tooltip: "Probability, stochastic processes, queuing, time series",
+        children: [
+          { name: "Probability & Statistics", tooltip: "Distributions, estimation, hypothesis testing", children: [
+            { name: "Probability Theory", tooltip: "Bayes theorem, random variables, MGF, Chebyshev" },
+            { name: "Distributions", tooltip: "Binomial, Poisson, Normal, Gamma, Bivariate Normal" },
+            { name: "Statistical Inference", tooltip: "CLT, MLE, confidence intervals, Neyman-Pearson" }
+          ]},
+          { name: "Stochastic Processes", tooltip: "Markov chains, Poisson process, Brownian motion", children: [
+            { name: "Markov Chains", tooltip: "Random walk, gambler's ruin, branching process" },
+            { name: "Continuous Processes", tooltip: "Poisson, birth-death, renewal, martingales, Brownian motion" }
+          ]},
+          { name: "Queuing Theory", tooltip: "M/M/1, M/G/1, network of queues, performance", children: [
+            { name: "Standard Models", tooltip: "M/M/1, M/M/C, M/G/1, priority queues" },
+            { name: "Advanced Topics", tooltip: "Network of queues, processor sharing, discrete time queues" }
+          ]},
+          { name: "Regression & Time Series", tooltip: "Linear regression, ARMA, GARCH, forecasting", children: [
+            { name: "Regression", tooltip: "Simple/multiple linear, diagnostics, polynomial, orthogonal" },
+            { name: "Time Series", tooltip: "AR(p), MA(q), autocorrelation, ARCH/GARCH, forecasting" }
+          ]},
+          { name: "Computational Statistics", tooltip: "ANOVA, experimental design, factorial designs", children: [
+            { name: "ANOVA & Design", tooltip: "One-way/two-way ANOVA, randomized block, Latin squares" },
+            { name: "Factorial Designs", tooltip: "Confounding, blocking, fractional factorial" }
+          ]}
+        ]
+      },
+      {
+        name: "Numerical & Optimization",
+        tooltip: "Numerical methods, linear algebra computation, OR, NLP",
+        children: [
+          { name: "Numerical ODE & PDE", tooltip: "Runge-Kutta, Crank-Nicolson, finite differences", children: [
+            { name: "IVP Methods", tooltip: "Euler, Runge-Kutta, Adams-Moulton predictor-corrector" },
+            { name: "BVP Methods", tooltip: "Finite difference, shooting methods, stability" },
+            { name: "PDE Methods", tooltip: "Crank-Nicolson, ADI, method of characteristics" }
+          ]},
+          { name: "Adv Numerical Techniques", tooltip: "Extended IVP/BVP/PDE methods" },
+          { name: "Computational LinAlg", tooltip: "Direct/iterative methods, SVD, eigenvalues", children: [
+            { name: "Direct Methods", tooltip: "Gaussian elimination, LU/QR factorization, condition numbers" },
+            { name: "Iterative Methods", tooltip: "Jacobi, Gauss-Seidel, SOR, conjugate gradient, GMRES" },
+            { name: "Eigenvalues & SVD", tooltip: "Jacobi, Givens, Householder, QR iteration, pseudo inverse" }
+          ]},
+          { name: "Operations Research", tooltip: "LP, integer programming, game theory", children: [
+            { name: "Linear Programming", tooltip: "Simplex, Big M, duality, sensitivity analysis" },
+            { name: "Integer Programming", tooltip: "Gomory cutting plane, branch and bound" },
+            { name: "Game Theory", tooltip: "Zero-sum games, saddle points, mixed strategies" }
+          ]},
+          { name: "Non-Linear Programming", tooltip: "KKT, convex/quadratic programming", children: [
+            { name: "Optimality Conditions", tooltip: "Fritz John, KKT conditions, duality" },
+            { name: "Methods", tooltip: "Convex, quadratic, fractional, separable, feasible direction" }
+          ]}
+        ]
+      },
+      {
+        name: "Computer Science",
+        tooltip: "Programming, algorithms, architecture, OS, databases",
+        children: [
+          { name: "Programming & DS", tooltip: "C/C++, arrays, linked lists, stacks, queues, complexity" },
+          { name: "Algorithms", tooltip: "Greedy, D&C, DP, graph algorithms, NP-completeness" },
+          { name: "Discrete Mathematics", tooltip: "Relations, lattices, Boolean algebra, predicate calculus" },
+          { name: "OO Systems Design", tooltip: "UML, object modeling, Java, CORBA/COM" },
+          { name: "Computer Architecture", tooltip: "ISA, memory hierarchy, pipelining, RISC, cache" },
+          { name: "Switching & Automata", tooltip: "Karnaugh maps, flip-flops, sequential machines, Turing machines" },
+          { name: "Systems Programming", tooltip: "Assembly, macroprocessors, assemblers, loaders" },
+          { name: "Operating Systems", tooltip: "Scheduling, virtual memory, concurrency, deadlock" },
+          { name: "Database Systems", tooltip: "ER model, normal forms, SQL, B-tree indexing" },
+          { name: "Graph Theory", tooltip: "Trees, planarity, colouring, enumeration" },
+          { name: "NLP & Speech", tooltip: "Tokenization, N-grams, POS tagging, machine translation" },
+          { name: "Soft Computing", tooltip: "Fuzzy logic, genetic algorithms, neural networks" }
+        ]
+      }
+    ]
+  },
+  graph: {
+    categories: { foundations: "#58a6ff", pure: "#f0883e", applied: "#3fb950", stats: "#bc8cff", numerical: "#f778ba", cs: "#79c0ff" },
+    edgeColors: { prereq: "#58a6ff", builds: "#3fb950", related: "#ffa657", extends: "#f0883e" },
+    nodes: [
+      { id: "math1", label: "Mathematics-I", cat: "foundations", tip: "Calculus, ODEs, sequences, complex variables" },
+      { id: "math2", label: "Mathematics-II", cat: "foundations", tip: "Linear algebra, integral/vector calculus, numerical analysis" },
+      { id: "transforms", label: "Transform Calculus", cat: "foundations", tip: "Laplace, Fourier, Z-transform" },
+      { id: "pde", label: "PDEs", cat: "foundations", tip: "First/second order PDEs, special functions" },
+      { id: "linalg", label: "Linear Algebra Adv", cat: "pure", tip: "Abstract vector spaces, dual spaces, quadratic forms" },
+      { id: "real", label: "Real Analysis", cat: "pure", tip: "Dedekind reals, convergence, Riemann integration" },
+      { id: "algebra", label: "Modern Algebra", cat: "pure", tip: "Groups, rings, fields, homomorphisms" },
+      { id: "functional", label: "Functional Analysis", cat: "pure", tip: "Banach/Hilbert spaces, Hahn-Banach, Riesz" },
+      { id: "measure", label: "Measure Theory", cat: "pure", tip: "Lebesgue measure/integral, Radon-Nikodym, Fubini" },
+      { id: "topology", label: "Topology", cat: "pure", tip: "Compactness, separation axioms, connectedness" },
+      { id: "numtheory", label: "Number Theory", cat: "pure", tip: "Primes, congruences, Diophantine equations" },
+      { id: "methods", label: "Math Methods", cat: "applied", tip: "BVP, Green's functions, tensors, stability" },
+      { id: "fluids", label: "Fluid Mechanics", cat: "applied", tip: "Navier-Stokes, boundary layers, 2D/3D flows" },
+      { id: "inteq", label: "Integral Eqs", cat: "applied", tip: "Volterra, Fredholm, calculus of variations" },
+      { id: "probstats", label: "Prob & Stats", cat: "stats", tip: "Distributions, estimation, hypothesis testing" },
+      { id: "stochastic", label: "Stochastic Processes", cat: "stats", tip: "Markov chains, Brownian motion, martingales" },
+      { id: "queuing", label: "Queuing Theory", cat: "stats", tip: "M/M/1, M/G/1, network of queues" },
+      { id: "regression", label: "Regression & TS", cat: "stats", tip: "Linear regression, ARMA, GARCH, forecasting" },
+      { id: "compstats", label: "Comp Statistics", cat: "stats", tip: "ANOVA, experimental design, factorial designs" },
+      { id: "numode", label: "Numerical ODE/PDE", cat: "numerical", tip: "Runge-Kutta, Crank-Nicolson, ADI" },
+      { id: "complinalg", label: "Comp LinAlg", cat: "numerical", tip: "LU/QR, iterative methods, SVD" },
+      { id: "or", label: "Operations Research", cat: "numerical", tip: "Simplex, duality, integer programming" },
+      { id: "nlpopt", label: "Non-Linear Prog", cat: "numerical", tip: "KKT, convex/quadratic programming" },
+      { id: "progds", label: "Programming & DS", cat: "cs", tip: "C/C++, data structures, complexity" },
+      { id: "algo", label: "Algorithms", cat: "cs", tip: "Greedy, DP, graph algorithms, NP-completeness" },
+      { id: "discrete", label: "Discrete Math", cat: "cs", tip: "Relations, lattices, Boolean algebra" },
+      { id: "comparch", label: "Comp Architecture", cat: "cs", tip: "ISA, pipelining, RISC, cache" },
+      { id: "automata", label: "Automata", cat: "cs", tip: "Karnaugh maps, flip-flops, Turing machines" },
+      { id: "os", label: "Operating Systems", cat: "cs", tip: "Scheduling, virtual memory, deadlock" },
+      { id: "db", label: "Databases", cat: "cs", tip: "ER model, SQL, B-tree, normal forms" }
+    ],
+    edges: [
+      { source: "math1", target: "math2", type: "prereq", label: "prerequisite" },
+      { source: "math1", target: "transforms", type: "builds", label: "builds on" },
+      { source: "math1", target: "pde", type: "prereq", label: "ODE foundation" },
+      { source: "math1", target: "real", type: "builds", label: "analysis roots" },
+      { source: "math2", target: "linalg", type: "extends", label: "extends" },
+      { source: "math2", target: "numode", type: "builds", label: "numerical intro" },
+      { source: "transforms", target: "pde", type: "builds", label: "solution tools" },
+      { source: "real", target: "functional", type: "prereq", label: "prerequisite" },
+      { source: "real", target: "measure", type: "prereq", label: "prerequisite" },
+      { source: "real", target: "topology", type: "prereq", label: "prerequisite" },
+      { source: "real", target: "numtheory", type: "prereq", label: "prerequisite" },
+      { source: "algebra", target: "numtheory", type: "prereq", label: "prerequisite" },
+      { source: "linalg", target: "functional", type: "builds", label: "vector spaces" },
+      { source: "pde", target: "fluids", type: "prereq", label: "prerequisite" },
+      { source: "pde", target: "methods", type: "builds", label: "BVP/special fns" },
+      { source: "methods", target: "inteq", type: "builds", label: "variational" },
+      { source: "probstats", target: "stochastic", type: "prereq", label: "prerequisite" },
+      { source: "probstats", target: "queuing", type: "prereq", label: "prerequisite" },
+      { source: "probstats", target: "regression", type: "prereq", label: "prerequisite" },
+      { source: "probstats", target: "compstats", type: "prereq", label: "prerequisite" },
+      { source: "stochastic", target: "queuing", type: "builds", label: "Markov chains" },
+      { source: "or", target: "nlpopt", type: "prereq", label: "prerequisite" },
+      { source: "progds", target: "algo", type: "prereq", label: "prerequisite" },
+      { source: "progds", target: "os", type: "prereq", label: "prerequisite" },
+      { source: "progds", target: "db", type: "prereq", label: "prerequisite" },
+      { source: "algo", target: "discrete", type: "related", label: "theory" },
+      { source: "discrete", target: "automata", type: "builds", label: "Boolean/logic" },
+      { source: "comparch", target: "os", type: "builds", label: "hardware to OS" },
+      { source: "linalg", target: "complinalg", type: "related", label: "computational" },
+      { source: "fluids", target: "numode", type: "related", label: "numerical PDE" },
+      { source: "measure", target: "stochastic", type: "related", label: "measure theory" }
+    ]
+  },
+
+  learningPath: [
+    { title: "Step 1 — Calculus Foundations", desc: "Differential calculus, ODEs, sequences, complex variables.", nodes: ["math1"] },
+    { title: "Step 2 — Linear Algebra & Integration", desc: "Vector spaces, integral & vector calculus, numerical methods.", nodes: ["math2"] },
+    { title: "Step 3 — Transforms", desc: "Laplace, Fourier, Z-transform — essential PDE tools.", nodes: ["transforms"] },
+    { title: "Step 4 — PDEs", desc: "Classification, solution methods, Bessel & Legendre.", nodes: ["pde"] },
+    { title: "Step 5 — Real Analysis", desc: "Rigorous foundations: Dedekind reals, convergence, integration.", nodes: ["real"] },
+    { title: "Step 6 — Abstract Algebra", desc: "Advanced linear algebra, groups, rings, fields.", nodes: ["linalg", "algebra"] },
+    { title: "Step 7 — Probability & Statistics", desc: "Distributions, estimation, hypothesis testing.", nodes: ["probstats"] },
+    { title: "Step 8 — Analysis & Topology", desc: "Functional analysis, measure theory, topological spaces.", nodes: ["functional", "topology", "measure"] },
+    { title: "Step 9 — Applied Math", desc: "Fluid mechanics, mathematical methods, integral equations.", nodes: ["fluids", "methods", "inteq"] },
+    { title: "Step 10 — Numerical Methods", desc: "ODE/PDE numerics, computational linear algebra.", nodes: ["numode", "complinalg"] },
+    { title: "Step 11 — Optimization", desc: "LP, integer programming, non-linear programming.", nodes: ["or", "nlpopt"] },
+    { title: "Step 12 — Stochastic Methods", desc: "Stochastic processes, queuing, time series.", nodes: ["stochastic", "queuing", "regression", "compstats"] },
+    { title: "Step 13 — CS Core", desc: "Programming, algorithms, discrete math, architecture, OS, databases.", nodes: ["progds", "algo", "discrete", "comparch", "automata", "os", "db"] },
+    { title: "Step 14 — Number Theory", desc: "Primes, congruences, algebraic numbers.", nodes: ["numtheory"] }
+  ],
+
+  deepDives: [
+    {
+      id: "dd-residue", num: "Concept 1 of 6", title: "Residue Theorem",
+      desc: "Converting real integrals to residue sums in the complex plane.",
+      color: "#58a6ff", icon: "\u222E",
+      svg: function(w, h) {
+        return '<svg viewBox="0 0 '+w+' '+h+'" xmlns="http://www.w3.org/2000/svg">'
+          +'<circle cx="'+w/2+'" cy="'+h/2+'" r="'+h*0.35+'" fill="none" stroke="#58a6ff" stroke-width="2"/>'
+          +'<circle cx="'+w*0.4+'" cy="'+h*0.45+'" r="4" fill="#f85149"/><circle cx="'+w*0.6+'" cy="'+h*0.55+'" r="4" fill="#f85149"/>'
+          +'<text x="'+w*0.25+'" y="'+h*0.88+'" fill="#c9d1d9" font-size="13">2\u03C0i \u00B7 \u03A3 Res(f, z\u2096)</text></svg>';
+      },
+      sections: [
+        { title: "Core Idea", text: "The integral of a meromorphic function around a closed contour equals 2\u03C0i times the sum of residues at enclosed singularities." },
+        { title: "Computing Residues", text: "Simple pole: Res = lim (z-z0)f(z). Higher order: use Laurent expansion." },
+        { title: "Applications", text: "Evaluate real integrals (rational, trigonometric, branch-cut types), sum series." }
+      ],
+      keypoints: [
+        { title: "Singularity Types", text: "Poles (simple, order n) vs essential singularities." },
+        { title: "Contour Choice", text: "Semicircle, keyhole, or rectangular based on integral type." }
+      ]
+    },
+    {
+      id: "dd-navier", num: "Concept 2 of 6", title: "Navier-Stokes Equations",
+      desc: "The fundamental equations governing viscous fluid flow.",
+      color: "#3fb950", icon: "\uD83C\uDF0A",
+      svg: function(w, h) {
+        return '<svg viewBox="0 0 '+w+' '+h+'" xmlns="http://www.w3.org/2000/svg">'
+          +'<rect x="0" y="'+h*0.75+'" width="'+w+'" height="'+h*0.25+'" fill="#21262d"/>'
+          +'<path d="M0,'+h*0.75+' Q'+w*0.5+','+h*0.4+' '+w+','+h*0.35+'" fill="none" stroke="#3fb950" stroke-width="2"/>'
+          +'<text x="'+w*0.1+'" y="'+h*0.92+'" fill="#c9d1d9" font-size="12">Boundary Layer \u2192</text></svg>';
+      },
+      sections: [
+        { title: "The Equations", text: "For incompressible flow: \u03C1(\u2202v/\u2202t + v\u00B7\u2207v) = -\u2207p + \u03BC\u2207\u00B2v" },
+        { title: "Exact Solutions", text: "Couette flow, Poiseuille flow, Stokes creeping flow." },
+        { title: "Boundary Layers", text: "Prandtl splits flow into inviscid outer region and thin viscous layer near walls." }
+      ],
+      keypoints: [
+        { title: "Reynolds Number", text: "Re = \u03C1UL/\u03BC determines laminar vs turbulent." },
+        { title: "Millennium Problem", text: "3D existence and smoothness remains unsolved." }
+      ]
+    },
+    {
+      id: "dd-eigen", num: "Concept 3 of 6", title: "Eigenvalue Problems",
+      desc: "The unifying concept across linear algebra, PDEs, and computation.",
+      color: "#f0883e", icon: "\u03BB",
+      svg: function(w, h) {
+        return '<svg viewBox="0 0 '+w+' '+h+'" xmlns="http://www.w3.org/2000/svg">'
+          +'<text x="'+w*0.1+'" y="'+h*0.2+'" fill="#f0883e" font-size="16" font-weight="bold">Ax = \u03BBx</text>'
+          +'<line x1="'+w*0.15+'" y1="'+h*0.3+'" x2="'+w*0.15+'" y2="'+h*0.85+'" stroke="#30363d"/>'
+          +'<line x1="'+w*0.15+'" y1="'+h*0.85+'" x2="'+w*0.9+'" y2="'+h*0.85+'" stroke="#30363d"/>'
+          +'<circle cx="'+w*0.3+'" cy="'+h*0.65+'" r="5" fill="#58a6ff"/><circle cx="'+w*0.5+'" cy="'+h*0.45+'" r="5" fill="#f0883e"/>'
+          +'<circle cx="'+w*0.7+'" cy="'+h*0.55+'" r="5" fill="#bc8cff"/>'
+          +'<text x="'+w*0.25+'" y="'+h*0.98+'" fill="#c9d1d9" font-size="11">Spectrum of A</text></svg>';
+      },
+      sections: [
+        { title: "Matrix Eigenvalues", text: "Spectral theorem for symmetric matrices, Cayley-Hamilton theorem." },
+        { title: "Sturm-Liouville", text: "Eigenfunction expansions generalize Fourier series to arbitrary BVP." },
+        { title: "Numerical Methods", text: "QR iteration, Jacobi/Givens, Householder, SVD." }
+      ],
+      keypoints: [
+        { title: "Everywhere", text: "Vibrating strings, quantum mechanics, PageRank, PCA, stability analysis." },
+        { title: "Spectral Theory", text: "In infinite dimensions, spectrum generalizes eigenvalues." }
+      ]
+    },
+    {
+      id: "dd-simplex", num: "Concept 4 of 6", title: "Simplex & LP Duality",
+      desc: "The foundational algorithm for linear programming.",
+      color: "#f778ba", icon: "\u25B3",
+      svg: function(w, h) {
+        return '<svg viewBox="0 0 '+w+' '+h+'" xmlns="http://www.w3.org/2000/svg">'
+          +'<polygon points="'+w*0.15+','+h*0.85+' '+w*0.85+','+h*0.85+' '+w*0.65+','+h*0.25+' '+w*0.25+','+h*0.4+'" fill="rgba(88,166,255,0.15)" stroke="#58a6ff" stroke-width="2"/>'
+          +'<circle cx="'+w*0.65+'" cy="'+h*0.25+'" r="6" fill="#3fb950"/>'
+          +'<text x="'+w*0.7+'" y="'+h*0.23+'" fill="#3fb950" font-size="10">Optimal</text></svg>';
+      },
+      sections: [
+        { title: "Algorithm", text: "Traverse vertices of the feasible polytope, pivoting to improve the objective." },
+        { title: "Duality", text: "Every LP min cTx has dual max bTy. Strong duality: optimal values equal." },
+        { title: "Extensions", text: "Big M method, sensitivity analysis, integer/non-linear programming." }
+      ],
+      keypoints: [
+        { title: "Efficiency", text: "Exponential worst-case but fast in practice. Interior point is polynomial." },
+        { title: "Applications", text: "Resource allocation, transportation, scheduling, portfolio optimization." }
+      ]
+    },
+    {
+      id: "dd-markov", num: "Concept 5 of 6", title: "Markov Chains & Brownian Motion",
+      desc: "From discrete random walks to continuous stochastic processes.",
+      color: "#bc8cff", icon: "\uD83C\uDFB2",
+      svg: function(w, h) {
+        return '<svg viewBox="0 0 '+w+' '+h+'" xmlns="http://www.w3.org/2000/svg">'
+          +'<path d="M'+w*0.05+','+h*0.5+' L'+w*0.15+','+h*0.4+' L'+w*0.25+','+h*0.45+' L'+w*0.35+','+h*0.3+' L'+w*0.45+','+h*0.38+' L'+w*0.55+','+h*0.25+' L'+w*0.65+','+h*0.35+' L'+w*0.75+','+h*0.2+' L'+w*0.85+','+h*0.3+' L'+w*0.95+','+h*0.22+'" fill="none" stroke="#bc8cff" stroke-width="2"/>'
+          +'<line x1="'+w*0.05+'" y1="'+h*0.5+'" x2="'+w*0.95+'" y2="'+h*0.5+'" stroke="#30363d" stroke-dasharray="2,4"/>'
+          +'<text x="'+w*0.2+'" y="'+h*0.92+'" fill="#c9d1d9" font-size="11">Brownian motion sample path</text></svg>';
+      },
+      sections: [
+        { title: "Markov Property", text: "The future depends only on the present state, not the history." },
+        { title: "Key Models", text: "Random walk, gambler's ruin, Poisson process, birth-death chains." },
+        { title: "Brownian Motion", text: "Continuous limit of random walks. Foundation of stochastic calculus and finance." }
+      ],
+      keypoints: [
+        { title: "Martingales", text: "Fair game abstraction with powerful convergence theorems." },
+        { title: "Applications", text: "Queuing theory, Black-Scholes, diffusion physics." }
+      ]
+    },
+    {
+      id: "dd-npc", num: "Concept 6 of 6", title: "NP-Completeness",
+      desc: "Which problems are efficiently solvable?",
+      color: "#79c0ff", icon: "\u267E",
+      svg: function(w, h) {
+        return '<svg viewBox="0 0 '+w+' '+h+'" xmlns="http://www.w3.org/2000/svg">'
+          +'<ellipse cx="'+w/2+'" cy="'+h*0.55+'" rx="'+w*0.43+'" ry="'+h*0.4+'" fill="rgba(121,192,255,0.1)" stroke="#79c0ff" stroke-width="2"/>'
+          +'<ellipse cx="'+w*0.43+'" cy="'+h*0.6+'" rx="'+w*0.25+'" ry="'+h*0.25+'" fill="rgba(63,185,80,0.15)" stroke="#3fb950" stroke-width="2"/>'
+          +'<circle cx="'+w*0.43+'" cy="'+h*0.6+'" r="'+w*0.08+'" fill="rgba(88,166,255,0.2)" stroke="#58a6ff" stroke-width="2"/>'
+          +'<text x="'+w*0.4+'" y="'+h*0.63+'" fill="#58a6ff" font-size="11" font-weight="bold">P</text>'
+          +'<text x="'+w*0.56+'" y="'+h*0.52+'" fill="#3fb950" font-size="10">NP-C</text>'
+          +'<text x="'+w*0.75+'" y="'+h*0.4+'" fill="#79c0ff" font-size="10">NP</text></svg>';
+      },
+      sections: [
+        { title: "P vs NP", text: "P = polynomial-time solvable. NP = polynomial-time verifiable. P=NP is open." },
+        { title: "NP-Completeness", text: "Cook-Levin: SAT is NP-complete. Reductions prove 3-coloring, TSP, knapsack." },
+        { title: "Practical Solutions", text: "Branch & bound, backtracking, approximation algorithms, heuristics." }
+      ],
+      keypoints: [
+        { title: "Reductions", text: "Polynomial-time reductions are the proof technique for NP-completeness." },
+        { title: "Beyond NP", text: "PSPACE, EXPTIME, undecidable — a hierarchy of difficulty." }
+      ]
+    }
+  ]
+}
+;
+
+// ─── Sample data (remove when using real config) ─────────────────────
+const SAMPLE_CONFIG = {
+  schemaVersion: 1,
+  course: { code: "CS 101", title: "Sample Course", term: "Fall 2025" },
+  storageKey: "sample",
+  sourceLink: { url: "https://www.youtube.com/playlist?list=SAMPLE", label: "▶ Sample Playlist" },
+  depthColors: ["#58a6ff", "#f778ba", "#7ee787", "#ffa657", "#d2a8ff", "#79c0ff"],
+
+  mindmap: {
+    name: "CS 101\nSample Course",
+    tooltip: "A sample course for demonstration purposes.",
+    children: [
+      {
+        name: "Week 1\nIntroduction",
+        tooltip: "Overview of the course and fundamental concepts.",
+        slides: [{ label: "📄 Lecture Slides", path: "lectures/sample1.pdf" }],
+        children: [
+          { name: "Sample Topic A", tooltip: "Description of sample topic A.", children: [
+            { name: "Sub-topic A1", tooltip: "Details about sub-topic A1." },
+            { name: "Sub-topic A2", tooltip: "Details about sub-topic A2." }
+          ]},
+          { name: "Sample Topic B", tooltip: "Description of sample topic B." },
+          { name: "Lab 1", tooltip: "First hands-on lab exercise.", _lab: true }
+        ]
+      },
+      {
+        name: "Week 2\nCore Concepts",
+        tooltip: "Deeper dive into the core material.",
+        slides: [
+          { label: "📄 Lecture Slides", path: "lectures/sample2.pdf" },
+          { label: "📝 Notes", path: "lecture-notes/sample2-notes.pdf" }
+        ],
+        children: [
+          { name: "Sample Topic C", tooltip: "Description of sample topic C.", children: [
+            { name: "Sub-topic C1", tooltip: "Details about sub-topic C1." },
+            { name: "Sub-topic C2", tooltip: "Details about sub-topic C2." }
+          ]},
+          { name: "Sample Topic D", tooltip: "Description of sample topic D." }
+        ]
+      }
+    ]
+  },
+
+  graph: {
+    categories: { core: "#58a6ff", applied: "#f778ba", infra: "#7ee787" },
+    edgeColors: { depends: "#58a6ff", implements: "#f778ba", enables: "#7ee787", related: "#ffa657" },
+    nodes: [
+      { id: "sample1", label: "Sample Node 1", cat: "core",    tip: "A foundational concept." },
+      { id: "sample2", label: "Sample Node 2", cat: "core",    tip: "Another foundational concept." },
+      { id: "sample3", label: "Sample Node 3", cat: "applied", tip: "An applied concept." },
+      { id: "sample4", label: "Sample Node 4", cat: "infra",   tip: "An infrastructure concept." },
+      { id: "sample5", label: "Sample Node 5", cat: "applied", tip: "Another applied concept." }
+    ],
+    edges: [
+      { source: "sample1", target: "sample2", type: "depends",    label: "builds on" },
+      { source: "sample2", target: "sample3", type: "enables",    label: "enables" },
+      { source: "sample1", target: "sample4", type: "implements", label: "implements" },
+      { source: "sample3", target: "sample5", type: "related",    label: "related to" }
+    ]
+  },
+
+  learningPath: [
+    { title: "Step 1 — Foundations",    desc: "Start with the basics.", nodes: ["sample1", "sample2"], week: "Week 1" },
+    { title: "Step 2 — Applied Skills", desc: "Build on the foundation.", nodes: ["sample3", "sample5"], week: "Week 2" },
+    { title: "Step 3 — Infrastructure", desc: "Understand the infrastructure.", nodes: ["sample4"], week: "Week 2" }
+  ],
+
+  deepDives: [
+    {
+      id: "dd-sample1", num: "Concept 1 of 2", title: "Sample Concept Alpha",
+      desc: "An overview of concept alpha.", color: "#58a6ff", icon: "🔬",
+      svg: function(w, h) {
+        return '<svg viewBox="0 0 ' + w + ' ' + h + '" xmlns="http://www.w3.org/2000/svg" style="background:#0d1117">'
+          + '<rect x="20" y="20" width="' + (w-40) + '" height="' + (h-40) + '" rx="8" fill="#58a6ff15" stroke="#58a6ff" stroke-width="1"/>'
+          + '<text x="' + w/2 + '" y="' + h/2 + '" text-anchor="middle" fill="#58a6ff" font-size="14" font-weight="600">Diagram Placeholder</text>'
+          + '</svg>';
+      },
+      sections: [
+        { title: "Overview", text: "This is a sample section explaining concept alpha in detail." },
+        { title: "Key Formula", formula: "y = mx + b" }
+      ],
+      keypoints: [
+        { title: "Point 1", text: "First important takeaway." },
+        { title: "Point 2", text: "Second important takeaway." }
+      ]
+    },
+    {
+      id: "dd-sample2", num: "Concept 2 of 2", title: "Sample Concept Beta",
+      desc: "An overview of concept beta.", color: "#f778ba", icon: "⚡",
+      svg: function(w, h) {
+        return '<svg viewBox="0 0 ' + w + ' ' + h + '" xmlns="http://www.w3.org/2000/svg" style="background:#0d1117">'
+          + '<circle cx="' + w/2 + '" cy="' + h/2 + '" r="60" fill="#f778ba15" stroke="#f778ba" stroke-width="1"/>'
+          + '<text x="' + w/2 + '" y="' + h/2 + '" text-anchor="middle" fill="#f778ba" font-size="14" font-weight="600">Diagram Placeholder</text>'
+          + '</svg>';
+      },
+      sections: [
+        { title: "Overview", text: "This is a sample section explaining concept beta." }
+      ],
+      keypoints: [
+        { title: "Point 1", text: "Key takeaway for beta." },
+        { title: "Point 2", text: "Another takeaway for beta." }
+      ]
+    }
+  ],
+
+  youtube: {
+    videos: [
+      { unit: 1, id: "dQw4w9WgXcQ", topic: "Sample Video 1 — Introduction" },
+      { unit: 1, id: "dQw4w9WgXcQ", topic: "Sample Video 2 — Basics" },
+      { unit: 2, id: "dQw4w9WgXcQ", topic: "Sample Video 3 — Deep Dive" },
+      { unit: 2, id: "dQw4w9WgXcQ", topic: "Sample Video 4 — Practice" }
+    ],
+    unitNames: { 1: "Unit 1: Foundations", 2: "Unit 2: Advanced" }
+  }
+};
+
+// Use real config if provided, else sample
+const C = (COURSE_CONFIG && COURSE_CONFIG.schemaVersion) ? COURSE_CONFIG : SAMPLE_CONFIG;
+
+// ═══════════════════════════════════════════════════════════════════════
+// INIT — Build tabs, toolbar, feature toggles
+// ═══════════════════════════════════════════════════════════════════════
+const STORAGE_KEY = C.storageKey || 'studytool';
+const depthColors = C.depthColors || ["#58a6ff","#f778ba","#7ee787","#ffa657","#d2a8ff","#79c0ff"];
+
+const tabs = [];
+if (C.mindmap)                          tabs.push({ id: 'mindmap',  label: '📐 Mind Map' });
+if (C.graph && C.graph.nodes && C.graph.nodes.length) tabs.push({ id: 'graph',    label: '🔗 Topic Graph' });
+if (C.deepDives && C.deepDives.length)  tabs.push({ id: 'deepdive', label: '📚 Deep Dives' });
+if (C.youtube && C.youtube.videos && C.youtube.videos.length) tabs.push({ id: 'appendix', label: '📹 Appendix' });
+tabs.push({ id: 'problems', label: '🧠 Practice' });
+
+document.getElementById('toolbar-title').textContent = '🧠 ' + C.course.code;
+document.title = C.course.code + ' — Interactive Study Tool';
+
+// Build tab buttons
+const tabGroup = document.getElementById('tab-group');
+tabs.forEach((t, i) => {
+  const btn = document.createElement('button');
+  btn.className = 'tab' + (i === 0 ? ' active' : '');
+  btn.dataset.view = t.id;
+  btn.textContent = t.label;
+  btn.onclick = () => switchTab(t.id);
+  tabGroup.appendChild(btn);
+});
+
+// Source link
+if (C.sourceLink) {
+  const sl = document.getElementById('source-link');
+  sl.href = C.sourceLink.url;
+  sl.textContent = C.sourceLink.label;
+  sl.style.display = '';
+}
+
+// Learning path button visibility
+if (C.learningPath && C.learningPath.length) {
+  document.getElementById('btn-path').style.display = '';
+}
+
+// Show first tab
+let currentTab = tabs.length ? tabs[0].id : null;
+if (currentTab) document.getElementById('view-' + currentTab).classList.add('active');
+
+// ═══════════════════════════════════════════════════════════════════════
+// TAB SWITCHING
+// ═══════════════════════════════════════════════════════════════════════
+let graphInitialized = false;
+
+function switchTab(tab) {
+  currentTab = tab;
+  document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.view === tab));
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.getElementById('view-' + tab).classList.add('active');
+
+  document.getElementById('mindmap-controls').style.display  = tab === 'mindmap'  ? 'flex' : 'none';
+  document.getElementById('graph-controls').style.display    = tab === 'graph'    ? 'flex' : 'none';
+  document.getElementById('deepdive-controls').style.display = 'none';
+  document.getElementById('btn-path').style.display = (tab === 'graph' && C.learningPath && C.learningPath.length) ? '' : 'none';
+  document.querySelector('.legend-mindmap').style.display = tab === 'mindmap' ? '' : 'none';
+  document.getElementById('legend-graph').style.display   = tab === 'graph'   ? '' : 'none';
+
+  if (tab === 'graph' && !graphInitialized) { initGraph(); graphInitialized = true; }
+  // Close mobile menu
+  document.querySelector('.tab-group').classList.remove('open');
+}
+
+function toggleMobileMenu() {
+  document.querySelector('.tab-group').classList.toggle('open');
+}
+
+// ═══════════════════════════════════════════════════════════════════════
+// localStorage helpers
+// ═══════════════════════════════════════════════════════════════════════
+function loadStore() { try { return JSON.parse(localStorage.getItem(STORAGE_KEY + '-comments') || '{}'); } catch(e) { return {}; } }
+function saveStore(s) { try { localStorage.setItem(STORAGE_KEY + '-comments', JSON.stringify(s)); } catch(e) {} }
+function nodeKey(name) { return name.replace(/\n/g, ' ').trim(); }
+
+// ═══════════════════════════════════════════════════════════════════════
+// TOOLTIP
+// ═══════════════════════════════════════════════════════════════════════
+const tooltip = document.getElementById('tooltip');
+
+function showTooltip(evt, name, tip, slides) {
+  tooltip.querySelector('.tt-title').textContent = name.replace(/\n/g, ' ');
+  tooltip.querySelector('.tt-body').textContent = tip || '';
+  const sc = tooltip.querySelector('.tt-slides');
+  sc.innerHTML = '';
+  if (slides && slides.length) {
+    sc.innerHTML = '<span class="slides-label">📎 Linked Materials</span>';
+    slides.forEach(s => {
+      const a = document.createElement('a');
+      a.textContent = s.label;
+      a.onclick = (e) => { e.stopPropagation(); openPdfViewer(s.path, s.label); };
+      sc.appendChild(a);
+    });
+    tooltip.classList.add('has-slides');
+  } else {
+    tooltip.classList.remove('has-slides');
+  }
+  tooltip.style.opacity = 1;
+  positionTooltip(evt);
+}
+
+function positionTooltip(evt) {
+  let x = evt.pageX + 16, y = evt.pageY - 10;
+  if (x + 400 > window.innerWidth) x = evt.pageX - 400;
+  if (y + 200 > window.innerHeight) y = evt.pageY - 200;
+  tooltip.style.left = x + 'px';
+  tooltip.style.top = y + 'px';
+}
+
+function hideTooltip() {
+  setTimeout(() => { if (!tooltip.matches(':hover')) tooltip.style.opacity = 0; }, 200);
+}
+tooltip.addEventListener('mouseleave', () => { tooltip.style.opacity = 0; });
+
+// ═══════════════════════════════════════════════════════════════════════
+// MIND MAP (D3 collapsible tree)
+// ═══════════════════════════════════════════════════════════════════════
+let g, root, treeLayout, mmZoom;
+
+if (C.mindmap) {
+  const W = window.innerWidth, H = window.innerHeight;
+  const svg = d3.select("#canvas");
+  g = svg.append("g");
+  mmZoom = d3.zoom().scaleExtent([0.1, 4]).on("zoom", e => g.attr("transform", e.transform));
+  svg.call(mmZoom);
+  // Sync zoom internal state with initial position so resetView works correctly
+  const mmInitialTransform = d3.zoomIdentity.translate(W/3, H/2);
+  svg.call(mmZoom.transform, mmInitialTransform);
+
+  root = d3.hierarchy(C.mindmap);
+  root.x0 = 0; root.y0 = 0;
+
+  // Collapse children beyond depth 1
+  root.descendants().forEach(d => { if (d.depth > 1 && d.children) { d._children = d.children; d.children = null; } });
+
+  treeLayout = d3.tree().nodeSize([28, 220]);
+  updateMindmap(root);
+
+  // Build legend
+  buildMindmapLegend();
+}
+
+function updateMindmap(source) {
+  const duration = 400;
+  treeLayout(root);
+  const nodes = root.descendants();
+  const links = root.links();
+
+  // Links
+  const link = g.selectAll("path.link").data(links, d => d.target.data.name);
+  link.enter().insert("path", "g")
+    .attr("class", "link")
+    .attr("fill", "none")
+    .attr("stroke", d => depthColors[Math.min(d.target.depth, depthColors.length-1)])
+    .attr("stroke-opacity", 0.25)
+    .attr("stroke-width", 2)
+    .attr("d", () => {
+      const o = { x: source.x0, y: source.y0 };
+      return diagonal({ source: o, target: o });
+    })
+    .on("mouseover", function(evt, d) { showTooltip(evt, d.target.data.name, d.target.data.tooltip, d.target.data.slides); })
+    .on("mousemove", positionTooltip)
+    .on("mouseout", hideTooltip)
+    .transition().duration(duration)
+    .attr("d", diagonal);
+
+  link.transition().duration(duration).attr("d", diagonal);
+  link.exit().transition().duration(duration)
+    .attr("d", () => { const o = { x: source.x, y: source.y }; return diagonal({ source: o, target: o }); })
+    .remove();
+
+  // Nodes
+  const node = g.selectAll("g.node").data(nodes, d => d.data.name);
+  const nodeEnter = node.enter().append("g")
+    .attr("class", "node")
+    .attr("transform", `translate(${source.y0},${source.x0})`)
+    .on("click", (evt, d) => { if (d.children) { d._children = d.children; d.children = null; } else if (d._children) { d.children = d._children; d._children = null; } updateMindmap(d); })
+    .on("dblclick", (evt, d) => openCmdPanel(d.data.name, d.data.tooltip))
+    .on("mouseover", (evt, d) => showTooltip(evt, d.data.name, d.data.tooltip, d.data.slides))
+    .on("mousemove", positionTooltip)
+    .on("mouseout", hideTooltip);
+
+  nodeEnter.append("circle")
+    .attr("r", d => d.depth === 0 ? 14 : d.data._lab ? 9 : 10)
+    .attr("fill", d => depthColors[Math.min(d.depth, depthColors.length-1)])
+    .attr("fill-opacity", d => d.data._lab ? 0.5 : 0.85)
+    .attr("stroke", d => depthColors[Math.min(d.depth, depthColors.length-1)])
+    .attr("stroke-width", d => d.depth === 0 ? 3 : 2)
+    .attr("stroke-opacity", 0.4);
+
+  nodeEnter.each(function(d) {
+    const lines = d.data.name.split("\n");
+    const t = d3.select(this).append("text")
+      .attr("fill", "#c9d1d9").attr("font-size", d.depth === 0 ? "13px" : "11px")
+      .attr("font-weight", d.depth <= 1 ? "600" : "400")
+      .attr("dy", lines.length > 1 ? `${-(lines.length-1)*0.3}em` : ".35em")
+      .attr("x", d.children || d._children ? -16 : 16)
+      .attr("text-anchor", d.children || d._children ? "end" : "start")
+      .style("paint-order", "stroke").style("stroke", "#0d1117").style("stroke-width", "3px");
+    lines.forEach((line, i) => {
+      t.append("tspan")
+        .attr("x", d.children || d._children ? -16 : 16)
+        .attr("dy", i === 0 ? 0 : "1.2em")
+        .text(line);
+    });
+  });
+
+  // Update positions
+  const nodeUpdate = nodeEnter.merge(node);
+  nodeUpdate.transition().duration(duration).attr("transform", d => `translate(${d.y},${d.x})`);
+  node.exit().transition().duration(duration).attr("transform", `translate(${source.y},${source.x})`).remove();
+
+  nodes.forEach(d => { d.x0 = d.x; d.y0 = d.y; });
+}
+
+function diagonal(d) {
+  return `M${d.source.y},${d.source.x}C${(d.source.y+d.target.y)/2},${d.source.x} ${(d.source.y+d.target.y)/2},${d.target.x} ${d.target.y},${d.target.x}`;
+}
+
+function expandAll()   { root.descendants().forEach(d => { if (d._children) { d.children = d._children; d._children = null; } }); updateMindmap(root); }
+function collapseAll() { root.descendants().forEach(d => { if (d.depth > 1 && d.children) { d._children = d.children; d.children = null; } }); updateMindmap(root); }
+function resetView()   { collapseAll(); const W = window.innerWidth, H = window.innerHeight; d3.select("#canvas").transition().duration(600).call(mmZoom.transform, d3.zoomIdentity.translate(W/3, H/2)); }
+
+function buildMindmapLegend() {
+  const legend = document.getElementById('legend');
+  legend.style.display = '';
+  const labels = ['Course Root', 'Weekly Topics', 'Sub-Topics', 'Key Concepts', 'Labs'];
+  let html = '<div style="font-weight:600;color:#58a6ff;margin-bottom:6px;font-size:12px">Node Depth <span style="font-weight:400;color:#8b949e;font-size:10px">— click to filter</span></div>';
+  labels.forEach((l, i) => {
+    html += `<div class="legend-item" data-mm="depth-${i}" style="display:flex;align-items:center;gap:8px;margin:4px 0;cursor:pointer;padding:2px 4px;border-radius:4px"><span class="swatch" style="background:${depthColors[i]}"></span> ${l}</div>`;
+  });
+  html += '<div style="margin-top:6px;border-top:1px solid #30363d;padding-top:6px"><div class="legend-item" data-mm="reset" style="display:flex;align-items:center;gap:8px;cursor:pointer;padding:2px 4px;border-radius:4px;color:#8b949e"><span style="font-size:14px">✕</span> Clear filter</div></div>';
+  legend.innerHTML = html;
+
+  // Legend click filtering
+  legend.querySelectorAll('.legend-item').forEach(item => {
+    item.addEventListener('click', () => {
+      const mmKey = item.dataset.mm;
+      legend.querySelectorAll('.legend-item').forEach(i => i.classList.remove('active-filter'));
+      if (mmKey === 'reset') {
+        g.selectAll("g.node").style("opacity", 1);
+        g.selectAll("path.link").style("opacity", 1);
+        return;
+      }
+      item.classList.add('active-filter');
+      const depth = mmKey === 'depth-4' ? -1 : parseInt(mmKey.split('-')[1]);
+      g.selectAll("g.node").style("opacity", d => {
+        if (depth === -1) return d.data._lab ? 1 : 0.15;
+        return d.depth === depth ? 1 : 0.15;
+      });
+      g.selectAll("path.link").style("opacity", 0.1);
+    });
+  });
+}
+
+// ═══════════════════════════════════════════════════════════════════════
+// TOPIC GRAPH (D3 force-directed)
+// ═══════════════════════════════════════════════════════════════════════
+let graphZoom, showEdgeLabels = true;
+
+function initGraph() {
+  if (!C.graph) return;
+  const W = window.innerWidth, H = window.innerHeight;
+  const svg = d3.select("#canvas-graph");
+  const graphCategories = C.graph.categories;
+  const edgeColors = C.graph.edgeColors;
+  const nodes = C.graph.nodes.map(d => ({...d}));
+  const edges = C.graph.edges.map(d => ({...d}));
+
+  graphZoom = d3.zoom().scaleExtent([0.2, 5]).on("zoom", e => gGraph.attr("transform", e.transform));
+  svg.call(graphZoom);
+  const gGraph = svg.append("g").attr("transform", `translate(${W/2},${H/2})`);
+
+  const simul = d3.forceSimulation(nodes)
+    .force("link", d3.forceLink(edges).id(d => d.id).distance(120))
+    .force("charge", d3.forceManyBody().strength(-300))
+    .force("center", d3.forceCenter(0, 0))
+    .force("collision", d3.forceCollide().radius(30));
+
+  // Edges
+  const link = gGraph.selectAll("line.graph-link").data(edges).enter().append("line")
+    .attr("class", "graph-link")
+    .attr("stroke", d => edgeColors[d.type] || "#8b949e")
+    .attr("stroke-width", 2)
+    .attr("marker-end", "url(#arrow)");
+
+  // Arrow marker
+  svg.append("defs").append("marker").attr("id", "arrow").attr("viewBox", "0 -4 8 8").attr("refX", 20)
+    .attr("markerWidth", 6).attr("markerHeight", 6).attr("orient", "auto")
+    .append("path").attr("d", "M0,-4L8,0L0,4").attr("fill", "#484f58");
+
+  // Edge labels
+  const edgeLabel = gGraph.selectAll("text.graph-link-label").data(edges).enter().append("text")
+    .attr("class", "graph-link-label")
+    .text(d => d.label || d.type)
+    .on("mouseover", function(evt, d) { showTooltip(evt, d.label || d.type, `${d.source.label || d.source} → ${d.target.label || d.target}`); })
+    .on("mouseout", hideTooltip);
+
+  // Nodes
+  const node = gGraph.selectAll("g.graph-node").data(nodes).enter().append("g")
+    .attr("class", "graph-node")
+    .call(d3.drag().on("start", (evt, d) => { if (!evt.active) simul.alphaTarget(0.3).restart(); d.fx = d.x; d.fy = d.y; })
+      .on("drag", (evt, d) => { d.fx = evt.x; d.fy = evt.y; })
+      .on("end", (evt, d) => { if (!evt.active) simul.alphaTarget(0); d.fx = null; d.fy = null; }))
+    .on("click", (evt, d) => highlightNode(d, nodes, edges, link, node, edgeLabel))
+    .on("dblclick", (evt, d) => openCmdPanel(d.label, d.tip))
+    .on("mouseover", (evt, d) => showTooltip(evt, d.label, d.tip, d.slides))
+    .on("mousemove", positionTooltip)
+    .on("mouseout", hideTooltip);
+
+  node.append("circle")
+    .attr("r", d => { const c = edges.filter(e => (e.source.id||e.source)===d.id||(e.target.id||e.target)===d.id).length; return Math.max(10, 6+c*1.5); })
+    .attr("fill", d => graphCategories[d.cat])
+    .attr("fill-opacity", 0.85).attr("stroke", d => graphCategories[d.cat]).attr("stroke-width", 2).attr("stroke-opacity", 0.4);
+
+  node.each(function(d) {
+    const lines = d.label.split("\n");
+    const t = d3.select(this).append("text").attr("class", "graph-node-label").attr("text-anchor", "middle")
+      .attr("dy", lines.length > 1 ? `-${(lines.length-1)*0.3}em` : ".35em")
+      .attr("y", () => { const c = edges.filter(e => (e.source.id||e.source)===d.id||(e.target.id||e.target)===d.id).length; return Math.max(10, 6+c*1.5)+14; });
+    lines.forEach((line, i) => { t.append("tspan").attr("x", 0).attr("dy", i===0?0:"1.15em").text(line); });
+  });
+
+  window._graphRefs = { link, node, edgeLabel, nodes, edges };
+
+  simul.on("tick", () => {
+    link.attr("x1",d=>d.source.x).attr("y1",d=>d.source.y).attr("x2",d=>d.target.x).attr("y2",d=>d.target.y);
+    edgeLabel.attr("x",d=>(d.source.x+d.target.x)/2).attr("y",d=>(d.source.y+d.target.y)/2-6).style("display", showEdgeLabels ? "" : "none");
+    node.attr("transform", d => `translate(${d.x},${d.y})`);
+  });
+
+  // Build graph legend
+  buildGraphLegend();
+  setTimeout(() => refreshGraphBadges(loadStore()), 300);
+}
+
+function highlightNode(d, nodes, edges, link, node, edgeLabel) {
+  const connected = new Set([d.id]);
+  edges.forEach(e => { const s=e.source.id||e.source, t=e.target.id||e.target; if(s===d.id) connected.add(t); if(t===d.id) connected.add(s); });
+  node.select("circle").transition().duration(300).attr("fill-opacity", n => connected.has(n.id)?1:0.12);
+  node.selectAll("text").transition().duration(300).style("opacity", n => connected.has(n.id)?1:0.15);
+  link.transition().duration(300).attr("stroke-opacity", e => { const s=e.source.id||e.source, t=e.target.id||e.target; return (s===d.id||t===d.id)?0.85:0.04; });
+  edgeLabel.transition().duration(300).style("opacity", e => { const s=e.source.id||e.source, t=e.target.id||e.target; return (s===d.id||t===d.id)?1:0.05; });
+}
+
+function highlightReset() {
+  if (!window._graphRefs) return;
+  const { link, node, edgeLabel } = window._graphRefs;
+  node.select("circle").transition().duration(300).attr("fill-opacity",0.85).attr("stroke-opacity",0.4);
+  node.selectAll("text").transition().duration(300).style("opacity",1);
+  link.transition().duration(300).attr("stroke-opacity",0.45).attr("stroke-width",2);
+  edgeLabel.transition().duration(300).style("opacity",1);
+}
+function toggleLabels() { showEdgeLabels=!showEdgeLabels; if(window._graphRefs) window._graphRefs.edgeLabel.style("display", showEdgeLabels?"":"none"); }
+function resetGraphView() { highlightReset(); d3.select("#canvas-graph").transition().duration(600).call(graphZoom.transform, d3.zoomIdentity); }
+
+function buildGraphLegend() {
+  const lg = document.getElementById('legend-graph');
+  let html = '<div style="font-weight:600;color:#58a6ff;margin-bottom:6px">Node Categories <span style="font-weight:400;color:#8b949e;font-size:10px">— click to filter</span></div>';
+  Object.entries(C.graph.categories).forEach(([cat, color]) => {
+    html += `<div class="legend-item" data-cat="${cat}" style="display:flex;align-items:center;gap:8px;margin:4px 0;cursor:pointer;padding:2px 4px;border-radius:4px"><span class="swatch" style="background:${color}"></span> ${cat}</div>`;
+  });
+  html += '<div style="margin-top:8px;font-weight:600;color:#58a6ff;margin-bottom:4px">Edge Types</div>';
+  Object.entries(C.graph.edgeColors).forEach(([type, color]) => {
+    html += `<div class="legend-item" data-edge="${type}" style="display:flex;align-items:center;gap:8px;margin:4px 0;cursor:pointer;padding:2px 4px;border-radius:4px"><span class="swatch-line" style="background:${color}"></span> ${type}</div>`;
+  });
+  html += '<div style="margin-top:6px;border-top:1px solid #30363d;padding-top:6px"><div class="legend-item" data-action="reset" style="display:flex;align-items:center;gap:8px;cursor:pointer;padding:2px 4px;border-radius:4px;color:#8b949e"><span style="font-size:14px">✕</span> Clear filter</div></div>';
+  lg.innerHTML = html;
+
+  // Attach click handlers for graph legend filtering
+  const { link, node, edgeLabel, nodes, edges } = window._graphRefs;
+  lg.querySelectorAll('.legend-item').forEach(item => {
+    item.addEventListener('click', () => {
+      lg.querySelectorAll('.legend-item').forEach(i => i.classList.remove('active-filter'));
+
+      // Reset filter
+      if (item.dataset.action === 'reset') {
+        node.select("circle").transition().duration(300).attr("fill-opacity", 0.85).attr("stroke-opacity", 0.4);
+        node.selectAll("text").transition().duration(300).style("opacity", 1);
+        link.transition().duration(300).attr("stroke-opacity", 0.45).attr("stroke-width", 2);
+        edgeLabel.transition().duration(300).style("opacity", 1);
+        return;
+      }
+
+      item.classList.add('active-filter');
+
+      // Filter by node category
+      if (item.dataset.cat) {
+        const cat = item.dataset.cat;
+        node.select("circle").transition().duration(300)
+          .attr("fill-opacity", d => d.cat === cat ? 1 : 0.08)
+          .attr("stroke-opacity", d => d.cat === cat ? 0.8 : 0.05);
+        node.selectAll("text").transition().duration(300)
+          .style("opacity", d => d.cat === cat ? 1 : 0.1);
+        link.transition().duration(300)
+          .attr("stroke-opacity", e => {
+            const scat = nodes.find(n => n.id === (e.source.id||e.source));
+            const tcat = nodes.find(n => n.id === (e.target.id||e.target));
+            return (scat && scat.cat === cat) || (tcat && tcat.cat === cat) ? 0.7 : 0.03;
+          });
+        edgeLabel.transition().duration(300)
+          .style("opacity", e => {
+            const scat = nodes.find(n => n.id === (e.source.id||e.source));
+            const tcat = nodes.find(n => n.id === (e.target.id||e.target));
+            return (scat && scat.cat === cat) || (tcat && tcat.cat === cat) ? 1 : 0.05;
+          });
+      }
+
+      // Filter by edge type
+      if (item.dataset.edge) {
+        const etype = item.dataset.edge;
+        link.transition().duration(300)
+          .attr("stroke-opacity", e => e.type === etype ? 0.85 : 0.03)
+          .attr("stroke-width", e => e.type === etype ? 3.5 : 1.5);
+        edgeLabel.transition().duration(300)
+          .style("opacity", e => e.type === etype ? 1 : 0.05);
+        // Dim nodes not connected by this edge type
+        const connected = new Set();
+        edges.forEach(e => { if (e.type === etype) { connected.add(e.source.id||e.source); connected.add(e.target.id||e.target); } });
+        node.select("circle").transition().duration(300)
+          .attr("fill-opacity", d => connected.has(d.id) ? 1 : 0.08);
+        node.selectAll("text").transition().duration(300)
+          .style("opacity", d => connected.has(d.id) ? 1 : 0.1);
+      }
+    });
+  });
+}
+
+// ═══════════════════════════════════════════════════════════════════════
+// LEARNING PATH
+// ═══════════════════════════════════════════════════════════════════════
+let pathPanelOpen = false, currentStep = -1, autoPlayTimer = null;
+
+function togglePathPanel() {
+  pathPanelOpen = !pathPanelOpen;
+  document.getElementById('path-panel').classList.toggle('open', pathPanelOpen);
+  if (pathPanelOpen && !document.getElementById('path-steps').children.length) buildPathUI();
+}
+
+function buildPathUI() {
+  if (!C.learningPath) return;
+  const container = document.getElementById('path-steps');
+  C.learningPath.forEach((step, idx) => {
+    const el = document.createElement('div');
+    el.className = 'path-step';
+    el.innerHTML = `<div class="step-connector"></div><div class="step-badge">${idx+1}</div><div class="step-content"><div class="step-title">${step.title}</div><div class="step-desc">${step.desc}</div><div class="step-nodes" style="font-size:10px;color:#58a6ff;margin-top:3px">${step.week || ''}</div></div>`;
+    el.onclick = () => activateStep(idx);
+    container.appendChild(el);
+  });
+}
+
+function activateStep(idx) {
+  currentStep = idx;
+  document.querySelectorAll('.path-step').forEach((el, i) => {
+    el.classList.remove('active', 'completed');
+    if (i < idx) el.classList.add('completed');
+    else if (i === idx) el.classList.add('active');
+  });
+  // Highlight corresponding graph nodes
+  if (window._graphRefs && C.learningPath[idx]) {
+    highlightReset();
+    const stepNodes = new Set(C.learningPath[idx].nodes);
+    const { node, link, edgeLabel } = window._graphRefs;
+    node.select("circle").transition().duration(300).attr("fill-opacity", n => stepNodes.has(n.id) ? 1 : 0.12);
+    node.selectAll("text").transition().duration(300).style("opacity", n => stepNodes.has(n.id) ? 1 : 0.15);
+    link.transition().duration(300).attr("stroke-opacity", 0.05);
+    edgeLabel.transition().duration(300).style("opacity", 0.05);
+  }
+}
+
+function resetPath() { currentStep = -1; document.querySelectorAll('.path-step').forEach(el => el.classList.remove('active', 'completed')); highlightReset(); }
+function autoPlay() {
+  if (autoPlayTimer) { clearInterval(autoPlayTimer); autoPlayTimer = null; document.getElementById('btn-autoplay').textContent = '▶ Auto-Play'; return; }
+  document.getElementById('btn-autoplay').textContent = '⏸ Pause';
+  let idx = currentStep < 0 ? 0 : currentStep;
+  activateStep(idx);
+  autoPlayTimer = setInterval(() => {
+    idx++;
+    if (idx >= (C.learningPath||[]).length) { clearInterval(autoPlayTimer); autoPlayTimer = null; document.getElementById('btn-autoplay').textContent = '▶ Auto-Play'; return; }
+    activateStep(idx);
+  }, 3000);
+}
+
+// ═══════════════════════════════════════════════════════════════════════
+// COMMAND PANEL (Comments / Tags)
+// ═══════════════════════════════════════════════════════════════════════
+let cmdPanelNodeKey = null;
+
+function openCmdPanel(name, tip) {
+  cmdPanelNodeKey = nodeKey(name);
+  document.getElementById('cp-name').textContent = name.replace(/\n/g, ' ');
+  document.getElementById('cp-tip').textContent = tip || '';
+  document.getElementById('cmd-panel').classList.add('open');
+  renderTags(); renderComments();
+}
+
+function closeCmdPanel() { document.getElementById('cmd-panel').classList.remove('open'); cmdPanelNodeKey = null; }
+
+function renderTags() {
+  const store = loadStore(); const nd = store[cmdPanelNodeKey] || {}; const tags = nd.tags || [];
+  const container = document.getElementById('cmd-tags'); container.innerHTML = '';
+  const builtinTags = ['done','todo','confused','important'];
+  tags.forEach(tag => {
+    const cls = builtinTags.includes(tag) ? 'tag-'+tag : 'tag-custom';
+    const el = document.createElement('span'); el.className = 'cmd-tag ' + cls;
+    el.innerHTML = `${tagIcon(tag)} ${tag} <span style="cursor:pointer;margin-left:2px" onclick="removeTag('${tag}')">&times;</span>`;
+    container.appendChild(el);
+  });
+}
+
+function renderComments() {
+  const store = loadStore(); const nd = store[cmdPanelNodeKey] || {}; const comments = nd.comments || [];
+  const container = document.getElementById('cmd-comments');
+  if (!comments.length) { container.innerHTML = '<div class="cmd-empty">No comments yet. Type below to add one.</div>'; return; }
+  container.innerHTML = '';
+  comments.forEach((c, idx) => {
+    const el = document.createElement('div'); el.className = 'cmd-comment';
+    el.innerHTML = `<div class="cc-text">${escHtml(c.text)}</div><div class="cc-time">${new Date(c.time).toLocaleString()}</div><button class="cc-del" onclick="deleteComment(${idx})">✕</button>`;
+    container.appendChild(el);
+  });
+  container.scrollTop = container.scrollHeight;
+}
+
+function escHtml(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function tagIcon(tag) { return {done:'✅',todo:'📋',confused:'❓',important:'⭐'}[tag] || '🏷️'; }
+
+function deleteComment(idx) {
+  const store = loadStore(); const nd = store[cmdPanelNodeKey] || {};
+  if (nd.comments) { nd.comments.splice(idx, 1); store[cmdPanelNodeKey] = nd; saveStore(store); }
+  renderComments(); refreshAllBadges();
+}
+
+function removeTag(tag) {
+  const store = loadStore(); const nd = store[cmdPanelNodeKey] || {};
+  nd.tags = (nd.tags || []).filter(t => t !== tag); store[cmdPanelNodeKey] = nd; saveStore(store);
+  renderTags(); refreshAllBadges();
+}
+
+document.getElementById('cmd-input').addEventListener('keydown', (e) => {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); const val = e.target.value.trim(); if (!val) return; processInput(val); e.target.value = ''; }
+});
+
+function processInput(input) {
+  if (!cmdPanelNodeKey) return;
+  const store = loadStore();
+  if (!store[cmdPanelNodeKey]) store[cmdPanelNodeKey] = { comments: [], tags: [] };
+  const nd = store[cmdPanelNodeKey]; if (!nd.comments) nd.comments = []; if (!nd.tags) nd.tags = [];
+  if (input.startsWith('/')) {
+    const parts = input.slice(1).split(/\s+/); const cmd = parts[0].toLowerCase(); const arg = parts.slice(1).join(' ').trim();
+    switch(cmd) {
+      case 'done': case 'todo': case 'confused': case 'important': toggleTag(nd, cmd); break;
+      case 'tag': if (arg) toggleTag(nd, arg); break;
+      case 'color': if (arg) nd.color = arg; else delete nd.color; break;
+      case 'clear': nd.comments = []; break;
+      case 'reset': delete store[cmdPanelNodeKey]; saveStore(store); renderTags(); renderComments(); refreshAllBadges(); return;
+      default: nd.comments.push({ text: input, time: Date.now() });
+    }
+    store[cmdPanelNodeKey] = nd; saveStore(store); renderTags(); renderComments(); refreshAllBadges(); return;
+  }
+  nd.comments.push({ text: input, time: Date.now() }); store[cmdPanelNodeKey] = nd; saveStore(store); renderComments(); refreshAllBadges();
+}
+
+function toggleTag(nd, tag) { const idx = nd.tags.indexOf(tag); if (idx >= 0) nd.tags.splice(idx, 1); else nd.tags.push(tag); }
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && cmdPanelNodeKey) closeCmdPanel(); });
+
+// ═══════════════════════════════════════════════════════════════════════
+// BADGES (visual indicators on nodes)
+// ═══════════════════════════════════════════════════════════════════════
+function refreshAllBadges() { const store = loadStore(); refreshMindmapBadges(store); refreshGraphBadges(store); }
+
+function refreshMindmapBadges(store) {
+  if (!g) return;
+  g.selectAll("g.node").each(function(d) {
+    const key = nodeKey(d.data.name); const nd = store[key]; const el = d3.select(this);
+    el.selectAll(".comment-badge,.comment-badge-bg,.has-comment-ring,.tag-icon-badge").remove();
+    if (!nd) return;
+    if (nd.color) el.select("circle").style("stroke", nd.color); else el.select("circle").style("stroke", null);
+    if (nd.comments && nd.comments.length) {
+      const r = d.depth===0?16:d.data._lab?11:12;
+      el.insert("circle","circle").attr("class","has-comment-ring").attr("r",r);
+      el.append("circle").attr("class","comment-badge-bg").attr("cx",-10).attr("cy",10).attr("r",7).attr("fill","#ffa657");
+      el.append("text").attr("class","comment-badge").attr("x",-10).attr("y",10).attr("text-anchor","middle").attr("dominant-baseline","central").style("font-size","8px").style("font-weight","700").text(nd.comments.length);
+    }
+    if (nd.tags && nd.tags.length) {
+      el.append("text").attr("class","tag-icon-badge").attr("x",10).attr("y",-12).style("font-size","10px").style("pointer-events","none").text(nd.tags.slice(0,3).map(t=>tagIcon(t)).join(''));
+    }
+  });
+}
+
+function refreshGraphBadges(store) {
+  if (!window._graphRefs) return;
+  window._graphRefs.node.each(function(d) {
+    const key = nodeKey(d.label); const nd = store[key]; const el = d3.select(this);
+    el.selectAll(".comment-badge,.comment-badge-bg,.has-comment-ring,.tag-icon-badge").remove();
+    if (!nd) return;
+    if (nd.color) el.select("circle").attr("fill",nd.color).attr("stroke",nd.color);
+    if (nd.comments && nd.comments.length) {
+      el.insert("circle",":first-child").attr("class","has-comment-ring").attr("r",18);
+      el.append("circle").attr("class","comment-badge-bg").attr("cx",-14).attr("cy",14).attr("r",7).attr("fill","#ffa657");
+      el.append("text").attr("class","comment-badge").attr("x",-14).attr("y",14).attr("text-anchor","middle").attr("dominant-baseline","central").style("font-size","8px").style("font-weight","700").text(nd.comments.length);
+    }
+    if (nd.tags && nd.tags.length) {
+      el.append("text").attr("class","tag-icon-badge").attr("x",14).attr("y",-14).style("font-size","10px").style("pointer-events","none").text(nd.tags.slice(0,3).map(t=>tagIcon(t)).join(''));
+    }
+  });
+}
+
+setTimeout(() => refreshAllBadges(), 600);
+
+// ═══════════════════════════════════════════════════════════════════════
+// DEEP DIVES
+// ═══════════════════════════════════════════════════════════════════════
+let currentDDIndex = -1;
+
+if (C.deepDives && C.deepDives.length) {
+  const grid = document.getElementById('dd-card-grid');
+  const fullContainer = document.getElementById('dd-full-container');
+
+  C.deepDives.forEach((dd, idx) => {
+    // Card
+    const card = document.createElement('div'); card.className = 'dd-card'; card.onclick = () => showDeepDive(idx);
+    const imgDiv = document.createElement('div'); imgDiv.className = 'dd-card-img'; imgDiv.style.background = dd.color + '10';
+    if (dd.svg) imgDiv.innerHTML = dd.svg(360, 200);
+    else imgDiv.innerHTML = `<span style="font-size:64px">${dd.icon || '📘'}</span>`;
+    const body = document.createElement('div'); body.className = 'dd-card-body';
+    body.innerHTML = `<div class="dd-card-num" style="color:${dd.color}">${dd.num}</div><div class="dd-card-title">${dd.title}</div><div class="dd-card-desc">${dd.desc}</div>`;
+    card.appendChild(imgDiv); card.appendChild(body); grid.appendChild(card);
+
+    // Full view
+    const full = document.createElement('div'); full.className = 'dd-full'; full.id = 'dd-full-' + dd.id;
+    let fhtml = `<div class="dd-infographic"><h2 style="color:${dd.color}">${dd.icon || ''} ${dd.title}</h2><div class="dd-subtitle">${dd.num} · ${dd.desc}</div>`;
+    if (dd.svg) fhtml += dd.svg(800, 300);
+    (dd.sections || []).forEach(s => {
+      fhtml += `<div class="dd-section"><h3>${s.title}</h3>`;
+      if (s.formula) fhtml += `<div class="dd-formula">${s.formula}</div>`;
+      else fhtml += `<p>${s.text}</p>`;
+      fhtml += '</div>';
+    });
+    if (dd.keypoints && dd.keypoints.length) {
+      fhtml += '<div class="dd-keypoints">';
+      dd.keypoints.forEach(kp => { fhtml += `<div class="dd-kp"><strong>${kp.title}</strong><span>${kp.text}</span></div>`; });
+      fhtml += '</div>';
+    }
+    fhtml += `<div class="dd-nav"><button class="btn" onclick="navDD(-1)">← Prev</button><button class="btn" onclick="showCardGrid()">Grid</button><button class="btn" onclick="navDD(1)">Next →</button></div></div>`;
+    full.innerHTML = fhtml;
+    fullContainer.appendChild(full);
+  });
+}
+
+function showDeepDive(idx) {
+  currentDDIndex = idx;
+  document.getElementById('dd-card-grid').style.display = 'none';
+  document.querySelectorAll('.dd-full').forEach(f => f.classList.remove('active'));
+  document.getElementById('dd-full-' + C.deepDives[idx].id).classList.add('active');
+  document.getElementById('deepdive-controls').style.display = 'flex';
+}
+
+function showCardGrid() {
+  currentDDIndex = -1;
+  document.querySelectorAll('.dd-full').forEach(f => f.classList.remove('active'));
+  document.getElementById('dd-card-grid').style.display = '';
+  document.getElementById('deepdive-controls').style.display = 'none';
+}
+
+function navDD(dir) {
+  const n = (C.deepDives || []).length;
+  if (!n) return;
+  currentDDIndex = (currentDDIndex + dir + n) % n;
+  showDeepDive(currentDDIndex);
+}
+
+// ═══════════════════════════════════════════════════════════════════════
+// TRACKER
+// ═══════════════════════════════════════════════════════════════════════
+let trackerOpen = false;
+
+function toggleTracker() {
+  trackerOpen = !trackerOpen;
+  document.getElementById('tracker-panel').classList.toggle('open', trackerOpen);
+  if (trackerOpen) buildTracker();
+}
+
+function buildTracker() {
+  const store = loadStore();
+  const entries = Object.entries(store).filter(([k,v]) => (v.comments && v.comments.length) || (v.tags && v.tags.length));
+
+  const totalNodes = entries.length;
+  const totalComments = entries.reduce((a,[k,v]) => a + (v.comments||[]).length, 0);
+  const totalTags = entries.reduce((a,[k,v]) => a + (v.tags||[]).length, 0);
+
+  document.getElementById('tracker-stats').innerHTML =
+    `<div class="tracker-stat"><div class="ts-num" style="color:#58a6ff">${totalNodes}</div><div class="ts-label">Nodes</div></div>`
+    + `<div class="tracker-stat"><div class="ts-num" style="color:#ffa657">${totalComments}</div><div class="ts-label">Comments</div></div>`
+    + `<div class="tracker-stat"><div class="ts-num" style="color:#7ee787">${totalTags}</div><div class="ts-label">Tags</div></div>`;
+
+  const list = document.getElementById('tracker-list');
+  if (!entries.length) { list.innerHTML = '<div id="tracker-empty">No comments or tags yet. Double-click any node to add some!</div>'; return; }
+  list.innerHTML = '';
+  entries.forEach(([key, val]) => {
+    const el = document.createElement('div'); el.className = 'tracker-item';
+    const icons = (val.tags || []).slice(0,3).map(t => tagIcon(t)).join('');
+    el.innerHTML = `<div class="ti-icon">${icons || '💬'}</div><div><div class="ti-name">${key}</div><div class="ti-tags">${(val.tags||[]).join(', ')}</div><div class="ti-count">${(val.comments||[]).length} comment(s)</div></div>`;
+    el.onclick = () => openCmdPanel(key, '');
+    list.appendChild(el);
+  });
+}
+
+// ═══════════════════════════════════════════════════════════════════════
+// PDF VIEWER + SCRIBBLE
+// ═══════════════════════════════════════════════════════════════════════
+let _pdfCurrentPath = null;
+let scribbleCanvas, scribbleCtx, scribbleActive = false, scribbleStrokes = [], currentStroke = null;
+
+function openPdfViewer(path, label) {
+  _pdfCurrentPath = path;
+  document.getElementById('pdf-title').textContent = label || path;
+  document.getElementById('pdf-iframe').src = path;
+  document.getElementById('pdf-viewer').classList.add('open');
+  tooltip.style.opacity = 0;
+  initScribbleCanvas();
+  loadScribble(path);
+}
+
+function closePdfViewer() {
+  document.getElementById('pdf-viewer').classList.remove('open');
+  document.getElementById('pdf-iframe').src = '';
+  scribbleActive = false;
+  const c = document.getElementById('scribble-canvas'); if (c) c.classList.remove('active');
+}
+
+function openPdfExternal() { if (_pdfCurrentPath) window.open(_pdfCurrentPath, '_blank'); }
+
+function initScribbleCanvas() {
+  scribbleCanvas = document.getElementById('scribble-canvas');
+  const body = document.getElementById('pdf-body');
+  scribbleCanvas.width = body.offsetWidth; scribbleCanvas.height = body.offsetHeight;
+  scribbleCtx = scribbleCanvas.getContext('2d');
+  scribbleCtx.lineCap = 'round'; scribbleCtx.lineJoin = 'round'; scribbleCtx.lineWidth = 3; scribbleCtx.strokeStyle = '#ff6b6b';
+}
+
+function toggleScribble() {
+  scribbleActive = !scribbleActive;
+  document.getElementById('scribble-canvas').classList.toggle('active', scribbleActive);
+  document.getElementById('scribble-toggle').classList.toggle('active-tool', scribbleActive);
+}
+
+function setScribbleColor(el, color) {
+  scribbleCtx.strokeStyle = color;
+  document.querySelectorAll('.scribble-color').forEach(c => c.classList.remove('sel'));
+  el.classList.add('sel');
+}
+
+// Scribble drawing
+document.getElementById('scribble-canvas').addEventListener('pointerdown', e => {
+  if (!scribbleActive) return;
+  currentStroke = { color: scribbleCtx.strokeStyle, width: scribbleCtx.lineWidth, points: [{ x: e.offsetX, y: e.offsetY }] };
+  scribbleCtx.beginPath(); scribbleCtx.moveTo(e.offsetX, e.offsetY);
+});
+
+document.getElementById('scribble-canvas').addEventListener('pointermove', e => {
+  if (!currentStroke) return;
+  currentStroke.points.push({ x: e.offsetX, y: e.offsetY });
+  scribbleCtx.lineTo(e.offsetX, e.offsetY); scribbleCtx.stroke(); scribbleCtx.beginPath(); scribbleCtx.moveTo(e.offsetX, e.offsetY);
+});
+
+window.addEventListener('pointerup', () => {
+  if (currentStroke) { scribbleStrokes.push(currentStroke); currentStroke = null; saveScribble(); }
+});
+
+function redrawScribble() {
+  scribbleCtx.clearRect(0, 0, scribbleCanvas.width, scribbleCanvas.height);
+  scribbleStrokes.forEach(stroke => {
+    scribbleCtx.strokeStyle = stroke.color; scribbleCtx.lineWidth = stroke.width;
+    scribbleCtx.beginPath(); scribbleCtx.moveTo(stroke.points[0].x, stroke.points[0].y);
+    for (let i = 1; i < stroke.points.length; i++) scribbleCtx.lineTo(stroke.points[i].x, stroke.points[i].y);
+    scribbleCtx.stroke();
+  });
+}
+
+function undoScribble() { if (scribbleStrokes.length) { scribbleStrokes.pop(); redrawScribble(); saveScribble(); } }
+function clearScribble() { scribbleStrokes = []; scribbleCtx.clearRect(0,0,scribbleCanvas.width,scribbleCanvas.height); saveScribble(); }
+
+function saveScribble() {
+  if (!_pdfCurrentPath) return;
+  try { const all = JSON.parse(localStorage.getItem(STORAGE_KEY+'-scribbles')||'{}'); all[_pdfCurrentPath] = scribbleStrokes; localStorage.setItem(STORAGE_KEY+'-scribbles', JSON.stringify(all)); } catch(e) {}
+}
+
+function loadScribble(path) {
+  scribbleStrokes = [];
+  try { const all = JSON.parse(localStorage.getItem(STORAGE_KEY+'-scribbles')||'{}'); if (all[path]) scribbleStrokes = all[path]; } catch(e) {}
+  if (scribbleCtx) redrawScribble();
+}
+
+window.addEventListener('resize', () => {
+  if (!scribbleCanvas) return;
+  const body = document.getElementById('pdf-body');
+  scribbleCanvas.width = body.offsetWidth; scribbleCanvas.height = body.offsetHeight;
+  redrawScribble();
+});
+
+// ═══════════════════════════════════════════════════════════════════════
+// APPENDIX (YouTube Videos)
+// ═══════════════════════════════════════════════════════════════════════
+if (C.youtube && C.youtube.videos && C.youtube.videos.length) {
+  buildAppendix();
+}
+
+function buildAppendix() {
+  const container = document.getElementById('appendix-container');
+  const videos = C.youtube.videos;
+  const unitNames = C.youtube.unitNames || {};
+  const unitColors = ["","#58a6ff","#f778ba","#7ee787","#ffa657","#d2a8ff","#7ee787","#ffa657","#ff7b72","#c9d1d9"];
+
+  const unitCounts = {};
+  videos.forEach(v => { unitCounts[v.unit] = (unitCounts[v.unit]||0) + 1; });
+
+  let html = `<div class="appendix-stats"><strong style="color:#c9d1d9">${videos.length} videos</strong>`;
+  Object.keys(unitCounts).forEach(u => {
+    const color = unitColors[u] || '#8b949e';
+    html += `<span class="stat-pill" style="border-color:${color}40"><span style="color:${color}">${unitNames[u] || 'Unit '+u}</span>: ${unitCounts[u]}</span>`;
+  });
+  html += '</div>';
+  html += '<input type="text" class="appendix-filter" id="appendix-filter-input" placeholder="🔍 Filter videos by title..." oninput="filterAppendix()">';
+  html += '<table class="appendix-table"><thead><tr><th style="width:40px">#</th><th>Video Title</th><th style="width:160px">Unit</th><th style="width:80px">Watch</th></tr></thead><tbody id="appendix-tbody">';
+
+  let num = 0, curUnit = 0;
+  videos.forEach(v => {
+    if (v.unit !== curUnit) {
+      curUnit = v.unit;
+      const color = unitColors[v.unit] || '#8b949e';
+      html += `<tr class="unit-group" data-unit="${v.unit}" onclick="toggleUnit(this)"><td colspan="4" style="color:${color};border-bottom-color:${color}40"><span class="unit-toggle">▾</span> ${unitNames[v.unit]||'Unit '+v.unit} <span style="color:#8b949e;font-weight:400;font-size:12px">(${unitCounts[v.unit]} videos)</span></td></tr>`;
+    }
+    num++;
+    const url = `https://www.youtube.com/watch?v=${v.id}`;
+    html += `<tr class="vid-row" data-unit="${v.unit}" data-topic="${v.topic.toLowerCase()}"><td class="vid-num">${num}</td><td>${v.topic}</td><td style="color:${unitColors[v.unit]||'#8b949e'};font-size:12px">${unitNames[v.unit]||'Unit '+v.unit}</td><td><a class="watch-link" href="${url}" target="_blank">▶ Watch</a></td></tr>`;
+  });
+
+  html += '</tbody></table>';
+  container.innerHTML = html;
+}
+
+function filterAppendix() {
+  const q = document.getElementById('appendix-filter-input').value.toLowerCase();
+  const rows = document.querySelectorAll('#appendix-tbody tr');
+  const visibleUnits = {};
+  rows.forEach(row => {
+    if (row.classList.contains('unit-group')) return;
+    if (!q) { row.style.display = ''; visibleUnits[row.dataset.unit] = true; return; }
+    const match = row.dataset.topic.indexOf(q) !== -1;
+    row.style.display = match ? '' : 'none';
+    if (match) visibleUnits[row.dataset.unit] = true;
+  });
+  rows.forEach(row => {
+    if (!row.classList.contains('unit-group')) return;
+    row.style.display = (!q || visibleUnits[row.dataset.unit]) ? '' : 'none';
+  });
+}
+
+function toggleUnit(headerRow) {
+  const unit = headerRow.dataset.unit;
+  const collapsed = headerRow.classList.toggle('collapsed');
+  document.querySelectorAll(`#appendix-tbody tr.vid-row[data-unit="${unit}"]`).forEach(r => { r.style.display = collapsed ? 'none' : ''; });
+}
+
+// ═══════════════════════════════════════════════════════════════════════
+// PWA — Register service worker
+// ═══════════════════════════════════════════════════════════════════════
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('./sw.js').catch(() => {});
+}
+
+window.PROBLEMS_DATA=[{week:'Linear Algebra',title:'Vectors, Matrices, Spans',items:[{tag:'derive',text:'Prove that the column space and row space of any matrix have the same dimension. Why is this "four-subspaces" fact surprising?',hint:'Rank = dim(col) = dim(row). Use rank-nullity.'},{tag:'design',text:'Given 3 vectors in R^4, how do you decide if they span a plane, a 3-space, or are linearly dependent — using only row operations? Walk through with your own example.'},{tag:'debug',text:'A student claims `det(A+B) = det(A)+det(B)`. Find a 2x2 counterexample in 30 seconds.'}]},{week:'Calculus',title:'Limits, Derivatives, Integrals',items:[{tag:'derive',text:'Derive `d/dx(sin x) = cos x` from first principles using the squeeze theorem on `sin(h)/h`.'},{tag:'design',text:'You are optimizing the shape of a tin can (fixed volume, minimize surface area). Set up the Lagrangian — do not solve — and identify all constraints and variables.'}]},{week:'Probability & Statistics',title:'Distributions and Estimators',items:[{tag:'derive',text:'Prove `Var(X+Y) = Var(X)+Var(Y)` iff X,Y independent. Show a correlated example where it fails.'},{tag:'debug',text:'A coin flipped 10 times gives 8 heads. Is it biased? Compute p-value mentally at the 5% level.',hint:'Binomial tail: P(X>=8 | p=.5) ~ 5.5%.'}]}];
+// ═══════════════════════════════════════════════════════════════════════
+// PRACTICE PROBLEMS (Problem-First learning)
+// ═══════════════════════════════════════════════════════════════════════
+function renderProblems() {
+  const container = document.getElementById('problems-container');
+  if (!container || container.dataset.rendered) return;
+  const data = (window.PROBLEMS_DATA && window.PROBLEMS_DATA.length) ? window.PROBLEMS_DATA
+             : (C.problems && C.problems.length) ? C.problems : null;
+  if (!data) { container.innerHTML = '<div class="prob-intro">No practice problems defined yet for this course.</div>'; container.dataset.rendered = '1'; return; }
+  container.dataset.rendered = '1';
+  let html = `<div class="prob-intro">
+    <strong>🧠 Problem-First Learning.</strong> Try each problem for 10 minutes <em>before</em> watching the lecture — flail, sketch, be wrong. Then watch with specific questions in mind. Your attention spikes 3–5×.
+    <br><br>
+    <strong style="color:#58a6ff">Tags:</strong>
+    <span class="prob-tag design">design</span> architect on paper &nbsp;
+    <span class="prob-tag derive">derive</span> math / proof &nbsp;
+    <span class="prob-tag debug">debug</span> find the failure mode &nbsp;
+    <span class="prob-tag code">code</span> hands-on &nbsp;
+    <span class="prob-tag paper">paper</span> predict before reading
+  </div>`;
+  data.forEach((sec, i) => {
+    html += `<details class="prob-section"${i < 2 ? ' open' : ''}>
+      <summary><span class="wk">${sec.week||''}</span> ${sec.title||''}</summary>
+      <div class="prob-body"><ol>`;
+    (sec.items||[]).forEach(p => {
+      html += `<li><span class="prob-tag ${p.tag||'design'}">${p.tag||'design'}</span>${p.text||''}`;
+      if (p.hint) html += `<span class="prob-hint">${p.hint}</span>`;
+      html += `</li>`;
+    });
+    html += `</ol></div></details>`;
+  });
+  container.innerHTML = html;
+}
+if (typeof switchTab === 'function') {
+  const _origSwitchTab_prob = switchTab;
+  switchTab = function(tab) { _origSwitchTab_prob(tab); if (tab === 'problems') renderProblems(); };
+}
+</script>
+<!-- BEGIN tooltip-pin (click pins, click outside closes) -->
+<style>
+  #tooltip.pinned {
+    pointer-events: auto !important;
+    box-shadow: 0 0 0 2px #58a6ff, 0 10px 28px rgba(0,0,0,0.55) !important;
+    cursor: default;
+  }
+  #tooltip.pinned::after {
+    content: "📌 pinned · click outside to close";
+    display: block;
+    margin-top: 8px;
+    padding-top: 6px;
+    border-top: 1px dashed #30363d;
+    font-size: 10px;
+    color: #58a6ff;
+    opacity: 0.85;
+  }
+  #tooltip .tt-close {
+    position: absolute; top: 4px; right: 6px;
+    background: transparent; border: 0;
+    color: #8b949e; cursor: pointer;
+    font-size: 14px; line-height: 1;
+    padding: 2px 6px; border-radius: 4px;
+    display: none;
+  }
+  #tooltip.pinned .tt-close { display: block; }
+  #tooltip .tt-close:hover { color: #f85149; background: rgba(248,81,73,0.1); }
+</style>
+<script>
+(function(){
+  const tt = document.getElementById('tooltip');
+  if (!tt) return;
+  let pinned = false;
+  let lastTarget = null;
+
+  // Inject close button
+  if (!tt.querySelector('.tt-close')) {
+    const btn = document.createElement('button');
+    btn.className = 'tt-close';
+    btn.type = 'button';
+    btn.textContent = '✕';
+    btn.title = 'Close';
+    btn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      unpin();
+    });
+    tt.appendChild(btn);
+  }
+
+  function pin() {
+    pinned = true;
+    tt.classList.add('pinned');
+    tt.style.setProperty('opacity', '1', 'important');
+  }
+  function unpin() {
+    pinned = false;
+    tt.classList.remove('pinned');
+    tt.style.removeProperty('opacity');
+    tt.style.opacity = 0;
+  }
+
+  // Keep opacity at 1 while pinned (defends against any code that sets opacity:0)
+  const obs = new MutationObserver(function() {
+    if (pinned && tt.style.opacity !== '1') {
+      tt.style.setProperty('opacity', '1', 'important');
+    }
+  });
+  obs.observe(tt, { attributes: true, attributeFilter: ['style'] });
+
+  // While pinned, freeze position: block mousemove repositioning at capture phase
+  document.addEventListener('mousemove', function(e) {
+    if (pinned) e.stopImmediatePropagation();
+  }, true);
+
+  // Selectors that identify clickable graph/mindmap elements with tooltip data
+  const SEL = [
+    'g.node', 'g.node *',
+    'line.graph-link', 'line.graph-link-hit', 'path.graph-link',
+    'text.graph-link-label',
+    'path.link', 'path.link-hit',
+    'circle.node', 'circle'
+  ].join(', ');
+
+  function getDatum(el) {
+    if (!el || typeof d3 === 'undefined') return null;
+    let cur = el;
+    while (cur && cur !== document) {
+      try {
+        const d = d3.select(cur).datum();
+        if (d) return { d: d, node: cur };
+      } catch(_) {}
+      cur = cur.parentNode;
+    }
+    return null;
+  }
+
+  function extract(d) {
+    let name, tip, slides;
+    if (d.data && (d.data.name || d.data.tooltip)) {
+      name = d.data.name; tip = d.data.tooltip; slides = d.data.slides;
+    } else if (d.source && d.target) {
+      name = d.label || d.type || 'connection';
+      const s = d.source, t = d.target;
+      const sn = (s.data && s.data.name) || s.label || (typeof s === 'string' ? s : '');
+      const tn = (t.data && t.data.name) || t.label || (typeof t === 'string' ? t : '');
+      tip = String(sn).replace(/\n/g, ' ') + ' → ' + String(tn).replace(/\n/g, ' ');
+    } else if (d.label !== undefined || d.tip !== undefined || d.name !== undefined) {
+      name = d.label || d.name; tip = d.tip || d.tooltip; slides = d.slides;
+    }
+    return name ? { name: name, tip: tip, slides: slides } : null;
+  }
+
+  document.addEventListener('click', function(e) {
+    // Click inside tooltip → ignore (preserve link clicks etc.)
+    if (tt.contains(e.target)) return;
+
+    const hit = getDatum(e.target.closest && e.target.closest(SEL));
+    if (!hit) {
+      if (pinned) unpin();
+      return;
+    }
+    const info = extract(hit.d);
+    if (!info) {
+      if (pinned) unpin();
+      return;
+    }
+
+    // Try the file's own renderer first so slides/icons/etc. render correctly
+    let rendered = false;
+    if (typeof window.showTooltip === 'function') {
+      try { window.showTooltip(e, info.name, info.tip, info.slides); rendered = true; } catch(_) {}
+    }
+    if (!rendered && typeof window.showTip === 'function') {
+      try { window.showTip(e, hit.d); rendered = true; } catch(_) {}
+    }
+    if (!rendered) {
+      const ttl = tt.querySelector('.tt-title');
+      const tbd = tt.querySelector('.tt-body');
+      if (ttl) ttl.textContent = String(info.name).replace(/\n/g, ' ');
+      if (tbd) tbd.textContent = info.tip || '';
+    }
+
+    lastTarget = hit.node;
+    pin();
+  });
+
+  // Esc key unpins
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && pinned) unpin();
+  });
+})();
+</script>
+<!-- END tooltip-pin -->
+</body>
+</html>
