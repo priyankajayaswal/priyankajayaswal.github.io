@@ -332,6 +332,11 @@
     overflow-y: auto; overflow-x: hidden;
     background: #0d1117; padding: 0;
   }
+  #view-exercise {
+    position: fixed; top: 50px; left: 0; right: 0; bottom: 0;
+    overflow-y: auto; overflow-x: hidden;
+    background: #0d1117; padding: 0;
+  }
   .recs-container { max-width: 1200px; margin: 0 auto; padding: 24px 32px 80px; }
   .recs-goal-card {
     background: #161b22; border: 1px solid #30363d; border-radius: 12px;
@@ -517,6 +522,7 @@
     <button class="tab" data-view="vitamins" onclick="switchTab('vitamins')">💊 Multivitamins</button>
     <button class="tab" data-view="peakspan" onclick="switchTab('peakspan')">📈 Peak Span</button>
     <button class="tab" data-view="recs" onclick="switchTab('recs')">🎯 Recommendations</button>
+    <button class="tab" data-view="exercise" onclick="switchTab('exercise')">🏃 Exercise</button>
   </div>
 </div>
 
@@ -2357,6 +2363,580 @@
 
   </div><!-- /recs-container -->
 </div><!-- /view-recs -->
+
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+<!-- EXERCISE TAB — Fun ways to promote movement                              -->
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+<style>
+  .ex-wrap { max-width: 1200px; margin: 0 auto; padding: 24px 28px 80px; color: #c9d1d9; }
+  .ex-hero { background: linear-gradient(135deg, #1a2332 0%, #2a1a3a 100%); border: 1px solid #30363d; border-left: 4px solid #f778ba; border-radius: 12px; padding: 28px 32px; margin-bottom: 24px; }
+  .ex-hero h2 { margin: 0 0 8px; color: #f778ba; font-size: 24px; }
+  .ex-hero p { margin: 0; color: #8b949e; font-size: 14px; line-height: 1.6; }
+  .ex-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 18px; margin-bottom: 24px; }
+  .ex-card { background: #161b22; border: 1px solid #30363d; border-radius: 12px; padding: 20px 22px; transition: transform .15s ease, border-color .15s ease, box-shadow .15s ease; }
+  .ex-card:hover { transform: translateY(-2px); border-color: #58a6ff; box-shadow: 0 8px 24px rgba(88,166,255,0.12); }
+  .ex-card-title { display: flex; align-items: center; gap: 10px; font-size: 15px; font-weight: 700; margin-bottom: 10px; color: #58a6ff; }
+  .ex-card-title .ex-emoji { font-size: 22px; }
+  .ex-card-body { font-size: 13px; color: #c9d1d9; line-height: 1.65; }
+  .ex-card-body ul { margin: 8px 0 0; padding-left: 18px; }
+  .ex-card-body li { margin: 4px 0; }
+  .ex-tag { display: inline-block; background: #21262d; color: #7ee787; font-size: 10px; padding: 2px 8px; border-radius: 10px; margin: 4px 4px 0 0; text-transform: uppercase; letter-spacing: .5px; }
+
+  /* Roulette */
+  .ex-roulette { background: linear-gradient(135deg, #1f1419 0%, #2a1f3a 100%); border: 1px solid #f778ba55; border-radius: 14px; padding: 28px; text-align: center; margin-bottom: 24px; }
+  .ex-roulette h3 { margin: 0 0 6px; color: #f778ba; font-size: 20px; }
+  .ex-roulette .ex-sub { color: #8b949e; font-size: 13px; margin-bottom: 18px; }
+  .ex-result { font-size: 28px; font-weight: 700; color: #ffa657; min-height: 48px; margin: 14px 0; transition: opacity .2s ease; }
+  .ex-result.spinning { color: #58a6ff; opacity: .7; }
+  .ex-result-meta { font-size: 13px; color: #8b949e; margin-bottom: 18px; min-height: 20px; }
+  .ex-spin-btn { background: linear-gradient(135deg, #f778ba 0%, #d2a8ff 100%); color: #fff; border: none; padding: 12px 32px; border-radius: 8px; font-size: 15px; font-weight: 600; cursor: pointer; box-shadow: 0 4px 14px rgba(247,120,186,0.3); transition: transform .12s ease; }
+  .ex-spin-btn:hover { transform: scale(1.04); }
+  .ex-spin-btn:active { transform: scale(0.98); }
+
+  /* Streak tracker */
+  .ex-streak { background: linear-gradient(135deg, #1a2a1a 0%, #1f3a2a 100%); border: 1px solid #7ee78755; border-radius: 14px; padding: 24px; margin-bottom: 24px; display: flex; align-items: center; gap: 24px; flex-wrap: wrap; }
+  .ex-streak-num { font-size: 56px; font-weight: 800; color: #7ee787; line-height: 1; text-shadow: 0 0 20px rgba(126,231,135,0.3); }
+  .ex-streak-info { flex: 1; min-width: 200px; }
+  .ex-streak-label { font-size: 16px; font-weight: 600; color: #fff; margin-bottom: 4px; }
+  .ex-streak-sub { font-size: 12px; color: #8b949e; margin-bottom: 10px; }
+  .ex-check-btn { background: #238636; color: #fff; border: none; padding: 10px 22px; border-radius: 6px; font-size: 14px; font-weight: 600; cursor: pointer; transition: background .15s ease; }
+  .ex-check-btn:hover { background: #2ea043; }
+  .ex-check-btn:disabled { background: #30363d; color: #8b949e; cursor: not-allowed; }
+  .ex-week-dots { display: flex; gap: 6px; margin-top: 10px; }
+  .ex-week-dots .dot { width: 22px; height: 22px; border-radius: 50%; background: #21262d; border: 1px solid #30363d; display: flex; align-items: center; justify-content: center; font-size: 10px; color: #8b949e; }
+  .ex-week-dots .dot.done { background: #238636; border-color: #2ea043; color: #fff; }
+  .ex-week-dots .dot.today { box-shadow: 0 0 0 2px #58a6ff; }
+
+  /* Challenges */
+  .ex-challenge { background: #161b22; border: 1px solid #30363d; border-radius: 10px; padding: 16px 18px; border-left: 3px solid #ffa657; }
+  .ex-challenge h4 { margin: 0 0 6px; color: #ffa657; font-size: 14px; }
+  .ex-challenge p { margin: 0; font-size: 12px; color: #8b949e; line-height: 1.5; }
+  .ex-challenge .ex-mini { margin-top: 8px; font-size: 11px; color: #7ee787; }
+
+  /* Snacks */
+  .ex-snack-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; }
+  .ex-snack { background: #0d1117; border: 1px solid #30363d; border-radius: 8px; padding: 12px 14px; transition: border-color .15s ease; cursor: default; }
+  .ex-snack:hover { border-color: #d2a8ff; }
+  .ex-snack-name { font-size: 13px; font-weight: 600; color: #d2a8ff; margin-bottom: 4px; }
+  .ex-snack-time { font-size: 11px; color: #8b949e; }
+
+  /* Playlists */
+  .ex-pl-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
+  .ex-pl-card { background: #161b22; border: 1px solid #30363d; border-left: 3px solid var(--accent, #58a6ff); border-radius: 10px; padding: 16px 18px; transition: transform .15s ease, border-color .15s ease; align-self: start; }
+  .ex-pl-card:hover { transform: translateY(-2px); }
+  .ex-pl-head { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1px solid #21262d; }
+  .ex-pl-emoji { font-size: 26px; }
+  .ex-pl-title { font-size: 15px; font-weight: 700; color: var(--accent, #58a6ff); }
+  .ex-pl-sub { font-size: 11px; color: #8b949e; margin-top: 2px; }
+  .ex-pl-list { list-style: none; padding: 0; margin: 0; }
+  .ex-pl-list li { padding: 6px 0; font-size: 13px; border-bottom: 1px dashed #21262d; display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px; }
+  .ex-pl-list li:last-child { border-bottom: none; }
+  .ex-pl-list a { color: #c9d1d9; text-decoration: none; border-bottom: 1px dotted #58a6ff66; }
+  .ex-pl-list a:hover { color: #58a6ff; border-bottom-color: #58a6ff; }
+  .ex-pl-meta { color: #8b949e; font-size: 10px; text-transform: uppercase; letter-spacing: .5px; margin-left: auto; }
+
+  @media (max-width: 700px) {
+    .ex-wrap { padding: 16px; }
+    .ex-streak-num { font-size: 40px; }
+  }
+</style>
+
+<div id="view-exercise" class="view">
+  <div class="ex-wrap">
+
+    <div class="ex-hero">
+      <h2>🏃 Make Movement Fun</h2>
+      <p>Exercise doesn't have to feel like a chore. Spin the workout roulette, take a daily challenge, sneak in movement snacks, and build your streak. The best workout is the one you'll actually do.</p>
+    </div>
+
+    <!-- Streak tracker -->
+    <div class="ex-streak">
+      <div class="ex-streak-num" id="ex-streak-num">0</div>
+      <div class="ex-streak-info">
+        <div class="ex-streak-label">Day Streak 🔥</div>
+        <div class="ex-streak-sub">Tap the button on any day you moved your body — even just 5 minutes counts.</div>
+        <div class="ex-week-dots" id="ex-week-dots"></div>
+      </div>
+      <button class="ex-check-btn" id="ex-check-btn" onclick="exCheckIn()">✓ I moved today</button>
+    </div>
+
+    <!-- Workout Roulette -->
+    <div class="ex-roulette">
+      <h3>🎰 Workout Roulette</h3>
+      <div class="ex-sub">Can't decide what to do? Let fate pick your workout.</div>
+      <div class="ex-result" id="ex-roulette-result">Press spin to begin!</div>
+      <div class="ex-result-meta" id="ex-roulette-meta">A random combo of activity + duration + intensity</div>
+      <button class="ex-spin-btn" onclick="exSpin()">🎲 Spin the Wheel</button>
+    </div>
+
+    <!-- Playlists -->
+    <div class="ex-card-title" style="font-size:18px; margin: 28px 0 14px;">🎵 Curated Playlists <span style="font-size:11px; font-weight:400; color:#8b949e;">— hit play and just move</span></div>
+    <div class="ex-pl-grid">
+
+      <div class="ex-pl-card" style="--accent:#f778ba;">
+        <div class="ex-pl-head">
+          <span class="ex-pl-emoji">💃</span>
+          <div>
+            <div class="ex-pl-title">Dance Cardio</div>
+            <div class="ex-pl-sub">High-energy choreography &amp; follow-along</div>
+          </div>
+        </div>
+        <ul class="ex-pl-list">
+          <li><a href="https://www.youtube.com/results?search_query=MadFit+dance+workout" target="_blank" rel="noopener">MadFit — Dance Workouts</a> <span class="ex-pl-meta">YouTube · 10–30 min</span></li>
+          <li><a href="https://www.youtube.com/results?search_query=The+Fitness+Marshall" target="_blank" rel="noopener">The Fitness Marshall</a> <span class="ex-pl-meta">YouTube · pop hits</span></li>
+          <li><a href="https://www.youtube.com/results?search_query=305+Fitness+full+workout" target="_blank" rel="noopener">305 Fitness — Studio Sessions</a> <span class="ex-pl-meta">YouTube · 30–45 min</span></li>
+          <li><a href="https://www.youtube.com/results?search_query=dance+workout+playlist+140+bpm" target="_blank" rel="noopener">YouTube · Dance Workout Mix</a> <span class="ex-pl-meta">YouTube · 130–140 BPM</span></li>
+          <li><a href="https://www.youtube.com/results?search_query=top+dance+hits+2024+playlist" target="_blank" rel="noopener">YouTube · Top Dance Hits</a> <span class="ex-pl-meta">YouTube · upbeat</span></li>
+        </ul>
+      </div>
+
+      <div class="ex-pl-card" style="--accent:#7ee787;">
+        <div class="ex-pl-head">
+          <span class="ex-pl-emoji">🧘</span>
+          <div>
+            <div class="ex-pl-title">Yoga &amp; Mobility</div>
+            <div class="ex-pl-sub">Stretch, breathe, decompress</div>
+          </div>
+        </div>
+        <ul class="ex-pl-list">
+          <li><a href="https://www.youtube.com/@yogawithadriene" target="_blank" rel="noopener">Yoga with Adriene</a> <span class="ex-pl-meta">YouTube · all levels</span></li>
+          <li><a href="https://www.youtube.com/@boho_beautiful" target="_blank" rel="noopener">Boho Beautiful</a> <span class="ex-pl-meta">YouTube · scenic flows</span></li>
+          <li><a href="https://www.youtube.com/@DOYOUYOGAcom" target="_blank" rel="noopener">DoYouYoga — 30-day series</a> <span class="ex-pl-meta">YouTube · daily</span></li>
+          <li><a href="https://www.youtube.com/results?search_query=yoga+ambient+music+1+hour" target="_blank" rel="noopener">YouTube · Yoga Ambient (1hr)</a> <span class="ex-pl-meta">YouTube · ambient</span></li>
+          <li><a href="https://www.youtube.com/results?search_query=evening+yoga+wind+down" target="_blank" rel="noopener">YouTube · Evening Wind-Down</a> <span class="ex-pl-meta">YouTube · pre-sleep</span></li>
+        </ul>
+      </div>
+
+      <div class="ex-pl-card" style="--accent:#ffa657;">
+        <div class="ex-pl-head">
+          <span class="ex-pl-emoji">🏃</span>
+          <div>
+            <div class="ex-pl-title">Running &amp; Cardio</div>
+            <div class="ex-pl-sub">Tempo-matched BPM to keep your stride</div>
+          </div>
+        </div>
+        <ul class="ex-pl-list">
+          <li><a href="https://www.youtube.com/results?search_query=running+music+150+bpm+1+hour" target="_blank" rel="noopener">YouTube · 150 BPM Running Mix</a> <span class="ex-pl-meta">YouTube · 130–150 BPM</span></li>
+          <li><a href="https://www.youtube.com/results?search_query=power+workout+rock+playlist" target="_blank" rel="noopener">YouTube · Power Workout Rock</a> <span class="ex-pl-meta">YouTube · driving rock</span></li>
+          <li><a href="https://www.youtube.com/results?search_query=running+music+165+bpm" target="_blank" rel="noopener">YouTube · 165 BPM Cadence Mix</a> <span class="ex-pl-meta">YouTube · 165 BPM</span></li>
+          <li><a href="https://zombiesrungame.com/" target="_blank" rel="noopener">Zombies, Run! (app)</a> <span class="ex-pl-meta">app · story-driven runs</span></li>
+          <li><a href="https://www.youtube.com/results?search_query=hip+hop+workout+mix+gym" target="_blank" rel="noopener">YouTube · Hip-Hop Gym Mix</a> <span class="ex-pl-meta">YouTube · hip-hop hype</span></li>
+        </ul>
+      </div>
+
+      <div class="ex-pl-card" style="--accent:#ff7b72;">
+        <div class="ex-pl-head">
+          <span class="ex-pl-emoji">⚡</span>
+          <div>
+            <div class="ex-pl-title">HIIT &amp; Tabata</div>
+            <div class="ex-pl-sub">Built-in interval timers</div>
+          </div>
+        </div>
+        <ul class="ex-pl-list">
+          <li><a href="https://www.youtube.com/@HeatherRobertsonYT" target="_blank" rel="noopener">Heather Robertson — HIIT</a> <span class="ex-pl-meta">YouTube · 20–30 min</span></li>
+          <li><a href="https://www.youtube.com/@SydneyCummings" target="_blank" rel="noopener">Sydney Cummings — daily</a> <span class="ex-pl-meta">YouTube · new daily</span></li>
+          <li><a href="https://www.youtube.com/results?search_query=tabata+songs+20+10" target="_blank" rel="noopener">Tabata Songs (20/10 timers)</a> <span class="ex-pl-meta">YouTube · timer built-in</span></li>
+          <li><a href="https://www.youtube.com/results?search_query=hiit+workout+music+explosive" target="_blank" rel="noopener">YouTube · HIIT Explosive Mix</a> <span class="ex-pl-meta">YouTube · explosive</span></li>
+          <li><a href="https://7minuteworkout.jnj.com/" target="_blank" rel="noopener">J&amp;J 7-Minute Workout (app)</a> <span class="ex-pl-meta">app · scientifically dosed</span></li>
+        </ul>
+      </div>
+
+      <div class="ex-pl-card" style="--accent:#d2a8ff;">
+        <div class="ex-pl-head">
+          <span class="ex-pl-emoji">🏋️</span>
+          <div>
+            <div class="ex-pl-title">Lifting &amp; Strength</div>
+            <div class="ex-pl-sub">Heavy, hype, headbang</div>
+          </div>
+        </div>
+        <ul class="ex-pl-list">
+          <li><a href="https://www.youtube.com/results?search_query=metal+gym+workout+playlist" target="_blank" rel="noopener">YouTube · Metal Gym Mix</a> <span class="ex-pl-meta">YouTube · metal</span></li>
+          <li><a href="https://www.youtube.com/results?search_query=hip+hop+lifting+playlist" target="_blank" rel="noopener">YouTube · Hip-Hop Lifting</a> <span class="ex-pl-meta">YouTube · hip-hop</span></li>
+          <li><a href="https://www.youtube.com/results?search_query=gym+hype+party+workout+mix" target="_blank" rel="noopener">YouTube · Gym Hype Mix</a> <span class="ex-pl-meta">YouTube · party hype</span></li>
+          <li><a href="https://www.youtube.com/@JeffNippard" target="_blank" rel="noopener">Jeff Nippard — Programs</a> <span class="ex-pl-meta">YouTube · evidence-based</span></li>
+          <li><a href="https://www.youtube.com/@Athlean-X" target="_blank" rel="noopener">Athlean-X</a> <span class="ex-pl-meta">YouTube · technique deep dives</span></li>
+        </ul>
+      </div>
+
+      <div class="ex-pl-card" style="--accent:#79c0ff;">
+        <div class="ex-pl-head">
+          <span class="ex-pl-emoji">🚶</span>
+          <div>
+            <div class="ex-pl-title">Walking &amp; Recovery</div>
+            <div class="ex-pl-sub">Lower BPM, longer attention span</div>
+          </div>
+        </div>
+        <ul class="ex-pl-list">
+          <li><a href="https://www.youtube.com/results?search_query=Leslie+Sansone+walking" target="_blank" rel="noopener">Leslie Sansone — Walk at Home</a> <span class="ex-pl-meta">YouTube · indoor walks</span></li>
+          <li><a href="https://www.youtube.com/results?search_query=walking+music+115+bpm+upbeat" target="_blank" rel="noopener">YouTube · 115 BPM Walking Mix</a> <span class="ex-pl-meta">YouTube · 100–115 BPM</span></li>
+          <li><a href="https://www.huberman-lab.com/" target="_blank" rel="noopener">Huberman Lab Podcast</a> <span class="ex-pl-meta">podcast · learn while you walk</span></li>
+          <li><a href="https://www.youtube.com/@TheDailyStoic" target="_blank" rel="noopener">The Daily Stoic</a> <span class="ex-pl-meta">YouTube · short reflections</span></li>
+          <li><a href="https://www.youtube.com/results?search_query=lofi+hip+hop+radio+walking" target="_blank" rel="noopener">YouTube · Lo-Fi Beats Radio</a> <span class="ex-pl-meta">YouTube · chill walks</span></li>
+        </ul>
+      </div>
+
+      <div class="ex-pl-card" style="--accent:#a5d6ff;">
+        <div class="ex-pl-head">
+          <span class="ex-pl-emoji">🥊</span>
+          <div>
+            <div class="ex-pl-title">Boxing &amp; Combat</div>
+            <div class="ex-pl-sub">Hit something. Feel better.</div>
+          </div>
+        </div>
+        <ul class="ex-pl-list">
+          <li><a href="https://www.youtube.com/@NateBowerFitness" target="_blank" rel="noopener">Nate Bower Fitness — Boxing</a> <span class="ex-pl-meta">YouTube · shadowboxing</span></li>
+          <li><a href="https://www.youtube.com/@TonyJeffriesBoxing" target="_blank" rel="noopener">Tony Jeffries — Box 'N Burn</a> <span class="ex-pl-meta">YouTube · Olympian-led</span></li>
+          <li><a href="https://www.fightcamp.com/" target="_blank" rel="noopener">FightCamp</a> <span class="ex-pl-meta">app · home-boxing classes</span></li>
+          <li><a href="https://www.youtube.com/results?search_query=boxing+training+music+mix" target="_blank" rel="noopener">YouTube · Boxing Training Mix</a> <span class="ex-pl-meta">YouTube · combat hype</span></li>
+          <li><a href="https://www.youtube.com/results?search_query=jump+rope+workout+routine" target="_blank" rel="noopener">YouTube · Jump Rope Drills</a> <span class="ex-pl-meta">YouTube · footwork</span></li>
+        </ul>
+      </div>
+
+      <div class="ex-pl-card" style="--accent:#ffd33d;">
+        <div class="ex-pl-head">
+          <span class="ex-pl-emoji">🌅</span>
+          <div>
+            <div class="ex-pl-title">Morning Wake-Up</div>
+            <div class="ex-pl-sub">Gentle activation, no shock</div>
+          </div>
+        </div>
+        <ul class="ex-pl-list">
+          <li><a href="https://www.youtube.com/results?search_query=10+minute+morning+yoga" target="_blank" rel="noopener">10-min Morning Yoga</a> <span class="ex-pl-meta">YouTube · daily flow</span></li>
+          <li><a href="https://www.youtube.com/results?search_query=tai+chi+morning" target="_blank" rel="noopener">Tai Chi Morning Practice</a> <span class="ex-pl-meta">YouTube · meditative</span></li>
+          <li><a href="https://www.youtube.com/results?search_query=morning+motivation+music+upbeat" target="_blank" rel="noopener">YouTube · Morning Motivation</a> <span class="ex-pl-meta">YouTube · uplifting</span></li>
+          <li><a href="https://www.youtube.com/results?search_query=happy+sunny+morning+playlist" target="_blank" rel="noopener">YouTube · Sunny Morning Mix</a> <span class="ex-pl-meta">YouTube · feel-good</span></li>
+          <li><a href="https://www.youtube.com/results?search_query=5+minute+morning+stretch" target="_blank" rel="noopener">5-min Morning Stretch</a> <span class="ex-pl-meta">YouTube · quick wake-up</span></li>
+        </ul>
+      </div>
+
+    </div><!-- /ex-pl-grid -->
+
+    <hr style="border: none; border-top: 1px solid #30363d; margin: 28px 0;">
+
+    <!-- Fun ideas grid -->
+    <div class="ex-grid">
+
+      <div class="ex-card">
+        <div class="ex-card-title"><span class="ex-emoji">🎮</span> Gamify Everything</div>
+        <div class="ex-card-body">
+          Turn movement into a game and your brain will reward you with dopamine.
+          <ul>
+            <li><b>Pokémon GO / Zombies, Run!</b> — exercise inside a story.</li>
+            <li><b>Ring Fit Adventure / Just Dance</b> — couch-crushing workouts.</li>
+            <li><b>VR fitness</b> (Beat Saber, Supernatural) — burn 8–12 cal/min and forget you're sweating.</li>
+            <li><b>Habit-tracker streaks</b> — never break the chain.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="ex-card">
+        <div class="ex-card-title"><span class="ex-emoji">🤝</span> Make It Social</div>
+        <div class="ex-card-body">
+          Accountability is the secret sauce — you're 95% more likely to follow through with a partner.
+          <ul>
+            <li>Walking meetings instead of conference rooms.</li>
+            <li>Friendly Strava / Apple Watch competitions.</li>
+            <li>Recreational leagues (pickleball, ultimate, soccer).</li>
+            <li>Bet a friend $20 / week against missed workouts.</li>
+            <li>Group fitness classes — built-in community.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="ex-card">
+        <div class="ex-card-title"><span class="ex-emoji">🎵</span> Vibe-Driven Workouts</div>
+        <div class="ex-card-body">
+          Music can boost performance up to 15% and pain tolerance significantly.
+          <ul>
+            <li>Build a "<b>can't sit still</b>" playlist (~140 BPM for running).</li>
+            <li>Audiobook-only-while-walking rule.</li>
+            <li>Watch your favorite show <b>only</b> on the treadmill.</li>
+            <li>Dance party in the kitchen — 3 songs = 12 min of cardio.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="ex-card">
+        <div class="ex-card-title"><span class="ex-emoji">🪜</span> Habit Stacking</div>
+        <div class="ex-card-body">
+          Attach exercise to things you already do — zero willpower required.
+          <ul>
+            <li>10 squats every time you brew coffee ☕</li>
+            <li>Push-ups during every TV ad break 📺</li>
+            <li>Calf raises while brushing teeth 🪥</li>
+            <li>Take stairs whenever they exist 🪜</li>
+            <li>Park at the back of every lot 🚗</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="ex-card">
+        <div class="ex-card-title"><span class="ex-emoji">🎯</span> Tiny Wins, Big Streaks</div>
+        <div class="ex-card-body">
+          Lower the bar so low you can't say no. Consistency beats intensity.
+          <ul>
+            <li><b>2-minute rule:</b> commit to just 2 minutes — usually you'll keep going.</li>
+            <li><b>Shoes-on rule:</b> just put on workout clothes. That's the whole goal.</li>
+            <li><b>Never miss twice:</b> one off-day is fine, two becomes a habit.</li>
+            <li>Reward yourself after 7 / 30 / 90-day milestones.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="ex-card">
+        <div class="ex-card-title"><span class="ex-emoji">🌳</span> Get Outside</div>
+        <div class="ex-card-body">
+          Outdoor exercise improves mood 50% more than indoor — bonus vitamin D.
+          <ul>
+            <li>Hiking — nature + cardio + zero gym fees.</li>
+            <li>Bike commute to work or errands.</li>
+            <li>Photo-walks: bring a camera, hunt for shots.</li>
+            <li>Geocaching / orienteering — treasure hunt cardio.</li>
+            <li>Beach / park workouts beat any treadmill.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="ex-card">
+        <div class="ex-card-title"><span class="ex-emoji">🧪</span> Mix It Up</div>
+        <div class="ex-card-body">
+          Variety crushes boredom and recruits more muscle groups.
+          <ul>
+            <li>Try a new class monthly: yoga, climbing, boxing, aerial silks.</li>
+            <li>"Workout sampler" week — different sport each day.</li>
+            <li>Travel? Use it: hotel-room HIIT, walking tours, new trails.</li>
+            <li>Seasonal sports rotation (skiing, surfing, tennis).</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="ex-card">
+        <div class="ex-card-title"><span class="ex-emoji">📱</span> Smart Tech Tricks</div>
+        <div class="ex-card-body">
+          Use technology to nudge yourself toward movement.
+          <ul>
+            <li>Hourly stand reminders on your watch ⌚</li>
+            <li>Apps: <b>Seven</b> (7-min), <b>Nike Training Club</b>, <b>Down Dog</b>.</li>
+            <li><b>StepBet / DietBet</b> — put money on the line.</li>
+            <li>YouTube channels: MadFit, Yoga With Adriene, Heather Robertson — free + endless.</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Today's Challenges -->
+    <div class="ex-card-title" style="font-size:18px; margin: 28px 0 14px;">🏆 Daily Challenges <span style="font-size:11px; font-weight:400; color:#8b949e;">— pick one and crush it</span></div>
+    <div class="ex-grid">
+      <div class="ex-challenge">
+        <h4>🪜 Stair Champion</h4>
+        <p>Climb every staircase you encounter today. Bonus: skip the elevator entirely.</p>
+        <div class="ex-mini">~50 cal per 5 flights · builds glutes &amp; quads</div>
+      </div>
+      <div class="ex-challenge">
+        <h4>💃 Dance Break Hour</h4>
+        <p>Set a timer to dance to 1 song every hour you're awake. 10 songs = 30+ minutes of cardio.</p>
+        <div class="ex-mini">~200 cal · pure dopamine boost</div>
+      </div>
+      <div class="ex-challenge">
+        <h4>🚶 10K Step Quest</h4>
+        <p>Hit 10,000 steps. Walk while on calls, after every meal, around the block before bed.</p>
+        <div class="ex-mini">~400 cal · linked to lower all-cause mortality</div>
+      </div>
+      <div class="ex-challenge">
+        <h4>💪 Greasing the Groove</h4>
+        <p>Do 5 push-ups every time you walk past your bedroom doorway. Goal: 50 reps spread across the day.</p>
+        <div class="ex-mini">Pavel Tsatsouline's secret to effortless strength</div>
+      </div>
+      <div class="ex-challenge">
+        <h4>🧘 5–4–3–2–1 Mobility</h4>
+        <p>5 cat-cows · 4 lunges/side · 3 squats · 2 push-ups · 1 minute plank. Repeat 3 rounds.</p>
+        <div class="ex-mini">~10 min · full-body wake-up</div>
+      </div>
+      <div class="ex-challenge">
+        <h4>⚡ Tabata Tuesday</h4>
+        <p>20 sec all-out + 10 sec rest × 8 rounds = 4 min of pure HIIT. Pick: burpees, jump squats, mountain climbers.</p>
+        <div class="ex-mini">Reverses heart aging (per Dr. Patrick)</div>
+      </div>
+    </div>
+
+    <!-- Movement Snacks -->
+    <div class="ex-card-title" style="font-size:18px; margin: 28px 0 14px;">⚡ Movement Snacks <span style="font-size:11px; font-weight:400; color:#8b949e;">— 30–90 second bursts you can do anywhere</span></div>
+    <div class="ex-card" style="border-left: 3px solid #d2a8ff;">
+      <div class="ex-snack-grid">
+        <div class="ex-snack"><div class="ex-snack-name">🦵 20 Air Squats</div><div class="ex-snack-time">45 sec</div></div>
+        <div class="ex-snack"><div class="ex-snack-name">💪 10 Push-ups</div><div class="ex-snack-time">30 sec</div></div>
+        <div class="ex-snack"><div class="ex-snack-name">🧗 30 Mountain Climbers</div><div class="ex-snack-time">45 sec</div></div>
+        <div class="ex-snack"><div class="ex-snack-name">🦘 20 Jumping Jacks</div><div class="ex-snack-time">30 sec</div></div>
+        <div class="ex-snack"><div class="ex-snack-name">🪑 1-Minute Wall Sit</div><div class="ex-snack-time">60 sec</div></div>
+        <div class="ex-snack"><div class="ex-snack-name">🌉 30-sec Plank Hold</div><div class="ex-snack-time">30 sec</div></div>
+        <div class="ex-snack"><div class="ex-snack-name">🦵 20 Calf Raises</div><div class="ex-snack-time">30 sec</div></div>
+        <div class="ex-snack"><div class="ex-snack-name">🤸 10 Burpees</div><div class="ex-snack-time">60 sec</div></div>
+        <div class="ex-snack"><div class="ex-snack-name">🦋 Shoulder Rolls × 20</div><div class="ex-snack-time">30 sec</div></div>
+        <div class="ex-snack"><div class="ex-snack-name">🪜 1 Flight of Stairs</div><div class="ex-snack-time">30 sec</div></div>
+        <div class="ex-snack"><div class="ex-snack-name">🤲 30-sec Dead Hang</div><div class="ex-snack-time">30 sec</div></div>
+        <div class="ex-snack"><div class="ex-snack-name">🔄 10 Hip Circles/side</div><div class="ex-snack-time">30 sec</div></div>
+      </div>
+      <div style="margin-top: 14px; padding-top: 12px; border-top: 1px solid #30363d; font-size: 12px; color: #8b949e;">
+        💡 <b>Why it works:</b> "Exercise snacks" of 1-min vigorous activity, 3× a day, lowered all-cause mortality 38–40% in a 2022 <i>Nature Medicine</i> study. You don't need a gym — you need momentum.
+      </div>
+    </div>
+
+    <!-- Why this matters -->
+    <div class="ex-card" style="margin-top: 24px; border-left: 3px solid #58a6ff;">
+      <div class="ex-card-title"><span class="ex-emoji">🧬</span> The Science of Why Fun Wins</div>
+      <div class="ex-card-body">
+        Behavioral science is clear: <b>enjoyment predicts adherence better than knowledge of benefits</b>. People who pick activities they actually like exercise <b>3× longer</b> than those grinding through "should-do" workouts. Fun isn't optional — it's the strategy.
+        <div style="margin-top: 10px;">
+          <span class="ex-tag">Dopamine</span>
+          <span class="ex-tag">BDNF +200%</span>
+          <span class="ex-tag">Better Sleep</span>
+          <span class="ex-tag">Mood +50%</span>
+          <span class="ex-tag">Cognition</span>
+          <span class="ex-tag">Longevity</span>
+        </div>
+      </div>
+    </div>
+
+
+
+  </div>
+</div><!-- /view-exercise -->
+
+<script>
+// ═══════════════════════════════════════════════════════════════════════
+// EXERCISE TAB — interactive bits
+// ═══════════════════════════════════════════════════════════════════════
+(function() {
+  const STORAGE_KEY = 'health_ex_streak_v1';
+
+  function loadStreak() {
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || { dates: [] }; }
+    catch (e) { return { dates: [] }; }
+  }
+  function saveStreak(s) {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(s)); } catch (e) {}
+  }
+  function todayStr() {
+    const d = new Date();
+    return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+  }
+  function calcStreak(dates) {
+    if (!dates.length) return 0;
+    const set = new Set(dates);
+    let count = 0;
+    let cur = new Date();
+    // If today not checked, start counting from yesterday
+    if (!set.has(todayStr())) cur.setDate(cur.getDate() - 1);
+    while (true) {
+      const k = cur.getFullYear()+'-'+String(cur.getMonth()+1).padStart(2,'0')+'-'+String(cur.getDate()).padStart(2,'0');
+      if (set.has(k)) { count++; cur.setDate(cur.getDate() - 1); }
+      else break;
+    }
+    return count;
+  }
+  function renderStreak() {
+    const s = loadStreak();
+    const set = new Set(s.dates);
+    const num = calcStreak(s.dates);
+    const numEl = document.getElementById('ex-streak-num');
+    const btnEl = document.getElementById('ex-check-btn');
+    const dotsEl = document.getElementById('ex-week-dots');
+    if (!numEl || !btnEl || !dotsEl) return;
+    numEl.textContent = num;
+    const today = todayStr();
+    if (set.has(today)) {
+      btnEl.disabled = true;
+      btnEl.textContent = '✓ Done for today!';
+    } else {
+      btnEl.disabled = false;
+      btnEl.textContent = '✓ I moved today';
+    }
+    // Last 7 days dots
+    dotsEl.innerHTML = '';
+    const labels = ['S','M','T','W','T','F','S'];
+    for (let i = 6; i >= 0; i--) {
+      const d = new Date();
+      d.setDate(d.getDate() - i);
+      const k = d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+      const dot = document.createElement('div');
+      dot.className = 'dot' + (set.has(k) ? ' done' : '') + (i === 0 ? ' today' : '');
+      dot.textContent = labels[d.getDay()];
+      dot.title = k;
+      dotsEl.appendChild(dot);
+    }
+  }
+  window.exCheckIn = function() {
+    const s = loadStreak();
+    const today = todayStr();
+    if (!s.dates.includes(today)) {
+      s.dates.push(today);
+      // Keep last 90 days only
+      const cutoff = new Date(); cutoff.setDate(cutoff.getDate() - 90);
+      s.dates = s.dates.filter(d => new Date(d) >= cutoff);
+      saveStreak(s);
+    }
+    renderStreak();
+  };
+
+  // Roulette
+  const ACTIVITIES = [
+    { name: '🏃 Run',        meta: 'aerobic · burns visceral fat' },
+    { name: '🚴 Bike Ride',  meta: 'low-impact cardio · joint friendly' },
+    { name: '🏊 Swim',       meta: 'full-body · zero impact' },
+    { name: '💃 Dance',      meta: 'cardio + coordination + joy' },
+    { name: '🧘 Yoga Flow',  meta: 'mobility · stress relief' },
+    { name: '🥊 Boxing',     meta: 'HIIT + power + stress release' },
+    { name: '🏋️ Lift Heavy', meta: 'preserves muscle · bone density' },
+    { name: '🚶 Power Walk', meta: 'easiest entry · still effective' },
+    { name: '🧗 Climb',      meta: 'strength + problem solving' },
+    { name: '⛹️ Pickup Game',meta: 'social cardio · competitive fun' },
+    { name: '🤸 Bodyweight Circuit', meta: 'no equipment · anywhere' },
+    { name: '⛰️ Hike',       meta: 'nature + endurance + mood boost' },
+  ];
+  const DURATIONS = ['10 minutes', '20 minutes', '30 minutes', '45 minutes', '60 minutes'];
+  const INTENSITIES = [
+    { name: 'Easy pace 🟢',     hint: 'conversation possible' },
+    { name: 'Moderate 🟡',      hint: 'breathing harder, can talk in sentences' },
+    { name: 'Vigorous 🟠',      hint: 'breathy short phrases only · 70%+ max HR' },
+    { name: 'All-out HIIT 🔴',  hint: 'work hard · rest · repeat' },
+  ];
+  function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+  window.exSpin = function() {
+    const r = document.getElementById('ex-roulette-result');
+    const m = document.getElementById('ex-roulette-meta');
+    if (!r || !m) return;
+    r.classList.add('spinning');
+    m.textContent = '...';
+    let ticks = 0;
+    const interval = setInterval(() => {
+      r.textContent = pick(ACTIVITIES).name;
+      ticks++;
+      if (ticks > 12) {
+        clearInterval(interval);
+        const a = pick(ACTIVITIES), d = pick(DURATIONS), i = pick(INTENSITIES);
+        r.classList.remove('spinning');
+        r.textContent = a.name;
+        m.innerHTML = `<b style="color:#c9d1d9">${d}</b> · <span style="color:#ffa657">${i.name}</span><br><span style="font-size:11px;">${a.meta} — ${i.hint}</span>`;
+      }
+    }, 60);
+  };
+
+  // Render streak when tab opens (and once on load)
+  document.addEventListener('DOMContentLoaded', renderStreak);
+  if (document.readyState !== 'loading') renderStreak();
+
+  // Hook into tab switching to refresh streak (in case localStorage changed)
+  if (typeof window.switchTab === 'function') {
+    const _orig = window.switchTab;
+    window.switchTab = function(tab) {
+      _orig(tab);
+      if (tab === 'exercise') renderStreak();
+    };
+  }
+})();
+</script>
 
 <!-- Detail Panel -->
 <div id="detail-panel">
