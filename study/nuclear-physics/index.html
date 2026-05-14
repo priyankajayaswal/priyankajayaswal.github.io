@@ -2072,5 +2072,702 @@ if (typeof switchTab === 'function') {
 })();
 </script>
 <!-- END tooltip-pin -->
+
+<!-- ============================================================
+     DROP-IN QUIZ MODULE — self-bootstrapping
+     Place this entire block immediately before </body>.
+     Customize the JSON inside <script id="quiz-data"> for the domain.
+     Each question: { topic, q, options:[...4], answer:0..3, explain }
+     ============================================================ -->
+<script id="quiz-data" type="application/json">
+[
+  {
+    "topic": "Nuclear Structure",
+    "options": [
+      "R = r₀A^(1/3)",
+      "R = r₀A",
+      "R = r₀√A",
+      "R = r₀/A"
+    ],
+    "answer": 0,
+    "explain": "The empirical nuclear radius is R ≈ r₀A^(1/3) where r₀ ≈ 1.2 fm, reflecting that nuclear volume is proportional to nucleon count.",
+    "q": "What is the approximate formula for the nuclear radius?"
+  },
+  {
+    "topic": "Nuclear Structure",
+    "options": [
+      "Fe-56",
+      "He-4",
+      "Ni-62",
+      "U-238"
+    ],
+    "answer": 0,
+    "explain": "Fe-56 has the highest binding energy per nucleon (~8.8 MeV), making it the most stable. This peak defines the valley of beta stability.",
+    "q": "Which nucleus has maximum binding energy per nucleon?"
+  },
+  {
+    "topic": "Nuclear Structure",
+    "options": [
+      "Nucleon counts with closed shells and extra stability",
+      "Atomic mass numbers divisible by 3",
+      "Radioactive decay constants",
+      "Nuclear resonance frequencies"
+    ],
+    "answer": 0,
+    "explain": "Magic numbers (2, 8, 20, 28, 50, 82, 126) occur when nucleon shells are completely filled, conferring exceptional stability like noble gases in chemistry.",
+    "q": "What do magic numbers in nuclear physics represent?"
+  },
+  {
+    "topic": "Nuclear Structure",
+    "options": [
+      "Symmetric nuclei minimize Coulomb repulsion effects",
+      "Neutrons are always heavier than protons",
+      "Alpha particles are the strongest bound state",
+      "All nuclei prefer equal numbers of particles"
+    ],
+    "answer": 0,
+    "explain": "Nuclei with N = Z (like ⁴He, ¹⁶O, ⁴⁰Ca) are particularly stable because they minimize asymmetry energy, a term in the semi-empirical mass formula.",
+    "q": "The shell model predicts that nuclei with equal Z and N are most stable because:"
+  },
+  {
+    "topic": "Binding Energy",
+    "options": [
+      "-aₛA^(2/3)",
+      "-aᵥA",
+      "+aₑZ²/A^(1/3)",
+      "-aₐ(N-Z)²/A"
+    ],
+    "answer": 0,
+    "explain": "The surface term -aₛA^(2/3) accounts for reduced binding of nucleons at the surface. This is analogous to surface tension in a liquid drop.",
+    "q": "Which term in the SEMF represents surface energy?"
+  },
+  {
+    "topic": "Binding Energy",
+    "options": [
+      "Energy released or absorbed (Q = ΔM·c²)",
+      "Reaction rate constant",
+      "Number of product nuclei",
+      "Half-life of radioactive decay"
+    ],
+    "answer": 0,
+    "explain": "Q = (initial rest masses - final rest masses)c². Q > 0 (exothermic) releases energy; Q < 0 (endothermic) requires energy input to proceed.",
+    "q": "What does Q-value mean in nuclear reactions?"
+  },
+  {
+    "topic": "Binding Energy",
+    "options": [
+      "Both proton and neutron shells can be completely filled, maximizing BE/A",
+      "Iron has unique magnetic properties",
+      "It has the largest nuclear radius",
+      "It undergoes spontaneous fission"
+    ],
+    "answer": 0,
+    "explain": "Fe-56 (Z=26, N=30) nearly fills several magic shells. This maximizes binding per nucleon, creating the peak in the BE/A vs A curve. Heavier nuclei are less stable due to Coulomb repulsion.",
+    "q": "Iron-56 is the peak of nuclear stability because:"
+  },
+  {
+    "topic": "Radioactive Decay",
+    "options": [
+      "⁴He nucleus (helium-4 with Z=2, N=2)",
+      "Single electron",
+      "Photon",
+      "Single neutron"
+    ],
+    "answer": 0,
+    "explain": "Alpha (α) decay emits ⁴₂He. Example: ²³⁸₉₂U → ²³⁴₉₀Th + ⁴₂He. Mass number decreases by 4, atomic number by 2. Nucleus loses ~25-30 MeV energy.",
+    "q": "What particles are emitted in alpha decay?"
+  },
+  {
+    "topic": "Radioactive Decay",
+    "options": [
+      "5,730 years",
+      "5.7 million years",
+      "573 years",
+      "57 million years"
+    ],
+    "answer": 0,
+    "explain": "C-14 half-life = 5,730 ± 40 years. After 5,730 years, half remains; after 11,460 years, quarter remains. This enables radiocarbon dating for objects up to ~50,000 years old.",
+    "q": "The half-life of C-14 is approximately:"
+  },
+  {
+    "topic": "Radioactive Decay",
+    "options": [
+      "A neutron converts to proton + electron + antineutrino",
+      "A proton converts to neutron + positron + neutrino",
+      "The nucleus captures an electron",
+      "An alpha particle is emitted"
+    ],
+    "answer": 0,
+    "explain": "β⁻ decay: n → p + e⁻ + ν̄ₑ. Atomic number increases by 1, mass number unchanged. Example: ¹⁴₆C → ¹⁴₇N + e⁻ + ν̄ₑ. Mediates by weak force.",
+    "q": "In beta-minus (β⁻) decay:"
+  },
+  {
+    "topic": "Radioactive Decay",
+    "options": [
+      "An excited nucleus emits a high-energy photon transitioning to lower energy state",
+      "The nucleus splits into fragments",
+      "An electron is emitted",
+      "A nucleus absorbs a photon"
+    ],
+    "answer": 0,
+    "explain": "Gamma (γ) decay is electromagnetic radiation from excited nucleus. Z and A are unchanged. Energy ~1 keV to several MeV. Often follows alpha or beta decay.",
+    "q": "Gamma decay occurs when:"
+  },
+  {
+    "topic": "Radioactive Decay",
+    "options": [
+      "Electrons preferentially emit antiparallel to their spin (left-handed)",
+      "Beta particles travel at different speeds",
+      "Neutrinos have mass",
+      "Beta decay is faster than alpha decay"
+    ],
+    "answer": 0,
+    "explain": "Wu et al. (1956) showed ⁶⁰Co β⁻ decay emits electrons preferentially opposite their spin—a parity violation unique to weak interactions. Nature is left-handed.",
+    "q": "Beta decay violates parity because:"
+  },
+  {
+    "topic": "Nuclear Reactions",
+    "options": [
+      "Effective interaction area (units: barns = 10⁻²⁴ cm²)",
+      "Physical radius of nucleus",
+      "Energy transferred in collision",
+      "Number of reaction products"
+    ],
+    "answer": 0,
+    "explain": "Cross section σ relates reaction rate R = σ·n·Φ (n = target density, Φ = projectile flux). Larger σ means higher reaction probability. Resonances cause dramatic σ peaks.",
+    "q": "Nuclear cross section measures:"
+  },
+  {
+    "topic": "Nuclear Reactions",
+    "options": [
+      "Highly excited state formed by fusing projectile and target nuclei",
+      "Final stable product nucleus",
+      "Nucleus with magic numbers",
+      "Any nucleus with balanced protons/neutrons"
+    ],
+    "answer": 0,
+    "explain": "When projectile + target merge, they form an intermediate compound nucleus in a highly excited state. It quickly decays via particle emission or fission. Explains reaction cross sections via compound nucleus model.",
+    "q": "What is a compound nucleus?"
+  },
+  {
+    "topic": "Nuclear Reactions",
+    "options": [
+      "Neutron in, proton out",
+      "Neutron produced, proton absorbed",
+      "Neutron and proton reactions",
+      "Nuclear resonance at neutron energy p"
+    ],
+    "answer": 0,
+    "explain": "Standard notation: target(projectile, ejectile)residual. (n,p) means neutron projectile enters, proton exits. Example: ¹⁶₈O(n,p)¹⁶₇N. Important for activation analysis.",
+    "q": "(n,p) reaction notation means:"
+  },
+  {
+    "topic": "Nuclear Reactions",
+    "options": [
+      "Minimum projectile KE to overcome negative Q and provide recoil momentum",
+      "Maximum energy ever released",
+      "Average kinetic energy of decay products",
+      "Energy equals Q value exactly"
+    ],
+    "answer": 0,
+    "explain": "Threshold Tₜₕ ≈ -Q·(2+m/M+|Q|/(2Mc²)). No reaction occurs below threshold. For Q < 0, significant kinetic energy is required even if Q ≈ 0, due to recoil conservation.",
+    "q": "What is the threshold energy for endothermic reactions (Q < 0)?"
+  },
+  {
+    "topic": "Nuclear Fission",
+    "options": [
+      "~2.4 neutrons per fission",
+      "~0.5 neutrons",
+      "~1.0 neutron",
+      "~5.0 neutrons"
+    ],
+    "answer": 0,
+    "explain": "U-235 fission releases 2-3 neutrons with average ν ≈ 2.4. Chain reaction occurs when k = ν·η·f·ε ≥ 1. This neutron multiplication enables both power generation and weapons.",
+    "q": "Average neutron multiplicity in U-235 fission:"
+  },
+  {
+    "topic": "Nuclear Fission",
+    "options": [
+      "Asymmetric fragments (~95 and ~140 mass number)",
+      "Symmetric fragments (~117 each)",
+      "One very light and one very heavy nucleus",
+      "Three approximately equal fragments"
+    ],
+    "answer": 0,
+    "explain": "U-235 fission is asymmetric: ~66% of events yield fragments like 95/140; ~34% yield ~110/125. Asymmetry likely due to shell effects near N=50 and Z=20 magic numbers in fragments.",
+    "q": "U-235 fission typically produces:"
+  },
+  {
+    "topic": "Nuclear Fission",
+    "options": [
+      "~200 MeV (165 MeV kinetic + 25 MeV neutrons/radiation)",
+      "~2 MeV",
+      "~20 GeV",
+      "~2000 MeV"
+    ],
+    "answer": 0,
+    "explain": "U-235 fission releases ~200 MeV per event: ~165 MeV fragment kinetic energy, ~3 MeV neutron kinetic, ~7 MeV antineutrino, ~7 MeV delayed gamma/beta. Density of energy ~82 TJ/kg—incredibly high.",
+    "q": "Total energy released per U-235 fission:"
+  },
+  {
+    "topic": "Nuclear Fission",
+    "options": [
+      "Average number of fission neutrons from one neutron absorbed",
+      "Total neutrons in reactor core",
+      "Neutron leakage fraction",
+      "Power output in MW"
+    ],
+    "answer": 0,
+    "explain": "k = (neutrons causing fission)/(neutrons absorbed). k > 1: supercritical (power ↑). k = 1: critical (steady state). k < 1: subcritical (power ↓). Reactors maintain k ≈ 1 via control rods.",
+    "q": "In reactor physics, multiplication factor k represents:"
+  },
+  {
+    "topic": "Nuclear Fission",
+    "options": [
+      "Absorbing neutrons (cadmium, boron) to regulate chain reaction",
+      "Moderating neutron speeds",
+      "Cooling reactor core",
+      "Producing extra neutrons"
+    ],
+    "answer": 0,
+    "explain": "Control rods contain strong neutron absorbers (Cd-113: σ ≈ 2520 barns; B-10: σ ≈ 3835 barns). Insertion reduces k; withdrawal increases k. Fine positioning maintains criticality.",
+    "q": "Control rods function by:"
+  },
+  {
+    "topic": "Nuclear Fission",
+    "options": [
+      "U-235 fissile with thermal neutrons; U-238 requires fast neutrons (~1.1 MeV)",
+      "U-238 is radioactive",
+      "U-235 doesn't produce neutrons",
+      "U-235 has higher density"
+    ],
+    "answer": 0,
+    "explain": "U-235 fission barrier ~5.5 MeV (can be triggered by 0.025 eV thermal neutrons). U-238 barrier ~6.5 MeV (needs ~1.1 MeV neutrons). Thermal reactors use enriched U-235 fuel.",
+    "q": "Why is U-235 preferred over U-238 for thermal reactors?"
+  },
+  {
+    "topic": "Nuclear Fusion",
+    "options": [
+      "Fuses hydrogen into helium-4, releasing ~26.7 MeV net",
+      "Fuses helium into carbon",
+      "Splits heavy nuclei",
+      "Requires active plasma control"
+    ],
+    "answer": 0,
+    "explain": "pp-chain dominates in low-mass stars like our sun. Step 1: p + p → ²H + e⁺ + νₑ. Steps 2-3 combine to form ⁴He. Net: 4p → ⁴He + 2e⁺ + 2νₑ + γ. Powers stars for billions of years.",
+    "q": "The proton-proton chain (pp-chain) power source of the sun:"
+  },
+  {
+    "topic": "Nuclear Fusion",
+    "options": [
+      "Quantum tunneling and thermal motion at ~100 million K",
+      "Direct classically-allowed collision",
+      "Nuclear force attractive at all distances",
+      "Spontaneous tunneling at room temperature"
+    ],
+    "answer": 0,
+    "explain": "Coulomb barrier Eᶜ ≈ Z₁Z₂e²/(4πε₀r). For D-T: Eᶜ ~0.4 MeV. At 100 MK, ~kT ≈ 8.6 keV << Eᶜ, but quantum tunneling through the barrier enables fusion reactions.",
+    "q": "The Coulomb barrier in deuteron-tritium fusion (~0.4 MeV) is overcome by:"
+  },
+  {
+    "topic": "Nuclear Fusion",
+    "options": [
+      "~50-100 million K",
+      "~1,000 K",
+      "~10 million K",
+      "~1 billion K"
+    ],
+    "answer": 0,
+    "explain": "D-T fusion requires ~50-100 million K (~5-10 keV) for significant cross section. At higher T, more particles overcome Coulomb barrier via tunneling. ITER tokamak targets ~150 MK for sustained fusion.",
+    "q": "Ignition temperature for deuterium-tritium fusion:"
+  },
+  {
+    "topic": "Nuclear Fusion",
+    "options": [
+      "Resonance in ⁸Be + ⁴He → ¹²C matches the energy of decaying ⁸Be",
+      "Three alphas directly collide and fuse",
+      "Nucleosynthesis requires carbon as intermediate",
+      "Hoyle resonance at 7.656 MeV exactly matches energy sum"
+    ],
+    "answer": 0,
+    "explain": "⁸Be is unstable (τ ~10⁻¹⁶ s) but 4He + ⁴He → ⁸Be. Hoyle (1954) predicted ¹²C level at 7.656 MeV matching the 3α energy. This resonance enabled carbon production in stars!",
+    "q": "The triple-alpha process forms carbon-12 because:"
+  },
+  {
+    "topic": "Nuclear Fusion",
+    "options": [
+      "Rapid implosion of fuel pellet to extreme density, using inertia to resist expansion",
+      "Magnetic field containment",
+      "Mechanical compression over seconds",
+      "Gravitational forces"
+    ],
+    "answer": 0,
+    "explain": "ICF uses high-power lasers (NIF: 192 beams) or heavy-ion beams to implode a DT pellet in nanoseconds to ~1000× solid density. Inertia confines plasma for ~nanoseconds. NIF achieved ignition in 2022.",
+    "q": "In inertial confinement fusion (ICF), confinement time is achieved by:"
+  },
+  {
+    "topic": "Detectors",
+    "options": [
+      "Energetic particle ionizes atoms; fluorescence photons detected by PMT",
+      "Particle travels through magnetic field",
+      "Electron-hole pairs created in semiconductor",
+      "Neutron absorption and radiative capture"
+    ],
+    "answer": 0,
+    "explain": "Scintillators (NaI, plastic scintillator, liquid) emit UV-visible photons when ionized. PMT converts photons → electrons → amplified signal. Fast response (~nanoseconds), decent energy resolution.",
+    "q": "A scintillation detector works by:"
+  },
+  {
+    "topic": "Detectors",
+    "options": [
+      "Total energy of particle (absorbed via electromagnetic/hadronic shower)",
+      "Particle momentum",
+      "Particle charge",
+      "Particle lifetime"
+    ],
+    "answer": 0,
+    "explain": "Calorimeters stop particles and convert kinetic energy → detectable signal (photons, heat, ionization). EM calorimeters: photons/electrons; hadronic: hadrons. ~100% energy capture, poor position resolution.",
+    "q": "A calorimeter measures:"
+  },
+  {
+    "topic": "Detectors",
+    "options": [
+      "Gas ionization cascades into avalanche, creating large electrical pulse",
+      "Scintillation light emission",
+      "Semiconductor junction effects",
+      "Neutron elastic scattering"
+    ],
+    "answer": 0,
+    "explain": "GM tube: gas at low pressure. Single ionizing event triggers breakdown avalanche → large pulse. Simple, cheap, robust (10⁻³ to 10⁴ rad/s range) but poor energy resolution and dead-time issues.",
+    "q": "Geiger-Müller tube detection principle:"
+  },
+  {
+    "topic": "Detectors",
+    "options": [
+      "Charged particle trajectory in magnetic field, revealing momentum and charge",
+      "Total energy of all particles",
+      "Lifetime of unstable particles",
+      "Number of particles produced"
+    ],
+    "answer": 0,
+    "explain": "Tracking detectors (drift chambers, silicon strip, TPCs) record ionization track as charged particle curves in B-field. Radius of curvature → momentum p = eBr/c. Essential for event reconstruction at colliders.",
+    "q": "Tracking detectors reconstruct:"
+  },
+  {
+    "topic": "Nuclear Force",
+    "options": [
+      "Short-range (~2 fm from pion exchange), attractive at small r, repulsive at r<0.5 fm",
+      "Long-range like gravity",
+      "Acts only on electrons",
+      "Strongest at large distances"
+    ],
+    "answer": 0,
+    "explain": "Strong force: pion mass m_π ~140 MeV → range ~ℏ/(m_π c) ~1.4 fm. Mediated by gluons in QCD. Quark confinement ensures E ∝ r (color field). Excludes Pauli-forbidden states.",
+    "q": "The strong nuclear force is unique because:"
+  },
+  {
+    "topic": "Nuclear Force",
+    "options": [
+      "Incompressible fluid with surface tension and Coulomb repulsion",
+      "Gas of independent particles",
+      "Rigid sphere",
+      "Collection of independent quarks"
+    ],
+    "answer": 0,
+    "explain": "Liquid drop: treats nucleus like incompressible fluid. Binding energy = volume + surface + Coulomb + asymmetry + pairing terms. Predicts fission barriers, magic effects less accurately than shell model.",
+    "q": "The liquid drop model explains nuclear binding by treating nucleus as:"
+  },
+  {
+    "topic": "Nuclear Force",
+    "options": [
+      "Removing a nucleon from closed shell requires extra energy to break shell closure",
+      "Total binding energy is maximum",
+      "Nucleons are more tightly bound",
+      "Shell model predicts exact energy levels"
+    ],
+    "answer": 0,
+    "explain": "Sₙ = E(A,Z) - E(A-1,Z) reveals shell structure. Peaks occur when removing the last nucleon breaks a full shell (magic number). Dips at next shell opening (new nucleon added to empty shell is weakly bound).",
+    "q": "Neutron separation energy Sₙ peaks at magic numbers because:"
+  }
+]
+</script>
+<script>
+(function() {
+  const dataEl = document.getElementById('quiz-data');
+  if (!dataEl) return;
+  let questions;
+  try { questions = JSON.parse(dataEl.textContent); } catch(e) { console.error('Quiz JSON parse error', e); return; }
+  if (!Array.isArray(questions) || !questions.length) return;
+
+  // ── Inject CSS ──
+  const css = `
+  #view-quiz { overflow-y: auto; padding-top: 60px; height: 100vh; }
+  .quiz-wrap { max-width: 880px; margin: 0 auto; padding: 24px 24px 80px; }
+  .quiz-header { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; margin-bottom: 12px; }
+  .quiz-header h2 { font-size: 22px; color: #58a6ff; }
+  .quiz-header .quiz-sub { font-size: 12px; color: #8b949e; margin-top: 2px; }
+  .quiz-stats { display:flex; gap:10px; flex-wrap:wrap; }
+  .quiz-stat { background:#161b22; border:1px solid #30363d; border-radius:8px; padding:8px 14px; font-size:12px; color:#8b949e; }
+  .quiz-stat b { color:#c9d1d9; font-size:15px; display:block; }
+  .quiz-stat.ok b { color:#7ee787; }
+  .quiz-stat.bad b { color:#ff7b72; }
+  .quiz-filters { display:flex; flex-wrap:wrap; gap:6px; margin: 12px 0 16px; }
+  .quiz-chip { background:#0d1117; border:1px solid #30363d; color:#8b949e; padding:5px 12px; border-radius:16px; cursor:pointer; font-size:12px; transition:all .15s; }
+  .quiz-chip:hover { color:#c9d1d9; border-color:#58a6ff; }
+  .quiz-chip.active { background:#1f6feb; color:#fff; border-color:#58a6ff; }
+  .quiz-actions { display:flex; gap:8px; flex-wrap:wrap; margin-bottom: 14px; }
+  .quiz-actions .qbtn { background:#21262d; border:1px solid #30363d; color:#c9d1d9; padding:6px 14px; border-radius:6px; cursor:pointer; font-size:12px; }
+  .quiz-actions .qbtn:hover { background:#30363d; border-color:#58a6ff; }
+  .quiz-progress { height:6px; background:#161b22; border-radius:4px; overflow:hidden; margin-bottom:16px; border:1px solid #30363d; }
+  .quiz-progress > div { height:100%; background:linear-gradient(90deg,#1f6feb,#58a6ff); transition:width .3s; }
+  .quiz-card { background:#161b22; border:1px solid #30363d; border-radius:12px; padding:22px 26px; box-shadow:0 4px 18px rgba(0,0,0,.3); }
+  .quiz-card .qc-meta { font-size:11px; color:#58a6ff; font-weight:600; text-transform:uppercase; letter-spacing:.5px; margin-bottom:8px; display:flex; justify-content:space-between; }
+  .quiz-card .qc-meta .qc-num { color:#8b949e; }
+  .quiz-card .qc-q { font-size:16px; color:#c9d1d9; line-height:1.55; font-weight:600; margin-bottom:16px; }
+  .quiz-options { display:flex; flex-direction:column; gap:8px; }
+  .quiz-opt { background:#0d1117; border:1px solid #30363d; color:#c9d1d9; padding:11px 16px; border-radius:8px; cursor:pointer; text-align:left; font-size:14px; transition:all .15s; line-height:1.4; display:flex; align-items:flex-start; gap:10px; }
+  .quiz-opt:hover:not(.disabled) { border-color:#58a6ff; background:#161b22; }
+  .quiz-opt .opt-letter { flex-shrink:0; width:22px; height:22px; border-radius:50%; background:#21262d; color:#8b949e; font-size:11px; font-weight:600; display:inline-flex; align-items:center; justify-content:center; }
+  .quiz-opt.correct { border-color:#3fb950; background:rgba(63,185,80,.08); }
+  .quiz-opt.correct .opt-letter { background:#3fb950; color:#fff; }
+  .quiz-opt.wrong { border-color:#f85149; background:rgba(248,81,73,.08); }
+  .quiz-opt.wrong .opt-letter { background:#f85149; color:#fff; }
+  .quiz-opt.disabled { cursor:default; }
+  .quiz-explain { margin-top:14px; padding:12px 16px; background:#0d1117; border-left:3px solid #58a6ff; border-radius:6px; font-size:13px; color:#8b949e; line-height:1.6; }
+  .quiz-explain b { color:#58a6ff; }
+  .quiz-nav { display:flex; justify-content:space-between; gap:10px; margin-top:18px; }
+  .quiz-nav .qbtn { padding:8px 18px; font-size:13px; background:#21262d; border:1px solid #30363d; color:#c9d1d9; border-radius:6px; cursor:pointer; }
+  .quiz-nav .qbtn:hover { background:#30363d; border-color:#58a6ff; }
+  .quiz-nav .qbtn.primary { background:#1f6feb; border-color:#58a6ff; color:#fff; }
+  .quiz-nav .qbtn.primary:hover { background:#388bfd; }
+  .quiz-nav .qbtn:disabled { opacity:.4; cursor:not-allowed; }
+  .quiz-empty { text-align:center; color:#484f58; padding:60px 20px; font-style:italic; }
+  .quiz-summary { background:#161b22; border:1px solid #30363d; border-radius:12px; padding:32px; text-align:center; }
+  .quiz-summary h3 { color:#58a6ff; font-size:22px; margin-bottom:6px; }
+  .quiz-summary .qs-score { font-size:56px; font-weight:700; color:#7ee787; margin:12px 0; }
+  .quiz-summary .qs-pct { color:#8b949e; font-size:14px; margin-bottom:16px; }
+  .quiz-summary .qs-breakdown { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:8px; margin:20px 0; text-align:left; }
+  .quiz-summary .qs-row { background:#0d1117; border:1px solid #30363d; border-radius:8px; padding:8px 12px; font-size:12px; color:#8b949e; }
+  .quiz-summary .qs-row b { display:block; color:#c9d1d9; font-size:14px; margin-bottom:2px; }
+  @media (max-width: 600px) {
+    .quiz-wrap { padding:14px 12px 80px; }
+    .quiz-card { padding:16px; }
+    .quiz-card .qc-q { font-size:15px; }
+    .quiz-opt { font-size:13px; padding:10px 12px; }
+  }`;
+  const styleEl = document.createElement('style');
+  styleEl.textContent = css;
+  document.head.appendChild(styleEl);
+
+  // ── Inject view container ──
+  function ensureView() {
+    let view = document.getElementById('view-quiz');
+    if (!view) {
+      view = document.createElement('div');
+      view.id = 'view-quiz';
+      view.className = 'view';
+      view.innerHTML = '<div id="quiz-container"></div>';
+      document.body.appendChild(view);
+    }
+    return view;
+  }
+  const viewEl = ensureView();
+
+  // ── State ──
+  const state = { filter: 'ALL', order: [], cursor: 0, answers: {}, built: false };
+
+  function shuffleArr(a) { for (let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} }
+  function escapeHtml(s) { return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+  function topics() { return ['ALL', ...Array.from(new Set(questions.map(q => q.topic || 'General')))]; }
+  function pool() { return state.order.map(i => ({i, q: questions[i]})).filter(x => state.filter === 'ALL' || (x.q.topic||'General') === state.filter); }
+
+  function build() {
+    state.order = questions.map((_, i) => i);
+    shuffleArr(state.order);
+    const root = document.getElementById('quiz-container');
+    root.innerHTML = `
+      <div class="quiz-wrap">
+        <div class="quiz-header">
+          <div>
+            <h2>🎯 Knowledge Quiz</h2>
+            <div class="quiz-sub">${questions.length} questions across ${topics().length - 1} topics — pick a topic or take it all.</div>
+          </div>
+          <div class="quiz-stats" id="quiz-stats"></div>
+        </div>
+        <div class="quiz-filters" id="quiz-filters"></div>
+        <div class="quiz-actions">
+          <button class="qbtn" data-act="shuffle">🔀 Shuffle</button>
+          <button class="qbtn" data-act="reset">↺ Reset Answers</button>
+          <button class="qbtn" data-act="next-unans">⏭ Next Unanswered</button>
+          <button class="qbtn" data-act="summary">📊 Summary</button>
+        </div>
+        <div class="quiz-progress"><div id="quiz-progress-bar" style="width:0%"></div></div>
+        <div id="quiz-body"></div>
+      </div>`;
+    root.querySelectorAll('.qbtn[data-act]').forEach(b => b.addEventListener('click', () => {
+      const a = b.getAttribute('data-act');
+      if (a === 'shuffle') { shuffleArr(state.order); state.cursor = 0; renderQ(); }
+      else if (a === 'reset') { if (confirm('Reset all answers?')) { state.answers = {}; renderQ(); } }
+      else if (a === 'next-unans') { const p = pool(); const n = p.findIndex(x => state.answers[x.i] === undefined); if (n >= 0) { state.cursor = n; renderQ(); } }
+      else if (a === 'summary') { showSummary(); }
+    }));
+    renderFilters();
+    renderQ();
+    state.built = true;
+  }
+
+  function renderFilters() {
+    const el = document.getElementById('quiz-filters');
+    el.innerHTML = '';
+    topics().forEach(t => {
+      const count = t === 'ALL' ? questions.length : questions.filter(q => (q.topic || 'General') === t).length;
+      const chip = document.createElement('button');
+      chip.className = 'quiz-chip' + (t === state.filter ? ' active' : '');
+      chip.textContent = t === 'ALL' ? `All (${count})` : `${t} (${count})`;
+      chip.addEventListener('click', () => { state.filter = t; state.cursor = 0; renderFilters(); renderQ(); });
+      el.appendChild(chip);
+    });
+  }
+
+  function renderStats() {
+    const p = pool();
+    const answered = p.filter(x => state.answers[x.i] !== undefined);
+    const correct = answered.filter(x => state.answers[x.i] === x.q.answer).length;
+    const wrong = answered.length - correct;
+    const el = document.getElementById('quiz-stats');
+    if (el) el.innerHTML = `
+      <div class="quiz-stat"><b>${p.length}</b>Questions</div>
+      <div class="quiz-stat ok"><b>${correct}</b>Correct</div>
+      <div class="quiz-stat bad"><b>${wrong}</b>Wrong</div>
+      <div class="quiz-stat"><b>${answered.length}/${p.length}</b>Done</div>`;
+    const pct = p.length ? Math.round(100 * answered.length / p.length) : 0;
+    const bar = document.getElementById('quiz-progress-bar');
+    if (bar) bar.style.width = pct + '%';
+  }
+
+  function renderQ() {
+    const p = pool();
+    const body = document.getElementById('quiz-body');
+    if (!p.length) { body.innerHTML = '<div class="quiz-empty">No questions for this filter.</div>'; renderStats(); return; }
+    if (state.cursor >= p.length) state.cursor = p.length - 1;
+    if (state.cursor < 0) state.cursor = 0;
+    const cur = p[state.cursor];
+    const q = cur.q;
+    const selected = state.answers[cur.i];
+    const answered = selected !== undefined;
+    const optsHtml = q.options.map((opt, i) => {
+      let cls = '';
+      if (answered) { if (i === q.answer) cls = 'correct'; else if (i === selected) cls = 'wrong'; cls += ' disabled'; }
+      const letter = String.fromCharCode(65 + i);
+      return `<button class="quiz-opt ${cls}" data-opt="${i}" ${answered ? 'disabled' : ''}>
+        <span class="opt-letter">${letter}</span><span>${escapeHtml(opt)}</span>
+      </button>`;
+    }).join('');
+    body.innerHTML = `
+      <div class="quiz-card">
+        <div class="qc-meta"><span>${escapeHtml(q.topic || 'General')}</span><span class="qc-num">${state.cursor + 1} / ${p.length}</span></div>
+        <div class="qc-q">${escapeHtml(q.q)}</div>
+        <div class="quiz-options">${optsHtml}</div>
+        ${answered ? `<div class="quiz-explain"><b>${selected === q.answer ? '✓ Correct.' : '✗ Not quite.'}</b> ${escapeHtml(q.explain || '')}</div>` : ''}
+        <div class="quiz-nav">
+          <button class="qbtn" data-nav="prev" ${state.cursor === 0 ? 'disabled' : ''}>← Previous</button>
+          <button class="qbtn primary" data-nav="next" ${state.cursor === p.length - 1 ? 'disabled' : ''}>Next →</button>
+        </div>
+      </div>`;
+    body.querySelectorAll('.quiz-opt[data-opt]').forEach(b => b.addEventListener('click', () => {
+      const idx = cur.i;
+      if (state.answers[idx] !== undefined) return;
+      state.answers[idx] = +b.getAttribute('data-opt');
+      renderQ();
+    }));
+    body.querySelectorAll('[data-nav]').forEach(b => b.addEventListener('click', () => {
+      const dir = b.getAttribute('data-nav');
+      const pp = pool();
+      if (dir === 'next' && state.cursor < pp.length - 1) { state.cursor++; renderQ(); }
+      else if (dir === 'prev' && state.cursor > 0) { state.cursor--; renderQ(); }
+    }));
+    renderStats();
+  }
+
+  function showSummary() {
+    const p = pool();
+    const answered = p.filter(x => state.answers[x.i] !== undefined);
+    const correct = answered.filter(x => state.answers[x.i] === x.q.answer).length;
+    const pct = answered.length ? Math.round(100 * correct / answered.length) : 0;
+    const topicStats = {};
+    p.forEach(x => {
+      const t = x.q.topic || 'General';
+      if (!topicStats[t]) topicStats[t] = { total: 0, answered: 0, correct: 0 };
+      topicStats[t].total++;
+      if (state.answers[x.i] !== undefined) {
+        topicStats[t].answered++;
+        if (state.answers[x.i] === x.q.answer) topicStats[t].correct++;
+      }
+    });
+    const rows = Object.entries(topicStats).map(([t,s]) =>
+      `<div class="qs-row"><b>${escapeHtml(t)}</b>${s.correct}/${s.answered} correct · ${s.total} total</div>`).join('');
+    document.getElementById('quiz-body').innerHTML = `
+      <div class="quiz-summary">
+        <h3>Summary</h3>
+        <div class="qs-score">${correct} / ${answered.length || p.length}</div>
+        <div class="qs-pct">${pct}% correct · ${answered.length} of ${p.length} answered</div>
+        <div class="qs-breakdown">${rows}</div>
+        <div class="quiz-nav" style="justify-content:center">
+          <button class="qbtn primary" id="qs-back">Back to Questions</button>
+          <button class="qbtn" id="qs-reset">Reset Answers</button>
+        </div>
+      </div>`;
+    document.getElementById('qs-back').addEventListener('click', renderQ);
+    document.getElementById('qs-reset').addEventListener('click', () => { if (confirm('Reset all answers?')) { state.answers = {}; renderQ(); } });
+  }
+
+  // ── Activate when the quiz tab is shown ──
+  function activate() {
+    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+    viewEl.classList.add('active');
+    document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.view === 'quiz'));
+    // hide any floating canvas-controls from other tabs
+    document.querySelectorAll('.canvas-controls').forEach(c => { if (c.id !== 'quiz-controls') c.style.display = 'none'; });
+    if (!state.built) build();
+  }
+
+  // ── Bootstrap on DOM ready: add tab button, hook switchTab ──
+  function boot() {
+    // Find the tab-group container (handles both class and id variants)
+    const tg = document.querySelector('#tab-group') || document.querySelector('.tab-group');
+    if (tg) {
+      // Avoid duplicate
+      if (!tg.querySelector('[data-view="quiz"]')) {
+        const btn = document.createElement('button');
+        btn.className = 'tab';
+        btn.dataset.view = 'quiz';
+        btn.textContent = '🎯 Quiz';
+        btn.addEventListener('click', () => {
+          if (typeof window.switchTab === 'function') {
+            try { window.switchTab('quiz'); } catch(e) { activate(); }
+            // even if host switchTab handles 'quiz', ensure quiz is built & active
+            activate();
+          } else {
+            activate();
+          }
+        });
+        tg.appendChild(btn);
+      }
+    }
+    // Wrap host switchTab so that programmatic switches also work
+    if (typeof window.switchTab === 'function') {
+      const orig = window.switchTab;
+      window.switchTab = function(tab) {
+        if (tab === 'quiz') { activate(); return; }
+        try { orig(tab); } catch(e) {}
+      };
+    }
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
+  else boot();
+})();
+</script>
+
 </body>
 </html>

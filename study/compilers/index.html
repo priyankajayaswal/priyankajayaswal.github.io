@@ -2188,5 +2188,555 @@ if (typeof switchTab === 'function') {
 })();
 </script>
 <!-- END tooltip-pin -->
+<!-- ============================================================
+     DROP-IN QUIZ MODULE — self-bootstrapping
+     Place this entire block immediately before </body>.
+     Customize the JSON inside <script id="quiz-data"> for the domain.
+     Each question: { topic, q, options:[...4], answer:0..3, explain }
+     ============================================================ -->
+<script id="quiz-data" type="application/json">
+[
+  {
+    "topic": "E-Waste Fundamentals",
+    "q": "What percentage of gold in e-waste recycling typically comes from printed circuit boards?",
+    "options": ["~30%", "~70%", "~15%", "~50%"],
+    "answer": 1,
+    "explain": "Printed circuit boards (PCBs) are the richest source of gold in e-waste, containing approximately 70% of recoverable precious metals due to their extensive use of gold-plated traces and component leads."
+  },
+  {
+    "topic": "E-Waste Fundamentals",
+    "q": "Which of the following is NOT a primary environmental hazard from e-waste?",
+    "options": ["Lead contamination in soil", "Mercury release to groundwater", "Excessive nitrogen fixation", "Cadmium bioaccumulation"],
+    "answer": 2,
+    "explain": "Excessive nitrogen fixation is not a primary e-waste concern. Lead, mercury, and cadmium are toxic heavy metals commonly found in e-waste that pose serious environmental and health risks."
+  },
+  {
+    "topic": "E-Waste Fundamentals",
+    "q": "What is the gold content range in crushed e-waste before processing?",
+    "options": ["0.01–0.05 g/kg", "0.5–2 g/kg", "10–50 g/kg", "100+ g/kg"],
+    "answer": 1,
+    "explain": "Crushed e-waste typically contains 0.5–2 g/kg of gold, making it a significantly richer source than many primary ore deposits (which average 1–10 g/kg but are more abundant in volume)."
+  },
+  {
+    "topic": "E-Waste Fundamentals",
+    "q": "Which regulation framework mandates the circular recovery of electronic waste in the EU?",
+    "options": ["COSHH Regulations", "WEEE Directive", "Basel Convention", "EPA Tier II"],
+    "answer": 1,
+    "explain": "The Waste Electrical and Electronic Equipment (WEEE) Directive is the EU regulatory framework requiring manufacturers to manage end-of-life electronics and recovery of valuable metals."
+  },
+  {
+    "topic": "E-Waste Fundamentals",
+    "q": "Approximately how many kg of e-waste is generated globally per year?",
+    "options": ["5–10 million tonnes", "20–30 million tonnes", "50–80 million tonnes", "150+ million tonnes"],
+    "answer": 2,
+    "explain": "Global e-waste generation is estimated at 50–80 million tonnes annually, with only ~20% being formally recycled. This represents both an environmental challenge and a significant source of recoverable precious metals."
+  },
+  {
+    "topic": "Precious Metals in Electronics",
+    "q": "Which component in a smartphone typically contains the highest concentration of gold?",
+    "options": ["LCD screen", "Battery", "Plated connector pins and circuit traces", "Plastic housing"],
+    "answer": 2,
+    "explain": "Gold-plated connector pins and circuit traces in the PCB are the highest concentration points. Gold is used for its conductivity and corrosion resistance in critical electronic connections."
+  },
+  {
+    "topic": "Precious Metals in Electronics",
+    "q": "What is the primary reason gold is used in electronic components despite its cost?",
+    "options": ["High density", "Superior electrical conductivity and corrosion resistance", "Ease of machining", "Thermal stability above 500°C"],
+    "answer": 1,
+    "explain": "Gold's corrosion resistance and superior electrical conductivity make it ideal for plating connector pins and circuit traces, where reliability is critical and cost-per-component is justified by device performance."
+  },
+  {
+    "topic": "Precious Metals in Electronics",
+    "q": "Approximately how much gold is in a typical laptop motherboard?",
+    "options": ["0.1 g", "0.5–2 g", "5–10 g", "20–50 g"],
+    "answer": 1,
+    "explain": "A laptop motherboard contains approximately 0.5–2 grams of gold, primarily in plated connectors and circuit traces. Over millions of devices, this represents a significant cumulative resource."
+  },
+  {
+    "topic": "Collection & Dismantling",
+    "q": "What is the primary advantage of manual dismantling over shredding e-waste?",
+    "options": ["Lower labor cost", "Faster processing", "Selective separation of high-value materials before processing", "Better environmental outcomes"],
+    "answer": 2,
+    "explain": "Manual dismantling allows selective removal of components with high-value concentrations (PCBs, hard drives) before bulk processing, improving recovery efficiency and purity of each material stream."
+  },
+  {
+    "topic": "Collection & Dismantling",
+    "q": "Which occupational hazard is of most concern during manual e-waste dismantling?",
+    "options": ["Thermal burns", "Inhalation of toxic dust and vapors from solder, flame retardants, and heavy metals", "Sharp blade injuries only", "Electromagnetic field exposure"],
+    "answer": 1,
+    "explain": "Lead in solder, brominated flame retardants, and dust containing cadmium, mercury, and other heavy metals pose serious inhalation and dermal absorption risks during dismantling operations."
+  },
+  {
+    "topic": "Collection & Dismantling",
+    "q": "What is the typical yield of manually separated PCBs from consumer electronics?",
+    "options": ["5–10% by weight", "15–25% by weight", "40–60% by weight", "80–90% by weight"],
+    "answer": 1,
+    "explain": "Manually separated PCBs typically represent 15–25% by weight of consumer e-waste. The remainder includes metals (copper, aluminum), plastics, glass, and other materials that may also be valuable."
+  },
+  {
+    "topic": "Pyrometallurgy",
+    "q": "What temperature range is typical for copper smelter pyrometallurgical processing of e-waste?",
+    "options": ["500–700°C", "800–1000°C", "1100–1400°C", "1600–1800°C"],
+    "answer": 2,
+    "explain": "Pyrometallurgical copper smelting operates at 1100–1400°C, where gold and other precious metals concentrate in the matte phase, separating from base metals that oxidize and slag off."
+  },
+  {
+    "topic": "Pyrometallurgy",
+    "q": "Which pollutant emission is of greatest environmental concern from pyrometallurgical e-waste processing?",
+    "options": ["Carbon dioxide", "Nitrogen oxides", "Sulfur dioxide and acid mists from oxidation of sulfides", "Water vapor"],
+    "answer": 2,
+    "explain": "SO₂ and acid mists (from oxidation of sulfur-containing minerals and oxides) cause acid rain and respiratory hazards. Modern facilities use scrubbers to capture these emissions."
+  },
+  {
+    "topic": "Pyrometallurgy",
+    "q": "What is a key advantage of the pyrometallurgical copper smelter route for e-waste processing?",
+    "options": ["Lower capital cost than hydrometallurgy", "Simultaneous recovery of multiple metals (Cu, Au, Ag, Pd) in a single process", "Lower energy consumption", "No hazardous waste generation"],
+    "answer": 1,
+    "explain": "The copper smelter route is integrated for bulk recovery of multiple precious and base metals in a single pyrometallurgical campaign, though it is energy-intensive and generates significant air and slag waste."
+  },
+  {
+    "topic": "Hydrometallurgy & Leaching",
+    "q": "What is the stoichiometric ratio of HCl to HNO₃ in aqua regia for gold dissolution?",
+    "options": ["1:1", "2:1", "3:1", "5:1"],
+    "answer": 2,
+    "explain": "Aqua regia is prepared at a 3:1 ratio of HCl:HNO₃. The HNO₃ acts as the oxidizing agent while HCl provides chloride ions, forming soluble chloroauric acid (HAuCl₄)."
+  },
+  {
+    "topic": "Hydrometallurgy & Leaching",
+    "q": "Which reagent combination is commonly used for non-toxic, sustainable leaching of precious metals from e-waste?",
+    "options": ["Sulfuric acid + sodium chloride", "Cyanide solution", "Thiosulfate + ammonia + copper sulfate", "Nitric acid + sulfuric acid"],
+    "answer": 2,
+    "explain": "Thiosulfate-based leaching with ammonia and copper sulfate is emerging as an environmentally friendlier alternative to cyanide, offering similar selectivity for precious metals without toxicity."
+  },
+  {
+    "topic": "Hydrometallurgy & Leaching",
+    "q": "What is a major environmental risk of cyanide-based leaching in gold recovery?",
+    "options": ["Excessive heat generation", "Cyanide contamination of soil and water; slow biodegradation and acute toxicity", "Corrosion of equipment", "Low recovery rates"],
+    "answer": 1,
+    "explain": "Cyanide is acutely toxic and persists in the environment. If not carefully contained, it poses severe risks to ecosystems and human health. Regulatory pressure is increasing for safer alternatives."
+  },
+  {
+    "topic": "Hydrometallurgy & Leaching",
+    "q": "Which metal in e-waste is most likely to co-dissolve with gold during aqua regia leaching, requiring selective precipitation?",
+    "options": ["Aluminum", "Silver and copper", "Magnesium", "Zinc"],
+    "answer": 1,
+    "explain": "Silver and copper also dissolve in aqua regia and must be selectively precipitated or separated from gold solution using differential reagent chemistry or electrochemical methods."
+  },
+  {
+    "topic": "Hydrometallurgy & Leaching",
+    "q": "What is the chemical formula for the gold complex formed in aqua regia dissolution?",
+    "options": ["AuCl₃", "HAuCl₄", "Au(SO₄)₃", "Au₂O₃"],
+    "answer": 1,
+    "explain": "Chloroauric acid (HAuCl₄) is the soluble gold complex formed in aqua regia. It is stable in acidic solution and serves as the precursor for subsequent gold recovery steps."
+  },
+  {
+    "topic": "Bioleaching",
+    "q": "Which microorganisms are typically used in bioleaching for gold extraction?",
+    "options": ["Acidithiobacillus ferrooxidans and Leptospirillum species", "Bacillus subtilis", "E. coli variants", "Saccharomyces cerevisiae"],
+    "answer": 0,
+    "explain": "Acidithiobacillus ferrooxidans and Leptospirillum species are acidophilic, iron-oxidizing bacteria that naturally oxidize sulfides in ore/waste, generating ferric iron that leaches gold and other metals."
+  },
+  {
+    "topic": "Bioleaching",
+    "q": "What is a major advantage of bioleaching compared to traditional chemical leaching?",
+    "options": ["Faster processing times", "Lower chemical costs and reduced toxic waste; slower but sustainable", "Higher recovery rates", "Compatible with all ore types"],
+    "answer": 1,
+    "explain": "Bioleaching is slower but uses naturally occurring microbes to generate leaching agents (ferric iron, sulfuric acid) at low cost. It generates less hazardous waste than chemical methods like cyanide."
+  },
+  {
+    "topic": "Bioleaching",
+    "q": "How long does a typical bioleaching cycle take for e-waste material?",
+    "options": ["Hours", "Days to weeks", "Months", "Years"],
+    "answer": 1,
+    "explain": "Bioleaching typically requires days to several weeks depending on particle size, microbial density, and operating conditions. This slower timeline is a trade-off for reduced chemical and environmental costs."
+  },
+  {
+    "topic": "Gold Recovery",
+    "q": "Which of the following methods is used to selectively precipitate gold from chloroauric acid solution?",
+    "options": ["Heating to 100°C", "Addition of sodium metabisulfite (Na₂S₂O₅) or other reducing agents", "Magnetic separation", "Centrifugation"],
+    "answer": 1,
+    "explain": "Sodium metabisulfite reduces Au³⁺ to Au⁰, precipitating metallic gold powder. Other reducing agents like ferrous sulfate or oxalic acid are also used depending on selectivity requirements."
+  },
+  {
+    "topic": "Gold Recovery",
+    "q": "What is cementation in the context of gold recovery?",
+    "options": ["Forming a concrete mold for gold", "Displacement precipitation using more reactive metals (Fe, Cu, Zn) to reduce and precipitate gold ions", "Thermal fusing of gold particles", "Electrodeposition"],
+    "answer": 1,
+    "explain": "Cementation uses metallic iron or copper to reduce Au³⁺ or Au⁺ ions in solution, precipitating metallic gold while the more reactive metal dissolves. This is a simple, cost-effective recovery method."
+  },
+  {
+    "topic": "Gold Recovery",
+    "q": "How does electrowinning recover gold from a leach solution?",
+    "options": ["Heating the solution to melting point", "Applying electrical current to reduce Au³⁺ to Au⁰ at the cathode, collecting metallic gold", "Magnetic attraction of gold particles", "Gravity settling"],
+    "answer": 1,
+    "explain": "Electrowinning applies DC current: Au³⁺ ions migrate to the cathode where they are reduced to metallic gold, which plates out. The anode oxidizes impurities or remains inert."
+  },
+  {
+    "topic": "Gold Recovery",
+    "q": "What is the typical purity of gold recovered immediately after precipitation or electrowinning?",
+    "options": ["99.9%", "99%", "95–98%", "85–95%"],
+    "answer": 2,
+    "explain": "Gold precipitate from reduction or electrodeposited gold is typically 95–98% pure, containing silver, copper, and other co-deposited metals. Further refining is needed for high-purity bullion."
+  },
+  {
+    "topic": "Gold Recovery",
+    "q": "Which method is primarily used to remove dissolved iron impurities during gold recovery?",
+    "options": ["Lime precipitation of ferric hydroxide", "Filtration alone", "Distillation", "Magnetic separation"],
+    "answer": 0,
+    "explain": "Iron ions (Fe³⁺) are precipitated as insoluble ferric hydroxide (Fe(OH)₃) by raising the pH with lime or other bases. This separates iron before gold recovery, improving final purity."
+  },
+  {
+    "topic": "Refining",
+    "q": "What is the Miller refining process?",
+    "options": ["Gravity separation of gold granules", "Chlorine gas treatment to selectively dissolve base metals, leaving high-purity gold", "Electrolytic refining in sulfuric acid", "Heating and cooling cycles"],
+    "answer": 1,
+    "explain": "Miller refining uses chlorine gas to selectively oxidize and remove base metals (copper, silver) from impure gold bullion, achieving 99.5–99.8% purity without electrolysis."
+  },
+  {
+    "topic": "Refining",
+    "q": "In Wohlwill refining, what is the electrolyte composition?",
+    "options": ["Sulfuric acid", "Chloroauric acid (HAuCl₄) in hydrochloric acid", "Nitric acid", "Sulfurous acid"],
+    "answer": 1,
+    "explain": "Wohlwill electrolysis uses chloroauric acid in HCl as the electrolyte. Impure gold is the anode; Au³⁺ ions are reduced to pure gold at the cathode, achieving 99.99% purity."
+  },
+  {
+    "topic": "Refining",
+    "q": "What is the primary advantage of Wohlwill refining compared to Miller refining?",
+    "options": ["Faster processing", "Achieves higher purity (99.99% vs. 99.5–99.8%)", "Lower cost", "No toxic emissions"],
+    "answer": 1,
+    "explain": "Wohlwill electrolytic refining produces gold of exceptional purity (99.99%+) due to the selective electrochemical separation. Miller process, while faster and simpler, achieves lower purity."
+  },
+  {
+    "topic": "Refining",
+    "q": "What is recovered as a valuable byproduct during gold refining processes?",
+    "options": ["Silica gel", "Silver and platinum-group metals", "Copper oxide", "Sulfur dioxide"],
+    "answer": 1,
+    "explain": "Silver, platinum, palladium, and other precious metals are co-refined with gold. Miller and Wohlwill processes allow recovery of these byproducts, improving overall profitability."
+  },
+  {
+    "topic": "Environmental Aspects",
+    "q": "What is the primary water pollution concern from hydrometallurgical gold recovery?",
+    "options": ["Excess salinity", "Acid mine drainage and heavy metal contamination (arsenic, cadmium); improper neutralization of waste solutions", "Excessive nitrogen", "High turbidity only"],
+    "answer": 1,
+    "explain": "Acidic effluent containing dissolved heavy metals (As, Cd, Pb, Cu) from leaching and refining poses the greatest water pollution risk. Proper pH adjustment and precipitation of metals are critical."
+  },
+  {
+    "topic": "Environmental Aspects",
+    "q": "Which air pollutant is primarily monitored during pyrometallurgical e-waste processing?",
+    "options": ["Oxygen depletion", "Particulate matter (PM₁₀, PM₂.₅) and SO₂ from sulfide oxidation; heavy metal particulates", "Excess humidity", "Carbon monoxide only"],
+    "answer": 1,
+    "explain": "Fine particulates carrying heavy metals (lead, cadmium, arsenic), SO₂, and NOₓ are the primary air pollutants from smelting. Bag filters and scrubbers are essential for control."
+  },
+  {
+    "topic": "Environmental Aspects",
+    "q": "What is a key principle of circular economy in e-waste gold recovery?",
+    "options": ["Maximize landfill disposal", "Extract gold only; discard other materials", "Design for disassembly; recover all valuable materials; minimize toxic waste generation", "Use virgin ore instead"],
+    "answer": 2,
+    "explain": "Circular economy principles mandate designing electronics for disassembly, extracting all economically recoverable metals and materials, and minimizing waste. This reduces mining pressure and environmental footprint."
+  },
+  {
+    "topic": "Emerging Technologies",
+    "q": "What is the pool cleaner method (TCA-based extraction) for gold recovery?",
+    "options": ["Heating gold in a pool of water", "Using trichloroisocyanuric acid (TCA) activated by UV light with polymer sorbents to dissolve and recover gold", "Gravity settling in pools", "Magnetic separation in water"],
+    "answer": 1,
+    "explain": "TCA-based extraction uses commercial pool cleaner (trichloroisocyanuric acid) activated by UV to generate active chlorine, dissolving gold. Polymer sorbents capture the gold, avoiding mercury and cyanide."
+  },
+  {
+    "topic": "Emerging Technologies",
+    "q": "What is a significant advantage of polymer sorbent-based gold recovery?",
+    "options": ["Extremely fast (seconds)", "Selective, non-toxic absorption; reusable sorbents; reduced chemical waste vs. chemical precipitation", "Higher cost than precipitation", "Incompatible with large-scale processing"],
+    "answer": 1,
+    "explain": "Polymer sorbents selectively absorb gold from dilute solutions, are regenerable, and avoid excess chemical use and waste. They are particularly suited for small-scale, sustainable recovery operations."
+  },
+  {
+    "topic": "Emerging Technologies",
+    "q": "Which emerging technology uses bacterial strains or biomass for passive gold recovery?",
+    "options": ["Nanoparticle catalysis", "Biosorption using chitosan, algae, or genetically modified bacteria", "Thermal decomposition", "Magnetic resonance"],
+    "answer": 1,
+    "explain": "Biosorption leverages chitosan (chitin derivative), algal biomass, or engineered bacteria to passively accumulate dissolved gold ions. This is low-cost, scalable, and sustainable for remote or low-grade applications."
+  }
+]
+
+</script>
+<script>
+(function() {
+  const dataEl = document.getElementById('quiz-data');
+  if (!dataEl) return;
+  let questions;
+  try { questions = JSON.parse(dataEl.textContent); } catch(e) { console.error('Quiz JSON parse error', e); return; }
+  if (!Array.isArray(questions) || !questions.length) return;
+
+  // ── Inject CSS ──
+  const css = `
+  #view-quiz { overflow-y: auto; padding-top: 60px; height: 100vh; }
+  .quiz-wrap { max-width: 880px; margin: 0 auto; padding: 24px 24px 80px; }
+  .quiz-header { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; margin-bottom: 12px; }
+  .quiz-header h2 { font-size: 22px; color: #58a6ff; }
+  .quiz-header .quiz-sub { font-size: 12px; color: #8b949e; margin-top: 2px; }
+  .quiz-stats { display:flex; gap:10px; flex-wrap:wrap; }
+  .quiz-stat { background:#161b22; border:1px solid #30363d; border-radius:8px; padding:8px 14px; font-size:12px; color:#8b949e; }
+  .quiz-stat b { color:#c9d1d9; font-size:15px; display:block; }
+  .quiz-stat.ok b { color:#7ee787; }
+  .quiz-stat.bad b { color:#ff7b72; }
+  .quiz-filters { display:flex; flex-wrap:wrap; gap:6px; margin: 12px 0 16px; }
+  .quiz-chip { background:#0d1117; border:1px solid #30363d; color:#8b949e; padding:5px 12px; border-radius:16px; cursor:pointer; font-size:12px; transition:all .15s; }
+  .quiz-chip:hover { color:#c9d1d9; border-color:#58a6ff; }
+  .quiz-chip.active { background:#1f6feb; color:#fff; border-color:#58a6ff; }
+  .quiz-actions { display:flex; gap:8px; flex-wrap:wrap; margin-bottom: 14px; }
+  .quiz-actions .qbtn { background:#21262d; border:1px solid #30363d; color:#c9d1d9; padding:6px 14px; border-radius:6px; cursor:pointer; font-size:12px; }
+  .quiz-actions .qbtn:hover { background:#30363d; border-color:#58a6ff; }
+  .quiz-progress { height:6px; background:#161b22; border-radius:4px; overflow:hidden; margin-bottom:16px; border:1px solid #30363d; }
+  .quiz-progress > div { height:100%; background:linear-gradient(90deg,#1f6feb,#58a6ff); transition:width .3s; }
+  .quiz-card { background:#161b22; border:1px solid #30363d; border-radius:12px; padding:22px 26px; box-shadow:0 4px 18px rgba(0,0,0,.3); }
+  .quiz-card .qc-meta { font-size:11px; color:#58a6ff; font-weight:600; text-transform:uppercase; letter-spacing:.5px; margin-bottom:8px; display:flex; justify-content:space-between; }
+  .quiz-card .qc-meta .qc-num { color:#8b949e; }
+  .quiz-card .qc-q { font-size:16px; color:#c9d1d9; line-height:1.55; font-weight:600; margin-bottom:16px; }
+  .quiz-options { display:flex; flex-direction:column; gap:8px; }
+  .quiz-opt { background:#0d1117; border:1px solid #30363d; color:#c9d1d9; padding:11px 16px; border-radius:8px; cursor:pointer; text-align:left; font-size:14px; transition:all .15s; line-height:1.4; display:flex; align-items:flex-start; gap:10px; }
+  .quiz-opt:hover:not(.disabled) { border-color:#58a6ff; background:#161b22; }
+  .quiz-opt .opt-letter { flex-shrink:0; width:22px; height:22px; border-radius:50%; background:#21262d; color:#8b949e; font-size:11px; font-weight:600; display:inline-flex; align-items:center; justify-content:center; }
+  .quiz-opt.correct { border-color:#3fb950; background:rgba(63,185,80,.08); }
+  .quiz-opt.correct .opt-letter { background:#3fb950; color:#fff; }
+  .quiz-opt.wrong { border-color:#f85149; background:rgba(248,81,73,.08); }
+  .quiz-opt.wrong .opt-letter { background:#f85149; color:#fff; }
+  .quiz-opt.disabled { cursor:default; }
+  .quiz-explain { margin-top:14px; padding:12px 16px; background:#0d1117; border-left:3px solid #58a6ff; border-radius:6px; font-size:13px; color:#8b949e; line-height:1.6; }
+  .quiz-explain b { color:#58a6ff; }
+  .quiz-nav { display:flex; justify-content:space-between; gap:10px; margin-top:18px; }
+  .quiz-nav .qbtn { padding:8px 18px; font-size:13px; background:#21262d; border:1px solid #30363d; color:#c9d1d9; border-radius:6px; cursor:pointer; }
+  .quiz-nav .qbtn:hover { background:#30363d; border-color:#58a6ff; }
+  .quiz-nav .qbtn.primary { background:#1f6feb; border-color:#58a6ff; color:#fff; }
+  .quiz-nav .qbtn.primary:hover { background:#388bfd; }
+  .quiz-nav .qbtn:disabled { opacity:.4; cursor:not-allowed; }
+  .quiz-empty { text-align:center; color:#484f58; padding:60px 20px; font-style:italic; }
+  .quiz-summary { background:#161b22; border:1px solid #30363d; border-radius:12px; padding:32px; text-align:center; }
+  .quiz-summary h3 { color:#58a6ff; font-size:22px; margin-bottom:6px; }
+  .quiz-summary .qs-score { font-size:56px; font-weight:700; color:#7ee787; margin:12px 0; }
+  .quiz-summary .qs-pct { color:#8b949e; font-size:14px; margin-bottom:16px; }
+  .quiz-summary .qs-breakdown { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:8px; margin:20px 0; text-align:left; }
+  .quiz-summary .qs-row { background:#0d1117; border:1px solid #30363d; border-radius:8px; padding:8px 12px; font-size:12px; color:#8b949e; }
+  .quiz-summary .qs-row b { display:block; color:#c9d1d9; font-size:14px; margin-bottom:2px; }
+  @media (max-width: 600px) {
+    .quiz-wrap { padding:14px 12px 80px; }
+    .quiz-card { padding:16px; }
+    .quiz-card .qc-q { font-size:15px; }
+    .quiz-opt { font-size:13px; padding:10px 12px; }
+  }`;
+  const styleEl = document.createElement('style');
+  styleEl.textContent = css;
+  document.head.appendChild(styleEl);
+
+  // ── Inject view container ──
+  function ensureView() {
+    let view = document.getElementById('view-quiz');
+    if (!view) {
+      view = document.createElement('div');
+      view.id = 'view-quiz';
+      view.className = 'view';
+      view.innerHTML = '<div id="quiz-container"></div>';
+      document.body.appendChild(view);
+    }
+    return view;
+  }
+  const viewEl = ensureView();
+
+  // ── State ──
+  const state = { filter: 'ALL', order: [], cursor: 0, answers: {}, built: false };
+
+  function shuffleArr(a) { for (let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} }
+  function escapeHtml(s) { return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+  function topics() { return ['ALL', ...Array.from(new Set(questions.map(q => q.topic || 'General')))]; }
+  function pool() { return state.order.map(i => ({i, q: questions[i]})).filter(x => state.filter === 'ALL' || (x.q.topic||'General') === state.filter); }
+
+  function build() {
+    state.order = questions.map((_, i) => i);
+    shuffleArr(state.order);
+    const root = document.getElementById('quiz-container');
+    root.innerHTML = `
+      <div class="quiz-wrap">
+        <div class="quiz-header">
+          <div>
+            <h2>🎯 Knowledge Quiz</h2>
+            <div class="quiz-sub">${questions.length} questions across ${topics().length - 1} topics — pick a topic or take it all.</div>
+          </div>
+          <div class="quiz-stats" id="quiz-stats"></div>
+        </div>
+        <div class="quiz-filters" id="quiz-filters"></div>
+        <div class="quiz-actions">
+          <button class="qbtn" data-act="shuffle">🔀 Shuffle</button>
+          <button class="qbtn" data-act="reset">↺ Reset Answers</button>
+          <button class="qbtn" data-act="next-unans">⏭ Next Unanswered</button>
+          <button class="qbtn" data-act="summary">📊 Summary</button>
+        </div>
+        <div class="quiz-progress"><div id="quiz-progress-bar" style="width:0%"></div></div>
+        <div id="quiz-body"></div>
+      </div>`;
+    root.querySelectorAll('.qbtn[data-act]').forEach(b => b.addEventListener('click', () => {
+      const a = b.getAttribute('data-act');
+      if (a === 'shuffle') { shuffleArr(state.order); state.cursor = 0; renderQ(); }
+      else if (a === 'reset') { if (confirm('Reset all answers?')) { state.answers = {}; renderQ(); } }
+      else if (a === 'next-unans') { const p = pool(); const n = p.findIndex(x => state.answers[x.i] === undefined); if (n >= 0) { state.cursor = n; renderQ(); } }
+      else if (a === 'summary') { showSummary(); }
+    }));
+    renderFilters();
+    renderQ();
+    state.built = true;
+  }
+
+  function renderFilters() {
+    const el = document.getElementById('quiz-filters');
+    el.innerHTML = '';
+    topics().forEach(t => {
+      const count = t === 'ALL' ? questions.length : questions.filter(q => (q.topic || 'General') === t).length;
+      const chip = document.createElement('button');
+      chip.className = 'quiz-chip' + (t === state.filter ? ' active' : '');
+      chip.textContent = t === 'ALL' ? `All (${count})` : `${t} (${count})`;
+      chip.addEventListener('click', () => { state.filter = t; state.cursor = 0; renderFilters(); renderQ(); });
+      el.appendChild(chip);
+    });
+  }
+
+  function renderStats() {
+    const p = pool();
+    const answered = p.filter(x => state.answers[x.i] !== undefined);
+    const correct = answered.filter(x => state.answers[x.i] === x.q.answer).length;
+    const wrong = answered.length - correct;
+    const el = document.getElementById('quiz-stats');
+    if (el) el.innerHTML = `
+      <div class="quiz-stat"><b>${p.length}</b>Questions</div>
+      <div class="quiz-stat ok"><b>${correct}</b>Correct</div>
+      <div class="quiz-stat bad"><b>${wrong}</b>Wrong</div>
+      <div class="quiz-stat"><b>${answered.length}/${p.length}</b>Done</div>`;
+    const pct = p.length ? Math.round(100 * answered.length / p.length) : 0;
+    const bar = document.getElementById('quiz-progress-bar');
+    if (bar) bar.style.width = pct + '%';
+  }
+
+  function renderQ() {
+    const p = pool();
+    const body = document.getElementById('quiz-body');
+    if (!p.length) { body.innerHTML = '<div class="quiz-empty">No questions for this filter.</div>'; renderStats(); return; }
+    if (state.cursor >= p.length) state.cursor = p.length - 1;
+    if (state.cursor < 0) state.cursor = 0;
+    const cur = p[state.cursor];
+    const q = cur.q;
+    const selected = state.answers[cur.i];
+    const answered = selected !== undefined;
+    const optsHtml = q.options.map((opt, i) => {
+      let cls = '';
+      if (answered) { if (i === q.answer) cls = 'correct'; else if (i === selected) cls = 'wrong'; cls += ' disabled'; }
+      const letter = String.fromCharCode(65 + i);
+      return `<button class="quiz-opt ${cls}" data-opt="${i}" ${answered ? 'disabled' : ''}>
+        <span class="opt-letter">${letter}</span><span>${escapeHtml(opt)}</span>
+      </button>`;
+    }).join('');
+    body.innerHTML = `
+      <div class="quiz-card">
+        <div class="qc-meta"><span>${escapeHtml(q.topic || 'General')}</span><span class="qc-num">${state.cursor + 1} / ${p.length}</span></div>
+        <div class="qc-q">${escapeHtml(q.q)}</div>
+        <div class="quiz-options">${optsHtml}</div>
+        ${answered ? `<div class="quiz-explain"><b>${selected === q.answer ? '✓ Correct.' : '✗ Not quite.'}</b> ${escapeHtml(q.explain || '')}</div>` : ''}
+        <div class="quiz-nav">
+          <button class="qbtn" data-nav="prev" ${state.cursor === 0 ? 'disabled' : ''}>← Previous</button>
+          <button class="qbtn primary" data-nav="next" ${state.cursor === p.length - 1 ? 'disabled' : ''}>Next →</button>
+        </div>
+      </div>`;
+    body.querySelectorAll('.quiz-opt[data-opt]').forEach(b => b.addEventListener('click', () => {
+      const idx = cur.i;
+      if (state.answers[idx] !== undefined) return;
+      state.answers[idx] = +b.getAttribute('data-opt');
+      renderQ();
+    }));
+    body.querySelectorAll('[data-nav]').forEach(b => b.addEventListener('click', () => {
+      const dir = b.getAttribute('data-nav');
+      const pp = pool();
+      if (dir === 'next' && state.cursor < pp.length - 1) { state.cursor++; renderQ(); }
+      else if (dir === 'prev' && state.cursor > 0) { state.cursor--; renderQ(); }
+    }));
+    renderStats();
+  }
+
+  function showSummary() {
+    const p = pool();
+    const answered = p.filter(x => state.answers[x.i] !== undefined);
+    const correct = answered.filter(x => state.answers[x.i] === x.q.answer).length;
+    const pct = answered.length ? Math.round(100 * correct / answered.length) : 0;
+    const topicStats = {};
+    p.forEach(x => {
+      const t = x.q.topic || 'General';
+      if (!topicStats[t]) topicStats[t] = { total: 0, answered: 0, correct: 0 };
+      topicStats[t].total++;
+      if (state.answers[x.i] !== undefined) {
+        topicStats[t].answered++;
+        if (state.answers[x.i] === x.q.answer) topicStats[t].correct++;
+      }
+    });
+    const rows = Object.entries(topicStats).map(([t,s]) =>
+      `<div class="qs-row"><b>${escapeHtml(t)}</b>${s.correct}/${s.answered} correct · ${s.total} total</div>`).join('');
+    document.getElementById('quiz-body').innerHTML = `
+      <div class="quiz-summary">
+        <h3>Summary</h3>
+        <div class="qs-score">${correct} / ${answered.length || p.length}</div>
+        <div class="qs-pct">${pct}% correct · ${answered.length} of ${p.length} answered</div>
+        <div class="qs-breakdown">${rows}</div>
+        <div class="quiz-nav" style="justify-content:center">
+          <button class="qbtn primary" id="qs-back">Back to Questions</button>
+          <button class="qbtn" id="qs-reset">Reset Answers</button>
+        </div>
+      </div>`;
+    document.getElementById('qs-back').addEventListener('click', renderQ);
+    document.getElementById('qs-reset').addEventListener('click', () => { if (confirm('Reset all answers?')) { state.answers = {}; renderQ(); } });
+  }
+
+  // ── Activate when the quiz tab is shown ──
+  function activate() {
+    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+    viewEl.classList.add('active');
+    document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.view === 'quiz'));
+    // hide any floating canvas-controls from other tabs
+    document.querySelectorAll('.canvas-controls').forEach(c => { if (c.id !== 'quiz-controls') c.style.display = 'none'; });
+    if (!state.built) build();
+  }
+
+  // ── Bootstrap on DOM ready: add tab button, hook switchTab ──
+  function boot() {
+    // Find the tab-group container (handles both class and id variants)
+    const tg = document.querySelector('#tab-group') || document.querySelector('.tab-group');
+    if (tg) {
+      // Avoid duplicate
+      if (!tg.querySelector('[data-view="quiz"]')) {
+        const btn = document.createElement('button');
+        btn.className = 'tab';
+        btn.dataset.view = 'quiz';
+        btn.textContent = '🎯 Quiz';
+        btn.addEventListener('click', () => {
+          if (typeof window.switchTab === 'function') {
+            try { window.switchTab('quiz'); } catch(e) { activate(); }
+            // even if host switchTab handles 'quiz', ensure quiz is built & active
+            activate();
+          } else {
+            activate();
+          }
+        });
+        tg.appendChild(btn);
+      }
+    }
+    // Wrap host switchTab so that programmatic switches also work
+    if (typeof window.switchTab === 'function') {
+      const orig = window.switchTab;
+      window.switchTab = function(tab) {
+        if (tab === 'quiz') { activate(); return; }
+        try { orig(tab); } catch(e) {}
+      };
+    }
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
+  else boot();
+})();
+</script>
+
+
 </body>
 </html>
+
