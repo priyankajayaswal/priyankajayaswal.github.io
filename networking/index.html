@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+/a<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -426,6 +426,82 @@
   }
   .legend-close:hover { color: #c9d1d9; }
 
+  /* ── Quiz View ── */
+  #view-quiz { overflow-y: auto; padding-top: 60px; height: 100vh; }
+  .quiz-wrap { max-width: 880px; margin: 0 auto; padding: 24px 24px 80px; }
+  .quiz-header { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; margin-bottom: 12px; }
+  .quiz-header h2 { font-size: 22px; color: #58a6ff; }
+  .quiz-header .quiz-sub { font-size: 12px; color: #8b949e; margin-top: 2px; }
+  .quiz-stats { display:flex; gap:10px; flex-wrap:wrap; }
+  .quiz-stat { background:#161b22; border:1px solid #30363d; border-radius:8px; padding:8px 14px; font-size:12px; color:#8b949e; }
+  .quiz-stat b { color:#c9d1d9; font-size:15px; display:block; }
+  .quiz-stat.ok b { color:#7ee787; }
+  .quiz-stat.bad b { color:#ff7b72; }
+  .quiz-filters { display:flex; flex-wrap:wrap; gap:6px; margin: 12px 0 16px; }
+  .quiz-chip {
+    background: #0d1117; border: 1px solid #30363d; color: #8b949e;
+    padding: 5px 12px; border-radius: 16px; cursor: pointer; font-size: 12px; transition: all .15s;
+  }
+  .quiz-chip:hover { color:#c9d1d9; border-color:#58a6ff; }
+  .quiz-chip.active { background:#1f6feb; color:#fff; border-color:#58a6ff; }
+  .quiz-actions { display:flex; gap:8px; flex-wrap:wrap; margin-bottom: 14px; }
+  .quiz-actions .btn { padding:6px 14px; font-size:12px; }
+  .quiz-progress { height: 6px; background:#161b22; border-radius:4px; overflow:hidden; margin-bottom: 16px; border:1px solid #30363d; }
+  .quiz-progress > div { height:100%; background: linear-gradient(90deg,#1f6feb,#58a6ff); transition: width .3s; }
+  .quiz-card {
+    background: #161b22; border: 1px solid #30363d; border-radius: 12px;
+    padding: 22px 26px; box-shadow: 0 4px 18px rgba(0,0,0,.3);
+  }
+  .quiz-card .qc-meta { font-size: 11px; color: #58a6ff; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; display:flex; justify-content:space-between; }
+  .quiz-card .qc-meta .qc-num { color:#8b949e; }
+  .quiz-card .qc-q { font-size: 16px; color: #c9d1d9; line-height: 1.55; font-weight: 600; margin-bottom: 16px; }
+  .quiz-options { display: flex; flex-direction: column; gap: 8px; }
+  .quiz-opt {
+    background: #0d1117; border: 1px solid #30363d; color: #c9d1d9;
+    padding: 11px 16px; border-radius: 8px; cursor: pointer; text-align: left;
+    font-size: 14px; transition: all .15s; line-height: 1.4;
+    display:flex; align-items:flex-start; gap:10px;
+  }
+  .quiz-opt:hover:not(.disabled) { border-color: #58a6ff; background:#161b22; }
+  .quiz-opt .opt-letter {
+    flex-shrink:0; width:22px; height:22px; border-radius:50%;
+    background:#21262d; color:#8b949e; font-size:11px; font-weight:600;
+    display:inline-flex; align-items:center; justify-content:center;
+  }
+  .quiz-opt.correct { border-color: #3fb950; background: rgba(63,185,80,0.08); }
+  .quiz-opt.correct .opt-letter { background:#3fb950; color:#fff; }
+  .quiz-opt.wrong { border-color: #f85149; background: rgba(248,81,73,0.08); }
+  .quiz-opt.wrong .opt-letter { background:#f85149; color:#fff; }
+  .quiz-opt.disabled { cursor: default; }
+  .quiz-explain {
+    margin-top: 14px; padding: 12px 16px; background: #0d1117;
+    border-left: 3px solid #58a6ff; border-radius: 6px;
+    font-size: 13px; color: #8b949e; line-height: 1.6;
+  }
+  .quiz-explain b { color: #58a6ff; }
+  .quiz-nav { display:flex; justify-content:space-between; gap:10px; margin-top: 18px; }
+  .quiz-nav .btn { padding: 8px 18px; font-size: 13px; }
+  .quiz-nav .btn.primary { background:#1f6feb; border-color:#58a6ff; color:#fff; }
+  .quiz-nav .btn.primary:hover { background:#388bfd; }
+  .quiz-nav .btn:disabled { opacity:.4; cursor:not-allowed; }
+  .quiz-empty { text-align:center; color:#484f58; padding: 60px 20px; font-style: italic; }
+  .quiz-summary {
+    background: #161b22; border: 1px solid #30363d; border-radius: 12px;
+    padding: 32px; text-align: center;
+  }
+  .quiz-summary h3 { color:#58a6ff; font-size:22px; margin-bottom:6px; }
+  .quiz-summary .qs-score { font-size: 56px; font-weight: 700; color:#7ee787; margin: 12px 0; }
+  .quiz-summary .qs-pct { color:#8b949e; font-size:14px; margin-bottom: 16px; }
+  .quiz-summary .qs-breakdown { display:grid; grid-template-columns: repeat(auto-fit,minmax(140px,1fr)); gap:8px; margin: 20px 0; text-align:left; }
+  .quiz-summary .qs-row { background:#0d1117; border:1px solid #30363d; border-radius:8px; padding:8px 12px; font-size:12px; }
+  .quiz-summary .qs-row b { display:block; color:#c9d1d9; font-size:14px; }
+  @media (max-width: 600px) {
+    .quiz-wrap { padding: 14px 12px 80px; }
+    .quiz-card { padding: 16px; }
+    .quiz-card .qc-q { font-size: 15px; }
+    .quiz-opt { font-size: 13px; padding: 10px 12px; }
+  }
+
   /* ── Tracker Panel ── */
   #tracker-panel {
     position: fixed; top: 56px; left: 0; bottom: 0; width: 320px; z-index: 12;
@@ -630,6 +706,7 @@
       <button class="tab" data-view="deepdive" onclick="switchTab('deepdive')">📚 Deep Dives</button>
       <button class="tab" data-view="appendix" onclick="switchTab('appendix')">📹 Appendix</button>
       <button class="tab" data-view="usecase" onclick="switchTab('usecase')">🔬 Use Cases</button>
+      <button class="tab" data-view="quiz" onclick="switchTab('quiz')">🎯 Quiz</button>
     </div>
     <div class="actions">
       <button class="btn" onclick="toggleTracker()">📊 Tracker</button>
@@ -735,6 +812,9 @@
   <div class="canvas-controls" id="usecase-controls" style="display:none">
     <button class="cbtn" id="btn-back-uc" onclick="showUseCaseGrid()">← Back to All</button>
   </div>
+</div>
+<div id="view-quiz" class="view">
+  <div id="quiz-container"></div>
 </div>
 
 <!-- Tracker Panel (left side) -->
@@ -3703,6 +3783,31 @@ const useCases = [
       { title: "Recipient retrieves email", component: "Mail User Agent (MUA) → IMAP/POP", detail: "The recipient's email client syncs via IMAP (port 993, TLS). IMAP allows server-side folders, flags, search — the definitive copy stays on the server. POP3 (port 995) downloads and optionally deletes from server. Webmail accesses the mailbox via internal API. Push notifications alert the user on mobile.", proto: "IMAP4 (port 993 TLS) / POP3 / Push", refs: [{ label: "RFC 9051 — IMAP4rev2", url: "https://tools.ietf.org/html/rfc9051" }, { label: "RFC 1939 — POP3", url: "https://tools.ietf.org/html/rfc1939" }], code: "# Test IMAP connection\nopenssl s_client -connect imap.gmail.com:993\n# Then type: a1 LOGIN user@gmail.com password / a2 LIST \"\" \"*\"" },
       { title: "Bounce & DSN (if delivery fails)", component: "MTA → Original Sender", detail: "If delivery fails permanently (user doesn't exist → 550), the receiving MTA sends a bounce (DSN — Delivery Status Notification) back to the envelope sender. Temporary failures (mailbox full → 452) cause retries with exponential backoff. After max retries (typically 4-5 days), a final bounce is sent.", proto: "SMTP DSN (RFC 3461) / Bounce Message", refs: [{ label: "RFC 3461 — SMTP DSN", url: "https://tools.ietf.org/html/rfc3461" }, { label: "RFC 3464 — DSN Format", url: "https://tools.ietf.org/html/rfc3464" }] }
     ]
+  },
+  {
+    id: "tcp-fsm",
+    title: "TCP Connection Lifecycle (FSM)",
+    desc: "A walk through every state of the TCP finite state machine — from CLOSED through the 3-way handshake, data transfer, and the 4-way close (including TIME_WAIT).",
+    icon: "🔄",
+    color: "#f778ba",
+    steps: [
+      { title: "State: CLOSED (both peers)", component: "TCP State Machine", detail: "The initial (and final) state. No connection exists, no resources are allocated in the kernel's TCB (Transmission Control Block). A transition out of CLOSED happens on an application call: passive open (listen()) moves the server to LISTEN; active open (connect()) moves the client to SYN_SENT.", proto: "No segments on the wire", refs: [{ label: "RFC 9293 §3.3.2 — State Machine", url: "https://tools.ietf.org/html/rfc9293#section-3.3.2" }, { label: "RFC 793 — Original TCP", url: "https://tools.ietf.org/html/rfc793" }, { label: "Wikipedia: TCP state diagram", url: "https://en.wikipedia.org/wiki/Transmission_Control_Protocol#Protocol_operation" }] },
+      { title: "State: LISTEN (server passive open)", component: "Server OS Kernel", detail: "The server has called socket() → bind() → listen(). The kernel creates a listening TCB and a SYN/accept queue for the (local-IP, local-port) pair. It blocks until a SYN arrives. No connection state exists for any client yet; only the listening endpoint exists. ss reports state LISTEN.", proto: "Awaiting incoming SYN", refs: [{ label: "RFC 9293 §3.10.2 — OPEN Call", url: "https://tools.ietf.org/html/rfc9293#section-3.10.2" }, { label: "man 2 listen", url: "https://man7.org/linux/man-pages/man2/listen.2.html" }], code: "# See sockets in LISTEN state\nss -tln\n# Inspect accept-queue depth (Recv-Q on listening sockets)\nss -tlnp state listening" },
+      { title: "State: SYN_SENT (client active open)", component: "Client OS Kernel", detail: "Application calls connect(). The kernel picks an ISN (Initial Sequence Number, randomized per RFC 6528), allocates a TCB, and emits SYN(seq=x). It starts the SYN retransmission timer (typically RTO ≈ 1 s, doubling on each retry up to ~tcp_syn_retries times). The socket is in SYN_SENT until a SYN-ACK arrives.", proto: "→ SYN (seq=x)", refs: [{ label: "RFC 9293 §3.5 — Connection Establishment", url: "https://tools.ietf.org/html/rfc9293#section-3.5" }, { label: "RFC 6528 — ISN Generation", url: "https://tools.ietf.org/html/rfc6528" }], code: "# Watch sockets in SYN_SENT\nss -t state syn-sent\n# Capture only SYN segments\ntcpdump -i any 'tcp[tcpflags] == tcp-syn'" },
+      { title: "State: SYN_RECEIVED (server)", component: "Server OS Kernel", detail: "The server receives SYN(seq=x). It picks its own ISN y, builds a mini-TCB (or a SYN cookie under load — RFC 4987 mitigates SYN-flood DoS), and replies with SYN-ACK(seq=y, ack=x+1). The connection sits in SYN_RECEIVED in the half-open / SYN queue, awaiting the final ACK.", proto: "← SYN-ACK (seq=y, ack=x+1)", refs: [{ label: "RFC 9293 §3.5", url: "https://tools.ietf.org/html/rfc9293#section-3.5" }, { label: "RFC 4987 — SYN Flood Mitigations", url: "https://tools.ietf.org/html/rfc4987" }], code: "# Sockets in SYN-RECV (half-open accept queue)\nss -t state syn-recv\n# Toggle SYN cookies (Linux)\nsysctl net.ipv4.tcp_syncookies" },
+      { title: "State: ESTABLISHED (client)", component: "Client OS Kernel", detail: "Client receives SYN-ACK(seq=y, ack=x+1) — its SYN is now acknowledged. It transitions SYN_SENT → ESTABLISHED and sends ACK(seq=x+1, ack=y+1). At this point the client may already piggyback application data on the ACK (this is what TCP Fast Open / RFC 7413 generalizes to send data inside the SYN itself).", proto: "→ ACK (seq=x+1, ack=y+1)", refs: [{ label: "RFC 9293 §3.5", url: "https://tools.ietf.org/html/rfc9293#section-3.5" }, { label: "RFC 7413 — TCP Fast Open", url: "https://tools.ietf.org/html/rfc7413" }] },
+      { title: "State: ESTABLISHED (server) — handshake complete", component: "Server OS Kernel", detail: "Server receives the final ACK, moves SYN_RECEIVED → ESTABLISHED, and the connection moves from the SYN queue to the accept queue, where the next accept() call dequeues it. Note: a simultaneous-open (both sides connect() at once) takes the SYN_SENT → SYN_RECEIVED → ESTABLISHED path on both peers, with no LISTEN side.", proto: "Three-way handshake complete (1 RTT)", refs: [{ label: "RFC 9293 §3.5", url: "https://tools.ietf.org/html/rfc9293#section-3.5" }], code: "# Capture all 3 handshake segments to a host\ntcpdump -i any -c 3 'tcp[tcpflags] & (tcp-syn|tcp-ack) != 0 and host 10.0.0.1'" },
+      { title: "ESTABLISHED — data transfer", component: "TCP State Machine (both peers)", detail: "Both sides exchange data segments. Sequence numbers cover bytes; the receiver returns cumulative ACKs (and SACK blocks per RFC 2018 for selective acknowledgment). Sliding window + congestion control (CUBIC, BBR) regulate in-flight bytes; the advertised rwnd provides flow control. Lost segments trigger fast retransmit (3 dup-ACKs) or RTO-based retransmission.", proto: "Data segments + cumulative/SACK ACKs", refs: [{ label: "RFC 9293 §3.7 — Data Communication", url: "https://tools.ietf.org/html/rfc9293#section-3.7" }, { label: "RFC 2018 — SACK", url: "https://tools.ietf.org/html/rfc2018" }, { label: "RFC 5681 — Congestion Control", url: "https://tools.ietf.org/html/rfc5681" }], code: "# Live per-connection cwnd, rtt, rwnd, retrans\nss -tin\n# Watch retransmissions\nnstat -az TcpRetransSegs" },
+      { title: "State: FIN_WAIT_1 (active closer)", component: "Active Closer's Kernel", detail: "The application calls close() (or shutdown(SHUT_WR)). The kernel flushes the send queue and emits FIN(seq=u), transitioning ESTABLISHED → FIN_WAIT_1. The peer must ACK this FIN. Note that FIN only closes the sending direction — TCP connections are full-duplex and each side closes independently (\"half-close\").", proto: "→ FIN (seq=u)", refs: [{ label: "RFC 9293 §3.6 — Closing a Connection", url: "https://tools.ietf.org/html/rfc9293#section-3.6" }, { label: "man 2 shutdown", url: "https://man7.org/linux/man-pages/man2/shutdown.2.html" }], code: "# Sockets that have sent FIN, waiting for ACK\nss -t state fin-wait-1" },
+      { title: "State: CLOSE_WAIT (passive side)", component: "Passive Side's Kernel + App", detail: "The peer receives FIN, acknowledges it with ACK(ack=u+1), and transitions ESTABLISHED → CLOSE_WAIT. The kernel signals EOF to the application (read() returns 0). The connection sits in CLOSE_WAIT until the application calls close(); long-lived CLOSE_WAIT sockets are a classic application bug (forgotten close()).", proto: "← ACK (ack=u+1); app still owes a FIN", refs: [{ label: "RFC 9293 §3.6", url: "https://tools.ietf.org/html/rfc9293#section-3.6" }], code: "# Hunt for leaked CLOSE_WAIT sockets per process\nss -tpn state close-wait" },
+      { title: "State: FIN_WAIT_2 (active closer)", component: "Active Closer's Kernel", detail: "Active closer receives the ACK of its FIN and moves FIN_WAIT_1 → FIN_WAIT_2. It can still receive data from the peer (the peer's half is still open). Linux bounds the time spent here via net.ipv4.tcp_fin_timeout (default ~60 s) to prevent the kernel from holding the TCB forever if the peer never sends FIN.", proto: "Awaiting peer's FIN", refs: [{ label: "RFC 9293 §3.6", url: "https://tools.ietf.org/html/rfc9293#section-3.6" }], code: "ss -t state fin-wait-2\nsysctl net.ipv4.tcp_fin_timeout" },
+      { title: "State: LAST_ACK (passive side)", component: "Passive Side's Kernel", detail: "When the application on the passive side finally calls close(), the kernel sends its own FIN(seq=v) and transitions CLOSE_WAIT → LAST_ACK. It now waits for the final ACK from the active closer. If that ACK is lost, the kernel retransmits the FIN.", proto: "→ FIN (seq=v)", refs: [{ label: "RFC 9293 §3.6", url: "https://tools.ietf.org/html/rfc9293#section-3.6" }], code: "ss -t state last-ack" },
+      { title: "State: TIME_WAIT (active closer, 2·MSL)", component: "Active Closer's Kernel", detail: "Active closer receives the peer's FIN, sends the final ACK(ack=v+1), and enters TIME_WAIT. It stays there for 2·MSL (Maximum Segment Lifetime — typically 60 s on Linux, hardcoded; up to 240 s on some stacks). This serves two purposes: (a) if the final ACK is lost the peer will retransmit its FIN and we can re-ACK it; (b) any old duplicate segments from this 4-tuple must expire before the tuple can be reused, avoiding cross-incarnation confusion.", proto: "→ ACK (ack=v+1); Timer: 2·MSL", refs: [{ label: "RFC 9293 §3.6.1 — TIME-WAIT", url: "https://tools.ietf.org/html/rfc9293#section-3.6.1" }, { label: "RFC 6191 — Reducing TIME_WAIT", url: "https://tools.ietf.org/html/rfc6191" }], code: "# Count TIME_WAIT sockets (common on busy clients)\nss -t state time-wait | wc -l\n# Allow reuse of TIME_WAIT outgoing ports\nsysctl net.ipv4.tcp_tw_reuse" },
+      { title: "Simultaneous close: CLOSING → TIME_WAIT", component: "TCP State Machine", detail: "If both peers call close() at the same time, each sends a FIN before receiving the other's. From FIN_WAIT_1, receiving a FIN (rather than an ACK of one's own FIN) transitions to CLOSING. Once the ACK of one's own FIN arrives, CLOSING → TIME_WAIT, then CLOSED after 2·MSL. This is the symmetric counterpart to simultaneous open.", proto: "FIN crosses FIN; CLOSING is transient", refs: [{ label: "RFC 9293 §3.6 — Simultaneous Close", url: "https://tools.ietf.org/html/rfc9293#section-3.6" }], code: "ss -t state closing" },
+      { title: "State: CLOSED (both peers, again)", component: "TCP State Machine", detail: "Active closer's 2·MSL timer fires (TIME_WAIT → CLOSED); passive side received the final ACK (LAST_ACK → CLOSED). Both TCBs are freed and the 4-tuple (src-IP, src-port, dst-IP, dst-port) becomes available for reuse. A full graceful close costs 1.5 RTTs of segments plus the 2·MSL wait on the active closer.", proto: "TCB freed; 4-tuple reusable", refs: [{ label: "RFC 9293 §3.3.2 — State Diagram", url: "https://tools.ietf.org/html/rfc9293#section-3.3.2" }] },
+      { title: "RST — abortive close (any state)", component: "TCP State Machine", detail: "Instead of the graceful FIN exchange, a peer can send RST (reset) — triggered by SO_LINGER with timeout 0, by receiving data on a closed socket, by half-open detection, or by a stack rejecting a segment that doesn't match any TCB. RST immediately tears the connection down on both sides with no TIME_WAIT, and any unread data is discarded. tcpdump shows the R flag.", proto: "RST segment → immediate CLOSED", refs: [{ label: "RFC 9293 §3.5.3 — Reset Generation", url: "https://tools.ietf.org/html/rfc9293#section-3.5.3" }, { label: "RFC 5961 — Blind Reset Mitigations", url: "https://tools.ietf.org/html/rfc5961" }], code: "# Capture only RSTs\ntcpdump -i any 'tcp[tcpflags] & tcp-rst != 0'\n# Force RST on close via SO_LINGER(0) (pseudocode)\n# struct linger l = {1, 0};\n# setsockopt(fd, SOL_SOCKET, SO_LINGER, &l, sizeof l);" },
+      { title: "Why TIME_WAIT (and how to live with it)", component: "Operational Notes", detail: "TIME_WAIT exists so that delayed duplicates from the old incarnation cannot be mistaken for data on a new connection sharing the same 4-tuple, and so that a lost final ACK can be retransmitted. On busy outbound clients (load testers, proxies) you may exhaust ephemeral ports. Mitigations: connection pooling, increasing the ephemeral range, or net.ipv4.tcp_tw_reuse=1 (safe on Linux with timestamps per RFC 7323). Do NOT enable tcp_tw_recycle — it is removed in modern Linux because it breaks NAT.", proto: "2·MSL ≈ 60 s on Linux", refs: [{ label: "RFC 7323 — TCP Timestamps", url: "https://tools.ietf.org/html/rfc7323" }, { label: "Vincent Bernat — Coping with TIME_WAIT", url: "https://vincent.bernat.ch/en/blog/2014-tcp-time-wait-state-linux" }], code: "# Ephemeral port range\nsysctl net.ipv4.ip_local_port_range\n# Summary of TCP states currently on the host\nss -tan | awk 'NR>1 {print $1}' | sort | uniq -c | sort -rn" }
+    ]
   }
 ];
 
@@ -3881,6 +3986,924 @@ document.addEventListener('touchstart', function(ev) {
 }, { passive: true });
 
 </script>
+<!-- BEGIN quiz -->
+<script>
+// ═══════════════════════════════════════════════════════════════════════
+// QUIZ — Course Review Q&A
+// ═══════════════════════════════════════════════════════════════════════
+const quizQuestions = [
+  // ── Week 1: Internet & Architecture ────────────────────────────────
+  { topic: "W1 — Internet & Architecture",
+    q: "Which statement best captures the *end-to-end principle*?",
+    options: [
+      "Every router along a path must replicate all transport-layer state.",
+      "Application-level functionality should be implemented at the endpoints rather than inside the network.",
+      "Reliability must be guaranteed by the link layer on every hop.",
+      "The network core should buffer entire flows to avoid loss." ],
+    answer: 1,
+    explain: "The end-to-end argument (Saltzer, Reed, Clark) says functions like reliability, ordering, and encryption belong at the endpoints because the network can't fully guarantee them — keeping the core simple and dumb." },
+  { topic: "W1 — Internet & Architecture",
+    q: "In the four-layer Internet model used in CS 144, which order is correct from top to bottom?",
+    options: [
+      "Application → Network → Transport → Link",
+      "Application → Transport → Network → Link",
+      "Transport → Application → Link → Network",
+      "Link → Network → Transport → Application (top-down)" ],
+    answer: 1,
+    explain: "Top-to-bottom: Application (HTTP, DNS) → Transport (TCP/UDP) → Network (IP) → Link (Ethernet/Wi-Fi). Each layer adds a header (encapsulation) when sending." },
+  { topic: "W1 — Internet & Architecture",
+    q: "What abstraction does TCP provide to the application?",
+    options: [
+      "A datagram service with fixed-size messages.",
+      "A reliable, ordered, bidirectional byte stream.",
+      "A best-effort packet delivery service with no retransmissions.",
+      "A connectionless multicast channel." ],
+    answer: 1,
+    explain: "TCP gives the application a reliable in-order byte stream in each direction, hiding IP's loss, reordering, and duplication." },
+  { topic: "W1 — Internet & Architecture",
+    q: "Which property does IP (the network layer) NOT provide?",
+    options: [
+      "Reliability and ordering guarantees",
+      "Best-effort delivery",
+      "Global addressing",
+      "Datagram-based forwarding" ],
+    answer: 0,
+    explain: "IP is intentionally best-effort: packets may be lost, reordered, or duplicated. Reliability is a transport-layer concern." },
+  { topic: "W1 — Internet & Architecture",
+    q: "What is *encapsulation* in protocol layering?",
+    options: [
+      "Routers translating between protocol versions",
+      "Each layer wrapping the data from the layer above with its own header (and possibly trailer)",
+      "Compressing payload to save bandwidth",
+      "Splitting a stream into equally-sized cells" ],
+    answer: 1,
+    explain: "As data moves down the stack, each layer prepends its own header. On receive, headers are stripped (decapsulated) as data moves up." },
+  { topic: "W1 — Internet & Architecture",
+    q: "Which is a key reason the Internet uses *packet switching* rather than circuit switching?",
+    options: [
+      "Packets always arrive in order with no loss.",
+      "Statistical multiplexing — bursty flows share links efficiently without pre-reserved capacity.",
+      "Per-flow state at every router enables tight QoS.",
+      "It allows a fixed bit-rate per call regardless of network load." ],
+    answer: 1,
+    explain: "Packet switching with statistical multiplexing lets many bursty sources share a link efficiently — there's no need to reserve dedicated capacity per flow." },
+  { topic: "W1 — Internet & Architecture",
+    q: "Which protocol uses port 80 by default (without TLS)?",
+    options: ["SSH", "HTTP", "SMTP", "DNS"],
+    answer: 1,
+    explain: "HTTP uses TCP port 80. HTTPS uses 443, SSH 22, SMTP 25, DNS 53." },
+  { topic: "W1 — Internet & Architecture",
+    q: "Which is true of a *socket* in the BSD API?",
+    options: [
+      "It identifies a host but not a process.",
+      "It is identified by the 4-tuple (src IP, src port, dst IP, dst port) for a connected TCP socket.",
+      "It is a layer-2 construct managed by the NIC firmware.",
+      "It can only be used for connection-oriented protocols." ],
+    answer: 1,
+    explain: "A connected TCP socket is uniquely identified by the 4-tuple of source and destination IP and port. UDP sockets are typically demultiplexed by dst (IP, port)." },
+
+  // ── Week 2: TCP ────────────────────────────────────────────────────
+  { topic: "W2 — TCP",
+    q: "What does the SYN flag mean in the TCP three-way handshake?",
+    options: [
+      "It carries the final FIN before close.",
+      "It synchronizes the initial sequence numbers.",
+      "It signals an urgent push of in-band data.",
+      "It acknowledges all previous bytes received." ],
+    answer: 1,
+    explain: "SYN = synchronize. Each side picks a random Initial Sequence Number (ISN) and the SYN segment communicates it." },
+  { topic: "W2 — TCP",
+    q: "Why are TCP Initial Sequence Numbers (ISNs) chosen randomly rather than starting at 0?",
+    options: [
+      "To make checksums easier to compute.",
+      "To reduce the chance of stale segments from a previous connection being mistaken as valid, and to make blind TCP injection attacks harder.",
+      "To compress the header.",
+      "Because zero is reserved by the kernel." ],
+    answer: 1,
+    explain: "Random ISNs protect against old-incarnation segments and make off-path attackers' job harder (they can't easily guess sequence numbers)." },
+  { topic: "W2 — TCP",
+    q: "TCP uses *cumulative acknowledgments*. If a receiver has bytes 0..999 and 2000..2999 but is missing 1000..1999, what ACK number does it send?",
+    options: ["3000", "2000", "1000", "999"],
+    answer: 2,
+    explain: "Cumulative ACK = next expected byte, i.e. the first byte of the gap. The receiver acks 1000, meaning everything up to but not including byte 1000 is received." },
+  { topic: "W2 — TCP",
+    q: "What triggers *fast retransmit*?",
+    options: [
+      "The RTO (Retransmission Timeout) timer firing.",
+      "Receipt of three duplicate ACKs for the same sequence number.",
+      "A RST segment from the peer.",
+      "An ICMP Source Quench message." ],
+    answer: 1,
+    explain: "Three duplicate ACKs strongly suggest a single segment was lost while later segments arrived. The sender retransmits without waiting for the RTO timer." },
+  { topic: "W2 — TCP",
+    q: "How is the TCP Retransmission Timeout (RTO) typically computed?",
+    options: [
+      "A fixed value of 3 seconds.",
+      "From smoothed RTT (SRTT) and RTT variation (RTTVAR), with exponential backoff on each consecutive timeout.",
+      "Equal to the receiver's advertised window divided by MSS.",
+      "Half the round-trip propagation delay." ],
+    answer: 1,
+    explain: "Jacobson/Karels algorithm: SRTT and RTTVAR are exponentially weighted moving averages; RTO ≈ SRTT + 4·RTTVAR, doubled on every retransmission (exponential backoff)." },
+  { topic: "W2 — TCP",
+    q: "TCP's *flow control* protects against what condition?",
+    options: [
+      "Network congestion in the middle of the path",
+      "The sender overwhelming the receiver's buffer",
+      "Out-of-order packet delivery",
+      "Sequence-number wraparound" ],
+    answer: 1,
+    explain: "Flow control (the receiver window, rwnd) prevents the sender from outpacing the receiver. Congestion control is what handles bottlenecks inside the network." },
+  { topic: "W2 — TCP",
+    q: "What is the *effective window* a TCP sender may have in flight?",
+    options: [
+      "max(cwnd, rwnd)",
+      "min(cwnd, rwnd)",
+      "rwnd only",
+      "cwnd + rwnd" ],
+    answer: 1,
+    explain: "A sender can have at most min(cwnd, rwnd) unacknowledged bytes outstanding — whichever is smaller of the congestion and receiver windows." },
+  { topic: "W2 — TCP",
+    q: "Which state does a TCP endpoint enter after sending the last ACK in active close, to ensure the final ACK isn't lost?",
+    options: ["LAST_ACK", "TIME_WAIT", "CLOSE_WAIT", "FIN_WAIT_2"],
+    answer: 1,
+    explain: "After the active closer sends the final ACK, it stays in TIME_WAIT (typically 2·MSL ≈ 60 s) so it can retransmit the ACK if the peer's FIN is re-sent." },
+  { topic: "W2 — TCP",
+    q: "What is the purpose of the TCP checksum?",
+    options: [
+      "Encrypting the payload",
+      "Detecting bit-errors in the header and payload (and pseudo-header) end-to-end",
+      "Computing the next sequence number",
+      "Compressing repeated bytes" ],
+    answer: 1,
+    explain: "The 16-bit checksum covers the TCP header, payload, and a pseudo-header from IP (src/dst IP, protocol, length). It's a simple integrity check, not cryptographic." },
+  { topic: "W2 — TCP",
+    q: "What happens when a TCP sender receives a RST segment for an established connection?",
+    options: [
+      "It pauses and waits for a SYN.",
+      "It aborts the connection immediately — no graceful FIN exchange.",
+      "It increments cwnd.",
+      "It begins TIME_WAIT for 2·MSL." ],
+    answer: 1,
+    explain: "RST is an abortive close — the connection is torn down immediately and any unread data is discarded. Unlike FIN, there is no orderly shutdown." },
+  { topic: "W2 — TCP",
+    q: "Which TCP segment field is used by the receiver to advertise available buffer space?",
+    options: ["Sequence Number", "Acknowledgment Number", "Window", "Urgent Pointer"],
+    answer: 2,
+    explain: "The 16-bit Window field carries rwnd. Window-scale option (RFC 7323) extends it to support larger windows." },
+
+  // ── Week 3: Packet Switching ───────────────────────────────────────
+  { topic: "W3 — Packet Switching",
+    q: "If a router has a 1 Gbps output link and a 12,000-bit packet arrives, what is the *transmission delay*?",
+    options: ["12 ms", "1.2 ms", "12 μs", "120 μs"],
+    answer: 2,
+    explain: "Transmission delay = packet size / link rate = 12,000 b / 1×10⁹ bps = 12×10⁻⁶ s = 12 μs." },
+  { topic: "W3 — Packet Switching",
+    q: "Which of the following is *propagation delay* primarily a function of?",
+    options: [
+      "Packet size and link bandwidth",
+      "Physical distance and signal speed in the medium",
+      "Router CPU speed",
+      "Queue occupancy" ],
+    answer: 1,
+    explain: "Propagation delay = distance / propagation speed (≈ ⅔ c in fiber). It is independent of packet size or rate." },
+  { topic: "W3 — Packet Switching",
+    q: "The four components of per-hop packet delay are:",
+    options: [
+      "Encryption, decryption, lookup, signaling",
+      "Processing, queueing, transmission, propagation",
+      "Encoding, modulation, demodulation, decoding",
+      "Slow-start, fast-recovery, retransmission, ACK" ],
+    answer: 1,
+    explain: "Total delay per hop = processing (header parsing/lookup) + queueing (waiting in output buffer) + transmission (serialization onto the link) + propagation (signal travel)." },
+  { topic: "W3 — Packet Switching",
+    q: "Statistical multiplexing yields gains when:",
+    options: [
+      "All sources transmit at peak rate continuously.",
+      "Sources are bursty and their peaks rarely coincide.",
+      "The link is engineered to handle the sum of peak rates.",
+      "Each flow has its own dedicated time slot." ],
+    answer: 1,
+    explain: "If many bursty flows share a link, their peaks usually don't overlap, so the shared link needs far less than the sum of peak rates — that's the multiplexing gain." },
+  { topic: "W3 — Packet Switching",
+    q: "What does the *bandwidth-delay product* represent?",
+    options: [
+      "Total bytes the pipe can hold in flight",
+      "Maximum data rate of a TCP connection",
+      "Optimal congestion-window scaling factor only on Wi-Fi",
+      "Number of routers along a path" ],
+    answer: 0,
+    explain: "BDP = bandwidth × RTT. To keep a pipe full, the sender's window must be at least the BDP." },
+  { topic: "W3 — Packet Switching",
+    q: "Why is *queueing delay* the most variable component of end-to-end delay?",
+    options: [
+      "It depends on physical link length.",
+      "It depends on instantaneous traffic load and queue occupancy, which fluctuate.",
+      "It depends on packet size, which is constant.",
+      "It is fixed by router hardware." ],
+    answer: 1,
+    explain: "Queueing delay varies with load: an empty queue means no wait; a near-full queue means long waits. Other components are largely fixed." },
+  { topic: "W3 — Packet Switching",
+    q: "What is *head-of-line blocking* in a packet switch?",
+    options: [
+      "A receiver discarding the first arriving packet.",
+      "A packet at the front of an input queue blocking other packets behind it because its output port is busy.",
+      "The transport layer waiting for in-order data.",
+      "Routers discarding ICMP." ],
+    answer: 1,
+    explain: "In input-queued switches, a blocked head-of-line packet stalls every packet behind it even if their output ports are free — virtual output queueing (VOQ) mitigates this." },
+  { topic: "W3 — Packet Switching",
+    q: "Little's Law (N = λ·W) tells us:",
+    options: [
+      "Average number in system = arrival rate × average time in system",
+      "Throughput equals window / RTT",
+      "Loss rate is proportional to queue size",
+      "Bandwidth scales linearly with hop count" ],
+    answer: 0,
+    explain: "Little's Law is a fundamental queueing identity used to relate occupancy, arrival rate, and delay — applicable to almost any stable queueing system." },
+
+  // ── Week 4: Congestion Control ─────────────────────────────────────
+  { topic: "W4 — Congestion Control",
+    q: "What is the fundamental signal TCP Reno uses to *infer* congestion?",
+    options: [
+      "An ICMP source-quench message from a router.",
+      "Packet loss (detected via timeout or 3 dup-ACKs).",
+      "A drop in the receiver's advertised window.",
+      "A reduction in IP TTL." ],
+    answer: 1,
+    explain: "Classical TCP (Reno/NewReno) treats loss as the congestion signal. ECN is an alternative explicit signal; BBR uses RTT and bandwidth probing instead." },
+  { topic: "W4 — Congestion Control",
+    q: "In TCP slow start, the congestion window grows:",
+    options: [
+      "Linearly — by 1 MSS per RTT",
+      "Exponentially — roughly doubling each RTT (by 1 MSS per ACK)",
+      "Cubically with time since last loss",
+      "It stays constant until first loss" ],
+    answer: 1,
+    explain: "Slow start: cwnd += MSS for each new ACK, so cwnd roughly doubles each RTT until ssthresh is reached or loss occurs." },
+  { topic: "W4 — Congestion Control",
+    q: "AIMD stands for and means:",
+    options: [
+      "Adaptive Initial Modulus Delay — sets initial RTO",
+      "Additive Increase / Multiplicative Decrease — +1 MSS per RTT, halve cwnd on loss",
+      "Asymmetric Increase / Modulated Drop — ramps based on ECN",
+      "Average Inter-Message Delay — flow control heuristic" ],
+    answer: 1,
+    explain: "AIMD in congestion-avoidance: cwnd += MSS per RTT (additive increase); cwnd = cwnd/2 on loss (multiplicative decrease). It converges to fair sharing." },
+  { topic: "W4 — Congestion Control",
+    q: "Chiu & Jain showed AIMD converges to fairness because:",
+    options: [
+      "Multiplicative decrease moves the operating point along a line through the origin, reducing inequality, while additive increase moves it along a 45° line that preserves the fairness vector.",
+      "Routers explicitly compute fair shares.",
+      "TCP measures other flows' rates and matches them.",
+      "ECN marks the largest flow first." ],
+    answer: 0,
+    explain: "The classic Chiu-Jain phase-plane argument: AIMD reduces the difference between flows over time on a 2-flow shared bottleneck, converging toward the fair point." },
+  { topic: "W4 — Congestion Control",
+    q: "What is *bufferbloat*?",
+    options: [
+      "A bug that doubles the receive buffer at random.",
+      "Excess persistent queueing delay caused by very large unmanaged buffers in routers, hurting interactive traffic.",
+      "A TCP option that compresses headers.",
+      "A condition where the receiver window equals zero." ],
+    answer: 1,
+    explain: "Bufferbloat: oversized buffers fill up under loss-based TCP, keeping latency high even when there's no real congestion. AQM (CoDel, FQ-CoDel, PIE) mitigates it." },
+  { topic: "W4 — Congestion Control",
+    q: "How does ECN (Explicit Congestion Notification) work?",
+    options: [
+      "Routers drop one packet per flow when congested.",
+      "Routers mark the IP ECN bits to signal congestion without dropping; the receiver echoes the mark back to the sender, which reduces its rate.",
+      "It is a TCP option that disables flow control.",
+      "It is implemented only in IPv6 routers." ],
+    answer: 1,
+    explain: "ECN-capable senders and AQM-enabled routers cooperate: instead of dropping, routers mark packets (CE bit). The receiver echoes via ECE; the sender reacts as if to a loss." },
+  { topic: "W4 — Congestion Control",
+    q: "When TCP Reno detects loss via 3 duplicate ACKs (fast retransmit + fast recovery), cwnd becomes:",
+    options: [
+      "Set to 1 MSS (full slow start restart)",
+      "Halved (approximately) and the connection enters congestion avoidance",
+      "Doubled",
+      "Set to the receiver's advertised window" ],
+    answer: 1,
+    explain: "Reno's fast recovery: ssthresh = cwnd/2; cwnd = ssthresh; resume linear (congestion-avoidance) growth. A timeout, in contrast, resets cwnd to 1 MSS." },
+  { topic: "W4 — Congestion Control",
+    q: "TCP throughput ≈ MSS / (RTT · √p) is sometimes called:",
+    options: [
+      "Little's Law",
+      "Mathis (TCP throughput) equation, showing inverse-square-root dependence on loss probability",
+      "Reno's first axiom",
+      "Nagle's identity" ],
+    answer: 1,
+    explain: "Mathis et al.'s steady-state formula. Doubling loss rate cuts throughput by √2; the inverse-RTT factor shows long-RTT flows are penalized." },
+  { topic: "W4 — Congestion Control",
+    q: "TCP Cubic, the Linux default for many years, replaces AIMD's linear growth with:",
+    options: [
+      "Logarithmic decrease",
+      "A cubic function of time since last loss, designed for high-BDP networks",
+      "Random jitter",
+      "Strict slow start always" ],
+    answer: 1,
+    explain: "Cubic's cwnd grows as a cubic function of elapsed time since last congestion event — concave near W_max then convex — to ramp quickly in high-BDP networks while being RTT-fair." },
+  { topic: "W4 — Congestion Control",
+    q: "BBR (Bottleneck Bandwidth and RTT) differs from loss-based TCP because it:",
+    options: [
+      "Uses ICMP to find the bottleneck.",
+      "Models the path's bottleneck bandwidth and min-RTT directly, pacing at that estimated rate rather than waiting for loss.",
+      "Disables retransmission entirely.",
+      "Only works on lossless links." ],
+    answer: 1,
+    explain: "BBR estimates BtlBw and RTprop and paces sending to BtlBw, periodically probing both. It aims for high throughput with low queue (and thus low latency)." },
+
+  // ── Week 5: Routing ────────────────────────────────────────────────
+  { topic: "W5 — Routing",
+    q: "Longest-prefix match means:",
+    options: [
+      "Forward using the route with the longest AS-path.",
+      "Among matching routes in the FIB, choose the one with the longest subnet mask (most specific prefix).",
+      "Always forward on the most recently learned route.",
+      "Choose the route with the highest hop count." ],
+    answer: 1,
+    explain: "A destination IP may match several prefixes (e.g., default 0.0.0.0/0 and a more specific 10.1.2.0/24). LPM picks the most specific one." },
+  { topic: "W5 — Routing",
+    q: "A distance-vector protocol (e.g., RIP) suffers from *count-to-infinity*. Why?",
+    options: [
+      "Routers send their entire link-state DB to each neighbor.",
+      "Routers only know hop counts from neighbors and can chase each other's stale routes upward after a failure.",
+      "TTL is capped at 16.",
+      "Multicast addresses overflow." ],
+    answer: 1,
+    explain: "Without full topology knowledge, after a link fails neighbors may advertise outdated paths through each other, slowly incrementing the metric. Split-horizon and poison reverse help." },
+  { topic: "W5 — Routing",
+    q: "Link-state routing (OSPF, IS-IS) builds the forwarding table by:",
+    options: [
+      "Flooding hop-count updates to neighbors only.",
+      "Each router flooding its link state to all others, then locally running Dijkstra to compute shortest paths.",
+      "Asking a central controller for routes.",
+      "Computing BGP best path with policy filters." ],
+    answer: 1,
+    explain: "Every router learns the whole topology via LSA flooding and independently runs Dijkstra's SPF algorithm to derive its forwarding table." },
+  { topic: "W5 — Routing",
+    q: "BGP is best described as:",
+    options: [
+      "A link-state protocol used within an AS.",
+      "A path-vector inter-domain routing protocol that propagates AS-paths between autonomous systems with policy-based decisions.",
+      "A distance-vector protocol with hop counts.",
+      "A flooding protocol for multicast." ],
+    answer: 1,
+    explain: "BGP carries AS-paths (a path vector preventing loops) and lets operators apply policy (LOCAL_PREF, MED, AS-path prepending, communities) — policy, not shortest-path, drives decisions." },
+  { topic: "W5 — Routing",
+    q: "What does *hierarchical routing* with autonomous systems (ASes) enable?",
+    options: [
+      "Per-flow QoS guarantees",
+      "Scalability: internal routing (IGPs) is decoupled from inter-domain routing (BGP), so global tables don't explode and policy stays local.",
+      "Faster Wi-Fi association",
+      "Smaller TCP windows" ],
+    answer: 1,
+    explain: "The Internet is divided into ~75k ASes. Each AS runs its own IGP (OSPF/IS-IS) and speaks BGP at the edges, which keeps state and policy manageable." },
+  { topic: "W5 — Routing",
+    q: "Why does the Internet use *CIDR* (Classless Inter-Domain Routing) instead of classful addressing?",
+    options: [
+      "Classful addresses had too small an address space for IPv4.",
+      "CIDR allows arbitrary-length prefixes, enabling route aggregation and conserving the IPv4 address space.",
+      "Classful was incompatible with TCP.",
+      "It is required by BGP only for IPv6." ],
+    answer: 1,
+    explain: "CIDR replaced the rigid A/B/C classes with prefix lengths, enabling supernetting/aggregation (reducing routing-table growth) and finer allocation granularity." },
+  { topic: "W5 — Routing",
+    q: "BGP loop prevention relies on:",
+    options: [
+      "TTL decrement at each AS boundary.",
+      "Each router observing its own AS number in a received AS_PATH and rejecting that route.",
+      "A central registry.",
+      "Sequence numbers in BGP updates." ],
+    answer: 1,
+    explain: "Path-vector loop detection: if an eBGP speaker sees its own ASN in the AS_PATH attribute of a received update, the route is discarded." },
+  { topic: "W5 — Routing",
+    q: "What is *equal-cost multipath* (ECMP)?",
+    options: [
+      "A QoS scheme that prioritizes voice.",
+      "Splitting traffic across multiple equally-good paths, usually via a flow hash so packets of one flow stay on one path (avoiding reordering).",
+      "A multicast spanning tree.",
+      "A TCP option for parallel streams." ],
+    answer: 1,
+    explain: "ECMP uses per-flow hashing (over 5-tuple) so all packets of a flow follow the same path, while different flows are spread across equal-cost paths." },
+  { topic: "W5 — Routing",
+    q: "When two ISPs *peer*, traffic between them is typically:",
+    options: [
+      "Settlement-based — each pays for incoming bytes.",
+      "Exchanged settlement-free at an IXP (Internet Exchange Point) or private interconnect, used to reach each other's customers.",
+      "Routed through a Tier-1 transit only.",
+      "Encrypted by default in BGP." ],
+    answer: 1,
+    explain: "Peering is the bilateral exchange of customer routes, usually free. Transit, by contrast, gives a customer access to the rest of the Internet and is paid." },
+  { topic: "W5 — Routing",
+    q: "*BGP hijacking* refers to:",
+    options: [
+      "TLS certificate spoofing.",
+      "An AS originating or announcing prefixes it does not legitimately own (intentionally or accidentally), causing traffic to be misrouted.",
+      "Port-scanning ASes.",
+      "Sending oversized BGP updates." ],
+    answer: 1,
+    explain: "Famous incidents (Pakistan/YouTube 2008, etc.). RPKI and ROAs are deployed as a defense by cryptographically authorizing which AS may originate a prefix." },
+
+  // ── Week 6: Link Layer ─────────────────────────────────────────────
+  { topic: "W6 — Link Layer",
+    q: "ARP (Address Resolution Protocol) translates:",
+    options: [
+      "Domain name → IP address",
+      "IPv4 address → MAC (link-layer) address on the local network",
+      "MAC → IPv6 link-local address",
+      "Port number → process" ],
+    answer: 1,
+    explain: "Before sending a frame to an on-link IPv4 next-hop, the host broadcasts an ARP request for that IP and learns the MAC. IPv6 uses NDP instead." },
+  { topic: "W6 — Link Layer",
+    q: "An Ethernet switch builds its forwarding table by:",
+    options: [
+      "Running a routing protocol with neighbors.",
+      "*Backward learning* — recording the source MAC and ingress port of frames it sees.",
+      "Querying DHCP.",
+      "Consulting a central controller for every frame." ],
+    answer: 1,
+    explain: "Switches learn (port, MAC) by observing source addresses, then forward by destination MAC. Unknown destinations are flooded." },
+  { topic: "W6 — Link Layer",
+    q: "Why is the Spanning Tree Protocol (STP) used in switched Ethernet?",
+    options: [
+      "To compress headers.",
+      "To prune loops in a redundantly-connected Layer-2 topology so frames don't circulate forever.",
+      "To assign IP addresses.",
+      "To distribute VLAN configuration." ],
+    answer: 1,
+    explain: "Ethernet frames have no TTL — a loop would cause broadcast storms. STP elects a root and blocks redundant ports to form a loop-free tree." },
+  { topic: "W6 — Link Layer",
+    q: "CSMA/CD on classic shared Ethernet means:",
+    options: [
+      "Stations sense the medium, transmit if idle, and detect collisions; on collision they back off using binary exponential backoff.",
+      "A central controller schedules every transmission.",
+      "Stations use TDMA slots.",
+      "Each station has a guaranteed bit-rate." ],
+    answer: 0,
+    explain: "Carrier Sense Multiple Access with Collision Detection. Modern switched full-duplex Ethernet eliminates collisions, so CSMA/CD is mostly historical." },
+  { topic: "W6 — Link Layer",
+    q: "Why does Wi-Fi use CSMA/CA (avoidance) instead of CSMA/CD?",
+    options: [
+      "Wireless NICs are too slow.",
+      "A wireless station cannot reliably transmit and listen for collisions on the same channel (and the hidden-terminal problem makes carrier sense unreliable), so collisions are avoided up-front via random backoff and ACKs.",
+      "Collisions never happen on Wi-Fi.",
+      "It is required by the IETF." ],
+    answer: 1,
+    explain: "Half-duplex radio + hidden terminals = can't detect collisions reliably. 802.11 uses CSMA/CA: random backoff before transmit, link-layer ACKs, optional RTS/CTS." },
+  { topic: "W6 — Link Layer",
+    q: "What is the role of the Ethernet *FCS* (Frame Check Sequence)?",
+    options: [
+      "Encryption key exchange",
+      "A CRC-32 trailer that lets the receiver detect bit-errors in the frame; corrupted frames are dropped at the NIC.",
+      "Flow-control credit",
+      "Frame ordering sequence number" ],
+    answer: 1,
+    explain: "Ethernet uses a 32-bit CRC. The NIC drops frames that fail CRC; there's no link-layer retransmission in classic Ethernet, so loss is left to higher layers." },
+  { topic: "W6 — Link Layer",
+    q: "MAC addresses are:",
+    options: [
+      "48-bit identifiers, globally administered in their upper bits (OUI), typically burned into the NIC.",
+      "Always derived from the host's IP address.",
+      "32-bit and routable across the Internet.",
+      "Random per packet." ],
+    answer: 0,
+    explain: "Classic IEEE EUI-48: first 24 bits (OUI) identify the vendor; lower 24 bits identify the interface. Locally-administered/random MACs exist for privacy." },
+  { topic: "W6 — Link Layer",
+    q: "What does an Ethernet broadcast address (ff:ff:ff:ff:ff:ff) do?",
+    options: [
+      "Reaches every host within the same Layer-2 broadcast domain (e.g., VLAN), used by ARP requests and DHCP discovery.",
+      "Reaches every host on the Internet.",
+      "Is silently dropped by switches.",
+      "Triggers link renegotiation." ],
+    answer: 0,
+    explain: "Broadcasts are flooded out all ports in the same broadcast domain (but not across routers/VLANs). ARP and DHCP rely on this scope." },
+
+  // ── Week 7: Applications & DNS ─────────────────────────────────────
+  { topic: "W7 — Applications & DNS",
+    q: "What does an *iterative* DNS query mean?",
+    options: [
+      "The resolver asks one server which either answers or *refers* the resolver to the next server to ask; the resolver chases the chain itself.",
+      "The client sends one query and waits forever.",
+      "The authoritative server queries the root on the client's behalf.",
+      "TLS-encrypted DNS only." ],
+    answer: 0,
+    explain: "Iterative: each server returns either the answer or the NS records for the next zone. *Recursive* queries are the kind a stub resolver makes to a recursive resolver, which then iterates." },
+  { topic: "W7 — Applications & DNS",
+    q: "A DNS *A record* maps:",
+    options: [
+      "Name → MAC",
+      "Name → IPv4 address",
+      "Name → mail server",
+      "Name → IPv6 address" ],
+    answer: 1,
+    explain: "A = IPv4, AAAA = IPv6, MX = mail exchanger, CNAME = alias, NS = nameserver, TXT = free-form text." },
+  { topic: "W7 — Applications & DNS",
+    q: "What primarily makes DNS fast and scalable at planetary scale?",
+    options: [
+      "Mandatory TLS",
+      "Aggressive caching at every level (recursive resolvers, stub resolvers) governed by TTLs, plus hierarchical delegation.",
+      "Single global database",
+      "Anycast only" ],
+    answer: 1,
+    explain: "DNS scales via hierarchy (root → TLD → authoritative) plus caching of responses for the TTL. Anycast (especially for the roots) helps further but caching does the heavy lifting." },
+  { topic: "W7 — Applications & DNS",
+    q: "HTTP/1.1 introduced *persistent connections*. Why does this matter for performance?",
+    options: [
+      "It compresses HTML.",
+      "Reusing a TCP connection avoids paying handshake + slow-start cost for every request, dramatically reducing page-load latency.",
+      "It lets servers push unsolicited objects.",
+      "It enables HTTPS." ],
+    answer: 1,
+    explain: "A fresh TCP connection costs 1 RTT for the handshake (plus TLS) and starts with cwnd=10 MSS. Reusing a warm connection avoids both penalties." },
+  { topic: "W7 — Applications & DNS",
+    q: "How does HTTP/2 improve on HTTP/1.1's pipelining limitations?",
+    options: [
+      "It uses UDP instead of TCP.",
+      "Multiplexed binary streams over a single TCP connection — multiple requests/responses interleave without head-of-line blocking at the HTTP layer (TCP-level HOL still exists).",
+      "It eliminates encryption.",
+      "It runs over ICMP." ],
+    answer: 1,
+    explain: "HTTP/2 multiplexes streams within one TCP connection. HTTP/3 (over QUIC/UDP) goes further by eliminating TCP's HOL blocking too." },
+  { topic: "W7 — Applications & DNS",
+    q: "The difference between HTTP/3 and HTTP/2 is primarily that HTTP/3:",
+    options: [
+      "Runs over QUIC (UDP) with built-in TLS 1.3 and per-stream loss recovery, removing TCP's head-of-line blocking.",
+      "Uses XML instead of JSON.",
+      "Drops encryption.",
+      "Is a server-push only protocol." ],
+    answer: 0,
+    explain: "QUIC moves transport into user-space over UDP, integrates TLS 1.3, and recovers losses per stream — a lost packet on stream A doesn't stall stream B." },
+
+  // ── Week 8: Security ───────────────────────────────────────────────
+  { topic: "W8 — Security",
+    q: "What does TLS provide?",
+    options: [
+      "Routing decisions",
+      "Confidentiality, integrity, and authentication (typically server-side, optionally mutual) between two endpoints over TCP.",
+      "Packet ordering",
+      "Lossless link-layer transport" ],
+    answer: 1,
+    explain: "TLS encrypts and MACs the byte stream and authenticates the server (and optionally the client) using certificates from a PKI." },
+  { topic: "W8 — Security",
+    q: "In TLS, the *server certificate* binds:",
+    options: [
+      "A MAC address to a port",
+      "A domain name to a public key, signed by a trusted Certificate Authority (CA).",
+      "A username to a session cookie",
+      "An AS number to a prefix" ],
+    answer: 1,
+    explain: "X.509 certificates chain back to a trusted root CA. Clients verify the chain and that the certificate's SAN/CN matches the hostname they're connecting to." },
+  { topic: "W8 — Security",
+    q: "A SYN-flood denial-of-service attack exploits:",
+    options: [
+      "TLS handshake replay.",
+      "The server allocating state in response to each SYN it receives; attackers send many spoofed SYNs filling the half-open connection table.",
+      "BGP route leaks.",
+      "DNS amplification." ],
+    answer: 1,
+    explain: "Mitigations include SYN cookies (server stays stateless until the final ACK arrives) and connection-rate limiting." },
+  { topic: "W8 — Security",
+    q: "DNS *amplification* attacks rely on:",
+    options: [
+      "TLS misconfiguration on the resolver.",
+      "Spoofing the victim's IP as the source in small DNS queries to open resolvers, which then send much larger responses to the victim — a bandwidth amplification factor.",
+      "Hijacking BGP for the resolver's prefix.",
+      "Brute-forcing TCP sequence numbers." ],
+    answer: 1,
+    explain: "Source-IP spoofing + a recursive resolver that returns large responses (e.g., DNSSEC, ANY queries) means a small attacker pipe creates a large victim flood. BCP 38 and rate-limiting help." },
+  { topic: "W8 — Security",
+    q: "The TLS *handshake* in TLS 1.3 achieves:",
+    options: [
+      "Zero round trips always.",
+      "Authenticated key agreement in 1-RTT (and 0-RTT for resumption), negotiating cipher suite and deriving session keys via (EC)DHE for forward secrecy.",
+      "Plaintext-only fallback for legacy clients.",
+      "No certificate verification." ],
+    answer: 1,
+    explain: "TLS 1.3 streamlines to 1-RTT, mandates ephemeral DH for forward secrecy, and removes many legacy weak ciphers. 0-RTT data is possible on resumption with replay caveats." },
+  { topic: "W8 — Security",
+    q: "Why is *forward secrecy* (e.g., from ephemeral Diffie-Hellman) valuable?",
+    options: [
+      "It makes the handshake shorter.",
+      "Compromise of the server's long-term private key later does not let an attacker decrypt previously recorded sessions, because session keys were derived from ephemeral values.",
+      "It eliminates the need for certificates.",
+      "It is required by IPv6." ],
+    answer: 1,
+    explain: "With (EC)DHE, even if the server's RSA/ECDSA key leaks tomorrow, recorded TLS sessions from today remain confidential — the ephemeral DH secrets are gone." },
+
+  // ── Week 9: Advanced / Beyond ───────────────────────────────────────
+  { topic: "W9 — Advanced",
+    q: "*NAT* (Network Address Translation) was introduced primarily to:",
+    options: [
+      "Improve TCP throughput.",
+      "Let many hosts share one public IPv4 address by rewriting addresses (and ports) at the boundary — mitigating IPv4 exhaustion.",
+      "Provide end-to-end encryption.",
+      "Replace DNS." ],
+    answer: 1,
+    explain: "A typical NAPT box maps internal (private IP, port) ↔ (public IP, port). NAT breaks the end-to-end principle and complicates inbound connections (hence STUN/TURN/ICE)." },
+  { topic: "W9 — Advanced",
+    q: "Compared to IPv4, IPv6:",
+    options: [
+      "Has 128-bit addresses, a simpler fixed header, no header checksum, and stateless address autoconfiguration via SLAAC.",
+      "Uses 64-bit addresses with mandatory checksums.",
+      "Eliminates ARP by adding broadcast back.",
+      "Replaces TCP." ],
+    answer: 0,
+    explain: "IPv6 expands address space to 128 bits, removes the IPv4 header checksum (relying on link/transport), and uses NDP/SLAAC instead of ARP/DHCP for basic config." },
+  { topic: "W9 — Advanced",
+    q: "An SDN (Software-Defined Networking) controller, in OpenFlow's model, typically:",
+    options: [
+      "Replaces TCP at the host.",
+      "Programs forwarding tables in switches centrally via a southbound API, decoupling control plane from data plane.",
+      "Runs only on Wi-Fi APs.",
+      "Implements BGP at the application layer." ],
+    answer: 1,
+    explain: "SDN moves control-plane decisions to a logically central controller; OpenFlow is one southbound protocol used to install flow rules into switch data planes." },
+  { topic: "W9 — Advanced",
+    q: "QUIC's main advantages over TCP+TLS+HTTP/2 include:",
+    options: [
+      "Higher MTU only.",
+      "User-space evolution, faster handshake (1-RTT or 0-RTT), no TCP-level HOL blocking across streams, and connection migration across IP changes via connection IDs.",
+      "Removing encryption.",
+      "Lower MAC frame overhead." ],
+    answer: 1,
+    explain: "QUIC over UDP integrates crypto + transport; each stream is independently retransmitted; connection IDs decouple sessions from 4-tuples (useful on mobile NAT rebinding)." },
+  { topic: "W9 — Advanced",
+    q: "What is the *fate-sharing* design principle (Clark)?",
+    options: [
+      "Hosts and the network share blame for losses.",
+      "Per-connection state should live only in the endpoints, so it survives only as long as the endpoints — routers can fail without losing connection state.",
+      "Hosts must replicate state to neighbors.",
+      "Routers must store TCP state to enable retransmission." ],
+    answer: 1,
+    explain: "Fate-sharing motivates keeping TCP state on the endpoints (not routers): if a router crashes, your connection survives. If your endpoint dies, the connection's gone — which is acceptable." },
+
+  // ── Labs / Implementation ──────────────────────────────────────────
+  { topic: "Labs / Implementation",
+    q: "Lab 0's *ByteStream* is essentially:",
+    options: [
+      "A TCP socket wrapper",
+      "An in-memory bounded FIFO of bytes with writer and reader interfaces, capacity, EOF, and bytes-pushed/popped counters.",
+      "A linked list of IP datagrams",
+      "A DNS cache" ],
+    answer: 1,
+    explain: "It's the producer/consumer byte buffer underlying both the sender (outgoing stream) and receiver (incoming stream) of your TCP implementation." },
+  { topic: "Labs / Implementation",
+    q: "Lab 1's *StreamReassembler* must handle:",
+    options: [
+      "Only in-order, non-overlapping pushes.",
+      "Out-of-order, possibly overlapping substring fragments — store them until contiguous from the next expected index, then write to the ByteStream.",
+      "Encryption of segments.",
+      "BGP route updates." ],
+    answer: 1,
+    explain: "Substrings can arrive in any order and overlap. The reassembler holds unassembled bytes (subject to capacity) and writes contiguous bytes from the next expected stream index to the ByteStream." },
+  { topic: "Labs / Implementation",
+    q: "In the CS 144 sender (Lab 3), when does it retransmit the earliest outstanding segment?",
+    options: [
+      "Whenever a duplicate ACK arrives.",
+      "When the retransmission timer expires; the timer is restarted, RTO is doubled if window is non-zero, and consecutive-retransmission counter increments.",
+      "Never — only the receiver retransmits.",
+      "On every tick of the clock." ],
+    answer: 1,
+    explain: "Lab 3's TCPSender runs a single retransmission timer for the earliest unacked segment. Timeouts cause retransmit + RTO backoff; on a fresh ACK, RTO resets to the initial value." },
+  { topic: "Labs / Implementation",
+    q: "The CS 144 receiver (Lab 2) sets the ACK number to:",
+    options: [
+      "The largest sequence number ever seen.",
+      "The next expected absolute sequence number (the reassembler's first unassembled index, converted to a sequence number, plus SYN/FIN accounting).",
+      "Zero until FIN.",
+      "A random value." ],
+    answer: 1,
+    explain: "ackno = wrap(first_unassembled_index, ISN) [+1 if FIN was reassembled and stream is at EOF]. SYN and FIN each occupy 1 sequence number." },
+  { topic: "Labs / Implementation",
+    q: "The 32-bit absolute sequence numbers in lab code differ from on-the-wire sequence numbers because:",
+    options: [
+      "Wire sequence numbers wrap modulo 2³² and are offset by a random ISN; absolute seqnos are unwrapped 64-bit counters starting at SYN.",
+      "They are encrypted.",
+      "They count packets, not bytes.",
+      "They reset on every retransmission." ],
+    answer: 0,
+    explain: "Wire seqnos are 32-bit wrapping; the lab uses 64-bit absolute seqnos (and a `wrap`/`unwrap` pair anchored at a checkpoint) so the reassembler can index a long stream safely." },
+  { topic: "Labs / Implementation",
+    q: "The router lab (checkpoint 7) implements:",
+    options: [
+      "An OSPF speaker that floods LSAs.",
+      "A longest-prefix-match forwarding table mapping IPv4 prefixes to next-hops; on packet arrival, decrement TTL, drop if 0, otherwise look up and forward.",
+      "A BGP daemon.",
+      "A TLS terminator." ],
+    answer: 1,
+    explain: "The router maintains a routing table of (prefix, length, next-hop, interface) and does LPM. It also handles TTL expiry and ARP for resolving next-hop MACs (often via a NetworkInterface helper)." }
+];
+
+// ── State ──
+let quizState = {
+  filter: 'ALL',
+  order: [],
+  cursor: 0,
+  answers: {}, // idx -> selectedOptionIndex
+  built: false
+};
+
+function quizTopics() {
+  const set = new Set(quizQuestions.map(q => q.topic));
+  return ['ALL', ...Array.from(set)];
+}
+
+function quizPool() {
+  return quizState.order
+    .map(i => ({ i, q: quizQuestions[i] }))
+    .filter(x => quizState.filter === 'ALL' || x.q.topic === quizState.filter);
+}
+
+function buildQuiz() {
+  const root = document.getElementById('quiz-container');
+  // initial random order
+  quizState.order = quizQuestions.map((_, i) => i);
+  shuffleArr(quizState.order);
+  root.innerHTML = `
+    <div class="quiz-wrap">
+      <div class="quiz-header">
+        <div>
+          <h2>🎯 Course Review Quiz</h2>
+          <div class="quiz-sub">${quizQuestions.length} questions across ${quizTopics().length - 1} topics — pick a topic or take it all.</div>
+        </div>
+        <div class="quiz-stats" id="quiz-stats"></div>
+      </div>
+      <div class="quiz-filters" id="quiz-filters"></div>
+      <div class="quiz-actions">
+        <button class="btn" onclick="quizShuffle()">🔀 Shuffle</button>
+        <button class="btn" onclick="quizResetAnswers()">↺ Reset Answers</button>
+        <button class="btn" onclick="quizJumpFirstUnanswered()">⏭ Next Unanswered</button>
+        <button class="btn" onclick="quizShowSummary()">📊 Summary</button>
+      </div>
+      <div class="quiz-progress"><div id="quiz-progress-bar" style="width:0%"></div></div>
+      <div id="quiz-body"></div>
+    </div>
+  `;
+  renderQuizFilters();
+  renderQuizStats();
+  renderQuizQuestion();
+  quizState.built = true;
+}
+
+function shuffleArr(a) {
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+}
+
+function renderQuizFilters() {
+  const el = document.getElementById('quiz-filters');
+  el.innerHTML = quizTopics().map(t => {
+    const count = t === 'ALL' ? quizQuestions.length : quizQuestions.filter(q => q.topic === t).length;
+    const cls = (t === quizState.filter) ? 'active' : '';
+    const label = t === 'ALL' ? `All (${count})` : `${t} (${count})`;
+    return `<button class="quiz-chip ${cls}" onclick="quizSetFilter(${JSON.stringify(t).replace(/"/g,'&quot;')})">${label}</button>`;
+  }).join('');
+}
+
+function quizSetFilter(topic) {
+  quizState.filter = topic;
+  quizState.cursor = 0;
+  renderQuizFilters();
+  renderQuizStats();
+  renderQuizQuestion();
+}
+
+function renderQuizStats() {
+  const pool = quizPool();
+  const answered = pool.filter(x => quizState.answers[x.i] !== undefined);
+  const correct = answered.filter(x => quizState.answers[x.i] === x.q.answer).length;
+  const wrong = answered.length - correct;
+  const el = document.getElementById('quiz-stats');
+  if (!el) return;
+  el.innerHTML = `
+    <div class="quiz-stat"><b>${pool.length}</b>Questions</div>
+    <div class="quiz-stat ok"><b>${correct}</b>Correct</div>
+    <div class="quiz-stat bad"><b>${wrong}</b>Wrong</div>
+    <div class="quiz-stat"><b>${answered.length}/${pool.length}</b>Done</div>
+  `;
+  const pct = pool.length ? Math.round(100 * answered.length / pool.length) : 0;
+  const bar = document.getElementById('quiz-progress-bar');
+  if (bar) bar.style.width = pct + '%';
+}
+
+function renderQuizQuestion() {
+  const pool = quizPool();
+  const body = document.getElementById('quiz-body');
+  if (!pool.length) {
+    body.innerHTML = `<div class="quiz-empty">No questions for this filter.</div>`;
+    return;
+  }
+  if (quizState.cursor >= pool.length) quizState.cursor = pool.length - 1;
+  if (quizState.cursor < 0) quizState.cursor = 0;
+  const cur = pool[quizState.cursor];
+  const q = cur.q;
+  const selected = quizState.answers[cur.i];
+  const answered = selected !== undefined;
+  const optsHtml = q.options.map((opt, i) => {
+    let cls = '';
+    if (answered) {
+      if (i === q.answer) cls = 'correct';
+      else if (i === selected) cls = 'wrong';
+      cls += ' disabled';
+    }
+    const letter = String.fromCharCode(65 + i);
+    return `<button class="quiz-opt ${cls}" ${answered ? 'disabled' : ''} onclick="quizPick(${cur.i}, ${i})">
+      <span class="opt-letter">${letter}</span><span>${escapeHtml(opt)}</span>
+    </button>`;
+  }).join('');
+  body.innerHTML = `
+    <div class="quiz-card">
+      <div class="qc-meta"><span>${escapeHtml(q.topic)}</span><span class="qc-num">${quizState.cursor + 1} / ${pool.length}</span></div>
+      <div class="qc-q">${escapeHtml(q.q)}</div>
+      <div class="quiz-options">${optsHtml}</div>
+      ${answered ? `<div class="quiz-explain"><b>${selected === q.answer ? '✓ Correct.' : '✗ Not quite.'}</b> ${escapeHtml(q.explain)}</div>` : ''}
+      <div class="quiz-nav">
+        <button class="btn" ${quizState.cursor === 0 ? 'disabled' : ''} onclick="quizPrev()">← Previous</button>
+        <button class="btn primary" ${quizState.cursor === pool.length - 1 ? 'disabled' : ''} onclick="quizNext()">Next →</button>
+      </div>
+    </div>
+  `;
+  renderQuizStats();
+}
+
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+function quizPick(idx, opt) {
+  if (quizState.answers[idx] !== undefined) return;
+  quizState.answers[idx] = opt;
+  renderQuizQuestion();
+}
+
+function quizNext() {
+  const pool = quizPool();
+  if (quizState.cursor < pool.length - 1) { quizState.cursor++; renderQuizQuestion(); }
+}
+function quizPrev() {
+  if (quizState.cursor > 0) { quizState.cursor--; renderQuizQuestion(); }
+}
+function quizShuffle() {
+  shuffleArr(quizState.order);
+  quizState.cursor = 0;
+  renderQuizQuestion();
+}
+function quizResetAnswers() {
+  if (!confirm('Reset all answers in this quiz?')) return;
+  quizState.answers = {};
+  renderQuizQuestion();
+}
+function quizJumpFirstUnanswered() {
+  const pool = quizPool();
+  const next = pool.findIndex(x => quizState.answers[x.i] === undefined);
+  if (next >= 0) { quizState.cursor = next; renderQuizQuestion(); }
+}
+function quizShowSummary() {
+  const pool = quizPool();
+  const answered = pool.filter(x => quizState.answers[x.i] !== undefined);
+  const correct = answered.filter(x => quizState.answers[x.i] === x.q.answer).length;
+  const pct = answered.length ? Math.round(100 * correct / answered.length) : 0;
+  // breakdown by topic
+  const topics = {};
+  pool.forEach(x => {
+    const t = x.q.topic;
+    if (!topics[t]) topics[t] = { total: 0, answered: 0, correct: 0 };
+    topics[t].total++;
+    if (quizState.answers[x.i] !== undefined) {
+      topics[t].answered++;
+      if (quizState.answers[x.i] === x.q.answer) topics[t].correct++;
+    }
+  });
+  const rows = Object.entries(topics).map(([t, s]) =>
+    `<div class="qs-row"><b>${escapeHtml(t)}</b>${s.correct}/${s.answered} correct · ${s.total} total</div>`
+  ).join('');
+  document.getElementById('quiz-body').innerHTML = `
+    <div class="quiz-summary">
+      <h3>Summary</h3>
+      <div class="qs-score">${correct} / ${answered.length || pool.length}</div>
+      <div class="qs-pct">${pct}% correct · ${answered.length} of ${pool.length} answered</div>
+      <div class="qs-breakdown">${rows}</div>
+      <div class="quiz-nav" style="justify-content:center">
+        <button class="btn primary" onclick="renderQuizQuestion()">Back to Questions</button>
+        <button class="btn" onclick="quizResetAnswers()">Reset Answers</button>
+      </div>
+    </div>
+  `;
+}
+
+// Hook into tab switching
+(function() {
+  const prev = switchTab;
+  switchTab = function(tab) {
+    prev(tab);
+    if (tab === 'quiz' && !quizState.built) buildQuiz();
+  };
+})();
+</script>
+<!-- END quiz -->
 <!-- BEGIN tooltip-pin (click pins, click outside closes) -->
 <style>
   #tooltip.pinned {
