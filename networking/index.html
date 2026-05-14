@@ -2550,7 +2550,7 @@ setTimeout(() => refreshAllBadges(), 600);
 const deepDives = [
   {
     id: 'layering',
-    num: 'Concept 1 of 6',
+    num: 'Concept 1 of 7',
     title: 'Protocol Layering & Encapsulation',
     desc: 'The mental model that structures everything — how layers abstract complexity and data flows down the stack.',
     color: '#58a6ff',
@@ -2737,7 +2737,7 @@ const deepDives = [
   },
   {
     id: 'tcp-reliable',
-    num: 'Concept 2 of 6',
+    num: 'Concept 2 of 7',
     title: 'TCP Reliable Delivery',
     desc: 'How TCP guarantees every byte arrives correctly and in order over an unreliable network.',
     color: '#f778ba',
@@ -2795,7 +2795,7 @@ const deepDives = [
   },
   {
     id: 'congestion',
-    num: 'Concept 3 of 6',
+    num: 'Concept 3 of 7',
     title: 'Congestion Control (AIMD)',
     desc: 'The algorithm that prevents the Internet from collapsing — Additive Increase, Multiplicative Decrease.',
     color: '#7ee787',
@@ -2851,7 +2851,7 @@ const deepDives = [
   },
   {
     id: 'routing',
-    num: 'Concept 4 of 6',
+    num: 'Concept 4 of 7',
     title: 'IP Routing & Forwarding',
     desc: 'How routers build tables and forward packets — the control plane vs. data plane distinction.',
     color: '#ffa657',
@@ -2908,7 +2908,7 @@ const deepDives = [
   },
   {
     id: 'dns',
-    num: 'Concept 5 of 6',
+    num: 'Concept 5 of 7',
     title: 'DNS — The Internet\'s Phone Book',
     desc: 'Hierarchical, distributed name resolution that turns human-readable names into IP addresses.',
     color: '#d2a8ff',
@@ -2977,7 +2977,7 @@ const deepDives = [
   },
   {
     id: 'endianness',
-    num: 'Concept 6 of 6',
+    num: 'Concept 6 of 7',
     title: 'Byte Order (Endianness) in Networks',
     desc: 'Why the order bytes are stored in memory matters when different machines talk over a network — and how network byte order solves it.',
     color: '#ff7b72',
@@ -3075,6 +3075,152 @@ const deepDives = [
       { title: 'Where It Bites You', text: 'Port numbers (16-bit), IP addresses (32-bit), TCP sequence/ack numbers (32-bit), packet lengths, DNS record fields, and checksum computations all require correct byte order. Struct packing and alignment add further complexity when casting between byte buffers and typed structs.' },
       { title: 'Bit Order vs. Byte Order', text: 'Endianness is about byte order, not bit order. Within each byte, bit 7 is always the MSB. Ethernet transmits the least significant bit of each byte first (bit-level little-endian), but this is handled by hardware — software only deals with byte-level endianness.' },
       { title: 'Debugging Tip', text: 'If a packet capture (Wireshark/tcpdump) shows header fields with nonsensical values — e.g., a window size of 14600 appearing as 0x1639 instead of 0x3916 — suspect a missing byte-order conversion. Wireshark automatically shows values in human-readable form, so compare raw hex bytes to expected values.' }
+    ]
+  },
+  {
+    id: 'tcp-fsm',
+    num: 'Concept 7 of 7',
+    title: 'TCP Connection Lifecycle (FSM)',
+    desc: 'Every state of the TCP finite state machine — from CLOSED through the 3-way handshake, data transfer, and the 4-way close (with TIME_WAIT, RST, and simultaneous-close edge cases).',
+    color: '#f778ba',
+    icon: '🔄',
+    svg: (w, h) => {
+      const pink = '#f778ba', green = '#7ee787', blue = '#58a6ff', amber = '#ffa657', purple = '#d2a8ff', grey = '#8b949e';
+      let s = `<svg viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg" style="background:#0d1117">`;
+      s += `<defs>`;
+      s += `<marker id="fsm-arr" viewBox="0 -4 8 8" refX="7" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,-4L8,0L0,4" fill="#8b949e"/></marker>`;
+      s += `<marker id="fsm-arr-p" viewBox="0 -4 8 8" refX="7" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,-4L8,0L0,4" fill="${pink}"/></marker>`;
+      s += `<marker id="fsm-arr-g" viewBox="0 -4 8 8" refX="7" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,-4L8,0L0,4" fill="${green}"/></marker>`;
+      s += `<marker id="fsm-arr-b" viewBox="0 -4 8 8" refX="7" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,-4L8,0L0,4" fill="${blue}"/></marker>`;
+      s += `<marker id="fsm-arr-a" viewBox="0 -4 8 8" refX="7" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,-4L8,0L0,4" fill="${amber}"/></marker>`;
+      s += `</defs>`;
+
+      // Title
+      s += `<text x="${w/2}" y="14" text-anchor="middle" fill="${pink}" font-size="10" font-weight="700" letter-spacing="1">TCP FINITE STATE MACHINE — RFC 9293</text>`;
+      s += `<line x1="20" y1="20" x2="${w-20}" y2="20" stroke="#30363d" stroke-width="0.5"/>`;
+
+      // Phase labels at top
+      s += `<text x="140" y="34" text-anchor="middle" fill="${grey}" font-size="7" font-weight="700" letter-spacing="1">PASSIVE / SERVER</text>`;
+      s += `<text x="${w/2}" y="34" text-anchor="middle" fill="${grey}" font-size="7" font-weight="700" letter-spacing="1">DATA TRANSFER</text>`;
+      s += `<text x="${w-140}" y="34" text-anchor="middle" fill="${grey}" font-size="7" font-weight="700" letter-spacing="1">ACTIVE / CLIENT</text>`;
+
+      // helper: state box
+      function st(x, y, name, sub, color, sw=110, sh=30) {
+        let o = `<rect x="${x}" y="${y}" width="${sw}" height="${sh}" rx="5" fill="${color}18" stroke="${color}" stroke-width="1.3"/>`;
+        o += `<text x="${x+sw/2}" y="${y+13}" text-anchor="middle" fill="${color}" font-size="9" font-weight="700" font-family="monospace">${name}</text>`;
+        if (sub) o += `<text x="${x+sw/2}" y="${y+24}" text-anchor="middle" fill="#c9d1d9" font-size="6.5">${sub}</text>`;
+        return o;
+      }
+      // helper: transition arrow + label
+      function tr(x1, y1, x2, y2, label, color='#8b949e', mid=null) {
+        const marker = color===pink?'fsm-arr-p':color===green?'fsm-arr-g':color===blue?'fsm-arr-b':color===amber?'fsm-arr-a':'fsm-arr';
+        let o = `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${color}" stroke-width="1" marker-end="url(#${marker})"/>`;
+        if (label) {
+          const mx = mid ? mid[0] : (x1+x2)/2;
+          const my = mid ? mid[1] : (y1+y2)/2;
+          o += `<rect x="${mx-label.length*2.4}" y="${my-5}" width="${label.length*4.8}" height="10" fill="#0d1117" stroke="${color}" stroke-width="0.4" rx="2"/>`;
+          o += `<text x="${mx}" y="${my+2.5}" text-anchor="middle" fill="${color}" font-size="6.5" font-family="monospace">${label}</text>`;
+        }
+        return o;
+      }
+
+      // === Layout ===
+      // CLOSED at top center
+      s += st(w/2-55, 44, 'CLOSED', 'no TCB', grey);
+
+      // Server side: LISTEN, SYN_RCVD
+      s += st(85, 90, 'LISTEN', 'listen()', green);
+      s += st(85, 145, 'SYN_RCVD', 'got SYN, sent SYN-ACK', green);
+
+      // Client side: SYN_SENT
+      s += st(w-195, 90, 'SYN_SENT', 'connect(), sent SYN', blue);
+
+      // ESTABLISHED in middle
+      s += st(w/2-65, 145, 'ESTABLISHED', '3-way handshake done', pink, 130, 30);
+
+      // Close phase — left passive, right active
+      s += st(85, 205, 'CLOSE_WAIT', 'peer FIN; app owes close()', amber);
+      s += st(w-505, 205, 'FIN_WAIT_1', 'sent FIN', purple);
+      s += st(w-360, 205, 'CLOSING', 'simultaneous close', purple);
+      s += st(w-195, 205, 'FIN_WAIT_2', 'FIN ACKed', purple);
+
+      s += st(85, 260, 'LAST_ACK', 'sent own FIN', amber);
+      s += st(w-360, 260, 'TIME_WAIT', '2·MSL ≈ 60 s', pink);
+      s += st(w-195, 260, 'CLOSED', 'TCB freed', grey);
+
+      // === Transitions: Open phase ===
+      // CLOSED → LISTEN (server passive open)
+      s += tr(w/2-55, 59, 144, 90, 'listen()', green, [240, 70]);
+      // CLOSED → SYN_SENT (client active open)
+      s += tr(w/2+55, 59, w-140, 90, 'connect()/SYN', blue, [w-260, 70]);
+      // LISTEN → SYN_RCVD (got SYN)
+      s += tr(140, 120, 140, 145, '', green);
+      s += `<text x="148" y="135" fill="${green}" font-size="6.5" font-family="monospace">rcv SYN / SYN-ACK</text>`;
+      // SYN_RCVD → ESTABLISHED (final ACK)
+      s += tr(195, 160, w/2-65, 160, 'rcv ACK', green, [(195+w/2-65)/2, 154]);
+      // SYN_SENT → ESTABLISHED (got SYN-ACK, send ACK)
+      s += tr(w-140, 120, w/2+10, 145, 'rcv SYN-ACK / ACK', blue, [w-310, 132]);
+
+      // === Transitions: Close phase ===
+      // ESTABLISHED → FIN_WAIT_1 (active close)
+      s += tr(w/2+30, 175, w-455, 205, 'close() / FIN', purple, [w-410, 188]);
+      // ESTABLISHED → CLOSE_WAIT (passive: rcv FIN)
+      s += tr(w/2-65, 175, 195, 205, 'rcv FIN / ACK', amber, [260, 188]);
+      // FIN_WAIT_1 → FIN_WAIT_2 (got ACK of FIN)
+      s += tr(w-395, 220, w-195, 220, 'rcv ACK', purple);
+      // FIN_WAIT_1 → CLOSING (simultaneous close: rcv FIN before ACK)
+      s += `<path d="M ${w-410} 235 Q ${w-385} 250 ${w-360} 235" fill="none" stroke="${purple}" stroke-width="1" marker-end="url(#fsm-arr-b)" opacity="0.7"/>`;
+      s += `<text x="${w-385}" y="252" text-anchor="middle" fill="${purple}" font-size="6" font-family="monospace">rcv FIN</text>`;
+      // FIN_WAIT_2 → TIME_WAIT (rcv peer FIN)
+      s += tr(w-140, 235, w-305, 260, 'rcv FIN / ACK', pink, [w-225, 252]);
+      // CLOSING → TIME_WAIT (got ACK)
+      s += tr(w-305, 235, w-305, 260, '', pink);
+      s += `<text x="${w-298}" y="251" fill="${pink}" font-size="6.5" font-family="monospace">rcv ACK</text>`;
+      // CLOSE_WAIT → LAST_ACK (app close())
+      s += tr(140, 235, 140, 260, '', amber);
+      s += `<text x="148" y="251" fill="${amber}" font-size="6.5" font-family="monospace">close() / FIN</text>`;
+      // LAST_ACK → CLOSED (rcv final ACK) — loop back up to top CLOSED
+      s += `<path d="M 85 275 Q 30 275 30 60 Q 30 50 ${w/2-60} 50" fill="none" stroke="${grey}" stroke-width="1" marker-end="url(#fsm-arr)" stroke-dasharray="3 2"/>`;
+      s += `<text x="38" y="170" fill="${grey}" font-size="6.5" font-family="monospace" transform="rotate(-90 38 170)">rcv ACK</text>`;
+      // TIME_WAIT → CLOSED (2·MSL elapsed)
+      s += tr(w-250, 275, w-195, 275, '2·MSL', pink);
+
+      // RST callout
+      s += `<rect x="${w/2-90}" y="${h-32}" width="180" height="22" rx="4" fill="#da363318" stroke="#da3633" stroke-width="0.8"/>`;
+      s += `<text x="${w/2}" y="${h-19}" text-anchor="middle" fill="#da3633" font-size="7.5" font-weight="700" font-family="monospace">RST — any state → CLOSED (abortive)</text>`;
+      s += `<text x="${w/2}" y="${h-11}" text-anchor="middle" fill="#8b949e" font-size="6">no TIME_WAIT; unread data discarded</text>`;
+
+      // Legend
+      s += `<g transform="translate(${w-180}, ${h-32})">`;
+      s += `<rect width="170" height="22" rx="4" fill="#161b22" stroke="#30363d" stroke-width="0.5"/>`;
+      s += `<circle cx="10" cy="8" r="3" fill="${green}"/><text x="18" y="11" fill="#c9d1d9" font-size="6">passive</text>`;
+      s += `<circle cx="55" cy="8" r="3" fill="${blue}"/><text x="63" y="11" fill="#c9d1d9" font-size="6">active</text>`;
+      s += `<circle cx="95" cy="8" r="3" fill="${pink}"/><text x="103" y="11" fill="#c9d1d9" font-size="6">conn</text>`;
+      s += `<circle cx="130" cy="8" r="3" fill="${amber}"/><text x="138" y="11" fill="#c9d1d9" font-size="6">close</text>`;
+      s += `<text x="6" y="20" fill="${grey}" font-size="5.5" font-style="italic">handshake = 1 RTT · graceful close = 1.5 RTT + 2·MSL</text>`;
+      s += `</g>`;
+
+      s += `</svg>`;
+      return s;
+    },
+    sections: [
+      { title: '🔑 Key Insight', text: 'A TCP connection is not a single handshake — it is a finite-state machine that both endpoints traverse independently, often in parallel and not always symmetrically. RFC 9293 defines 11 states (CLOSED, LISTEN, SYN_SENT, SYN_RECEIVED, ESTABLISHED, FIN_WAIT_1, FIN_WAIT_2, CLOSE_WAIT, CLOSING, LAST_ACK, TIME_WAIT). Every transition is driven by either a local API event (connect/listen/close) or an incoming segment flag (SYN, ACK, FIN, RST). Understanding this state diagram is the single most useful mental model for diagnosing connection-level bugs — half-open sockets, stuck CLOSE_WAITs, TIME_WAIT exhaustion, RST storms, accept-queue overflows all map directly to states.' },
+      { title: '🤝 Establishment (3-way handshake)', text: 'Client: CLOSED → connect() picks an ISN x (randomized per RFC 6528) and sends SYN(seq=x), entering SYN_SENT. Server: CLOSED → listen() → LISTEN; on receipt of SYN it picks ISN y, sends SYN-ACK(seq=y, ack=x+1), entering SYN_RECEIVED. Client receives SYN-ACK, replies ACK(seq=x+1, ack=y+1), and transitions to ESTABLISHED. Server receives the ACK and also transitions to ESTABLISHED — the connection now moves from the SYN queue to the accept queue, where accept() dequeues it. Total cost: 1 RTT before any application data can flow. TCP Fast Open (RFC 7413) shortcuts this by piggy-backing data on the SYN.' },
+      { title: '👋 Termination (4-way close)', text: 'TCP is full-duplex, so each direction closes independently. Active closer calls close() → sends FIN(seq=u), enters FIN_WAIT_1. Peer ACKs the FIN → enters CLOSE_WAIT and signals EOF to its application (read() returns 0); active closer moves FIN_WAIT_1 → FIN_WAIT_2. When the peer\'s app eventually calls close(), it sends its own FIN(seq=v) and enters LAST_ACK. Active closer ACKs → enters TIME_WAIT, where it lingers for 2·MSL (≈60 s on Linux) before reaching CLOSED. The peer reaches CLOSED on receipt of the final ACK. Cost: 1.5 RTTs + 2·MSL wait on the active closer.' },
+      { title: '⏳ Why TIME_WAIT (and how to live with it)', text: 'TIME_WAIT exists for two reasons. (1) Reliable close: if the final ACK is lost, the peer retransmits its FIN — we must still be around to re-ACK it, otherwise the peer reaches RST. (2) Tuple safety: delayed duplicates from this 4-tuple must expire on the network before the tuple can be reused for a new incarnation, preventing cross-connection data confusion. On busy outbound clients (load testers, proxies) TIME_WAIT can exhaust the ephemeral port range. Safe mitigations on Linux: connection pooling, widening net.ipv4.ip_local_port_range, and net.ipv4.tcp_tw_reuse=1 (relies on RFC 7323 timestamps). Do not enable tcp_tw_recycle — it was broken with NAT and is removed in modern kernels.' },
+      { title: '🚨 RST — the abortive escape hatch', text: 'A peer can bypass the FIN dance entirely by sending RST (reset). RST is generated by: setting SO_LINGER with timeout 0 and calling close(); receiving a segment for a non-existent TCB (e.g., the peer crashed and rebooted); receiving data on a half-closed socket where the app already exited; or stack-level half-open detection. RST tears down both endpoints immediately — no TIME_WAIT, unread data is discarded, the app gets ECONNRESET. RFC 5961 adds blind-reset mitigations (challenge-ACK) so an off-path attacker can\'t spoof a RST without knowing the sequence number window.' },
+      { title: '🪤 Edge cases worth knowing', text: 'Simultaneous open: both peers call connect() at once and exchange SYNs without a LISTEN side; both traverse SYN_SENT → SYN_RECEIVED → ESTABLISHED. Simultaneous close: both call close() at once; from FIN_WAIT_1, receiving a FIN (rather than the ACK of one\'s own FIN) transitions to CLOSING, which moves to TIME_WAIT once the ACK arrives. Half-close: shutdown(SHUT_WR) sends FIN but keeps the read half open — useful for HTTP/1.0 request-then-stream-response patterns. Leaked CLOSE_WAIT: if an app never calls close() after the peer sent FIN, the socket sits in CLOSE_WAIT indefinitely — a classic application bug visible in `ss -tn state close-wait`.' },
+      { title: '🔧 The CS 144 Minnow Connection', text: 'In CS 144 Lab 4, you implement TCPConnection — the state machine that wires together your TCPSender and TCPReceiver. The lab tests drive your implementation through every legal transition: SYN exchanges, retransmissions, FIN handling, lingering after the last segment (CS 144\'s analogue of TIME_WAIT), and clean shutdown. The grading harness is essentially a state-diagram conformance test — segments arrive in adversarial orders and your stack must respond correctly. Internalizing this FSM is the single biggest accelerator for the lab.' }
+    ],
+    keypoints: [
+      { title: '11 States, RFC 9293', text: 'CLOSED, LISTEN, SYN_SENT, SYN_RECEIVED, ESTABLISHED, FIN_WAIT_1, FIN_WAIT_2, CLOSE_WAIT, CLOSING, LAST_ACK, TIME_WAIT. Each peer traverses its own copy independently; the state diagram is not symmetric between the two peers of a single connection.' },
+      { title: 'Establishment Cost', text: '3-way handshake = 1 RTT before data can flow. RFC 6528 randomizes the ISN to thwart blind off-path injection. RFC 7413 (TCP Fast Open) carries data inside the SYN using a cryptographic cookie.' },
+      { title: 'Half-Open Detection', text: 'If a peer reboots without closing, its kernel responds to your next segment with RST (no matching TCB). TCP keepalive (SO_KEEPALIVE, ~2 h default on Linux) probes idle connections to surface dead peers.' },
+      { title: 'Accept Queue Mechanics', text: 'On the server, a connection moves from the SYN queue (state SYN_RECEIVED) to the accept queue once the final ACK arrives. accept() dequeues from the accept queue. Tune with net.core.somaxconn and the listen() backlog argument; SYN cookies (net.ipv4.tcp_syncookies, RFC 4987) prevent SYN-flood DoS.' },
+      { title: 'CLOSE_WAIT = App Bug', text: 'A socket in CLOSE_WAIT means your app received EOF but never called close(). The kernel can\'t complete the FIN exchange until you do. Long-lived CLOSE_WAIT counts in `ss -tn state close-wait` are nearly always a missing close() in error paths.' },
+      { title: 'TIME_WAIT Math', text: 'Linux hardcodes TIME_WAIT to ~60 s (2·MSL with MSL=30 s; cannot be changed without recompile). On the active closer only. Exhausts ephemeral ports for outbound bursts at >~470 conn/s to the same (dst-IP, dst-port). Cure: pool, widen ephemerals, tcp_tw_reuse.' },
+      { title: 'Observability Cheatsheet', text: '`ss -tan` summarizes per-state counts; `ss -tin` shows per-connection cwnd/rtt/rwnd/retrans; `tcpdump -i any \'tcp[tcpflags] & (tcp-syn|tcp-fin|tcp-rst) != 0\'` captures the interesting transitions; `nstat -az TcpExt*` exposes per-state counters and abort/retransmit causes.' },
+      { title: 'RFC Reading Path', text: 'RFC 9293 (current TCP spec, supersedes 793/1122/etc.) §3.3.2 has the state diagram; §3.5 covers establishment; §3.6 covers close + TIME_WAIT. RFC 5961 covers RST/SYN robustness. RFC 7414 is the comprehensive TCP roadmap.' }
     ]
   }
 ];
@@ -3782,31 +3928,6 @@ const useCases = [
       { title: "Delivery to Mailbox (MDA)", component: "Mail Delivery Agent", detail: "The message passes all checks and the MDA delivers it to the recipient's mailbox. This may involve Sieve filters (user-defined rules), sorting into folders, flagging as important. The message is stored in the mail store (Maildir, database, or cloud storage). Server-side indexing enables search.", proto: "LMTP / Sieve Filters → Mailbox Store", refs: [{ label: "RFC 5228 — Sieve", url: "https://tools.ietf.org/html/rfc5228" }, { label: "RFC 2033 — LMTP", url: "https://tools.ietf.org/html/rfc2033" }] },
       { title: "Recipient retrieves email", component: "Mail User Agent (MUA) → IMAP/POP", detail: "The recipient's email client syncs via IMAP (port 993, TLS). IMAP allows server-side folders, flags, search — the definitive copy stays on the server. POP3 (port 995) downloads and optionally deletes from server. Webmail accesses the mailbox via internal API. Push notifications alert the user on mobile.", proto: "IMAP4 (port 993 TLS) / POP3 / Push", refs: [{ label: "RFC 9051 — IMAP4rev2", url: "https://tools.ietf.org/html/rfc9051" }, { label: "RFC 1939 — POP3", url: "https://tools.ietf.org/html/rfc1939" }], code: "# Test IMAP connection\nopenssl s_client -connect imap.gmail.com:993\n# Then type: a1 LOGIN user@gmail.com password / a2 LIST \"\" \"*\"" },
       { title: "Bounce & DSN (if delivery fails)", component: "MTA → Original Sender", detail: "If delivery fails permanently (user doesn't exist → 550), the receiving MTA sends a bounce (DSN — Delivery Status Notification) back to the envelope sender. Temporary failures (mailbox full → 452) cause retries with exponential backoff. After max retries (typically 4-5 days), a final bounce is sent.", proto: "SMTP DSN (RFC 3461) / Bounce Message", refs: [{ label: "RFC 3461 — SMTP DSN", url: "https://tools.ietf.org/html/rfc3461" }, { label: "RFC 3464 — DSN Format", url: "https://tools.ietf.org/html/rfc3464" }] }
-    ]
-  },
-  {
-    id: "tcp-fsm",
-    title: "TCP Connection Lifecycle (FSM)",
-    desc: "A walk through every state of the TCP finite state machine — from CLOSED through the 3-way handshake, data transfer, and the 4-way close (including TIME_WAIT).",
-    icon: "🔄",
-    color: "#f778ba",
-    steps: [
-      { title: "State: CLOSED (both peers)", component: "TCP State Machine", detail: "The initial (and final) state. No connection exists, no resources are allocated in the kernel's TCB (Transmission Control Block). A transition out of CLOSED happens on an application call: passive open (listen()) moves the server to LISTEN; active open (connect()) moves the client to SYN_SENT.", proto: "No segments on the wire", refs: [{ label: "RFC 9293 §3.3.2 — State Machine", url: "https://tools.ietf.org/html/rfc9293#section-3.3.2" }, { label: "RFC 793 — Original TCP", url: "https://tools.ietf.org/html/rfc793" }, { label: "Wikipedia: TCP state diagram", url: "https://en.wikipedia.org/wiki/Transmission_Control_Protocol#Protocol_operation" }] },
-      { title: "State: LISTEN (server passive open)", component: "Server OS Kernel", detail: "The server has called socket() → bind() → listen(). The kernel creates a listening TCB and a SYN/accept queue for the (local-IP, local-port) pair. It blocks until a SYN arrives. No connection state exists for any client yet; only the listening endpoint exists. ss reports state LISTEN.", proto: "Awaiting incoming SYN", refs: [{ label: "RFC 9293 §3.10.2 — OPEN Call", url: "https://tools.ietf.org/html/rfc9293#section-3.10.2" }, { label: "man 2 listen", url: "https://man7.org/linux/man-pages/man2/listen.2.html" }], code: "# See sockets in LISTEN state\nss -tln\n# Inspect accept-queue depth (Recv-Q on listening sockets)\nss -tlnp state listening" },
-      { title: "State: SYN_SENT (client active open)", component: "Client OS Kernel", detail: "Application calls connect(). The kernel picks an ISN (Initial Sequence Number, randomized per RFC 6528), allocates a TCB, and emits SYN(seq=x). It starts the SYN retransmission timer (typically RTO ≈ 1 s, doubling on each retry up to ~tcp_syn_retries times). The socket is in SYN_SENT until a SYN-ACK arrives.", proto: "→ SYN (seq=x)", refs: [{ label: "RFC 9293 §3.5 — Connection Establishment", url: "https://tools.ietf.org/html/rfc9293#section-3.5" }, { label: "RFC 6528 — ISN Generation", url: "https://tools.ietf.org/html/rfc6528" }], code: "# Watch sockets in SYN_SENT\nss -t state syn-sent\n# Capture only SYN segments\ntcpdump -i any 'tcp[tcpflags] == tcp-syn'" },
-      { title: "State: SYN_RECEIVED (server)", component: "Server OS Kernel", detail: "The server receives SYN(seq=x). It picks its own ISN y, builds a mini-TCB (or a SYN cookie under load — RFC 4987 mitigates SYN-flood DoS), and replies with SYN-ACK(seq=y, ack=x+1). The connection sits in SYN_RECEIVED in the half-open / SYN queue, awaiting the final ACK.", proto: "← SYN-ACK (seq=y, ack=x+1)", refs: [{ label: "RFC 9293 §3.5", url: "https://tools.ietf.org/html/rfc9293#section-3.5" }, { label: "RFC 4987 — SYN Flood Mitigations", url: "https://tools.ietf.org/html/rfc4987" }], code: "# Sockets in SYN-RECV (half-open accept queue)\nss -t state syn-recv\n# Toggle SYN cookies (Linux)\nsysctl net.ipv4.tcp_syncookies" },
-      { title: "State: ESTABLISHED (client)", component: "Client OS Kernel", detail: "Client receives SYN-ACK(seq=y, ack=x+1) — its SYN is now acknowledged. It transitions SYN_SENT → ESTABLISHED and sends ACK(seq=x+1, ack=y+1). At this point the client may already piggyback application data on the ACK (this is what TCP Fast Open / RFC 7413 generalizes to send data inside the SYN itself).", proto: "→ ACK (seq=x+1, ack=y+1)", refs: [{ label: "RFC 9293 §3.5", url: "https://tools.ietf.org/html/rfc9293#section-3.5" }, { label: "RFC 7413 — TCP Fast Open", url: "https://tools.ietf.org/html/rfc7413" }] },
-      { title: "State: ESTABLISHED (server) — handshake complete", component: "Server OS Kernel", detail: "Server receives the final ACK, moves SYN_RECEIVED → ESTABLISHED, and the connection moves from the SYN queue to the accept queue, where the next accept() call dequeues it. Note: a simultaneous-open (both sides connect() at once) takes the SYN_SENT → SYN_RECEIVED → ESTABLISHED path on both peers, with no LISTEN side.", proto: "Three-way handshake complete (1 RTT)", refs: [{ label: "RFC 9293 §3.5", url: "https://tools.ietf.org/html/rfc9293#section-3.5" }], code: "# Capture all 3 handshake segments to a host\ntcpdump -i any -c 3 'tcp[tcpflags] & (tcp-syn|tcp-ack) != 0 and host 10.0.0.1'" },
-      { title: "ESTABLISHED — data transfer", component: "TCP State Machine (both peers)", detail: "Both sides exchange data segments. Sequence numbers cover bytes; the receiver returns cumulative ACKs (and SACK blocks per RFC 2018 for selective acknowledgment). Sliding window + congestion control (CUBIC, BBR) regulate in-flight bytes; the advertised rwnd provides flow control. Lost segments trigger fast retransmit (3 dup-ACKs) or RTO-based retransmission.", proto: "Data segments + cumulative/SACK ACKs", refs: [{ label: "RFC 9293 §3.7 — Data Communication", url: "https://tools.ietf.org/html/rfc9293#section-3.7" }, { label: "RFC 2018 — SACK", url: "https://tools.ietf.org/html/rfc2018" }, { label: "RFC 5681 — Congestion Control", url: "https://tools.ietf.org/html/rfc5681" }], code: "# Live per-connection cwnd, rtt, rwnd, retrans\nss -tin\n# Watch retransmissions\nnstat -az TcpRetransSegs" },
-      { title: "State: FIN_WAIT_1 (active closer)", component: "Active Closer's Kernel", detail: "The application calls close() (or shutdown(SHUT_WR)). The kernel flushes the send queue and emits FIN(seq=u), transitioning ESTABLISHED → FIN_WAIT_1. The peer must ACK this FIN. Note that FIN only closes the sending direction — TCP connections are full-duplex and each side closes independently (\"half-close\").", proto: "→ FIN (seq=u)", refs: [{ label: "RFC 9293 §3.6 — Closing a Connection", url: "https://tools.ietf.org/html/rfc9293#section-3.6" }, { label: "man 2 shutdown", url: "https://man7.org/linux/man-pages/man2/shutdown.2.html" }], code: "# Sockets that have sent FIN, waiting for ACK\nss -t state fin-wait-1" },
-      { title: "State: CLOSE_WAIT (passive side)", component: "Passive Side's Kernel + App", detail: "The peer receives FIN, acknowledges it with ACK(ack=u+1), and transitions ESTABLISHED → CLOSE_WAIT. The kernel signals EOF to the application (read() returns 0). The connection sits in CLOSE_WAIT until the application calls close(); long-lived CLOSE_WAIT sockets are a classic application bug (forgotten close()).", proto: "← ACK (ack=u+1); app still owes a FIN", refs: [{ label: "RFC 9293 §3.6", url: "https://tools.ietf.org/html/rfc9293#section-3.6" }], code: "# Hunt for leaked CLOSE_WAIT sockets per process\nss -tpn state close-wait" },
-      { title: "State: FIN_WAIT_2 (active closer)", component: "Active Closer's Kernel", detail: "Active closer receives the ACK of its FIN and moves FIN_WAIT_1 → FIN_WAIT_2. It can still receive data from the peer (the peer's half is still open). Linux bounds the time spent here via net.ipv4.tcp_fin_timeout (default ~60 s) to prevent the kernel from holding the TCB forever if the peer never sends FIN.", proto: "Awaiting peer's FIN", refs: [{ label: "RFC 9293 §3.6", url: "https://tools.ietf.org/html/rfc9293#section-3.6" }], code: "ss -t state fin-wait-2\nsysctl net.ipv4.tcp_fin_timeout" },
-      { title: "State: LAST_ACK (passive side)", component: "Passive Side's Kernel", detail: "When the application on the passive side finally calls close(), the kernel sends its own FIN(seq=v) and transitions CLOSE_WAIT → LAST_ACK. It now waits for the final ACK from the active closer. If that ACK is lost, the kernel retransmits the FIN.", proto: "→ FIN (seq=v)", refs: [{ label: "RFC 9293 §3.6", url: "https://tools.ietf.org/html/rfc9293#section-3.6" }], code: "ss -t state last-ack" },
-      { title: "State: TIME_WAIT (active closer, 2·MSL)", component: "Active Closer's Kernel", detail: "Active closer receives the peer's FIN, sends the final ACK(ack=v+1), and enters TIME_WAIT. It stays there for 2·MSL (Maximum Segment Lifetime — typically 60 s on Linux, hardcoded; up to 240 s on some stacks). This serves two purposes: (a) if the final ACK is lost the peer will retransmit its FIN and we can re-ACK it; (b) any old duplicate segments from this 4-tuple must expire before the tuple can be reused, avoiding cross-incarnation confusion.", proto: "→ ACK (ack=v+1); Timer: 2·MSL", refs: [{ label: "RFC 9293 §3.6.1 — TIME-WAIT", url: "https://tools.ietf.org/html/rfc9293#section-3.6.1" }, { label: "RFC 6191 — Reducing TIME_WAIT", url: "https://tools.ietf.org/html/rfc6191" }], code: "# Count TIME_WAIT sockets (common on busy clients)\nss -t state time-wait | wc -l\n# Allow reuse of TIME_WAIT outgoing ports\nsysctl net.ipv4.tcp_tw_reuse" },
-      { title: "Simultaneous close: CLOSING → TIME_WAIT", component: "TCP State Machine", detail: "If both peers call close() at the same time, each sends a FIN before receiving the other's. From FIN_WAIT_1, receiving a FIN (rather than an ACK of one's own FIN) transitions to CLOSING. Once the ACK of one's own FIN arrives, CLOSING → TIME_WAIT, then CLOSED after 2·MSL. This is the symmetric counterpart to simultaneous open.", proto: "FIN crosses FIN; CLOSING is transient", refs: [{ label: "RFC 9293 §3.6 — Simultaneous Close", url: "https://tools.ietf.org/html/rfc9293#section-3.6" }], code: "ss -t state closing" },
-      { title: "State: CLOSED (both peers, again)", component: "TCP State Machine", detail: "Active closer's 2·MSL timer fires (TIME_WAIT → CLOSED); passive side received the final ACK (LAST_ACK → CLOSED). Both TCBs are freed and the 4-tuple (src-IP, src-port, dst-IP, dst-port) becomes available for reuse. A full graceful close costs 1.5 RTTs of segments plus the 2·MSL wait on the active closer.", proto: "TCB freed; 4-tuple reusable", refs: [{ label: "RFC 9293 §3.3.2 — State Diagram", url: "https://tools.ietf.org/html/rfc9293#section-3.3.2" }] },
-      { title: "RST — abortive close (any state)", component: "TCP State Machine", detail: "Instead of the graceful FIN exchange, a peer can send RST (reset) — triggered by SO_LINGER with timeout 0, by receiving data on a closed socket, by half-open detection, or by a stack rejecting a segment that doesn't match any TCB. RST immediately tears the connection down on both sides with no TIME_WAIT, and any unread data is discarded. tcpdump shows the R flag.", proto: "RST segment → immediate CLOSED", refs: [{ label: "RFC 9293 §3.5.3 — Reset Generation", url: "https://tools.ietf.org/html/rfc9293#section-3.5.3" }, { label: "RFC 5961 — Blind Reset Mitigations", url: "https://tools.ietf.org/html/rfc5961" }], code: "# Capture only RSTs\ntcpdump -i any 'tcp[tcpflags] & tcp-rst != 0'\n# Force RST on close via SO_LINGER(0) (pseudocode)\n# struct linger l = {1, 0};\n# setsockopt(fd, SOL_SOCKET, SO_LINGER, &l, sizeof l);" },
-      { title: "Why TIME_WAIT (and how to live with it)", component: "Operational Notes", detail: "TIME_WAIT exists so that delayed duplicates from the old incarnation cannot be mistaken for data on a new connection sharing the same 4-tuple, and so that a lost final ACK can be retransmitted. On busy outbound clients (load testers, proxies) you may exhaust ephemeral ports. Mitigations: connection pooling, increasing the ephemeral range, or net.ipv4.tcp_tw_reuse=1 (safe on Linux with timestamps per RFC 7323). Do NOT enable tcp_tw_recycle — it is removed in modern Linux because it breaks NAT.", proto: "2·MSL ≈ 60 s on Linux", refs: [{ label: "RFC 7323 — TCP Timestamps", url: "https://tools.ietf.org/html/rfc7323" }, { label: "Vincent Bernat — Coping with TIME_WAIT", url: "https://vincent.bernat.ch/en/blog/2014-tcp-time-wait-state-linux" }], code: "# Ephemeral port range\nsysctl net.ipv4.ip_local_port_range\n# Summary of TCP states currently on the host\nss -tan | awk 'NR>1 {print $1}' | sort | uniq -c | sort -rn" }
     ]
   }
 ];
