@@ -2036,7 +2036,7 @@ if (typeof switchTab === 'function') {
       "3x - 6"
     ],
     "q": "If f(x) = x³ - 3x² + 2x, what is f'(x)?",
-    "explain": "Using power rule: d/dx(x³) = 3x², d/dx(-3x²) = -6x, d/dx(2x) = 2, so f'(x) = 3x² - 6x + 2."
+    "explain": "The power rule states that d/dx(xⁿ) = n·x^(n-1). Applying this to each term: d/dx(x³) = 3x², d/dx(-3x²) = -6x, and d/dx(2x) = 2. Thus f'(x) = 3x² - 6x + 2. This technique extends to any polynomial by differentiating term-by-term."
   },
   {
     "answer": 0,
@@ -2048,7 +2048,7 @@ if (typeof switchTab === 'function') {
       "tan(x) + C"
     ],
     "q": "What is the integral of cos(x) dx?",
-    "explain": "The antiderivative of cos(x) is sin(x) + C (constant of integration)."
+    "explain": "The antiderivative of cos(x) is sin(x) because d/dx(sin(x)) = cos(x) by the fundamental definition of derivatives. The constant of integration C is essential—any constant differentiates to zero, so all antiderivatives of cos(x) differ by a constant. This is a standard result in calculus that appears frequently in physics and engineering applications."
   },
   {
     "answer": 0,
@@ -2060,7 +2060,7 @@ if (typeof switchTab === 'function') {
       "x·eˣ"
     ],
     "q": "For f(x) = eˣ, what is the value of f''(x)?",
-    "explain": "f'(x) = eˣ, f''(x) = eˣ. The exponential function and its derivatives are all eˣ."
+    "explain": "The exponential function eˣ has the remarkable property that it equals its own derivative: f'(x) = eˣ. Therefore the second derivative also equals eˣ: f''(x) = eˣ. This unique property makes eˣ invaluable in modeling growth, decay, and oscillations—e^(ax) is the general solution to many differential equations."
   },
   {
     "answer": 0,
@@ -2072,7 +2072,7 @@ if (typeof switchTab === 'function') {
       "Method of undetermined coefficients"
     ],
     "q": "Which method is typically used to solve first-order linear ODEs of the form y' + P(x)y = Q(x)?",
-    "explain": "The integrating factor method multiplies both sides by μ(x) = e^∫P(x)dx to make the left side exact."
+    "explain": "For a first-order linear ODE y' + P(x)y = Q(x), the integrating factor method transforms the left side into the derivative of a product. Multiplying by μ(x) = e^(∫P(x)dx) gives d/dx[μ(x)y] = μ(x)Q(x), which can be integrated directly. This method is more systematic than separation of variables for non-separable linear equations."
   },
   {
     "answer": 0,
@@ -2084,7 +2084,7 @@ if (typeof switchTab === 'function') {
       "r² - 3r = 0"
     ],
     "q": "For the ODE y'' - 3y' + 2y = 0, what is the characteristic equation?",
-    "explain": "Substitute y = e^(rx) to get the characteristic equation r² - 3r + 2 = 0, with roots r = 1, 2."
+    "explain": "To solve y'' - 3y' + 2y = 0, assume y = e^(rx). Substituting yields r²e^(rx) - 3re^(rx) + 2e^(rx) = 0. Dividing by e^(rx) (never zero) gives the characteristic equation r² - 3r + 2 = 0, which factors as (r-1)(r-2) = 0 with roots r = 1 and r = 2. The general solution is y = c₁e^x + c₂e^(2x)."
   },
   {
     "answer": 0,
@@ -2096,7 +2096,7 @@ if (typeof switchTab === 'function') {
       "10"
     ],
     "q": "If matrix A = [[1, 2], [3, 4]], what is det(A)?",
-    "explain": "For 2×2 matrix, det(A) = (1)(4) - (2)(3) = 4 - 6 = -2."
+    "explain": "For a 2×2 matrix, det(A) = ad - bc where A = [[a, b], [c, d]]. Here det(A) = (1)(4) - (2)(3) = 4 - 6 = -2. The determinant measures whether a matrix is invertible (det ≠ 0) and represents the volume scaling factor under the linear transformation. A negative determinant indicates a reflection."
   },
   {
     "answer": 0,
@@ -2108,7 +2108,7 @@ if (typeof switchTab === 'function') {
       "λ = -5"
     ],
     "q": "For what value of λ is (A - λI) singular where A = [[5, 0], [0, 3]]?",
-    "explain": "Eigenvalues occur when det(A - λI) = 0, giving (5-λ)(3-λ) = 0, so λ = 5 or 3."
+    "explain": "Eigenvalues λ are found by solving det(A - λI) = 0. For the diagonal matrix A = [[5, 0], [0, 3]], we have A - λI = [[5-λ, 0], [0, 3-λ]]. Thus det(A - λI) = (5-λ)(3-λ) = 0, giving λ = 5 or λ = 3. For diagonal matrices, eigenvalues are simply the diagonal entries, making them easy to spot."
   },
   {
     "answer": 0,
@@ -2120,7 +2120,7 @@ if (typeof switchTab === 'function') {
       "0"
     ],
     "q": "What is the rank of the matrix [[1, 2, 3], [2, 4, 6], [0, 0, 0]]?",
-    "explain": "Row 2 is 2× Row 1, and Row 3 is all zeros. Only 1 linearly independent row remains."
+    "explain": "Row 2 is exactly 2 times Row 1 (both [2, 4, 6] = 2·[1, 2, 3]). Row 3 is all zeros. Therefore only 1 row is linearly independent—the rank equals the number of independent row vectors. Rank determines the dimension of the column space and the number of free variables in solving Ax = b."
   },
   {
     "answer": 0,
@@ -2132,7 +2132,7 @@ if (typeof switchTab === 'function') {
       "4"
     ],
     "q": "What is the modulus |3 + 4i|?",
-    "explain": "|3 + 4i| = √(3² + 4²) = √(9 + 16) = √25 = 5."
+    "explain": "The modulus (absolute value) of a complex number z = a + bi is |z| = √(a² + b²). For z = 3 + 4i, this gives |z| = √(9 + 16) = √25 = 5. Geometrically, the modulus is the distance from the origin in the complex plane, analogous to the Euclidean norm in ℝ²."
   },
   {
     "answer": 0,
@@ -2144,7 +2144,7 @@ if (typeof switchTab === 'function') {
       "2z + i"
     ],
     "q": "If f(z) = z² satisfies the Cauchy-Riemann equations, what is f'(z)?",
-    "explain": "For f(z) = z², the derivative is f'(z) = 2z, verified by Cauchy-Riemann equations."
+    "explain": "For f(z) = z², the Cauchy-Riemann equations are necessary and sufficient (for C¹ functions) to confirm f is holomorphic (complex-differentiable). When satisfied, the derivative is f'(z) = 2z, which matches formal differentiation. Holomorphic functions are infinitely differentiable and exhibit remarkable rigidity properties."
   },
   {
     "answer": 0,
@@ -2156,7 +2156,7 @@ if (typeof switchTab === 'function') {
       "3/2"
     ],
     "q": "What is the sum of the geometric series 1 + 1/2 + 1/4 + 1/8 + ... ?",
-    "explain": "Sum = a/(1-r) where a=1, r=1/2. So S = 1/(1-1/2) = 1/(1/2) = 2."
+    "explain": "The sum of an infinite geometric series with first term a and common ratio r (|r| < 1) is S = a/(1-r). Here a = 1 and r = 1/2, so S = 1/(1-1/2) = 2. This formula is derived by the finite sum formula S_n = a(1-r^n)/(1-r) and taking the limit as n → ∞."
   },
   {
     "answer": 0,
@@ -2168,7 +2168,7 @@ if (typeof switchTab === 'function') {
       "Σ(n)"
     ],
     "q": "Which series converges by the p-test (p-series test)?",
-    "explain": "p-series Σ(1/n^p) converges if p > 1. Here p = 3/2 > 1, so it converges."
+    "explain": "The p-series test states that Σ(1/n^p) converges if and only if p > 1. Here p = 3/2 > 1, so Σ(1/n^(3/2)) converges. The other options fail: Σ(1/n) is the harmonic series (diverges at p=1), and Σ(1/√n) = Σ(1/n^0.5) diverges (p = 0.5 < 1). This is one of the most useful tests for quick convergence determination."
   },
   {
     "answer": 0,
@@ -2180,7 +2180,7 @@ if (typeof switchTab === 'function') {
       "x+y+z"
     ],
     "q": "What is ∇·(F) for F = (x, y, z)?",
-    "explain": "Divergence: ∂(x)/∂x + ∂(y)/∂y + ∂(z)/∂z = 1 + 1 + 1 = 3."
+    "explain": "Divergence measures the 'outflow' of a vector field. For F = (x, y, z), we compute ∇·F = ∂x/∂x + ∂y/∂y + ∂z/∂z = 1 + 1 + 1 = 3. A positive divergence indicates a source; a negative indicates a sink. At every point, the field is expanding outward uniformly with rate 3."
   },
   {
     "answer": 0,
@@ -2192,7 +2192,7 @@ if (typeof switchTab === 'function') {
       "The gradient"
     ],
     "q": "What is ∇×(∇φ) where φ is a scalar field?",
-    "explain": "The curl of any gradient is always the zero vector (Schwarz's theorem)."
+    "explain": "The curl of any gradient field is always zero: ∇×(∇φ) = 0 (this is Schwarz's theorem / the identity ∇×(∇φ) ≡ 0). This is a consequence of the symmetry of mixed partial derivatives for smooth φ. Conversely, any zero-curl field (irrotational) is the gradient of a scalar potential in simply-connected domains."
   },
   {
     "answer": 0,
@@ -2204,7 +2204,7 @@ if (typeof switchTab === 'function') {
       "No convergence"
     ],
     "q": "For Newton-Raphson method, x_(n+1) = x_n - f(x_n)/f'(x_n). What is the typical convergence rate?",
-    "explain": "Newton-Raphson has quadratic convergence near the root (error squared each iteration)."
+    "explain": "Newton-Raphson exhibits quadratic convergence near a root under good conditions. This means the number of correct digits approximately squares at each iteration: if error ≈ 10^(-k), then after one step it ≈ 10^(-2k). Linear methods (like bisection) gain one digit per step; quadratic is much faster and is why Newton-Raphson is the standard choice for high-precision root finding."
   },
   {
     "answer": 0,
@@ -2216,7 +2216,7 @@ if (typeof switchTab === 'function') {
       "Checking if matrix is triangular"
     ],
     "q": "What is the condition number of a matrix used for?",
-    "explain": "Condition number measures how error in input propagates to output for ill-conditioned problems."
+    "explain": "The condition number κ(A) quantifies how errors in input vector b are amplified in the solution to Ax = b. High condition number means the problem is ill-conditioned: small perturbations in b cause large changes in x. Formally κ(A) = ||A||·||A^(-1)||. It appears in backward error analysis and determines required precision."
   },
   {
     "answer": 0,
@@ -2228,7 +2228,7 @@ if (typeof switchTab === 'function') {
       "a/(s-a)"
     ],
     "q": "What is L{e^(at)}(s)?",
-    "explain": "L{e^(at)} = ∫₀^∞ e^(at)·e^(-st) dt = 1/(s-a) for s > a."
+    "explain": "The Laplace transform of e^(at) is L{e^(at)} = ∫₀^∞ e^(at)·e^(-st) dt = ∫₀^∞ e^((a-s)t) dt = 1/(s-a) for s > a. This result requires the convergence condition s > a to ensure the integral converges. The Laplace transform is a powerful tool for solving linear ODEs with constant coefficients by converting them to algebraic equations."
   },
   {
     "answer": 0,
@@ -2240,7 +2240,7 @@ if (typeof switchTab === 'function') {
       "1/s"
     ],
     "q": "What is L{sin(at)}(s)?",
-    "explain": "L{sin(at)} = a/(s²+a²) (standard transform)."
+    "explain": "The Laplace transform of sin(at) is a standard result: L{sin(at)} = a/(s²+a²) (for s > 0). This is derived using the identity sin(at) = (e^(iat) - e^(-iat))/(2i) or by integration by parts. Like cos(at) → s/(s²+a²), these transforms form the backbone of frequency-domain ODE solving in control theory and signal processing."
   },
   {
     "answer": 0,
@@ -2252,7 +2252,7 @@ if (typeof switchTab === 'function') {
       "∫₀^(2π) f(x)dx"
     ],
     "q": "For a function with period 2π, what is a₀ in the Fourier series?",
-    "explain": "The constant term a₀ = (1/π)∫₀^(2π) f(x)dx in Fourier series for period 2π."
+    "explain": "For a function with period 2π, the Fourier constant term is a₀ = (1/π)∫₀^(2π) f(x) dx. This is the average value of f over one period (scaled by 1/π instead of 1/(2π) due to the standard convention). The complete Fourier series is a₀/2 + Σ[aₙcos(nx) + bₙsin(nx)], and a₀/2 is literally the mean value of the function."
   },
   {
     "answer": 0,
@@ -2264,7 +2264,7 @@ if (typeof switchTab === 'function') {
       "∂u/∂x + ∂u/∂y = 0"
     ],
     "q": "Which PDE is the heat equation?",
-    "explain": "The heat/diffusion equation is ∂u/∂t = α∇²u (parabolic PDE)."
+    "explain": "The heat (diffusion) equation ∂u/∂t = α∇²u models how temperature or concentration spreads over time. The ∇²u term (Laplacian) drives smoothing: regions of high curvature evolve fastest. This is a parabolic PDE (second-order in space, first-order in time) that smooths out discontinuities and is fundamental to thermal physics and probability theory."
   },
   {
     "answer": 0,
@@ -2276,7 +2276,7 @@ if (typeof switchTab === 'function') {
       "None"
     ],
     "q": "What is the classification of ∂²u/∂x² + ∂²u/∂y² = 0?",
-    "explain": "Laplace's equation (elliptic): A=1, B=0, C=1, so B²-4AC = -4 < 0."
+    "explain": "Laplace's equation ∇²u = 0 is classified as elliptic because the discriminant B² - 4AC = 0 - 4(1)(1) = -4 < 0 for the form Auₓₓ + 2Buₓᵧ + Cᵧᵧ + ... = 0. Elliptic PDEs describe steady-state phenomena (electrostatics, gravitational potential) where the solution is determined globally by boundary conditions, with no time evolution."
   },
   {
     "answer": 0,
@@ -2288,7 +2288,7 @@ if (typeof switchTab === 'function') {
       "The sequence converges to infinity"
     ],
     "q": "What is the definition of a Cauchy sequence?",
-    "explain": "Cauchy sequence: elements become arbitrarily close to each other as n increases."
+    "explain": "A Cauchy sequence {aₙ} satisfies: for any ε > 0, there exists N such that |aₘ - aₙ| < ε whenever m, n > N. This captures the intuition that elements become arbitrarily close together—the sequence is 'internally convergent.' In complete metric spaces like ℝ, every Cauchy sequence converges, but in incomplete spaces it may not."
   },
   {
     "answer": 0,
@@ -2300,7 +2300,7 @@ if (typeof switchTab === 'function') {
       "ℝ"
     ],
     "q": "In ℝ, which of these sets is compact?",
-    "explain": "[0,1] is closed and bounded, hence compact by Heine-Borel theorem in ℝ."
+    "explain": "The closed interval [0,1] is compact in ℝ by the Heine-Borel theorem: a set is compact if and only if it is closed and bounded. The open interval (0,1) is not compact (not closed); [0,∞) is not compact (not bounded). Compactness ensures continuous functions attain their maximum and minimum values—crucial for optimization."
   },
   {
     "answer": 0,
@@ -2312,7 +2312,7 @@ if (typeof switchTab === 'function') {
       "10"
     ],
     "q": "What is the order of the cyclic group Z_5?",
-    "explain": "Z_5 = {0,1,2,3,4} has 5 elements, so |Z_5| = 5."
+    "explain": "The cyclic group ℤ₅ = {0, 1, 2, 3, 4} under addition mod 5 has exactly 5 elements. By Lagrange's theorem, the order of any subgroup divides the group order. The order also divides the exponent: 5·a ≡ 0 (mod 5) for any a ∈ ℤ₅. Cyclic groups are abelian and generated by a single element."
   },
   {
     "answer": 0,
@@ -2324,7 +2324,7 @@ if (typeof switchTab === 'function') {
       "7"
     ],
     "q": "What is (5 mod 7)⁻¹ in the multiplicative group Z₇*?",
-    "explain": "5 × 3 = 15 ≡ 1 (mod 7), so 5⁻¹ ≡ 3 (mod 7)."
+    "explain": "In ℤ₇* (multiplicative group of non-zero residues mod 7), we seek 5⁻¹ such that 5·5⁻¹ ≡ 1 (mod 7). Testing: 5·3 = 15 ≡ 1 (mod 7), so 5⁻¹ ≡ 3 (mod 7). The multiplicative inverse exists because gcd(5, 7) = 1 (Fermat's Little Theorem also gives 5⁶ ≡ 1 mod 7, so 5⁻¹ = 5⁵ mod 7)."
   },
   {
     "answer": 0,
@@ -2336,7 +2336,7 @@ if (typeof switchTab === 'function') {
       "0.9"
     ],
     "q": "If P(A) = 0.4 and P(B|A) = 0.5, what is P(A∩B)?",
-    "explain": "P(A∩B) = P(A)·P(B|A) = 0.4 × 0.5 = 0.2."
+    "explain": "By the definition of conditional probability, P(A∩B) = P(A)·P(B|A). Plugging in: P(A∩B) = 0.4 × 0.5 = 0.2. This formula encodes the joint probability as the probability of A times the probability of B given A. It generalizes to chains: P(A∩B∩C) = P(A)·P(B|A)·P(C|A,B)."
   },
   {
     "answer": 0,
@@ -2348,7 +2348,7 @@ if (typeof switchTab === 'function') {
       "50%"
     ],
     "q": "For a Normal distribution N(μ, σ²), what % of data is within μ ± 2σ?",
-    "explain": "Empirical rule: ~68% within ±σ, ~95% within ±2σ, ~99.7% within ±3σ."
+    "explain": "The empirical rule for a normal distribution states: ~68% of data lies within μ ± σ, ~95% within μ ± 2σ, and ~99.7% within μ ± 3σ. Within μ ± 2σ corresponds to roughly ±2 standard deviations, which covers 95% of the distribution. This rule is exact in the limit and is essential for quality control and statistical inference."
   },
   {
     "answer": 0,
@@ -2360,7 +2360,7 @@ if (typeof switchTab === 'function') {
       "Population mean"
     ],
     "q": "What is the Maximum Likelihood Estimate (MLE) for the mean of N(μ, σ²)?",
-    "explain": "For Normal distribution, MLE of μ is the sample mean x̄ = (1/n)Σxᵢ."
+    "explain": "For data X₁, ..., Xₙ from a Normal distribution N(μ, σ²), the MLE for μ is the sample mean x̄ = (1/n)Σxᵢ. This is derived by maximizing the likelihood L(μ, σ²) = ∏(1/√(2πσ²))exp(-(xᵢ-μ)²/(2σ²)), which yields ∂ℓ/∂μ = 0 when μ = x̄. The MLE is an unbiased, consistent, and efficient estimator."
   },
   {
     "answer": 1,
@@ -2372,7 +2372,7 @@ if (typeof switchTab === 'function') {
       "All states communicate"
     ],
     "q": "What is a memoryless property of Markov chains?",
-    "explain": "Markov property: Xₙ₊₁ depends only on Xₙ, not on X₀,...,Xₙ₋₁."
+    "explain": "The Markov property states that the future state Xₙ₊₁ depends only on the current state Xₙ, not on the entire history X₀, X₁, ..., Xₙ₋₁. Formally: P(Xₙ₊₁=j | X₀, ..., Xₙ) = P(Xₙ₊₁=j | Xₙ). This 'memorylessness' is the defining feature of Markov chains and makes them tractable for long-term analysis."
   },
   {
     "answer": 0,
@@ -2384,7 +2384,7 @@ if (typeof switchTab === 'function') {
       "Multi-class and Multi-server"
     ],
     "q": "In an M/M/1 queue, what do the two M's represent?",
-    "explain": "M/M/1: M (Markovian/exponential) arrivals, M (exponential) service, 1 server."
+    "explain": "In M/M/1 queueing notation, the first 'M' denotes Markovian (memoryless/exponential) interarrival times, the second 'M' denotes exponential service times, and '1' indicates a single server. Exponential distributions are used because of their memoryless property: the time to next arrival/departure doesn't depend on the past. M/M/1 is the simplest and most studied queue model."
   },
   {
     "answer": 0,
@@ -2396,7 +2396,7 @@ if (typeof switchTab === 'function') {
       "The objective is unbounded"
     ],
     "q": "In the simplex method, the solution is optimal when:",
-    "explain": "Optimality condition: all reduced costs ≥ 0 for maximization problem."
+    "explain": "In the simplex method for linear programming, the reduced cost of each non-basic variable measures the rate of change of the objective per unit increase of that variable. At optimality (for maximization), all reduced costs must be non-negative (≥ 0)—if any were negative, increasing that variable would improve the objective. This is the practical stopping criterion for the algorithm."
   },
   {
     "answer": 0,
@@ -2408,7 +2408,7 @@ if (typeof switchTab === 'function') {
       "Objective unbounded"
     ],
     "q": "What does KKT condition require at optimality for constrained optimization?",
-    "explain": "KKT: at optimum, gradient of objective equals linear combination of constraint gradients."
+    "explain": "The Karush-Kuhn-Tucker (KKT) conditions generalize Lagrange multipliers to constrained optimization with inequality constraints. At an optimum, ∇f = Σλᵢ∇gᵢ (gradient of objective equals a linear combination of constraint gradients), complementary slackness holds, and λᵢ ≥ 0. These conditions are necessary for local optima and sufficient if the problem is convex."
   },
   {
     "answer": 0,
@@ -2420,7 +2420,7 @@ if (typeof switchTab === 'function') {
       "24"
     ],
     "q": "What is the greatest common divisor of 48 and 18?",
-    "explain": "GCD(48,18): 48=2×24=4×12=6×8, 18=2×9=3×6. GCD = 6."
+    "explain": "The GCD can be computed by the Euclidean algorithm: gcd(48, 18) = gcd(18, 12) = gcd(12, 6) = gcd(6, 0) = 6. Alternatively, 48 = 2⁴·3 and 18 = 2·3², so gcd = 2¹·3¹ = 6. The GCD is the largest integer dividing both numbers and is used in simplifying fractions and solving linear Diophantine equations."
   },
   {
     "answer": 0,
@@ -2432,7 +2432,7 @@ if (typeof switchTab === 'function') {
       "12"
     ],
     "q": "How many prime numbers are between 1 and 20?",
-    "explain": "Primes: 2, 3, 5, 7, 11, 13, 17, 19. That's 8 primes."
+    "explain": "The prime numbers between 1 and 20 are: 2, 3, 5, 7, 11, 13, 17, 19. That is 8 primes total. Note that 1 is not prime (by convention, primes have exactly two distinct positive divisors); the primes become sparser as numbers grow (Prime Number Theorem: π(n) ~ n/ln(n)). Primes are the building blocks of number theory and cryptography."
   },
   {
     "answer": 0,
@@ -2444,7 +2444,7 @@ if (typeof switchTab === 'function') {
       "All open sets are compact"
     ],
     "q": "A Hausdorff space satisfies:",
-    "explain": "Hausdorff (T₂): for x≠y, ∃ open U∋x, V∋y with U∩V=∅."
+    "explain": "A Hausdorff space (T₂ space) satisfies: for any two distinct points x and y, there exist open sets U and V such that x ∈ U, y ∈ V, and U ∩ V = ∅. This means points can be 'separated' by open sets. All metric spaces are Hausdorff. This separation axiom ensures limits are unique and is fundamental to topology and analysis."
   },
   {
     "answer": 0,
@@ -2456,7 +2456,7 @@ if (typeof switchTab === 'function') {
       "1/3"
     ],
     "q": "What is the Lebesgue measure of the Cantor set?",
-    "explain": "The Cantor set is a closed, nowhere dense set with measure zero (despite being uncountable)."
+    "explain": "The Cantor set, constructed by repeatedly removing middle thirds from [0,1], is closed and nowhere dense yet uncountable. Its Lebesgue measure is 0 because the total length removed is 1/3 + 2/9 + 4/27 + ... = 1 (geometric series). This is a classical pathological example: an uncountable set with measure zero that contains no intervals."
   },
   {
     "answer": 0,
@@ -2468,7 +2468,7 @@ if (typeof switchTab === 'function') {
       "All operators are continuous"
     ],
     "q": "A Banach space is a complete normed vector space. What is 'complete'?",
-    "explain": "Complete: every Cauchy sequence of elements has a limit in the space."
+    "explain": "A Banach space is a complete normed vector space: it is a vector space V with a norm ||·|| such that every Cauchy sequence {xₙ} (where ||xₘ - xₙ|| → 0) converges to some x ∈ V. Completeness ensures the space is 'closed' under limits. Common examples: ℝⁿ, Lᵖ spaces, and spaces of continuous functions. Banach spaces are the setting for functional analysis."
   }
 ]
 </script>
