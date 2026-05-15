@@ -4122,7 +4122,7 @@ const quizQuestions = [
       "Reliability must be guaranteed by the link layer on every hop.",
       "The network core should buffer entire flows to avoid loss." ],
     answer: 1,
-    explain: "The end-to-end argument (Saltzer, Reed, Clark) says functions like reliability, ordering, and encryption belong at the endpoints because the network can't fully guarantee them — keeping the core simple and dumb." },
+    explain: "The end-to-end principle, articulated by Saltzer, Reed, and Clark, states that functionality like reliability, ordering, and encryption should be implemented at the endpoints rather than in the network itself. The core insight is that the network cannot fully guarantee end-to-end services—e.g., a router crash can still lose data—so applications must implement these features anyway for true robustness. By keeping the network core simple and stateless (just forwarding datagrams), the Internet remains scalable and flexible, with complexity pushed to hosts where it can be tightly controlled. Option A (routers replicating state) and C (link-layer reliability) contradict this principle; the network core serves best when it remains dumb. This design is why TCP is at the endpoint, not built into routers." },
   { topic: "W1 — Internet & Architecture",
     q: "In the four-layer Internet model used in CS 144, which order is correct from top to bottom?",
     options: [
@@ -4131,7 +4131,7 @@ const quizQuestions = [
       "Transport → Application → Link → Network",
       "Link → Network → Transport → Application (top-down)" ],
     answer: 1,
-    explain: "Top-to-bottom: Application (HTTP, DNS) → Transport (TCP/UDP) → Network (IP) → Link (Ethernet/Wi-Fi). Each layer adds a header (encapsulation) when sending." },
+    explain: "In the four-layer model used in CS 144, the correct top-to-bottom order is Application → Transport → Network → Link. Each layer processes the data from the layer above and prepends (or appends) its own header during transmission; on receive, headers are stripped as the data moves up the stack. This layered approach isolates concerns: applications rely on TCP/UDP semantics, transport relies on IP routing, IP relies on reliable link delivery (though Ethernet offers only best-effort delivery too). Options A and C violate this order and would break basic layering." },
   { topic: "W1 — Internet & Architecture",
     q: "What abstraction does TCP provide to the application?",
     options: [
@@ -4140,7 +4140,7 @@ const quizQuestions = [
       "A best-effort packet delivery service with no retransmissions.",
       "A connectionless multicast channel." ],
     answer: 1,
-    explain: "TCP gives the application a reliable in-order byte stream in each direction, hiding IP's loss, reordering, and duplication." },
+    explain: "TCP provides a reliable, ordered, bidirectional byte stream abstraction, which is fundamentally different from IP's unreliable datagram service. This means the application sees a continuous flow of bytes in the order sent, even if the underlying IP loses, reorders, or duplicates packets—TCP handles all of that transparently. The stream is bidirectional, so both endpoints can send and receive data concurrently. Options A (datagram) and C (best-effort) are exactly what IP does; TCP's value is that it hides those lower-layer inconveniences." },
   { topic: "W1 — Internet & Architecture",
     q: "Which property does IP (the network layer) NOT provide?",
     options: [
@@ -4149,7 +4149,7 @@ const quizQuestions = [
       "Global addressing",
       "Datagram-based forwarding" ],
     answer: 0,
-    explain: "IP is intentionally best-effort: packets may be lost, reordered, or duplicated. Reliability is a transport-layer concern." },
+    explain: "IP (RFC 9293) provides only best-effort delivery—it offers no guarantees that packets will reach their destination, arrive in order, or appear exactly once. This simplicity is by design: keeping IP stateless and minimal allows it to scale across heterogeneous networks. Reliability, ordering, and deduplication are explicitly not IP's responsibility; TCP provides those at the transport layer. Global addressing (via IPv4/IPv6) and datagram-based forwarding are core IP features, but guarantees are not. This is a direct application of the end-to-end principle." },
   { topic: "W1 — Internet & Architecture",
     q: "What is *encapsulation* in protocol layering?",
     options: [
@@ -4158,7 +4158,7 @@ const quizQuestions = [
       "Compressing payload to save bandwidth",
       "Splitting a stream into equally-sized cells" ],
     answer: 1,
-    explain: "As data moves down the stack, each layer prepends its own header. On receive, headers are stripped (decapsulated) as data moves up." },
+    explain: "Encapsulation is the process where each protocol layer wraps the data from the layer above with its own header (and sometimes trailer) as it passes down the stack. For example, an HTTP request becomes an HTTP message (application), is wrapped in a TCP header with port and sequence numbers (transport), then wrapped again in an IP header with source/destination IP addresses (network), then wrapped in an Ethernet header with MAC addresses (link). On the receive side, each layer removes its header and passes the payload up—this is called decapsulation. This layering enables modularity: each layer can evolve independently." },
   { topic: "W1 — Internet & Architecture",
     q: "Which is a key reason the Internet uses *packet switching* rather than circuit switching?",
     options: [
@@ -4167,12 +4167,12 @@ const quizQuestions = [
       "Per-flow state at every router enables tight QoS.",
       "It allows a fixed bit-rate per call regardless of network load." ],
     answer: 1,
-    explain: "Packet switching with statistical multiplexing lets many bursty sources share a link efficiently — there's no need to reserve dedicated capacity per flow." },
+    explain: "Packet switching with statistical multiplexing allows multiple bursty flows to share a single link efficiently without pre-reserving bandwidth for each flow. If flows have bursty traffic, their peaks rarely coincide, so the aggregate usage stays below the link capacity even though the sum of peak rates might exceed it. In contrast, circuit switching reserves a fixed fraction of bandwidth per call regardless of whether it's used, leading to poor utilization when traffic is bursty. This multiplexing gain is why the Internet chose packet switching over circuit switching for efficiency and cost." },
   { topic: "W1 — Internet & Architecture",
     q: "Which protocol uses port 80 by default (without TLS)?",
     options: ["SSH", "HTTP", "SMTP", "DNS"],
     answer: 1,
-    explain: "HTTP uses TCP port 80. HTTPS uses 443, SSH 22, SMTP 25, DNS 53." },
+    explain: "HTTP, the Hypertext Transfer Protocol, uses TCP port 80 by default. HTTPS (HTTP + TLS encryption) uses port 443, SSH uses 22, SMTP (mail) uses 25, and DNS queries use port 53 (UDP, though DNS also can use TCP for zone transfers). Port assignments are managed by IANA; well-known ports (0–1023) are reserved and typically require administrator privileges to bind. Knowing these canonical ports is essential for debugging network services." },
   { topic: "W1 — Internet & Architecture",
     q: "Which is true of a *socket* in the BSD API?",
     options: [
@@ -4181,7 +4181,7 @@ const quizQuestions = [
       "It is a layer-2 construct managed by the NIC firmware.",
       "It can only be used for connection-oriented protocols." ],
     answer: 1,
-    explain: "A connected TCP socket is uniquely identified by the 4-tuple of source and destination IP and port. UDP sockets are typically demultiplexed by dst (IP, port)." },
+    explain: "In the BSD socket API, a connected TCP socket is uniquely identified by a 4-tuple: source IP, source port, destination IP, and destination port. The kernel uses this 4-tuple to multiplex multiple connections and route incoming data to the right application. A socket is a process-level handle, not a host-level one; host identification alone (option A) is insufficient because one host can run multiple processes. UDP sockets are typically demultiplexed by the destination (IP, port) pair only, since UDP is connectionless and each datagram is independent. Layer-2 constructs (option C) and protocol-specific constraints (option D) do not define sockets." },
 
   // ── Week 2: TCP ────────────────────────────────────────────────────
   { topic: "W2 — TCP",
@@ -4192,7 +4192,7 @@ const quizQuestions = [
       "It signals an urgent push of in-band data.",
       "It acknowledges all previous bytes received." ],
     answer: 1,
-    explain: "SYN = synchronize. Each side picks a random Initial Sequence Number (ISN) and the SYN segment communicates it." },
+    explain: "SYN = synchronize. Each side of a TCP connection picks a random Initial Sequence Number (ISN) to prevent old-incarnation segments from being mistaken for current data. The SYN flag signals that the Sequence Number field contains the sender's ISN. Receiving the SYN allows the peer to note the ISN and then send a SYN-ACK with its own ISN and an ACK of the sender's ISN+1, completing the synchronization. This randomization of ISN (as opposed to starting at 0) adds security against blind injection attacks and defends against segment confusion if a connection is quickly restarted." },
   { topic: "W2 — TCP",
     q: "Why are TCP Initial Sequence Numbers (ISNs) chosen randomly rather than starting at 0?",
     options: [
@@ -4201,12 +4201,12 @@ const quizQuestions = [
       "To compress the header.",
       "Because zero is reserved by the kernel." ],
     answer: 1,
-    explain: "Random ISNs protect against old-incarnation segments and make off-path attackers' job harder (they can't easily guess sequence numbers)." },
+    explain: "TCP ISNs are chosen randomly to provide defense-in-depth against two threats: old-incarnation segments and blind TCP injection attacks. If ISNs started at 0 (or were predictable), a stale segment from a previous connection with the same (source, destination) pair could be mistaken for current data. Random ISNs ensure such old segments have sequence numbers far outside the active window. More critically, an off-path attacker guessing the next ISN is much harder—predictable ISNs make blind spoofing attacks easier. RFC 793 and modern RFC 9293 mandate random ISNs. Options C (header compression) and D (kernel reservation) are not relevant." },
   { topic: "W2 — TCP",
     q: "TCP uses *cumulative acknowledgments*. If a receiver has bytes 0..999 and 2000..2999 but is missing 1000..1999, what ACK number does it send?",
     options: ["3000", "2000", "1000", "999"],
     answer: 2,
-    explain: "Cumulative ACK = next expected byte, i.e. the first byte of the gap. The receiver acks 1000, meaning everything up to but not including byte 1000 is received." },
+    explain: "TCP uses cumulative acknowledgments, meaning the ACK number field contains the next expected byte—the first byte *after* all contiguously received data. In this scenario, the receiver has bytes 0–999 and 2000–2999 but is missing bytes 1000–1999; thus, the next expected byte is 1000. The receiver sends ACK 1000 to signal \"I have everything up to (but not including) byte 1000.\" The sender can infer there's a gap (a missing segment) when it later receives in-order data starting at 2000 but no ACK for 1000. This cumulative approach is simpler than selective ACKs but lacks explicit gap information; SACK (RFC 2018) extends it to carry multiple ranges." },
   { topic: "W2 — TCP",
     q: "What triggers *fast retransmit*?",
     options: [
@@ -4215,7 +4215,7 @@ const quizQuestions = [
       "A RST segment from the peer.",
       "An ICMP Source Quench message." ],
     answer: 1,
-    explain: "Three duplicate ACKs strongly suggest a single segment was lost while later segments arrived. The sender retransmits without waiting for the RTO timer." },
+    explain: "Fast retransmit is triggered by receiving three duplicate ACKs (or \"duplicate ACKs\" strictly means ACKs for the same already-ACKed sequence number, typically arriving when later segments do arrive). Three duplicates indicate high probability that a single segment in the middle of the stream was lost—later data arrived out of order, generating duplicate ACKs at the receiver. Fast retransmit immediately resends the lost segment without waiting for the RTO timer to expire, reducing recovery latency. Option A (RTO timeout) is a separate, slower recovery path; options C (RST) and D (ICMP) are not standard congestion signals. This mechanism is critical for TCP performance on networks with moderate loss." },
   { topic: "W2 — TCP",
     q: "How is the TCP Retransmission Timeout (RTO) typically computed?",
     options: [
@@ -4224,7 +4224,7 @@ const quizQuestions = [
       "Equal to the receiver's advertised window divided by MSS.",
       "Half the round-trip propagation delay." ],
     answer: 1,
-    explain: "Jacobson/Karels algorithm: SRTT and RTTVAR are exponentially weighted moving averages; RTO ≈ SRTT + 4·RTTVAR, doubled on every retransmission (exponential backoff)." },
+    explain: "The RTO is computed dynamically using the Jacobson/Karels algorithm (RFC 6298), which maintains exponentially weighted moving averages of the RTT (SRTT) and its variation (RTTVAR). The formula is RTO = SRTT + 4·RTTVAR, clamped to a minimum (typically 1 second). When a retransmission occurs and still no ACK arrives, the RTO is doubled (exponential backoff), up to a maximum. This adaptive approach handles networks where RTT varies greatly: on low-latency networks with stable RTT, RTO settles near RTT; on high-delay or variable networks, RTO adapts to avoid spurious timeouts. Option A (fixed 3s) is too naive; options C and D misunderstand the RTO mechanism." },
   { topic: "W2 — TCP",
     q: "TCP's *flow control* protects against what condition?",
     options: [
@@ -4233,7 +4233,7 @@ const quizQuestions = [
       "Out-of-order packet delivery",
       "Sequence-number wraparound" ],
     answer: 1,
-    explain: "Flow control (the receiver window, rwnd) prevents the sender from outpacing the receiver. Congestion control is what handles bottlenecks inside the network." },
+    explain: "Flow control, implemented via the receiver's advertised window (rwnd), prevents the sender from overwhelming the receiver's buffer. The receiver tells the sender \"I can accept up to N more bytes\" by including rwnd in every ACK; the sender limits bytes in flight to at most rwnd. This protects the receiver from buffer exhaustion if it is slower than the sender or if the application is not reading data promptly. Congestion control (via cwnd), by contrast, protects the *network* by limiting the sender's sending rate when routers along the path are congested. Flow control is receiver-driven; congestion control is sender-driven. Option A (network congestion) conflates the two concepts." },
   { topic: "W2 — TCP",
     q: "What is the *effective window* a TCP sender may have in flight?",
     options: [
@@ -4242,12 +4242,12 @@ const quizQuestions = [
       "rwnd only",
       "cwnd + rwnd" ],
     answer: 1,
-    explain: "A sender can have at most min(cwnd, rwnd) unacknowledged bytes outstanding — whichever is smaller of the congestion and receiver windows." },
+    explain: "The effective window (the amount of data the sender can have in flight) is the minimum of the congestion window (cwnd, enforced by the sender based on network feedback) and the receiver window (rwnd, advertised by the receiver based on buffer availability). Both windows must be satisfied: if cwnd is 10 MSS but rwnd is only 5 MSS, the sender can only send 5 MSS. Conversely, if rwnd is unlimited but the network is congested, cwnd limits sending. This min() relationship is fundamental to TCP's dual-axis flow control design and is implemented in labs (e.g., TCPSender in CS 144 Lab 3)." },
   { topic: "W2 — TCP",
     q: "Which state does a TCP endpoint enter after sending the last ACK in active close, to ensure the final ACK isn't lost?",
     options: ["LAST_ACK", "TIME_WAIT", "CLOSE_WAIT", "FIN_WAIT_2"],
     answer: 1,
-    explain: "After the active closer sends the final ACK, it stays in TIME_WAIT (typically 2·MSL ≈ 60 s) so it can retransmit the ACK if the peer's FIN is re-sent." },
+    explain: "After the active closer sends its final ACK in response to the passive closer's FIN, it enters TIME_WAIT for 2·MSL seconds (approximately 60 seconds on modern systems, per RFC 9293). During TIME_WAIT, the connection is half-closed: no new data is sent or accepted, but the endpoint remains ready to retransmit the ACK if the peer resends its FIN. If the final ACK is lost, the peer retransmits the FIN, and the TIME_WAIT endpoint must respond with the ACK again; otherwise, the peer would retransmit forever. After 2·MSL, the connection state is fully discarded. This grace period also ensures stale packets from the old connection don't arrive after a new connection with the same (source, destination) is created." },
   { topic: "W2 — TCP",
     q: "What is the purpose of the TCP checksum?",
     options: [
@@ -4256,7 +4256,7 @@ const quizQuestions = [
       "Computing the next sequence number",
       "Compressing repeated bytes" ],
     answer: 1,
-    explain: "The 16-bit checksum covers the TCP header, payload, and a pseudo-header from IP (src/dst IP, protocol, length). It's a simple integrity check, not cryptographic." },
+    explain: "The TCP checksum (16 bits, defined in RFC 9293) covers the TCP header, the payload, and a pseudo-header derived from the IP layer (source IP, destination IP, protocol number, and TCP segment length). It is a simple one's-complement sum—not a cryptographic hash like MD5 or SHA. Receivers verify the checksum; any bit error in transit causes it to fail, and the corrupted segment is discarded (leaving retransmission to TCP's ARQ mechanism). The checksum is an integrity check, not encryption or compression. It is computed end-to-end (not per-hop), providing protection against link-layer errors that the Ethernet FCS might miss." },
   { topic: "W2 — TCP",
     q: "What happens when a TCP sender receives a RST segment for an established connection?",
     options: [
@@ -4265,19 +4265,19 @@ const quizQuestions = [
       "It increments cwnd.",
       "It begins TIME_WAIT for 2·MSL." ],
     answer: 1,
-    explain: "RST is an abortive close — the connection is torn down immediately and any unread data is discarded. Unlike FIN, there is no orderly shutdown." },
+    explain: "A RST (reset) segment signals an abortive close—the connection is torn down immediately without any graceful FIN handshake or TIME_WAIT. All unread data in the receiver's buffer is discarded, and both sides transition to the closed state instantly. The sender of a RST does not wait for an ACK or respond to further packets; the RST is essentially \"I'm done, goodbye, no recovery possible.\" This is used when an error is detected (e.g., connection refused, protocol violation) and orderly shutdown is not feasible. Unlike FIN (which allows both sides to flush data and close gracefully), RST is abrupt. Options B and C misunderstand when RST is used (not on ACK receipt or congestion window change)." },
   { topic: "W2 — TCP",
     q: "Which TCP segment field is used by the receiver to advertise available buffer space?",
     options: ["Sequence Number", "Acknowledgment Number", "Window", "Urgent Pointer"],
     answer: 2,
-    explain: "The 16-bit Window field carries rwnd. Window-scale option (RFC 7323) extends it to support larger windows." },
+    explain: "The 16-bit Window field in the TCP header is used by the receiver to advertise available buffer space to the sender, measured in bytes. This field carries rwnd, the receiver window. Modern systems support the Window Scale option (RFC 7323), which extends the window to effectively 32 bits by allowing a scale factor, enabling support for high-speed, high-delay networks. The Sequence Number, ACK Number, and Urgent Pointer serve different purposes (identifying which bytes are being sent, what has been received, and marking urgent data, respectively). The Window field alone communicates flow-control information." },
 
   // ── Week 3: Packet Switching ───────────────────────────────────────
   { topic: "W3 — Packet Switching",
     q: "If a router has a 1 Gbps output link and a 12,000-bit packet arrives, what is the *transmission delay*?",
     options: ["12 ms", "1.2 ms", "12 μs", "120 μs"],
     answer: 2,
-    explain: "Transmission delay = packet size / link rate = 12,000 b / 1×10⁹ bps = 12×10⁻⁶ s = 12 μs." },
+    explain: "Transmission delay is the time required to serialize (or \"transmit\") a complete packet onto the physical link, calculated as packet size divided by link rate. Here: 12,000 bits ÷ 1,000,000,000 bits/second = 12×10⁻⁶ seconds = 12 microseconds. This delay is independent of distance; a packet takes the same transmission time on a 1-meter cable as on a 1-kilometer cable if the link rate is the same. Transmission delay is one of the four components of end-to-end delay (the others being propagation, processing, and queueing) and is often the dominant delay on slow, long-distance, or heavily congested links. Confusing it with propagation delay (which depends on distance) is a common mistake." },
   { topic: "W3 — Packet Switching",
     q: "Which of the following is *propagation delay* primarily a function of?",
     options: [
@@ -4286,7 +4286,7 @@ const quizQuestions = [
       "Router CPU speed",
       "Queue occupancy" ],
     answer: 1,
-    explain: "Propagation delay = distance / propagation speed (≈ ⅔ c in fiber). It is independent of packet size or rate." },
+    explain: "Propagation delay is the time a signal takes to physically travel through the transmission medium from source to destination, computed as distance divided by propagation speed. In fiber or copper, the propagation speed is approximately two-thirds the speed of light in vacuum (~200,000 km/s), so a 1000-km link has a propagation delay of roughly 5 milliseconds. Critically, propagation delay is independent of packet size, link bandwidth, and router CPU speed—it is determined entirely by physics. This is why a path's minimum RTT is typically lower-bounded by 2× the propagation delay, and why high-BDP (bandwidth-delay product) networks require large TCP windows to stay productive." },
   { topic: "W3 — Packet Switching",
     q: "The four components of per-hop packet delay are:",
     options: [
@@ -4295,7 +4295,7 @@ const quizQuestions = [
       "Encoding, modulation, demodulation, decoding",
       "Slow-start, fast-recovery, retransmission, ACK" ],
     answer: 1,
-    explain: "Total delay per hop = processing (header parsing/lookup) + queueing (waiting in output buffer) + transmission (serialization onto the link) + propagation (signal travel)." },
+    explain: "The four main components of per-hop delay are: (1) *Processing* delay—time for the router to parse the header, perform a lookup, and decide where to forward; (2) *Queueing* delay—time the packet spends waiting in the output buffer for a busy link; (3) *Transmission* delay—time to serialize the packet onto the outgoing link; and (4) *Propagation* delay—time for the signal to travel across the physical link. The sum of all four delays at all hops (plus any application-layer delays at the sender and receiver) equals the end-to-end delay. Queueing and transmission delays tend to be the most variable and are where congestion control and AQM have the most impact. Options A, C, and D refer to unrelated concepts or specific protocols." },
   { topic: "W3 — Packet Switching",
     q: "Statistical multiplexing yields gains when:",
     options: [
@@ -4304,7 +4304,7 @@ const quizQuestions = [
       "The link is engineered to handle the sum of peak rates.",
       "Each flow has its own dedicated time slot." ],
     answer: 1,
-    explain: "If many bursty flows share a link, their peaks usually don't overlap, so the shared link needs far less than the sum of peak rates — that's the multiplexing gain." },
+    explain: "Statistical multiplexing gains arise when multiple bursty flows share a link and their peaks do not coincide. If each flow's peak data rate is 100 Mbps but a shared link is 200 Mbps, and the flows transmit for only 10% of the time (randomly), the link needs only 200 Mbps total even though two simultaneous peaks could reach 200 Mbps. This efficiency is why packet switching triumphed over circuit switching for the Internet. Options A (all sources at peak continuously) and D (dedicated time slots) both describe scenarios where statistical multiplexing provides *no* gains—in fact, option C (reserving sum of peak rates) would negate the multiplexing benefit entirely. Bursty, random traffic patterns are essential for multiplexing gains." },
   { topic: "W3 — Packet Switching",
     q: "What does the *bandwidth-delay product* represent?",
     options: [
@@ -4313,7 +4313,7 @@ const quizQuestions = [
       "Optimal congestion-window scaling factor only on Wi-Fi",
       "Number of routers along a path" ],
     answer: 0,
-    explain: "BDP = bandwidth × RTT. To keep a pipe full, the sender's window must be at least the BDP." },
+    explain: "The bandwidth-delay product (BDP) is the product of a link's capacity (in bits per second) and the round-trip delay across that path, yielding the total number of bits (or bytes, if divided by 8) that can be in flight on the path simultaneously. For example, a 10 Gbps link with a 50 ms RTT has BDP = 10×10⁹ bits/s × 0.05 s = 500×10⁶ bits = 62.5 MB. To keep such a \"pipe\" full and maximize throughput, the TCP window must be at least the BDP; if the window is smaller, the link will be underutilized. This is why high-BDP networks (satellite links, long-distance fiber) require large TCP windows or aggressive pacing. Options B, C, and D misinterpret the purpose and scope of BDP." },
   { topic: "W3 — Packet Switching",
     q: "Why is *queueing delay* the most variable component of end-to-end delay?",
     options: [
@@ -4322,7 +4322,7 @@ const quizQuestions = [
       "It depends on packet size, which is constant.",
       "It is fixed by router hardware." ],
     answer: 1,
-    explain: "Queueing delay varies with load: an empty queue means no wait; a near-full queue means long waits. Other components are largely fixed." },
+    explain: "Queueing delay varies dramatically with instantaneous traffic load on the router's output link. When the queue is empty, arriving packets experience no queueing delay. When the queue is nearly full (because traffic is bursty and arriving faster than the link can drain packets), packets wait for many earlier packets to transmit—leading to high queueing delay. Transmission and propagation delays are largely fixed per hop; processing delay is generally short and stable. Queueing is the most variable component and is why end-to-end latency jitter (variability) is often correlated with network congestion. This variability is one reason BBR and other rate-based algorithms try to minimize queue occupancy." },
   { topic: "W3 — Packet Switching",
     q: "What is *head-of-line blocking* in a packet switch?",
     options: [
@@ -4331,7 +4331,7 @@ const quizQuestions = [
       "The transport layer waiting for in-order data.",
       "Routers discarding ICMP." ],
     answer: 1,
-    explain: "In input-queued switches, a blocked head-of-line packet stalls every packet behind it even if their output ports are free — virtual output queueing (VOQ) mitigates this." },
+    explain: "Head-of-line (HOL) blocking occurs in input-queued switches when a packet at the front of an input queue has a destination output port that is currently congested or busy. Even though other packets behind it are destined for free output ports, they cannot proceed because the switch logic forwards packets from a queue only in FIFO order. This causes unnecessary delays for packets that could have been serviced immediately. Virtual output queueing (VOQ) mitigates HOL blocking by maintaining separate queues for each output port at each input, allowing packets destined for free ports to bypass blocked packets. Option A (receiver discarding) and D (router discarding ICMP) are unrelated phenomena." },
   { topic: "W3 — Packet Switching",
     q: "Little's Law (N = λ·W) tells us:",
     options: [
@@ -4340,7 +4340,7 @@ const quizQuestions = [
       "Loss rate is proportional to queue size",
       "Bandwidth scales linearly with hop count" ],
     answer: 0,
-    explain: "Little's Law is a fundamental queueing identity used to relate occupancy, arrival rate, and delay — applicable to almost any stable queueing system." },
+    explain: "Little's Law, formalized as N = λ·W, is a fundamental queueing theory identity that relates the average number of items in a system (N), the average arrival rate (λ), and the average time each item spends in the system (W). For example, if on average 10 packets/second arrive at a router queue and each packet spends 0.1 seconds in the system (queued and processed), then on average 1 packet is in the system at any time. This law holds for any stable system—it does not depend on the arrival distribution, service distribution, or queueing discipline. Little's Law is widely used in network analysis to relate occupancy, load, and delay. It applies equally well to TCP buffers, router queues, or any queueing system in steady state." },
 
   // ── Week 4: Congestion Control ─────────────────────────────────────
   { topic: "W4 — Congestion Control",
@@ -4351,7 +4351,7 @@ const quizQuestions = [
       "A drop in the receiver's advertised window.",
       "A reduction in IP TTL." ],
     answer: 1,
-    explain: "Classical TCP (Reno/NewReno) treats loss as the congestion signal. ECN is an alternative explicit signal; BBR uses RTT and bandwidth probing instead." },
+    explain: "TCP Reno and subsequent loss-based algorithms infer congestion by observing packet loss, detected either by a timeout (RTO fire) or by three duplicate ACKs (fast retransmit). The assumption is that loss in the Internet is primarily caused by queue overflow at congested routers—when a router buffer fills, it must drop packets. This loss signal tells the sender \"the network is full, back off.\" ECN (Explicit Congestion Notification) provides an alternative signal: routers mark packets (using IP header bits) when queues are building up, and endpoints learn of congestion without packet loss. BBR uses a different approach entirely: it estimates the bottleneck bandwidth and minimum RTT from probing and paces at the bottleneck rate, not waiting for loss. Option A (ICMP source quench), though once proposed, is rarely used in practice." },
   { topic: "W4 — Congestion Control",
     q: "In TCP slow start, the congestion window grows:",
     options: [
@@ -4360,7 +4360,7 @@ const quizQuestions = [
       "Cubically with time since last loss",
       "It stays constant until first loss" ],
     answer: 1,
-    explain: "Slow start: cwnd += MSS for each new ACK, so cwnd roughly doubles each RTT until ssthresh is reached or loss occurs." },
+    explain: "During TCP slow start, the congestion window (cwnd) grows exponentially: for each new ACK received, cwnd increases by one MSS. Since the sender transmits a window's worth of data and typically receives multiple ACKs per RTT (one ACK per arriving segment, or more with selective ACKs), cwnd roughly doubles each RTT. This exponential growth is much more aggressive than the linear growth of congestion avoidance, allowing the connection to quickly probe the available bandwidth. Slow start continues until cwnd reaches a threshold (ssthresh, often set to cwnd/2 after a loss) or until a loss event occurs. Despite its name, slow start grows cwnd *quickly*—it is called \"slow\" only in comparison to uncongested sending at line rate." },
   { topic: "W4 — Congestion Control",
     q: "AIMD stands for and means:",
     options: [
@@ -4369,7 +4369,7 @@ const quizQuestions = [
       "Asymmetric Increase / Modulated Drop — ramps based on ECN",
       "Average Inter-Message Delay — flow control heuristic" ],
     answer: 1,
-    explain: "AIMD in congestion-avoidance: cwnd += MSS per RTT (additive increase); cwnd = cwnd/2 on loss (multiplicative decrease). It converges to fair sharing." },
+    explain: "AIMD stands for Additive Increase, Multiplicative Decrease, the congestion control strategy proposed by Chiu and Jain. During congestion avoidance (when the connection is probing for spare capacity), cwnd increases by 1 MSS per RTT (additive increase)—a linear growth that is conservative and fair. When loss is detected (indicating congestion), cwnd is halved (multiplicative decrease), a steep reduction that quickly backs off in response to congestion. This asymmetric response—gentle increase but rapid decrease—causes flows sharing a bottleneck to converge toward fair bandwidth sharing. RFC 5681 specifies AIMD for standard TCP Reno. Options A, C, and D describe different algorithms or parameters unrelated to AIMD." },
   { topic: "W4 — Congestion Control",
     q: "Chiu & Jain showed AIMD converges to fairness because:",
     options: [
@@ -4378,7 +4378,7 @@ const quizQuestions = [
       "TCP measures other flows' rates and matches them.",
       "ECN marks the largest flow first." ],
     answer: 0,
-    explain: "The classic Chiu-Jain phase-plane argument: AIMD reduces the difference between flows over time on a 2-flow shared bottleneck, converging toward the fair point." },
+    explain: "The Chiu-Jain fairness proof uses a phase-plane argument to show that AIMD converges to fairness. When two flows share a bottleneck, the operating point is a 2D vector (cwnd1, cwnd2). Multiplicative decrease (cwnd = cwnd/2) scales both dimensions equally, moving the operating point along a line through the origin toward the fair 45° diagonal line (cwnd1 = cwnd2). Additive increase moves the point along a 45° line parallel to the diagonal, maintaining the fairness ratio. Repeated cycles of these moves cause the operating point to spiral toward the intersection of the fair line and the capacity constraint, where cwnd1 + cwnd2 = bottleneck bandwidth. This elegant geometric proof applies to any network of flows and shows AIMD's inherent fairness. Options B, C, and D misunderstand the mechanism." },
   { topic: "W4 — Congestion Control",
     q: "What is *bufferbloat*?",
     options: [
@@ -4387,7 +4387,7 @@ const quizQuestions = [
       "A TCP option that compresses headers.",
       "A condition where the receiver window equals zero." ],
     answer: 1,
-    explain: "Bufferbloat: oversized buffers fill up under loss-based TCP, keeping latency high even when there's no real congestion. AQM (CoDel, FQ-CoDel, PIE) mitigates it." },
+    explain: "Bufferbloat, described in research by Gettys and Nichols, occurs when routers maintain excessively large buffers that fill up under heavy loss-based TCP traffic. TCP congestion control assumes loss indicates congestion; if buffers are huge, queues fill before loss happens, and TCP doesn't back off in time. The result is persistently high queueing delay—sometimes seconds—even when there is no actual packet loss. This hurts interactive applications (video calls, online gaming) that are sensitive to latency variance. BBR and Active Queue Management algorithms like CoDel and FQ-CoDel mitigate bufferbloat by either probing based on RTT rather than loss (BBR) or explicitly dropping or marking packets when queue depth exceeds a target (AQM). Option A and C are not relevant phenomena; option D (window = 0) indicates the receiver has no space, which is separate from bufferbloat." },
   { topic: "W4 — Congestion Control",
     q: "How does ECN (Explicit Congestion Notification) work?",
     options: [
@@ -4396,7 +4396,7 @@ const quizQuestions = [
       "It is a TCP option that disables flow control.",
       "It is implemented only in IPv6 routers." ],
     answer: 1,
-    explain: "ECN-capable senders and AQM-enabled routers cooperate: instead of dropping, routers mark packets (CE bit). The receiver echoes via ECE; the sender reacts as if to a loss." },
+    explain: "Explicit Congestion Notification (ECN), defined in RFC 3168, allows routers to signal congestion without dropping packets. Two bits in the IP header (ECN field) are used: senders and receivers set the ECT (ECN-Capable Transport) bit to opt in; when a router detects congestion (via an AQM algorithm), it sets the CE (Congestion Experienced) bit in packets rather than dropping them. The receiver echoes this CE signal back to the sender via the ECE (ECN-Echo) bit in the TCP header. Upon receiving an ECE, the sender reacts as if a packet were lost—halving cwnd and entering fast recovery—but the connection avoids the throughput loss and latency spike that actual packet loss causes. ECN requires cooperation from both endpoints and routers; when properly deployed, it improves both throughput and latency." },
   { topic: "W4 — Congestion Control",
     q: "When TCP Reno detects loss via 3 duplicate ACKs (fast retransmit + fast recovery), cwnd becomes:",
     options: [
@@ -4405,7 +4405,7 @@ const quizQuestions = [
       "Doubled",
       "Set to the receiver's advertised window" ],
     answer: 1,
-    explain: "Reno's fast recovery: ssthresh = cwnd/2; cwnd = ssthresh; resume linear (congestion-avoidance) growth. A timeout, in contrast, resets cwnd to 1 MSS." },
+    explain: "When TCP Reno detects loss via three duplicate ACKs (fast retransmit), it enters fast recovery: ssthresh is set to cwnd/2, cwnd is then set to ssthresh (or sometimes ssthresh + 3 MSS), and the connection immediately resumes transmission in congestion-avoidance mode (linear cwnd growth). This differs critically from a timeout loss, where cwnd is reset to 1 MSS and slow start restarts—a much more aggressive pullback. Fast recovery avoids the throughput cliff of slow-start restart, improving recovery latency on networks where some isolated packet loss occurs but the pipe is not entirely saturated. Option A (full slow start restart on 3 dup-ACKs) is incorrect; option C (cwnd doubled) is the opposite of what should happen; option D confuses the issue with window scaling." },
   { topic: "W4 — Congestion Control",
     q: "TCP throughput ≈ MSS / (RTT · √p) is sometimes called:",
     options: [
@@ -4414,7 +4414,7 @@ const quizQuestions = [
       "Reno's first axiom",
       "Nagle's identity" ],
     answer: 1,
-    explain: "Mathis et al.'s steady-state formula. Doubling loss rate cuts throughput by √2; the inverse-RTT factor shows long-RTT flows are penalized." },
+    explain: "The Mathis equation, derived by Mathis et al., approximates steady-state TCP throughput as MSS / (RTT · √p), where p is the packet loss probability. This formula reveals that throughput falls inversely with the square root of loss rate: doubling the loss rate cuts throughput by √2 (≈ 1.41×), not 2×. It also shows that longer-RTT flows achieve lower throughput for the same loss rate, a fairness issue since high-latency paths (transcontinental, satellite) are disadvantaged. This insight motivated research into fairness-improving algorithms like CUBIC (which ramps faster on high-BDP networks) and BBR (which avoids loss altogether). Option A (Little's Law) applies to queueing, not TCP throughput; options C and D are not established formulas." },
   { topic: "W4 — Congestion Control",
     q: "TCP Cubic, the Linux default for many years, replaces AIMD's linear growth with:",
     options: [
@@ -4423,7 +4423,7 @@ const quizQuestions = [
       "Random jitter",
       "Strict slow start always" ],
     answer: 1,
-    explain: "Cubic's cwnd grows as a cubic function of elapsed time since last congestion event — concave near W_max then convex — to ramp quickly in high-BDP networks while being RTT-fair." },
+    explain: "TCP CUBIC, the default congestion control in Linux for many years, replaces Reno's linear growth during congestion avoidance with a cubic polynomial function of time elapsed since the last congestion event. The cubic function is concave near the previous congestion point W_max (growing slowly) and then becomes convex (growing faster), allowing CUBIC to ramp quickly to fill high-BDP networks while remaining fair to RTT-diverse flows. CUBIC was designed specifically to improve performance on long-delay, high-bandwidth networks (like intercontinental links or data-center networks) where Reno's linear growth struggles to utilize the available capacity. More recent alternatives like BBR operate on different principles (bandwidth and RTT estimation) but CUBIC's cubic growth remains a popular, standardized choice. Options A, C, and D describe other strategies not used by CUBIC." },
   { topic: "W4 — Congestion Control",
     q: "BBR (Bottleneck Bandwidth and RTT) differs from loss-based TCP because it:",
     options: [
@@ -4432,7 +4432,7 @@ const quizQuestions = [
       "Disables retransmission entirely.",
       "Only works on lossless links." ],
     answer: 1,
-    explain: "BBR estimates BtlBw and RTprop and paces sending to BtlBw, periodically probing both. It aims for high throughput with low queue (and thus low latency)." },
+    explain: "BBR (Bottleneck Bandwidth and Round-Trip propagation time), developed at Google and now used by many large services, fundamentally differs from loss-based TCP: instead of waiting for packet loss to detect congestion, BBR directly estimates the bottleneck link's bandwidth (BtlBw) and the path's minimum RTT (RTprop) by continuously measuring. BBR then paces packets at the estimated BtlBw rate (roughly BtlBw × RTprop bytes in flight) and periodically probes to refine these estimates. This model-based approach aims for high throughput *without* filling queues, thereby minimizing latency. BBR works well on lossy networks, satellite links, and mobile networks where loss-based algorithms suffer. It is not limited to lossless links and, when properly deployed with flow-rate diversity handling, scales well. Option A (ICMP), C (no retransmission), and D (lossless only) mischaracterize BBR." },
 
   // ── Week 5: Routing ────────────────────────────────────────────────
   { topic: "W5 — Routing",
@@ -4443,7 +4443,7 @@ const quizQuestions = [
       "Always forward on the most recently learned route.",
       "Choose the route with the highest hop count." ],
     answer: 1,
-    explain: "A destination IP may match several prefixes (e.g., default 0.0.0.0/0 and a more specific 10.1.2.0/24). LPM picks the most specific one." },
+    explain: "Longest-prefix match (LPM) is the forwarding rule used by IP routers when multiple routes in the forwarding information base (FIB) match a destination IP address. For example, a destination might match both 0.0.0.0/0 (default route, /0 prefix) and a more specific 10.1.2.0/24 (a /24 prefix). LPM selects the route with the longest subnet mask—here, /24 is longer than /0, so the 10.1.2.0/24 route is chosen. This allows networks to use default routes for unreachable destinations while still maintaining more specific paths for known subnets. LPM is essential to Internet scalability; it enables route aggregation (CIDR) and allows ISPs to build hierarchical routing tables. Option A (longest AS-path) is BGP-specific, not routing in general; options C and D mischaracterize LPM." },
   { topic: "W5 — Routing",
     q: "A distance-vector protocol (e.g., RIP) suffers from *count-to-infinity*. Why?",
     options: [
@@ -4452,7 +4452,7 @@ const quizQuestions = [
       "TTL is capped at 16.",
       "Multicast addresses overflow." ],
     answer: 1,
-    explain: "Without full topology knowledge, after a link fails neighbors may advertise outdated paths through each other, slowly incrementing the metric. Split-horizon and poison reverse help." },
+    explain: "Distance-vector protocols like RIP suffer from the count-to-infinity problem: routers maintain only the hop count (distance metric) to each destination as learned from neighbors, without complete topology knowledge. When a link fails, routers may temporarily have stale routes to the failed destination pointing back through the neighbor that learned the route from them. The neighbors then chase each other's outdated metrics upward (incrementing hop counts) until the metric reaches \"infinity\" (16 hops in RIP), at which point the route is discarded. This convergence can take many minutes, during which packets may loop. Split-horizon (never send a route back to where it came from) and poison-reverse (advertise failed routes with infinite metric) partially mitigate looping. Link-state protocols avoid this by flooding the complete topology to all routers." },
   { topic: "W5 — Routing",
     q: "Link-state routing (OSPF, IS-IS) builds the forwarding table by:",
     options: [
@@ -4461,7 +4461,7 @@ const quizQuestions = [
       "Asking a central controller for routes.",
       "Computing BGP best path with policy filters." ],
     answer: 1,
-    explain: "Every router learns the whole topology via LSA flooding and independently runs Dijkstra's SPF algorithm to derive its forwarding table." },
+    explain: "Link-state routing protocols like OSPF (RFC 2328) and IS-IS operate by having each router flood its local link-state information (adjacencies, link metrics) to all other routers in the network via Link-State Advertisements (LSAs). Every router receives the complete topology and independently runs Dijkstra's Shortest-Path First (SPF) algorithm to compute the shortest-path tree rooted at itself, from which it derives its forwarding table. This approach ensures all routers converge to the same routing decisions (given stable topology), avoids count-to-infinity problems, and converges quickly to topology changes. OSPF is widely used within autonomous systems (as an IGP). Options A (distance-vector), C (central controller), and D (BGP) describe different architectures." },
   { topic: "W5 — Routing",
     q: "BGP is best described as:",
     options: [
@@ -4470,7 +4470,7 @@ const quizQuestions = [
       "A distance-vector protocol with hop counts.",
       "A flooding protocol for multicast." ],
     answer: 1,
-    explain: "BGP carries AS-paths (a path vector preventing loops) and lets operators apply policy (LOCAL_PREF, MED, AS-path prepending, communities) — policy, not shortest-path, drives decisions." },
+    explain: "BGP (Border Gateway Protocol, RFC 9279) is the inter-domain routing protocol used to exchange reachability information between autonomous systems (ASes). Unlike distance-vector (which counts hops) or link-state (which floods topology), BGP is a *path-vector* protocol: it announces AS-paths (ordered lists of ASNs traversed) to prevent loops—if a router sees its own ASN in a received path, it discards the route. Critically, BGP operators use policy at each hop to select routes: LOCAL_PREF (local preference for internal routes), MED (multi-exit discriminator to influence incoming traffic), AS-path prepending (artificially lengthening paths to deprioritize them), and community tags allow fine-grained traffic engineering. BGP is thus policy-driven, not purely shortest-path-driven. This flexibility is essential for Internet operators but also makes BGP complex and fragile. Option A (link-state IGP) and C (distance-vector) describe other protocols; option D (multicast flooding) is unrelated." },
   { topic: "W5 — Routing",
     q: "What does *hierarchical routing* with autonomous systems (ASes) enable?",
     options: [
@@ -4479,7 +4479,7 @@ const quizQuestions = [
       "Faster Wi-Fi association",
       "Smaller TCP windows" ],
     answer: 1,
-    explain: "The Internet is divided into ~75k ASes. Each AS runs its own IGP (OSPF/IS-IS) and speaks BGP at the edges, which keeps state and policy manageable." },
+    explain: "Hierarchical routing via autonomous systems (ASes) decouples the Internet into two layers of routing: *interior gateway protocols* (IGPs) like OSPF handle routing within each AS (intra-domain), while *exterior gateway protocols* like BGP handle routing between ASes (inter-domain). Each AS runs its own IGP and only exposes aggregate reachability information to the rest of the Internet via BGP. This hierarchy is crucial for scalability: the global routing table does not explode (it contains ~900k prefixes, not millions), and operators can apply local policy independently without affecting global routing. There are approximately 75,000 ASes in the Internet today. Without this hierarchy, every router would need to know every route in the world, which is computationally and operationally infeasible. Options A, C, and D are unrelated benefits." },
   { topic: "W5 — Routing",
     q: "Why does the Internet use *CIDR* (Classless Inter-Domain Routing) instead of classful addressing?",
     options: [
@@ -4488,7 +4488,7 @@ const quizQuestions = [
       "Classful was incompatible with TCP.",
       "It is required by BGP only for IPv6." ],
     answer: 1,
-    explain: "CIDR replaced the rigid A/B/C classes with prefix lengths, enabling supernetting/aggregation (reducing routing-table growth) and finer allocation granularity." },
+    explain: "CIDR (Classless Inter-Domain Routing, RFC 4632) replaced the older classful addressing scheme (Classes A, B, C) where address ranges were rigid and wasteful—a Class C was always /24 (256 addresses), and a Class B was always /16, leaving no flexibility. CIDR allows arbitrary-length prefixes (e.g., /22, /25) and enables *route aggregation* (supernetting): multiple smaller prefixes can be combined into one larger prefix for announcement, vastly reducing routing-table size. Without CIDR, IPv4 address space would have been exhausted much earlier, and routing tables would be unmanageably large. CIDR is fundamental to modern Internet scalability and was a critical factor in the Internet's continued growth beyond the early 1990s. Option A (IPv4 address space) conflates cause and effect; C (TCP compatibility) is not a driver; D (IPv6) applies to IPv6, not a reason for CIDR." },
   { topic: "W5 — Routing",
     q: "BGP loop prevention relies on:",
     options: [
@@ -4497,7 +4497,7 @@ const quizQuestions = [
       "A central registry.",
       "Sequence numbers in BGP updates." ],
     answer: 1,
-    explain: "Path-vector loop detection: if an eBGP speaker sees its own ASN in the AS_PATH attribute of a received update, the route is discarded." },
+    explain: "BGP loop prevention relies on the path-vector mechanism: each BGP update carries an AS_PATH attribute listing the ASNs the route has traversed. If an eBGP speaker (a router at the edge of an AS, facing the Internet) receives an update whose AS_PATH contains its own ASN, it immediately discards that route—a direct sign of a loop. For example, if AS 65001 sends a route with AS_PATH [65001, 65002, 65003], and 65001 later receives that same route (implying it traveled around a loop and came back), 65001 will reject it. This simple mechanism is extremely effective and fast: routers check the AS_PATH before making any routing decisions. Option A (TTL decrement) is how IP prevents loops, not BGP; options C and D are not relevant to BGP's loop detection. TTL only helps at the packet level, not the routing protocol level." },
   { topic: "W5 — Routing",
     q: "What is *equal-cost multipath* (ECMP)?",
     options: [
@@ -4506,7 +4506,7 @@ const quizQuestions = [
       "A multicast spanning tree.",
       "A TCP option for parallel streams." ],
     answer: 1,
-    explain: "ECMP uses per-flow hashing (over 5-tuple) so all packets of a flow follow the same path, while different flows are spread across equal-cost paths." },
+    explain: "Equal-cost multipath (ECMP) is a forwarding technique where a router with multiple equally-good routes to a destination spreads traffic across them, typically using a per-flow hash (over the 5-tuple: source IP, source port, destination IP, destination port, protocol) to ensure all packets of a single flow follow the same path. This prevents TCP packet reordering for that flow (which would hurt performance) while distributing load across multiple next-hops. ECMP is commonly used in modern data centers and ISP networks to leverage redundant paths and balance load. The hash ensures deterministic forwarding: the same flow always takes the same path. Option A (QoS/voice prioritization), C (multicast tree), and D (TCP parallel streams) are unrelated techniques." },
   { topic: "W5 — Routing",
     q: "When two ISPs *peer*, traffic between them is typically:",
     options: [
@@ -4515,7 +4515,7 @@ const quizQuestions = [
       "Routed through a Tier-1 transit only.",
       "Encrypted by default in BGP." ],
     answer: 1,
-    explain: "Peering is the bilateral exchange of customer routes, usually free. Transit, by contrast, gives a customer access to the rest of the Internet and is paid." },
+    explain: "When two ISPs *peer* (establish a bilateral peering relationship), they exchange routes to their customers' networks and agree to forward traffic between each other's customers for *free* (or on a settlement-free basis at an Internet Exchange Point). Peering is distinct from *transit*, where one ISP pays another for access to the rest of the Internet. Most peering occurs at IXPs (Internet Exchange Points like DE-CIX in Frankfurt, AMS-IX in Amsterdam) where many ISPs' routers are co-located. Peering reduces latency and improves performance between customer networks of the two ISPs. ISPs carefully manage peering agreements and policies because peering is cost-effective but requires geographic proximity; transit is more expensive but provides global reach. Option A (payment for incoming bytes) is not standard modern peering; option C (through Tier-1 only) is inefficient and not how peering works; option D (default BGP encryption) is not a peering characteristic." },
   { topic: "W5 — Routing",
     q: "*BGP hijacking* refers to:",
     options: [
@@ -4524,7 +4524,7 @@ const quizQuestions = [
       "Port-scanning ASes.",
       "Sending oversized BGP updates." ],
     answer: 1,
-    explain: "Famous incidents (Pakistan/YouTube 2008, etc.). RPKI and ROAs are deployed as a defense by cryptographically authorizing which AS may originate a prefix." },
+    explain: "BGP hijacking occurs when an AS (or an attacker who compromises an AS's routers) originates or announces IP prefixes it does not legitimately own. If an attacker's ASN announces the target prefix with a better (shorter) AS_PATH than the legitimate originator, BGP routers may route traffic destined for that prefix to the attacker instead. Famous incidents include Pakistan Telecom's accidental hijacking of YouTube's prefix in 2008 and various attacks on financial institutions. RPKI (Resource Public Key Infrastructure) and ROAs (Route Origin Authorizations) provide cryptographic defense: a legitimate prefix holder publishes a ROA specifying which ASN(s) may originate that prefix, and routers validate announcements against ROAs. Deployment is growing but still incomplete. DNSSEC (option A) protects DNS data, not BGP. Options C and D mischaracterize hijacking." },
 
   // ── Week 6: Link Layer ─────────────────────────────────────────────
   { topic: "W6 — Link Layer",
@@ -4535,7 +4535,7 @@ const quizQuestions = [
       "MAC → IPv6 link-local address",
       "Port number → process" ],
     answer: 1,
-    explain: "Before sending a frame to an on-link IPv4 next-hop, the host broadcasts an ARP request for that IP and learns the MAC. IPv6 uses NDP instead." },
+    explain: "ARP (Address Resolution Protocol, RFC 826) is a Layer-2 protocol that translates IPv4 addresses to MAC (link-layer) addresses for hosts on the same local network segment. Before a host sends an Ethernet frame to an on-link IPv4 next-hop, it must know the next-hop's MAC address. If unknown, the sender broadcasts an ARP Request: \"Who has IP address 10.0.0.5? Tell me your MAC.\" The owner of that IP responds with an ARP Reply containing its MAC. The sender caches this mapping and uses it for subsequent frames. IPv6 uses Neighbor Discovery Protocol (NDP, RFC 4861) instead of ARP, with similar semantics. ARP is essential for local-link communication; without it, Ethernet frames to on-link destinations would have unknown destination MAC addresses. Option A (DNS) is Layer-3 (application-level); options C and D are incorrect mappings." },
   { topic: "W6 — Link Layer",
     q: "An Ethernet switch builds its forwarding table by:",
     options: [
@@ -4544,7 +4544,7 @@ const quizQuestions = [
       "Querying DHCP.",
       "Consulting a central controller for every frame." ],
     answer: 1,
-    explain: "Switches learn (port, MAC) by observing source addresses, then forward by destination MAC. Unknown destinations are flooded." },
+    explain: "Ethernet switches build their forwarding tables through *backward learning* (also called *learning* or *MAC learning*): as a switch observes Ethernet frames arriving on each port, it records the source MAC address and the port it arrived on in a Content-Addressable Memory (CAM) table. When later forwarding a frame destined for that MAC, the switch consults the table and forwards out the corresponding port. Unknown destinations are *flooded* out all ports except the arrival port. This simple, stateless approach allows switches to scale without requiring manual MAC-to-port configuration. The CAM table is dynamic and has a finite size; entries age out after a timeout (typically 5 minutes). Option A (routing protocol) is Layer-3; options C and D are impractical for switch scalability." },
   { topic: "W6 — Link Layer",
     q: "Why is the Spanning Tree Protocol (STP) used in switched Ethernet?",
     options: [
@@ -4553,7 +4553,7 @@ const quizQuestions = [
       "To assign IP addresses.",
       "To distribute VLAN configuration." ],
     answer: 1,
-    explain: "Ethernet frames have no TTL — a loop would cause broadcast storms. STP elects a root and blocks redundant ports to form a loop-free tree." },
+    explain: "Spanning Tree Protocol (STP, IEEE 802.1D, and improved in RSTP) is used to prevent loops in redundantly-connected Layer-2 networks. Ethernet frames have no TTL or hop-count field—unlike IP, where TTL prevents infinite loops. In a bridged Ethernet network with loops (created by multiple paths between switches for redundancy), a broadcast frame would circulate forever, consuming all bandwidth. STP elects a root bridge and configures ports in a spanning tree: ports are either *forwarding* (active) or *blocking* (inactive), ensuring only one active path between any two switches. If a link fails, STP reconverges to a new tree using the blocked backup path. This provides both redundancy and loop-free topology. Option A (header compression), C (IP assignment), and D (VLAN distribution) are unrelated." },
   { topic: "W6 — Link Layer",
     q: "CSMA/CD on classic shared Ethernet means:",
     options: [
@@ -4562,7 +4562,7 @@ const quizQuestions = [
       "Stations use TDMA slots.",
       "Each station has a guaranteed bit-rate." ],
     answer: 0,
-    explain: "Carrier Sense Multiple Access with Collision Detection. Modern switched full-duplex Ethernet eliminates collisions, so CSMA/CD is mostly historical." },
+    explain: "CSMA/CD (Carrier Sense Multiple Access with Collision Detection) is the medium access control protocol used by classic shared Ethernet. The algorithm is: (1) sense the medium (check if any station is transmitting); (2) if idle, transmit; (3) while transmitting, listen for collisions (a collision occurs if another station also started transmitting); (4) on collision, jam the channel (send a jam signal) and back off for a random time interval using binary exponential backoff. Once backoff expires, return to step 1. This distributed algorithm works because collisions propagate across the shared medium and all stations can detect them. Modern Ethernet is full-duplex and switched, eliminating collisions entirely, so CSMA/CD is now mostly historical. Options B and D incorrectly describe centralized or guaranteed-rate schemes; option C describes TDMA, a different access method." },
   { topic: "W6 — Link Layer",
     q: "Why does Wi-Fi use CSMA/CA (avoidance) instead of CSMA/CD?",
     options: [
@@ -4571,7 +4571,7 @@ const quizQuestions = [
       "Collisions never happen on Wi-Fi.",
       "It is required by the IETF." ],
     answer: 1,
-    explain: "Half-duplex radio + hidden terminals = can't detect collisions reliably. 802.11 uses CSMA/CA: random backoff before transmit, link-layer ACKs, optional RTS/CTS." },
+    explain: "Wi-Fi (802.11) uses CSMA/CA (Collision Avoidance) instead of CSMA/CD because wireless links have unique constraints: a transmitting station cannot reliably listen for collisions simultaneously (half-duplex), and the hidden-terminal problem means a station may not sense another transmitter if they are out of range. CSMA/CA avoids collisions up-front by using random backoff before transmission and by requiring link-layer ACKs for each frame—if the sender doesn't receive an ACK after a timeout, it assumes a collision and retransmits. Optionally, RTS/CTS (Request-to-Send / Clear-to-Send) handshakes can reserve the medium before data transmission, mitigating hidden terminals. This frame-by-frame approach trades throughput for reliability in the challenging wireless environment. Option A (slow NICs), C (no collisions), and D (IETF requirement) are either false or mischaracterize why." },
   { topic: "W6 — Link Layer",
     q: "What is the role of the Ethernet *FCS* (Frame Check Sequence)?",
     options: [
@@ -4580,7 +4580,7 @@ const quizQuestions = [
       "Flow-control credit",
       "Frame ordering sequence number" ],
     answer: 1,
-    explain: "Ethernet uses a 32-bit CRC. The NIC drops frames that fail CRC; there's no link-layer retransmission in classic Ethernet, so loss is left to higher layers." },
+    explain: "The Ethernet Frame Check Sequence (FCS) is a 32-bit cyclic redundancy check (CRC-32) calculated over the Ethernet frame (header, payload, sometimes trailer) and appended as a trailer. The NIC hardware computes the FCS at transmission and verifies it at reception; if the FCS doesn't match, the frame has suffered bit errors during transmission and is silently discarded. Ethernet provides no link-layer retransmission—the error is simply dropped. Higher-layer protocols (like TCP) must handle retransmission if needed. This design keeps Ethernet simple and fast; more complex local networks like Wi-Fi implement link-layer retransmissions. The FCS protects against random bit errors on the link but is not cryptographic—it cannot detect intentional tampering. Options A (encryption), C (flow-control credit), and D (frame ordering) are unrelated." },
   { topic: "W6 — Link Layer",
     q: "MAC addresses are:",
     options: [
@@ -4589,7 +4589,7 @@ const quizQuestions = [
       "32-bit and routable across the Internet.",
       "Random per packet." ],
     answer: 0,
-    explain: "Classic IEEE EUI-48: first 24 bits (OUI) identify the vendor; lower 24 bits identify the interface. Locally-administered/random MACs exist for privacy." },
+    explain: "MAC addresses are 48-bit identifiers (also called EUI-48 in modern terminology). The address space is divided into two parts: the first 24 bits (called the Organizationally Unique Identifier or OUI) are assigned to vendors and identify the manufacturer; the remaining 24 bits are assigned by the vendor to identify a unique network interface within that manufacturer's range. These assignments are globally unique, and classic MAC addresses are burned into the NIC's ROM at manufacture. However, many modern systems support locally-administered MAC addresses (overriding the burned-in address via software), enabling MAC spoofing or privacy-preserving randomization. Options B (derived from IP) are incorrect; option C (32-bit) conflates with IPv4 addresses; option D (random per packet) describes per-packet randomization, not the general case." },
   { topic: "W6 — Link Layer",
     q: "What does an Ethernet broadcast address (ff:ff:ff:ff:ff:ff) do?",
     options: [
@@ -4598,7 +4598,7 @@ const quizQuestions = [
       "Is silently dropped by switches.",
       "Triggers link renegotiation." ],
     answer: 0,
-    explain: "Broadcasts are flooded out all ports in the same broadcast domain (but not across routers/VLANs). ARP and DHCP rely on this scope." },
+    explain: "An Ethernet broadcast address (ff:ff:ff:ff:ff:ff, all 48 bits set to 1) is a special MAC address that reaches *all* hosts within the same Layer-2 broadcast domain (e.g., a VLAN or a physical LAN segment connected by switches). Switches flood broadcast frames out all ports except the arrival port; routers do *not* forward broadcasts between subnets. Many critical protocols rely on broadcasts: ARP uses broadcast to find MAC addresses; DHCP uses broadcast for initial server discovery; and IPv6 Neighbor Discovery uses multicast (a related concept). Option B (Internet-wide) is impossible without routers, which block broadcasts; option C (switches drop) is incorrect; option D (link renegotiation) is unrelated." },
 
   // ── Week 7: Applications & DNS ─────────────────────────────────────
   { topic: "W7 — Applications & DNS",
@@ -4609,7 +4609,7 @@ const quizQuestions = [
       "The authoritative server queries the root on the client's behalf.",
       "TLS-encrypted DNS only." ],
     answer: 0,
-    explain: "Iterative: each server returns either the answer or the NS records for the next zone. *Recursive* queries are the kind a stub resolver makes to a recursive resolver, which then iterates." },
+    explain: "In an *iterative* DNS query, the resolver (the client's DNS software or a recursive resolver) directly queries a server with a specific question. The server responds by either answering the question directly or, if it doesn't have the answer, referring the resolver to another server (by returning NS records pointing to the next server in the chain). The resolver must then chase this referral by querying the next server, and so on. In contrast, a *recursive* query is what a stub resolver (a client application) makes to a recursive resolver (e.g., 8.8.8.8)—the resolver promises to do all the chasing on the client's behalf and return either the answer or an error. Modern DNS is typically recursive at the stub→resolver level and iterative at the resolver→authoritative level. RFC 1034/1035 define both query types. Option B (wait forever) is incorrect; options C and D conflate recursion/iteration with other DNS features." },
   { topic: "W7 — Applications & DNS",
     q: "A DNS *A record* maps:",
     options: [
@@ -4618,7 +4618,7 @@ const quizQuestions = [
       "Name → mail server",
       "Name → IPv6 address" ],
     answer: 1,
-    explain: "A = IPv4, AAAA = IPv6, MX = mail exchanger, CNAME = alias, NS = nameserver, TXT = free-form text." },
+    explain: "DNS record types are distinguished by their purpose. The *A* record maps a domain name to an IPv4 address; *AAAA* maps to IPv6; *CNAME* creates an alias to another name; *MX* identifies mail servers for the domain; *NS* specifies authoritative nameservers; and *TXT* carries arbitrary text (used for SPF, DKIM, and other services). Each zone's authoritative nameserver maintains these records. Option A (MAC address mapping) is Layer-2 and is done by ARP, not DNS; option C (mail server) is the job of MX, not A; option D (IPv6) is handled by AAAA. Understanding the various record types is essential for DNS troubleshooting and management." },
   { topic: "W7 — Applications & DNS",
     q: "What primarily makes DNS fast and scalable at planetary scale?",
     options: [
@@ -4627,7 +4627,7 @@ const quizQuestions = [
       "Single global database",
       "Anycast only" ],
     answer: 1,
-    explain: "DNS scales via hierarchy (root → TLD → authoritative) plus caching of responses for the TTL. Anycast (especially for the roots) helps further but caching does the heavy lifting." },
+    explain: "DNS's ability to scale to billions of names relies on two key mechanisms: (1) *Hierarchical delegation*: the global namespace is divided into zones (e.g., root, TLDs like .com, second-level domains like example.com), each with its own authoritative nameserver, so no single server must know all names; (2) *Aggressive caching*: every resolver (recursive resolver, OS resolver, application cache) caches responses for the TTL (Time-To-Live) specified in the records, reducing queries to authoritative servers. Anycast (using the same IP address for multiple geographically distributed servers, relying on BGP routing to send queries to the nearest copy) helps distribute load, especially for the 13 root nameserver addresses. But caching is the primary scalability mechanism. Without TTL-based caching, the root and TLD servers would be overwhelmed. Option A (mandatory TLS), C (single DB), and D (anycast only) either add cost or miss the main driver." },
   { topic: "W7 — Applications & DNS",
     q: "HTTP/1.1 introduced *persistent connections*. Why does this matter for performance?",
     options: [
@@ -4636,7 +4636,7 @@ const quizQuestions = [
       "It lets servers push unsolicited objects.",
       "It enables HTTPS." ],
     answer: 1,
-    explain: "A fresh TCP connection costs 1 RTT for the handshake (plus TLS) and starts with cwnd=10 MSS. Reusing a warm connection avoids both penalties." },
+    explain: "Persistent connections in HTTP/1.1 (RFC 7230) allow a TCP connection to remain open and be reused for multiple request/response exchanges, rather than opening and closing a new connection for each request. This eliminates the overhead of the TCP three-way handshake and slow start for every request. A modern HTTPS connection also incurs a TLS handshake (1–2 RTTs), so keeping the connection warm avoids that cost too. A page with dozens of small objects (images, stylesheets, scripts) loaded sequentially over one persistent connection is much faster than using separate connections. Without persistent connections, browser performance suffers dramatically. HTTP/1.1 made persistent connections the default (with Connection: close to opt out), improving page-load latency significantly. Option A (compression), C (server push, an HTTP/2 feature), and D (HTTPS support) are unrelated benefits." },
   { topic: "W7 — Applications & DNS",
     q: "How does HTTP/2 improve on HTTP/1.1's pipelining limitations?",
     options: [
@@ -4645,7 +4645,7 @@ const quizQuestions = [
       "It eliminates encryption.",
       "It runs over ICMP." ],
     answer: 1,
-    explain: "HTTP/2 multiplexes streams within one TCP connection. HTTP/3 (over QUIC/UDP) goes further by eliminating TCP's HOL blocking too." },
+    explain: "HTTP/1.1 supported pipelining—sending multiple requests on a single connection without waiting for responses—but suffered from head-of-line (HOL) blocking at the HTTP layer: if the first response is slow, all subsequent responses are delayed even if they're ready on the server. HTTP/2 (RFC 7540) introduced multiplexing: multiple requests and responses are interleaved on a single TCP connection as independent *streams*, each with its own headers and body. A delay in stream 1 does not block stream 2; streams can be prioritized, and headers can be compressed. However, HTTP/2 still runs over TCP, so TCP-level HOL blocking (a lost packet on the TCP connection stalls all streams) still occurs. Option A (UDP instead of TCP), C (eliminating encryption), and D (ICMP) are incorrect. HTTP/3 addresses TCP-level HOL by using QUIC over UDP." },
   { topic: "W7 — Applications & DNS",
     q: "The difference between HTTP/3 and HTTP/2 is primarily that HTTP/3:",
     options: [
@@ -4654,7 +4654,7 @@ const quizQuestions = [
       "Drops encryption.",
       "Is a server-push only protocol." ],
     answer: 0,
-    explain: "QUIC moves transport into user-space over UDP, integrates TLS 1.3, and recovers losses per stream — a lost packet on stream A doesn't stall stream B." },
+    explain: "HTTP/3 (RFC 9114) is layered over QUIC (RFC 9000), a transport protocol built on UDP that integrates transport and security. Unlike HTTP/2+TCP+TLS (three separate layers), QUIC combines these features in user-space, enabling faster evolution. Key advantages: (1) the 1-RTT handshake establishes both transport and TLS, and 0-RTT resumption is possible; (2) connection migration using connection IDs allows seamless handoff when mobile clients switch networks (IP changes don't break the connection); (3) *stream-level* retransmission means a lost packet on stream A doesn't block stream B (eliminating TCP-level HOL blocking). QUIC's user-space implementation allows operators to deploy improvements without kernel changes, accelerating innovation. Option A (MTU), C (removing encryption), and D (MAC overhead) are not primary advantages." },
 
   // ── Week 8: Security ───────────────────────────────────────────────
   { topic: "W8 — Security",
@@ -4665,7 +4665,7 @@ const quizQuestions = [
       "Packet ordering",
       "Lossless link-layer transport" ],
     answer: 1,
-    explain: "TLS encrypts and MACs the byte stream and authenticates the server (and optionally the client) using certificates from a PKI." },
+    explain: "TLS (Transport Layer Security, RFC 8446 for version 1.3) is a protocol that provides three security properties to communication between endpoints: (1) *Confidentiality*—the content is encrypted so only authorized parties can read it; (2) *Integrity*—a message authentication code (MAC) ensures data is not tampered with in transit; and (3) *Authentication*—typically the server proves its identity via a certificate signed by a trusted Certificate Authority, and optionally the client authenticates too (mutual TLS). TLS operates over TCP and is commonly used for HTTPS (HTTP over TLS). The protocol handles handshakes (key agreement and authentication), record encryption/decryption, and change-of-cipher-suite negotiation. Option A (routing), C (packet ordering), and D (link-layer properties) are unrelated to TLS." },
   { topic: "W8 — Security",
     q: "In TLS, the *server certificate* binds:",
     options: [
@@ -4674,7 +4674,7 @@ const quizQuestions = [
       "A username to a session cookie",
       "An AS number to a prefix" ],
     answer: 1,
-    explain: "X.509 certificates chain back to a trusted root CA. Clients verify the chain and that the certificate's SAN/CN matches the hostname they're connecting to." },
+    explain: "An X.509 server certificate binds a domain name (the subject's CN or SAN fields) to a public key by cryptographic signature. A trusted Certificate Authority (CA) signs the certificate, asserting \"I verify that this public key belongs to this domain.\" The CA's signature is backed by its own certificate, which chains up to a trusted root CA in the client's store. When a TLS client connects to a server, it: (1) receives the server's certificate, (2) verifies the chain of signatures back to a trusted root, and (3) checks that the certificate's domain name matches the hostname being connected to (CN/SAN matching). If any check fails, the connection is rejected. This architecture prevents an attacker from impersonating a server without breaking cryptography or compromising a trusted CA. Option A (MAC/port binding), C (username/session cookie), and D (AS/prefix binding) are entirely different identifier concepts." },
   { topic: "W8 — Security",
     q: "A SYN-flood denial-of-service attack exploits:",
     options: [
@@ -4683,7 +4683,7 @@ const quizQuestions = [
       "BGP route leaks.",
       "DNS amplification." ],
     answer: 1,
-    explain: "Mitigations include SYN cookies (server stays stateless until the final ACK arrives) and connection-rate limiting." },
+    explain: "A SYN-flood DoS attack exploits the TCP three-way handshake: the attacker sends a stream of SYN segments with spoofed source IP addresses to a target server. The server, following the TCP specification, allocates kernel state for each SYN in a backlog (the half-open connection table). If the backlog fills, the server can no longer accept new legitimate connections. The attacker never completes the handshakes (never responds to the SYN-ACK), leaving connections hanging. Mitigations include: (1) *SYN cookies*—the server uses a cryptographic hash of the client's IP/port and its own secret to generate the ISN, avoiding state allocation until the final ACK arrives; (2) rate-limiting and backlog tuning; and (3) TCP intercept proxies at the edge. Modern servers typically use SYN cookies by default. Options A (TLS replay), C (BGP), and D (DNS amplification) are different attacks." },
   { topic: "W8 — Security",
     q: "DNS *amplification* attacks rely on:",
     options: [
@@ -4692,7 +4692,7 @@ const quizQuestions = [
       "Hijacking BGP for the resolver's prefix.",
       "Brute-forcing TCP sequence numbers." ],
     answer: 1,
-    explain: "Source-IP spoofing + a recursive resolver that returns large responses (e.g., DNSSEC, ANY queries) means a small attacker pipe creates a large victim flood. BCP 38 and rate-limiting help." },
+    explain: "DNS amplification attacks exploit open (misconfigured) recursive resolvers and source-IP spoofing. The attacker sends a small DNS query (often an ANY query for a domain, or a query for a large record like DNSSEC data) with the *victim's* IP address as the source. The open resolver responds to what it believes is a legitimate client, but sends the response to the victim. The amplification factor (ratio of response size to query size) can be 40× or more. If an attacker controls multiple bots or compromised hosts, they can flood the victim's link with massive DNS response traffic. BCP 38 (source-IP filtering at ISP edges) prevents spoofing; restricting recursive resolvers to authorized clients; and rate-limiting help mitigate. Interestingly, DNSSEC responses are even larger, making DNSSEC-capable resolvers attractive amplifiers—a security feature (authentication) inadvertently enabled amplification. Options A (TLS on resolver), C (BGP hijacking), and D (TCP sequence guessing) are unrelated." },
   { topic: "W8 — Security",
     q: "The TLS *handshake* in TLS 1.3 achieves:",
     options: [
@@ -4701,7 +4701,7 @@ const quizQuestions = [
       "Plaintext-only fallback for legacy clients.",
       "No certificate verification." ],
     answer: 1,
-    explain: "TLS 1.3 streamlines to 1-RTT, mandates ephemeral DH for forward secrecy, and removes many legacy weak ciphers. 0-RTT data is possible on resumption with replay caveats." },
+    explain: "TLS 1.3 (RFC 8446) reduced the handshake from 2 RTTs (in TLS 1.2) to 1 RTT in the common case. The client sends its key share and supported cipher suites in the first message; the server responds with its key share, selected cipher suite, and authentication (via certificate). Both sides can now derive session keys using (EC)DHE, and the client can immediately send encrypted application data. A 0-RTT mode exists for resumed connections where the client can send data in the first message (on resumption, skipping the full handshake), but 0-RTT data lacks forward secrecy and is vulnerable to replay—applications must be carefully designed to accept this. All session keys are derived using ephemeral DH for forward secrecy (compromise of the server's long-term certificate doesn't decrypt prior sessions). Option A (zero RTTs always) is inaccurate; options C and D are vulnerabilities TLS 1.3 explicitly addresses." },
   { topic: "W8 — Security",
     q: "Why is *forward secrecy* (e.g., from ephemeral Diffie-Hellman) valuable?",
     options: [
@@ -4710,7 +4710,7 @@ const quizQuestions = [
       "It eliminates the need for certificates.",
       "It is required by IPv6." ],
     answer: 1,
-    explain: "With (EC)DHE, even if the server's RSA/ECDSA key leaks tomorrow, recorded TLS sessions from today remain confidential — the ephemeral DH secrets are gone." },
+    explain: "Forward secrecy (also called perfect forward secrecy, PFS) is a property where compromise of the server's long-term private key (e.g., its RSA or ECDSA key) in the future does *not* allow an attacker to decrypt previously recorded TLS sessions. This is achieved by deriving session keys using ephemeral Diffie-Hellman (ephemeral DH or ECDHE) values that are generated fresh for each connection and discarded after the handshake. Even if an attacker records every bit of the TLS handshake and later compromises the server's RSA key, they still cannot derive the ephemeral DH private values that were discarded. Forward secrecy has become essential for privacy; TLS 1.3 mandates PFS by requiring (EC)DHE. Without PFS, long-term key compromise is catastrophic—all past communications are retroactively decrypted. Option A (shorter handshake) and C (eliminating certificates) are unrelated; option D (IPv6 requirement) is false." },
 
   // ── Week 9: Advanced / Beyond ───────────────────────────────────────
   { topic: "W9 — Advanced",
@@ -4721,7 +4721,7 @@ const quizQuestions = [
       "Provide end-to-end encryption.",
       "Replace DNS." ],
     answer: 1,
-    explain: "A typical NAPT box maps internal (private IP, port) ↔ (public IP, port). NAT breaks the end-to-end principle and complicates inbound connections (hence STUN/TURN/ICE)." },
+    explain: "NAT (Network Address Translation), specifically NAPT (NAT with Port Translation), was introduced to conserve the limited IPv4 address space by allowing many hosts behind a private network to share a single (or few) public IP address(es). The NAT box rewrites outgoing packets, replacing the private (source IP, port) with a (public IP, port), and maintains a translation table. Returning packets are rewritten back to the private (dest IP, port). A typical home router doing NAT maps internal (192.168.1.x) hosts to a single ISP-assigned public IP. NAT has significant drawbacks: it breaks the end-to-end principle (IPv6 was designed to eliminate the need for it), breaks protocols that embed IP addresses, and complicates inbound connections (hence STUN/TURN/ICE for peer-to-peer). IPv6's vast address space eliminates the need for NAT. Option A (throughput), C (encryption), and D (DNS replacement) are not NAT's purpose." },
   { topic: "W9 — Advanced",
     q: "Compared to IPv4, IPv6:",
     options: [
@@ -4730,7 +4730,7 @@ const quizQuestions = [
       "Eliminates ARP by adding broadcast back.",
       "Replaces TCP." ],
     answer: 0,
-    explain: "IPv6 expands address space to 128 bits, removes the IPv4 header checksum (relying on link/transport), and uses NDP/SLAAC instead of ARP/DHCP for basic config." },
+    explain: "IPv6 (RFC 8200) expands address space to 128 bits (from IPv4's 32 bits), providing ~3.4×10³⁸ addresses—enough that every grain of sand on Earth could have multiple addresses. IPv6's header is simpler and fixed-length (40 bytes, no variable options as in IPv4), improving router processing speed. IPv6 removes the IPv4 header checksum (link-layer and transport-layer checksums provide sufficient integrity), shifting responsibility downward. IPv6 replaces ARP with Neighbor Discovery Protocol (NDP) and uses Stateless Address Autoconfiguration (SLAAC), where devices derive a unique IPv6 address from the network prefix and their MAC address without requiring DHCP. Option B (64-bit addresses) is incorrect; option C (reintroducing broadcast) is false; option D (replacing TCP) conflates layers." },
   { topic: "W9 — Advanced",
     q: "An SDN (Software-Defined Networking) controller, in OpenFlow's model, typically:",
     options: [
@@ -4739,7 +4739,7 @@ const quizQuestions = [
       "Runs only on Wi-Fi APs.",
       "Implements BGP at the application layer." ],
     answer: 1,
-    explain: "SDN moves control-plane decisions to a logically central controller; OpenFlow is one southbound protocol used to install flow rules into switch data planes." },
+    explain: "Software-Defined Networking (SDN) decouples the control plane (deciding how packets should be routed) from the data plane (actually forwarding packets). An SDN controller is logically centralized (often physically replicated for redundancy) and uses a southbound API (OpenFlow being one common protocol) to program forwarding entries into switches. Instead of each switch independently running routing protocols like OSPF, the controller computes forwarding tables and pushes them to switches' forwarding tables (Flow Tables in OpenFlow). This allows operators to centrally manage network behavior, implement complex policies, and rapidly deploy network changes. OpenFlow specifies packet format matching (on headers like Ethernet, IP, TCP fields) and actions (forward, drop, rewrite, etc.). SDN is widely deployed in data centers and enterprise networks. Option A (replacing TCP), C (Wi-Fi AP only), and D (BGP at application layer) mischaracterize SDN." },
   { topic: "W9 — Advanced",
     q: "QUIC's main advantages over TCP+TLS+HTTP/2 include:",
     options: [
@@ -4748,7 +4748,7 @@ const quizQuestions = [
       "Removing encryption.",
       "Lower MAC frame overhead." ],
     answer: 1,
-    explain: "QUIC over UDP integrates crypto + transport; each stream is independently retransmitted; connection IDs decouple sessions from 4-tuples (useful on mobile NAT rebinding)." },
+    explain: "QUIC's key advantages over the combination of TCP+TLS+HTTP/2 include: (1) *User-space implementation* on UDP allows protocol improvements without kernel changes, accelerating innovation; (2) *Faster handshake*—1 RTT to establish transport and crypto (vs. 1 RTT TCP + 1–2 RTT TLS in HTTP/2), plus 0-RTT resumption; (3) *Stream-level loss recovery*—if a packet on stream A is lost, stream B continues uninterrupted (HTTP/2 over TCP suffers TCP-level head-of-line blocking); (4) *Connection migration*—connection IDs (not 4-tuple) identify a session, so changing IP (mobile handoff, NAT rebinding) doesn't break the connection. QUIC makes the network more efficient and responsive, especially for high-latency mobile scenarios. Option A (MTU), C (removing encryption), and D (MAC frame overhead) are minor or incorrect." },
   { topic: "W9 — Advanced",
     q: "What is the *fate-sharing* design principle (Clark)?",
     options: [
@@ -4757,7 +4757,7 @@ const quizQuestions = [
       "Hosts must replicate state to neighbors.",
       "Routers must store TCP state to enable retransmission." ],
     answer: 1,
-    explain: "Fate-sharing motivates keeping TCP state on the endpoints (not routers): if a router crashes, your connection survives. If your endpoint dies, the connection's gone — which is acceptable." },
+    explain: "Fate-sharing, articulated by Clark in 1988, is an end-to-end design principle stating that per-connection state should reside *only* at the endpoints, not in the network. The rationale is that if a router crashes, all its state is lost, but the connection can only survive if state is replicated at the endpoints. Conversely, if state is at endpoints, connection survival depends only on endpoint survival—which is acceptable because without an endpoint, there's no application anyway. TCP embodies fate-sharing: the connection state (sequence numbers, retransmission timers, congestion window) lives in the OS/application at each end; routers are stateless and need only forward packets. This design contributes to the Internet's resilience and enables router software to be simple and robust. Option A (shared blame) is imprecise; option C (replication to neighbors) violates fate-sharing; option D (router state for retransmit) would violate fate-sharing." },
 
   // ── Labs / Implementation ──────────────────────────────────────────
   { topic: "Labs / Implementation",
@@ -4768,7 +4768,7 @@ const quizQuestions = [
       "A linked list of IP datagrams",
       "A DNS cache" ],
     answer: 1,
-    explain: "It's the producer/consumer byte buffer underlying both the sender (outgoing stream) and receiver (incoming stream) of your TCP implementation." },
+    explain: "ByteStream is an in-memory FIFO (First-In-First-Out) buffer implemented in CS 144 Lab 0 that stores up to a specified capacity of bytes. It maintains separate write and read indexes, allowing one end to push bytes and the other to pop them. The stream tracks cumulative bytes pushed and bytes popped, and supports an EOF (end-of-file) marker to signal the end of data. ByteStream is the foundation of TCP's byte-stream abstraction: the TCPSender uses a ByteStream for the outgoing byte stream (what the application wants to send), and the TCPReceiver uses a ByteStream for the incoming byte stream (data received and reassembled from the network). Understanding ByteStream's semantics (how capacity limits work, how EOF propagates) is essential for implementing the full TCP stack. Option A (socket wrapper) is too high-level; options C and D are unrelated." },
   { topic: "Labs / Implementation",
     q: "Lab 1's *StreamReassembler* must handle:",
     options: [
@@ -4777,7 +4777,7 @@ const quizQuestions = [
       "Encryption of segments.",
       "BGP route updates." ],
     answer: 1,
-    explain: "Substrings can arrive in any order and overlap. The reassembler holds unassembled bytes (subject to capacity) and writes contiguous bytes from the next expected stream index to the ByteStream." },
+    explain: "The StreamReassembler (Lab 1) handles one of the trickiest parts of TCP: reassembling out-of-order, possibly overlapping byte segments into a contiguous stream. Segments can arrive in any order (segment 2000–2999 before 1000–1999), may overlap (1000–2000 and 1500–2500), or may be duplicates. The reassembler buffers unassembled bytes in a data structure (like a set of disjoint intervals), subject to a capacity limit. Once a contiguous sequence is available starting from the next expected index, the reassembler writes it to the underlying ByteStream. This allows the application to read data as soon as it's available in order, even if segments arrived out of sequence. Lab 1 tests thoroughly because this component is bug-prone and subtle. Option A (only in-order) ignores TCP's real-world challenges; options C and D are unrelated." },
   { topic: "Labs / Implementation",
     q: "In the CS 144 sender (Lab 3), when does it retransmit the earliest outstanding segment?",
     options: [
@@ -4786,7 +4786,7 @@ const quizQuestions = [
       "Never — only the receiver retransmits.",
       "On every tick of the clock." ],
     answer: 1,
-    explain: "Lab 3's TCPSender runs a single retransmission timer for the earliest unacked segment. Timeouts cause retransmit + RTO backoff; on a fresh ACK, RTO resets to the initial value." },
+    explain: "Lab 3's TCPSender maintains a single retransmission timer (a priority queue or simple timeout) for the earliest unacknowledged segment. When the timer expires: (1) the earliest unacked segment is retransmitted, (2) the RTO (retransmission timeout) is doubled (exponential backoff, up to a maximum), and (3) the timer is restarted if there are still unacked segments in flight. If an ACK arrives for previously unacked data, the timer is reset to the initial RTO value (not doubled). This behavior matches RFC 9293's retransmission algorithm. Critically, if the sender's window is zero (receiver advertised rwnd = 0), the sender still retransmits periodically to probe for window opening (to avoid deadlock if a window-opening ACK is lost). Option A (on every dup-ACK) is incorrect; option C (never) misses a critical mechanism; option D (every tick) is inefficient." },
   { topic: "Labs / Implementation",
     q: "The CS 144 receiver (Lab 2) sets the ACK number to:",
     options: [
@@ -4795,7 +4795,7 @@ const quizQuestions = [
       "Zero until FIN.",
       "A random value." ],
     answer: 1,
-    explain: "ackno = wrap(first_unassembled_index, ISN) [+1 if FIN was reassembled and stream is at EOF]. SYN and FIN each occupy 1 sequence number." },
+    explain: "The TCPReceiver (Lab 2) computes the ACK number by converting its first unassembled index (tracked by the StreamReassembler) into a sequence number in the wire's number space. Specifically, ackno = wrap(first_unassembled_index, ISN), where wrap() adjusts the 64-bit absolute index into the 32-bit wrapping sequence number space using the Initial Sequence Number (ISN) as the offset. Additionally, the ACK must account for SYN and FIN: each occupies one sequence number even though they carry no data. So if the stream is at EOF and the FIN has been reassembled, ackno += 1 to acknowledge the FIN bit. This calculation is subtle because it bridges the gap between the lab's 64-bit absolute indexing and TCP's 32-bit wrapping sequence numbers, requiring the wrap function. Option A (largest seqno seen) would create gaps; options C and D are incorrect timing/logic." },
   { topic: "Labs / Implementation",
     q: "The 32-bit absolute sequence numbers in lab code differ from on-the-wire sequence numbers because:",
     options: [
@@ -4804,7 +4804,7 @@ const quizQuestions = [
       "They count packets, not bytes.",
       "They reset on every retransmission." ],
     answer: 0,
-    explain: "Wire seqnos are 32-bit wrapping; the lab uses 64-bit absolute seqnos (and a `wrap`/`unwrap` pair anchored at a checkpoint) so the reassembler can index a long stream safely." },
+    explain: "TCP uses 32-bit sequence numbers on the wire (defined in RFC 9293), which wrap around after reaching 2³² - 1. The lab code uses 64-bit absolute sequence numbers starting at the SYN to simplify index arithmetic and avoid wraparound complexity. To convert between wire and absolute sequence numbers, the lab defines wrap(absolute_seqno, ISN) → wire_seqno and unwrap(wire_seqno, ISN, checkpoint) → absolute_seqno. The unwrap function takes a checkpoint (a known absolute sequence number close to the current stream position) to disambiguate which of the multiple absolute values (that would map to the same 32-bit wire seqno) is correct. This engineering simplifies the reassembler and sender—they work with 64-bit indexes without wraparound logic. The wrap/unwrap pair is a crucial abstraction layer in CS 144 that maps between the low-level wire protocol and the high-level implementation. Options B, C, D are incorrect interpretations." },
   { topic: "Labs / Implementation",
     q: "The router lab (checkpoint 7) implements:",
     options: [
@@ -4813,7 +4813,7 @@ const quizQuestions = [
       "A BGP daemon.",
       "A TLS terminator." ],
     answer: 1,
-    explain: "The router maintains a routing table of (prefix, length, next-hop, interface) and does LPM. It also handles TTL expiry and ARP for resolving next-hop MACs (often via a NetworkInterface helper)." }
+    explain: "The Router lab (checkpoint 7) builds a simplified IP router that performs three core functions: (1) *Longest-prefix-match lookup* in a routing table mapping (prefix, length) to a (next-hop, interface); (2) *TTL decrement and expiry check*—decrement the TTL field; if it reaches 0, discard the packet (and optionally send an ICMP Time-Exceeded, though the lab may not require this); (3) *ARP resolution and forwarding*—look up the next-hop's MAC address (via ARP if needed, or with NetworkInterface's help) and forward the packet on the outgoing interface. The router maintains a FIB (Forwarding Information Base) that is updated via routing updates. The lab does *not* require implementing BGP or OSPF; instead, the FIB is pre-populated or updated via a simple protocol. Option A (OSPF LSA flooding), C (BGP daemon), and D (TLS terminator) are not the router's job." }
 ];
 
 // ── State ──
