@@ -254,6 +254,36 @@
     border-radius: 4px; font-size: 10px; color: #79c0ff; text-decoration: none; transition: all .2s;
   }
   .uc-refs a:hover { border-color: #58a6ff; color: #58a6ff; background: #0d1117; }
+  /* ── Use-case enrichment v2 ── */
+  .uc-overview { background: linear-gradient(135deg, #0d1117 0%, #161b22 100%); border: 1px solid #30363d;
+    border-left: 3px solid #58a6ff; border-radius: 10px; padding: 16px 18px; margin: 16px 0 20px; }
+  .uc-overview .uc-summary { font-size: 13px; color: #c9d1d9; line-height: 1.7; }
+  .uc-overview .uc-summary strong { color: #79c0ff; }
+  .uc-pipeline { margin-top: 14px; padding: 10px 12px; background: #0d1117; border: 1px solid #30363d;
+    border-radius: 6px; font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+    font-size: 11px; color: #7ee787; line-height: 1.6; white-space: pre-wrap; overflow-x: auto; }
+  .uc-metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 10px; margin-top: 14px; }
+  .uc-metric { background: #0d1117; border: 1px solid #30363d; border-radius: 8px; padding: 10px 12px; }
+  .uc-metric .uc-metric-label { font-size: 10px; color: #8b949e; text-transform: uppercase; letter-spacing: 0.5px; }
+  .uc-metric .uc-metric-value { font-size: 14px; color: #ffa657; font-weight: 600; margin-top: 4px; line-height: 1.4; }
+  .uc-extensions { margin-top: 14px; padding: 10px 12px; background: rgba(210, 168, 255, 0.06);
+    border: 1px solid rgba(210, 168, 255, 0.25); border-radius: 6px; font-size: 12px; color: #c9d1d9; line-height: 1.6; }
+  .uc-extensions strong { color: #d2a8ff; }
+  .uc-step .uc-intuition { margin-top: 8px; padding: 8px 10px; background: rgba(126, 231, 135, 0.08);
+    border-left: 2px solid #3fb950; border-radius: 4px; font-size: 12px; color: #c9d1d9; line-height: 1.55; display: none; }
+  .uc-step.active .uc-intuition { display: block; }
+  .uc-step .uc-intuition strong { color: #7ee787; }
+  .uc-step .uc-complexity { display: inline-block; margin-top: 8px; margin-right: 6px;
+    background: rgba(31, 111, 235, 0.15); border: 1px solid rgba(88, 166, 255, 0.35); border-radius: 4px;
+    padding: 2px 8px; font-size: 10px; color: #79c0ff; font-family: 'Cascadia Code', 'Consolas', monospace; }
+  .uc-step .uc-pitfall { margin-top: 8px; padding: 8px 10px; background: rgba(255, 123, 114, 0.08);
+    border-left: 2px solid #ff7b72; border-radius: 4px; font-size: 12px; color: #c9d1d9; line-height: 1.55; display: none; }
+  .uc-step.active .uc-pitfall { display: block; }
+  .uc-step .uc-pitfall strong { color: #ff7b72; }
+  .uc-step .uc-example { margin-top: 8px; padding: 8px 10px; background: rgba(255, 166, 87, 0.06);
+    border-left: 2px solid #ffa657; border-radius: 4px; font-size: 12px; color: #c9d1d9; line-height: 1.55; display: none; }
+  .uc-step.active .uc-example { display: block; }
+  .uc-step .uc-example strong { color: #ffa657; }
   .legend-close {
     position: absolute; top: 8px; right: 8px; background: none; border: none;
     color: #8b949e; font-size: 16px; cursor: pointer; line-height: 1; padding: 2px 6px;
@@ -321,27 +351,92 @@
   /* ── Practice Problems (Problem-First) ── */
   #problems-container { position: relative; top: 0; width: 100%; max-width: 1100px; margin: 0 auto; padding: 24px 16px 60px; }
   #view-problems { overflow-y: auto; height: calc(100vh - 50px); margin-top: 50px; }
-  .prob-intro { background: #161b22; border: 1px solid #30363d; border-left: 3px solid #7ee787; border-radius: 6px; padding: 14px 18px; margin-bottom: 22px; color: #c9d1d9; font-size: 14px; line-height: 1.6; }
+  .prob-intro { background: #161b22; border: 1px solid #30363d; border-left: 3px solid #7ee787; border-radius: 6px; padding: 14px 18px; margin-bottom: 18px; color: #c9d1d9; font-size: 14px; line-height: 1.6; }
   .prob-intro strong { color: #7ee787; }
-  .prob-section { margin-bottom: 22px; border: 1px solid #30363d; border-radius: 8px; background: #161b22; overflow: hidden; }
-  .prob-section > summary { padding: 14px 18px; font-size: 15px; font-weight: 600; color: #e6edf3; cursor: pointer; list-style: none; display: flex; align-items: center; gap: 10px; user-select: none; transition: background .15s; }
+  /* Toolbar */
+  .prob-toolbar { position: sticky; top: 0; z-index: 5; background: rgba(13,17,23,0.95); backdrop-filter: blur(6px); padding: 10px 0 12px; margin-bottom: 14px; border-bottom: 1px solid #21262d; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  .prob-search { flex: 1 1 200px; min-width: 180px; background: #0d1117; border: 1px solid #30363d; border-radius: 6px; padding: 7px 12px; color: #c9d1d9; font-size: 13px; outline: none; }
+  .prob-search:focus { border-color: #58a6ff; }
+  .prob-filter-row { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+  .prob-chip { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 12px; cursor: pointer; background: #161b22; border: 1px solid #30363d; color: #8b949e; text-transform: uppercase; letter-spacing: .4px; transition: all .15s; user-select: none; }
+  .prob-chip:hover { border-color: #58a6ff; color: #c9d1d9; }
+  .prob-chip.active { background: #1f6feb22; border-color: #58a6ff; color: #58a6ff; }
+  .prob-chip.design.active  { background: #58a6ff22; border-color: #58a6ff; color: #58a6ff; }
+  .prob-chip.derive.active  { background: #ffa65722; border-color: #ffa657; color: #ffa657; }
+  .prob-chip.debug.active   { background: #f8514922; border-color: #f85149; color: #f85149; }
+  .prob-chip.code.active    { background: #7ee78722; border-color: #7ee787; color: #7ee787; }
+  .prob-chip.paper.active   { background: #d2a8ff22; border-color: #d2a8ff; color: #d2a8ff; }
+  .prob-chip .count { font-size: 9px; opacity: .7; font-weight: 500; }
+  .prob-actbtn { background: #161b22; border: 1px solid #30363d; color: #c9d1d9; padding: 6px 12px; border-radius: 6px; font-size: 12px; cursor: pointer; transition: all .15s; }
+  .prob-actbtn:hover { border-color: #58a6ff; color: #58a6ff; }
+  .prob-actbtn.primary { background: #1f6feb; border-color: #58a6ff; color: #fff; }
+  .prob-actbtn.primary:hover { background: #388bfd; }
+  .prob-progress { display: flex; align-items: center; gap: 10px; flex: 0 0 auto; font-size: 11px; color: #8b949e; margin-left: auto; }
+  .prob-progress-bar { width: 100px; height: 6px; background: #21262d; border-radius: 3px; overflow: hidden; }
+  .prob-progress-fill { height: 100%; background: linear-gradient(90deg, #7ee787, #58a6ff); transition: width .3s; }
+  /* Sections */
+  .prob-section { margin-bottom: 16px; border: 1px solid #30363d; border-radius: 8px; background: #161b22; overflow: hidden; }
+  .prob-section > summary { padding: 13px 18px; font-size: 14px; font-weight: 600; color: #e6edf3; cursor: pointer; list-style: none; display: flex; align-items: center; gap: 10px; user-select: none; transition: background .15s; flex-wrap: wrap; }
   .prob-section > summary::-webkit-details-marker { display: none; }
   .prob-section > summary::before { content: '▸'; color: #8b949e; font-size: 11px; transition: transform .2s; }
   .prob-section[open] > summary::before { transform: rotate(90deg); }
   .prob-section > summary:hover { background: rgba(88,166,255,0.04); }
-  .prob-section .wk { color: #8b949e; font-size: 12px; font-weight: 500; background: #0d1117; padding: 2px 8px; border-radius: 10px; border: 1px solid #30363d; }
-  .prob-body { padding: 6px 20px 18px 40px; }
-  .prob-body > ol { padding-left: 22px; margin: 8px 0 4px; }
-  .prob-body > ol > li { margin: 12px 0; color: #c9d1d9; font-size: 14px; line-height: 1.55; }
-  .prob-body > ol > li::marker { color: #7ee787; font-weight: 600; }
-  .prob-hint { display: block; margin-top: 4px; color: #8b949e; font-size: 12.5px; font-style: italic; }
-  .prob-hint::before { content: '💡 '; font-style: normal; }
-  .prob-tag { display: inline-block; font-size: 10px; font-weight: 600; padding: 1px 7px; border-radius: 8px; margin-right: 6px; vertical-align: middle; text-transform: uppercase; letter-spacing: .4px; }
+  .prob-section .wk { color: #8b949e; font-size: 11px; font-weight: 500; background: #0d1117; padding: 2px 8px; border-radius: 10px; border: 1px solid #30363d; }
+  .prob-section .sec-meta { margin-left: auto; font-size: 11px; color: #6e7681; font-weight: 500; }
+  .prob-section .sec-meta .done-count { color: #7ee787; font-weight: 600; }
+  .prob-hook { background: #0d1117; border-bottom: 1px solid #21262d; padding: 12px 22px; font-size: 13px; color: #d2a8ff; font-style: italic; line-height: 1.6; display: flex; gap: 8px; align-items: flex-start; }
+  .prob-hook::before { content: '🪝'; font-style: normal; flex-shrink: 0; }
+  .prob-body { padding: 12px 18px 16px; display: flex; flex-direction: column; gap: 10px; }
+  /* Problem cards */
+  .prob-card { background: #0d1117; border: 1px solid #21262d; border-radius: 8px; padding: 12px 14px; transition: all .15s; position: relative; }
+  .prob-card:hover { border-color: #30363d; }
+  .prob-card.status-thinking { border-left: 3px solid #d2a8ff; }
+  .prob-card.status-got      { border-left: 3px solid #7ee787; opacity: .75; }
+  .prob-card.status-stuck    { border-left: 3px solid #f85149; }
+  .prob-card.hidden          { display: none; }
+  .prob-card .pc-head { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 4px; }
+  .prob-card .pc-num { color: #6e7681; font-size: 11px; font-weight: 600; font-family: 'Cascadia Code', monospace; }
+  .prob-card .pc-star { color: #ffa657; font-size: 13px; }
+  .prob-tag { display: inline-block; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 8px; text-transform: uppercase; letter-spacing: .4px; }
   .prob-tag.design { background: #58a6ff20; color: #58a6ff; }
   .prob-tag.debug  { background: #f8514920; color: #f85149; }
   .prob-tag.paper  { background: #d2a8ff20; color: #d2a8ff; }
   .prob-tag.code   { background: #7ee78720; color: #7ee787; }
   .prob-tag.derive { background: #ffa65720; color: #ffa657; }
+  .prob-card .pc-text { color: #c9d1d9; font-size: 13.5px; line-height: 1.6; margin: 2px 0 6px; }
+  .prob-card .pc-actions { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; margin-top: 6px; }
+  .prob-revealbtn { background: transparent; border: 1px dashed #30363d; color: #8b949e; padding: 3px 10px; border-radius: 12px; font-size: 11px; cursor: pointer; transition: all .15s; }
+  .prob-revealbtn:hover { border-color: #d2a8ff; color: #d2a8ff; border-style: solid; }
+  .prob-revealbtn.approach:hover { border-color: #79c0ff; color: #79c0ff; }
+  .prob-revealbtn.answer:hover   { border-color: #7ee787; color: #7ee787; }
+  .prob-reveal-panel { display: none; margin-top: 8px; padding: 10px 14px; background: #161b22; border-radius: 4px; color: #c9d1d9; font-size: 12.5px; line-height: 1.65; }
+  .prob-reveal-panel.shown { display: block; }
+  .prob-reveal-panel ul, .prob-reveal-panel ol { margin: 4px 0 4px 18px; padding: 0; }
+  .prob-reveal-panel li { margin: 3px 0; }
+  .prob-reveal-panel code { background: #0d1117; padding: 1px 5px; border-radius: 3px; font-size: 11.5px; color: #79c0ff; font-family: 'Cascadia Code', 'Consolas', monospace; }
+  .prob-reveal-panel strong { color: #e6edf3; }
+  .prob-reveal-panel .rh-label { display: inline-block; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .6px; margin-right: 8px; padding: 1px 6px; border-radius: 4px; vertical-align: middle; }
+  .prob-hint     { border-left: 2px solid #d2a8ff; }
+  .prob-hint     .rh-label { background: #d2a8ff22; color: #d2a8ff; }
+  .prob-approach { border-left: 2px solid #79c0ff; }
+  .prob-approach .rh-label { background: #79c0ff22; color: #79c0ff; }
+  .prob-answer   { border-left: 2px solid #7ee787; background: #0d1f17; }
+  .prob-answer   .rh-label { background: #7ee78722; color: #7ee787; }
+  .prob-status-btns { display: flex; gap: 4px; margin-left: auto; }
+  .prob-statbtn { background: transparent; border: 1px solid #30363d; color: #6e7681; padding: 3px 9px; border-radius: 12px; font-size: 11px; cursor: pointer; transition: all .15s; }
+  .prob-statbtn:hover { border-color: #58a6ff; color: #c9d1d9; }
+  .prob-statbtn.active.thinking { background: #d2a8ff22; border-color: #d2a8ff; color: #d2a8ff; }
+  .prob-statbtn.active.got      { background: #7ee78722; border-color: #7ee787; color: #7ee787; }
+  .prob-statbtn.active.stuck    { background: #f8514922; border-color: #f85149; color: #f85149; }
+  .prob-empty { text-align: center; padding: 40px 20px; color: #6e7681; font-size: 13px; }
+  /* Modal for surprise-me */
+  .prob-spotlight { position: fixed; inset: 0; background: rgba(13,17,23,0.85); backdrop-filter: blur(4px); display: none; align-items: center; justify-content: center; z-index: 100; padding: 20px; }
+  .prob-spotlight.open { display: flex; }
+  .prob-spotlight-card { background: #161b22; border: 1px solid #58a6ff; border-radius: 12px; max-width: 600px; width: 100%; padding: 24px 28px; box-shadow: 0 12px 60px rgba(88,166,255,0.3); }
+  .prob-spotlight-card h3 { color: #58a6ff; font-size: 14px; margin: 0 0 4px; text-transform: uppercase; letter-spacing: 1px; }
+  .prob-spotlight-card .pc-text { font-size: 16px; line-height: 1.55; color: #e6edf3; margin: 10px 0; }
+  .prob-spotlight-card .sl-close { background: transparent; border: none; color: #8b949e; font-size: 22px; cursor: pointer; float: right; line-height: 1; }
+  .prob-spotlight-card .sl-close:hover { color: #c9d1d9; }
   .appendix-table .watch-link:hover { color: #ff0000; text-decoration: underline; }
   /* ── Progress checkbox ── */
   .appendix-table .vid-check { width: 18px; height: 18px; cursor: pointer; accent-color: #7ee787; vertical-align: middle; }
@@ -399,6 +494,233 @@
     .dd-card-img { height: 120px; }
     .dd-keypoints { grid-template-columns: 1fr; }
   }
+
+/* === BEGIN glossary v1 css === */
+  /* dd-nav sticky top */
+  .dd-nav.dd-nav-top {
+    position: sticky; top: 0; z-index: 5;
+    margin: -4px -4px 14px; padding: 10px 8px;
+    background: linear-gradient(180deg, rgba(13,17,23,0.96) 75%, rgba(13,17,23,0));
+    backdrop-filter: blur(4px);
+    border-bottom: 1px solid #21262d;
+  }
+  /* ── Glossary ── */
+  .gloss-intro { background: #161b22; border: 1px solid #30363d; border-left: 3px solid #d2a8ff; border-radius: 6px; padding: 14px 18px; margin-bottom: 14px; color: #c9d1d9; font-size: 14px; line-height: 1.6; }
+  .gloss-intro strong { color: #d2a8ff; }
+  #view-glossary { overflow-y: auto; height: calc(100vh - 50px); margin-top: 50px; padding: 20px; box-sizing: border-box; }
+  @media (max-width: 768px) { #view-glossary { margin-top: 48px; padding: 12px; } }
+  .glossary-controls { position: sticky; top: 0; z-index: 5; background: rgba(13,17,23,0.95); backdrop-filter: blur(6px); padding: 10px 0 12px; margin: -8px 0 14px; border-bottom: 1px solid #21262d; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  #glossary-search { flex: 1 1 240px; min-width: 200px; background: #0d1117; border: 1px solid #30363d; border-radius: 6px; padding: 7px 12px; color: #c9d1d9; font-size: 13px; outline: none; }
+  #glossary-search:focus { border-color: #58a6ff; }
+  .glossary-cat-pills { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+  .glossary-cat-pills button { background: #161b22; border: 1px solid #30363d; color: #8b949e; padding: 4px 10px; border-radius: 12px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .4px; cursor: pointer; transition: all .15s; }
+  .glossary-cat-pills button:hover { border-color: #58a6ff; color: #c9d1d9; }
+  .glossary-cat-pills button.active { background: var(--pill-bg, #1f6feb22); border-color: var(--pill-color, #58a6ff); color: var(--pill-color, #58a6ff); }
+  .glossary-count { font-size: 11px; color: #8b949e; margin-left: auto; }
+  .glossary-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 14px; max-width: 1400px; margin: 0 auto; }
+  .glossary-card { background: #161b22; border: 1px solid #30363d; border-radius: 10px; padding: 14px; transition: border-color .15s, box-shadow .15s, transform .15s; }
+  .glossary-card:hover { border-color: var(--cat-color, #58a6ff); box-shadow: 0 4px 14px rgba(0,0,0,0.35); }
+  .glossary-card.flash {
+    animation: glossary-flash 2.6s cubic-bezier(.4,0,.2,1) 1 forwards;
+    position: relative;
+    z-index: 2;
+  }
+  @keyframes glossary-flash {
+    0% {
+      background: #161b22;
+      border-color: #30363d;
+      box-shadow: 0 0 0 rgba(0,0,0,0);
+      transform: scale(1);
+    }
+    8% {
+      background: color-mix(in srgb, var(--cat-color, #58a6ff) 55%, #161b22);
+      border-color: var(--cat-color, #58a6ff);
+      box-shadow:
+        0 0 0 4px var(--cat-color, #58a6ff),
+        0 0 28px 6px color-mix(in srgb, var(--cat-color, #58a6ff) 70%, transparent),
+        0 14px 36px rgba(0,0,0,0.55);
+      transform: scale(1.045);
+    }
+    22% {
+      background: color-mix(in srgb, var(--cat-color, #58a6ff) 30%, #161b22);
+      border-color: var(--cat-color, #58a6ff);
+      box-shadow:
+        0 0 0 3px var(--cat-color, #58a6ff),
+        0 0 22px 4px color-mix(in srgb, var(--cat-color, #58a6ff) 55%, transparent),
+        0 10px 28px rgba(0,0,0,0.5);
+      transform: scale(1.03);
+    }
+    45% {
+      background: color-mix(in srgb, var(--cat-color, #58a6ff) 45%, #161b22);
+      border-color: var(--cat-color, #58a6ff);
+      box-shadow:
+        0 0 0 3px var(--cat-color, #58a6ff),
+        0 0 26px 5px color-mix(in srgb, var(--cat-color, #58a6ff) 60%, transparent),
+        0 12px 32px rgba(0,0,0,0.5);
+      transform: scale(1.035);
+    }
+    70% {
+      background: color-mix(in srgb, var(--cat-color, #58a6ff) 22%, #161b22);
+      border-color: color-mix(in srgb, var(--cat-color, #58a6ff) 80%, #30363d);
+      box-shadow:
+        0 0 0 2px color-mix(in srgb, var(--cat-color, #58a6ff) 70%, transparent),
+        0 0 18px 3px color-mix(in srgb, var(--cat-color, #58a6ff) 40%, transparent);
+      transform: scale(1.015);
+    }
+    100% {
+      background: #161b22;
+      border-color: #30363d;
+      box-shadow: 0 0 0 rgba(0,0,0,0);
+      transform: scale(1);
+    }
+  }
+  /* Fallback for browsers without color-mix: solid tinted backgrounds */
+  @supports not (background: color-mix(in srgb, red, blue)) {
+    @keyframes glossary-flash {
+      0%,100% { background: #161b22; border-color: #30363d; box-shadow: none; transform: scale(1); }
+      8%, 45% {
+        background: rgba(88,166,255,0.32);
+        border-color: var(--cat-color, #58a6ff);
+        box-shadow: 0 0 0 4px var(--cat-color, #58a6ff), 0 0 28px var(--cat-color, #58a6ff);
+        transform: scale(1.04);
+      }
+    }
+  }
+  .glossary-term-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .glossary-term { font-size: 16px; font-weight: 700; color: #e6edf3; }
+  .glossary-cat-badge { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; padding: 2px 7px; border-radius: 10px; border: 1px solid var(--cat-color, #58a6ff); color: var(--cat-color, #58a6ff); background: rgba(0,0,0,0.2); }
+  .glossary-aka { font-size: 11px; color: #8b949e; font-style: italic; margin-top: 3px; }
+  .glossary-short { font-size: 13px; color: #c9d1d9; margin-top: 8px; line-height: 1.5; }
+  .glossary-long { font-size: 13px; color: #8b949e; margin-top: 8px; line-height: 1.55; display: none; }
+  .glossary-long code { background: #0d1117; border: 1px solid #21262d; border-radius: 4px; padding: 1px 5px; font-family: 'Cascadia Code', monospace; font-size: 12px; color: #d2a8ff; }
+  .glossary-card.expanded .glossary-long { display: block; }
+  .glossary-toggle { background: none; border: none; color: #58a6ff; font-size: 11px; cursor: pointer; padding: 6px 0 0; }
+  .glossary-toggle:hover { text-decoration: underline; }
+  .glossary-links { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+  .glossary-links button { background: #0d1117; border: 1px solid #30363d; color: #c9d1d9; padding: 3px 9px; border-radius: 10px; font-size: 11px; cursor: pointer; transition: all .15s; }
+  .glossary-links button:hover { border-color: #58a6ff; color: #58a6ff; }
+  /* graph-node pulse when jumped to from glossary */
+  @keyframes glossary-pulse {
+    0%   { stroke-opacity: 1; stroke-width: 14; }
+    100% { stroke-opacity: 0.55; stroke-width: 5; }
+  }
+  @keyframes glossary-halo-pulse {
+    0%   { r: 16;  stroke-opacity: 1;    stroke-width: 10; }
+    60%  { r: 90;  stroke-opacity: 0.55; stroke-width: 5; }
+    100% { r: 140; stroke-opacity: 0;    stroke-width: 2; }
+  }
+  @keyframes glossary-halo-pulse-2 {
+    0%   { r: 16;  stroke-opacity: 0.9; stroke-width: 6; }
+    60%  { r: 110; stroke-opacity: 0.4; stroke-width: 3; }
+    100% { r: 170; stroke-opacity: 0;   stroke-width: 1.5; }
+  }
+  @keyframes glossary-fill-pulse {
+    0%, 100% { fill-opacity: 0.85; }
+    50%      { fill-opacity: 1; }
+  }
+  @keyframes glossary-dim-others {
+    0%   { opacity: 1; }
+    20%  { opacity: 0.15; }
+    100% { opacity: 0.15; }
+  }
+  /* Dim everything in the graph except the highlighted node + its halos */
+  #canvas-graph.glossary-spotlight g.graph-node:not(.glossary-highlight),
+  #canvas-graph.glossary-spotlight line.graph-link,
+  #canvas-graph.glossary-spotlight text.graph-link-label {
+    animation: glossary-dim-others 0.4s ease-out forwards;
+  }
+  #canvas-graph.glossary-spotlight g.graph-node.glossary-highlight {
+    opacity: 1 !important;
+  }
+  g.graph-node.glossary-highlight circle:not(.glossary-halo):not(.glossary-halo-outer) {
+    animation:
+      glossary-pulse 0.45s ease-in-out 10 alternate,
+      glossary-fill-pulse 0.45s ease-in-out 10 alternate;
+    stroke: #ffd13b !important;
+    fill: #ffd13b !important;
+    filter:
+      drop-shadow(0 0 10px #ffd13b)
+      drop-shadow(0 0 24px #ffd13baa)
+      drop-shadow(0 0 40px #ffd13b66);
+  }
+  g.graph-node.glossary-highlight text {
+    fill: #fff !important;
+    font-weight: 900 !important;
+    font-size: 15px !important;
+    paint-order: stroke fill;
+    stroke: #5a3a00;
+    stroke-width: 4px;
+    stroke-linejoin: round;
+    filter:
+      drop-shadow(0 0 6px #000)
+      drop-shadow(0 0 12px #ffd13b)
+      drop-shadow(0 0 20px #ffd13bcc);
+  }
+  circle.glossary-halo {
+    fill: none;
+    stroke: #ffd13b;
+    pointer-events: none;
+    animation: glossary-halo-pulse 1.1s ease-out 5;
+    filter: drop-shadow(0 0 8px #ffd13baa);
+  }
+  circle.glossary-halo-outer {
+    fill: none;
+    stroke: #ffae00;
+    pointer-events: none;
+    animation: glossary-halo-pulse-2 1.4s ease-out 5;
+    animation-delay: 0.18s;
+    filter: drop-shadow(0 0 12px #ffae0099);
+  }
+  /* mindmap pulse (uses a <circle> appended) */
+  circle.glossary-mm-halo {
+    fill: none;
+    stroke: #ffd13b;
+    pointer-events: none;
+    animation: glossary-halo-pulse 1.1s ease-out 5;
+    filter: drop-shadow(0 0 8px #ffd13baa);
+  }
+  circle.glossary-mm-halo-outer {
+    fill: none;
+    stroke: #ffae00;
+    pointer-events: none;
+    animation: glossary-halo-pulse-2 1.4s ease-out 5;
+    animation-delay: 0.18s;
+    filter: drop-shadow(0 0 12px #ffae0099);
+  }
+  /* toast banner shown when jumping from glossary */
+  #glossary-toast {
+    position: fixed; top: 60px; left: 50%; transform: translateX(-50%) translateY(-30px) scale(0.92);
+    background: linear-gradient(180deg, #2a1f0a, #1a1308);
+    border: 2px solid #ffd13b; border-left: 6px solid #ffd13b;
+    color: #fff5d6; padding: 12px 22px; border-radius: 10px;
+    font-size: 15px; font-weight: 700;
+    box-shadow:
+      0 10px 32px rgba(0,0,0,0.6),
+      0 0 36px rgba(255,209,59,0.45),
+      0 0 64px rgba(255,209,59,0.25);
+    opacity: 0; pointer-events: none;
+    transition: opacity .22s ease, transform .28s cubic-bezier(.2,1.2,.4,1);
+    z-index: 10000;
+    display: flex; align-items: center; gap: 12px;
+    max-width: 90vw;
+    text-shadow: 0 0 8px rgba(255,209,59,0.5);
+  }
+  #glossary-toast.show { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+  #glossary-toast .gt-icon { font-size: 22px; filter: drop-shadow(0 0 6px #ffd13b); }
+  #glossary-toast .gt-sub { color: #c9b88c; font-weight: 500; font-size: 12.5px; margin-left: 4px; }
+  #glossary-toast strong { color: #ffd13b; text-shadow: 0 0 10px rgba(255,209,59,0.6); }
+  @media (max-width: 768px) { #glossary-toast { top: 56px; font-size: 13px; padding: 10px 16px; } }
+  /* tooltip glossary footer link */
+  #tooltip .tt-glossary { margin-top: 6px; padding-top: 5px; border-top: 1px solid #30363d; }
+  #tooltip .tt-glossary:empty { display: none; }
+  #tooltip .tt-glossary a {
+    display: inline-block; padding: 2px 8px; border-radius: 4px;
+    background: rgba(210,168,255,0.10); color: #d2a8ff; text-decoration: none;
+    font-size: 11px; font-weight: 500; cursor: pointer; border: 1px solid rgba(210,168,255,0.25);
+  }
+  #tooltip .tt-glossary a:hover { background: rgba(210,168,255,0.22); border-color: #d2a8ff; }
+  #tooltip.has-glossary { pointer-events: auto; }
+/* === END glossary v1 css === */
 </style>
 </head>
 <body>
@@ -459,6 +781,21 @@
 <div id="view-problems" class="view">
   <div id="problems-container"></div>
 </div>
+<!-- BEGIN glossary v1 view -->
+<div id="view-glossary" class="view">
+  <div class="gloss-intro">
+    <strong>📖 Glossary.</strong> Every acronym, jargon term, and unit-of-art used across <em>Use Cases</em> and <em>Deep Dives</em> — defined here, cross-linked to the <strong>Topic Graph</strong> and <strong>Mind Map</strong> so you can jump from definition → diagram in one click.
+    <br><br>
+    <span style="color:#8b949e">Tip: click a related term to flash-jump to it. Click the 🌐 graph or 🧭 mindmap links to spotlight that node on its tab.</span>
+  </div>
+  <div class="glossary-controls">
+    <input type="text" id="glossary-search" placeholder="🔍 Search terms, acronyms, or definitions…" />
+    <div class="glossary-cat-pills" id="glossary-cat-pills"></div>
+    <span class="glossary-count" id="glossary-count"></span>
+  </div>
+  <div id="glossary-list" class="glossary-list"></div>
+</div>
+<!-- END glossary v1 view -->
 
 <!-- ═══════════════ SHARED OVERLAYS ═══════════════ -->
 <div id="tooltip"><div class="tt-title"></div><div class="tt-body"></div><div class="tt-slides"></div></div>
@@ -584,9 +921,9 @@ const COURSE_CONFIG = {
         { name: "C:N Ratio", tooltip: "Optimal carbon-to-nitrogen ratio (20-30:1) for digestion" },
         { name: "Pre-treatment", tooltip: "Mechanical, thermal, or chemical methods to improve digestibility" }
       ]},
-      { name: "Biogas\nUtilization", tooltip: "Cooking, electricity, CNG upgrading, grid injection", children: [
+      { name: "Biogas\nUtilization", tooltip: "Cooking, CHP electricity, CNG upgrading, grid injection", children: [
         { name: "Cooking", tooltip: "Direct use in household and community kitchens" },
-        { name: "Electricity", tooltip: "CHP engines and micro-turbines for power generation" },
+        { name: "CHP Electricity", tooltip: "Combined heat & power engines / micro-turbines; recovers both shaft power and jacket-water heat" },
         { name: "CNG Upgrading", tooltip: "Compression to vehicle fuel grade biomethane" },
         { name: "Grid Injection", tooltip: "Purified biomethane fed into natural gas networks" }
       ]},
@@ -600,10 +937,11 @@ const COURSE_CONFIG = {
         { name: "Bio-products", tooltip: "Biochemicals, bioplastics, and platform chemicals" },
         { name: "Bioethanol", tooltip: "Fermentation of sugars from biomass into ethanol fuel" }
       ]},
-      { name: "Environmental\nImpact", tooltip: "GHG reduction, waste management, circular economy", children: [
+      { name: "Environmental\nImpact", tooltip: "GHG reduction, waste management, circular economy, digestate as fertilizer", children: [
         { name: "GHG Reduction", tooltip: "Methane capture and fossil fuel displacement" },
         { name: "Waste Management", tooltip: "Diversion of organic waste from landfills" },
-        { name: "Circular Economy", tooltip: "Nutrient recycling through digestate application" }
+        { name: "Circular Economy", tooltip: "Nutrient recycling through digestate application" },
+        { name: "Digestate Use", tooltip: "AD residue applied as N/P/K-rich liquid fertilizer; key revenue stream and soil-carbon co-benefit" }
       ]},
       { name: "Scale &\nEconomics", tooltip: "Household, community, industrial scale, cost analysis", children: [
         { name: "Household Scale", tooltip: "Small digesters (1-10 m\u00b3) for family use" },
@@ -627,7 +965,10 @@ const COURSE_CONFIG = {
       { id: "bioethanol", label: "Bioethanol",           cat: "chemistry",   tip: "Alcohol fuel produced from biomass fermentation" },
       { id: "cn_ratio",   label: "C:N Ratio",            cat: "biology",     tip: "Carbon-to-nitrogen ratio critical for digester performance" },
       { id: "ghg",        label: "GHG Reduction",        cat: "economics",   tip: "Greenhouse gas mitigation through biogas technology" },
-      { id: "scale",      label: "Scale",                cat: "economics",   tip: "Plant sizing from household to industrial" }
+      { id: "scale",      label: "Scale",                cat: "economics",   tip: "Plant sizing from household to industrial" },
+      { id: "digestate",  label: "Digestate",            cat: "biology",     tip: "Nutrient-rich slurry residue from AD; closes the loop as fertilizer" },
+      { id: "upgrading",  label: "Biogas Upgrading",     cat: "engineering", tip: "Removing CO2 and H2S to reach biomethane (>97% CH4) for grid or vehicle use" },
+      { id: "chp",        label: "CHP",                  cat: "engineering", tip: "Combined heat & power: engine-generator burning biogas for electricity + recovered heat" }
     ],
     edges: [
       { source: "feedstock",  target: "ad",         type: "enables",      label: "feeds" },
@@ -639,68 +980,107 @@ const COURSE_CONFIG = {
       { source: "feedstock", target: "gasification", type: "enables" },
       { source: "gasification", target: "methane", type: "implements" },
       { source: "digester", target: "scale", type: "related" },
-      { source: "scale", target: "ghg", type: "related" }
+      { source: "scale", target: "ghg", type: "related" },
+      { source: "ad", target: "digestate", type: "enables", label: "yields" },
+      { source: "digestate", target: "feedstock", type: "related", label: "fertilizes" },
+      { source: "methane", target: "upgrading", type: "depends", label: "enriched by" },
+      { source: "upgrading", target: "ghg", type: "enables", label: "displaces NG" },
+      { source: "methane", target: "chp", type: "enables", label: "fuels" },
+      { source: "chp", target: "scale", type: "related", label: "monetises" },
+      { source: "cn_ratio", target: "ad", type: "depends", label: "regulates" }
     ]
   },
 
   deepDives: [
     {
-      id: "dd-ad-stages", num: "Card 1 of 3", title: "Anaerobic Digestion Stages",
+      id: "dd-ad-stages", num: "Card 1 of 5", title: "Anaerobic Digestion Stages",
       desc: "Hydrolysis \u2192 Acidogenesis \u2192 Acetogenesis \u2192 Methanogenesis", color: "#58a6ff", icon: "\ud83e\udda0",
       svg: function(w, h) {
         var stages = ["Hydrolysis", "Acidogenesis", "Acetogenesis", "Methanogenesis"];
+        var inputs = ["Polymers", "Monomers", "VFAs/H\u2082", "Acetate/H\u2082"];
+        var outputs = ["Sugars,AA,FA", "VFAs,H\u2082,CO\u2082", "Acetate,H\u2082,CO\u2082", "CH\u2084 + CO\u2082"];
         var colors = ["#58a6ff", "#7ee787", "#ffa657", "#f778ba"];
-        var bw = (w - 80) / 4, bh = 40, y = h / 2 - bh / 2;
+        var bw = (w - 80) / 4, bh = 46, y = h / 2 - bh / 2;
         var s = '<svg viewBox="0 0 ' + w + ' ' + h + '" xmlns="http://www.w3.org/2000/svg" style="background:#0d1117">';
         for (var i = 0; i < 4; i++) {
           var x = 20 + i * (bw + 15);
+          s += '<text x="' + (x + bw/2) + '" y="' + (y - 8) + '" text-anchor="middle" fill="#8b949e" font-size="9">in: ' + inputs[i] + '</text>';
           s += '<rect x="' + x + '" y="' + y + '" width="' + bw + '" height="' + bh + '" rx="6" fill="' + colors[i] + '22" stroke="' + colors[i] + '" stroke-width="1"/>';
-          s += '<text x="' + (x + bw/2) + '" y="' + (y + bh/2 + 5) + '" text-anchor="middle" fill="' + colors[i] + '" font-size="11" font-weight="600">' + stages[i] + '</text>';
+          s += '<text x="' + (x + bw/2) + '" y="' + (y + bh/2 + 4) + '" text-anchor="middle" fill="' + colors[i] + '" font-size="11" font-weight="600">' + stages[i] + '</text>';
+          s += '<text x="' + (x + bw/2) + '" y="' + (y + bh + 14) + '" text-anchor="middle" fill="#c9d1d9" font-size="9">' + outputs[i] + '</text>';
           if (i < 3) s += '<text x="' + (x + bw + 7) + '" y="' + (y + bh/2 + 5) + '" fill="#8b949e" font-size="14">\u2192</text>';
         }
+        s += '<text x="' + (w/2) + '" y="' + (h - 6) + '" text-anchor="middle" fill="#7ee787" font-size="10">Aceticlastic ~70% of CH\u2084  \u2022  Hydrogenotrophic ~30%</text>';
         s += '</svg>';
         return s;
       },
       sections: [
-        { title: "Hydrolysis", text: "Complex organic polymers (carbohydrates, proteins, fats) are broken down into soluble monomers (sugars, amino acids, fatty acids) by extracellular enzymes." },
-        { title: "Acidogenesis", text: "Fermentative bacteria convert monomers into volatile fatty acids (VFAs), alcohols, hydrogen, and CO\u2082." },
-        { title: "Acetogenesis", text: "Acetogenic bacteria convert VFAs and alcohols into acetate, hydrogen, and CO\u2082 \u2014 the direct substrates for methanogens." },
-        { title: "Methanogenesis", text: "Methanogenic archaea produce methane via two pathways: aceticlastic (acetate \u2192 CH\u2084 + CO\u2082) and hydrogenotrophic (4H\u2082 + CO\u2082 \u2192 CH\u2084 + 2H\u2082O)." }
+        { title: "Hydrolysis \u2014 the slow gate", text: "Extracellular enzymes (cellulases, proteases, lipases) cleave insoluble polymers \u2014 cellulose, proteins, lipids \u2014 into soluble sugars, amino acids, and long-chain fatty acids. For lignocellulosic feedstock (straw, manure fibre) this step caps the whole reactor: a 30-day HRT is mostly waiting for hydrolysis. Pre-treatment (steam, mild alkali, milling, enzymes) can double the apparent first-order rate constant k\u209b from ~0.05 d\u207b\u00b9 to ~0.1 d\u207b\u00b9 and is the single biggest yield lever for fibrous waste." },
+        { title: "Acidogenesis \u2014 fast and acidifying", text: "Fermentative bacteria (Clostridium, Bacteroides) ferment monomers in hours, producing volatile fatty acids (acetic, propionic, butyric), alcohols, H\u2082 and CO\u2082. This step is so fast that on a sudden feedstock spike VFAs can pile up before the slower archaea catch up, dragging pH from 7.0 to <6.5 and stalling methanogenesis. Operators watch the VFA/alkalinity ratio (FOS/TAC); a value >0.4 is the early-warning siren." },
+        { title: "Acetogenesis \u2014 thermodynamic tightrope", text: "Syntrophic acetogens (e.g. Syntrophomonas) convert propionate, butyrate, ethanol into acetate + H\u2082 + CO\u2082. The propionate \u2192 acetate reaction is endergonic at standard conditions (\u0394G\u00b0' = +76 kJ/mol) and only proceeds when hydrogenotrophic methanogens keep H\u2082 partial pressure below ~10\u207b\u2074 atm \u2014 obligate \"interspecies hydrogen transfer.\" Lose the methanogens and acetogenesis stops within hours." },
+        { title: "Methanogenesis \u2014 the product step", text: "Strictly anaerobic archaea make CH\u2084 by two routes: acetoclastic (Methanosaeta/Methanosarcina: CH\u2083COO\u207b \u2192 CH\u2084 + HCO\u2083\u207b, ~70 % of biogas methane) and hydrogenotrophic (4H\u2082 + CO\u2082 \u2192 CH\u2084 + 2H\u2082O). They have generation times of 5\u201315 days and pH window 6.8\u20137.5; pH 6.0 or 8.0 effectively stops them. Worked example: 1 kg VS food waste \u2192 ~0.5 m\u00b3 CH\u2084 if all four steps balance." }
       ],
       keypoints: [
-        { title: "Rate-Limiting Step", text: "Hydrolysis is typically the slowest step and determines overall digestion rate." },
-        { title: "Syntrophic Balance", text: "Acetogenesis and methanogenesis must remain in balance; VFA accumulation causes pH drop and process failure." },
-        { title: "Temperature Regimes", text: "Mesophilic (35-40\u00b0C) and thermophilic (50-60\u00b0C) conditions support different microbial communities." }
+        { title: "Rate-Limiting Step", text: "Hydrolysis sets the ceiling: typical k\u209b = 0.05\u20130.4 d\u207b\u00b9 \u2192 use 20\u201340 d HRT for fibre, 10\u201320 d for slurry/food waste." },
+        { title: "Syntrophic Balance", text: "Healthy reactor: VFA <2 g/L, FOS/TAC <0.3, pH 6.8\u20137.4. VFA >4 g/L = imminent crash." },
+        { title: "Two Methane Pathways", text: "~70 % of CH\u2084 from acetate (Methanosaeta), ~30 % from H\u2082+CO\u2082 \u2014 thermophilic shift inverts that ratio." },
+        { title: "Temperature Regimes", text: "Psychrophilic (15\u201320\u00b0C, 60\u201390 d HRT), mesophilic (35\u201340\u00b0C, 20\u201340 d), thermophilic (50\u201360\u00b0C, 12\u201320 d, +30 % rate but +50 % heat duty)." },
+        { title: "Pitfall \u2014 ammonia inhibition", text: "High-protein feed (slaughterhouse, chicken litter) raises NH\u2083 above ~3 g N/L and irreversibly poisons methanogens; co-digest with C-rich straw to dilute." }
       ]
     },
     {
-      id: "dd-digester", num: "Card 2 of 3", title: "Digester Design",
-      desc: "Fixed dome vs floating drum, sizing, retention time", color: "#7ee787", icon: "\ud83c\udfd7\ufe0f",
+      id: "dd-digester", num: "Card 2 of 5", title: "Digester Design & Sizing",
+      desc: "Fixed dome vs floating drum, cross-section, HRT and OLR sizing", color: "#7ee787", icon: "\ud83c\udfd7\ufe0f",
       svg: function(w, h) {
         var s = '<svg viewBox="0 0 ' + w + ' ' + h + '" xmlns="http://www.w3.org/2000/svg" style="background:#0d1117">';
-        var cx1 = w * 0.3, cx2 = w * 0.7, cy = h * 0.5;
-        s += '<rect x="' + (cx1-50) + '" y="' + (cy-35) + '" width="100" height="70" rx="8" fill="#7ee78722" stroke="#7ee787" stroke-width="1"/>';
-        s += '<text x="' + cx1 + '" y="' + (cy+5) + '" text-anchor="middle" fill="#7ee787" font-size="12" font-weight="600">Fixed Dome</text>';
-        s += '<rect x="' + (cx2-50) + '" y="' + (cy-35) + '" width="100" height="70" rx="8" fill="#58a6ff22" stroke="#58a6ff" stroke-width="1"/>';
-        s += '<text x="' + cx2 + '" y="' + (cy+5) + '" text-anchor="middle" fill="#58a6ff" font-size="12" font-weight="600">Floating Drum</text>';
-        s += '<text x="' + w/2 + '" y="' + (cy+55) + '" text-anchor="middle" fill="#8b949e" font-size="11">Compare designs by cost, maintenance & gas pressure</text>';
+        // Ground line
+        s += '<line x1="10" y1="' + (h*0.55) + '" x2="' + (w-10) + '" y2="' + (h*0.55) + '" stroke="#30363d" stroke-dasharray="3,3"/>';
+        s += '<text x="14" y="' + (h*0.55 - 4) + '" fill="#8b949e" font-size="9">ground</text>';
+        // Fixed dome (left): underground tank with dome
+        var cx = w*0.28, ry = h*0.18, rx = h*0.26;
+        s += '<path d="M ' + (cx-rx) + ' ' + (h*0.55) + ' Q ' + cx + ' ' + (h*0.55-2*ry) + ' ' + (cx+rx) + ' ' + (h*0.55) + ' L ' + (cx+rx) + ' ' + (h*0.85) + ' L ' + (cx-rx) + ' ' + (h*0.85) + ' Z" fill="#7ee78718" stroke="#7ee787" stroke-width="1.2"/>';
+        // Slurry level
+        s += '<line x1="' + (cx-rx+4) + '" y1="' + (h*0.62) + '" x2="' + (cx+rx-4) + '" y2="' + (h*0.62) + '" stroke="#58a6ff" stroke-dasharray="2,2"/>';
+        s += '<text x="' + (cx+rx-4) + '" y="' + (h*0.61) + '" text-anchor="end" fill="#58a6ff" font-size="9">slurry</text>';
+        s += '<text x="' + cx + '" y="' + (h*0.50) + '" text-anchor="middle" fill="#7ee787" font-size="10">CH\u2084</text>';
+        // Inlet/outlet pipes
+        s += '<line x1="' + (cx-rx-20) + '" y1="' + (h*0.45) + '" x2="' + (cx-rx+5) + '" y2="' + (h*0.65) + '" stroke="#ffa657" stroke-width="2"/>';
+        s += '<text x="' + (cx-rx-22) + '" y="' + (h*0.42) + '" text-anchor="end" fill="#ffa657" font-size="9">feed</text>';
+        s += '<line x1="' + (cx+rx-5) + '" y1="' + (h*0.65) + '" x2="' + (cx+rx+20) + '" y2="' + (h*0.45) + '" stroke="#f778ba" stroke-width="2"/>';
+        s += '<text x="' + (cx+rx+22) + '" y="' + (h*0.42) + '" fill="#f778ba" font-size="9">digestate</text>';
+        s += '<text x="' + cx + '" y="' + (h*0.94) + '" text-anchor="middle" fill="#7ee787" font-size="11" font-weight="600">Fixed Dome</text>';
+        // Floating drum (right)
+        var cx2 = w*0.74, tw = h*0.5;
+        s += '<rect x="' + (cx2-tw/2) + '" y="' + (h*0.50) + '" width="' + tw + '" height="' + (h*0.35) + '" fill="#58a6ff10" stroke="#58a6ff" stroke-width="1.2"/>';
+        s += '<line x1="' + (cx2-tw/2+4) + '" y1="' + (h*0.62) + '" x2="' + (cx2+tw/2-4) + '" y2="' + (h*0.62) + '" stroke="#58a6ff" stroke-dasharray="2,2"/>';
+        // Drum (gas holder) floating above
+        s += '<rect x="' + (cx2-tw/2-4) + '" y="' + (h*0.30) + '" width="' + (tw+8) + '" height="' + (h*0.22) + '" fill="#58a6ff22" stroke="#58a6ff" stroke-width="1.2"/>';
+        s += '<text x="' + cx2 + '" y="' + (h*0.42) + '" text-anchor="middle" fill="#58a6ff" font-size="10">drum (CH\u2084)</text>';
+        // Arrow showing it floats
+        s += '<text x="' + (cx2-tw/2-14) + '" y="' + (h*0.40) + '" fill="#8b949e" font-size="14">\u2195</text>';
+        s += '<text x="' + cx2 + '" y="' + (h*0.94) + '" text-anchor="middle" fill="#58a6ff" font-size="11" font-weight="600">Floating Drum</text>';
+        // Title
+        s += '<text x="' + (w/2) + '" y="14" text-anchor="middle" fill="#c9d1d9" font-size="11" font-weight="600">Digester cross-section</text>';
         s += '</svg>';
         return s;
       },
       sections: [
-        { title: "Fixed Dome Digester", text: "Underground brick/concrete structure with a fixed gas storage dome. Low cost and long lifespan but variable gas pressure. Common in China and India (Deenbandhu model)." },
-        { title: "Floating Drum Digester", text: "Metal drum floats on slurry providing constant gas pressure. Higher cost due to steel drum corrosion. Popular KVIC model in India." },
-        { title: "Sizing & HRT", text: "Hydraulic retention time (HRT) typically 20-40 days for mesophilic digestion. Digester volume = daily feed volume \u00d7 HRT. Organic loading rate (OLR) should stay within 1-6 kg VS/m\u00b3/day." }
+        { title: "Fixed Dome (Deenbandhu / Chinese)", text: "Brick or RCC tank buried below frost line; the gas accumulates under the same masonry dome that forms the roof. Capital cost is the lowest of any design (~\u20b912 000\u201320 000 for a 4 m\u00b3 family unit) and the underground placement gives free thermal insulation \u2014 critical in north-Indian winters where surface units lose heat. Trade-off: gas pressure swings between ~0 and 1.2 m H\u2082O as gas accumulates, so burners must tolerate variable pressure or a separate manometer/pressure regulator is fitted." },
+        { title: "Floating Drum (KVIC / Khadi)", text: "An inverted mild-steel drum sits in a guide frame and rises with stored gas, giving constant pressure (~10 cm H\u2082O = ~1 kPa). Easy gas-volume reading (drum height \u00d7 area), simple operation. Downside: the drum is the most expensive single component and corrodes \u2014 the H\u2082S in raw biogas attacks the steel near the gas\u2013water interface, requiring repainting every 2\u20133 years. Lifespan ~15 y vs 25\u201330 y for fixed dome." },
+        { title: "Plug-flow & CSTR designs", text: "Industrial dairy/agro plants use horizontal plug-flow (long, narrow tanks: high-solids feed travels as a slug, no short-circuiting) or continuously stirred tank reactors (CSTR, mechanical or gas-recirc mixing, TS 3\u20138 %). UASB and EGSB cover dilute, soluble waste (brewery, dairy whey) at OLR up to 20 kg COD/m\u00b3\u00b7d \u2014 5\u201310\u00d7 a CSTR." },
+        { title: "Sizing \u2014 HRT and OLR", text: "Two design equations rule it: V_digester = Q_feed \u00d7 HRT, and OLR = (Q_feed \u00d7 VS_in) / V. Worked example: a dairy with 500 kg/d cow dung at 8 % VS, mixed 1:1 with water, gives Q = 1 m\u00b3/d and 40 kg VS/d. Choosing HRT = 30 d \u2192 V = 30 m\u00b3 and OLR = 40/30 = 1.3 kg VS/m\u00b3\u00b7d \u2014 well inside the 1\u20134 safe band for mesophilic dung digesters. Pitfall: under-sizing pushes OLR above 5 and the reactor sours." }
       ],
       keypoints: [
-        { title: "Fixed Dome Pros", text: "Low cost, no moving parts, underground insulation, long lifespan (20+ years)." },
-        { title: "Floating Drum Pros", text: "Constant gas pressure, easy to monitor gas volume, simpler operation." },
-        { title: "Key Design Parameter", text: "C:N ratio of 20-30:1 and total solids of 8-12% ensure optimal digester performance." }
+        { title: "Fixed Dome Pros", text: "Lowest cost (no metal drum), no moving parts, lifespan 20\u201330 y, underground = stable 20\u201325\u00b0C." },
+        { title: "Floating Drum Pros", text: "Constant 1 kPa gas pressure, gas volume readable from drum height, easy to commission." },
+        { title: "Sizing rule of thumb", text: "Family digester: 0.25\u20130.4 m\u00b3 per kg fresh dung/day; HRT 30\u201340 d at 25\u00b0C; OLR 1\u20134 kg VS/m\u00b3\u00b7d." },
+        { title: "C:N and TS targets", text: "C:N 20\u201330:1 and total solids 7\u201310 % ensure mixability and methanogen happiness." },
+        { title: "Pitfall \u2014 organic overload", text: "Doubling feed without doubling volume spikes OLR; VFAs accumulate within 48 h and pH crashes \u2014 recovery takes 2\u20133 weeks." }
       ]
     },
     {
-      id: "dd-purification", num: "Card 3 of 3", title: "Biogas Purification",
-      desc: "Desulfurization, CO\u2082 removal, moisture removal", color: "#f778ba", icon: "\u2697\ufe0f",
+      id: "dd-purification", num: "Card 3 of 5", title: "Biogas Purification & Upgrading",
+      desc: "Desulfurization, CO\u2082 removal, moisture removal \u2014 raw biogas \u2192 biomethane", color: "#f778ba", icon: "\u2697\ufe0f",
       svg: function(w, h) {
         var steps = ["Raw\nBiogas", "Desulfurization", "CO\u2082 Removal", "Drying", "Bio-\nmethane"];
         var colors = ["#8b949e", "#ffa657", "#58a6ff", "#7ee787", "#f778ba"];
@@ -716,17 +1096,515 @@ const COURSE_CONFIG = {
         return s;
       },
       sections: [
-        { title: "Desulfurization", text: "H\u2082S removal is critical to prevent corrosion and toxicity. Methods include iron oxide beds (dry), iron chloride dosing (in-situ), and biological desulfurization using Thiobacillus bacteria." },
-        { title: "CO\u2082 Removal", text: "Upgrading biogas to >95% methane. Technologies: water scrubbing, pressure swing adsorption (PSA), amine scrubbing, and membrane separation." },
-        { title: "Moisture Removal", text: "Condensation traps, desiccants, or refrigeration drying remove water vapor that can cause pipeline corrosion and reduce calorific value." }
+        { title: "Why upgrade at all?", text: "Raw biogas is roughly 55\u201365 % CH\u2084, 35\u201345 % CO\u2082, plus 100\u20133 000 ppm H\u2082S, NH\u2083 traces and saturated water vapour. As-is it works for cooking and CHP engines, but to inject into a natural-gas grid (Wobbe index ~13.6 kWh/m\u00b3) or fuel CNG vehicles you need >95 % CH\u2084, <5 ppm H\u2082S, dew point <\u20138\u00b0C. Each percentage point of CO\u2082 removed bumps calorific value by ~0.1 kWh/m\u00b3." },
+        { title: "Desulfurization (H\u2082S removal)", text: "Mandatory first step \u2014 H\u2082S forms H\u2082SO\u2084 in engine crankcases and rusts gas pipes within months. Three workhorse methods: (1) iron-oxide \"sponge\" or pelletised Fe\u2082O\u2083 beds capture H\u2082S as FeS, regenerable with air; (2) in-situ FeCl\u2083 dosing into the digester precipitates FeS in the slurry; (3) biological scrubbing introduces a controlled 2\u20136 % air micro-dose so Thiobacillus oxidise H\u2082S to elemental S \u2014 cheapest for plants <500 m\u00b3/h. Typical removal: from 2 000 ppm down to <20 ppm." },
+        { title: "CO\u2082 removal (upgrading)", text: "Four mature technologies. Water scrubbing exploits CO\u2082 being ~26\u00d7 more soluble than CH\u2084 \u2014 cheap, robust, ~96 % CH\u2084 out, methane slip 1\u20132 %. Pressure-swing adsorption (PSA) cycles four columns of carbon molecular sieve at 4\u20138 bar; high purity (>97 %) but slip up to 4 %. Amine scrubbing (MEA/MDEA) chemically binds CO\u2082, lowest slip (<0.1 %) but needs steam reboiler. Membrane separation (polyimide hollow fibre) is modular and best for small/medium farms; staged designs hit 98 % CH\u2084." },
+        { title: "Moisture, siloxanes, ammonia", text: "Condensate traps in low points + a chiller or glycol absorber drop the dew point below the lowest pipeline temperature (typ. \u20138\u00b0C at 8 bar). Sewage and landfill gas also carry siloxanes that fuse into glassy SiO\u2082 deposits in engine combustion chambers \u2014 a packed-bed activated-carbon polish removes them to <0.1 mg Si/m\u00b3. NH\u2083 is washed out with the water in scrubbers." }
       ],
       keypoints: [
-        { title: "Why Purify?", text: "Raw biogas (50-70% CH\u2084) must be upgraded to biomethane (>95% CH\u2084) for grid injection or vehicle fuel." },
-        { title: "H\u2082S Limits", text: "H\u2082S must be reduced below 5 ppm for CNG use and below 100 ppm for engine applications." },
-        { title: "Methane Slip", text: "All upgrading technologies lose some methane; minimizing methane slip is critical for both economics and GHG impact." }
+        { title: "Composition target", text: "Grid biomethane: >95 % CH\u2084, <2 % CO\u2082, <5 ppm H\u2082S, <10 mg/m\u00b3 H\u2082O \u2014 matches L-gas Wobbe spec." },
+        { title: "H\u2082S limits in numbers", text: "<5 ppm for vehicle CNG, <100 ppm for spark engines, <250 ppm for boilers \u2014 anything above corrodes and voids warranties." },
+        { title: "Methane slip", text: "Water scrub 1\u20132 %, PSA 2\u20134 %, amine <0.1 %, membrane 0.5\u20132 %. CH\u2084 is 28\u00d7 GWP\u2086 of CO\u2082 \u2014 slip directly erases climate benefit." },
+        { title: "Cost rule of thumb", text: "Upgrading adds \u20ac0.10\u20130.20 per Nm\u00b3 biomethane; viable only above ~150 Nm\u00b3 raw biogas/h." },
+        { title: "Pitfall \u2014 silicon poisoning", text: "Skipping siloxane removal on landfill/sewage gas turns CHP engine heads into glass within 1 000 hours of runtime." }
+      ]
+    },
+    {
+      id: "dd-cn-ratio", num: "Card 4 of 5", title: "C:N Ratio & Feedstock Selection",
+      desc: "Why 25:1 is the sweet spot \u2014 codigestion math and methane yield by substrate",
+      color: "#ffa657", icon: "\ud83c\udf3e",
+      svg: function(w, h) {
+        var s = '<svg viewBox="0 0 ' + w + ' ' + h + '" xmlns="http://www.w3.org/2000/svg" style="background:#0d1117">';
+        var pl = 50, pr = 20, pt = 26, pb = 36;
+        var cw = w - pl - pr, ch = h - pt - pb;
+        // Axes
+        s += '<line x1="' + pl + '" y1="' + pt + '" x2="' + pl + '" y2="' + (pt+ch) + '" stroke="#30363d"/>';
+        s += '<line x1="' + pl + '" y1="' + (pt+ch) + '" x2="' + (pl+cw) + '" y2="' + (pt+ch) + '" stroke="#30363d"/>';
+        s += '<text x="' + (pl+cw/2) + '" y="' + (h-8) + '" text-anchor="middle" fill="#8b949e" font-size="10">C:N ratio</text>';
+        s += '<text x="14" y="' + (pt+ch/2) + '" fill="#8b949e" font-size="10" transform="rotate(-90 14 ' + (pt+ch/2) + ')">methane yield</text>';
+        // Bell curve sampled (peak around C:N=25)
+        var pts = "";
+        for (var x = 0; x <= cw; x += 4) {
+          var cn = 5 + (x / cw) * 50;          // 5..55
+          var y = Math.exp(-Math.pow((cn - 25) / 9, 2));
+          var py = (pt + ch) - y * (ch - 8);
+          pts += (x === 0 ? "M" : "L") + (pl + x) + " " + py + " ";
+        }
+        s += '<path d="' + pts + '" fill="none" stroke="#ffa657" stroke-width="2"/>';
+        // X labels
+        var ticks = [10, 20, 25, 30, 40, 50];
+        for (var i = 0; i < ticks.length; i++) {
+          var tx = pl + ((ticks[i] - 5) / 50) * cw;
+          s += '<line x1="' + tx + '" y1="' + (pt+ch) + '" x2="' + tx + '" y2="' + (pt+ch+3) + '" stroke="#30363d"/>';
+          s += '<text x="' + tx + '" y="' + (pt+ch+14) + '" text-anchor="middle" fill="#8b949e" font-size="9">' + ticks[i] + '</text>';
+        }
+        // Optimum band
+        var x1 = pl + ((20-5)/50)*cw, x2 = pl + ((30-5)/50)*cw;
+        s += '<rect x="' + x1 + '" y="' + pt + '" width="' + (x2-x1) + '" height="' + ch + '" fill="#7ee78711"/>';
+        s += '<text x="' + ((x1+x2)/2) + '" y="' + (pt+12) + '" text-anchor="middle" fill="#7ee787" font-size="9">optimum 20\u201330</text>';
+        // Feedstock annotations
+        var marks = [
+          {cn:8,  lbl:"chicken litter", col:"#ff7b72"},
+          {cn:18, lbl:"food waste",     col:"#58a6ff"},
+          {cn:25, lbl:"cow dung",       col:"#7ee787"},
+          {cn:50, lbl:"straw/maize",    col:"#d2a8ff"}
+        ];
+        for (var j = 0; j < marks.length; j++) {
+          var mx = pl + ((marks[j].cn-5)/50)*cw;
+          s += '<circle cx="' + mx + '" cy="' + (pt+ch-4) + '" r="3" fill="' + marks[j].col + '"/>';
+          s += '<text x="' + mx + '" y="' + (pt - 4 + (j%2)*10) + '" text-anchor="middle" fill="' + marks[j].col + '" font-size="9">' + marks[j].lbl + '</text>';
+        }
+        s += '<text x="' + (w/2) + '" y="14" text-anchor="middle" fill="#c9d1d9" font-size="11" font-weight="600">Methane yield vs C:N ratio</text>';
+        s += '</svg>';
+        return s;
+      },
+      sections: [
+        { title: "Why microbes care about C:N", text: "Methanogens build biomass at roughly C:N \u2248 5\u20137:1, but they only use ~10 % of incoming carbon for cells \u2014 the rest goes to CH\u2084. Net-net the comfortable substrate ratio is C:N 20\u201330:1. Below ~15 the surplus nitrogen mineralises to NH\u2083, which crosses cell walls and inhibits methanogenesis above ~3 g free-NH\u2083 N/L. Above ~35 there is too little nitrogen to grow new cells and the microbial population thins out, dropping yield." },
+        { title: "Typical feedstock C:N values", text: "Cow dung 18\u201325, pig slurry 9\u201313, chicken litter 5\u201310, food waste 14\u201320, fruit/vegetable peels 35, water hyacinth 20\u201325, rice straw 50\u201370, wheat straw 80\u2013130, sawdust 200\u2013500. The household digester sweet-spot \u2014 cow dung \u2014 is exactly in the optimum band, which is why it became the global default. Chicken-only or vegetable-only feedstocks need codigestion to balance." },
+        { title: "Codigestion math \u2014 worked example", text: "Mix x kg chicken litter (C:N = 8, C = 36 %, N = 4.5 %) with (1\u2212x) kg rice straw (C:N = 60, C = 42 %, N = 0.7 %). Target 25:1: solve (0.36x + 0.42(1\u2212x)) / (0.045x + 0.007(1\u2212x)) = 25 \u2192 x \u2248 0.55. So a 55 % litter / 45 % straw mix on dry basis gives ~25:1 and roughly doubles biogas yield over either substrate alone." },
+        { title: "Methane potential (BMP) cheat sheet", text: "Theoretical Buswell yield: B\u2080 = 22.4(n/2 + a/8 \u2212 b/4 \u2212 3c/8) per CnHaObNc. Typical experimental BMP, m\u00b3 CH\u2084 / kg VS: cow dung 0.20\u20130.30, pig slurry 0.30\u20130.45, food waste 0.40\u20130.55, fats/oils 0.80\u20131.00 (highest energy density but slow hydrolysis), grass silage 0.30\u20130.40, sewage sludge 0.20\u20130.35. Multiply by VS feed-rate to get expected daily Nm\u00b3 of biogas." }
+      ],
+      keypoints: [
+        { title: "Sweet spot", text: "C:N 20\u201330:1, total solids 7\u201310 %, particle size <10 mm \u2014 \"the holy trinity\" of feedstock prep." },
+        { title: "Ammonia ceiling", text: "Free NH\u2083 >150 mg/L (or total NH\u2084\u207a-N >3 g/L) inhibits methanogenesis \u2014 watch for it on poultry/abattoir waste." },
+        { title: "Codigestion bonus", text: "Co-digesting two streams typically raises specific yield 20\u201340 % over the weighted mean \u2014 nutrient balance + buffering + trace metals." },
+        { title: "Pre-treatment payoff", text: "Mechanical milling raises straw yield ~25 %, mild alkali (NaOH 4 %, 24 h) raises it ~60 %, steam explosion ~90 %." },
+        { title: "Pitfall \u2014 oils", text: "Fats/grease have huge BMP but a long-chain-fatty-acid lag of 5\u201310 d; over-feeding causes scum-layer flotation that traps gas." }
+      ]
+    },
+    {
+      id: "dd-gas-safety", num: "Card 5 of 5", title: "Gas Storage, Codigestion & Safety",
+      desc: "Gas-holder schematic, low/high-pressure storage, flame arrestors and isolation valves",
+      color: "#d2a8ff", icon: "\ud83d\udee1\ufe0f",
+      svg: function(w, h) {
+        var s = '<svg viewBox="0 0 ' + w + ' ' + h + '" xmlns="http://www.w3.org/2000/svg" style="background:#0d1117">';
+        // Digester (left)
+        var dx = w*0.12, dy = h*0.55, dw = w*0.18, dh = h*0.32;
+        s += '<rect x="' + dx + '" y="' + dy + '" width="' + dw + '" height="' + dh + '" rx="4" fill="#7ee78718" stroke="#7ee787" stroke-width="1"/>';
+        s += '<text x="' + (dx+dw/2) + '" y="' + (dy+dh/2+3) + '" text-anchor="middle" fill="#7ee787" font-size="10">Digester</text>';
+        // Pipe to safety train
+        var py = dy + 8;
+        s += '<line x1="' + (dx+dw) + '" y1="' + py + '" x2="' + (w*0.42) + '" y2="' + py + '" stroke="#8b949e" stroke-width="2"/>';
+        // Flame arrestor
+        var fx = w*0.36;
+        s += '<rect x="' + fx + '" y="' + (py-10) + '" width="22" height="20" fill="#ff7b7222" stroke="#ff7b72"/>';
+        s += '<text x="' + (fx+11) + '" y="' + (py+24) + '" text-anchor="middle" fill="#ff7b72" font-size="8">flame arrestor</text>';
+        // Isolation valve symbol (bowtie)
+        var vx = w*0.48;
+        s += '<path d="M ' + (vx-8) + ' ' + (py-6) + ' L ' + vx + ' ' + py + ' L ' + (vx-8) + ' ' + (py+6) + ' Z M ' + (vx+8) + ' ' + (py-6) + ' L ' + vx + ' ' + py + ' L ' + (vx+8) + ' ' + (py+6) + ' Z" fill="#ffa657" stroke="#ffa657"/>';
+        s += '<line x1="' + vx + '" y1="' + (py-12) + '" x2="' + vx + '" y2="' + (py-6) + '" stroke="#ffa657"/>';
+        s += '<text x="' + vx + '" y="' + (py+24) + '" text-anchor="middle" fill="#ffa657" font-size="8">isolation</text>';
+        s += '<line x1="' + (vx+6) + '" y1="' + py + '" x2="' + (w*0.62) + '" y2="' + py + '" stroke="#8b949e" stroke-width="2"/>';
+        // Gas-holder (centre): floating drum on water seal
+        var gx = w*0.66, gy = h*0.30, gw = w*0.18, gh = h*0.45;
+        s += '<rect x="' + gx + '" y="' + (gy+gh*0.5) + '" width="' + gw + '" height="' + (gh*0.5) + '" fill="#58a6ff10" stroke="#58a6ff" stroke-width="1"/>';
+        s += '<line x1="' + gx + '" y1="' + (gy+gh*0.6) + '" x2="' + (gx+gw) + '" y2="' + (gy+gh*0.6) + '" stroke="#58a6ff" stroke-dasharray="2,2"/>';
+        s += '<text x="' + (gx+gw+4) + '" y="' + (gy+gh*0.6) + '" fill="#58a6ff" font-size="8">water seal</text>';
+        s += '<rect x="' + (gx-3) + '" y="' + gy + '" width="' + (gw+6) + '" height="' + (gh*0.55) + '" fill="#d2a8ff22" stroke="#d2a8ff" stroke-width="1.2"/>';
+        s += '<text x="' + (gx+gw/2) + '" y="' + (gy+gh*0.30) + '" text-anchor="middle" fill="#d2a8ff" font-size="10">Gas Holder</text>';
+        s += '<text x="' + (gx+gw/2) + '" y="' + (gy+gh*0.42) + '" text-anchor="middle" fill="#8b949e" font-size="8">~1 kPa</text>';
+        s += '<text x="' + (gx-12) + '" y="' + (gy+gh*0.10) + '" fill="#8b949e" font-size="14">\u2195</text>';
+        // Pipe to use
+        s += '<line x1="' + (gx+gw) + '" y1="' + (gy+gh*0.20) + '" x2="' + (w*0.92) + '" y2="' + (gy+gh*0.20) + '" stroke="#8b949e" stroke-width="2"/>';
+        // PRV
+        var px = w*0.88;
+        s += '<polygon points="' + px + ',' + (gy+gh*0.10) + ' ' + (px-7) + ',' + (gy+gh*0.20) + ' ' + (px+7) + ',' + (gy+gh*0.20) + '" fill="#ff7b7222" stroke="#ff7b72"/>';
+        s += '<text x="' + px + '" y="' + (gy+gh*0.06) + '" text-anchor="middle" fill="#ff7b72" font-size="8">PRV</text>';
+        // Burner / CHP icon
+        s += '<text x="' + (w*0.94) + '" y="' + (gy+gh*0.24) + '" text-anchor="end" fill="#ffa657" font-size="11">\ud83d\udd25 burner / CHP</text>';
+        // Title
+        s += '<text x="' + (w/2) + '" y="14" text-anchor="middle" fill="#c9d1d9" font-size="11" font-weight="600">Gas-holder + safety train</text>';
+        s += '</svg>';
+        return s;
+      },
+      sections: [
+        { title: "Why store gas at all?", text: "Anaerobic digesters produce gas continuously (24 \u00d7 7 at near-constant rate), but demand is peaky \u2014 cooking morning + evening, CHP engines following grid demand, vehicle fuelling on schedule. A gas holder buffers the mismatch. Sizing rule: storage \u2265 50 % of one day\u2019s production for cooking duty, \u2265 4\u20136 h of CHP feed for industrial plants. A 30 m\u00b3/d family digester wants ~15 m\u00b3 of storage." },
+        { title: "Storage pressure tiers", text: "Low-pressure (1\u20135 kPa, the floating drum or external rubber bag): cheap, no compressor, used straight for cookstoves and CHP. Medium-pressure (5\u201320 bar, steel cylinders): fits CNG-style fast fill stations after upgrading. High-pressure (200\u2013250 bar): same as natural-gas vehicles \u2014 only after H\u2082S and water removal, otherwise corrosion shortens cylinder life from 20 y to 2." },
+        { title: "Safety train \u2014 the non-negotiable parts", text: "From the digester outwards: (1) condensate trap, (2) flame arrestor (sintered metal disk, quenches a flashback below the methane MIE 0.28 mJ), (3) over/under-pressure relief valve (PRV) set ~10 % above and ~50 % below normal, (4) isolation valve, (5) low-pressure cut-off interlock for end-use appliances. Biogas is explosive in air at 5\u201315 % CH\u2084 \u2014 the same window as natural gas. Always purge with CO\u2082 or N\u2082 before opening a vessel." },
+        { title: "Codigestion in practice", text: "Mixing complementary substrates raises gas yield and stabilises the reactor through nutrient and pH buffering. Classic combos: dairy slurry + maize silage (Germany\u2019s \"NaWaRo\" plants, +60 % yield), sewage sludge + food-waste fats (UK water utilities, +30\u201340 %), municipal organics + manure. Watch the ammonia and LCFA limits when increasing the high-N/high-fat fraction \u2014 step changes >10 %/week often crash the methanogens." }
+      ],
+      keypoints: [
+        { title: "Explosive range", text: "CH\u2084-air LEL/UEL = 5 %\u201315 %; biogas LEL ~6 % because CO\u2082 is inert \u2014 still treat it like natural gas." },
+        { title: "H\u2082S toxicity", text: "100 ppm causes eye irritation in 1 h, 700 ppm fatal in minutes \u2014 always desulfurise and ventilate pits." },
+        { title: "Storage sizing", text: "Family/cooking: 50\u2013100 % of daily production. CHP: 4\u20136 h. Vehicle fast-fill: separate 200-bar buffer." },
+        { title: "Codigestion limits", text: "Fats/oils \u2264 30 % VS share to avoid LCFA inhibition; ammonia <3 g/L; protein-rich streams \u226430 % of feed." },
+        { title: "Pitfall \u2014 negative pressure", text: "Drawing gas faster than production sucks air into the digester through any pinhole \u2192 explosive mixture inside the headspace. PRVs must work both directions." }
       ]
     }
   ],
+
+  useCases: [
+    {
+      id: "uc-dairy-farm", title: "Dairy Farm Digester (KVIC, 25 m³)",
+      desc: "Family-scale farm with 8 cows uses fixed-dome digester to replace LPG and produce slurry fertilizer.",
+      icon: "\ud83d\udc04", color: "#7ee787",
+      summary: "A village-scale plant is the <strong>simplest closed loop in bioenergy</strong>: dung in, biogas + bio-fertiliser out, no electricity needed. The whole design hinges on three numbers — feed ~1:1 with water to ~8% TS, hold it for ~30 days at ambient temperature, and size the gas-holder to one day of cooking demand. Get those right and a Deenbandhu/KVIC unit runs for 20+ years on free fuel.",
+      pipeline: "8 cows → 80 kg dung/day\n   │ mix 1:1 with water\n   ▼\nMixing pit (160 L/d, 8% TS)\n   │ gravity inlet\n   ▼\nFixed-dome digester (25 m³, HRT≈30 d, 22–28°C)\n   │ ~4 m³ biogas/d  @ 55–60% CH₄\n   ├──────────────► 12 mm HDPE @ 1 kPa\n   │                   ▼\n   │              Kitchen burner + mantle lamp\n   ▼\nOutlet tank → 160 L/d digestate (NPK 1.5-1.0-1.0)\n   │\n   ▼\nFodder plot (+25% biomass vs raw dung)",
+      metrics: [
+        { label: "Daily gas yield", value: "≈ 4 m³/d (0.04 m³/kg dung)" },
+        { label: "CH₄ content", value: "55–60 %" },
+        { label: "LPG displaced", value: "≈ 1.5 cylinders / month" },
+        { label: "Avoided CO₂", value: "≈ 70 kg CO₂-eq / month" },
+        { label: "Capex / payback", value: "₹35–45 k / 3–4 yr" }
+      ],
+      extensions: "Once the loop works, the next moves are: add a second digester in series for cold-season buffering, swap the masonry dome for a HDPE balloon to drop capex, and feed a small Lister-type dual-fuel engine for irrigation pumping.",
+      steps: [
+        { title: "Feedstock collection", component: "Mixing pit", detail: "8 cows produce ~80 kg fresh dung/day. Mixed 1:1 with water in a stirred mixing pit to give 160 kg/d slurry at ~8 % TS — the right viscosity to flow into the inlet pipe.", proto: "Cow dung + water 1:1",
+          intuition: "The mixing ratio targets a viscosity (~8% TS) that gravity-feeds through a 100 mm inlet without plugging — too thick jams the pipe, too thin washes microbes out.",
+          example: "A typical Indian zebu cow gives 8–12 kg dung/day at ~18% TS; diluting 1:1 lands at the canonical 8–10% TS for wet AD.",
+          pitfall: "Adding kitchen wastewater with soap/detergents to the mixing pit kills methanogens — keep household greywater out of the inlet." },
+        { title: "Anaerobic digestion", component: "25 m³ fixed-dome digester (Deenbandhu)", detail: "HRT ≈ 30 d at ambient 22–28°C; OLR ≈ 1.3 kg VS/m³·d. Daily biogas output ≈ 4 m³ (≈ 0.04 m³/kg dung), enough for ~6 h of cooking on a two-burner stove.", proto: "Mesophilic AD",
+          intuition: "Volume = HRT × daily feed. With 160 L/d feed and a 30-day HRT you need ~5 m³ of live slurry — the rest of the 25 m³ is gas-holder displacement chamber.",
+          complexity: "V = Q · HRT  (sizing rule)",
+          example: "In winter (15°C) gas output drops to ~60% — Deenbandhu units in north India are sized 25 m³ even though 15 m³ would suffice in summer.",
+          pitfall: "Below ~18°C methanogen activity falls off a cliff. Burying the dome ≥1.2 m deep is what keeps it warm — surface-mounted units fail in cold climates." },
+        { title: "Gas use — cooking + lighting", component: "Domestic burner, mantle lamp", detail: "Raw biogas piped 30 m to kitchen at ~1 kPa via 12 mm HDPE; condensate trap at low point. Replaces ~1.5 LPG cylinders/month, saving ₹1 200 and ~70 kg CO₂-eq/month.", proto: "Low-pressure direct use",
+          intuition: "Biogas has ~60% the calorific value of LPG, so burners need a larger jet (~Ø 1.5 mm vs Ø 0.8 mm) to deliver the same heat — using an LPG stove unmodified gives a weak yellow flame.",
+          example: "A two-burner Indian biogas chulha consumes ~0.45 m³/h × 2 — 4 m³/d covers ~4–5 h of active cooking.",
+          pitfall: "No condensate trap → water collects at the lowest pipe point in monsoon and the flame mysteriously dies. Slope all gas piping toward a U-trap." },
+        { title: "Digestate application", component: "Outlet tank → field", detail: "Daily 160 L of digestate (NPK ≈ 1.5–1.0–1.0, mostly ammoniacal) pumped to fodder plot. N is in plant-available form — gives ~25 % higher fodder biomass than raw dung.", proto: "Liquid bio-fertiliser",
+          intuition: "AD doesn't destroy nitrogen — it mineralises organic-N into NH₄⁺, which plants take up immediately. The fertiliser value goes up while pathogens and weed seeds go down.",
+          example: "Trials at IARI on berseem fodder show 22–28% yield uplift over equivalent raw-dung application — the slurry's ammonia hits roots faster than the compost mineralisation curve.",
+          pitfall: "Surface-applied digestate loses 30–50% of its ammonia to volatilisation within 24 h — incorporate within hours or use a drag-hose injector." }
+      ]
+    },
+    {
+      id: "uc-municipal-organics", title: "Municipal Organic Waste Plant (5 000 t/y)",
+      desc: "City wet-waste stream → source-segregated kitchen waste digester producing electricity and compost.",
+      icon: "\ud83c\udfd9\ufe0f", color: "#58a6ff",
+      summary: "An urban food-waste digester is the <strong>industrial sister of the village plant</strong>: same biology, but pasteurisation, stirred CSTRs, a CHP engine and dewatering centrifuges turn it into a closed waste-energy-fertiliser loop. The economics live or die on tipping fees plus feed-in tariffs — biology alone is rarely cash-positive at this scale.", 
+      pipeline: "14 t/d kitchen waste\n   │ magnetic + 30 mm screen\n   ▼\nPulping (12% TS slurry, recycled water)\n   │\n   ▼\nPasteuriser 70 °C / 1 h  (EU ABP)\n   │  +15 % BMP boost from softening\n   ▼\n2 × 2 500 m³ CSTR @ 38 °C\n   │ OLR 3.5 kgVS/m³·d, HRT 25 d\n   │ ~520 Nm³/h biogas @ 60% CH₄\n   ▼\n1.2 MW CHP engine\n   ├── Power → grid (feed-in tariff)\n   └── Heat → jacket loop → digester + pasteuriser\n            (parasitic load < 15 %)\n   ▼\nDecanter centrifuge\n   ├── Solids 25 % DS → compost\n   └── Liquids 1.5 % DS → farm N-fertiliser (≤20 km haul)",
+      metrics: [
+        { label: "Throughput", value: "5 000 t/y (≈ 14 t/d)" },
+        { label: "Biogas output", value: "≈ 520 Nm³/h @ 60% CH₄" },
+        { label: "Electrical output", value: "≈ 3.1 GWh/y @ 38% CHP-elec" },
+        { label: "Parasitic load", value: "< 15 % of generated power" },
+        { label: "Hygienisation", value: "70 °C × 1 h (EU ABP)" }
+      ],
+      extensions: "Next-level designs add: high-solids dry AD (Kompogas / Dranco) to skip dewatering, CO₂-capture from CHP flue gas for greenhouse fertilisation, and digestate-evaporation to a marketable concentrated NPK product instead of trucked liquid.",
+      steps: [
+        { title: "Source segregation + reception", component: "Tipping hall, screw press", detail: "~14 t/d of kitchen waste arrives in dedicated trucks; magnetic separator + 30 mm screen pulls out cutlery and packaging. Pulping with recycled process water gives 12 % TS slurry.", proto: "Mechanical pre-treatment",
+          intuition: "Garbage-in, garbage-out is literal here — every gram of plastic shopping bag in the feed survives the digester and ends up as visible contamination in the compost.",
+          example: "Copenhagen's Solrød plant rejects ~7% by mass at the receiving screen — mostly plastic film and cutlery — which still meets EN 17427 packaging-purity rules for compostable bags.",
+          pitfall: "Skipping source segregation means buying a much more aggressive front-end (BTA / pulper / grit trap) and still struggling with sand abrasion in pumps and stirrers." },
+        { title: "Thermal hygienisation", component: "70 °C / 1 h pasteuriser", detail: "Required by EU ABP Reg. 1069/2009 for animal-derived kitchen waste. Kills Salmonella, parvovirus; also softens fibre and bumps subsequent BMP by ~15 %.", proto: "Hygienisation",
+          intuition: "Pasteurisation is a regulatory checkbox, but it doubles as a free pre-treatment — cell walls rupture, soluble COD rises, and the downstream digester sees a richer substrate.",
+          complexity: "70 °C continuous × 60 min (residence)",
+          example: "Danish ABP-Cat-3 plants typically size 3 × pasteuriser tanks for redundancy and log the time-temperature curve per batch — auditors demand the trace, not just averages.",
+          pitfall: "Short-circuiting in a single tank means part of the batch leaves under-treated. Use ≥3 tanks operated batch-fill / hold / discharge to guarantee 60 min on every kg." },
+        { title: "Wet mesophilic CSTR", component: "2 × 2 500 m³ stirred digesters", detail: "OLR 3.5 kg VS/m³·d, HRT 25 d at 38 °C. ~520 m³ biogas/h at 60 % CH₄ → ~3.1 GWh/y of electricity at 38 % CHP efficiency.", proto: "Mesophilic CSTR",
+          intuition: "Two tanks in parallel give you N+1 redundancy: one can be drained for repair without losing the methanogen population in the other — restarting a single dead 2 500 m³ digester takes 6–8 weeks.",
+          complexity: "OLR × V = daily VS load → biogas at ~0.4–0.5 Nm³/kgVS",
+          example: "Aikan-style Danish plants run 38–40 °C exactly — moving up to thermophilic 55 °C gives faster kinetics but loses ammonia tolerance, which kitchen waste (high N) cannot afford.",
+          pitfall: "Top-mounted mechanical mixers fail at the gas/liquid interface from fibrous wrap-around. Many EU plants have shifted to gas-injection or pumped recirculation mixing." },
+        { title: "CHP + heat recovery", component: "1.2 MW gas engine + heat exchanger", detail: "Engine drives generator; jacket water at 90 °C heats digesters and pasteuriser. Power exported under feed-in tariff; heat closes the energy loop — parasitic load <15 %.", proto: "Combined Heat & Power",
+          intuition: "CHP is what makes biogas competitive: ~38% goes to electricity, ~47% to recoverable heat, only ~15% to losses — vs ~38% total for power-only.",
+          complexity: "η_elec ≈ 38 %, η_thermal ≈ 47 %, η_total ≈ 85 %",
+          example: "Jenbacher J412 / MAN E2876 class engines dominate this size band — 8 000+ run-hours/yr with one major service interval.",
+          pitfall: "H₂S above ~250 ppm chews through engine oil additives — without an activated-carbon polisher, TBN drops and rod bearings fail inside one service interval." },
+        { title: "Digestate dewatering", component: "Decanter centrifuge", detail: "Solid fraction (25 % DS) composted as soil amendment; liquid fraction (1.5 % DS) sold as liquid N-fertiliser to neighbouring farms within 20 km haul distance.", proto: "Mechanical dewatering",
+          intuition: "The liquid carries the soluble nitrogen (NH₄⁺), the solid carries the carbon and phosphorus — splitting the streams lets each go to the user who needs it most.",
+          example: "A 20 m³/h decanter pulling 5 kWh/m³ separates 14 t/d feed into ~4 t solids + ~10 t liquor; polymer cost (~€1.5/t) usually outweighs energy.",
+          pitfall: "Liquid digestate beyond ~20 km haul economics turns negative — many plants oversize and end up paying farmers to take it. Plan offtake contracts before commissioning." }
+      ]
+    },
+    {
+      id: "uc-biomethane-grid", title: "Biogas-to-Grid Upgrading (250 Nm³/h)",
+      desc: "Co-op of farms upgrades raw biogas to natural-gas-grid quality using membrane separation.",
+      icon: "\ud83c\udf2c\ufe0f", color: "#f778ba",
+      summary: "Upgrading turns biogas from a <strong>local heat fuel into a fungible energy carrier</strong>: strip CO₂ + H₂S + H₂O so what remains is interchangeable with fossil natural gas. Membranes have largely displaced water-scrubbing and amines for plants under ~500 Nm³/h because they're modular, dry, and have no chemicals — but slip and parasitic compression power are still the design battle.",
+      pipeline: "4 farm digesters\n   │ ~10 kPa\n   ▼\nManifold (250 Nm³/h crude, 56% CH₄, 42% CO₂, 1200 ppm H₂S)\n   │ in-situ FeCl₃ → H₂S ≈ 50 ppm\n   ▼\nFe₂O₃ guard bed → H₂S < 2 ppm\n   │\n   ▼\n2-stage screw compressor → 8 bar\n   │ glycol chiller → dew point −10 °C\n   ▼\n3-stage polyimide hollow-fibre membranes\n   │ stage-1 retentate >92% CH₄\n   │ stage-2 polish >97% CH₄\n   │ stage-3 slip → recycle\n   ▼\nOdorisation (THT 8 mg/m³) + analytics\n   │  EN 16723 / DVGW G260\n   ▼\nGrid RMU → 4 bar distribution main",
+      metrics: [
+        { label: "Throughput", value: "250 Nm³/h raw → ~140 Nm³/h biomethane" },
+        { label: "Final CH₄ purity", value: "> 97 %" },
+        { label: "Methane recovery", value: "≈ 99.5 %" },
+        { label: "Specific energy", value: "≈ 0.25 kWh / Nm³ raw gas" },
+        { label: "H₂S spec at injection", value: "< 5 mg/Nm³" }
+      ],
+      extensions: "Bigger plants move to amine (MEA/MDEA) scrubbing for >99.9% recovery, or to PSA when CO₂ off-gas is itself a saleable product (food-grade CO₂). Tomorrow's frontier is power-to-gas: feed the upgrader's CO₂ back through a Sabatier reactor with green H₂ to double the methane yield.",
+      steps: [
+        { title: "Crude biogas collection", component: "Manifold from 4 farm digesters", detail: "Pooled 250 Nm³/h at 56 % CH₄, 42 % CO₂, ~1 200 ppm H₂S, water-saturated. Collected at low pressure (10 kPa) into central upgrading skid.", proto: "Multi-source manifold",
+          intuition: "Pooling decouples upgrader sizing from any single farm — and lets each farm size its digester to its own substrate without worrying about uneconomic on-site upgrading.",
+          example: "Danish 'fælles-anlæg' (cooperative plants) typically aggregate 5–15 farms within a 10 km truck-piping radius, since gas pipelines below ~50 kPa lose < 0.3% in 5 km of DN150.",
+          pitfall: "Allowing any single member's digester to go negative-pressure can suck air into the whole manifold — explosive mixture inside the central skid. Each tie-in needs a back-pressure regulator." },
+        { title: "H₂S polishing", component: "Iron-oxide guard bed", detail: "Spent in-situ FeCl₃ dosing knocks H₂S down to ~50 ppm; a single Fe₂O₃ pellet bed polishes to <2 ppm — protects downstream membranes from sulphide degradation.", proto: "Fe₂O₃ sponge",
+          intuition: "Two-stage H₂S removal is cheap because cost scales with mass removed: in-situ chemistry handles the bulk in the digester, the polisher just trims the last 50 ppm.",
+          complexity: "Fe₂O₃ + 3 H₂S → Fe₂S₃ + 3 H₂O",
+          example: "A 1 m³ bed lasts ~2–4 months at 250 Nm³/h × 50 ppm before regeneration with air (exothermic — runaway risk).",
+          pitfall: "Polyimide membranes lose ~0.1% selectivity per ppm-day of H₂S exposure above 5 ppm — letting the guard bed run to exhaustion silently destroys the downstream skid." },
+        { title: "Compression + drying", component: "2-stage screw compressor + chiller", detail: "Compressed to 8 bar; intercooled glycol chiller drops dew point to −10 °C. Removed water drains to plant sewer; energy use ~0.25 kWh/Nm³ raw gas.", proto: "Compression train",
+          intuition: "Water vapour is the silent killer — at 8 bar it would condense inside the membrane modules, plug pores and turn the polyimide rubbery. Dry before separation, always.",
+          complexity: "η_compression ≈ 70 %; W ≈ 0.20–0.30 kWh/Nm³",
+          example: "Atlas Copco / GEA oil-flooded screw skids dominate this band — single skid, 8 000 h/yr duty, oil change at 4 000 h.",
+          pitfall: "Oil carryover from the compressor crystallises onto membrane fibres. A 3-stage coalescing filter + activated carbon is non-negotiable, even with 'oil-free' machines." },
+        { title: "3-stage membrane separation", component: "Polyimide hollow-fibre modules", detail: "Cascade of permeators: CO₂ permeates faster than CH₄. Stage-1 retentate >92 % CH₄; stage-2 polishes to >97 %; stage-3 recycles slip back to feed — overall methane recovery 99.5 %.", proto: "Membrane permeation",
+          intuition: "Membrane stages trade purity vs recovery: one stage gives ~92% CH₄ but vents 8% of the methane with the CO₂. The recycle loop is what pushes recovery to 99.5%.",
+          complexity: "α_CO₂/CH₄ ≈ 20–40 for polyimide; selectivity drops with feed humidity",
+          example: "Evonik SEPURAN Green or Air Liquide MEDAL modules — typical lifetime 10–15 yr; replacement cost ≈ €40–60 k per skid.",
+          pitfall: "If the CO₂-rich permeate vent contains >2% CH₄ it's a regulatory problem (fugitive GHG) and a yield loss. Continuously meter permeate composition, not just product." },
+        { title: "Grid injection", component: "Odorisation + RMU", detail: "THT odorant injected to 8 mg/m³, gas analysed continuously for CH₄/CO₂/O₂/H₂O/H₂S; if any spec drifts, the grid valve closes and gas vents to flare. Connected to local 4-bar distribution main.", proto: "EN 16723 / DVGW G260",
+          intuition: "The grid operator's only ask is interchangeability — Wobbe index within ±2% and a defined odorant profile. Anything else and they'll close the valve before they trust your gas.",
+          example: "German DVGW G260 requires Wobbe = 13.6–15.7 kWh/m³ and CH₄ ≥ 96%. Danish DGC requires CH₄ ≥ 97% — slightly tighter, so most Nordic plants run the membrane harder.",
+          pitfall: "Vent-to-flare during off-spec events looks safe but wastes ~100% of the upgrading energy. Better designs add an intermediate buffer (10–30 min) and only flare on persistent failures." }
+      ]
+    },
+    {
+      id: "uc-codigestion-design", title: "Designing a Co-Digestion Plant (cattle + maize + food waste)",
+      desc: "Engineering walk-through of choosing feedstocks, balancing C:N, sizing the reactor and forecasting yield for a 500 kWₑ German farm plant.",
+      icon: "\ud83e\uddee", color: "#ffa657",
+      summary: "Co-digestion is <strong>nutrient chemistry plus economics</strong>: blend a high-N, well-buffered slurry (cattle dung) with high-C, high-BMP substrates (maize silage, food waste) so the blended C:N lands at ~25:1 and the reactor sees a stable, methanogen-friendly diet. Design starts not with the tank but with a BMP-weighted feed table — get the recipe wrong and no amount of stirring saves you.",
+      pipeline: "Substrate menu (annual availability)\n   │  cattle slurry  120 t/d  @ 7% TS, C:N 12, BMP 220 Nm³/tVS\n   │  maize silage   12  t/d  @ 32% TS, C:N 40, BMP 340 Nm³/tVS\n   │  food waste     4   t/d  @ 25% TS, C:N 18, BMP 480 Nm³/tVS\n   ▼\nBlend solver  →  C:N ≈ 25, blended TS ≈ 11%\n   │  total VS load ≈ 8.5 t/d\n   ▼\nReactor sizing: V = VS / OLR = 8.5 / 3.0 = 2 800 m³\n   │  HRT = V / Q ≈ 22 d\n   ▼\nExpected biogas ≈ 3 100 Nm³/d @ 54% CH₄\n   ▼\n500 kWₑ CHP (38% η_elec)  →  4.0 GWh/y power + 5.0 GWh/y heat\n   ▼\nDigestate 130 t/d (NPK 4-1-3, dewatered)",
+      metrics: [
+        { label: "Blended C:N", value: "≈ 25 : 1 (target window 20–30)" },
+        { label: "Designed OLR", value: "3.0 kg VS / m³·d" },
+        { label: "Reactor volume", value: "≈ 2 800 m³ (single CSTR)" },
+        { label: "Annual electricity", value: "≈ 4.0 GWh @ 500 kWₑ CHP" },
+        { label: "Specific yield", value: "≈ 0.37 Nm³ CH₄ / kgVS fed" }
+      ],
+      extensions: "After commissioning the next levers are: seasonal recipe swaps (sugar beet in winter, grass silage in summer), trace-element dosing (Co/Ni/Se) to lift methanogen activity at high OLR, and adding a second post-digester to recover the last 10–15% of BMP that the main CSTR leaves on the table.",
+      steps: [
+        { title: "Build the substrate inventory", component: "Feedstock survey", detail: "List every available stream within ~20 km truck radius with seasonal availability, TS, VS, C:N and reference BMP. The plant lives or dies on whether this table is honest — overstated BMP is the #1 cause of underperforming German farm digesters.",
+          proto: "BMP × VS × tonnage = annual gas budget",
+          intuition: "BMP (Biochemical Methane Potential) is the substrate's theoretical maximum yield under ideal lab conditions; field plants typically realise 80–90% of BMP. Budget at 85%.",
+          example: "Cattle slurry 220 Nm³ CH₄/t VS, maize silage 340, food waste 480, poultry litter 280, glycerol 770 (but inhibitory above 5% VS share).",
+          pitfall: "Catalogue values for 'food waste' span 350–600 Nm³/tVS depending on fat content. Always sample your actual stream — bakery waste ≠ canteen waste ≠ slaughterhouse blood." },
+        { title: "Balance C:N and inhibitors", component: "Blend solver (spreadsheet or GAMS)", detail: "Mix substrates so blended C:N ≈ 20–30, ammonia stays under 3 g/L total, LCFA-contributing fats under 30% of VS, and protein under 30%. Cattle slurry is the buffering base; maize and food waste are the energy substrates.",
+          proto: "min cost s.t. C:N ∈ [20,30], NH₃ < 3 g/L",
+          intuition: "Manure brings N + alkalinity + microbes; energy crops bring C + BMP. Neither alone runs stably — together they buffer each other.",
+          complexity: "Linear blend in 5–10 variables, solved in seconds",
+          pitfall: "High-protein streams (slaughterhouse, blood) push NH₃ over 3 g/L and you watch methanogen activity collapse over a week. Trace the protein, not just the BMP." },
+        { title: "Size the digester", component: "CSTR + sizing equations", detail: "Pick a design OLR (3.0 kgVS/m³·d for wet mesophilic), compute V = VS / OLR, then verify HRT = V/Q is above the methanogen doubling time (≥20 d at 38°C). Add 15% freeboard for foam and gas-holder volume.",
+          proto: "V = VS_load / OLR;  HRT = V / Q",
+          intuition: "OLR sets reactor size, HRT sets biology safety — both constraints must hold simultaneously. The tighter one wins.",
+          complexity: "OLR ≤ 4 kg VS/m³·d (wet); HRT ≥ 20 d",
+          example: "8.5 tVS/d ÷ 3.0 → 2 833 m³. Round up to nearest standard tank (e.g. 2 × 1 500 m³ for N+1 redundancy).",
+          pitfall: "Designing at OLR 5+ to save capex looks attractive on paper but leaves zero headroom — one bad batch of silage and VFAs spike, pH crashes." },
+        { title: "Forecast gas, power and digestate", component: "Mass + energy balance", detail: "Gas = Σ(tVS · BMP · 0.85). Electricity = gas × 6 kWh/Nm³ CH₄ × η_elec. Digestate = feed − gas − evaporation. These three numbers anchor the EPC contract and the bank financing.",
+          proto: "Yield 85% of theoretical BMP",
+          intuition: "The 0.85 realisation factor compresses 15 unknowns (mixing, dead zones, trace elements, seasonal swings) into one honest haircut. Banks model with 0.80 to be safe.",
+          example: "8.5 tVS/d × 305 Nm³CH₄/tVS (blend-weighted) × 0.85 ≈ 2 200 Nm³CH₄/d ≈ 4 080 Nm³ biogas/d at 54% CH₄.",
+          pitfall: "Forgetting the parasitic load (heating, mixing, pumping ≈ 12–18% of generation in winter) inflates the net export figure by ~15%. EPC contracts must specify *net* exported energy." },
+        { title: "Permit, build, commission", component: "BImSchG / TA-Luft / EEG", detail: "German Federal Immission Control approval (BImSchG ≥ 1.2 t/h substrate), air emissions (TA-Luft methane slip <0.5%), and EEG 2023 tariff registration. Commissioning takes 4–8 weeks of seeding from a sister plant — never start cold.",
+          proto: "Hot-start from sister plant inoculum",
+          intuition: "Methanogens have doubling times of 5–10 days; a cold start of a 2 800 m³ tank from scratch can take 3–4 months. Buying 200 m³ of active sludge cuts that to weeks.",
+          example: "EEG-2023 tariff for ≤500 kWₑ + ≥50% manure: ~22 ct/kWh. Without the manure share you drop to ~13 ct/kWh — the recipe drives the tariff.",
+          pitfall: "Pushing OLR to design value in the first month overloads the seed culture and you crash. Standard ramp: 30%/30%/50%/70%/100% over 8–12 weeks." }
+      ]
+    },
+    {
+      id: "uc-danish-cooperative", title: "Danish Centralised Co-Op Plant (Lemvig-style, 550 t/d)",
+      desc: "Multi-farm centralised biogas plant collecting manure + industrial organics, producing biomethane for the Danish gas grid under the 2030 fossil-free target.",
+      icon: "\ud83c\udde9\ud83c\uddf0", color: "#d2a8ff",
+      summary: "Denmark's <strong>fælles-anlæg model</strong> is the world's most mature co-op biogas pattern: 20–60 farms within ~15 km truck the manure to a central thermophilic plant, raw biogas is upgraded on-site to biomethane, and the digestate is trucked back to the same fields. 65 % of all Danish biogas is now produced this way and ~30 % of Danish gas-grid throughput is renewable methane — the rest of Europe is now copying it.",
+      pipeline: "30+ farms within 15 km\n   │ vacuum tankers, 2-3 trips/farm/wk\n   ▼\nReception + pre-storage (550 t/d slurry + 100 t/d industrial)\n   │ ABP Cat-3 line → 70 °C × 1 h pasteuriser\n   ▼\n4 × 4 000 m³ thermophilic CSTRs @ 52 °C\n   │ OLR 4.5 kgVS/m³·d, HRT 18 d\n   │ ~2 200 Nm³/h biogas @ 64 % CH₄\n   ▼\nAmine scrubber (MEA) upgrader\n   │ CH₄ recovery > 99.9 %, slip < 0.1 %\n   ▼\nBiomethane ≈ 1 400 Nm³/h, > 98 % CH₄\n   ├── Grid injection (40-bar transmission)\n   └── CO₂ side-stream → food-grade liquefaction\n   ▼\nDigestate back to farms (truck round-trip)\n   │ inter-farm nutrient redistribution",
+      metrics: [
+        { label: "Plant throughput", value: "≈ 650 t/d (manure + co-substrates)" },
+        { label: "Biomethane output", value: "≈ 1 400 Nm³/h (≈ 110 GWh/y)" },
+        { label: "Methane recovery", value: "> 99.9 % (amine)" },
+        { label: "Process temperature", value: "52 °C thermophilic" },
+        { label: "Member farms", value: "20–60 within 15 km" },
+        { label: "GHG reduction", value: "≈ 60 kt CO₂-eq / yr displaced" }
+      ],
+      extensions: "Next-generation Danish plants are stacking: power-to-X using the captured CO₂ stream + electrolytic H₂ to synthesise additional CH₄ (Electrochaea), pyrolysis of the fibre fraction of digestate into biochar for carbon-negative credits, and contractual coupling to wind-power surpluses for low-cost H₂.",
+      steps: [
+        { title: "Co-op formation + logistics planning", component: "Farmer co-operative + GIS routing", detail: "20–60 farms sign 10–15 year manure-supply contracts. Routes are GIS-optimised so vacuum tankers do ~2–3 round trips per farm per week, hauling slurry in and digestate out on the same vehicle. The radius is capped at ~15 km to keep diesel cost below ~5% of revenue.",
+          proto: "Round-trip slurry exchange",
+          intuition: "The economic constraint is *empty kilometres* — coupling outbound digestate with inbound manure halves trucking cost vs one-way logistics.",
+          example: "Lemvig Biogas serves ~75 farmers from a single hub; average haul radius 12 km; ~14 trucks make ~80 round-trips/day.",
+          pitfall: "Without long-term contracts, when a single large supplier exits, OLR drops below design and the plant runs lossy. Membership clauses must include 24-month exit notice." },
+        { title: "Reception + pasteurisation", component: "Buffer tanks + 70 °C / 1 h pasteuriser line", detail: "Slurry arrives at 4–8 % TS and is screened (10 mm), then animal-by-product (Cat-3) co-substrates go through a separate ABP-compliant 70 °C × 1 h line before joining the main feed. Buffer tanks even out the working-day inbound peak.",
+          proto: "EU 1069/2009 ABP Cat-3",
+          intuition: "Pasteurisation gives Danish digestate an EU 'sanitised' stamp — the only thing that lets it cross farm boundaries without quarantine.",
+          example: "A 100 t/d ABP line typically uses 3 × 30 m³ tanks rotating fill/hold/discharge to guarantee 60 min ≥ 70 °C per kg.",
+          pitfall: "Mixing un-pasteurised manure with pasteurised co-substrate downstream of the heat treatment voids the ABP cert for the whole stream — strict pipework segregation required." },
+        { title: "Thermophilic CSTR digestion", component: "4 × 4 000 m³ stirred reactors @ 52 °C", detail: "Higher temperature shortens HRT to ~18 d, gives 30 % higher specific gas production than mesophilic, and provides additional pathogen kill. The trade-off: methanogens are more ammonia-sensitive, so feed-blend NH₃ must stay below 2.5 g/L.",
+          proto: "Thermophilic AD",
+          intuition: "Thermophilic = faster kinetics + tighter operating window. Denmark prefers it because the manure base buffers ammonia naturally and the cold climate makes process heat 'free' from the CHP loop.",
+          complexity: "Doubling time ≈ 3–4 d (vs 5–10 d mesophilic)",
+          example: "55 °C operation gives ~0.45 Nm³ CH₄/kgVS on cattle slurry + 20 % industrial blend; mesophilic equivalent is ~0.35.",
+          pitfall: "A 5 °C temperature drop (e.g. heater failure) shocks thermophiles and they take 2–3 weeks to recover. Redundant heating loops are mandatory at this scale." },
+        { title: "Amine upgrading", component: "MEA / MDEA absorber-stripper", detail: "Raw biogas (~64 % CH₄ at thermophilic) is contacted with monoethanolamine in an absorber column; CO₂ binds chemically. Lean amine is regenerated with steam, releasing 99 % pure CO₂ ready for food-grade liquefaction.",
+          proto: "Chemical absorption (MEA/MDEA)",
+          intuition: "Amine is chosen over membranes here because (a) volume is high enough to amortise the steam cost, and (b) the CO₂ off-gas is a saleable product, not just a vent.",
+          complexity: "CH₄ slip < 0.1 %; steam ≈ 0.55 kg / Nm³ raw gas",
+          example: "Lemvig's MEA skid delivers > 99 % CH₄ at < 0.1 % slip — among the highest recoveries achievable industrially.",
+          pitfall: "Amine degrades to corrosive heat-stable salts in the presence of O₂ or SO₂; trace-O₂ ingress at the reception tanks costs €100 k/yr in amine top-up." },
+        { title: "Grid injection + CO₂ valorisation", component: "Odorisation, GC analysis, RMU + CO₂ liquefier", detail: "Biomethane is odorised, GC-analysed every 90 s, and injected into the Danish 40-bar transmission grid. Captured CO₂ (~1 t/h) is dried, liquefied to −30 °C / 17 bar and trucked to greenhouses and beverage plants — turning a waste stream into a second revenue line.",
+          proto: "DGC quality spec + food-grade CO₂",
+          intuition: "Two products from one gas: methane for energy, CO₂ for food/horticulture. Both must hit strict purity specs but on a single integrated plant the marginal CO₂-capture cost is tiny.",
+          example: "Danish DGC spec requires CH₄ ≥ 97 %, Wobbe index 14.1–15.5 kWh/Nm³, total S ≤ 5 mg/Nm³. CO₂ food-grade requires < 50 ppm hydrocarbons.",
+          pitfall: "Without an on-site buffer (10–30 min), an out-of-spec event closes the grid valve and 1 400 Nm³/h of biomethane has to be flared — a single 30 min event burns ~700 Nm³ of saleable gas." },
+        { title: "Digestate logistics + nutrient redistribution", component: "Decanter + return-trip tankers", detail: "Whole digestate (~95 % of input mass) is decanted into solids (composted) and liquids (returned to fields). Crucially, digestate goes back to *different* farms than it came from — the plant equalises nutrients across the co-op, helping nitrate-vulnerable farms by exporting N.",
+          proto: "Nutrient redistribution by trucking",
+          intuition: "Centralisation isn't just about gas — it's a nutrient-trading network. Pig farms (P-rich, N-rich) effectively trade with arable farms (P-poor) through the digestate flow.",
+          example: "Danish nitrate directive caps field N at 170 kgN/ha·yr; the co-op redistributes ~12 kt N/yr across its membership, keeping every farm under the cap.",
+          pitfall: "Without nutrient accounting per delivery, regulators will treat all digestate as if it had peak N, forcing artificial limits. Each truck-load needs a sampling log." }
+      ]
+    }
+  ],
+
+  // === BEGIN glossary v1 data placeholder ===
+  glossary: [
+    { id: "ad", term: "Anaerobic Digestion", aka: "AD", category: "concepts",
+      short: "Microbial breakdown of organic matter without oxygen, yielding biogas and digestate.",
+      long: "A four-stage biological process (hydrolysis \u2192 acidogenesis \u2192 acetogenesis \u2192 methanogenesis) carried out by a consortium of bacteria and archaea inside a sealed digester. The net products are biogas (~60 % CH\u2084, ~40 % CO\u2082) and a nutrient-rich liquid digestate. AD is the foundation of every biogas plant, regardless of scale.",
+      seeAlso: ["methanogenesis", "hydrolysis", "digester", "biogas"] },
+    { id: "hydrolysis", term: "Hydrolysis", category: "concepts",
+      short: "First AD stage: extracellular enzymes cleave polymers (cellulose, proteins, fats) into soluble monomers.",
+      long: "Hydrolytic bacteria secrete cellulases, proteases and lipases that split long-chain biopolymers into sugars, amino acids and long-chain fatty acids. For lignocellulosic feedstock this step is rate-limiting because lignin shields the cellulose; pre-treatment is used to accelerate it.",
+      seeAlso: ["ad", "lignocellulose", "pre-treatment"] },
+    { id: "acidogenesis", term: "Acidogenesis", category: "concepts",
+      short: "Second AD stage: monomers are fermented into volatile fatty acids (VFAs), H\u2082 and CO\u2082.",
+      long: "Fast-growing fermentative bacteria convert hydrolysis products into acetate, propionate, butyrate and other VFAs along with hydrogen and CO\u2082. If the downstream stages cannot keep up, VFAs accumulate, pH drops and the digester \u2018sours\u2019.",
+      seeAlso: ["ad", "vfa", "methanogenesis"] },
+    { id: "acetogenesis", term: "Acetogenesis", category: "concepts",
+      short: "Third AD stage: longer VFAs and alcohols are converted to acetate, H\u2082 and CO\u2082.",
+      long: "Syntrophic acetogens depend on low H\u2082 partial pressure maintained by neighbouring methanogens \u2014 a tight metabolic coupling. About 70 % of the methane ultimately produced flows through acetate generated here.",
+      seeAlso: ["acidogenesis", "methanogenesis", "vfa"] },
+    { id: "methanogenesis", term: "Methanogenesis", category: "concepts",
+      short: "Final AD stage: archaea reduce acetate or H\u2082/CO\u2082 to methane.",
+      long: "Carried out by strict-anaerobe archaea (Methanosaeta, Methanosarcina, Methanobacterium). Two main routes: acetoclastic (CH\u2083COOH \u2192 CH\u2084 + CO\u2082) and hydrogenotrophic (CO\u2082 + 4H\u2082 \u2192 CH\u2084 + 2H\u2082O). Methanogens are slow-growing and sensitive to pH, NH\u2083 and O\u2082 \u2014 they set the overall HRT.",
+      seeAlso: ["ad", "methane", "hrt"] },
+    { id: "biogas", term: "Biogas", category: "concepts",
+      short: "Raw gas from AD: ~50\u201370 % CH\u2084, ~30\u201345 % CO\u2082, plus H\u2082S, NH\u2083 and water vapour.",
+      long: "Calorific value of raw biogas is ~20\u201325 MJ/Nm\u00b3, about 60 % of natural gas. Used directly for cooking and heat, fired in CHP engines, or upgraded to biomethane for vehicle fuel or grid injection.",
+      seeAlso: ["methane", "upgrading", "calorific-value", "chp"] },
+    { id: "methane", term: "Methane", aka: "CH\u2084", category: "concepts",
+      short: "The energy-carrying component of biogas; lower heating value 35.8 MJ/Nm\u00b3.",
+      long: "Methane is also a potent greenhouse gas (GWP\u2081\u2080\u2080 \u2248 28). Capturing it from organic waste and combusting it to CO\u2082 therefore yields a double climate benefit \u2014 avoided fugitive CH\u2084 plus displaced fossil fuel.",
+      seeAlso: ["biogas", "ghg", "upgrading"] },
+    { id: "digester", term: "Digester", aka: "Bioreactor", category: "hardware",
+      short: "Sealed vessel that holds the slurry and microbial consortium while AD proceeds.",
+      long: "Designs range from sub-10 m\u00b3 household fixed-dome and floating-drum units to multi-thousand-m\u00b3 industrial CSTRs and plug-flow tubular reactors. Key engineering choices: gas-holder type, mixing, heating, and inlet/outlet geometry.",
+      seeAlso: ["fixed-dome", "floating-drum", "cstr", "plug-flow"] },
+    { id: "fixed-dome", term: "Fixed-Dome Digester", aka: "Deenbandhu / Chinese type", category: "hardware",
+      short: "Underground masonry digester with a rigid hemispherical gas-holder cast in concrete.",
+      long: "Gas pressure varies with stored volume because the dome is fixed; a displacement chamber accepts the rising slurry. Low capital cost and 20+ year life, but masonry cracks can cause leaks. Common 1\u20136 m\u00b3 family sizes (Deenbandhu, KVIC) in India and China.",
+      seeAlso: ["digester", "floating-drum"] },
+    { id: "floating-drum", term: "Floating-Drum Digester", aka: "KVIC type", category: "hardware",
+      short: "Steel gas-holder floats on the slurry, giving roughly constant gas pressure.",
+      long: "Developed by KVIC in India. Constant pressure simplifies appliances, and gas volume is read directly from drum height. Trade-offs: steel corrosion at the gas/liquid interface limits life to ~10\u201315 years and adds maintenance cost.",
+      seeAlso: ["digester", "fixed-dome"] },
+    { id: "cstr", term: "CSTR", aka: "Continuously Stirred Tank Reactor", category: "systems",
+      short: "Large, mechanically mixed digester operated continuously \u2014 the workhorse of industrial AD.",
+      long: "Mixing keeps the slurry homogeneous, prevents scum/sediment layers and improves substrate\u2013microbe contact. Typically 1 000\u201310 000 m\u00b3, heated to mesophilic 38 \u00b0C, with HRT 20\u201340 d and OLR 2\u20135 kg VS/m\u00b3\u00b7d.",
+      seeAlso: ["digester", "hrt", "olr"] },
+    { id: "plug-flow", term: "Plug-Flow / Tubular Digester", category: "hardware",
+      short: "Horizontal long tube where slurry moves end-to-end with little back-mixing.",
+      long: "Often built as a buried PVC/HDPE \u2018bag\u2019 (Taiwanese model) for low-cost on-farm use, or insulated concrete channels at larger scale. Suits high-TS feeds (10\u201315 %) such as manure; staged biology naturally develops along the length.",
+      seeAlso: ["digester", "ts"] },
+    { id: "feedstock", term: "Feedstock", aka: "Substrate", category: "concepts",
+      short: "Organic input to the digester \u2014 manure, crop residues, kitchen waste, energy crops, sludge.",
+      long: "Choice of feedstock fixes the C:N ratio, biodegradability and BMP. Most plants run on a co-digestion blend to balance nutrients, dilute inhibitors and smooth seasonal supply.",
+      seeAlso: ["co-digestion", "cn_ratio", "bmp", "lignocellulose"] },
+    { id: "cn_ratio", term: "C:N Ratio", aka: "Carbon-to-Nitrogen Ratio", category: "numerics",
+      short: "Mass ratio of carbon to nitrogen in the feedstock; optimum for AD is ~20\u201330:1.",
+      long: "Too high (e.g. straw at 80:1) starves microbes of N and slows methanogenesis; too low (e.g. poultry litter at 5:1) liberates excess NH\u2083 that poisons methanogens. Co-digestion is mainly used to drive the blended C:N into the sweet spot.",
+      seeAlso: ["feedstock", "co-digestion"] },
+    { id: "co-digestion", term: "Co-digestion", category: "systems",
+      short: "Feeding two or more substrates together to improve nutrient balance and yield.",
+      long: "A classic combination is cattle slurry (low C:N, lots of buffering) with maize silage or food waste (high C:N, high BMP). Synergistic boosts of 10\u201330 % over the weighted single-substrate yield are routinely reported.",
+      seeAlso: ["feedstock", "cn_ratio", "bmp"] },
+    { id: "pre-treatment", term: "Pre-treatment", category: "systems",
+      short: "Mechanical, thermal, chemical or biological conditioning of feedstock to speed up hydrolysis.",
+      long: "Examples: grinding/maceration, steam explosion, thermal hygienisation at 70 \u00b0C/1 h (EU ABP rule), dilute-acid or alkaline soak, enzymatic dosing. Critical for lignocellulosic and packaged food waste.",
+      seeAlso: ["hydrolysis", "lignocellulose"] },
+    { id: "lignocellulose", term: "Lignocellulose", category: "concepts",
+      short: "Plant cell-wall matrix of cellulose, hemicellulose and lignin \u2014 the recalcitrant fraction of biomass.",
+      long: "Lignin physically shields cellulose fibrils from hydrolytic enzymes, which is why straw and woody residues have low BMP unless pre-treated. Lignin itself is essentially non-digestible anaerobically and ends up in the digestate.",
+      seeAlso: ["pre-treatment", "feedstock", "pyrolysis"] },
+    { id: "hrt", term: "HRT", aka: "Hydraulic Retention Time", category: "numerics",
+      short: "Average time slurry spends in the digester: HRT = V / Q.",
+      long: "Sets how completely the substrate degrades. Typical ranges: 15\u201325 d thermophilic, 25\u201340 d mesophilic, 40\u201360 d psychrophilic. Shortening HRT below the methanogen doubling time washes them out and crashes the reactor.",
+      seeAlso: ["olr", "cstr", "methanogenesis"] },
+    { id: "olr", term: "OLR", aka: "Organic Loading Rate", category: "numerics",
+      short: "Mass of volatile solids fed per m\u00b3 of digester per day (kg VS/m\u00b3\u00b7d).",
+      long: "A design and operating throttle. Wet mesophilic CSTRs run at 2\u20134 kg VS/m\u00b3\u00b7d, dry AD at 6\u201310. Pushing OLR too high causes VFA accumulation, pH crash and process failure.",
+      seeAlso: ["hrt", "vs", "vfa"] },
+    { id: "ts", term: "TS / VS", aka: "Total Solids / Volatile Solids", category: "numerics",
+      short: "TS = dry mass after 105 \u00b0C drying; VS = mass lost on ignition at 550 \u00b0C \u2014 the biodegradable fraction.",
+      long: "Wet AD runs at <15 % TS, dry AD at 20\u201340 % TS. VS is the meaningful input for OLR and BMP calculations because the inorganic ash fraction contributes nothing to gas yield.",
+      seeAlso: ["olr", "bmp"] },
+    { id: "vfa", term: "Volatile Fatty Acids", aka: "VFAs", category: "concepts",
+      short: "Short-chain organic acids (acetate, propionate, butyrate) \u2014 intermediates and stress indicator.",
+      long: "Healthy digesters keep total VFA <2 g/L and the propionate:acetate ratio <1.4. Rising VFAs are the earliest sign of overload, toxicity or temperature shock and usually precede a pH drop by 1\u20132 days.",
+      seeAlso: ["acidogenesis", "acetogenesis", "olr"] },
+    { id: "bmp", term: "BMP", aka: "Biochemical Methane Potential", category: "numerics",
+      short: "Lab-measured ultimate methane yield of a substrate, in Nm\u00b3 CH\u2084 per kg VS added.",
+      long: "Determined by 30\u201360 d batch assays at 35 \u00b0C with excess inoculum. Reference values: cattle manure 0.20, food waste 0.45, fats/oils 0.85, straw 0.25 Nm\u00b3 CH\u2084/kg VS. Used to size plants and price feedstocks.",
+      seeAlso: ["feedstock", "ts", "methane"] },
+    { id: "mesophilic", term: "Mesophilic vs Thermophilic", category: "concepts",
+      short: "Two operating temperature windows: ~30\u201340 \u00b0C and ~50\u201357 \u00b0C.",
+      long: "Mesophilic is the default \u2014 robust, lower parasitic heat. Thermophilic doubles the kinetics (so smaller volumes), hygienises the digestate, but is more sensitive to NH\u2083 inhibition and feed shocks.",
+      seeAlso: ["hrt", "methanogenesis"] },
+    { id: "digestate", term: "Digestate", aka: "Slurry residue", category: "concepts",
+      short: "Liquid + solid residue leaving the digester \u2014 a nutrient-rich biofertiliser.",
+      long: "Carries the bulk of feedstock N (mostly as plant-available NH\u2084\u207a), P and K. Often dewatered: the solid fraction is composted or land-applied, the liquid sold as N-fertiliser. Revenue from digestate can rival gas-sales income at farm scale.",
+      seeAlso: ["ad", "feedstock", "ghg"] },
+    { id: "upgrading", term: "Biogas Upgrading", category: "systems",
+      short: "Removing CO\u2082, H\u2082S, water and trace gases to reach pipeline-grade biomethane (>97 % CH\u2084).",
+      long: "Common technologies: water scrubbing, amine absorption, pressure-swing adsorption (PSA), and polymeric membrane separation. Targets methane recovery >98 % with methane slip <1 %, plus odorisation before grid injection.",
+      seeAlso: ["biogas", "methane", "ghg"] },
+    { id: "h2s", term: "H\u2082S Removal", aka: "Desulphurisation", category: "hardware",
+      short: "Stripping hydrogen sulphide from raw biogas to prevent corrosion and SO\u2082 emissions.",
+      long: "Options scale by load: in-situ air dosing (cheap, drops H\u2082S to ~200 ppm), Fe\u2082O\u2083 \u2018sponge\u2019 guard beds (<5 ppm), activated carbon polishers, or biological scrubbers. Mandatory upstream of CHP engines and membrane modules.",
+      seeAlso: ["upgrading", "chp", "biogas"] },
+    { id: "chp", term: "CHP", aka: "Combined Heat & Power", category: "performance",
+      short: "Gas engine driving a generator while jacket-water heat is recovered for process or district use.",
+      long: "Typical biogas CHP achieves ~38 % electrical and ~45 % thermal efficiency \u2014 combined ~80\u201385 %. The recovered heat usually goes back to heating the digester (parasitic ~10\u201315 %), with the surplus exported.",
+      seeAlso: ["biogas", "upgrading", "scale"] },
+    { id: "ghg", term: "GHG Reduction", aka: "Avoided Emissions", category: "performance",
+      short: "Net climate benefit from capturing fugitive CH\u2084 and displacing fossil fuels.",
+      long: "Each Nm\u00b3 of biogas combusted avoids ~2 kg CO\u2082-eq when it replaces natural gas, and far more when it diverts manure or landfill methane (GWP 28) into a controlled flare or engine. Often the largest revenue stream via carbon credits.",
+      seeAlso: ["methane", "digestate", "upgrading"] },
+    { id: "pyrolysis", term: "Pyrolysis", category: "concepts",
+      short: "Thermal decomposition of biomass at 400\u2013700 \u00b0C in the absence of oxygen.",
+      long: "Yields bio-oil, biochar and a non-condensable gas in proportions tunable by temperature and residence time. Complements AD for woody, lignin-rich feedstock that resists biological conversion.",
+      seeAlso: ["lignocellulose", "gasification"] },
+    { id: "gasification", term: "Gasification", category: "concepts",
+      short: "Partial oxidation of biomass at 800\u20131000 \u00b0C producing syngas (CO + H\u2082 + CH\u2084 + CO\u2082).",
+      long: "Operates with sub-stoichiometric O\u2082, air or steam. Syngas can be combusted for power, upgraded to substitute natural gas, or fed to Fischer\u2013Tropsch / methanol synthesis. Reactor types: downdraft, updraft, fluidised-bed, entrained-flow.",
+      seeAlso: ["pyrolysis", "methane"] },
+    { id: "calorific-value", term: "Calorific Value", aka: "LHV / HHV", category: "numerics",
+      short: "Heat released per unit fuel; LHV excludes condensation of water vapour, HHV includes it.",
+      long: "Reference LHVs: raw biogas (60 % CH\u2084) \u2248 21 MJ/Nm\u00b3; biomethane \u2248 35.8 MJ/Nm\u00b3; natural gas \u2248 38 MJ/Nm\u00b3; wood chips (30 % MC) \u2248 12 MJ/kg. Drives sizing of CHP engines and economic comparisons across fuels.",
+      seeAlso: ["biogas", "chp"] }
+  ],
+  // === END glossary v1 data placeholder ===
+
+  problems: [
+    {
+      week: "Foundations", title: "Sizing & Process Design",
+      items: [
+        { tag: "design", text: "A village wants a community digester for 50 households. Each household contributes 4 kg of mixed kitchen + market waste/day at C:N \u2248 18 and 22 % VS. Choose a digester type, size it (HRT, V), estimate daily biogas, and explain what limits the OLR.",
+          hint: "Compute Q at TS \u2248 8 %, pick HRT 25\u201330 d, then check OLR vs the 1\u20134 kg VS/m\u00b3\u00b7d window. BMP \u2248 0.45 m\u00b3 CH\u2084/kg VS." },
+        { tag: "derive", text: "Derive Buswell\u2019s equation for theoretical biogas yield from C\u2099H\u2090O\u1d47N\u1d04, and apply it to glucose (C\u2086H\u2081\u2082O\u2086) and oleic acid (C\u2081\u2088H\u2083\u2084O\u2082). Why is the experimental BMP of fats much closer to theoretical than that of straw?",
+          hint: "Balance the AD reaction CnHaObNc + (n\u2212a/4\u2212b/2+3c/4) H\u2082O \u2192 (n/2 + a/8 \u2212 b/4 \u2212 3c/8) CH\u2084 + \u2026 . Bioavailability vs lignin shielding." }
+      ]
+    },
+    {
+      week: "Operations", title: "Debug & Diagnostics",
+      items: [
+        { tag: "debug", text: "A mesophilic CSTR fed dairy slurry was stable for 6 months. After switching 30 % of feed to chicken litter, gas production fell 40 % within 10 days, pH dropped from 7.3 to 6.6, and FOS/TAC rose from 0.25 to 0.52. Diagnose the failure mode in 3 steps and propose two corrective actions.",
+          hint: "High N-feed \u2192 NH\u2083 inhibition + VFA accumulation. Reduce litter share, dose alkalinity (NaHCO\u2083), or trickle-add trace metals (Ni, Co) to support methanogens." },
+        { tag: "debug", text: "A floating-drum unit shows the drum dropping every night even with no gas drawn. List the four most likely causes and the test that distinguishes each.",
+          hint: "Leak (soap test on joints), temperature drop (overnight gas contraction \u2192 use \u0394V = nR\u0394T/P), water-seal evaporation, biological slowdown if reactor cooled below 20\u00b0C." }
+      ]
+    },
+    {
+      week: "Upgrading & Use", title: "Calculation & Code",
+      items: [
+        { tag: "code", text: "Write a short Python function biogas_to_kWh(flow_Nm3h, ch4_pct) that returns electrical power output for a CHP engine of 38 % electrical efficiency. Use LHV(CH\u2084) = 9.97 kWh/Nm\u00b3.",
+          hint: "P_elec = flow_Nm3h \u00d7 (ch4_pct/100) \u00d7 9.97 \u00d7 0.38 \u2014 careful: it returns kW, not kWh." },
+        { tag: "design", text: "Specify a safety train for a 10 m\u00b3/h farm digester feeding a kitchen + 20 kW CHP engine. List components in order from digester to end-use, with the design parameter for each.",
+          hint: "Condensate trap \u2192 H\u2082S scrubber \u2192 flame arrestor \u2192 PRV \u00b110 % set point \u2192 dual isolation \u2192 pressure regulator \u2192 low-pressure cut-off." },
+        { tag: "paper", text: "Read one peer-reviewed paper on codigestion of food waste with sewage sludge. Summarise (a) the codigestion ratio used, (b) the change in specific methane yield vs mono-digestion, and (c) any inhibition observed.",
+          hint: "Look for Bioresource Technology / Waste Management / Renewable Energy. Typical answer: 30:70 FW:SS, +25\u201340 % yield, occasional LCFA / ammonia spikes." }
+      ]
+    }
+  ],
+
+
 
   youtube: {
     videos: [
@@ -849,37 +1727,7 @@ const SAMPLE_CONFIG = {
     }
   ],
 
-  useCases: [
-    {
-      id: "sample-usecase-1", title: "Sample Use Case Alpha",
-      desc: "A step-by-step walkthrough of how process alpha works end to end.",
-      icon: "🔬", color: "#58a6ff",
-      steps: [
-        { title: "Step One — Initiation", component: "Component A", detail: "The process begins when the user triggers action alpha. The system validates input and prepares the request payload.", proto: "Protocol X",
-          code: "curl -X POST https://api.example.com/alpha \\\n  -H 'Content-Type: application/json' \\\n  -d '{\"action\":\"start\"}'",
-          refs: [{ label: "Sample RFC", url: "https://tools.ietf.org/html/rfc7231" }] },
-        { title: "Step Two — Processing", component: "Component B", detail: "The request is routed to the processing engine. Validation, transformation, and business logic are applied.", proto: "Protocol Y",
-          code: "# Monitor processing pipeline\ntail -f /var/log/pipeline.log | grep alpha",
-          refs: [{ label: "MDN: Fetch API", url: "https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API" }] },
-        { title: "Step Three — Response", component: "Component C", detail: "The result is packaged and returned to the caller. Caches are updated and logs are written.", proto: "Protocol Z",
-          refs: [{ label: "HTTP Caching", url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Caching" }] }
-      ]
-    },
-    {
-      id: "sample-usecase-2", title: "Sample Use Case Beta",
-      desc: "Walkthrough of process beta from trigger to completion.",
-      icon: "⚡", color: "#f778ba",
-      steps: [
-        { title: "Trigger Event", component: "Event Source", detail: "An external event triggers the beta pipeline. The event is validated and enriched with context.", proto: "Event Bus",
-          code: "# Publish event to message bus\naws sns publish --topic-arn arn:aws:sns:us-east-1:123:beta \\\n  --message '{\"event\":\"trigger\"}'",
-          refs: [{ label: "AWS SNS Docs", url: "https://docs.aws.amazon.com/sns/" }] },
-        { title: "Pipeline Execution", component: "Orchestrator", detail: "The orchestrator sequences the pipeline stages: parse, transform, enrich, persist. Each stage can retry on failure.", proto: "Message Queue",
-          code: "# Check queue depth\naws sqs get-queue-attributes \\\n  --queue-url https://sqs.us-east-1.amazonaws.com/123/beta \\\n  --attribute-names ApproximateNumberOfMessages" },
-        { title: "Notification", component: "Notification Service", detail: "Stakeholders are notified of the completed process. Channels include email, webhook, and in-app alerts.", proto: "SMTP / WebHook",
-          refs: [{ label: "RFC 6376 — DKIM", url: "https://tools.ietf.org/html/rfc6376" }] }
-      ]
-    }
-  ],
+  // (placeholder useCases block removed — real biogas-plant use cases defined above)
 
   youtube: {
     videos: [
@@ -907,7 +1755,9 @@ if (C.graph && C.graph.nodes && C.graph.nodes.length) tabs.push({ id: 'graph',  
 if (C.deepDives && C.deepDives.length)  tabs.push({ id: 'deepdive', label: '📚 Deep Dives' });
 if (C.useCases && C.useCases.length)    tabs.push({ id: 'usecase',  label: '🔬 Use Cases' });
 if (C.youtube && C.youtube.videos && C.youtube.videos.length) tabs.push({ id: 'appendix', label: '📹 Appendix' });
+if (C.glossary && C.glossary.length)    tabs.push({ id: 'glossary', label: '📖 Glossary' }); /* glossary v1 tab */
 tabs.push({ id: 'problems', label: '🧠 Practice' });
+tabs.push({ id: 'quiz',     label: '🎯 Quiz' });
 
 document.getElementById('toolbar-title').textContent = '🧠 ' + C.course.code;
 document.title = C.course.code + ' — Interactive Study Tool';
@@ -1223,6 +2073,7 @@ function initGraph() {
   // Nodes
   const node = gGraph.selectAll("g.graph-node").data(nodes).enter().append("g")
     .attr("class", "graph-node")
+    .attr("data-id", d => d.id) /* glossary v1 data-id */
     .call(d3.drag().on("start", (evt, d) => { if (!evt.active) simul.alphaTarget(0.3).restart(); d.fx = d.x; d.fy = d.y; })
       .on("drag", (evt, d) => { d.fx = evt.x; d.fy = evt.y; })
       .on("end", (evt, d) => { if (!evt.active) simul.alphaTarget(0); d.fx = null; d.fy = null; }))
@@ -1564,6 +2415,8 @@ if (C.deepDives && C.deepDives.length) {
     // Full view
     const full = document.createElement('div'); full.className = 'dd-full'; full.id = 'dd-full-' + dd.id;
     let fhtml = `<div class="dd-infographic"><h2 style="color:${dd.color}">${dd.icon || ''} ${dd.title}</h2><div class="dd-subtitle">${dd.num || ''}${dd.num && dd.desc ? ' · ' : ''}${dd.desc || ''}</div>`;
+    // Navigator at the top for quick prev/grid/next without scrolling
+    fhtml += `<div class="dd-nav dd-nav-top"><button class="btn" onclick="navDD(-1)">← Prev</button><button class="btn" onclick="showCardGrid()">Grid</button><button class="btn" onclick="navDD(1)">Next →</button></div>`;
     if (dd.svg) fhtml += dd.svg(800, 300);
     // Render top-level content fields (markdown/body/content) as a single section
     const topText = dd.markdown || dd.body || dd.content || dd.detail;
@@ -1585,7 +2438,7 @@ if (C.deepDives && C.deepDives.length) {
       dd.keypoints.forEach(kp => { fhtml += `<div class="dd-kp"><strong>${kp.title}</strong><span>${kp.text || kp.body || ''}</span></div>`; });
       fhtml += '</div>';
     }
-    fhtml += `<div class="dd-nav"><button class="btn" onclick="navDD(-1)">← Prev</button><button class="btn" onclick="showCardGrid()">Grid</button><button class="btn" onclick="navDD(1)">Next →</button></div></div>`;
+    fhtml += `</div>`; // dd-nav v1 top inserted
     full.innerHTML = fhtml;
     fullContainer.appendChild(full);
   });
@@ -1653,6 +2506,20 @@ function showUseCase(idx) {
   html += '<button class="uc-back-btn" onclick="showUseCaseGrid()">← Back to All Use Cases</button>';
   html += `<h2>${uc.icon} ${uc.title}</h2>`;
   html += `<div class="uc-subtitle">${uc.desc}</div>`;
+  if (uc.summary || uc.pipeline || uc.metrics || uc.extensions) {
+    html += '<div class="uc-overview">';
+    if (uc.summary)   html += `<div class="uc-summary">${uc.summary}</div>`;
+    if (uc.pipeline)  html += `<div class="uc-pipeline">${uc.pipeline}</div>`;
+    if (uc.metrics && uc.metrics.length) {
+      html += '<div class="uc-metrics">';
+      uc.metrics.forEach(m => {
+        html += `<div class="uc-metric"><div class="uc-metric-label">${m.label}</div><div class="uc-metric-value">${m.value}</div></div>`;
+      });
+      html += '</div>';
+    }
+    if (uc.extensions) html += `<div class="uc-extensions"><strong>Where to go next:</strong> ${uc.extensions}</div>`;
+    html += '</div>';
+  }
   html += '<div class="uc-flow-controls">';
   html += '<button onclick="ucPrev()">← Previous</button>';
   html += '<button class="primary" onclick="ucNext()">Next Step →</button>';
@@ -1673,8 +2540,14 @@ function showUseCase(idx) {
     html += '<div class="uc-body">';
     html += `<div class="uc-title">${step.title}</div>`;
     html += `<div class="uc-component">📍 ${step.component}</div>`;
-    let detailHtml = `<p>${step.detail}</p><span class="uc-proto">${step.proto}</span>`;
+    let detailHtml = '';
+    if (step.intuition) detailHtml += `<div class="uc-intuition"><strong>💡 Intuition:</strong> ${step.intuition}</div>`;
+    detailHtml += `<p>${step.detail}</p>`;
+    if (step.proto) detailHtml += `<span class="uc-proto">${step.proto}</span>`;
+    if (step.complexity) detailHtml += `<span class="uc-complexity">⏱ ${step.complexity}</span>`;
     if (step.code) detailHtml += `<pre class="uc-code">${step.code}</pre>`;
+    if (step.example) detailHtml += `<div class="uc-example"><strong>📊 In practice:</strong> ${step.example}</div>`;
+    if (step.pitfall) detailHtml += `<div class="uc-pitfall"><strong>⚠ Pitfall:</strong> ${step.pitfall}</div>`;
     if (step.refs && step.refs.length) {
       detailHtml += '<div class="uc-refs">' + step.refs.map(r => `<a href="${r.url}" target="_blank" rel="noopener">${r.label}</a>`).join('') + '</div>';
     }
@@ -2001,10 +2874,17 @@ function toggleUnit(headerRow) {
 }
 
 
-window.PROBLEMS_DATA=[{week:'Anaerobic Digestion',title:'Microbiology & Chemistry',items:[{tag:'derive',text:'Cow dung (C/N ~25) vs food waste (C/N ~15). Why does low C/N cause ammonia inhibition? Compute NH3 concentration for 3% N feedstock at 10% loading.'},{tag:'design',text:'Size a continuous digester for a 50-cow dairy farm. Given: 30 kg fresh dung/cow/day, 8% TS, 20-day HRT. What tank volume? Expected biogas m^3/day?',hint:'~1500 kg/day feed, 300 L biogas/kg VS, ~60 m^3/day.'}]},{week:'Gas & Purification',title:'Composition & Upgrading',items:[{tag:'debug',text:'Biogas has ~60% CH4, 40% CO2, 0.1-0.5% H2S. Why remove H2S? Propose 3 methods and their tradeoffs (iron sponge, water scrubbing, bio-trickling).'},{tag:'derive',text:'Upgrade 100 m^3/h raw biogas to bio-CNG (>97% CH4). Which separation (PSA, membrane, amine)? Energy cost per m^3?'}]},{week:'Economics & Scale',title:'Plant Design',items:[{tag:'design',text:'Community-scale biogas for 500 households in rural India. What feedstock? Ownership model? Why do most government plants fail after year 2?'}]}];
+window.PROBLEMS_DATA=[{week:'Anaerobic Digestion',title:'Microbiology & Chemistry',hook:'Methanogens are some of the slowest-growing organisms on Earth (doubling time ~days) — yet a healthy digester turns over tonnes of feedstock per week. Why is balancing that bottleneck the central craft of AD operation?',items:[{tag:'derive',star:true,text:'Cow dung (C/N ~25) vs food waste (C/N ~15). Why does low C/N cause ammonia inhibition? Compute NH3 concentration for 3% N feedstock at 10% loading.',hint:'3% N × 10% TS loading ≈ 3 g N/L; under thermophilic pH ~8, free NH3 fraction is ~5–10%. Methanogens are inhibited above ~200 mg/L free NH3.'},{tag:'design',star:true,text:'Size a continuous digester for a 50-cow dairy farm. Given: 30 kg fresh dung/cow/day, 8% TS, 20-day HRT. What tank volume? Expected biogas m^3/day?',hint:'~1500 kg/day feed × 20 d ≈ 30 m^3 working volume → ~36 m^3 with headspace. ~300 L biogas/kg VS × ~10% VS ≈ 45–60 m^3/day.'},{tag:'debug',text:'A farmer reports gas production crashed after switching from cattle dung to mostly poultry litter. VFAs climbed to 5000 mg/L, pH dropped to 6.4. Diagnose the failure chain and propose a recovery sequence.',hint:'Poultry is ultra-high N (C/N ~5–10) → ammonia spike → methanogens stall → acidogens keep working → VFA crash → pH falls → digester sour. Recovery: dilute, co-feed straw, add alkalinity, slow reload.'}]},{week:'Gas & Purification',title:'Composition & Upgrading',hook:'Raw biogas at ~60% CH4 is worth ~6 kWh/m^3 as engine fuel, but upgrading to >97% CH4 unlocks 10× the market (grid, vehicles) — at the cost of parasitic energy. The whole upgrading business is one economic question: when is the methane worth more than the compression?',items:[{tag:'debug',star:true,text:'Biogas has ~60% CH4, 40% CO2, 0.1–0.5% H2S. Why remove H2S? Propose 3 methods and their tradeoffs (iron sponge, water scrubbing, bio-trickling).',hint:'H2S → SO2 in combustion → corrodes engines, regulators, grid pipes. Iron sponge: cheap, batch-regenerate. Water scrub: continuous, also removes CO2. Bio-trickling: low opex, slower startup.'},{tag:'derive',star:true,text:'Upgrade 100 m^3/h raw biogas to bio-CNG (>97% CH4). Which separation (PSA, membrane, amine)? Energy cost per m^3?',hint:'PSA ~0.25 kWh/m^3 raw; membranes ~0.3 kWh/m^3 with methane slip 1–3%; amine ~0.5 kWh/m^3 but >99% CH4 recovery. At ₹6/kWh power, parasitic cost is ~₹1.5–3/m^3 upgraded.'},{tag:'paper',text:'Read a vendor spec sheet for a membrane upgrader. Predict before reading: where will methane slip end up? How is it usually destroyed or recovered?',hint:'CH4 slip goes into the off-gas/permeate. Best practice: route to a flox burner, RTO, or recycle to digester gas header — methane is 28× CO2 as GHG, so even 1% slip can erase the project carbon win.'}]},{week:'Economics & Scale',title:'Plant Design',hook:'Government audits of rural biogas programs repeatedly find the same number: 40–60% of installed digesters are non-functional after 2 years. The problem is almost never the biology — it is ownership, feedstock logistics, and who fixes a cracked dome on a Saturday.',items:[{tag:'design',star:true,text:'Community-scale biogas for 500 households in rural India. What feedstock? Ownership model? Why do most government plants fail after year 2?',hint:'Feed: mixed cattle dung + kitchen waste + crop residue. Failure modes: feedstock collection logistics break down, no spare-parts supply chain, no trained operator, gas pricing unclear, ownership ambiguous (panchayat vs SHG vs private). Successful models tie payment-for-gas to a single accountable operator.'},{tag:'derive',star:true,text:'Estimate the breakeven gate fee (₹/tonne) for a 100 TPD food-waste digester selling bio-CNG at ₹54/kg and digestate at ₹500/t. Assume capex ₹40 cr, opex ₹5 cr/yr, 50 Nm^3 CH4 per tonne feed.',hint:'Revenue: 100 t/d × 50 Nm^3 × ~0.7 kg/Nm^3 × ₹54 × 330 d ≈ ₹6.2 cr/yr from gas; digestate adds ~₹1 cr. Capex annualised (10y, 10%) ≈ ₹6.5 cr → shortfall ~₹4 cr/yr → gate fee needed ~₹1200/t.'}]}];
 // ═══════════════════════════════════════════════════════════════════════
 // PRACTICE PROBLEMS (Problem-First learning)
 // ═══════════════════════════════════════════════════════════════════════
+const PROB_STATE_KEY = STORAGE_KEY + '-probstate';
+function probLoadState() { try { return JSON.parse(localStorage.getItem(PROB_STATE_KEY) || '{}'); } catch(e) { return {}; } }
+function probSaveState(s) { try { localStorage.setItem(PROB_STATE_KEY, JSON.stringify(s)); } catch(e) {} }
+let _probState = probLoadState();
+let _probFilters = { tags: new Set(), search: '', status: 'all' };
+let _probFlat = []; // [{si, ii, p}]
+
 function renderProblems() {
   const container = document.getElementById('problems-container');
   if (!container || container.dataset.rendered) return;
@@ -2012,6 +2892,17 @@ function renderProblems() {
              : (C.problems && C.problems.length) ? C.problems : null;
   if (!data) { container.innerHTML = '<div class="prob-intro">No practice problems defined yet for this course.</div>'; container.dataset.rendered = '1'; return; }
   container.dataset.rendered = '1';
+
+  // Build flat index + per-tag counts
+  _probFlat = [];
+  const tagCounts = {};
+  data.forEach((sec, si) => (sec.items||[]).forEach((p, ii) => {
+    _probFlat.push({ si, ii, p, key: si+':'+ii });
+    const t = p.tag || 'design';
+    tagCounts[t] = (tagCounts[t]||0) + 1;
+  }));
+  const TAGS = ['design','derive','debug','code','paper'];
+
   let html = `<div class="prob-intro">
     <strong>🧠 Problem-First Learning.</strong> Try each problem for 10 minutes <em>before</em> watching the lecture — flail, sketch, be wrong. Then watch with specific questions in mind. Your attention spikes 3–5×.
     <br><br>
@@ -2021,24 +2912,657 @@ function renderProblems() {
     <span class="prob-tag debug">debug</span> find the failure mode &nbsp;
     <span class="prob-tag code">code</span> hands-on &nbsp;
     <span class="prob-tag paper">paper</span> predict before reading
-  </div>`;
-  data.forEach((sec, i) => {
-    html += `<details class="prob-section"${i < 2 ? ' open' : ''}>
-      <summary><span class="wk">${sec.week||''}</span> ${sec.title||''}</summary>
-      <div class="prob-body"><ol>`;
-    (sec.items||[]).forEach(p => {
-      html += `<li><span class="prob-tag ${p.tag||'design'}">${p.tag||'design'}</span>${p.text||''}`;
-      if (p.hint) html += `<span class="prob-hint">${p.hint}</span>`;
-      html += `</li>`;
+    <br><br>
+    <strong style="color:#ffa657">⭐ starred</strong> problems are curiosity-piquing — start there if you're new.
+    Reveals come in three layers: <strong style="color:#d2a8ff">💡 hint</strong> (nudge) · <strong style="color:#79c0ff">🔑 approach</strong> (how to attack) · <strong style="color:#7ee787">📐 answer</strong> (the result). Try the problem before peeking.
+  </div>
+  <div class="prob-toolbar">
+    <input id="prob-search" class="prob-search" type="text" placeholder="🔍 Search problems by keyword…" />
+    <div class="prob-filter-row" id="prob-tag-row">
+      ${TAGS.map(t => `<span class="prob-chip ${t}" data-tag="${t}">${t}<span class="count">${tagCounts[t]||0}</span></span>`).join('')}
+    </div>
+    <div class="prob-filter-row" id="prob-status-row">
+      <span class="prob-chip" data-status="all">All</span>
+      <span class="prob-chip" data-status="unattempted">○ New</span>
+      <span class="prob-chip" data-status="thinking">🤔 Thinking</span>
+      <span class="prob-chip" data-status="got">💡 Got it</span>
+      <span class="prob-chip" data-status="stuck">❓ Stuck</span>
+    </div>
+    <button id="prob-surprise" class="prob-actbtn primary" title="Open a random problem">🎲 Surprise me</button>
+    <button id="prob-reset" class="prob-actbtn" title="Clear all status">↺ Reset</button>
+    <div class="prob-progress" title="Problems attempted (thinking / got / stuck)">
+      <span id="prob-progress-text">0/${_probFlat.length}</span>
+      <div class="prob-progress-bar"><div id="prob-progress-fill" class="prob-progress-fill" style="width:0%"></div></div>
+    </div>
+  </div>
+  <div id="prob-sections">`;
+
+  data.forEach((sec, si) => {
+    const secTotal = (sec.items||[]).length;
+    html += `<details class="prob-section" data-si="${si}"${si < 2 ? ' open' : ''}>
+      <summary><span class="wk">${sec.week||''}</span> <span class="sec-title">${sec.title||''}</span>
+        <span class="sec-meta"><span class="done-count" data-sec-done="${si}">0</span>/<span>${secTotal}</span></span>
+      </summary>`;
+    if (sec.hook) html += `<div class="prob-hook">${sec.hook}</div>`;
+    html += `<div class="prob-body">`;
+    (sec.items||[]).forEach((p, ii) => {
+      const key = si+':'+ii;
+      const st = _probState[key] || {};
+      const tag = p.tag || 'design';
+      const statusCls = st.status ? ' status-'+st.status : '';
+      html += `<div class="prob-card${statusCls}" data-key="${key}" data-tag="${tag}" data-status="${st.status||''}">
+        <div class="pc-head">
+          <span class="pc-num">${(ii+1).toString().padStart(2,'0')}</span>
+          <span class="prob-tag ${tag}">${tag}</span>
+          ${p.star ? '<span class="pc-star" title="Curiosity pick">★</span>' : ''}
+          <div class="prob-status-btns">
+            <button class="prob-statbtn thinking${st.status==='thinking'?' active':''}" data-status="thinking" title="I'm working on this">🤔</button>
+            <button class="prob-statbtn got${st.status==='got'?' active':''}"           data-status="got"      title="Got it">💡</button>
+            <button class="prob-statbtn stuck${st.status==='stuck'?' active':''}"       data-status="stuck"    title="Stuck">❓</button>
+          </div>
+        </div>
+        <div class="pc-text">${p.text||''}</div>`;
+      const reveals = [];
+      if (p.hint)     reveals.push({ kind:'hint',     label:'💡 Reveal hint',   field:'hint',     btnCls:'',          panelCls:'prob-hint',     tag:'Hint' });
+      if (p.approach) reveals.push({ kind:'approach', label:'🔑 Show approach', field:'approach', btnCls:'approach',  panelCls:'prob-approach', tag:'Approach' });
+      if (p.answer)   reveals.push({ kind:'answer',   label:'📐 Show answer',   field:'answer',   btnCls:'answer',    panelCls:'prob-answer',   tag:'Answer' });
+      if (reveals.length) {
+        html += `<div class="pc-actions">`;
+        reveals.forEach(r => {
+          const shown = st[r.kind+'Shown'];
+          html += `<button class="prob-revealbtn ${r.btnCls}" data-action="${r.kind}" ${shown?'style="display:none"':''}>${r.label}</button>`;
+        });
+        html += `</div>`;
+        reveals.forEach(r => {
+          const shown = st[r.kind+'Shown'];
+          html += `<div class="prob-reveal-panel ${r.panelCls}${shown?' shown':''}" data-panel="${r.kind}"><span class="rh-label">${r.tag}</span>${p[r.field]}</div>`;
+        });
+      }
+      html += `</div>`;
     });
-    html += `</ol></div></details>`;
+    html += `</div></details>`;
   });
+  html += `</div>
+  <div class="prob-spotlight" id="prob-spotlight">
+    <div class="prob-spotlight-card">
+      <button class="sl-close" onclick="probCloseSpotlight()">×</button>
+      <h3>🎲 Surprise Problem</h3>
+      <div id="prob-spotlight-body"></div>
+    </div>
+  </div>`;
+
   container.innerHTML = html;
+
+  // Wire interactions
+  container.querySelectorAll('#prob-tag-row .prob-chip').forEach(c => c.addEventListener('click', () => {
+    const tag = c.dataset.tag;
+    if (_probFilters.tags.has(tag)) _probFilters.tags.delete(tag); else _probFilters.tags.add(tag);
+    c.classList.toggle('active');
+    probApplyFilters();
+  }));
+  container.querySelectorAll('#prob-status-row .prob-chip').forEach(c => c.addEventListener('click', () => {
+    container.querySelectorAll('#prob-status-row .prob-chip').forEach(x => x.classList.remove('active'));
+    c.classList.add('active');
+    _probFilters.status = c.dataset.status;
+    probApplyFilters();
+  }));
+  container.querySelector('#prob-status-row .prob-chip[data-status="all"]').classList.add('active');
+
+  const searchEl = container.querySelector('#prob-search');
+  searchEl.addEventListener('input', () => { _probFilters.search = searchEl.value.toLowerCase().trim(); probApplyFilters(); });
+
+  container.querySelector('#prob-surprise').addEventListener('click', probSurpriseMe);
+  container.querySelector('#prob-reset').addEventListener('click', () => {
+    if (!confirm('Clear status on all '+_probFlat.length+' problems?')) return;
+    _probState = {}; probSaveState(_probState);
+    container.dataset.rendered = ''; container.innerHTML = ''; renderProblems();
+  });
+
+  container.querySelectorAll('.prob-card').forEach(card => {
+    card.querySelectorAll('.prob-statbtn').forEach(btn => btn.addEventListener('click', e => {
+      e.stopPropagation();
+      const key = card.dataset.key;
+      const newStatus = btn.dataset.status;
+      const st = _probState[key] || {};
+      st.status = (st.status === newStatus) ? null : newStatus;
+      _probState[key] = st; probSaveState(_probState);
+      card.classList.remove('status-thinking','status-got','status-stuck');
+      if (st.status) card.classList.add('status-'+st.status);
+      card.dataset.status = st.status || '';
+      card.querySelectorAll('.prob-statbtn').forEach(b => b.classList.toggle('active', b.dataset.status === st.status));
+      probUpdateProgress();
+      if (_probFilters.status !== 'all') probApplyFilters();
+    }));
+    const revealBtns = card.querySelectorAll('[data-action="hint"],[data-action="approach"],[data-action="answer"]');
+    revealBtns.forEach(btn => btn.addEventListener('click', () => {
+      const kind = btn.dataset.action;
+      const panel = card.querySelector(`.prob-reveal-panel[data-panel="${kind}"]`);
+      if (panel) panel.classList.add('shown');
+      btn.style.display = 'none';
+      const key = card.dataset.key;
+      const st = _probState[key] || {};
+      st[kind+'Shown'] = true; _probState[key] = st; probSaveState(_probState);
+    }));
+  });
+
+  probUpdateProgress();
 }
+
+function probApplyFilters() {
+  const container = document.getElementById('problems-container');
+  const { tags, search, status } = _probFilters;
+  container.querySelectorAll('.prob-card').forEach(card => {
+    const tag = card.dataset.tag;
+    const cardStatus = card.dataset.status || '';
+    const text = card.querySelector('.pc-text').textContent.toLowerCase();
+    let show = true;
+    if (tags.size > 0 && !tags.has(tag)) show = false;
+    if (search && !text.includes(search)) show = false;
+    if (status !== 'all') {
+      if (status === 'unattempted') { if (cardStatus) show = false; }
+      else if (cardStatus !== status) show = false;
+    }
+    card.classList.toggle('hidden', !show);
+  });
+  // Auto-open sections with visible cards; hide empty sections
+  container.querySelectorAll('.prob-section').forEach(sec => {
+    const visible = sec.querySelectorAll('.prob-card:not(.hidden)').length;
+    sec.style.display = visible === 0 ? 'none' : '';
+    if (visible > 0 && (tags.size || search || status !== 'all')) sec.open = true;
+  });
+}
+
+function probUpdateProgress() {
+  const total = _probFlat.length;
+  let attempted = 0;
+  const perSec = {};
+  _probFlat.forEach(({si, key}) => {
+    const st = _probState[key];
+    if (st && st.status) { attempted++; perSec[si] = (perSec[si]||0) + 1; }
+  });
+  const txt = document.getElementById('prob-progress-text');
+  const fill = document.getElementById('prob-progress-fill');
+  if (txt) txt.textContent = attempted + '/' + total;
+  if (fill) fill.style.width = (total ? (attempted/total*100) : 0) + '%';
+  document.querySelectorAll('[data-sec-done]').forEach(el => {
+    const si = +el.dataset.secDone;
+    el.textContent = perSec[si] || 0;
+  });
+}
+
+function probSurpriseMe() {
+  if (!_probFlat.length) return;
+  // Prefer starred & unattempted; otherwise unattempted; otherwise any
+  const starredNew = _probFlat.filter(x => x.p.star && !(_probState[x.key]||{}).status);
+  const anyNew     = _probFlat.filter(x => !(_probState[x.key]||{}).status);
+  const pool = starredNew.length ? starredNew : (anyNew.length ? anyNew : _probFlat);
+  const pick = pool[Math.floor(Math.random()*pool.length)];
+  const { p, si, ii, key } = pick;
+  const sec = (window.PROBLEMS_DATA || (C.problems||[]))[si];
+  const tag = p.tag || 'design';
+  const body = document.getElementById('prob-spotlight-body');
+  const layers = [];
+  if (p.hint)     layers.push({ summary:'💡 Reveal hint',   panelCls:'prob-hint',     tag:'Hint',     body: p.hint });
+  if (p.approach) layers.push({ summary:'🔑 Show approach', panelCls:'prob-approach', tag:'Approach', body: p.approach });
+  if (p.answer)   layers.push({ summary:'📐 Show answer',   panelCls:'prob-answer',   tag:'Answer',   body: p.answer });
+  body.innerHTML = `
+    <div style="display:flex;gap:8px;align-items:center;margin-bottom:6px;flex-wrap:wrap">
+      <span class="prob-tag ${tag}">${tag}</span>
+      ${p.star ? '<span style="color:#ffa657">★</span>' : ''}
+      <span style="color:#8b949e;font-size:12px">${sec.week||''} · ${sec.title||''} · #${ii+1}</span>
+    </div>
+    <div class="pc-text">${p.text||''}</div>
+    ${layers.map(l => `<details style="margin-top:10px"><summary style="cursor:pointer;color:#8b949e;font-size:12px;padding:4px 0">${l.summary}</summary><div class="prob-reveal-panel ${l.panelCls} shown" style="margin-top:6px"><span class="rh-label">${l.tag}</span>${l.body}</div></details>`).join('')}
+    <div style="margin-top:14px;display:flex;gap:6px;flex-wrap:wrap">
+      <button class="prob-actbtn" onclick="probJumpTo('${key}')">↗ Jump to it</button>
+      <button class="prob-actbtn" onclick="probSurpriseMe()">🎲 Another</button>
+    </div>`;
+  document.getElementById('prob-spotlight').classList.add('open');
+}
+function probCloseSpotlight() { const el = document.getElementById('prob-spotlight'); if (el) el.classList.remove('open'); }
+function probJumpTo(key) {
+  probCloseSpotlight();
+  const card = document.querySelector(`.prob-card[data-key="${key}"]`);
+  if (!card) return;
+  const sec = card.closest('.prob-section');
+  if (sec) sec.open = true;
+  card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  card.style.transition = 'box-shadow .3s'; card.style.boxShadow = '0 0 0 2px #58a6ff';
+  setTimeout(() => { card.style.boxShadow = ''; }, 1500);
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') probCloseSpotlight(); });
 if (typeof switchTab === 'function') {
   const _origSwitchTab_prob = switchTab;
   switchTab = function(tab) { _origSwitchTab_prob(tab); if (tab === 'problems') renderProblems(); };
 }
+
+// === BEGIN glossary v1 js ===
+// ═══════════════════════════════════════════════════════════════════════
+// GLOSSARY — definitions + cross-references with graph & mindmap
+// ═══════════════════════════════════════════════════════════════════════
+(function initGlossaryMaps() {
+  const gloss = (C && C.glossary) || [];
+  if (!gloss.length) return;
+
+  // 1. Build id → entry maps and "label/aka" → id reverse map.
+  const byId = {};
+  const byLabel = {}; // lowercased term/aka → id
+  gloss.forEach(g => {
+    byId[g.id] = g;
+    const keys = [g.term].concat(g.aka || []);
+    keys.forEach(k => { if (k) byLabel[k.toLowerCase().trim()] = g.id; });
+  });
+
+  // 2. Patch graph node tips for any node whose id matches a glossary entry.
+  let graphMatched = 0;
+  const glossByGraphNode = {};
+  if (C.graph && Array.isArray(C.graph.nodes)) {
+    C.graph.nodes.forEach(n => {
+      if (byId[n.id]) {
+        glossByGraphNode[n.id] = n.id;
+        graphMatched++;
+        if (n.tip && n.tip.indexOf('📖') < 0) n.tip = n.tip + ' · 📖 in glossary';
+      } else {
+        // Fallback: try label/aka match
+        const k = (n.label || '').toLowerCase().trim();
+        if (byLabel[k]) {
+          glossByGraphNode[n.id] = byLabel[k];
+          graphMatched++;
+          if (n.tip && n.tip.indexOf('📖') < 0) n.tip = n.tip + ' · 📖 in glossary';
+        }
+      }
+    });
+  }
+
+  // 3. Walk mindmap and build name → glossary-id map. Match relaxed:
+  //    full name (newlines → space) OR each line.
+  let mindmapMatched = 0;
+  const glossByMindmapName = {};
+  function walkMm(node) {
+    if (!node) return;
+    if (node.name) {
+      const full = node.name.replace(/\n/g, ' ').trim();
+      const candidates = [full].concat(node.name.split(/\n+/).map(s => s.trim()).filter(Boolean));
+      for (const c of candidates) {
+        const id = byLabel[c.toLowerCase()];
+        if (id) {
+          glossByMindmapName[full] = id;
+          mindmapMatched++;
+          break;
+        }
+      }
+    }
+    (node.children || []).forEach(walkMm);
+  }
+  if (C.mindmap) walkMm(C.mindmap);
+
+  window._glossaryById = byId;
+  window._glossaryByLabel = byLabel;
+  window._glossaryIdByGraphNode = glossByGraphNode;
+  window._glossaryIdByMindmapName = glossByMindmapName;
+  window._glossaryStats = { graphMatched: graphMatched, mindmapMatched: mindmapMatched };
+
+  // 4. Monkey-patch showTooltip so it appends a "📖 Defined in glossary →" link
+  //    whenever the hovered name corresponds to a glossary entry.
+  if (typeof window.showTooltip === 'function') {
+    const _origShowTooltip = window.showTooltip;
+    const ttRoot = document.getElementById('tooltip');
+    let glossFooter = ttRoot.querySelector('.tt-glossary');
+    if (!glossFooter) {
+      glossFooter = document.createElement('div');
+      glossFooter.className = 'tt-glossary';
+      ttRoot.appendChild(glossFooter);
+    }
+    window.showTooltip = function(evt, name, tip, slides) {
+      _origShowTooltip(evt, name, tip, slides);
+      glossFooter.innerHTML = '';
+      ttRoot.classList.remove('has-glossary');
+      if (!name) return;
+      const plain = String(name).replace(/\n/g, ' ').trim();
+      const key = plain.toLowerCase();
+      let id = byLabel[key] || glossByMindmapName[plain] || null;
+      if (!id) {
+        // strip parenthetical suffix e.g. "Optical Switch (OCS)" → "Optical Switch"
+        const stripped = plain.replace(/\s*\([^)]*\)\s*$/, '').toLowerCase();
+        if (stripped !== key) id = byLabel[stripped] || null;
+      }
+      if (id) {
+        const a = document.createElement('a');
+        a.textContent = '📖 Defined in glossary →';
+        a.onclick = (e) => {
+          e.stopPropagation();
+          if (typeof window.glossaryJumpToTerm === 'function') window.glossaryJumpToTerm(id);
+        };
+        glossFooter.appendChild(a);
+        ttRoot.classList.add('has-glossary');
+      }
+    };
+  }
+})();
+
+// ─── renderGlossary ───────────────────────────────────────────────────
+let _glossSelectedCat = 'all';
+let _glossSearch = '';
+let _glossSearchTimer = null;
+let _glossBuilt = false;
+
+const GLOSS_CAT_COLORS = {
+  hardware:    '#58a6ff',
+  software:    '#7ee787',
+  numerics:    '#79c0ff',
+  systems:     '#d2a8ff',
+  performance: '#f778ba',
+  concepts:    '#ffa657'
+};
+
+function renderGlossary() {
+  const data = (C.glossary || []).slice().sort((a, b) =>
+    a.term.toLowerCase().localeCompare(b.term.toLowerCase()));
+  const list = document.getElementById('glossary-list');
+  const pillBar = document.getElementById('glossary-cat-pills');
+  const countEl = document.getElementById('glossary-count');
+  const searchEl = document.getElementById('glossary-search');
+  if (!list || !pillBar || !countEl || !searchEl) return;
+
+  // Build category pills + search input wiring once.
+  if (!_glossBuilt) {
+    const cats = ['all'].concat(
+      Array.from(new Set(data.map(d => d.category))).sort());
+    pillBar.innerHTML = '';
+    cats.forEach(cat => {
+      const btn = document.createElement('button');
+      btn.textContent = cat === 'all' ? `All (${data.length})` :
+        `${cat} (${data.filter(d => d.category === cat).length})`;
+      btn.dataset.cat = cat;
+      const color = cat === 'all' ? '#58a6ff' : (GLOSS_CAT_COLORS[cat] || '#58a6ff');
+      btn.style.setProperty('--pill-color', color);
+      btn.style.setProperty('--pill-bg', color + '22');
+      if (cat === _glossSelectedCat) btn.classList.add('active');
+      btn.onclick = () => {
+        _glossSelectedCat = cat;
+        pillBar.querySelectorAll('button').forEach(b =>
+          b.classList.toggle('active', b.dataset.cat === cat));
+        renderGlossary();
+      };
+      pillBar.appendChild(btn);
+    });
+    searchEl.addEventListener('input', () => {
+      if (_glossSearchTimer) clearTimeout(_glossSearchTimer);
+      _glossSearchTimer = setTimeout(() => {
+        _glossSearch = searchEl.value.trim().toLowerCase();
+        renderGlossary();
+      }, 120);
+    });
+    _glossBuilt = true;
+  }
+
+  // Filter
+  const q = _glossSearch;
+  const visible = data.filter(d => {
+    if (_glossSelectedCat !== 'all' && d.category !== _glossSelectedCat) return false;
+    if (!q) return true;
+    const hay = [d.term, (Array.isArray(d.aka) ? d.aka.join(' ') : (d.aka || '')), d.short, d.long || ''].join(' ').toLowerCase();
+    return hay.indexOf(q) >= 0;
+  });
+
+  countEl.textContent = `${visible.length} of ${data.length} terms`;
+
+  const graphIds = new Set();
+  if (C.graph && C.graph.nodes) C.graph.nodes.forEach(n => graphIds.add(n.id));
+  const glossIds = new Set(data.map(d => d.id));
+  const mindmapNames = window._glossaryIdByMindmapName || {};
+  const reverseMindmap = {}; // glossary-id → mindmap label
+  Object.keys(mindmapNames).forEach(name => { reverseMindmap[mindmapNames[name]] = name; });
+
+  list.innerHTML = '';
+  visible.forEach(d => {
+    const color = GLOSS_CAT_COLORS[d.category] || '#58a6ff';
+    const card = document.createElement('div');
+    card.className = 'glossary-card';
+    card.dataset.id = d.id;
+    card.style.setProperty('--cat-color', color);
+
+    const head = document.createElement('div');
+    head.className = 'glossary-term-row';
+    const term = document.createElement('span');
+    term.className = 'glossary-term';
+    term.textContent = d.term;
+    head.appendChild(term);
+    const badge = document.createElement('span');
+    badge.className = 'glossary-cat-badge';
+    badge.textContent = d.category;
+    badge.style.setProperty('--cat-color', color);
+    head.appendChild(badge);
+    card.appendChild(head);
+
+    if (d.aka && d.aka.length) {
+      const aka = document.createElement('div');
+      aka.className = 'glossary-aka';
+      aka.textContent = 'aka ' + (Array.isArray(d.aka) ? d.aka.join(', ') : d.aka);
+      card.appendChild(aka);
+    }
+
+    const shortEl = document.createElement('div');
+    shortEl.className = 'glossary-short';
+    shortEl.textContent = d.short || '';
+    card.appendChild(shortEl);
+
+    if (d.long) {
+      const longEl = document.createElement('div');
+      longEl.className = 'glossary-long';
+      longEl.innerHTML = d.long;
+      card.appendChild(longEl);
+      const toggle = document.createElement('button');
+      toggle.className = 'glossary-toggle';
+      toggle.textContent = 'Show more ▾';
+      toggle.onclick = () => {
+        const expanded = card.classList.toggle('expanded');
+        toggle.textContent = expanded ? 'Show less ▴' : 'Show more ▾';
+      };
+      card.appendChild(toggle);
+    }
+
+    const links = document.createElement('div');
+    links.className = 'glossary-links';
+    if (graphIds.has(d.id)) {
+      const b = document.createElement('button');
+      b.textContent = '🔗 Topic Graph';
+      b.onclick = () => window.glossaryJumpToGraphNode(d.id);
+      links.appendChild(b);
+    }
+    if (reverseMindmap[d.id]) {
+      const b = document.createElement('button');
+      b.textContent = '📐 Mind Map';
+      b.onclick = () => window.glossaryJumpToMindmapNode(reverseMindmap[d.id]);
+      links.appendChild(b);
+    }
+    (d.seeAlso || []).forEach(otherId => {
+      if (!glossIds.has(otherId)) return;
+      const other = (C.glossary || []).find(x => x.id === otherId);
+      if (!other) return;
+      const b = document.createElement('button');
+      b.textContent = '→ ' + other.term;
+      b.onclick = () => window.glossaryJumpToTerm(otherId);
+      links.appendChild(b);
+    });
+    if (links.children.length) card.appendChild(links);
+
+    list.appendChild(card);
+  });
+}
+
+// ─── Cross-tab jump helpers ───────────────────────────────────────────
+window.glossaryJumpToTerm = function(id) {
+  if (typeof switchTab === 'function') switchTab('glossary');
+  setTimeout(() => {
+    const card = document.querySelector('.glossary-card[data-id="' + CSS.escape(id) + '"]');
+    if (!card) return;
+    card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    card.classList.remove('flash');
+    void card.offsetWidth; // restart animation
+    card.classList.add('flash');
+    // Pull the display term from the card itself so the toast matches what the user sees
+    const labelEl = card.querySelector('.glossary-term');
+    const label = labelEl ? labelEl.textContent.trim() : id;
+    if (typeof showGlossaryToast === 'function') showGlossaryToast('Glossary', label, 'glossary');
+    setTimeout(() => card.classList.remove('flash'), 2800);
+  }, 60);
+};
+
+window.glossaryJumpToGraphNode = function(id) {
+  if (typeof switchTab === 'function') switchTab('graph');
+  const tryFlash = (attempt) => {
+    const g = document.querySelector('g.graph-node[data-id="' + CSS.escape(id) + '"]');
+    if (!g) {
+      if (attempt < 12) return setTimeout(() => tryFlash(attempt + 1), 120);
+      return;
+    }
+    // Pull the node's force-simulation position from its bound datum
+    let d = null;
+    try { d = (typeof d3 !== 'undefined') ? d3.select(g).datum() : null; } catch(_) {}
+    const label = (d && (d.label || d.id)) || id;
+
+    // 1) Pan + zoom the SVG so the node is centered and reasonably zoomed in
+    try {
+      if (d && typeof d.x === 'number' && typeof d.y === 'number' && typeof d3 !== 'undefined' && typeof graphZoom !== 'undefined') {
+        const svgEl = document.getElementById('canvas-graph');
+        const W = (svgEl && svgEl.clientWidth)  || window.innerWidth;
+        const H = (svgEl && svgEl.clientHeight) || window.innerHeight;
+        const k = 1.6;
+        const tx = W / 2 - k * d.x;
+        const ty = H / 2 - k * d.y;
+        d3.select('#canvas-graph')
+          .transition().duration(650)
+          .call(graphZoom.transform, d3.zoomIdentity.translate(tx, ty).scale(k));
+      } else {
+        g.querySelector('circle') && g.querySelector('circle').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    } catch(_) {}
+
+    // 2) Big halo ring + bold class on the node group
+    g.classList.remove('glossary-highlight');
+    void g.getBoundingClientRect();
+    g.classList.add('glossary-highlight');
+    try {
+      // remove any previous halo
+      g.querySelectorAll('circle.glossary-halo').forEach(c => c.remove());
+      const halo = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+      halo.setAttribute('class', 'glossary-halo');
+      halo.setAttribute('cx', '0');
+      halo.setAttribute('cy', '0');
+      halo.setAttribute('r', '14');
+      g.insertBefore(halo, g.firstChild); // behind the node circle
+    } catch(_) {}
+
+    // 3) Top-of-screen toast
+    showGlossaryToast('Topic Graph', label, 'graph');
+
+    setTimeout(() => {
+      g.classList.remove('glossary-highlight');
+      g.querySelectorAll('circle.glossary-halo').forEach(c => c.remove());
+    }, 4200);
+  };
+  requestAnimationFrame(() => requestAnimationFrame(() => tryFlash(0)));
+};
+
+window.glossaryJumpToMindmapNode = function(label) {
+  if (typeof switchTab === 'function') switchTab('mindmap');
+  const target = (label || '').replace(/\n/g, ' ').trim().toLowerCase();
+  const tryFlash = (attempt) => {
+    const groups = document.querySelectorAll('#canvas g');
+    let hit = null;
+    groups.forEach(g => {
+      if (hit) return;
+      const txt = (g.textContent || '').replace(/\s+/g, ' ').trim().toLowerCase();
+      if (txt === target) hit = g;
+    });
+    if (!hit) {
+      if (attempt < 10) return setTimeout(() => tryFlash(attempt + 1), 150);
+      return;
+    }
+
+    // 1) Pan the mindmap so the hit node is roughly centered
+    try {
+      if (typeof d3 !== 'undefined' && typeof mmZoom !== 'undefined') {
+        const svgEl = document.getElementById('canvas');
+        const W = (svgEl && svgEl.clientWidth)  || window.innerWidth;
+        const H = (svgEl && svgEl.clientHeight) || window.innerHeight;
+        // Read the node's local SVG position from its existing transform attribute (form: translate(x,y))
+        const tr = hit.getAttribute('transform') || '';
+        const m = tr.match(/translate\(\s*([-0-9.]+)\s*[ ,]\s*([-0-9.]+)/);
+        if (m) {
+          const x = parseFloat(m[1]), y = parseFloat(m[2]);
+          const k = 1.3;
+          const tx = W / 2 - k * x;
+          const ty = H / 2 - k * y;
+          d3.select('#canvas')
+            .transition().duration(650)
+            .call(mmZoom.transform, d3.zoomIdentity.translate(tx, ty).scale(k));
+        } else {
+          hit.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      } else {
+        hit.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    } catch(_) {}
+
+    // 2) Halo ring on the mindmap node
+    try {
+      hit.querySelectorAll('circle.glossary-mm-halo').forEach(c => c.remove());
+      const halo = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+      halo.setAttribute('class', 'glossary-mm-halo');
+      halo.setAttribute('cx', '0');
+      halo.setAttribute('cy', '0');
+      halo.setAttribute('r', '14');
+      hit.insertBefore(halo, hit.firstChild);
+      setTimeout(() => halo.remove(), 4200);
+    } catch(_) {}
+
+    // 3) Stroke flash on the shape
+    const shape = hit.querySelector('circle, rect');
+    if (shape) {
+      const prev = shape.getAttribute('stroke');
+      const prevW = shape.getAttribute('stroke-width');
+      shape.setAttribute('stroke', '#f0c000');
+      shape.setAttribute('stroke-width', '5');
+      setTimeout(() => {
+        if (prev !== null) shape.setAttribute('stroke', prev); else shape.removeAttribute('stroke');
+        if (prevW !== null) shape.setAttribute('stroke-width', prevW); else shape.removeAttribute('stroke-width');
+      }, 3000);
+    }
+
+    // 4) Toast
+    showGlossaryToast('Mind Map', (label || '').replace(/\n/g, ' '), 'mindmap');
+  };
+  requestAnimationFrame(() => requestAnimationFrame(() => tryFlash(0)));
+};
+
+// Floating toast helper — visible regardless of where the target node ended up
+function showGlossaryToast(where, label, kind) {
+  let t = document.getElementById('glossary-toast');
+  if (!t) {
+    t = document.createElement('div');
+    t.id = 'glossary-toast';
+    document.body.appendChild(t);
+  }
+  const icon = kind === 'graph' ? '🔗' : (kind === 'mindmap' ? '📐' : '📖');
+  t.innerHTML = '<span class="gt-icon">' + icon + '</span>'
+              + '<span>Jumped to: <strong>' + (label || '').replace(/[<>&]/g, '') + '</strong></span>'
+              + '<span class="gt-sub">in ' + where + '</span>';
+  // restart animation
+  t.classList.remove('show');
+  void t.offsetWidth;
+  t.classList.add('show');
+  clearTimeout(t._hideTimer);
+  t._hideTimer = setTimeout(() => t.classList.remove('show'), 3200);
+}
+
+// Lazy-render hook
+if (typeof switchTab === 'function') {
+  const _origSwitchTab_gloss = switchTab;
+  switchTab = function(tab) { _origSwitchTab_gloss(tab); if (tab === 'glossary') renderGlossary(); };
+}
+// === END glossary v1 js ===
 </script>
 <!-- BEGIN tooltip-pin (click pins, click outside closes) -->
 <style>

@@ -254,6 +254,36 @@
     border-radius: 4px; font-size: 10px; color: #79c0ff; text-decoration: none; transition: all .2s;
   }
   .uc-refs a:hover { border-color: #58a6ff; color: #58a6ff; background: #0d1117; }
+  /* ── Use-case enrichment v2 ── */
+  .uc-overview { background: linear-gradient(135deg, #0d1117 0%, #161b22 100%); border: 1px solid #30363d;
+    border-left: 3px solid #58a6ff; border-radius: 10px; padding: 16px 18px; margin: 16px 0 20px; }
+  .uc-overview .uc-summary { font-size: 13px; color: #c9d1d9; line-height: 1.7; }
+  .uc-overview .uc-summary strong { color: #79c0ff; }
+  .uc-pipeline { margin-top: 14px; padding: 10px 12px; background: #0d1117; border: 1px solid #30363d;
+    border-radius: 6px; font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+    font-size: 11px; color: #7ee787; line-height: 1.6; white-space: pre-wrap; overflow-x: auto; }
+  .uc-metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 10px; margin-top: 14px; }
+  .uc-metric { background: #0d1117; border: 1px solid #30363d; border-radius: 8px; padding: 10px 12px; }
+  .uc-metric .uc-metric-label { font-size: 10px; color: #8b949e; text-transform: uppercase; letter-spacing: 0.5px; }
+  .uc-metric .uc-metric-value { font-size: 14px; color: #ffa657; font-weight: 600; margin-top: 4px; line-height: 1.4; }
+  .uc-extensions { margin-top: 14px; padding: 10px 12px; background: rgba(210, 168, 255, 0.06);
+    border: 1px solid rgba(210, 168, 255, 0.25); border-radius: 6px; font-size: 12px; color: #c9d1d9; line-height: 1.6; }
+  .uc-extensions strong { color: #d2a8ff; }
+  .uc-step .uc-intuition { margin-top: 8px; padding: 8px 10px; background: rgba(126, 231, 135, 0.08);
+    border-left: 2px solid #3fb950; border-radius: 4px; font-size: 12px; color: #c9d1d9; line-height: 1.55; display: none; }
+  .uc-step.active .uc-intuition { display: block; }
+  .uc-step .uc-intuition strong { color: #7ee787; }
+  .uc-step .uc-complexity { display: inline-block; margin-top: 8px; margin-right: 6px;
+    background: rgba(31, 111, 235, 0.15); border: 1px solid rgba(88, 166, 255, 0.35); border-radius: 4px;
+    padding: 2px 8px; font-size: 10px; color: #79c0ff; font-family: 'Cascadia Code', 'Consolas', monospace; }
+  .uc-step .uc-pitfall { margin-top: 8px; padding: 8px 10px; background: rgba(255, 123, 114, 0.08);
+    border-left: 2px solid #ff7b72; border-radius: 4px; font-size: 12px; color: #c9d1d9; line-height: 1.55; display: none; }
+  .uc-step.active .uc-pitfall { display: block; }
+  .uc-step .uc-pitfall strong { color: #ff7b72; }
+  .uc-step .uc-example { margin-top: 8px; padding: 8px 10px; background: rgba(255, 166, 87, 0.06);
+    border-left: 2px solid #ffa657; border-radius: 4px; font-size: 12px; color: #c9d1d9; line-height: 1.55; display: none; }
+  .uc-step.active .uc-example { display: block; }
+  .uc-step .uc-example strong { color: #ffa657; }
   .legend-close {
     position: absolute; top: 8px; right: 8px; background: none; border: none;
     color: #8b949e; font-size: 16px; cursor: pointer; line-height: 1; padding: 2px 6px;
@@ -321,27 +351,92 @@
   /* ── Practice Problems (Problem-First) ── */
   #problems-container { position: relative; top: 0; width: 100%; max-width: 1100px; margin: 0 auto; padding: 24px 16px 60px; }
   #view-problems { overflow-y: auto; height: calc(100vh - 50px); margin-top: 50px; }
-  .prob-intro { background: #161b22; border: 1px solid #30363d; border-left: 3px solid #7ee787; border-radius: 6px; padding: 14px 18px; margin-bottom: 22px; color: #c9d1d9; font-size: 14px; line-height: 1.6; }
+  .prob-intro { background: #161b22; border: 1px solid #30363d; border-left: 3px solid #7ee787; border-radius: 6px; padding: 14px 18px; margin-bottom: 18px; color: #c9d1d9; font-size: 14px; line-height: 1.6; }
   .prob-intro strong { color: #7ee787; }
-  .prob-section { margin-bottom: 22px; border: 1px solid #30363d; border-radius: 8px; background: #161b22; overflow: hidden; }
-  .prob-section > summary { padding: 14px 18px; font-size: 15px; font-weight: 600; color: #e6edf3; cursor: pointer; list-style: none; display: flex; align-items: center; gap: 10px; user-select: none; transition: background .15s; }
+  /* Toolbar */
+  .prob-toolbar { position: sticky; top: 0; z-index: 5; background: rgba(13,17,23,0.95); backdrop-filter: blur(6px); padding: 10px 0 12px; margin-bottom: 14px; border-bottom: 1px solid #21262d; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  .prob-search { flex: 1 1 200px; min-width: 180px; background: #0d1117; border: 1px solid #30363d; border-radius: 6px; padding: 7px 12px; color: #c9d1d9; font-size: 13px; outline: none; }
+  .prob-search:focus { border-color: #58a6ff; }
+  .prob-filter-row { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+  .prob-chip { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 12px; cursor: pointer; background: #161b22; border: 1px solid #30363d; color: #8b949e; text-transform: uppercase; letter-spacing: .4px; transition: all .15s; user-select: none; }
+  .prob-chip:hover { border-color: #58a6ff; color: #c9d1d9; }
+  .prob-chip.active { background: #1f6feb22; border-color: #58a6ff; color: #58a6ff; }
+  .prob-chip.design.active  { background: #58a6ff22; border-color: #58a6ff; color: #58a6ff; }
+  .prob-chip.derive.active  { background: #ffa65722; border-color: #ffa657; color: #ffa657; }
+  .prob-chip.debug.active   { background: #f8514922; border-color: #f85149; color: #f85149; }
+  .prob-chip.code.active    { background: #7ee78722; border-color: #7ee787; color: #7ee787; }
+  .prob-chip.paper.active   { background: #d2a8ff22; border-color: #d2a8ff; color: #d2a8ff; }
+  .prob-chip .count { font-size: 9px; opacity: .7; font-weight: 500; }
+  .prob-actbtn { background: #161b22; border: 1px solid #30363d; color: #c9d1d9; padding: 6px 12px; border-radius: 6px; font-size: 12px; cursor: pointer; transition: all .15s; }
+  .prob-actbtn:hover { border-color: #58a6ff; color: #58a6ff; }
+  .prob-actbtn.primary { background: #1f6feb; border-color: #58a6ff; color: #fff; }
+  .prob-actbtn.primary:hover { background: #388bfd; }
+  .prob-progress { display: flex; align-items: center; gap: 10px; flex: 0 0 auto; font-size: 11px; color: #8b949e; margin-left: auto; }
+  .prob-progress-bar { width: 100px; height: 6px; background: #21262d; border-radius: 3px; overflow: hidden; }
+  .prob-progress-fill { height: 100%; background: linear-gradient(90deg, #7ee787, #58a6ff); transition: width .3s; }
+  /* Sections */
+  .prob-section { margin-bottom: 16px; border: 1px solid #30363d; border-radius: 8px; background: #161b22; overflow: hidden; }
+  .prob-section > summary { padding: 13px 18px; font-size: 14px; font-weight: 600; color: #e6edf3; cursor: pointer; list-style: none; display: flex; align-items: center; gap: 10px; user-select: none; transition: background .15s; flex-wrap: wrap; }
   .prob-section > summary::-webkit-details-marker { display: none; }
   .prob-section > summary::before { content: '▸'; color: #8b949e; font-size: 11px; transition: transform .2s; }
   .prob-section[open] > summary::before { transform: rotate(90deg); }
   .prob-section > summary:hover { background: rgba(88,166,255,0.04); }
-  .prob-section .wk { color: #8b949e; font-size: 12px; font-weight: 500; background: #0d1117; padding: 2px 8px; border-radius: 10px; border: 1px solid #30363d; }
-  .prob-body { padding: 6px 20px 18px 40px; }
-  .prob-body > ol { padding-left: 22px; margin: 8px 0 4px; }
-  .prob-body > ol > li { margin: 12px 0; color: #c9d1d9; font-size: 14px; line-height: 1.55; }
-  .prob-body > ol > li::marker { color: #7ee787; font-weight: 600; }
-  .prob-hint { display: block; margin-top: 4px; color: #8b949e; font-size: 12.5px; font-style: italic; }
-  .prob-hint::before { content: '💡 '; font-style: normal; }
-  .prob-tag { display: inline-block; font-size: 10px; font-weight: 600; padding: 1px 7px; border-radius: 8px; margin-right: 6px; vertical-align: middle; text-transform: uppercase; letter-spacing: .4px; }
+  .prob-section .wk { color: #8b949e; font-size: 11px; font-weight: 500; background: #0d1117; padding: 2px 8px; border-radius: 10px; border: 1px solid #30363d; }
+  .prob-section .sec-meta { margin-left: auto; font-size: 11px; color: #6e7681; font-weight: 500; }
+  .prob-section .sec-meta .done-count { color: #7ee787; font-weight: 600; }
+  .prob-hook { background: #0d1117; border-bottom: 1px solid #21262d; padding: 12px 22px; font-size: 13px; color: #d2a8ff; font-style: italic; line-height: 1.6; display: flex; gap: 8px; align-items: flex-start; }
+  .prob-hook::before { content: '🪝'; font-style: normal; flex-shrink: 0; }
+  .prob-body { padding: 12px 18px 16px; display: flex; flex-direction: column; gap: 10px; }
+  /* Problem cards */
+  .prob-card { background: #0d1117; border: 1px solid #21262d; border-radius: 8px; padding: 12px 14px; transition: all .15s; position: relative; }
+  .prob-card:hover { border-color: #30363d; }
+  .prob-card.status-thinking { border-left: 3px solid #d2a8ff; }
+  .prob-card.status-got      { border-left: 3px solid #7ee787; opacity: .75; }
+  .prob-card.status-stuck    { border-left: 3px solid #f85149; }
+  .prob-card.hidden          { display: none; }
+  .prob-card .pc-head { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 4px; }
+  .prob-card .pc-num { color: #6e7681; font-size: 11px; font-weight: 600; font-family: 'Cascadia Code', monospace; }
+  .prob-card .pc-star { color: #ffa657; font-size: 13px; }
+  .prob-tag { display: inline-block; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 8px; text-transform: uppercase; letter-spacing: .4px; }
   .prob-tag.design { background: #58a6ff20; color: #58a6ff; }
   .prob-tag.debug  { background: #f8514920; color: #f85149; }
   .prob-tag.paper  { background: #d2a8ff20; color: #d2a8ff; }
   .prob-tag.code   { background: #7ee78720; color: #7ee787; }
   .prob-tag.derive { background: #ffa65720; color: #ffa657; }
+  .prob-card .pc-text { color: #c9d1d9; font-size: 13.5px; line-height: 1.6; margin: 2px 0 6px; }
+  .prob-card .pc-actions { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; margin-top: 6px; }
+  .prob-revealbtn { background: transparent; border: 1px dashed #30363d; color: #8b949e; padding: 3px 10px; border-radius: 12px; font-size: 11px; cursor: pointer; transition: all .15s; }
+  .prob-revealbtn:hover { border-color: #d2a8ff; color: #d2a8ff; border-style: solid; }
+  .prob-revealbtn.approach:hover { border-color: #79c0ff; color: #79c0ff; }
+  .prob-revealbtn.answer:hover   { border-color: #7ee787; color: #7ee787; }
+  .prob-reveal-panel { display: none; margin-top: 8px; padding: 10px 14px; background: #161b22; border-radius: 4px; color: #c9d1d9; font-size: 12.5px; line-height: 1.65; }
+  .prob-reveal-panel.shown { display: block; }
+  .prob-reveal-panel ul, .prob-reveal-panel ol { margin: 4px 0 4px 18px; padding: 0; }
+  .prob-reveal-panel li { margin: 3px 0; }
+  .prob-reveal-panel code { background: #0d1117; padding: 1px 5px; border-radius: 3px; font-size: 11.5px; color: #79c0ff; font-family: 'Cascadia Code', 'Consolas', monospace; }
+  .prob-reveal-panel strong { color: #e6edf3; }
+  .prob-reveal-panel .rh-label { display: inline-block; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .6px; margin-right: 8px; padding: 1px 6px; border-radius: 4px; vertical-align: middle; }
+  .prob-hint     { border-left: 2px solid #d2a8ff; }
+  .prob-hint     .rh-label { background: #d2a8ff22; color: #d2a8ff; }
+  .prob-approach { border-left: 2px solid #79c0ff; }
+  .prob-approach .rh-label { background: #79c0ff22; color: #79c0ff; }
+  .prob-answer   { border-left: 2px solid #7ee787; background: #0d1f17; }
+  .prob-answer   .rh-label { background: #7ee78722; color: #7ee787; }
+  .prob-status-btns { display: flex; gap: 4px; margin-left: auto; }
+  .prob-statbtn { background: transparent; border: 1px solid #30363d; color: #6e7681; padding: 3px 9px; border-radius: 12px; font-size: 11px; cursor: pointer; transition: all .15s; }
+  .prob-statbtn:hover { border-color: #58a6ff; color: #c9d1d9; }
+  .prob-statbtn.active.thinking { background: #d2a8ff22; border-color: #d2a8ff; color: #d2a8ff; }
+  .prob-statbtn.active.got      { background: #7ee78722; border-color: #7ee787; color: #7ee787; }
+  .prob-statbtn.active.stuck    { background: #f8514922; border-color: #f85149; color: #f85149; }
+  .prob-empty { text-align: center; padding: 40px 20px; color: #6e7681; font-size: 13px; }
+  /* Modal for surprise-me */
+  .prob-spotlight { position: fixed; inset: 0; background: rgba(13,17,23,0.85); backdrop-filter: blur(4px); display: none; align-items: center; justify-content: center; z-index: 100; padding: 20px; }
+  .prob-spotlight.open { display: flex; }
+  .prob-spotlight-card { background: #161b22; border: 1px solid #58a6ff; border-radius: 12px; max-width: 600px; width: 100%; padding: 24px 28px; box-shadow: 0 12px 60px rgba(88,166,255,0.3); }
+  .prob-spotlight-card h3 { color: #58a6ff; font-size: 14px; margin: 0 0 4px; text-transform: uppercase; letter-spacing: 1px; }
+  .prob-spotlight-card .pc-text { font-size: 16px; line-height: 1.55; color: #e6edf3; margin: 10px 0; }
+  .prob-spotlight-card .sl-close { background: transparent; border: none; color: #8b949e; font-size: 22px; cursor: pointer; float: right; line-height: 1; }
+  .prob-spotlight-card .sl-close:hover { color: #c9d1d9; }
   .appendix-table .watch-link:hover { color: #ff0000; text-decoration: underline; }
   /* ── Progress checkbox ── */
   .appendix-table .vid-check { width: 18px; height: 18px; cursor: pointer; accent-color: #7ee787; vertical-align: middle; }
@@ -399,6 +494,233 @@
     .dd-card-img { height: 120px; }
     .dd-keypoints { grid-template-columns: 1fr; }
   }
+
+/* === BEGIN glossary v1 css === */
+  /* dd-nav sticky top */
+  .dd-nav.dd-nav-top {
+    position: sticky; top: 0; z-index: 5;
+    margin: -4px -4px 14px; padding: 10px 8px;
+    background: linear-gradient(180deg, rgba(13,17,23,0.96) 75%, rgba(13,17,23,0));
+    backdrop-filter: blur(4px);
+    border-bottom: 1px solid #21262d;
+  }
+  /* ── Glossary ── */
+  .gloss-intro { background: #161b22; border: 1px solid #30363d; border-left: 3px solid #d2a8ff; border-radius: 6px; padding: 14px 18px; margin-bottom: 14px; color: #c9d1d9; font-size: 14px; line-height: 1.6; }
+  .gloss-intro strong { color: #d2a8ff; }
+  #view-glossary { overflow-y: auto; height: calc(100vh - 50px); margin-top: 50px; padding: 20px; box-sizing: border-box; }
+  @media (max-width: 768px) { #view-glossary { margin-top: 48px; padding: 12px; } }
+  .glossary-controls { position: sticky; top: 0; z-index: 5; background: rgba(13,17,23,0.95); backdrop-filter: blur(6px); padding: 10px 0 12px; margin: -8px 0 14px; border-bottom: 1px solid #21262d; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  #glossary-search { flex: 1 1 240px; min-width: 200px; background: #0d1117; border: 1px solid #30363d; border-radius: 6px; padding: 7px 12px; color: #c9d1d9; font-size: 13px; outline: none; }
+  #glossary-search:focus { border-color: #58a6ff; }
+  .glossary-cat-pills { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+  .glossary-cat-pills button { background: #161b22; border: 1px solid #30363d; color: #8b949e; padding: 4px 10px; border-radius: 12px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .4px; cursor: pointer; transition: all .15s; }
+  .glossary-cat-pills button:hover { border-color: #58a6ff; color: #c9d1d9; }
+  .glossary-cat-pills button.active { background: var(--pill-bg, #1f6feb22); border-color: var(--pill-color, #58a6ff); color: var(--pill-color, #58a6ff); }
+  .glossary-count { font-size: 11px; color: #8b949e; margin-left: auto; }
+  .glossary-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 14px; max-width: 1400px; margin: 0 auto; }
+  .glossary-card { background: #161b22; border: 1px solid #30363d; border-radius: 10px; padding: 14px; transition: border-color .15s, box-shadow .15s, transform .15s; }
+  .glossary-card:hover { border-color: var(--cat-color, #58a6ff); box-shadow: 0 4px 14px rgba(0,0,0,0.35); }
+  .glossary-card.flash {
+    animation: glossary-flash 2.6s cubic-bezier(.4,0,.2,1) 1 forwards;
+    position: relative;
+    z-index: 2;
+  }
+  @keyframes glossary-flash {
+    0% {
+      background: #161b22;
+      border-color: #30363d;
+      box-shadow: 0 0 0 rgba(0,0,0,0);
+      transform: scale(1);
+    }
+    8% {
+      background: color-mix(in srgb, var(--cat-color, #58a6ff) 55%, #161b22);
+      border-color: var(--cat-color, #58a6ff);
+      box-shadow:
+        0 0 0 4px var(--cat-color, #58a6ff),
+        0 0 28px 6px color-mix(in srgb, var(--cat-color, #58a6ff) 70%, transparent),
+        0 14px 36px rgba(0,0,0,0.55);
+      transform: scale(1.045);
+    }
+    22% {
+      background: color-mix(in srgb, var(--cat-color, #58a6ff) 30%, #161b22);
+      border-color: var(--cat-color, #58a6ff);
+      box-shadow:
+        0 0 0 3px var(--cat-color, #58a6ff),
+        0 0 22px 4px color-mix(in srgb, var(--cat-color, #58a6ff) 55%, transparent),
+        0 10px 28px rgba(0,0,0,0.5);
+      transform: scale(1.03);
+    }
+    45% {
+      background: color-mix(in srgb, var(--cat-color, #58a6ff) 45%, #161b22);
+      border-color: var(--cat-color, #58a6ff);
+      box-shadow:
+        0 0 0 3px var(--cat-color, #58a6ff),
+        0 0 26px 5px color-mix(in srgb, var(--cat-color, #58a6ff) 60%, transparent),
+        0 12px 32px rgba(0,0,0,0.5);
+      transform: scale(1.035);
+    }
+    70% {
+      background: color-mix(in srgb, var(--cat-color, #58a6ff) 22%, #161b22);
+      border-color: color-mix(in srgb, var(--cat-color, #58a6ff) 80%, #30363d);
+      box-shadow:
+        0 0 0 2px color-mix(in srgb, var(--cat-color, #58a6ff) 70%, transparent),
+        0 0 18px 3px color-mix(in srgb, var(--cat-color, #58a6ff) 40%, transparent);
+      transform: scale(1.015);
+    }
+    100% {
+      background: #161b22;
+      border-color: #30363d;
+      box-shadow: 0 0 0 rgba(0,0,0,0);
+      transform: scale(1);
+    }
+  }
+  /* Fallback for browsers without color-mix: solid tinted backgrounds */
+  @supports not (background: color-mix(in srgb, red, blue)) {
+    @keyframes glossary-flash {
+      0%,100% { background: #161b22; border-color: #30363d; box-shadow: none; transform: scale(1); }
+      8%, 45% {
+        background: rgba(88,166,255,0.32);
+        border-color: var(--cat-color, #58a6ff);
+        box-shadow: 0 0 0 4px var(--cat-color, #58a6ff), 0 0 28px var(--cat-color, #58a6ff);
+        transform: scale(1.04);
+      }
+    }
+  }
+  .glossary-term-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .glossary-term { font-size: 16px; font-weight: 700; color: #e6edf3; }
+  .glossary-cat-badge { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; padding: 2px 7px; border-radius: 10px; border: 1px solid var(--cat-color, #58a6ff); color: var(--cat-color, #58a6ff); background: rgba(0,0,0,0.2); }
+  .glossary-aka { font-size: 11px; color: #8b949e; font-style: italic; margin-top: 3px; }
+  .glossary-short { font-size: 13px; color: #c9d1d9; margin-top: 8px; line-height: 1.5; }
+  .glossary-long { font-size: 13px; color: #8b949e; margin-top: 8px; line-height: 1.55; display: none; }
+  .glossary-long code { background: #0d1117; border: 1px solid #21262d; border-radius: 4px; padding: 1px 5px; font-family: 'Cascadia Code', monospace; font-size: 12px; color: #d2a8ff; }
+  .glossary-card.expanded .glossary-long { display: block; }
+  .glossary-toggle { background: none; border: none; color: #58a6ff; font-size: 11px; cursor: pointer; padding: 6px 0 0; }
+  .glossary-toggle:hover { text-decoration: underline; }
+  .glossary-links { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+  .glossary-links button { background: #0d1117; border: 1px solid #30363d; color: #c9d1d9; padding: 3px 9px; border-radius: 10px; font-size: 11px; cursor: pointer; transition: all .15s; }
+  .glossary-links button:hover { border-color: #58a6ff; color: #58a6ff; }
+  /* graph-node pulse when jumped to from glossary */
+  @keyframes glossary-pulse {
+    0%   { stroke-opacity: 1; stroke-width: 14; }
+    100% { stroke-opacity: 0.55; stroke-width: 5; }
+  }
+  @keyframes glossary-halo-pulse {
+    0%   { r: 16;  stroke-opacity: 1;    stroke-width: 10; }
+    60%  { r: 90;  stroke-opacity: 0.55; stroke-width: 5; }
+    100% { r: 140; stroke-opacity: 0;    stroke-width: 2; }
+  }
+  @keyframes glossary-halo-pulse-2 {
+    0%   { r: 16;  stroke-opacity: 0.9; stroke-width: 6; }
+    60%  { r: 110; stroke-opacity: 0.4; stroke-width: 3; }
+    100% { r: 170; stroke-opacity: 0;   stroke-width: 1.5; }
+  }
+  @keyframes glossary-fill-pulse {
+    0%, 100% { fill-opacity: 0.85; }
+    50%      { fill-opacity: 1; }
+  }
+  @keyframes glossary-dim-others {
+    0%   { opacity: 1; }
+    20%  { opacity: 0.15; }
+    100% { opacity: 0.15; }
+  }
+  /* Dim everything in the graph except the highlighted node + its halos */
+  #canvas-graph.glossary-spotlight g.graph-node:not(.glossary-highlight),
+  #canvas-graph.glossary-spotlight line.graph-link,
+  #canvas-graph.glossary-spotlight text.graph-link-label {
+    animation: glossary-dim-others 0.4s ease-out forwards;
+  }
+  #canvas-graph.glossary-spotlight g.graph-node.glossary-highlight {
+    opacity: 1 !important;
+  }
+  g.graph-node.glossary-highlight circle:not(.glossary-halo):not(.glossary-halo-outer) {
+    animation:
+      glossary-pulse 0.45s ease-in-out 10 alternate,
+      glossary-fill-pulse 0.45s ease-in-out 10 alternate;
+    stroke: #ffd13b !important;
+    fill: #ffd13b !important;
+    filter:
+      drop-shadow(0 0 10px #ffd13b)
+      drop-shadow(0 0 24px #ffd13baa)
+      drop-shadow(0 0 40px #ffd13b66);
+  }
+  g.graph-node.glossary-highlight text {
+    fill: #fff !important;
+    font-weight: 900 !important;
+    font-size: 15px !important;
+    paint-order: stroke fill;
+    stroke: #5a3a00;
+    stroke-width: 4px;
+    stroke-linejoin: round;
+    filter:
+      drop-shadow(0 0 6px #000)
+      drop-shadow(0 0 12px #ffd13b)
+      drop-shadow(0 0 20px #ffd13bcc);
+  }
+  circle.glossary-halo {
+    fill: none;
+    stroke: #ffd13b;
+    pointer-events: none;
+    animation: glossary-halo-pulse 1.1s ease-out 5;
+    filter: drop-shadow(0 0 8px #ffd13baa);
+  }
+  circle.glossary-halo-outer {
+    fill: none;
+    stroke: #ffae00;
+    pointer-events: none;
+    animation: glossary-halo-pulse-2 1.4s ease-out 5;
+    animation-delay: 0.18s;
+    filter: drop-shadow(0 0 12px #ffae0099);
+  }
+  /* mindmap pulse (uses a <circle> appended) */
+  circle.glossary-mm-halo {
+    fill: none;
+    stroke: #ffd13b;
+    pointer-events: none;
+    animation: glossary-halo-pulse 1.1s ease-out 5;
+    filter: drop-shadow(0 0 8px #ffd13baa);
+  }
+  circle.glossary-mm-halo-outer {
+    fill: none;
+    stroke: #ffae00;
+    pointer-events: none;
+    animation: glossary-halo-pulse-2 1.4s ease-out 5;
+    animation-delay: 0.18s;
+    filter: drop-shadow(0 0 12px #ffae0099);
+  }
+  /* toast banner shown when jumping from glossary */
+  #glossary-toast {
+    position: fixed; top: 60px; left: 50%; transform: translateX(-50%) translateY(-30px) scale(0.92);
+    background: linear-gradient(180deg, #2a1f0a, #1a1308);
+    border: 2px solid #ffd13b; border-left: 6px solid #ffd13b;
+    color: #fff5d6; padding: 12px 22px; border-radius: 10px;
+    font-size: 15px; font-weight: 700;
+    box-shadow:
+      0 10px 32px rgba(0,0,0,0.6),
+      0 0 36px rgba(255,209,59,0.45),
+      0 0 64px rgba(255,209,59,0.25);
+    opacity: 0; pointer-events: none;
+    transition: opacity .22s ease, transform .28s cubic-bezier(.2,1.2,.4,1);
+    z-index: 10000;
+    display: flex; align-items: center; gap: 12px;
+    max-width: 90vw;
+    text-shadow: 0 0 8px rgba(255,209,59,0.5);
+  }
+  #glossary-toast.show { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+  #glossary-toast .gt-icon { font-size: 22px; filter: drop-shadow(0 0 6px #ffd13b); }
+  #glossary-toast .gt-sub { color: #c9b88c; font-weight: 500; font-size: 12.5px; margin-left: 4px; }
+  #glossary-toast strong { color: #ffd13b; text-shadow: 0 0 10px rgba(255,209,59,0.6); }
+  @media (max-width: 768px) { #glossary-toast { top: 56px; font-size: 13px; padding: 10px 16px; } }
+  /* tooltip glossary footer link */
+  #tooltip .tt-glossary { margin-top: 6px; padding-top: 5px; border-top: 1px solid #30363d; }
+  #tooltip .tt-glossary:empty { display: none; }
+  #tooltip .tt-glossary a {
+    display: inline-block; padding: 2px 8px; border-radius: 4px;
+    background: rgba(210,168,255,0.10); color: #d2a8ff; text-decoration: none;
+    font-size: 11px; font-weight: 500; cursor: pointer; border: 1px solid rgba(210,168,255,0.25);
+  }
+  #tooltip .tt-glossary a:hover { background: rgba(210,168,255,0.22); border-color: #d2a8ff; }
+  #tooltip.has-glossary { pointer-events: auto; }
+/* === END glossary v1 css === */
 </style>
 </head>
 <body>
@@ -459,6 +781,21 @@
 <div id="view-problems" class="view">
   <div id="problems-container"></div>
 </div>
+<!-- BEGIN glossary v1 view -->
+<div id="view-glossary" class="view">
+  <div class="gloss-intro">
+    <strong>📖 Glossary.</strong> Every acronym, jargon term, and unit-of-art used across <em>Use Cases</em> and <em>Deep Dives</em> — defined here, cross-linked to the <strong>Topic Graph</strong> and <strong>Mind Map</strong> so you can jump from definition → diagram in one click.
+    <br><br>
+    <span style="color:#8b949e">Tip: click a related term to flash-jump to it. Click the 🌐 graph or 🧭 mindmap links to spotlight that node on its tab.</span>
+  </div>
+  <div class="glossary-controls">
+    <input type="text" id="glossary-search" placeholder="🔍 Search terms, acronyms, or definitions…" />
+    <div class="glossary-cat-pills" id="glossary-cat-pills"></div>
+    <span class="glossary-count" id="glossary-count"></span>
+  </div>
+  <div id="glossary-list" class="glossary-list"></div>
+</div>
+<!-- END glossary v1 view -->
 
 <!-- ═══════════════ SHARED OVERLAYS ═══════════════ -->
 <div id="tooltip"><div class="tt-title"></div><div class="tt-body"></div><div class="tt-slides"></div></div>
@@ -685,38 +1022,681 @@ const COURSE_CONFIG = {
 
   deepDives: [
     {
-      icon: "\ud83d\udd24",
+      id: "regex-nfa-dfa", num: "Concept 1 of 6",
       title: "Regular Expressions \u2192 NFA \u2192 DFA",
+      desc: "How a one-line regex becomes the deterministic state machine that powers every lexer.",
+      color: "#58a6ff", icon: "\ud83d\udd24",
+      svg: function(w, h) {
+        return '<svg viewBox="0 0 460 200" width="'+w+'" height="'+h+'" xmlns="http://www.w3.org/2000/svg">'+
+          '<defs><marker id="arr1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#8b949e"/></marker></defs>'+
+          '<text x="10" y="20" fill="#7ee787" font-family="monospace" font-size="13">regex: a(b|c)*</text>'+
+          '<text x="10" y="48" fill="#8b949e" font-size="11">NFA (Thompson)</text>'+
+          '<g stroke="#58a6ff" stroke-width="2" fill="#0d1117">'+
+            '<circle cx="40" cy="80" r="14"/><circle cx="120" cy="80" r="14"/>'+
+            '<circle cx="200" cy="50" r="14"/><circle cx="200" cy="110" r="14"/>'+
+            '<circle cx="280" cy="80" r="14"/><circle cx="360" cy="80" r="14" stroke-width="3"/>'+
+            '<circle cx="360" cy="80" r="9" fill="none"/>'+
+          '</g>'+
+          '<g fill="#c9d1d9" font-family="monospace" font-size="11" text-anchor="middle">'+
+            '<text x="40" y="84">s0</text><text x="120" y="84">s1</text>'+
+            '<text x="200" y="54">s2</text><text x="200" y="114">s3</text>'+
+            '<text x="280" y="84">s4</text><text x="360" y="84">s5</text>'+
+          '</g>'+
+          '<g stroke="#8b949e" fill="none" marker-end="url(#arr1)">'+
+            '<path d="M54,80 L106,80"/>'+
+            '<path d="M134,75 Q165,55 186,52"/>'+
+            '<path d="M134,85 Q165,105 186,108"/>'+
+            '<path d="M214,52 Q245,55 266,75"/>'+
+            '<path d="M214,108 Q245,105 266,85"/>'+
+            '<path d="M294,80 Q320,80 346,80"/>'+
+            '<path d="M280,66 Q200,20 120,66" stroke-dasharray="3,3"/>'+
+          '</g>'+
+          '<g fill="#7ee787" font-size="10" font-family="monospace">'+
+            '<text x="70" y="74">a</text><text x="148" y="62">\u03b5</text>'+
+            '<text x="148" y="105">\u03b5</text><text x="232" y="62">b</text>'+
+            '<text x="232" y="106">c</text><text x="312" y="74">\u03b5</text>'+
+            '<text x="195" y="22">\u03b5 (loop)</text>'+
+          '</g>'+
+          '<text x="10" y="155" fill="#8b949e" font-size="11">DFA (subset construction)</text>'+
+          '<g stroke="#f778ba" stroke-width="2" fill="#0d1117">'+
+            '<circle cx="60" cy="180" r="13"/><circle cx="160" cy="180" r="13"/>'+
+            '<circle cx="260" cy="180" r="13" stroke-width="3"/><circle cx="260" cy="180" r="8" fill="none"/>'+
+          '</g>'+
+          '<g fill="#c9d1d9" font-size="10" font-family="monospace" text-anchor="middle">'+
+            '<text x="60" y="184">{s0}</text><text x="160" y="184">{s1,s2,s3}</text><text x="260" y="184">acc</text>'+
+          '</g>'+
+          '<g stroke="#8b949e" fill="none" marker-end="url(#arr1)">'+
+            '<path d="M73,180 L147,180"/><path d="M173,180 L247,180"/>'+
+            '<path d="M160,167 Q160,140 175,167" /></g>'+
+          '<g fill="#ffa657" font-size="10" font-family="monospace">'+
+            '<text x="100" y="174">a</text><text x="200" y="174">b|c</text><text x="170" y="150">b|c</text>'+
+          '</g>'+
+        '</svg>';
+      },
       sections: [
-        { heading: "Thompson Construction", body: "Converts a regular expression into an equivalent NFA using systematic construction rules. Each regex operator (concatenation, alternation, Kleene star) maps to a specific NFA fragment pattern." },
-        { heading: "Subset Construction", body: "Converts an NFA to a DFA by computing \u03b5-closures and tracking sets of NFA states as single DFA states. Each DFA state represents a set of NFA states reachable on the same input." }
+        { title: "Thompson\u2019s construction (regex \u2192 NFA)", text: "Each regex operator maps to a tiny NFA fragment glued together by \u03b5-transitions: a single character becomes two states with a labeled edge; concatenation R\u00b7S splices the accept of R into the start of S; alternation R|S adds a fresh start with two \u03b5-edges into R and S and merges their accepts; the Kleene star R* wraps R in \u03b5-loops so it can be skipped or repeated. The result is an NFA whose size is linear in the regex length, with at most one labeled transition per state \u2014 ideal for further analysis." },
+        { title: "Subset construction (NFA \u2192 DFA)", text: "The NFA may have many \u03b5-transitions and choices, so we determinize it. A DFA state is a *set* of NFA states reachable together; from each set we compute, for every input symbol c, the \u03b5-closure of all c-successors. That closure becomes the next DFA state. We start from the \u03b5-closure of the NFA start state and explore until no new sets appear. Worst case the DFA is exponential, but for practical regexes (lexer tokens, identifiers, numbers) it stays small." },
+        { title: "Worked mini-example: identifier regex", text: "For [A-Za-z][A-Za-z0-9]* Thompson gives ~6 states; subset construction collapses the \u03b5-closures into a 2-state DFA: state 0 transitions on a letter to accepting state 1, and state 1 self-loops on letter or digit. flex/lex emit exactly this DFA as a transition table. Hopcroft\u2019s algorithm can then minimize it by partition refinement, fusing equivalent states." },
+        { title: "Lexer pragmatics", text: "Real lexers run all token DFAs simultaneously and use the *longest match* rule plus *priority ordering* to disambiguate (e.g., the keyword if vs the identifier if). They also track line/column for diagnostics and pre-compute the transition table as a 2-D array indexed by (state, byte) for one-instruction dispatch \u2014 this is why a hand-written or flex-generated lexer can sustain hundreds of MB/s." }
+      ],
+      keypoints: [
+        { title: "\u03b5-closure is the trick", text: "Every NFA\u2192DFA conversion hinges on closing each state set under \u03b5-transitions before reading the next symbol; forget it and your DFA accepts the wrong language." },
+        { title: "Determinization can blow up", text: "Pathological regexes like (a|b)*a(a|b){n} produce DFAs of size 2^n. Lexer regexes avoid this by being short and anchored." },
+        { title: "Used everywhere", text: "flex, re2, RE2/J, JavaScript\u2019s V8 Irregexp, and grep all share this regex\u2192NFA\u2192DFA pipeline; backtracking engines (PCRE, Python re) skip the DFA step and pay for it with catastrophic backtracking." },
+        { title: "Minimization matters", text: "Hopcroft\u2019s O(n log n) DFA minimization typically halves the table size; smaller tables fit in L1 cache and lex faster." }
       ]
     },
     {
-      icon: "\ud83d\udccb",
-      title: "LR Parsing",
+      id: "lr-parsing", num: "Concept 2 of 6",
+      title: "LR Parsing & Shift-Reduce Tables",
+      desc: "Bottom-up parsing with a deterministic stack and a precomputed action/goto table.",
+      color: "#f778ba", icon: "\ud83d\udccb",
+      svg: function(w, h) {
+        return '<svg viewBox="0 0 460 220" width="'+w+'" height="'+h+'" xmlns="http://www.w3.org/2000/svg">'+
+          '<text x="10" y="18" fill="#7ee787" font-family="monospace" font-size="12">E \u2192 E + T | T   T \u2192 id</text>'+
+          '<text x="10" y="40" fill="#8b949e" font-size="11">Parse stack on input: id + id $</text>'+
+          '<g font-family="monospace" font-size="11" fill="#c9d1d9">'+
+            '<rect x="10" y="55" width="200" height="20" fill="#161b22" stroke="#30363d"/>'+
+            '<text x="20" y="69">[ 0 ]</text><text x="120" y="69">id + id $</text>'+
+            '<rect x="10" y="80" width="200" height="20" fill="#161b22" stroke="#30363d"/>'+
+            '<text x="20" y="94">[ 0 id 5 ]</text><text x="120" y="94">+ id $</text>'+
+            '<rect x="10" y="105" width="200" height="20" fill="#161b22" stroke="#30363d"/>'+
+            '<text x="20" y="119">[ 0 T 2 ]</text><text x="120" y="119">+ id $</text>'+
+            '<rect x="10" y="130" width="200" height="20" fill="#161b22" stroke="#30363d"/>'+
+            '<text x="20" y="144">[ 0 E 1 ]</text><text x="120" y="144">+ id $</text>'+
+            '<rect x="10" y="155" width="200" height="20" fill="#161b22" stroke="#30363d"/>'+
+            '<text x="20" y="169">[ 0 E 1 + 6 id 5 ]</text><text x="160" y="169">$</text>'+
+            '<rect x="10" y="180" width="200" height="20" fill="#161b22" stroke="#30363d"/>'+
+            '<text x="20" y="194">[ 0 E 1 ]</text><text x="120" y="194">$  accept</text>'+
+          '</g>'+
+          '<g font-family="monospace" font-size="10" fill="#ffa657">'+
+            '<text x="220" y="69">shift 5</text>'+
+            '<text x="220" y="94">reduce T\u2192id</text>'+
+            '<text x="220" y="119">reduce E\u2192T</text>'+
+            '<text x="220" y="144">shift +,id; ...</text>'+
+            '<text x="220" y="169">reduce E\u2192E+T</text>'+
+            '<text x="220" y="194">accept</text>'+
+          '</g>'+
+          '<text x="10" y="218" fill="#8b949e" font-size="10">Action[s,a] \u2208 {shift n, reduce p, accept, error}; Goto[s,N] \u2208 states</text>'+
+        '</svg>';
+      },
       sections: [
-        { heading: "Shift-Reduce Parsing", body: "Bottom-up parsing technique that shifts input tokens onto a stack and reduces sequences matching grammar rule right-hand sides. Uses a parse table to decide between shift and reduce actions." },
-        { heading: "LR(0) Items", body: "Grammar productions with a dot indicating parsing progress. The set of all items forms the basis for constructing LR parse tables." },
-        { heading: "SLR/LALR/CLR Tables", body: "Increasingly powerful parse table construction methods. SLR uses FOLLOW sets, LALR merges states with same cores, and CLR tracks full lookahead sets for maximum precision." }
+        { title: "The shift-reduce loop", text: "An LR parser keeps a stack of (state, symbol) pairs and a one-token lookahead. At each step it consults action[top-state, lookahead]: *shift n* pushes the token plus state n; *reduce p* pops |rhs(p)| pairs, then pushes the lhs nonterminal and goto[new-top-state, lhs]. *accept* halts on $; *error* invokes recovery. The whole loop is just two table lookups per token, so LR parsing runs in O(n) regardless of grammar complexity." },
+        { title: "LR(0) items and canonical collection", text: "An LR(0) *item* is a production with a dot showing how much has been parsed, e.g. E \u2192 E\u00b7+T. The closure of a set of items adds, for every dot-before-nonterminal, that nonterminal\u2019s productions with the dot at the start. The canonical collection is built by starting from {S\u2019\u2192\u00b7S} and repeatedly applying goto(I, X) until closed \u2014 each set becomes a state of the DFA that drives the parser." },
+        { title: "SLR vs LALR vs canonical LR", text: "SLR(1) uses FOLLOW(A) to decide when to reduce A\u2192\u03b1; it\u2019s simple but rejects some unambiguous grammars. LALR(1) merges canonical LR(1) states with identical *cores*, giving the same power for almost all real languages with far fewer states \u2014 this is what yacc/bison emit. Full LR(1) keeps every lookahead distinct: maximally powerful but tables can be 10\u00d7 larger." },
+        { title: "Mini-example: a parse-table cell", text: "For E\u2192E+T | T, T\u2192id, state I0={S\u2019\u2192\u00b7E, E\u2192\u00b7E+T, E\u2192\u00b7T, T\u2192\u00b7id}. goto(I0, id) = closure({T\u2192id\u00b7}) = state with item T\u2192id\u00b7 and FOLLOW(T)={+,$}. Hence action[1, +] = reduce T\u2192id. Build a few of these by hand once \u2014 it permanently demystifies bison\u2019s .output files." }
+      ],
+      keypoints: [
+        { title: "Conflicts diagnose ambiguity", text: "Shift-reduce conflicts (e.g., dangling-else) mean the grammar is ambiguous *for this parser class*; reduce-reduce conflicts almost always indicate a real grammar bug." },
+        { title: "Left recursion is fine \u2014 even preferred", text: "LR handles left-recursive rules naturally and parses them in constant stack space, unlike top-down LL/recursive-descent which must rewrite them." },
+        { title: "GLR for the rest", text: "When even LR(1) isn\u2019t enough (C++ template parsing, natural language), GLR forks the parse stack on conflicts and reconciles later \u2014 used by Elkhound, Bison\u2019s %glr-parser, and tree-sitter." },
+        { title: "Real parsers", text: "GCC moved from yacc to a hand-written recursive-descent parser for better diagnostics; Clang is recursive-descent; V8 and Roslyn are too. Pure-table LR survives in bison-generated SQL parsers (PostgreSQL) and DSLs." }
       ]
     },
     {
-      icon: "\ud83d\udd00",
-      title: "SSA Form",
+      id: "ast-semantic", num: "Concept 3 of 6",
+      title: "AST & Semantic Analysis",
+      desc: "From parse tree to typed, scope-resolved AST \u2014 the bridge between syntax and meaning.",
+      color: "#7ee787", icon: "\ud83c\udf33",
+      svg: function(w, h) {
+        return '<svg viewBox="0 0 460 220" width="'+w+'" height="'+h+'" xmlns="http://www.w3.org/2000/svg">'+
+          '<text x="10" y="18" fill="#7ee787" font-family="monospace" font-size="12">let x: int = a + 2 * b;</text>'+
+          '<g stroke="#58a6ff" stroke-width="1.5" fill="none">'+
+            '<line x1="230" y1="50" x2="120" y2="95"/><line x1="230" y1="50" x2="230" y2="95"/>'+
+            '<line x1="230" y1="50" x2="340" y2="95"/>'+
+            '<line x1="340" y1="110" x2="280" y2="155"/><line x1="340" y1="110" x2="400" y2="155"/>'+
+            '<line x1="400" y1="170" x2="360" y2="200"/><line x1="400" y1="170" x2="440" y2="200"/>'+
+          '</g>'+
+          '<g font-family="monospace" font-size="11" text-anchor="middle">'+
+            '<rect x="195" y="35" width="70" height="22" rx="4" fill="#161b22" stroke="#7ee787"/>'+
+            '<text x="230" y="50" fill="#7ee787">VarDecl</text>'+
+            '<rect x="80" y="80" width="80" height="22" rx="4" fill="#161b22" stroke="#58a6ff"/>'+
+            '<text x="120" y="95" fill="#c9d1d9">name: x</text>'+
+            '<rect x="195" y="80" width="70" height="22" rx="4" fill="#161b22" stroke="#58a6ff"/>'+
+            '<text x="230" y="95" fill="#c9d1d9">type: int</text>'+
+            '<rect x="310" y="95" width="60" height="22" rx="4" fill="#161b22" stroke="#ffa657"/>'+
+            '<text x="340" y="110" fill="#ffa657">+</text>'+
+            '<rect x="245" y="140" width="60" height="22" rx="4" fill="#161b22" stroke="#58a6ff"/>'+
+            '<text x="275" y="155" fill="#c9d1d9">a</text>'+
+            '<rect x="370" y="155" width="60" height="22" rx="4" fill="#161b22" stroke="#ffa657"/>'+
+            '<text x="400" y="170" fill="#ffa657">*</text>'+
+            '<rect x="335" y="190" width="50" height="22" rx="4" fill="#161b22" stroke="#58a6ff"/>'+
+            '<text x="360" y="205" fill="#c9d1d9">2</text>'+
+            '<rect x="415" y="190" width="50" height="22" rx="4" fill="#161b22" stroke="#58a6ff"/>'+
+            '<text x="440" y="205" fill="#c9d1d9">b</text>'+
+          '</g>'+
+          '<g font-family="monospace" font-size="9" fill="#d2a8ff">'+
+            '<text x="10" y="115">Symbol table:</text>'+
+            '<text x="10" y="130">x : int  (decl L1)</text>'+
+            '<text x="10" y="145">a : int  (param)</text>'+
+            '<text x="10" y="160">b : int  (param)</text>'+
+            '<text x="10" y="175">+ : (int,int)\u2192int \u2713</text>'+
+            '<text x="10" y="190">* : (int,int)\u2192int \u2713</text>'+
+          '</g>'+
+        '</svg>';
+      },
       sections: [
-        { heading: "\u03c6-Functions", body: "Special merge functions inserted at join points in control flow where different definitions of a variable converge. Each \u03c6-function selects the appropriate value based on the incoming control flow edge." },
-        { heading: "Dominance Frontiers", body: "The dominance frontier of a node N is the set of nodes where N\u2019s dominance ends. Used to determine optimal placement of \u03c6-functions during SSA construction." },
-        { heading: "Use-Def Chains", body: "In SSA form, every use of a variable has exactly one reaching definition, making use-def chains trivial. This simplifies many optimizations like constant propagation and dead code elimination." }
+        { title: "From parse tree to AST", text: "The parse (concrete syntax) tree mirrors the grammar exactly \u2014 including punctuation, parens, and chains of unary productions. The AST throws all that away and keeps only what later passes care about: a BinaryOp node with op, left, right; a VarDecl with name, type, init; etc. Semantic actions in yacc/bison or a tree builder in recursive descent emit AST nodes during reduction. Operator precedence and associativity get baked into the *shape* of the tree, so downstream code never re-parses." },
+        { title: "Symbol tables and scope", text: "A symbol table maps names to declarations. Block-scoped languages use a stack of hash maps (push on entering a block, pop on exit) so a lookup walks outward through enclosing scopes. The semantic pass also records each identifier\u2019s *resolution* (which declaration it refers to) directly on the AST node \u2014 later passes never look up by name again. Forward references, mutual recursion, and overload resolution all live here." },
+        { title: "Type checking", text: "A bottom-up walk computes a type for every expression node and verifies operator/function compatibility. For a + 2 * b: literal 2 is int, b is int from the symbol table, * has signature (int,int)\u2192int, etc. Implicit conversions, generics, subtyping, and inference (Hindley\u2013Milner) make this step the most complex in real compilers \u2014 but the structure is always a syntax-directed traversal of the AST." },
+        { title: "Diagnostics & pitfalls", text: "Good error messages need source spans on every AST node, not just tokens; that\u2019s why Clang and Roslyn keep ranges and pretty-print the offending sub-expression. Common pitfalls: forgetting to record the *defining occurrence* of a name (so go-to-definition fails), running type checks before scope resolution, and treating implicit conversions as silent (C\u2019s int\u2194pointer is the canonical foot-gun)." }
+      ],
+      keypoints: [
+        { title: "AST is the lingua franca", text: "Optimizers, linters, formatters, and IDE tooling all consume the AST \u2014 keep it minimal, immutable, and decorated with source spans." },
+        { title: "Two passes minimum", text: "Resolve names first, then type-check; mixing them tangles forward references and recursive types." },
+        { title: "Attribute grammars formalize it", text: "Synthesized attributes flow up (types), inherited attributes flow down (expected type, scope). Tools like ANTLR\u2019s tree listeners or Roslyn\u2019s SemanticModel encode this directly." },
+        { title: "Real-world: Roslyn & Clang ASTs", text: "Both expose the typed AST as a public API; that\u2019s what powers IntelliSense, refactoring, and clang-tidy \u2014 a compiler is now half library, half batch tool." }
       ]
     },
     {
-      icon: "\ud83d\udce6",
-      title: "Register Allocation",
+      id: "ssa-form", num: "Concept 4 of 6",
+      title: "SSA Form & Dominance",
+      desc: "Why Static Single Assignment makes data-flow optimizations almost trivial.",
+      color: "#ffa657", icon: "\ud83d\udd00",
+      svg: function(w, h) {
+        return '<svg viewBox="0 0 460 230" width="'+w+'" height="'+h+'" xmlns="http://www.w3.org/2000/svg">'+
+          '<defs><marker id="arr2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#8b949e"/></marker></defs>'+
+          '<text x="10" y="18" fill="#8b949e" font-size="11">Before SSA</text>'+
+          '<text x="270" y="18" fill="#8b949e" font-size="11">After SSA + \u03c6</text>'+
+          '<g font-family="monospace" font-size="10" fill="#c9d1d9">'+
+            '<rect x="20" y="30" width="120" height="40" rx="6" fill="#161b22" stroke="#58a6ff"/>'+
+            '<text x="30" y="48">B1: x = 1</text><text x="30" y="62">    if c goto B3</text>'+
+            '<rect x="20" y="95" width="120" height="28" rx="6" fill="#161b22" stroke="#58a6ff"/>'+
+            '<text x="30" y="113">B2: x = 2</text>'+
+            '<rect x="20" y="145" width="120" height="28" rx="6" fill="#161b22" stroke="#58a6ff"/>'+
+            '<text x="30" y="163">B3: print x</text>'+
+            '<rect x="270" y="30" width="170" height="40" rx="6" fill="#161b22" stroke="#7ee787"/>'+
+            '<text x="280" y="48">B1: x\u2081 = 1</text><text x="280" y="62">    if c goto B3</text>'+
+            '<rect x="270" y="95" width="170" height="28" rx="6" fill="#161b22" stroke="#7ee787"/>'+
+            '<text x="280" y="113">B2: x\u2082 = 2</text>'+
+            '<rect x="270" y="145" width="170" height="42" rx="6" fill="#161b22" stroke="#d2a8ff"/>'+
+            '<text x="280" y="163" fill="#d2a8ff">B3: x\u2083 = \u03c6(x\u2081, x\u2082)</text>'+
+            '<text x="280" y="178">    print x\u2083</text>'+
+          '</g>'+
+          '<g stroke="#8b949e" fill="none" marker-end="url(#arr2)">'+
+            '<path d="M80,71 L80,93"/><path d="M80,123 L80,143"/>'+
+            '<path d="M140,50 Q200,80 80,143"/>'+
+            '<path d="M340,71 L340,93"/><path d="M340,123 L340,143"/>'+
+            '<path d="M395,50 Q450,90 340,143"/>'+
+          '</g>'+
+          '<text x="10" y="208" fill="#8b949e" font-size="10">\u03c6 placement = dominance frontier of each definition</text>'+
+          '<text x="10" y="224" fill="#d2a8ff" font-size="10" font-family="monospace">DF(B1)=\u2205, DF(B2)=DF(...)={B3} \u21d2 \u03c6 in B3</text>'+
+        '</svg>';
+      },
       sections: [
-        { heading: "Graph Coloring", body: "Models register allocation as a graph coloring problem. Each variable is a node, and edges connect simultaneously live variables. The goal is to color the graph with k colors (registers)." },
-        { heading: "Interference Graph", body: "A graph where nodes represent live ranges and edges represent conflicts between variables that are simultaneously live. Two variables connected by an edge cannot share a register." },
-        { heading: "Spilling", body: "When the interference graph cannot be colored with k registers, some variables are spilled to memory. Spill cost heuristics determine which variables to spill to minimize performance impact." }
+        { title: "What SSA gives you", text: "In SSA every variable is assigned exactly once, so each name has a single, statically known definition. *Use-def* and *def-use* chains become O(1) lookups instead of dataflow analyses, which makes constant propagation, dead-code elimination, value numbering, and global value numbering linear-time passes. Modern IRs (LLVM, V8 TurboFan, HotSpot C2, MLIR) are all SSA-based for this reason." },
+        { title: "\u03c6-functions at join points", text: "When two paths merge and both define x, SSA inserts x\u2083 = \u03c6(x\u2081, x\u2082) at the start of the join block. \u03c6 selects x\u2081 if control came from the predecessor where x\u2081 was defined, x\u2082 otherwise. \u03c6 is not a real instruction \u2014 backends *destroy SSA* by inserting copies on each incoming edge before register allocation, an art with subtleties (the lost-copy and swap problems)." },
+        { title: "Where do \u03c6s go? Dominance frontiers", text: "Node A *dominates* node B if every path from entry to B goes through A. The *dominance frontier* of A is the set of nodes B where A dominates a predecessor of B but does not dominate B itself \u2014 exactly the join points where A\u2019s definition first becomes ambiguous. Cytron et al.\u2019s 1991 algorithm places minimal \u03c6s by inserting one for each variable in the iterated dominance frontier of its defining blocks." },
+        { title: "Pitfalls and tricks", text: "SSA does *not* model memory \u2014 loads/stores stay outside, often handled by a parallel \"memory SSA\" or alias-analysis layer. Loops need a \u03c6 in the header for every loop-carried variable; getting this wrong silently breaks induction-variable analysis. And unreachable code can fool naive \u03c6-pruning into deleting live values; LLVM\u2019s -mem2reg pass is the canonical reference implementation worth reading." }
+      ],
+      keypoints: [
+        { title: "Single static assignment, multiple dynamic", text: "x\u2081 may execute many times in a loop; SSA only requires that the *textual* definition be unique." },
+        { title: "Dominator tree is the workhorse", text: "Computed once via Lengauer\u2013Tarjan in near-linear time; used by \u03c6-placement, LICM, scalar evolution, and most loop passes." },
+        { title: "Pruned & semi-pruned SSA", text: "Skip \u03c6s for variables not live at the join \u2014 LLVM uses semi-pruned SSA to keep IR small." },
+        { title: "Out-of-SSA is hard", text: "Sreedhar\u2019s algorithm, the Boissinot et al. 2009 method, and parallel-copy sequentialization are the standard references; getting it wrong corrupts the program." }
+      ]
+    },
+    {
+      id: "optimization", num: "Concept 5 of 6",
+      title: "Classical Optimization Passes",
+      desc: "Constant folding, CSE, LICM, DCE \u2014 the bread-and-butter of any -O2.",
+      color: "#d2a8ff", icon: "\u26a1",
+      svg: function(w, h) {
+        return '<svg viewBox="0 0 460 220" width="'+w+'" height="'+h+'" xmlns="http://www.w3.org/2000/svg">'+
+          '<text x="10" y="18" fill="#8b949e" font-size="11">Source</text>'+
+          '<text x="240" y="18" fill="#8b949e" font-size="11">After CF + CSE + LICM + DCE</text>'+
+          '<g font-family="monospace" font-size="10">'+
+            '<rect x="10" y="28" width="210" height="170" rx="6" fill="#161b22" stroke="#30363d"/>'+
+            '<text x="20" y="45" fill="#c9d1d9">for (i = 0; i &lt; n; i++) {</text>'+
+            '<text x="20" y="60" fill="#c9d1d9">  t  = 2 * 3;</text>'+
+            '<text x="20" y="75" fill="#c9d1d9">  k  = a * b + i;</text>'+
+            '<text x="20" y="90" fill="#c9d1d9">  k2 = a * b - i;</text>'+
+            '<text x="20" y="105" fill="#c9d1d9">  dead = i + 1;</text>'+
+            '<text x="20" y="120" fill="#c9d1d9">  arr[i] = k + k2;</text>'+
+            '<text x="20" y="135" fill="#c9d1d9">}</text>'+
+            '<text x="20" y="160" fill="#ffa657">// t  invariant \u2192 hoist</text>'+
+            '<text x="20" y="174" fill="#ffa657">// a*b CSE</text>'+
+            '<text x="20" y="188" fill="#ffa657">// dead unused \u2192 DCE</text>'+
+            '<rect x="240" y="28" width="210" height="170" rx="6" fill="#161b22" stroke="#7ee787"/>'+
+            '<text x="250" y="45" fill="#7ee787">t  = 6;          // CF</text>'+
+            '<text x="250" y="60" fill="#7ee787">ab = a * b;       // hoisted</text>'+
+            '<text x="250" y="75" fill="#c9d1d9">for (i = 0; i &lt; n; i++) {</text>'+
+            '<text x="250" y="90" fill="#c9d1d9">  k   = ab + i;</text>'+
+            '<text x="250" y="105" fill="#c9d1d9">  k2  = ab - i;</text>'+
+            '<text x="250" y="120" fill="#c9d1d9">  arr[i] = k + k2;</text>'+
+            '<text x="250" y="135" fill="#c9d1d9">}</text>'+
+            '<text x="250" y="170" fill="#7ee787">// 2*3 folded; ab once;</text>'+
+            '<text x="250" y="184" fill="#7ee787">// dead store removed</text>'+
+          '</g>'+
+        '</svg>';
+      },
+      sections: [
+        { title: "Constant folding & propagation", text: "The simplest pass \u2014 evaluate any operation whose operands are compile-time constants and replace the result. Combined with constant *propagation* (substituting known values forward through use-def chains), it triggers a cascade: 2*3 becomes 6, then if (6 > 0) becomes if (true), then the dead branch is removed by the next pass. Sparse Conditional Constant Propagation (Wegman\u2013Zadeck 1991) does this and reachability analysis simultaneously over SSA." },
+        { title: "CSE, GVN, and LICM", text: "Common-Subexpression Elimination spots when the same expression is computed twice with the same operands and reuses the first result. Global Value Numbering generalizes it across basic blocks by assigning each value a number such that congruent values share a number. Loop-Invariant Code Motion hoists computations whose operands don\u2019t change in the loop \u2014 safe iff the loop body executes at least once or the operation is side-effect-free." },
+        { title: "Dead-code elimination (DCE)", text: "Two flavors: *aggressive* DCE marks instructions live only if they affect control flow, returns, or memory; everything else is deleted in one pass over SSA. *Conditional* DCE removes branches proven unreachable by constant propagation. Pitfall: volatile loads, atomics, and any operation with side effects (call to a function the compiler can\u2019t see) must never be deleted \u2014 LLVM tags these with mayHaveSideEffects." },
+        { title: "Peephole patterns & strength reduction", text: "Late in the pipeline, a peephole optimizer rewrites short instruction sequences: x*2 \u2192 x<<1, x*0 \u2192 0, x+0 \u2192 x, mul-by-constant via shift-and-add. Strength reduction inside loops turns array indexing i*4 into a running pointer add. GCC\u2019s combine pass and LLVM\u2019s InstCombine are huge collections of such patterns \u2014 thousands of lines each, generated and verified by Alive2 to be soundness-preserving." }
+      ],
+      keypoints: [
+        { title: "Order matters", text: "Run inlining \u2192 SCCP \u2192 CSE/GVN \u2192 LICM \u2192 DCE \u2192 peephole. Repeat until fixed point; LLVM\u2019s pass manager runs the loop pipeline twice for exactly this reason." },
+        { title: "Profile-guided beats heuristic", text: "PGO and AutoFDO feed real branch frequencies into LICM and inlining \u2014 typical 5\u201320% wins on server workloads." },
+        { title: "Soundness is non-trivial", text: "Reordering loads across atomic stores, hoisting div by zero, deleting infinite loops in C++ \u2014 every modern compiler has shipped a CVE here. Read the Alive2 papers." },
+        { title: "Where to look", text: "LLVM\u2019s opt -print-after-all dumps IR after each pass; GCC\u2019s -fdump-tree-all does the same for GIMPLE. Best way to learn optimizations is to watch them happen." }
+      ]
+    },
+    {
+      id: "regalloc", num: "Concept 6 of 6",
+      title: "Register Allocation by Graph Coloring",
+      desc: "Mapping unbounded virtual registers to a tiny set of physical ones.",
+      color: "#79c0ff", icon: "\ud83c\udfa8",
+      svg: function(w, h) {
+        return '<svg viewBox="0 0 460 220" width="'+w+'" height="'+h+'" xmlns="http://www.w3.org/2000/svg">'+
+          '<text x="10" y="16" fill="#7ee787" font-family="monospace" font-size="11">a=1; b=2; c=a+b; d=c*2; e=c+d; ret e;</text>'+
+          '<text x="10" y="36" fill="#8b949e" font-size="11">Live ranges</text>'+
+          '<g font-family="monospace" font-size="10" fill="#c9d1d9">'+
+            '<text x="10" y="52">a:</text><line x1="40" y1="49" x2="120" y2="49" stroke="#58a6ff" stroke-width="3"/>'+
+            '<text x="10" y="68">b:</text><line x1="60" y1="65" x2="120" y2="65" stroke="#f778ba" stroke-width="3"/>'+
+            '<text x="10" y="84">c:</text><line x1="120" y1="81" x2="200" y2="81" stroke="#7ee787" stroke-width="3"/>'+
+            '<text x="10" y="100">d:</text><line x1="160" y1="97" x2="200" y2="97" stroke="#ffa657" stroke-width="3"/>'+
+            '<text x="10" y="116">e:</text><line x1="200" y1="113" x2="240" y2="113" stroke="#d2a8ff" stroke-width="3"/>'+
+          '</g>'+
+          '<text x="280" y="36" fill="#8b949e" font-size="11">Interference graph (k=2)</text>'+
+          '<g stroke="#8b949e" stroke-width="1.5">'+
+            '<line x1="320" y1="80" x2="380" y2="60"/>'+
+            '<line x1="380" y1="60" x2="430" y2="100"/>'+
+            '<line x1="320" y1="80" x2="380" y2="120"/>'+
+            '<line x1="380" y1="120" x2="430" y2="100"/>'+
+            '<line x1="380" y1="60" x2="380" y2="120"/>'+
+          '</g>'+
+          '<g font-family="monospace" font-size="10" text-anchor="middle">'+
+            '<circle cx="320" cy="80" r="14" fill="#58a6ff" stroke="#0d1117" stroke-width="2"/><text x="320" y="84" fill="#0d1117">a</text>'+
+            '<circle cx="380" cy="60" r="14" fill="#f778ba" stroke="#0d1117" stroke-width="2"/><text x="380" y="64" fill="#0d1117">b</text>'+
+            '<circle cx="430" cy="100" r="14" fill="#58a6ff" stroke="#0d1117" stroke-width="2"/><text x="430" y="104" fill="#0d1117">c</text>'+
+            '<circle cx="380" cy="120" r="14" fill="#f778ba" stroke="#0d1117" stroke-width="2"/><text x="380" y="124" fill="#0d1117">d</text>'+
+          '</g>'+
+          '<text x="280" y="160" fill="#7ee787" font-family="monospace" font-size="10">a\u2192R0  b\u2192R1  c\u2192R0  d\u2192R1  e\u2192R0</text>'+
+          '<text x="280" y="180" fill="#ffa657" font-family="monospace" font-size="10">If k=1 \u2192 spill highest-degree node</text>'+
+          '<text x="10" y="200" fill="#8b949e" font-size="10">Edge (u,v) \u21d4 u and v simultaneously live</text>'+
+          '<text x="10" y="214" fill="#8b949e" font-size="10">k = number of physical registers</text>'+
+        '</svg>';
+      },
+      sections: [
+        { title: "The coloring formulation", text: "After SSA destruction we have a (possibly large) set of *virtual registers*, each with a *live range*: the set of program points where its value may still be used. Two virtuals *interfere* if their live ranges overlap; build an undirected *interference graph* with one node per virtual and one edge per pair that interferes. A k-coloring \u2014 assigning at most k labels so adjacent nodes differ \u2014 is exactly a valid assignment of virtuals to k physical registers." },
+        { title: "Chaitin\u2019s simplify-spill-select", text: "Graph coloring is NP-hard, but Chaitin\u2019s heuristic works well: while there\u2019s a node of degree < k, push it on a stack and remove it from the graph (it\u2019s trivially colorable later). When stuck, pick a node by spill-cost heuristic, mark it for spilling, remove it. Then pop the stack and color each node with any free color among its neighbors. Briggs\u2019 *optimistic coloring* refines this by deferring the spill decision \u2014 sometimes a high-degree node still finds a free color." },
+        { title: "Spilling and live-range splitting", text: "When no color is free, the variable must live in memory: insert a store at every definition and a reload before every use, then re-run the allocator. Naive spilling explodes code size, so modern allocators *split* live ranges at basic-block boundaries (LLVM\u2019s greedy allocator) or use SSA-based live-range splitting (Hack & Goos). Linear-scan (Poletto & Sarkar 1999) skips the graph entirely and is what V8 and HotSpot C1 use for fast JIT compilation." },
+        { title: "Calling conventions & coalescing", text: "The allocator must respect the ABI: on x86-64 SysV, RDI/RSI/RDX/RCX/R8/R9 are argument registers and RAX is the return value, while R12\u2013R15 are callee-saved. Move-coalescing fuses move-related virtuals into one node so a copy x = y becomes a no-op when both end up in the same register \u2014 the George/Appel and Briggs criteria keep this safe by checking it won\u2019t cause spills." }
+      ],
+      keypoints: [
+        { title: "k = registers minus reserved", text: "On x86-64 you don\u2019t get all 16 GPRs: RSP is the stack pointer, often RBP is the frame pointer, plus scratch for spills. Effective k is closer to 13." },
+        { title: "Spill cost heuristics", text: "Common formula: \u03a3(uses + defs) \u00b7 10^loop_depth / degree. High-degree, deeply-nested, frequently-used variables cost the most to spill." },
+        { title: "JIT vs AOT tradeoff", text: "AOT compilers (GCC, LLVM -O2) afford full graph coloring; JITs (V8 Sparkplug, HotSpot C1) use linear-scan or even greedy block-local allocation to keep compile time tiny." },
+        { title: "Chordal SSA simplification", text: "An SSA program\u2019s interference graph is chordal, so optimal coloring is polynomial \u2014 Hack et al. exploit this in the SSA-based allocator that ships in LLVM\u2019s GlobalISel and libFirm." }
+      ]
+    }
+  ],
+
+  useCases: [
+    {
+      id: "calc-interpreter", title: "Tiny Calculator: Lex \u2192 Parse \u2192 Eval",
+      desc: "End-to-end walk through an arithmetic interpreter that fits in 100 lines.",
+      icon: "\ud83e\uddee", color: "#58a6ff",
+      summary: "A toy interpreter is the <strong>entire compiler stack in miniature</strong>: characters become tokens, tokens become a tree, the tree becomes a value. Once you replace the final eval() with a code emitter you have a real compiler \u2014 every production system from Lua to V8 started here. The same Pratt parser that ships in this 100-line script powers Go\u2019s expression parser and TypeScript\u2019s tsc.",
+      pipeline: "source string \"1+2*(3-4)\"\n   \u2502 lexer (DFA, O(n) chars)\n   \u25bc\nTokens: [NUM(1), PLUS, NUM(2), STAR, LPAREN, ...]\n   \u2502 Pratt parser (recursive descent)\n   \u25bc\nAST:    BinOp(+, NUM(1), BinOp(*, NUM(2), BinOp(-, NUM(3), NUM(4))))\n   \u2502 tree-walking interpreter (post-order)\n   \u25bc\nResult: -1     [or swap eval() for codegen \u2192 x86-64]",
+      metrics: [
+        { label: "Lexer throughput", value: "\u2248300 MB/s (re2c-generated DFA, 1 instr/byte)" },
+        { label: "Parser speed (Pratt)", value: "\u2248120 MB/s for arithmetic expressions" },
+        { label: "Crafting Interpreters jlox", value: "1,500 LOC, full Lox interpreter" },
+        { label: "Walk vs. JIT speedup", value: "20\u201350\u00d7 once you replace eval() with codegen" }
+      ],
+      extensions: "Add static typing (Hindley\u2013Milner), compile the AST to a bytecode VM (Lua/Python style), then add a tracing or method JIT (LuaJIT, V8 Sparkplug).",
+      steps: [
+        { title: "Tokenize", component: "Lexer", proto: "regex / hand-written DFA",
+          intuition: "Each input byte triggers exactly one DFA state transition \u2014 that's why production lexers like re2c hit memory bandwidth.",
+          complexity: "O(n) time, O(1) state",
+          detail: "Scan the input string left to right, skipping whitespace. Emit tokens NUM(value), PLUS, MINUS, STAR, SLASH, LPAREN, RPAREN, EOF. A two-state DFA suffices: accumulate digits while in NUM, otherwise dispatch on the single character.",
+          code: "tokens = []\nfor c in input:\n  if c.isdigit(): buf += c\n  elif c in '+-*/()': flush(); tokens.append(op(c))\n  elif c.isspace(): flush()",
+          example: "Clang\u2019s hand-written lexer in Lexer.cpp scans \u2248400 MB/s on a single core; re2c-generated tables beat 1 GB/s on hot caches.",
+          pitfall: "Forgetting longest-match rules \u2014 lexing \"==\" as two \"=\" tokens silently mangles every comparison expression downstream." },
+        { title: "Parse with precedence climbing", component: "Parser", proto: "Pratt / recursive descent",
+          intuition: "One function per precedence level turns the grammar into a Russian doll: each layer only sees operators of its own binding power.",
+          complexity: "O(n) tokens, O(d) stack depth where d = max nesting",
+          detail: "Use one function per precedence level: expr() calls term() then loops on +/-, term() calls factor() then loops on */, factor() handles NUM and parenthesized expr(). The grammar is right-associative for ^ and left-associative for the rest \u2014 baked into the loop direction.",
+          code: "def expr():\n  l = term()\n  while peek() in (PLUS, MINUS):\n    op = consume(); l = BinOp(op, l, term())\n  return l",
+          example: "Go\u2019s parser/parser.go uses precedence climbing for all 5 binary precedence levels; TypeScript\u2019s parseBinaryExpression is the same algorithm \u2014 \u2248600 LOC handles JS\u2019s 17 levels.",
+          pitfall: "Mixing up left- and right-associativity flips loop direction \u2014 2^3^2 silently becomes (2^3)^2=64 instead of 2^(3^2)=512." },
+        { title: "Evaluate the AST", component: "Tree-walking interpreter", proto: "post-order visitor",
+          intuition: "Post-order evaluation matches the semantic dependency order: children must produce their values before the parent can combine them.",
+          complexity: "O(n) nodes, O(d) recursion stack",
+          detail: "Recursively evaluate: NUM returns its value, BinOp evaluates left and right then applies the op. Total runtime is O(n) in tree size. Replace this single function with codegen to get a compiler instead of an interpreter.",
+          code: "def eval(n):\n  if n.kind == 'NUM': return n.val\n  l, r = eval(n.left), eval(n.right)\n  return {'+':l+r,'-':l-r,'*':l*r,'/':l/r}[n.op]",
+          example: "CPython\u2019s ceval.c is essentially this loop unrolled to bytecode \u2014 a tree-walker like jlox runs Fibonacci(30) in \u22483s, whereas the bytecode VM clox does it in \u2248120 ms (25\u00d7 faster) on the same input." },
+        { title: "Add error recovery", component: "Diagnostics", proto: "panic-mode",
+          intuition: "A compiler that stops at the first error is hostile \u2014 users want to see every problem in one build, so the parser must keep going past the first wreck.",
+          detail: "On unexpected token, emit an error with line/column, then *synchronize* by skipping tokens until a statement-level delimiter (semicolon, newline, EOF). Continue parsing so the user sees multiple errors per run \u2014 the Clang/Roslyn experience.",
+          example: "Clang famously emits up to 20 diagnostics for a single broken file; Rust\u2019s rustc additionally tracks expected tokens and prints \"did you mean ...?\" suggestions for typos with edit distance \u2264 3.",
+          pitfall: "Naive panic mode can cascade \u2014 a missing brace turns 5 lines of valid code into 50 spurious errors. Modern parsers use scoring heuristics to demote follow-on diagnostics.",
+          refs: [{ label: "Crafting Interpreters \u2014 Pratt parsing", url: "https://craftinginterpreters.com/parsing-expressions.html" }] }
+      ]
+    },
+    {
+      id: "dce-pass", title: "Dead-Code Elimination Pass on SSA IR",
+      desc: "Walk through marking live instructions and sweeping the rest.",
+      icon: "\ud83e\uddf9", color: "#7ee787",
+      summary: "Dead-code elimination is the <strong>poster child for SSA</strong>: because every value has exactly one definition and explicit use-def edges, liveness becomes a simple graph reachability problem instead of an iterative dataflow analysis. On LLVM IR, ADCE plus SCCP routinely deletes 10\u201330% of instructions after inlining \u2014 huge wins for very little compile time.",
+      pipeline: "SSA IR (after inlining)\n   \u2502 1. seed worklist with side-effecting instrs\n   \u25bc\nLive-set = { stores, calls, returns, branches }\n   \u2502 2. BFS backward via use-def edges\n   \u25bc\nLive-set closed under operands\n   \u2502 3. sweep: delete !live instrs + dead \u03c6\u2019s\n   \u25bc\nCleaned IR\n   \u2502 4. SCCP \u2192 more constants \u2192 more dead branches \u2192 GOTO 1\n   \u25bc\nFixed point (usually \u2264 3 iterations)",
+      metrics: [
+        { label: "Instruction reduction (LLVM ADCE)", value: "10\u201330% post-inlining on SPEC CPU2017" },
+        { label: "Pass cost", value: "<2% of -O2 wall time (linear in IR size)" },
+        { label: "Iterations to fixpoint", value: "\u2264 3 in practice (LLVM caps at 4)" },
+        { label: "ADCE + SCCP combined win", value: "5\u201312% binary size on real C++ codebases" }
+      ],
+      extensions: "Aggressive DCE that speculatively removes branches, partial DCE that sinks code into colder blocks, and the related dead-store-elimination on memory SSA.",
+      steps: [
+        { title: "Seed the worklist", component: "Liveness analysis", proto: "mark phase",
+          intuition: "Side effects are the only reason machine code exists; everything else must justify itself by feeding a side effect transitively.",
+          complexity: "O(n) instructions",
+          detail: "Every instruction with side effects (store, call to opaque function, return, branch) is unconditionally live. Push them on a worklist. In SSA this is one linear scan over the IR \u2014 no fixed-point dataflow needed because use-def chains are explicit.",
+          example: "A typical LLVM function (\u224850 basic blocks, \u2248500 instructions) seeds \u224860\u2013100 instructions \u2014 the rest must prove their worth.",
+          pitfall: "Marking a memory-barrier or volatile load as side-effect-free deletes synchronization invisibly \u2014 LLVM tracks hasSideEffects + mayHaveSideEffects explicitly per opcode." },
+          { title: "Propagate liveness backward", component: "Use-def walker", proto: "graph reachability",
+            intuition: "SSA turns liveness into graph BFS \u2014 there's no fixed-point because each use points to exactly one def, no joins to solve.",
+            complexity: "O(uses) total, amortized O(1) per edge",
+            detail: "Pop an instruction from the worklist; for each operand it uses, look up the defining instruction via the SSA use-def edge and, if not yet live, mark it and push it. Continue until the worklist drains. Cost: O(uses) total.",
+          code: "while worklist:\n  i = worklist.pop()\n  for op in i.operands:\n    d = op.def\n    if not d.live:\n      d.live = True; worklist.append(d)",
+          example: "LLVM ADCE walks \u22483\u00d7 the live-instruction count on average \u2014 a 500-instruction function with 300 live results does \u22481000 edge traversals (\u2248microseconds)." },
+        { title: "Sweep dead instructions", component: "IR rewriter", proto: "single pass",
+          intuition: "After marking, sweeping is bookkeeping: anything unmarked is provably unreachable from any observable effect.",
+          complexity: "O(n) instructions",
+          detail: "Walk every basic block; delete any instruction whose live flag is false. \u03c6-functions whose result is dead vanish too. After deletion, run a quick CFG cleanup pass to merge basic blocks whose only predecessor is a single jump.",
+          pitfall: "Removing a dead \u03c6 in a loop header without updating loop metadata silently breaks LICM and unswitching downstream \u2014 LLVM\u2019s LoopSimplify invariants matter.",
+          refs: [{ label: "LLVM ADCE source", url: "https://github.com/llvm/llvm-project/blob/main/llvm/lib/Transforms/Scalar/ADCE.cpp" }] },
+        { title: "Iterate with constant propagation", component: "Pass manager", proto: "fixed-point",
+          intuition: "Optimization passes are catalysts \u2014 one pass turns code into a shape another pass can finally simplify, which is why pipelines run them in cycles.",
+          detail: "DCE often unlocks more constant propagation (a now-unused branch makes its target unreachable), which unlocks more DCE. LLVM\u2019s -O2 schedules SCCP and ADCE adjacent and runs the function pipeline twice for this reason.",
+          example: "Clang -O2 runs the function simplification pipeline twice and the module pipeline once \u2014 ChromeOS reports \u22487% extra size reduction from the second iteration alone." }
+      ]
+    },
+    {
+      id: "regalloc-walk", title: "Register Allocation Walkthrough",
+      desc: "From IR live ranges to a colored interference graph in five steps.",
+      icon: "\ud83c\udfa8", color: "#79c0ff",
+      summary: "Register allocation is where a compiler stops thinking in <strong>infinite virtual values</strong> and starts negotiating for the 16 (x86-64) or 32 (ARM64) physical registers a CPU actually has. Get it wrong and every variable spills to memory; get it right and you match hand-written assembly. LLVM\u2019s Greedy allocator and HotSpot\u2019s linear-scan are the two production schools.",
+      pipeline: "SSA IR with virtual registers\n   \u2502 1. liveness (backward dataflow on CFG)\n   \u25bc\nLive ranges per virtual\n   \u2502 2. build interference graph\n   \u25bc\nGraph G(V=virtuals, E=overlap)\n   \u2502 3. simplify: remove deg<k nodes, push stack\n   \u25bc\nReduced graph + spill candidates\n   \u2502 4. select: pop stack, assign color\n   \u25bc\nVirtual\u2192physical map (+ spills)\n   \u2502 5. coalesce moves, emit prologue/epilogue\n   \u25bc\nFinal machine code",
+      metrics: [
+        { label: "x86-64 GPRs available", value: "13 (16 minus RSP, RBP, fixed roles)" },
+        { label: "LLVM Greedy RA share of -O2 time", value: "8\u201315% of backend time" },
+        { label: "Linear scan vs. graph color", value: "\u22483\u00d7 faster compile, \u22485\u201312% slower code" },
+        { label: "Spill rate (well-tuned codegen)", value: "<2% of variables on x86-64, <0.5% on ARM64" }
+      ],
+      extensions: "PBQP allocation (used by LLVM for irregular ISAs), SSA-based allocators that exploit chordal interference graphs (Hack 2007), and live-range splitting heuristics in LLVM Greedy.",
+      steps: [
+        { title: "Compute liveness", component: "Backward dataflow", proto: "live-out = \u22c3 live-in(succ)",
+          intuition: "A variable is live whenever its last use is still in the future \u2014 think of registers as renting space until checkout time.",
+          complexity: "O(|V|\u00b7|E|) in worst case; O(|V|+|E|) on reducible CFGs in reverse postorder",
+          detail: "For each basic block, live-in = (live-out \u2212 def) \u222a use. Iterate to fixed point over the CFG in reverse postorder; on SSA this converges in one or two passes. The result tells you which virtuals are alive at every program point.",
+          pitfall: "Forgetting that calls clobber caller-saved registers turns liveness into a lie \u2014 the allocator must insert implicit defs at every call site." },
+        { title: "Build the interference graph", component: "Graph builder", proto: "adjacency list",
+          intuition: "Two values that are alive at the same instant can never share a register \u2014 the graph encodes \"these must differ\".",
+          complexity: "O(|V|\u00b2) worst case; O(live-set-size \u00d7 instructions) typical",
+          detail: "For each program point, for every pair of virtuals live there, add an undirected edge. In practice you walk each block backward maintaining a live-set: when you see a def of v, add an edge from v to every other member of live; then update live by removing v and adding the operands.",
+          code: "for instr in reversed(block):\n  for v in live - {instr.def}:\n    G.add_edge(instr.def, v)\n  live = (live - {instr.def}) | set(instr.uses)",
+          example: "A 200-instruction function in SPEC gcc averages 80\u2013150 virtuals and \u2248600 edges \u2014 trivially colorable on x86-64\u2019s k=13." },
+        { title: "Simplify (Chaitin)", component: "Coloring heuristic", proto: "stack-based",
+          intuition: "If a node has fewer neighbors than colors, you can always color it last \u2014 so safely remove it now and recurse on a smaller problem.",
+          complexity: "O(|V| + |E|) per simplification round",
+          detail: "Repeatedly remove any node with degree < k and push it on a stack. If only high-degree nodes remain, pick one with the lowest spill cost, mark it as a *potential spill*, and remove it. Continue until the graph is empty.",
+          pitfall: "Choosing spill candidates by raw degree instead of (uses+defs)\u00b710^loop_depth/degree spills hot loop variables \u2014 disaster for performance." },
+        { title: "Select colors / actual spills", component: "Backend", proto: "greedy assign",
+          intuition: "Popping in reverse order guarantees that when you color a node, all its potential conflicts have already been colored.",
+          complexity: "O(|V| + |E|); each restart-after-spill multiplies by iteration count (\u22643 typical)",
+          detail: "Pop the stack; for each node, choose any color (physical register) not used by its remaining neighbors. If none exists, the node becomes an *actual spill*: rewrite the IR to store/load it around each use, then restart from step 1.",
+          example: "On x86-64 LLVM averages 0\u20133 spill iterations even on big functions; one notorious case in libavcodec hits 7 iterations on -O0.",
+          refs: [{ label: "Chaitin et al. 1981 \u2014 Register allocation via graph coloring", url: "https://dl.acm.org/doi/10.1145/800052.801974" }] },
+        { title: "Coalesce and finalize", component: "Move resolver", proto: "George/Appel",
+          intuition: "Two virtuals connected only by a move can share a register if doing so wouldn\u2019t make the graph uncolorable \u2014 free elimination of register-to-register copies.",
+          detail: "Eliminate move instructions whose source and dest were assigned the same register. Insert spill code, save/restore callee-saved registers in the prologue/epilogue, and emit the final assembly.",
+          example: "Aggressive coalescing in LLVM removes \u224825% of mov instructions emitted by codegen; conservative George\u2013Appel coalescing removes \u224818% but never makes a graph uncolorable.",
+          refs: [{ label: "LLVM Greedy RA blog post", url: "https://llvm.org/devmtg/2011-11/Olesen_RegisterAllocation.pdf" }] }
+      ]
+    },
+    {
+      id: "scripting-jit", title: "Build a Tracing JIT for a Scripting Language",
+      desc: "From interpreter profiling to native code emission \u2014 the LuaJIT / V8 TurboFan recipe.",
+      icon: "\u26a1", color: "#ffa657",
+      summary: "A JIT exploits the fact that <strong>most programs spend 90% of time in 10% of the code</strong>. The interpreter runs everything cheaply; only when a function or loop gets hot does the JIT pay the cost of compilation \u2014 and amortizes it across millions of subsequent calls. V8 ships four tiers (Ignition \u2192 Sparkplug \u2192 Maglev \u2192 TurboFan) precisely to spread that cost.",
+      pipeline: "Source\n   \u2502 parse + bytecode emit (cheap)\n   \u25bc\nBytecode interpreter (Ignition / LuaJIT mode 0)\n   \u2502 inline caches record types, hot-counter ticks\n   \u25bc\nHot function or loop trace (>10\u00b3 calls)\n   \u2502 type-specialize via recorded ICs\n   \u25bc\nOptimizing IR (TurboFan sea-of-nodes / LuaJIT SSA)\n   \u2502 inline, fold, escape-analyze, schedule\n   \u25bc\nMachine code (x86-64 / ARM64) + deopt metadata\n   \u2502 on guard fail \u2192 bail out to interpreter (OSR)\n   \u25bc\nFast steady-state execution",
+      metrics: [
+        { label: "V8 TurboFan vs. Ignition", value: "20\u201380\u00d7 on numeric loops, \u22483\u00d7 on object-heavy code" },
+        { label: "LuaJIT vs. Lua 5.1 interp", value: "\u224830\u00d7 on Fibonacci, near-C on numeric kernels" },
+        { label: "Sparkplug compile speed", value: "\u22481 \u00b5s/bytecode (10\u00d7 faster than Maglev)" },
+        { label: "Deoptimization rate (healthy)", value: "<1% of compiled functions per minute" }
+      ],
+      extensions: "Inline caching (monomorphic/polymorphic/megamorphic), on-stack replacement (OSR), tiered compilation policies, and meta-tracing frameworks like RPython / PyPy.",
+      steps: [
+        { title: "Run the bytecode interpreter with counters", component: "Profiler", proto: "edge / call counters",
+          intuition: "Most code never runs hot enough to deserve compilation \u2014 measure first, compile second.",
+          complexity: "O(1) extra per branch / call (single counter increment)",
+          detail: "Every function-entry and loop-back-edge bumps a counter. When it crosses a threshold (V8: 1024 ticks for Maglev, 30k for TurboFan), the runtime queues that unit for compilation. Until then the interpreter runs everything \u2014 cold code costs zero compile budget.",
+          example: "V8\u2019s Ignition uses a 16-bit feedback vector slot per IC; SpiderMonkey\u2019s baseline JIT bumps a 32-bit counter \u2014 negligible vs. \u2248100 ns/bytecode interpretation cost.",
+          pitfall: "Counter increments inside tight loops can themselves become the hot path \u2014 modern JITs use sampling or skip increments when already in optimized code." },
+        { title: "Specialize on observed types via inline caches", component: "Feedback collection", proto: "IC sites",
+          intuition: "Dynamic languages are statically typed in practice \u2014 each call site usually sees one or two concrete shapes; the JIT can compile as if those were guaranteed.",
+          complexity: "O(1) lookup per IC hit; O(IC chain length) on miss",
+          detail: "At every property access, method call, and arithmetic op the interpreter records the runtime types and object shapes (hidden classes). When the JIT compiles, it reads this feedback and emits code that assumes those types, guarded by cheap type checks.",
+          example: "V8 records up to 4 maps per IC before going megamorphic. Chrome telemetry shows \u224885% of property loads are monomorphic, \u22489% polymorphic, only \u22486% megamorphic.",
+          pitfall: "An IC poisoned by one weird call with a different shape can keep a hot function from ever reaching its fast tier \u2014 hence the need for IC migration and code invalidation." },
+        { title: "Build optimizing IR and apply classical passes", component: "Optimizer", proto: "SSA / sea-of-nodes",
+          intuition: "Once you assume the types, JavaScript becomes a statically-typed language and every textbook compiler optimization applies.",
+          complexity: "O(n log n) for most passes (GVN, scheduling); O(n) for inlining/DCE",
+          detail: "Convert bytecode to SSA, inline based on feedback, run constant folding, escape analysis, GVN, loop-invariant code motion, and bounds-check elimination. TurboFan\u2019s sea-of-nodes makes scheduling explicit; LuaJIT runs SSA with on-the-fly narrowing and allocation sinking.",
+          example: "TurboFan inlines through up to 4 levels by default; escape analysis eliminates \u224835% of short-lived object allocations in benchmark code \u2014 a massive win on V8\u2019s JetStream2 suite." },
+        { title: "Lower to machine code with deopt points", component: "Codegen", proto: "linear scan + ABI lowering",
+          intuition: "Each speculative assumption needs an escape hatch \u2014 if reality diverges, jump back to the interpreter at the right bytecode index.",
+          complexity: "O(n) lowering + register allocation (linear scan for JITs)",
+          detail: "Allocate registers (linear scan to keep compile time low), lower IR to ISA opcodes, and emit deoptimization tables mapping each machine PC back to (function, bytecode-offset, live-locals). On guard failure the runtime reconstructs the interpreter frame and resumes.",
+          example: "Sparkplug compiles \u22481 MB of bytecode per second per core; TurboFan is \u224810\u00d7 slower but produces code competitive with Clang on numeric kernels.",
+          pitfall: "Mis-sized deopt tables can balloon code size \u2014 V8 once shipped TurboFan with \u22483\u00d7 the metadata of the code itself, fixed by deduplicating shared bailout frames." },
+        { title: "Handle deoptimization and on-stack replacement", component: "Runtime", proto: "OSR + bailout",
+          intuition: "OSR lets you swap a slow interpreter frame for a hot compiled frame mid-execution \u2014 essential for long-running loops that start cold.",
+          detail: "When a hot loop is detected mid-execution, the JIT compiles a specialized entry that picks up at the current bytecode offset. Conversely on a guard failure (unexpected type, integer overflow, array hole), the runtime reconstructs interpreter state from deopt metadata and resumes interpretation.",
+          example: "PyPy\u2019s meta-tracing relies entirely on OSR for loops; V8\u2019s OSR transition costs \u22481 ms but is amortized over loops that run >10\u2076 iterations." }
+      ]
+    },
+    {
+      id: "lto-link", title: "Link-Time Optimization (LTO) Pipeline",
+      desc: "Cross-module inlining, devirtualization, and dead-symbol stripping at link time.",
+      icon: "\ud83d\udd17", color: "#d2a8ff",
+      summary: "Traditional separate compilation throws away most optimization opportunities at the .o boundary \u2014 the compiler can\u2019t inline a function it has never seen. LTO defers backend codegen until link time, when the <strong>whole program is visible</strong>, enabling cross-TU inlining, devirtualization, and global DCE. ThinLTO makes this scalable by sharing a summary index instead of one giant module.",
+      pipeline: "*.cpp \u2192 clang -flto=thin \u2192 *.o (LLVM bitcode + summary)\n        \u2502\n        \u25bc\n  lld / gold-plugin loads all .o\u2019s\n        \u2502 build module summary index (function sizes, refs)\n        \u25bc\n  Decide cross-module imports (importer per TU)\n        \u2502 parallel per-TU optimize (inline, devirt, DCE)\n        \u25bc\n  Per-TU codegen \u2192 native .o\n        \u2502 final native link + ICF (identical code folding)\n        \u25bc\n  Stripped, deduplicated binary",
+      metrics: [
+        { label: "ThinLTO speedup vs. full LTO link", value: "\u224810\u201320\u00d7 (parallel + incremental)" },
+        { label: "Binary size reduction (Chromium)", value: "\u224810\u201315% with LTO + ICF over -O2" },
+        { label: "Performance uplift", value: "3\u20138% on SPEC CPU2017 vs. -O2 no-LTO" },
+        { label: "Cross-TU inline candidates", value: "Chromium: \u224850k functions imported per TU on average" }
+      ],
+      extensions: "Profile-guided LTO (PGO+LTO), BOLT and Propeller post-link layout optimizers, and whole-program devirtualization with virtual-table inference.",
+      steps: [
+        { title: "Emit IR instead of object code", component: "Frontend", proto: "-flto / -flto=thin",
+          intuition: "Postponing codegen to link time is the only way to make every callsite see every callee \u2014 .o files of bitcode are an IOU for optimization.",
+          complexity: "Compile per TU stays O(TU size); link grows to O(\u03a3 TU)",
+          detail: "Pass -flto (full) or -flto=thin to Clang/GCC. Each .o now contains LLVM bitcode (or GIMPLE in GCC) plus a small summary describing exported functions, sizes, and external references. The linker plugin recognizes these and routes them through the LTO backend instead of treating them as opaque.",
+          example: "Chromium\u2019s Clang/ThinLTO build emits \u224870k bitcode .o files; their per-file summaries total <2% of bitcode size yet drive all import decisions.",
+          pitfall: "Mixing -flto and non-LTO .o files silently disables cross-TU optimization for the affected symbols \u2014 build systems must propagate the flag everywhere." },
+        { title: "Build the module summary index", component: "Linker plugin", proto: "ThinLTO index",
+          intuition: "You don\u2019t need the full IR to decide what to inline \u2014 a tiny summary (size, refs, hotness) is enough to plan imports before paying I/O.",
+          complexity: "O(\u03a3 summaries) \u2014 megabytes even for chromium-scale builds",
+          detail: "lld\u2019s LTO plugin (or gold-plugin) reads every .o\u2019s summary and merges them into a global index: for each function, a list of definitions across TUs, sizes, profile counts (if PGO), and references. The index drives the importer\u2019s decisions without ever loading full bitcode.",
+          example: "LLVM ThinLTO index for the Linux kernel (\u224830k TUs) is \u2248200 MB \u2014 small enough to mmap and walk in seconds." },
+        { title: "Decide cross-module imports per TU", component: "Importer", proto: "callsite cost model",
+          intuition: "Importing a hot tiny callee gives you almost everything full LTO can; importing a cold giant function is pure I/O waste.",
+          complexity: "O(callsites \u00d7 import-depth) per TU; capped to keep work bounded",
+          detail: "For each TU, walk its callsites; for each external callee, decide whether importing its IR is profitable using thresholds (size, hotness from PGO, transitive cost). Import the chosen functions into the TU\u2019s module. This step is what makes ThinLTO\u2019s parallelism work \u2014 each TU optimizes independently afterward.",
+          example: "Chromium ThinLTO imports \u224850k functions per TU on average; the importer threshold (default 100) caps inline-cost-equivalent size of imported bodies.",
+          pitfall: "Aggressive import thresholds blow up per-TU IR \u2014 doubling them once made LLD use 64 GB RAM linking a single Clang binary." },
+        { title: "Optimize each TU in parallel", component: "Backend", proto: "per-TU pass pipeline",
+          intuition: "Once imports are in place, each TU looks like a self-contained program \u2014 just run the regular -O2/-O3 pipeline on it.",
+          complexity: "O(TU size with imports); parallel across all TUs",
+          detail: "Each TU runs the standard pass pipeline: inlining (now able to see imported bodies), SROA, GVN, LICM, devirtualization (when the vtable target is known across TUs), and finally codegen + register allocation. Because TUs are independent, this scales linearly with cores \u2014 ThinLTO\u2019s killer feature.",
+          example: "Linking Chromium with ThinLTO across 32 cores takes \u22483 minutes; full LTO on the same machine takes \u224830\u201360 minutes single-threaded." },
+        { title: "Native link with ICF and final layout", component: "Linker", proto: "lld / mold",
+          intuition: "Identical code folding finds functions that compile to byte-identical machine code (often template instantiations) and keeps only one copy.",
+          detail: "After per-TU codegen the linker concatenates the resulting native .o\u2019s, runs section/symbol GC (--gc-sections), folds identical functions (--icf=all), and optionally reorders by hotness using a PGO/BOLT profile. The result is the final stripped binary.",
+          example: "Chromium reports ICF folds \u22485\u201310% of code; combined with LTO\u2019s 10\u201315% reduction, the binary is \u224820\u201325% smaller than a vanilla -O2 build.",
+          refs: [{ label: "LLVM ThinLTO design doc", url: "https://clang.llvm.org/docs/ThinLTO.html" }] }
+      ]
+    }
+  ],
+
+  // === BEGIN glossary v1 data placeholder ===
+  glossary: [
+    { id: "lexer", term: "Lexer", aka: "Scanner / tokenizer", category: "software",
+      short: "Front-end stage that converts a stream of source characters into a stream of tokens.",
+      long: "The lexer recognizes lexical units (identifiers, numbers, keywords, punctuation) using regular expressions compiled to a DFA. It applies longest-match and priority rules to disambiguate (e.g., keyword 'if' vs identifier), discards whitespace/comments, and emits tokens annotated with line/column for diagnostics.",
+      seeAlso: ["token", "regex", "dfa", "parser"] },
+    { id: "token", term: "Token", category: "concepts",
+      short: "A typed lexical unit (kind + lexeme + source position) produced by the lexer.",
+      long: "Tokens carry a kind (IDENT, NUMBER, PLUS, LPAREN, ...), the matched lexeme text, and a span used for error reporting. The parser consumes tokens as terminals of the grammar; everything below the token level (individual characters, whitespace) is the lexer's problem.",
+      seeAlso: ["lexer", "parser"] },
+    { id: "regex", term: "Regular Expression", aka: "regex", category: "concepts",
+      short: "Pattern language describing the set of strings recognized as a single token.",
+      long: "Regular expressions are built from characters, concatenation, alternation (|), and Kleene star (*). Thompson's construction converts a regex of size n to an NFA of O(n) states, which subset construction then determinizes into a DFA suitable for table-driven scanning.",
+      seeAlso: ["nfa", "dfa", "lexer"] },
+    { id: "nfa", term: "NFA", aka: "Nondeterministic Finite Automaton", category: "concepts",
+      short: "Finite automaton allowing ε-transitions and multiple successors per (state, symbol).",
+      long: "NFAs are the natural target of Thompson's regex construction: each operator yields a tiny NFA fragment glued with ε-edges. They are compact but cannot be executed directly with one transition per byte — they must either be simulated with a state set or determinized to a DFA.",
+      seeAlso: ["dfa", "regex"] },
+    { id: "dfa", term: "DFA", aka: "Deterministic Finite Automaton", category: "concepts",
+      short: "Finite automaton with exactly one transition per (state, input symbol) and no ε-edges.",
+      long: "DFAs execute in O(n) time with one table lookup per input byte, which is why every production lexer compiles its regexes to a DFA. Subset construction builds one from an NFA; Hopcroft's O(n log n) minimization fuses equivalent states for smaller, cache-friendlier transition tables.",
+      seeAlso: ["nfa", "regex", "lexer"] },
+    { id: "parser", term: "Parser", category: "software",
+      short: "Stage that consumes tokens and builds a parse tree or AST according to a grammar.",
+      long: "Parsers implement a context-free grammar using top-down (LL, recursive descent, Pratt) or bottom-up (LR, LALR, GLR) algorithms. The output is typically an AST plus diagnostics; modern parsers also produce concrete-syntax-tree positions for IDE features like refactoring and formatting.",
+      seeAlso: ["cfg", "ll-parser", "lr-parser", "ast"] },
+    { id: "cfg", term: "Context-Free Grammar", aka: "CFG", category: "concepts",
+      short: "Set of production rules describing the syntactic structure of a language.",
+      long: "A CFG has nonterminals, terminals (tokens), a start symbol, and productions of the form A → α. CFGs capture nested constructs (balanced parentheses, statement blocks) that regular languages cannot, which is why parsing — not lexing — is where brackets and expression structure are validated.",
+      seeAlso: ["parser", "ll-parser", "lr-parser"] },
+    { id: "ll-parser", term: "LL Parsing", category: "concepts",
+      short: "Top-down predictive parsing that reads Left-to-right and produces a Leftmost derivation.",
+      long: "LL(k) parsers choose a production by looking at the next k tokens, typically implemented as recursive-descent or table-driven. They require the grammar to be free of left recursion and unambiguous within their lookahead — handwritten compilers (Clang, Roslyn, rustc) often use LL-style recursive descent for excellent diagnostics.",
+      seeAlso: ["parser", "cfg", "lr-parser"] },
+    { id: "lr-parser", term: "LR Parsing", category: "concepts",
+      short: "Bottom-up shift-reduce parsing that reads Left-to-right and produces a Rightmost derivation in reverse.",
+      long: "LR parsers maintain a stack of states and consult a precomputed ACTION/GOTO table to decide between shifting the next token and reducing by a production. Variants SLR, LALR, and canonical LR trade table size for grammar power; tools like Bison and Menhir generate LALR(1) parsers used by GCC and OCaml.",
+      seeAlso: ["parser", "cfg", "ll-parser"] },
+    { id: "ast", term: "AST", aka: "Abstract Syntax Tree", category: "concepts",
+      short: "Tree representation of program structure with syntactic noise stripped away.",
+      long: "Unlike the parse tree, the AST omits punctuation and grouping nodes — an 'if' becomes a node with condition/then/else children, not seven tokens. Every subsequent pass (type checking, lowering to IR, source-to-source transforms) walks the AST; it is the lingua franca between the front end and the middle end.",
+      seeAlso: ["parser", "typechecker", "ir"] },
+    { id: "symbol-table", term: "Symbol Table", category: "software",
+      short: "Data structure mapping names to declarations, types, and scope information.",
+      long: "Built during semantic analysis, symbol tables are typically a stack of hash maps mirroring the lexical scope structure. They resolve identifier references to their bindings, detect duplicate declarations, and feed the type checker. In modular compilers they persist across files as part of the module's interface.",
+      seeAlso: ["typechecker", "scope", "ast"] },
+    { id: "scope", term: "Scope", category: "concepts",
+      short: "Region of program text in which a name binding is visible.",
+      long: "Lexical (static) scope resolves names by following the textual nesting of blocks, regardless of call site — the rule used by C, Java, Rust, and most modern languages. Dynamic scope resolves by call chain (older Lisps, shell variables). Closures capture the lexical scope of their definition site so it outlives the enclosing call.",
+      seeAlso: ["symbol-table", "closure"] },
+    { id: "typechecker", term: "Type Checker", category: "software",
+      short: "Pass that verifies expressions are used with consistent, well-defined types.",
+      long: "Walking the AST bottom-up, the type checker assigns a type to every expression, compares it against context (operator signatures, function parameter types, assignment targets), and reports mismatches. In languages with inference (ML, Haskell, Rust) it also solves type equations via unification (Hindley-Milner) before reporting concrete types.",
+      seeAlso: ["ast", "symbol-table", "type-system"] },
+    { id: "type-system", term: "Type System", category: "concepts",
+      short: "Formal rules classifying program values and constraining how they combine.",
+      long: "Type systems range from dynamic (Python, JavaScript) to static (Java, Rust), structural (Go interfaces, TypeScript) to nominal (Java classes), monomorphic to polymorphic (generics, traits). A sound type system guarantees that well-typed programs cannot exhibit certain runtime errors — the famous 'well-typed programs do not go wrong'.",
+      seeAlso: ["typechecker", "polymorphism"] },
+    { id: "ir", term: "IR", aka: "Intermediate Representation", category: "software",
+      short: "Platform-independent code form between the AST and target machine instructions.",
+      long: "IRs decouple the front end from the back end so n languages × m targets cost n + m, not n × m. Common forms are three-address code (TAC, e.g., t1 = a + b), stack-based bytecode (JVM, WebAssembly), and SSA-based control-flow graphs (LLVM IR, MLIR). Most middle-end optimizations operate on IR rather than AST or machine code.",
+      seeAlso: ["ssa", "cfg-graph", "optimizer"] },
+    { id: "ssa", term: "SSA", aka: "Static Single Assignment", category: "concepts",
+      short: "IR property where every variable is assigned exactly once, with φ-functions joining paths.",
+      long: "SSA makes use-def chains explicit (every use points to exactly one def), which turns many dataflow problems into simple graph walks: constant propagation, dead-code elimination, and global value numbering all become linear-time. Where control-flow paths join, a φ-function selects the value from the predecessor that executed. LLVM IR, GCC's GIMPLE, V8's TurboFan, and HotSpot's C2 are all SSA-based.",
+      seeAlso: ["ir", "dominance", "optimizer"] },
+    { id: "cfg-graph", term: "Control Flow Graph", aka: "CFG", category: "concepts",
+      short: "Directed graph whose nodes are basic blocks and whose edges are possible control transfers.",
+      long: "A basic block is a maximal straight-line sequence with one entry and one exit; the CFG connects them via jumps, branches, and calls. The CFG is the substrate for almost every middle-end analysis — dominance, loop detection, liveness, reachability — and underlies SSA construction via the dominator tree.",
+      seeAlso: ["dominance", "ssa", "liveness"] },
+    { id: "dominance", term: "Dominance", category: "concepts",
+      short: "Node A dominates B if every path from entry to B passes through A.",
+      long: "The dominator tree is computed by Lengauer-Tarjan or Cooper-Harvey-Kennedy in near-linear time and is the foundation of SSA construction (φ-functions go in each block's dominance frontier), loop identification (a back-edge targets its loop header dominator), and code motion legality.",
+      seeAlso: ["cfg-graph", "ssa"] },
+    { id: "optimizer", term: "Optimizer", aka: "Optimization passes", category: "software",
+      short: "Middle-end stage that transforms IR to make it faster or smaller without changing semantics.",
+      long: "Optimizers are organized as a pipeline of passes: constant folding, common-subexpression elimination, inlining, loop-invariant code motion, dead-code elimination, and dozens more. A pass manager schedules them, often iterating because one pass exposes opportunities for another (DCE + SCCP is the classic example).",
+      seeAlso: ["dce", "ssa", "ir"] },
+    { id: "dce", term: "Dead-Code Elimination", aka: "DCE", category: "performance",
+      short: "Removal of instructions whose results are never used and have no side effects.",
+      long: "On SSA IR, DCE is a single worklist algorithm: seed with instructions that have side effects (stores, calls, returns), then walk use-def edges backward to mark everything reachable as live, and sweep the rest. Aggressive DCE (ADCE) additionally treats unused branches as dead, removing whole subgraphs.",
+      seeAlso: ["ssa", "optimizer"] },
+    { id: "regalloc", term: "Register Allocation", aka: "regalloc", category: "software",
+      short: "Back-end pass mapping unbounded virtual registers to a fixed set of physical CPU registers.",
+      long: "Classical Chaitin-style allocation builds an interference graph from liveness, then colors it with k = number of physical registers — high-degree nodes that cannot be colored are spilled to the stack. LLVM's greedy allocator and linear-scan allocators trade graph-coloring optimality for speed; both must also honor calling conventions and coalesce moves.",
+      seeAlso: ["liveness", "calling-convention", "codegen"] },
+    { id: "liveness", term: "Liveness Analysis", category: "concepts",
+      short: "Backward dataflow computing which variables hold values that may still be used.",
+      long: "A variable is live at a point if some path from there uses it before redefinition. The equations are live-in = use ∪ (live-out − def) and live-out = ⋃ live-in(successors), iterated to fixed point in reverse postorder. Liveness drives register allocation, dead-store elimination, and garbage-collector root identification.",
+      seeAlso: ["regalloc", "cfg-graph", "dce"] },
+    { id: "codegen", term: "Code Generation", aka: "codegen", category: "software",
+      short: "Back-end stage that lowers IR to target-specific machine instructions.",
+      long: "Code generation does instruction selection (pattern-matching IR tiles to ISA opcodes, often via tree pattern matchers like BURS or LLVM's SelectionDAG/GlobalISel), instruction scheduling (reordering to hide pipeline latency and feed wide issue), and final assembly/object emission with relocations.",
+      seeAlso: ["regalloc", "ir", "calling-convention"] },
+    { id: "calling-convention", term: "Calling Convention", aka: "ABI", category: "systems",
+      short: "Contract defining how arguments, return values, and registers are passed across function calls.",
+      long: "Conventions like System V AMD64 (Linux/macOS x86-64) and Windows x64 specify which registers carry the first N arguments, who saves caller- vs callee-saved registers, stack alignment at call sites, and red-zone usage. The code generator must honor the convention exactly or interop with libraries and the OS breaks.",
+      seeAlso: ["codegen", "stack-frame", "regalloc"] },
+    { id: "stack-frame", term: "Stack Frame", aka: "Activation Record", category: "systems",
+      short: "Per-call region of the stack holding locals, saved registers, and the return address.",
+      long: "The prologue allocates the frame and saves callee-saved registers; the epilogue restores them and returns. Frame layout is fixed by the ABI: incoming arguments above the frame pointer, locals and spill slots below. Frame pointers can be omitted (-fomit-frame-pointer) to free a register at the cost of harder stack unwinding.",
+      seeAlso: ["calling-convention", "gc"] },
+    { id: "gc", term: "Garbage Collection", aka: "GC", category: "systems",
+      short: "Automatic reclamation of heap memory no longer reachable from program roots.",
+      long: "Tracing collectors (mark-sweep, mark-compact, copying, generational) follow references from roots (registers, stack, globals) to identify live objects; reference counting decrements on assignment. Generational GCs exploit the weak generational hypothesis — most objects die young — and pair a fast nursery collector with a slower full GC.",
+      seeAlso: ["stack-frame", "closure"] },
+    { id: "jit", term: "JIT Compilation", aka: "Just-In-Time", category: "performance",
+      short: "Compilation that occurs at run time, typically guided by profile data.",
+      long: "JIT compilers (V8 TurboFan, HotSpot C2, .NET RyuJIT, LuaJIT) start by interpreting or baseline-compiling, collect type and branch profiles, then aggressively optimize hot methods with speculative assumptions (monomorphic call sites, exact types). Deoptimization rolls back when assumptions break, falling back to the interpreter.",
+      seeAlso: ["optimizer", "ir"] },
+    { id: "closure", term: "Closure", category: "concepts",
+      short: "Function value bundled with the environment of captured free variables.",
+      long: "When a function refers to variables from an enclosing scope and that scope outlives the call, the compiler must heap-allocate an environment record so the captured bindings survive. Languages without closures (C) require explicit context pointers; languages with them (JavaScript, Rust, OCaml) generate the boxing automatically.",
+      seeAlso: ["scope", "gc"] },
+    { id: "polymorphism", term: "Polymorphism", category: "concepts",
+      short: "Code that operates uniformly on values of multiple types.",
+      long: "Parametric polymorphism (generics, ML/Haskell) writes code once over a type parameter — usually compiled by monomorphization (Rust, C++ templates) or by boxing (Java erasure). Ad-hoc polymorphism (overloading, type classes, traits) dispatches per concrete type. Subtype polymorphism (OOP) uses vtables for dynamic dispatch.",
+      seeAlso: ["type-system", "typechecker"] }
+  ],
+  // === END glossary v1 data placeholder ===
+
+  problems: [
+    {
+      week: "Week 1\u20132 \u2014 Lexing & Parsing", title: "Front-End Foundations",
+      hook: "The lex/parse split is a deliberate trade-off: regex is fast (a DFA runs in O(n) with one byte per step) but cannot balance brackets; CFGs handle nesting but cost a stack. Where you draw the line decides whether <code>abc(123</code> is a tokenization error or a parse error \u2014 and that changes every diagnostic your compiler will ever print.",
+      items: [
+        { tag: "design", star: true, text: "Design a lexer for a JSON subset that supports numbers, strings, booleans, null, [, ], {, }, : and ,. Specify the regex per token and resolve the longest-match conflict between true and an identifier-like token.", hint: "Order patterns so keywords are checked before generic identifiers, or post-filter identifier tokens against a keyword set." },
+        { tag: "derive", star: true, text: "Convert the regex (a|b)*abb to an NFA with Thompson\u2019s construction, then determinize via subset construction. How many DFA states do you get? Minimize with Hopcroft and report the final count.", hint: "You should end with 4 DFA states; the dead state is not strictly required." },
+        { tag: "debug", text: "A bison grammar reports 1 shift/reduce and 2 reduce/reduce conflicts on the dangling-else and an overloaded \u2018-\u2019 (binary minus vs unary). Diagnose each and propose a fix without using %prec hacks.", hint: "For dangling-else, attach the else to the nearest if via grammar restructuring; for unary minus, introduce a separate nonterminal for unary expressions." },
+        { tag: "code", star: true, text: "Implement a Pratt parser in ~60 lines that handles +, -, *, /, ^ (right-assoc), unary -, and parentheses. Verify on -2^2 evaluates to -4 (not 4).", hint: "Unary minus binds tighter than ^ but ^ is right-associative; precedence-climbing handles this naturally with a separate prefix-handler table." }
+      ]
+    },
+    {
+      week: "Week 3\u20134 \u2014 Semantic Analysis & IR", title: "Meaning and Lowering",
+      hook: "SSA is the mind-bend: a \u03c6-node has no machine encoding \u2014 it is a <em>constraint</em>, not an instruction. Every join in the CFG pretends to be a free parallel copy, and the entire optimizer takes that lie seriously. Register allocation is the moment SSA has to admit \u03c6s never existed, and out-of-SSA passes are surprisingly subtle.",
+      items: [
+        { tag: "design", text: "Design a symbol table data structure that supports nested scopes, shadowing, and O(1) average lookup. Compare a stack-of-hashmaps with a single hashmap-of-stacks. Which is faster for typical programs and why?", hint: "Hashmap-of-stacks does one hash per lookup regardless of nesting depth; the stack-of-hashmaps walks scopes." },
+        { tag: "derive", star: true, text: "For the CFG with blocks B1\u2192{B2,B3}, B2\u2192B4, B3\u2192B4, compute dominators and the dominance frontier of each block. Place \u03c6-functions for a variable defined in B2 and B3.", hint: "DF(B2)=DF(B3)={B4}; one \u03c6 in B4." },
+        { tag: "code", star: true, text: "Translate the snippet  if (x > 0) y = a; else y = b; print(y);  to three-address code, then to SSA with explicit \u03c6-functions.", hint: "After the if, B_join: y3 = \u03c6(y1, y2); then call print(y3)." },
+        { tag: "paper", star: true, text: "Read Cytron et al. 1991 \"Efficiently computing static single assignment form and the control dependence graph.\" Summarize the iterated dominance frontier algorithm in your own words and compare its complexity with the naive minimal-SSA placement.", hint: "IDF(S) = least fixed point of DF(S \u222a DF(S)); near-linear with Lengauer-Tarjan dominators, vs naive O(N\u00b3) by iterated intersection." }
+      ]
+    },
+    {
+      week: "Week 5\u20136 \u2014 Optimization & Backend", title: "Making It Fast",
+      hook: "Register allocation is graph coloring (NP-hard in general, yet solved in milliseconds by JITs), escape analysis decides what stays on the stack vs the heap (one wrong answer = GC pressure or use-after-free), and link-time optimization is the moment the compiler finally sees the whole program \u2014 often the single biggest perf jump in a real build.",
+      items: [
+        { tag: "debug", star: true, text: "After enabling -O2, a program prints the wrong value from a global flag updated by a signal handler. Diagnose: which optimization is unsound here, and what qualifier silences it?", hint: "LICM hoists the load out of the loop; declare the global volatile (C) or use std::atomic with appropriate ordering (C++)." },
+        { tag: "design", text: "Design a peephole optimizer table for a stack VM with PUSH, POP, ADD, MUL. List 5 patterns it should rewrite (e.g., PUSH 0; ADD \u2192 nothing). For each, state the precondition that makes it sound.", hint: "Watch out: PUSH 0; MUL is not equivalent to POP; PUSH 0 if the top operand has side effects in evaluating it \u2014 but on a stack VM the value is already computed, so it is sound." },
+        { tag: "derive", star: true, text: "Given live ranges a:[1,4], b:[2,5], c:[3,6], d:[5,7], build the interference graph and find the chromatic number. Can you 2-color it? What spill must you choose if k=2?", hint: "Edges: a\u2013b, a\u2013c, b\u2013c, b\u2013d, c\u2013d. The triangle a-b-c forces \u03c7=3; with k=2 spill the variable that minimizes uses, typically a." },
+        { tag: "code", text: "Implement constant folding over a tiny IR: an instruction list of (op, dst, src1, src2) where srcs are either constants or virtual-register names. Iterate to a fixed point.", hint: "Maintain a value map vreg \u2192 const; an instruction folds when both operands are in the map. Don\u2019t forget to remove instructions whose dst becomes constant." },
+        { tag: "paper", star: true, text: "Compare Chaitin\u2019s 1981 graph-coloring allocator with Poletto & Sarkar\u2019s 1999 linear-scan allocator. For what scenarios does each shine, and why is linear-scan the JIT default?", hint: "Chaitin: better code quality, O(N\u00b2) build + iterate spill; linear-scan: one pass over live intervals, O(N log N), trades a few % codegen quality for ~10\u00d7 compile speed \u2014 a fair price for V8/HotSpot tiering." }
       ]
     }
   ],
@@ -901,7 +1881,9 @@ if (C.graph && C.graph.nodes && C.graph.nodes.length) tabs.push({ id: 'graph',  
 if (C.deepDives && C.deepDives.length)  tabs.push({ id: 'deepdive', label: '📚 Deep Dives' });
 if (C.useCases && C.useCases.length)    tabs.push({ id: 'usecase',  label: '🔬 Use Cases' });
 if (C.youtube && C.youtube.videos && C.youtube.videos.length) tabs.push({ id: 'appendix', label: '📹 Appendix' });
+if (C.glossary && C.glossary.length)    tabs.push({ id: 'glossary', label: '📖 Glossary' }); /* glossary v1 tab */
 tabs.push({ id: 'problems', label: '🧠 Practice' });
+tabs.push({ id: 'quiz',     label: '🎯 Quiz' });
 
 document.getElementById('toolbar-title').textContent = '🧠 ' + C.course.code;
 document.title = C.course.code + ' — Interactive Study Tool';
@@ -1217,6 +2199,7 @@ function initGraph() {
   // Nodes
   const node = gGraph.selectAll("g.graph-node").data(nodes).enter().append("g")
     .attr("class", "graph-node")
+    .attr("data-id", d => d.id) /* glossary v1 data-id */
     .call(d3.drag().on("start", (evt, d) => { if (!evt.active) simul.alphaTarget(0.3).restart(); d.fx = d.x; d.fy = d.y; })
       .on("drag", (evt, d) => { d.fx = evt.x; d.fy = evt.y; })
       .on("end", (evt, d) => { if (!evt.active) simul.alphaTarget(0); d.fx = null; d.fy = null; }))
@@ -1558,6 +2541,8 @@ if (C.deepDives && C.deepDives.length) {
     // Full view
     const full = document.createElement('div'); full.className = 'dd-full'; full.id = 'dd-full-' + dd.id;
     let fhtml = `<div class="dd-infographic"><h2 style="color:${dd.color}">${dd.icon || ''} ${dd.title}</h2><div class="dd-subtitle">${dd.num || ''}${dd.num && dd.desc ? ' · ' : ''}${dd.desc || ''}</div>`;
+    // Navigator at the top for quick prev/grid/next without scrolling
+    fhtml += `<div class="dd-nav dd-nav-top"><button class="btn" onclick="navDD(-1)">← Prev</button><button class="btn" onclick="showCardGrid()">Grid</button><button class="btn" onclick="navDD(1)">Next →</button></div>`;
     if (dd.svg) fhtml += dd.svg(800, 300);
     // Render top-level content fields (markdown/body/content) as a single section
     const topText = dd.markdown || dd.body || dd.content || dd.detail;
@@ -1579,7 +2564,7 @@ if (C.deepDives && C.deepDives.length) {
       dd.keypoints.forEach(kp => { fhtml += `<div class="dd-kp"><strong>${kp.title}</strong><span>${kp.text || kp.body || ''}</span></div>`; });
       fhtml += '</div>';
     }
-    fhtml += `<div class="dd-nav"><button class="btn" onclick="navDD(-1)">← Prev</button><button class="btn" onclick="showCardGrid()">Grid</button><button class="btn" onclick="navDD(1)">Next →</button></div></div>`;
+    fhtml += `</div>`; // dd-nav v1 top inserted
     full.innerHTML = fhtml;
     fullContainer.appendChild(full);
   });
@@ -1647,6 +2632,20 @@ function showUseCase(idx) {
   html += '<button class="uc-back-btn" onclick="showUseCaseGrid()">← Back to All Use Cases</button>';
   html += `<h2>${uc.icon} ${uc.title}</h2>`;
   html += `<div class="uc-subtitle">${uc.desc}</div>`;
+  if (uc.summary || uc.pipeline || uc.metrics || uc.extensions) {
+    html += '<div class="uc-overview">';
+    if (uc.summary)   html += `<div class="uc-summary">${uc.summary}</div>`;
+    if (uc.pipeline)  html += `<div class="uc-pipeline">${uc.pipeline}</div>`;
+    if (uc.metrics && uc.metrics.length) {
+      html += '<div class="uc-metrics">';
+      uc.metrics.forEach(m => {
+        html += `<div class="uc-metric"><div class="uc-metric-label">${m.label}</div><div class="uc-metric-value">${m.value}</div></div>`;
+      });
+      html += '</div>';
+    }
+    if (uc.extensions) html += `<div class="uc-extensions"><strong>Where to go next:</strong> ${uc.extensions}</div>`;
+    html += '</div>';
+  }
   html += '<div class="uc-flow-controls">';
   html += '<button onclick="ucPrev()">← Previous</button>';
   html += '<button class="primary" onclick="ucNext()">Next Step →</button>';
@@ -1667,8 +2666,14 @@ function showUseCase(idx) {
     html += '<div class="uc-body">';
     html += `<div class="uc-title">${step.title}</div>`;
     html += `<div class="uc-component">📍 ${step.component}</div>`;
-    let detailHtml = `<p>${step.detail}</p><span class="uc-proto">${step.proto}</span>`;
+    let detailHtml = '';
+    if (step.intuition) detailHtml += `<div class="uc-intuition"><strong>💡 Intuition:</strong> ${step.intuition}</div>`;
+    detailHtml += `<p>${step.detail}</p>`;
+    if (step.proto) detailHtml += `<span class="uc-proto">${step.proto}</span>`;
+    if (step.complexity) detailHtml += `<span class="uc-complexity">⏱ ${step.complexity}</span>`;
     if (step.code) detailHtml += `<pre class="uc-code">${step.code}</pre>`;
+    if (step.example) detailHtml += `<div class="uc-example"><strong>📊 In practice:</strong> ${step.example}</div>`;
+    if (step.pitfall) detailHtml += `<div class="uc-pitfall"><strong>⚠ Pitfall:</strong> ${step.pitfall}</div>`;
     if (step.refs && step.refs.length) {
       detailHtml += '<div class="uc-refs">' + step.refs.map(r => `<a href="${r.url}" target="_blank" rel="noopener">${r.label}</a>`).join('') + '</div>';
     }
@@ -1996,10 +3001,16 @@ function toggleUnit(headerRow) {
 
 
 
-window.PROBLEMS_DATA=[{week:'Lexing & Parsing',title:'Regex, NFA, LL/LR',items:[{tag:'derive',text:'Build an NFA for `a(b|c)*d`, convert to DFA via subset construction, minimize. How many states each step?'},{tag:'design',text:'Write an LL(1) grammar for arithmetic: + - * / with correct precedence and left-associativity. Show why `E -> E + T` directly causes LL(1) conflict. Fix with left-recursion elimination.'}]},{week:'Semantics & IR',title:'Type Checking, SSA',items:[{tag:'code',text:'Implement SSA conversion for a simple while-loop CFG. Show where phi-nodes are inserted. Why is SSA minimal form unique?'},{tag:'debug',text:'A naive dominator-tree algorithm is O(N^3). Show how Lengauer-Tarjan achieves O(N*alpha(N)).'}]},{week:'Optimization & Codegen',title:'Dataflow, Register Allocation',items:[{tag:'derive',text:'Graph coloring for register allocation is NP-hard in general. Why does Chaitin\\\'s heuristic work in practice? When does it spill?'},{tag:'design',text:'Design a loop-invariant code motion pass. Which conditions must hold for an expression to be hoisted? Walk through an example with a potentially aliasing store.'},{tag:'paper',text:'Before reading the LLVM Mem2Reg pass: predict what it does with a `store` followed by a `load` to the same alloca. Then read and compare.'}]}];
 // ═══════════════════════════════════════════════════════════════════════
 // PRACTICE PROBLEMS (Problem-First learning)
 // ═══════════════════════════════════════════════════════════════════════
+const PROB_STATE_KEY = STORAGE_KEY + '-probstate';
+function probLoadState() { try { return JSON.parse(localStorage.getItem(PROB_STATE_KEY) || '{}'); } catch(e) { return {}; } }
+function probSaveState(s) { try { localStorage.setItem(PROB_STATE_KEY, JSON.stringify(s)); } catch(e) {} }
+let _probState = probLoadState();
+let _probFilters = { tags: new Set(), search: '', status: 'all' };
+let _probFlat = []; // [{si, ii, p}]
+
 function renderProblems() {
   const container = document.getElementById('problems-container');
   if (!container || container.dataset.rendered) return;
@@ -2007,6 +3018,17 @@ function renderProblems() {
              : (C.problems && C.problems.length) ? C.problems : null;
   if (!data) { container.innerHTML = '<div class="prob-intro">No practice problems defined yet for this course.</div>'; container.dataset.rendered = '1'; return; }
   container.dataset.rendered = '1';
+
+  // Build flat index + per-tag counts
+  _probFlat = [];
+  const tagCounts = {};
+  data.forEach((sec, si) => (sec.items||[]).forEach((p, ii) => {
+    _probFlat.push({ si, ii, p, key: si+':'+ii });
+    const t = p.tag || 'design';
+    tagCounts[t] = (tagCounts[t]||0) + 1;
+  }));
+  const TAGS = ['design','derive','debug','code','paper'];
+
   let html = `<div class="prob-intro">
     <strong>🧠 Problem-First Learning.</strong> Try each problem for 10 minutes <em>before</em> watching the lecture — flail, sketch, be wrong. Then watch with specific questions in mind. Your attention spikes 3–5×.
     <br><br>
@@ -2016,24 +3038,653 @@ function renderProblems() {
     <span class="prob-tag debug">debug</span> find the failure mode &nbsp;
     <span class="prob-tag code">code</span> hands-on &nbsp;
     <span class="prob-tag paper">paper</span> predict before reading
-  </div>`;
-  data.forEach((sec, i) => {
-    html += `<details class="prob-section"${i < 2 ? ' open' : ''}>
-      <summary><span class="wk">${sec.week||''}</span> ${sec.title||''}</summary>
-      <div class="prob-body"><ol>`;
-    (sec.items||[]).forEach(p => {
-      html += `<li><span class="prob-tag ${p.tag||'design'}">${p.tag||'design'}</span>${p.text||''}`;
-      if (p.hint) html += `<span class="prob-hint">${p.hint}</span>`;
-      html += `</li>`;
+    <br><br>
+    <strong style="color:#ffa657">⭐ starred</strong> problems are curiosity-piquing — start there if you're new.
+    Reveals come in three layers: <strong style="color:#d2a8ff">💡 hint</strong> (nudge) · <strong style="color:#79c0ff">🔑 approach</strong> (how to attack) · <strong style="color:#7ee787">📐 answer</strong> (the result). Try the problem before peeking.
+  </div>
+  <div class="prob-toolbar">
+    <input id="prob-search" class="prob-search" type="text" placeholder="🔍 Search problems by keyword…" />
+    <div class="prob-filter-row" id="prob-tag-row">
+      ${TAGS.map(t => `<span class="prob-chip ${t}" data-tag="${t}">${t}<span class="count">${tagCounts[t]||0}</span></span>`).join('')}
+    </div>
+    <div class="prob-filter-row" id="prob-status-row">
+      <span class="prob-chip" data-status="all">All</span>
+      <span class="prob-chip" data-status="unattempted">○ New</span>
+      <span class="prob-chip" data-status="thinking">🤔 Thinking</span>
+      <span class="prob-chip" data-status="got">💡 Got it</span>
+      <span class="prob-chip" data-status="stuck">❓ Stuck</span>
+    </div>
+    <button id="prob-surprise" class="prob-actbtn primary" title="Open a random problem">🎲 Surprise me</button>
+    <button id="prob-reset" class="prob-actbtn" title="Clear all status">↺ Reset</button>
+    <div class="prob-progress" title="Problems attempted (thinking / got / stuck)">
+      <span id="prob-progress-text">0/${_probFlat.length}</span>
+      <div class="prob-progress-bar"><div id="prob-progress-fill" class="prob-progress-fill" style="width:0%"></div></div>
+    </div>
+  </div>
+  <div id="prob-sections">`;
+
+  data.forEach((sec, si) => {
+    const secTotal = (sec.items||[]).length;
+    html += `<details class="prob-section" data-si="${si}"${si < 2 ? ' open' : ''}>
+      <summary><span class="wk">${sec.week||''}</span> <span class="sec-title">${sec.title||''}</span>
+        <span class="sec-meta"><span class="done-count" data-sec-done="${si}">0</span>/<span>${secTotal}</span></span>
+      </summary>`;
+    if (sec.hook) html += `<div class="prob-hook">${sec.hook}</div>`;
+    html += `<div class="prob-body">`;
+    (sec.items||[]).forEach((p, ii) => {
+      const key = si+':'+ii;
+      const st = _probState[key] || {};
+      const tag = p.tag || 'design';
+      const statusCls = st.status ? ' status-'+st.status : '';
+      html += `<div class="prob-card${statusCls}" data-key="${key}" data-tag="${tag}" data-status="${st.status||''}">
+        <div class="pc-head">
+          <span class="pc-num">${(ii+1).toString().padStart(2,'0')}</span>
+          <span class="prob-tag ${tag}">${tag}</span>
+          ${p.star ? '<span class="pc-star" title="Curiosity pick">★</span>' : ''}
+          <div class="prob-status-btns">
+            <button class="prob-statbtn thinking${st.status==='thinking'?' active':''}" data-status="thinking" title="I'm working on this">🤔</button>
+            <button class="prob-statbtn got${st.status==='got'?' active':''}"           data-status="got"      title="Got it">💡</button>
+            <button class="prob-statbtn stuck${st.status==='stuck'?' active':''}"       data-status="stuck"    title="Stuck">❓</button>
+          </div>
+        </div>
+        <div class="pc-text">${p.text||''}</div>`;
+      const reveals = [];
+      if (p.hint)     reveals.push({ kind:'hint',     label:'💡 Reveal hint',   field:'hint',     btnCls:'',          panelCls:'prob-hint',     tag:'Hint' });
+      if (p.approach) reveals.push({ kind:'approach', label:'🔑 Show approach', field:'approach', btnCls:'approach',  panelCls:'prob-approach', tag:'Approach' });
+      if (p.answer)   reveals.push({ kind:'answer',   label:'📐 Show answer',   field:'answer',   btnCls:'answer',    panelCls:'prob-answer',   tag:'Answer' });
+      if (reveals.length) {
+        html += `<div class="pc-actions">`;
+        reveals.forEach(r => {
+          const shown = st[r.kind+'Shown'];
+          html += `<button class="prob-revealbtn ${r.btnCls}" data-action="${r.kind}" ${shown?'style="display:none"':''}>${r.label}</button>`;
+        });
+        html += `</div>`;
+        reveals.forEach(r => {
+          const shown = st[r.kind+'Shown'];
+          html += `<div class="prob-reveal-panel ${r.panelCls}${shown?' shown':''}" data-panel="${r.kind}"><span class="rh-label">${r.tag}</span>${p[r.field]}</div>`;
+        });
+      }
+      html += `</div>`;
     });
-    html += `</ol></div></details>`;
+    html += `</div></details>`;
   });
+  html += `</div>
+  <div class="prob-spotlight" id="prob-spotlight">
+    <div class="prob-spotlight-card">
+      <button class="sl-close" onclick="probCloseSpotlight()">×</button>
+      <h3>🎲 Surprise Problem</h3>
+      <div id="prob-spotlight-body"></div>
+    </div>
+  </div>`;
+
   container.innerHTML = html;
+
+  // Wire interactions
+  container.querySelectorAll('#prob-tag-row .prob-chip').forEach(c => c.addEventListener('click', () => {
+    const tag = c.dataset.tag;
+    if (_probFilters.tags.has(tag)) _probFilters.tags.delete(tag); else _probFilters.tags.add(tag);
+    c.classList.toggle('active');
+    probApplyFilters();
+  }));
+  container.querySelectorAll('#prob-status-row .prob-chip').forEach(c => c.addEventListener('click', () => {
+    container.querySelectorAll('#prob-status-row .prob-chip').forEach(x => x.classList.remove('active'));
+    c.classList.add('active');
+    _probFilters.status = c.dataset.status;
+    probApplyFilters();
+  }));
+  container.querySelector('#prob-status-row .prob-chip[data-status="all"]').classList.add('active');
+
+  const searchEl = container.querySelector('#prob-search');
+  searchEl.addEventListener('input', () => { _probFilters.search = searchEl.value.toLowerCase().trim(); probApplyFilters(); });
+
+  container.querySelector('#prob-surprise').addEventListener('click', probSurpriseMe);
+  container.querySelector('#prob-reset').addEventListener('click', () => {
+    if (!confirm('Clear status on all '+_probFlat.length+' problems?')) return;
+    _probState = {}; probSaveState(_probState);
+    container.dataset.rendered = ''; container.innerHTML = ''; renderProblems();
+  });
+
+  container.querySelectorAll('.prob-card').forEach(card => {
+    card.querySelectorAll('.prob-statbtn').forEach(btn => btn.addEventListener('click', e => {
+      e.stopPropagation();
+      const key = card.dataset.key;
+      const newStatus = btn.dataset.status;
+      const st = _probState[key] || {};
+      st.status = (st.status === newStatus) ? null : newStatus;
+      _probState[key] = st; probSaveState(_probState);
+      card.classList.remove('status-thinking','status-got','status-stuck');
+      if (st.status) card.classList.add('status-'+st.status);
+      card.dataset.status = st.status || '';
+      card.querySelectorAll('.prob-statbtn').forEach(b => b.classList.toggle('active', b.dataset.status === st.status));
+      probUpdateProgress();
+      if (_probFilters.status !== 'all') probApplyFilters();
+    }));
+    const revealBtns = card.querySelectorAll('[data-action="hint"],[data-action="approach"],[data-action="answer"]');
+    revealBtns.forEach(btn => btn.addEventListener('click', () => {
+      const kind = btn.dataset.action;
+      const panel = card.querySelector(`.prob-reveal-panel[data-panel="${kind}"]`);
+      if (panel) panel.classList.add('shown');
+      btn.style.display = 'none';
+      const key = card.dataset.key;
+      const st = _probState[key] || {};
+      st[kind+'Shown'] = true; _probState[key] = st; probSaveState(_probState);
+    }));
+  });
+
+  probUpdateProgress();
 }
+
+function probApplyFilters() {
+  const container = document.getElementById('problems-container');
+  const { tags, search, status } = _probFilters;
+  container.querySelectorAll('.prob-card').forEach(card => {
+    const tag = card.dataset.tag;
+    const cardStatus = card.dataset.status || '';
+    const text = card.querySelector('.pc-text').textContent.toLowerCase();
+    let show = true;
+    if (tags.size > 0 && !tags.has(tag)) show = false;
+    if (search && !text.includes(search)) show = false;
+    if (status !== 'all') {
+      if (status === 'unattempted') { if (cardStatus) show = false; }
+      else if (cardStatus !== status) show = false;
+    }
+    card.classList.toggle('hidden', !show);
+  });
+  // Auto-open sections with visible cards; hide empty sections
+  container.querySelectorAll('.prob-section').forEach(sec => {
+    const visible = sec.querySelectorAll('.prob-card:not(.hidden)').length;
+    sec.style.display = visible === 0 ? 'none' : '';
+    if (visible > 0 && (tags.size || search || status !== 'all')) sec.open = true;
+  });
+}
+
+function probUpdateProgress() {
+  const total = _probFlat.length;
+  let attempted = 0;
+  const perSec = {};
+  _probFlat.forEach(({si, key}) => {
+    const st = _probState[key];
+    if (st && st.status) { attempted++; perSec[si] = (perSec[si]||0) + 1; }
+  });
+  const txt = document.getElementById('prob-progress-text');
+  const fill = document.getElementById('prob-progress-fill');
+  if (txt) txt.textContent = attempted + '/' + total;
+  if (fill) fill.style.width = (total ? (attempted/total*100) : 0) + '%';
+  document.querySelectorAll('[data-sec-done]').forEach(el => {
+    const si = +el.dataset.secDone;
+    el.textContent = perSec[si] || 0;
+  });
+}
+
+function probSurpriseMe() {
+  if (!_probFlat.length) return;
+  // Prefer starred & unattempted; otherwise unattempted; otherwise any
+  const starredNew = _probFlat.filter(x => x.p.star && !(_probState[x.key]||{}).status);
+  const anyNew     = _probFlat.filter(x => !(_probState[x.key]||{}).status);
+  const pool = starredNew.length ? starredNew : (anyNew.length ? anyNew : _probFlat);
+  const pick = pool[Math.floor(Math.random()*pool.length)];
+  const { p, si, ii, key } = pick;
+  const sec = (window.PROBLEMS_DATA || (C.problems||[]))[si];
+  const tag = p.tag || 'design';
+  const body = document.getElementById('prob-spotlight-body');
+  body.innerHTML = `
+    <div style="display:flex;gap:8px;align-items:center;margin-bottom:6px;flex-wrap:wrap">
+      <span class="prob-tag ${tag}">${tag}</span>
+      ${p.star ? '<span style="color:#ffa657">★</span>' : ''}
+      <span style="color:#8b949e;font-size:12px">${sec.week||''} · ${sec.title||''} · #${ii+1}</span>
+    </div>
+    <div class="pc-text">${p.text||''}</div>
+    ${(()=>{const L=[];if(p.hint)L.push({s:'💡 Reveal hint',c:'prob-hint',t:'Hint',b:p.hint});if(p.approach)L.push({s:'🔑 Show approach',c:'prob-approach',t:'Approach',b:p.approach});if(p.answer)L.push({s:'📐 Show answer',c:'prob-answer',t:'Answer',b:p.answer});return L.map(l=>`<details style="margin-top:10px"><summary style="cursor:pointer;color:#8b949e;font-size:12px;padding:4px 0">${l.s}</summary><div class="prob-reveal-panel ${l.c} shown" style="margin-top:6px"><span class="rh-label">${l.t}</span>${l.b}</div></details>`).join('');})()}
+    <div style="margin-top:14px;display:flex;gap:6px;flex-wrap:wrap">
+      <button class="prob-actbtn" onclick="probJumpTo('${key}')">↗ Jump to it</button>
+      <button class="prob-actbtn" onclick="probSurpriseMe()">🎲 Another</button>
+    </div>`;
+  document.getElementById('prob-spotlight').classList.add('open');
+}
+function probCloseSpotlight() { const el = document.getElementById('prob-spotlight'); if (el) el.classList.remove('open'); }
+function probJumpTo(key) {
+  probCloseSpotlight();
+  const card = document.querySelector(`.prob-card[data-key="${key}"]`);
+  if (!card) return;
+  const sec = card.closest('.prob-section');
+  if (sec) sec.open = true;
+  card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  card.style.transition = 'box-shadow .3s'; card.style.boxShadow = '0 0 0 2px #58a6ff';
+  setTimeout(() => { card.style.boxShadow = ''; }, 1500);
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') probCloseSpotlight(); });
 if (typeof switchTab === 'function') {
   const _origSwitchTab_prob = switchTab;
   switchTab = function(tab) { _origSwitchTab_prob(tab); if (tab === 'problems') renderProblems(); };
 }
+
+// === BEGIN glossary v1 js ===
+// ═══════════════════════════════════════════════════════════════════════
+// GLOSSARY — definitions + cross-references with graph & mindmap
+// ═══════════════════════════════════════════════════════════════════════
+(function initGlossaryMaps() {
+  const gloss = (C && C.glossary) || [];
+  if (!gloss.length) return;
+
+  // 1. Build id → entry maps and "label/aka" → id reverse map.
+  const byId = {};
+  const byLabel = {}; // lowercased term/aka → id
+  gloss.forEach(g => {
+    byId[g.id] = g;
+    const keys = [g.term].concat(g.aka || []);
+    keys.forEach(k => { if (k) byLabel[k.toLowerCase().trim()] = g.id; });
+  });
+
+  // 2. Patch graph node tips for any node whose id matches a glossary entry.
+  let graphMatched = 0;
+  const glossByGraphNode = {};
+  if (C.graph && Array.isArray(C.graph.nodes)) {
+    C.graph.nodes.forEach(n => {
+      if (byId[n.id]) {
+        glossByGraphNode[n.id] = n.id;
+        graphMatched++;
+        if (n.tip && n.tip.indexOf('📖') < 0) n.tip = n.tip + ' · 📖 in glossary';
+      } else {
+        // Fallback: try label/aka match
+        const k = (n.label || '').toLowerCase().trim();
+        if (byLabel[k]) {
+          glossByGraphNode[n.id] = byLabel[k];
+          graphMatched++;
+          if (n.tip && n.tip.indexOf('📖') < 0) n.tip = n.tip + ' · 📖 in glossary';
+        }
+      }
+    });
+  }
+
+  // 3. Walk mindmap and build name → glossary-id map. Match relaxed:
+  //    full name (newlines → space) OR each line.
+  let mindmapMatched = 0;
+  const glossByMindmapName = {};
+  function walkMm(node) {
+    if (!node) return;
+    if (node.name) {
+      const full = node.name.replace(/\n/g, ' ').trim();
+      const candidates = [full].concat(node.name.split(/\n+/).map(s => s.trim()).filter(Boolean));
+      for (const c of candidates) {
+        const id = byLabel[c.toLowerCase()];
+        if (id) {
+          glossByMindmapName[full] = id;
+          mindmapMatched++;
+          break;
+        }
+      }
+    }
+    (node.children || []).forEach(walkMm);
+  }
+  if (C.mindmap) walkMm(C.mindmap);
+
+  window._glossaryById = byId;
+  window._glossaryByLabel = byLabel;
+  window._glossaryIdByGraphNode = glossByGraphNode;
+  window._glossaryIdByMindmapName = glossByMindmapName;
+  window._glossaryStats = { graphMatched: graphMatched, mindmapMatched: mindmapMatched };
+
+  // 4. Monkey-patch showTooltip so it appends a "📖 Defined in glossary →" link
+  //    whenever the hovered name corresponds to a glossary entry.
+  if (typeof window.showTooltip === 'function') {
+    const _origShowTooltip = window.showTooltip;
+    const ttRoot = document.getElementById('tooltip');
+    let glossFooter = ttRoot.querySelector('.tt-glossary');
+    if (!glossFooter) {
+      glossFooter = document.createElement('div');
+      glossFooter.className = 'tt-glossary';
+      ttRoot.appendChild(glossFooter);
+    }
+    window.showTooltip = function(evt, name, tip, slides) {
+      _origShowTooltip(evt, name, tip, slides);
+      glossFooter.innerHTML = '';
+      ttRoot.classList.remove('has-glossary');
+      if (!name) return;
+      const plain = String(name).replace(/\n/g, ' ').trim();
+      const key = plain.toLowerCase();
+      let id = byLabel[key] || glossByMindmapName[plain] || null;
+      if (!id) {
+        // strip parenthetical suffix e.g. "Optical Switch (OCS)" → "Optical Switch"
+        const stripped = plain.replace(/\s*\([^)]*\)\s*$/, '').toLowerCase();
+        if (stripped !== key) id = byLabel[stripped] || null;
+      }
+      if (id) {
+        const a = document.createElement('a');
+        a.textContent = '📖 Defined in glossary →';
+        a.onclick = (e) => {
+          e.stopPropagation();
+          if (typeof window.glossaryJumpToTerm === 'function') window.glossaryJumpToTerm(id);
+        };
+        glossFooter.appendChild(a);
+        ttRoot.classList.add('has-glossary');
+      }
+    };
+  }
+})();
+
+// ─── renderGlossary ───────────────────────────────────────────────────
+let _glossSelectedCat = 'all';
+let _glossSearch = '';
+let _glossSearchTimer = null;
+let _glossBuilt = false;
+
+const GLOSS_CAT_COLORS = {
+  hardware:    '#58a6ff',
+  software:    '#7ee787',
+  numerics:    '#79c0ff',
+  systems:     '#d2a8ff',
+  performance: '#f778ba',
+  concepts:    '#ffa657'
+};
+
+function renderGlossary() {
+  const data = (C.glossary || []).slice().sort((a, b) =>
+    a.term.toLowerCase().localeCompare(b.term.toLowerCase()));
+  const list = document.getElementById('glossary-list');
+  const pillBar = document.getElementById('glossary-cat-pills');
+  const countEl = document.getElementById('glossary-count');
+  const searchEl = document.getElementById('glossary-search');
+  if (!list || !pillBar || !countEl || !searchEl) return;
+
+  // Build category pills + search input wiring once.
+  if (!_glossBuilt) {
+    const cats = ['all'].concat(
+      Array.from(new Set(data.map(d => d.category))).sort());
+    pillBar.innerHTML = '';
+    cats.forEach(cat => {
+      const btn = document.createElement('button');
+      btn.textContent = cat === 'all' ? `All (${data.length})` :
+        `${cat} (${data.filter(d => d.category === cat).length})`;
+      btn.dataset.cat = cat;
+      const color = cat === 'all' ? '#58a6ff' : (GLOSS_CAT_COLORS[cat] || '#58a6ff');
+      btn.style.setProperty('--pill-color', color);
+      btn.style.setProperty('--pill-bg', color + '22');
+      if (cat === _glossSelectedCat) btn.classList.add('active');
+      btn.onclick = () => {
+        _glossSelectedCat = cat;
+        pillBar.querySelectorAll('button').forEach(b =>
+          b.classList.toggle('active', b.dataset.cat === cat));
+        renderGlossary();
+      };
+      pillBar.appendChild(btn);
+    });
+    searchEl.addEventListener('input', () => {
+      if (_glossSearchTimer) clearTimeout(_glossSearchTimer);
+      _glossSearchTimer = setTimeout(() => {
+        _glossSearch = searchEl.value.trim().toLowerCase();
+        renderGlossary();
+      }, 120);
+    });
+    _glossBuilt = true;
+  }
+
+  // Filter
+  const q = _glossSearch;
+  const visible = data.filter(d => {
+    if (_glossSelectedCat !== 'all' && d.category !== _glossSelectedCat) return false;
+    if (!q) return true;
+    const hay = [d.term, (Array.isArray(d.aka) ? d.aka.join(' ') : (d.aka || '')), d.short, d.long || ''].join(' ').toLowerCase();
+    return hay.indexOf(q) >= 0;
+  });
+
+  countEl.textContent = `${visible.length} of ${data.length} terms`;
+
+  const graphIds = new Set();
+  if (C.graph && C.graph.nodes) C.graph.nodes.forEach(n => graphIds.add(n.id));
+  const glossIds = new Set(data.map(d => d.id));
+  const mindmapNames = window._glossaryIdByMindmapName || {};
+  const reverseMindmap = {}; // glossary-id → mindmap label
+  Object.keys(mindmapNames).forEach(name => { reverseMindmap[mindmapNames[name]] = name; });
+
+  list.innerHTML = '';
+  visible.forEach(d => {
+    const color = GLOSS_CAT_COLORS[d.category] || '#58a6ff';
+    const card = document.createElement('div');
+    card.className = 'glossary-card';
+    card.dataset.id = d.id;
+    card.style.setProperty('--cat-color', color);
+
+    const head = document.createElement('div');
+    head.className = 'glossary-term-row';
+    const term = document.createElement('span');
+    term.className = 'glossary-term';
+    term.textContent = d.term;
+    head.appendChild(term);
+    const badge = document.createElement('span');
+    badge.className = 'glossary-cat-badge';
+    badge.textContent = d.category;
+    badge.style.setProperty('--cat-color', color);
+    head.appendChild(badge);
+    card.appendChild(head);
+
+    if (d.aka && d.aka.length) {
+      const aka = document.createElement('div');
+      aka.className = 'glossary-aka';
+      aka.textContent = 'aka ' + (Array.isArray(d.aka) ? d.aka.join(', ') : d.aka);
+      card.appendChild(aka);
+    }
+
+    const shortEl = document.createElement('div');
+    shortEl.className = 'glossary-short';
+    shortEl.textContent = d.short || '';
+    card.appendChild(shortEl);
+
+    if (d.long) {
+      const longEl = document.createElement('div');
+      longEl.className = 'glossary-long';
+      longEl.innerHTML = d.long;
+      card.appendChild(longEl);
+      const toggle = document.createElement('button');
+      toggle.className = 'glossary-toggle';
+      toggle.textContent = 'Show more ▾';
+      toggle.onclick = () => {
+        const expanded = card.classList.toggle('expanded');
+        toggle.textContent = expanded ? 'Show less ▴' : 'Show more ▾';
+      };
+      card.appendChild(toggle);
+    }
+
+    const links = document.createElement('div');
+    links.className = 'glossary-links';
+    if (graphIds.has(d.id)) {
+      const b = document.createElement('button');
+      b.textContent = '🔗 Topic Graph';
+      b.onclick = () => window.glossaryJumpToGraphNode(d.id);
+      links.appendChild(b);
+    }
+    if (reverseMindmap[d.id]) {
+      const b = document.createElement('button');
+      b.textContent = '📐 Mind Map';
+      b.onclick = () => window.glossaryJumpToMindmapNode(reverseMindmap[d.id]);
+      links.appendChild(b);
+    }
+    (d.seeAlso || []).forEach(otherId => {
+      if (!glossIds.has(otherId)) return;
+      const other = (C.glossary || []).find(x => x.id === otherId);
+      if (!other) return;
+      const b = document.createElement('button');
+      b.textContent = '→ ' + other.term;
+      b.onclick = () => window.glossaryJumpToTerm(otherId);
+      links.appendChild(b);
+    });
+    if (links.children.length) card.appendChild(links);
+
+    list.appendChild(card);
+  });
+}
+
+// ─── Cross-tab jump helpers ───────────────────────────────────────────
+window.glossaryJumpToTerm = function(id) {
+  if (typeof switchTab === 'function') switchTab('glossary');
+  setTimeout(() => {
+    const card = document.querySelector('.glossary-card[data-id="' + CSS.escape(id) + '"]');
+    if (!card) return;
+    card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    card.classList.remove('flash');
+    void card.offsetWidth; // restart animation
+    card.classList.add('flash');
+    // Pull the display term from the card itself so the toast matches what the user sees
+    const labelEl = card.querySelector('.glossary-term');
+    const label = labelEl ? labelEl.textContent.trim() : id;
+    if (typeof showGlossaryToast === 'function') showGlossaryToast('Glossary', label, 'glossary');
+    setTimeout(() => card.classList.remove('flash'), 2800);
+  }, 60);
+};
+
+window.glossaryJumpToGraphNode = function(id) {
+  if (typeof switchTab === 'function') switchTab('graph');
+  const tryFlash = (attempt) => {
+    const g = document.querySelector('g.graph-node[data-id="' + CSS.escape(id) + '"]');
+    if (!g) {
+      if (attempt < 12) return setTimeout(() => tryFlash(attempt + 1), 120);
+      return;
+    }
+    // Pull the node's force-simulation position from its bound datum
+    let d = null;
+    try { d = (typeof d3 !== 'undefined') ? d3.select(g).datum() : null; } catch(_) {}
+    const label = (d && (d.label || d.id)) || id;
+
+    // 1) Pan + zoom the SVG so the node is centered and reasonably zoomed in
+    try {
+      if (d && typeof d.x === 'number' && typeof d.y === 'number' && typeof d3 !== 'undefined' && typeof graphZoom !== 'undefined') {
+        const svgEl = document.getElementById('canvas-graph');
+        const W = (svgEl && svgEl.clientWidth)  || window.innerWidth;
+        const H = (svgEl && svgEl.clientHeight) || window.innerHeight;
+        const k = 1.6;
+        const tx = W / 2 - k * d.x;
+        const ty = H / 2 - k * d.y;
+        d3.select('#canvas-graph')
+          .transition().duration(650)
+          .call(graphZoom.transform, d3.zoomIdentity.translate(tx, ty).scale(k));
+      } else {
+        g.querySelector('circle') && g.querySelector('circle').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    } catch(_) {}
+
+    // 2) Big halo ring + bold class on the node group
+    g.classList.remove('glossary-highlight');
+    void g.getBoundingClientRect();
+    g.classList.add('glossary-highlight');
+    try {
+      // remove any previous halo
+      g.querySelectorAll('circle.glossary-halo').forEach(c => c.remove());
+      const halo = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+      halo.setAttribute('class', 'glossary-halo');
+      halo.setAttribute('cx', '0');
+      halo.setAttribute('cy', '0');
+      halo.setAttribute('r', '14');
+      g.insertBefore(halo, g.firstChild); // behind the node circle
+    } catch(_) {}
+
+    // 3) Top-of-screen toast
+    showGlossaryToast('Topic Graph', label, 'graph');
+
+    setTimeout(() => {
+      g.classList.remove('glossary-highlight');
+      g.querySelectorAll('circle.glossary-halo').forEach(c => c.remove());
+    }, 4200);
+  };
+  requestAnimationFrame(() => requestAnimationFrame(() => tryFlash(0)));
+};
+
+window.glossaryJumpToMindmapNode = function(label) {
+  if (typeof switchTab === 'function') switchTab('mindmap');
+  const target = (label || '').replace(/\n/g, ' ').trim().toLowerCase();
+  const tryFlash = (attempt) => {
+    const groups = document.querySelectorAll('#canvas g');
+    let hit = null;
+    groups.forEach(g => {
+      if (hit) return;
+      const txt = (g.textContent || '').replace(/\s+/g, ' ').trim().toLowerCase();
+      if (txt === target) hit = g;
+    });
+    if (!hit) {
+      if (attempt < 10) return setTimeout(() => tryFlash(attempt + 1), 150);
+      return;
+    }
+
+    // 1) Pan the mindmap so the hit node is roughly centered
+    try {
+      if (typeof d3 !== 'undefined' && typeof mmZoom !== 'undefined') {
+        const svgEl = document.getElementById('canvas');
+        const W = (svgEl && svgEl.clientWidth)  || window.innerWidth;
+        const H = (svgEl && svgEl.clientHeight) || window.innerHeight;
+        // Read the node's local SVG position from its existing transform attribute (form: translate(x,y))
+        const tr = hit.getAttribute('transform') || '';
+        const m = tr.match(/translate\(\s*([-0-9.]+)\s*[ ,]\s*([-0-9.]+)/);
+        if (m) {
+          const x = parseFloat(m[1]), y = parseFloat(m[2]);
+          const k = 1.3;
+          const tx = W / 2 - k * x;
+          const ty = H / 2 - k * y;
+          d3.select('#canvas')
+            .transition().duration(650)
+            .call(mmZoom.transform, d3.zoomIdentity.translate(tx, ty).scale(k));
+        } else {
+          hit.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      } else {
+        hit.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    } catch(_) {}
+
+    // 2) Halo ring on the mindmap node
+    try {
+      hit.querySelectorAll('circle.glossary-mm-halo').forEach(c => c.remove());
+      const halo = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+      halo.setAttribute('class', 'glossary-mm-halo');
+      halo.setAttribute('cx', '0');
+      halo.setAttribute('cy', '0');
+      halo.setAttribute('r', '14');
+      hit.insertBefore(halo, hit.firstChild);
+      setTimeout(() => halo.remove(), 4200);
+    } catch(_) {}
+
+    // 3) Stroke flash on the shape
+    const shape = hit.querySelector('circle, rect');
+    if (shape) {
+      const prev = shape.getAttribute('stroke');
+      const prevW = shape.getAttribute('stroke-width');
+      shape.setAttribute('stroke', '#f0c000');
+      shape.setAttribute('stroke-width', '5');
+      setTimeout(() => {
+        if (prev !== null) shape.setAttribute('stroke', prev); else shape.removeAttribute('stroke');
+        if (prevW !== null) shape.setAttribute('stroke-width', prevW); else shape.removeAttribute('stroke-width');
+      }, 3000);
+    }
+
+    // 4) Toast
+    showGlossaryToast('Mind Map', (label || '').replace(/\n/g, ' '), 'mindmap');
+  };
+  requestAnimationFrame(() => requestAnimationFrame(() => tryFlash(0)));
+};
+
+// Floating toast helper — visible regardless of where the target node ended up
+function showGlossaryToast(where, label, kind) {
+  let t = document.getElementById('glossary-toast');
+  if (!t) {
+    t = document.createElement('div');
+    t.id = 'glossary-toast';
+    document.body.appendChild(t);
+  }
+  const icon = kind === 'graph' ? '🔗' : (kind === 'mindmap' ? '📐' : '📖');
+  t.innerHTML = '<span class="gt-icon">' + icon + '</span>'
+              + '<span>Jumped to: <strong>' + (label || '').replace(/[<>&]/g, '') + '</strong></span>'
+              + '<span class="gt-sub">in ' + where + '</span>';
+  // restart animation
+  t.classList.remove('show');
+  void t.offsetWidth;
+  t.classList.add('show');
+  clearTimeout(t._hideTimer);
+  t._hideTimer = setTimeout(() => t.classList.remove('show'), 3200);
+}
+
+// Lazy-render hook
+if (typeof switchTab === 'function') {
+  const _origSwitchTab_gloss = switchTab;
+  switchTab = function(tab) { _origSwitchTab_gloss(tab); if (tab === 'glossary') renderGlossary(); };
+}
+// === END glossary v1 js ===
 </script>
 <!-- BEGIN tooltip-pin (click pins, click outside closes) -->
 <style>

@@ -254,6 +254,36 @@
     border-radius: 4px; font-size: 10px; color: #79c0ff; text-decoration: none; transition: all .2s;
   }
   .uc-refs a:hover { border-color: #58a6ff; color: #58a6ff; background: #0d1117; }
+  /* ── Use-case enrichment v2 ── */
+  .uc-overview { background: linear-gradient(135deg, #0d1117 0%, #161b22 100%); border: 1px solid #30363d;
+    border-left: 3px solid #58a6ff; border-radius: 10px; padding: 16px 18px; margin: 16px 0 20px; }
+  .uc-overview .uc-summary { font-size: 13px; color: #c9d1d9; line-height: 1.7; }
+  .uc-overview .uc-summary strong { color: #79c0ff; }
+  .uc-pipeline { margin-top: 14px; padding: 10px 12px; background: #0d1117; border: 1px solid #30363d;
+    border-radius: 6px; font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+    font-size: 11px; color: #7ee787; line-height: 1.6; white-space: pre-wrap; overflow-x: auto; }
+  .uc-metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 10px; margin-top: 14px; }
+  .uc-metric { background: #0d1117; border: 1px solid #30363d; border-radius: 8px; padding: 10px 12px; }
+  .uc-metric .uc-metric-label { font-size: 10px; color: #8b949e; text-transform: uppercase; letter-spacing: 0.5px; }
+  .uc-metric .uc-metric-value { font-size: 14px; color: #ffa657; font-weight: 600; margin-top: 4px; line-height: 1.4; }
+  .uc-extensions { margin-top: 14px; padding: 10px 12px; background: rgba(210, 168, 255, 0.06);
+    border: 1px solid rgba(210, 168, 255, 0.25); border-radius: 6px; font-size: 12px; color: #c9d1d9; line-height: 1.6; }
+  .uc-extensions strong { color: #d2a8ff; }
+  .uc-step .uc-intuition { margin-top: 8px; padding: 8px 10px; background: rgba(126, 231, 135, 0.08);
+    border-left: 2px solid #3fb950; border-radius: 4px; font-size: 12px; color: #c9d1d9; line-height: 1.55; display: none; }
+  .uc-step.active .uc-intuition { display: block; }
+  .uc-step .uc-intuition strong { color: #7ee787; }
+  .uc-step .uc-complexity { display: inline-block; margin-top: 8px; margin-right: 6px;
+    background: rgba(31, 111, 235, 0.15); border: 1px solid rgba(88, 166, 255, 0.35); border-radius: 4px;
+    padding: 2px 8px; font-size: 10px; color: #79c0ff; font-family: 'Cascadia Code', 'Consolas', monospace; }
+  .uc-step .uc-pitfall { margin-top: 8px; padding: 8px 10px; background: rgba(255, 123, 114, 0.08);
+    border-left: 2px solid #ff7b72; border-radius: 4px; font-size: 12px; color: #c9d1d9; line-height: 1.55; display: none; }
+  .uc-step.active .uc-pitfall { display: block; }
+  .uc-step .uc-pitfall strong { color: #ff7b72; }
+  .uc-step .uc-example { margin-top: 8px; padding: 8px 10px; background: rgba(255, 166, 87, 0.06);
+    border-left: 2px solid #ffa657; border-radius: 4px; font-size: 12px; color: #c9d1d9; line-height: 1.55; display: none; }
+  .uc-step.active .uc-example { display: block; }
+  .uc-step .uc-example strong { color: #ffa657; }
   .legend-close {
     position: absolute; top: 8px; right: 8px; background: none; border: none;
     color: #8b949e; font-size: 16px; cursor: pointer; line-height: 1; padding: 2px 6px;
@@ -322,27 +352,92 @@
   /* ── Practice Problems (Problem-First) ── */
   #problems-container { position: relative; top: 0; width: 100%; max-width: 1100px; margin: 0 auto; padding: 24px 16px 60px; }
   #view-problems { overflow-y: auto; height: calc(100vh - 50px); margin-top: 50px; }
-  .prob-intro { background: #161b22; border: 1px solid #30363d; border-left: 3px solid #7ee787; border-radius: 6px; padding: 14px 18px; margin-bottom: 22px; color: #c9d1d9; font-size: 14px; line-height: 1.6; }
+  .prob-intro { background: #161b22; border: 1px solid #30363d; border-left: 3px solid #7ee787; border-radius: 6px; padding: 14px 18px; margin-bottom: 18px; color: #c9d1d9; font-size: 14px; line-height: 1.6; }
   .prob-intro strong { color: #7ee787; }
-  .prob-section { margin-bottom: 22px; border: 1px solid #30363d; border-radius: 8px; background: #161b22; overflow: hidden; }
-  .prob-section > summary { padding: 14px 18px; font-size: 15px; font-weight: 600; color: #e6edf3; cursor: pointer; list-style: none; display: flex; align-items: center; gap: 10px; user-select: none; transition: background .15s; }
+  /* Toolbar */
+  .prob-toolbar { position: sticky; top: 0; z-index: 5; background: rgba(13,17,23,0.95); backdrop-filter: blur(6px); padding: 10px 0 12px; margin-bottom: 14px; border-bottom: 1px solid #21262d; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  .prob-search { flex: 1 1 200px; min-width: 180px; background: #0d1117; border: 1px solid #30363d; border-radius: 6px; padding: 7px 12px; color: #c9d1d9; font-size: 13px; outline: none; }
+  .prob-search:focus { border-color: #58a6ff; }
+  .prob-filter-row { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+  .prob-chip { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 12px; cursor: pointer; background: #161b22; border: 1px solid #30363d; color: #8b949e; text-transform: uppercase; letter-spacing: .4px; transition: all .15s; user-select: none; }
+  .prob-chip:hover { border-color: #58a6ff; color: #c9d1d9; }
+  .prob-chip.active { background: #1f6feb22; border-color: #58a6ff; color: #58a6ff; }
+  .prob-chip.design.active  { background: #58a6ff22; border-color: #58a6ff; color: #58a6ff; }
+  .prob-chip.derive.active  { background: #ffa65722; border-color: #ffa657; color: #ffa657; }
+  .prob-chip.debug.active   { background: #f8514922; border-color: #f85149; color: #f85149; }
+  .prob-chip.code.active    { background: #7ee78722; border-color: #7ee787; color: #7ee787; }
+  .prob-chip.paper.active   { background: #d2a8ff22; border-color: #d2a8ff; color: #d2a8ff; }
+  .prob-chip .count { font-size: 9px; opacity: .7; font-weight: 500; }
+  .prob-actbtn { background: #161b22; border: 1px solid #30363d; color: #c9d1d9; padding: 6px 12px; border-radius: 6px; font-size: 12px; cursor: pointer; transition: all .15s; }
+  .prob-actbtn:hover { border-color: #58a6ff; color: #58a6ff; }
+  .prob-actbtn.primary { background: #1f6feb; border-color: #58a6ff; color: #fff; }
+  .prob-actbtn.primary:hover { background: #388bfd; }
+  .prob-progress { display: flex; align-items: center; gap: 10px; flex: 0 0 auto; font-size: 11px; color: #8b949e; margin-left: auto; }
+  .prob-progress-bar { width: 100px; height: 6px; background: #21262d; border-radius: 3px; overflow: hidden; }
+  .prob-progress-fill { height: 100%; background: linear-gradient(90deg, #7ee787, #58a6ff); transition: width .3s; }
+  /* Sections */
+  .prob-section { margin-bottom: 16px; border: 1px solid #30363d; border-radius: 8px; background: #161b22; overflow: hidden; }
+  .prob-section > summary { padding: 13px 18px; font-size: 14px; font-weight: 600; color: #e6edf3; cursor: pointer; list-style: none; display: flex; align-items: center; gap: 10px; user-select: none; transition: background .15s; flex-wrap: wrap; }
   .prob-section > summary::-webkit-details-marker { display: none; }
   .prob-section > summary::before { content: '▸'; color: #8b949e; font-size: 11px; transition: transform .2s; }
   .prob-section[open] > summary::before { transform: rotate(90deg); }
   .prob-section > summary:hover { background: rgba(88,166,255,0.04); }
-  .prob-section .wk { color: #8b949e; font-size: 12px; font-weight: 500; background: #0d1117; padding: 2px 8px; border-radius: 10px; border: 1px solid #30363d; }
-  .prob-body { padding: 6px 20px 18px 40px; }
-  .prob-body > ol { padding-left: 22px; margin: 8px 0 4px; }
-  .prob-body > ol > li { margin: 12px 0; color: #c9d1d9; font-size: 14px; line-height: 1.55; }
-  .prob-body > ol > li::marker { color: #7ee787; font-weight: 600; }
-  .prob-hint { display: block; margin-top: 4px; color: #8b949e; font-size: 12.5px; font-style: italic; }
-  .prob-hint::before { content: '💡 '; font-style: normal; }
-  .prob-tag { display: inline-block; font-size: 10px; font-weight: 600; padding: 1px 7px; border-radius: 8px; margin-right: 6px; vertical-align: middle; text-transform: uppercase; letter-spacing: .4px; }
+  .prob-section .wk { color: #8b949e; font-size: 11px; font-weight: 500; background: #0d1117; padding: 2px 8px; border-radius: 10px; border: 1px solid #30363d; }
+  .prob-section .sec-meta { margin-left: auto; font-size: 11px; color: #6e7681; font-weight: 500; }
+  .prob-section .sec-meta .done-count { color: #7ee787; font-weight: 600; }
+  .prob-hook { background: #0d1117; border-bottom: 1px solid #21262d; padding: 12px 22px; font-size: 13px; color: #d2a8ff; font-style: italic; line-height: 1.6; display: flex; gap: 8px; align-items: flex-start; }
+  .prob-hook::before { content: '🪝'; font-style: normal; flex-shrink: 0; }
+  .prob-body { padding: 12px 18px 16px; display: flex; flex-direction: column; gap: 10px; }
+  /* Problem cards */
+  .prob-card { background: #0d1117; border: 1px solid #21262d; border-radius: 8px; padding: 12px 14px; transition: all .15s; position: relative; }
+  .prob-card:hover { border-color: #30363d; }
+  .prob-card.status-thinking { border-left: 3px solid #d2a8ff; }
+  .prob-card.status-got      { border-left: 3px solid #7ee787; opacity: .75; }
+  .prob-card.status-stuck    { border-left: 3px solid #f85149; }
+  .prob-card.hidden          { display: none; }
+  .prob-card .pc-head { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 4px; }
+  .prob-card .pc-num { color: #6e7681; font-size: 11px; font-weight: 600; font-family: 'Cascadia Code', monospace; }
+  .prob-card .pc-star { color: #ffa657; font-size: 13px; }
+  .prob-tag { display: inline-block; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 8px; text-transform: uppercase; letter-spacing: .4px; }
   .prob-tag.design { background: #58a6ff20; color: #58a6ff; }
   .prob-tag.debug  { background: #f8514920; color: #f85149; }
   .prob-tag.paper  { background: #d2a8ff20; color: #d2a8ff; }
   .prob-tag.code   { background: #7ee78720; color: #7ee787; }
   .prob-tag.derive { background: #ffa65720; color: #ffa657; }
+  .prob-card .pc-text { color: #c9d1d9; font-size: 13.5px; line-height: 1.6; margin: 2px 0 6px; }
+  .prob-card .pc-actions { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; margin-top: 6px; }
+  .prob-revealbtn { background: transparent; border: 1px dashed #30363d; color: #8b949e; padding: 3px 10px; border-radius: 12px; font-size: 11px; cursor: pointer; transition: all .15s; }
+  .prob-revealbtn:hover { border-color: #d2a8ff; color: #d2a8ff; border-style: solid; }
+  .prob-revealbtn.approach:hover { border-color: #79c0ff; color: #79c0ff; }
+  .prob-revealbtn.answer:hover   { border-color: #7ee787; color: #7ee787; }
+  .prob-reveal-panel { display: none; margin-top: 8px; padding: 10px 14px; background: #161b22; border-radius: 4px; color: #c9d1d9; font-size: 12.5px; line-height: 1.65; }
+  .prob-reveal-panel.shown { display: block; }
+  .prob-reveal-panel ul, .prob-reveal-panel ol { margin: 4px 0 4px 18px; padding: 0; }
+  .prob-reveal-panel li { margin: 3px 0; }
+  .prob-reveal-panel code { background: #0d1117; padding: 1px 5px; border-radius: 3px; font-size: 11.5px; color: #79c0ff; font-family: 'Cascadia Code', 'Consolas', monospace; }
+  .prob-reveal-panel strong { color: #e6edf3; }
+  .prob-reveal-panel .rh-label { display: inline-block; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .6px; margin-right: 8px; padding: 1px 6px; border-radius: 4px; vertical-align: middle; }
+  .prob-hint     { border-left: 2px solid #d2a8ff; }
+  .prob-hint     .rh-label { background: #d2a8ff22; color: #d2a8ff; }
+  .prob-approach { border-left: 2px solid #79c0ff; }
+  .prob-approach .rh-label { background: #79c0ff22; color: #79c0ff; }
+  .prob-answer   { border-left: 2px solid #7ee787; background: #0d1f17; }
+  .prob-answer   .rh-label { background: #7ee78722; color: #7ee787; }
+  .prob-status-btns { display: flex; gap: 4px; margin-left: auto; }
+  .prob-statbtn { background: transparent; border: 1px solid #30363d; color: #6e7681; padding: 3px 9px; border-radius: 12px; font-size: 11px; cursor: pointer; transition: all .15s; }
+  .prob-statbtn:hover { border-color: #58a6ff; color: #c9d1d9; }
+  .prob-statbtn.active.thinking { background: #d2a8ff22; border-color: #d2a8ff; color: #d2a8ff; }
+  .prob-statbtn.active.got      { background: #7ee78722; border-color: #7ee787; color: #7ee787; }
+  .prob-statbtn.active.stuck    { background: #f8514922; border-color: #f85149; color: #f85149; }
+  .prob-empty { text-align: center; padding: 40px 20px; color: #6e7681; font-size: 13px; }
+  /* Modal for surprise-me */
+  .prob-spotlight { position: fixed; inset: 0; background: rgba(13,17,23,0.85); backdrop-filter: blur(4px); display: none; align-items: center; justify-content: center; z-index: 100; padding: 20px; }
+  .prob-spotlight.open { display: flex; }
+  .prob-spotlight-card { background: #161b22; border: 1px solid #58a6ff; border-radius: 12px; max-width: 600px; width: 100%; padding: 24px 28px; box-shadow: 0 12px 60px rgba(88,166,255,0.3); }
+  .prob-spotlight-card h3 { color: #58a6ff; font-size: 14px; margin: 0 0 4px; text-transform: uppercase; letter-spacing: 1px; }
+  .prob-spotlight-card .pc-text { font-size: 16px; line-height: 1.55; color: #e6edf3; margin: 10px 0; }
+  .prob-spotlight-card .sl-close { background: transparent; border: none; color: #8b949e; font-size: 22px; cursor: pointer; float: right; line-height: 1; }
+  .prob-spotlight-card .sl-close:hover { color: #c9d1d9; }
   .appendix-table .watch-link:hover { color: #ff0000; text-decoration: underline; }
   /* ── Progress checkbox ── */
   .appendix-table .vid-check { width: 18px; height: 18px; cursor: pointer; accent-color: #7ee787; vertical-align: middle; }
@@ -400,6 +495,233 @@
     .dd-card-img { height: 120px; }
     .dd-keypoints { grid-template-columns: 1fr; }
   }
+
+/* === BEGIN glossary v1 css === */
+  /* dd-nav sticky top */
+  .dd-nav.dd-nav-top {
+    position: sticky; top: 0; z-index: 5;
+    margin: -4px -4px 14px; padding: 10px 8px;
+    background: linear-gradient(180deg, rgba(13,17,23,0.96) 75%, rgba(13,17,23,0));
+    backdrop-filter: blur(4px);
+    border-bottom: 1px solid #21262d;
+  }
+  /* ── Glossary ── */
+  .gloss-intro { background: #161b22; border: 1px solid #30363d; border-left: 3px solid #d2a8ff; border-radius: 6px; padding: 14px 18px; margin-bottom: 14px; color: #c9d1d9; font-size: 14px; line-height: 1.6; }
+  .gloss-intro strong { color: #d2a8ff; }
+  #view-glossary { overflow-y: auto; height: calc(100vh - 50px); margin-top: 50px; padding: 20px; box-sizing: border-box; }
+  @media (max-width: 768px) { #view-glossary { margin-top: 48px; padding: 12px; } }
+  .glossary-controls { position: sticky; top: 0; z-index: 5; background: rgba(13,17,23,0.95); backdrop-filter: blur(6px); padding: 10px 0 12px; margin: -8px 0 14px; border-bottom: 1px solid #21262d; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  #glossary-search { flex: 1 1 240px; min-width: 200px; background: #0d1117; border: 1px solid #30363d; border-radius: 6px; padding: 7px 12px; color: #c9d1d9; font-size: 13px; outline: none; }
+  #glossary-search:focus { border-color: #58a6ff; }
+  .glossary-cat-pills { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+  .glossary-cat-pills button { background: #161b22; border: 1px solid #30363d; color: #8b949e; padding: 4px 10px; border-radius: 12px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .4px; cursor: pointer; transition: all .15s; }
+  .glossary-cat-pills button:hover { border-color: #58a6ff; color: #c9d1d9; }
+  .glossary-cat-pills button.active { background: var(--pill-bg, #1f6feb22); border-color: var(--pill-color, #58a6ff); color: var(--pill-color, #58a6ff); }
+  .glossary-count { font-size: 11px; color: #8b949e; margin-left: auto; }
+  .glossary-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 14px; max-width: 1400px; margin: 0 auto; }
+  .glossary-card { background: #161b22; border: 1px solid #30363d; border-radius: 10px; padding: 14px; transition: border-color .15s, box-shadow .15s, transform .15s; }
+  .glossary-card:hover { border-color: var(--cat-color, #58a6ff); box-shadow: 0 4px 14px rgba(0,0,0,0.35); }
+  .glossary-card.flash {
+    animation: glossary-flash 2.6s cubic-bezier(.4,0,.2,1) 1 forwards;
+    position: relative;
+    z-index: 2;
+  }
+  @keyframes glossary-flash {
+    0% {
+      background: #161b22;
+      border-color: #30363d;
+      box-shadow: 0 0 0 rgba(0,0,0,0);
+      transform: scale(1);
+    }
+    8% {
+      background: color-mix(in srgb, var(--cat-color, #58a6ff) 55%, #161b22);
+      border-color: var(--cat-color, #58a6ff);
+      box-shadow:
+        0 0 0 4px var(--cat-color, #58a6ff),
+        0 0 28px 6px color-mix(in srgb, var(--cat-color, #58a6ff) 70%, transparent),
+        0 14px 36px rgba(0,0,0,0.55);
+      transform: scale(1.045);
+    }
+    22% {
+      background: color-mix(in srgb, var(--cat-color, #58a6ff) 30%, #161b22);
+      border-color: var(--cat-color, #58a6ff);
+      box-shadow:
+        0 0 0 3px var(--cat-color, #58a6ff),
+        0 0 22px 4px color-mix(in srgb, var(--cat-color, #58a6ff) 55%, transparent),
+        0 10px 28px rgba(0,0,0,0.5);
+      transform: scale(1.03);
+    }
+    45% {
+      background: color-mix(in srgb, var(--cat-color, #58a6ff) 45%, #161b22);
+      border-color: var(--cat-color, #58a6ff);
+      box-shadow:
+        0 0 0 3px var(--cat-color, #58a6ff),
+        0 0 26px 5px color-mix(in srgb, var(--cat-color, #58a6ff) 60%, transparent),
+        0 12px 32px rgba(0,0,0,0.5);
+      transform: scale(1.035);
+    }
+    70% {
+      background: color-mix(in srgb, var(--cat-color, #58a6ff) 22%, #161b22);
+      border-color: color-mix(in srgb, var(--cat-color, #58a6ff) 80%, #30363d);
+      box-shadow:
+        0 0 0 2px color-mix(in srgb, var(--cat-color, #58a6ff) 70%, transparent),
+        0 0 18px 3px color-mix(in srgb, var(--cat-color, #58a6ff) 40%, transparent);
+      transform: scale(1.015);
+    }
+    100% {
+      background: #161b22;
+      border-color: #30363d;
+      box-shadow: 0 0 0 rgba(0,0,0,0);
+      transform: scale(1);
+    }
+  }
+  /* Fallback for browsers without color-mix: solid tinted backgrounds */
+  @supports not (background: color-mix(in srgb, red, blue)) {
+    @keyframes glossary-flash {
+      0%,100% { background: #161b22; border-color: #30363d; box-shadow: none; transform: scale(1); }
+      8%, 45% {
+        background: rgba(88,166,255,0.32);
+        border-color: var(--cat-color, #58a6ff);
+        box-shadow: 0 0 0 4px var(--cat-color, #58a6ff), 0 0 28px var(--cat-color, #58a6ff);
+        transform: scale(1.04);
+      }
+    }
+  }
+  .glossary-term-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .glossary-term { font-size: 16px; font-weight: 700; color: #e6edf3; }
+  .glossary-cat-badge { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; padding: 2px 7px; border-radius: 10px; border: 1px solid var(--cat-color, #58a6ff); color: var(--cat-color, #58a6ff); background: rgba(0,0,0,0.2); }
+  .glossary-aka { font-size: 11px; color: #8b949e; font-style: italic; margin-top: 3px; }
+  .glossary-short { font-size: 13px; color: #c9d1d9; margin-top: 8px; line-height: 1.5; }
+  .glossary-long { font-size: 13px; color: #8b949e; margin-top: 8px; line-height: 1.55; display: none; }
+  .glossary-long code { background: #0d1117; border: 1px solid #21262d; border-radius: 4px; padding: 1px 5px; font-family: 'Cascadia Code', monospace; font-size: 12px; color: #d2a8ff; }
+  .glossary-card.expanded .glossary-long { display: block; }
+  .glossary-toggle { background: none; border: none; color: #58a6ff; font-size: 11px; cursor: pointer; padding: 6px 0 0; }
+  .glossary-toggle:hover { text-decoration: underline; }
+  .glossary-links { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+  .glossary-links button { background: #0d1117; border: 1px solid #30363d; color: #c9d1d9; padding: 3px 9px; border-radius: 10px; font-size: 11px; cursor: pointer; transition: all .15s; }
+  .glossary-links button:hover { border-color: #58a6ff; color: #58a6ff; }
+  /* graph-node pulse when jumped to from glossary */
+  @keyframes glossary-pulse {
+    0%   { stroke-opacity: 1; stroke-width: 14; }
+    100% { stroke-opacity: 0.55; stroke-width: 5; }
+  }
+  @keyframes glossary-halo-pulse {
+    0%   { r: 16;  stroke-opacity: 1;    stroke-width: 10; }
+    60%  { r: 90;  stroke-opacity: 0.55; stroke-width: 5; }
+    100% { r: 140; stroke-opacity: 0;    stroke-width: 2; }
+  }
+  @keyframes glossary-halo-pulse-2 {
+    0%   { r: 16;  stroke-opacity: 0.9; stroke-width: 6; }
+    60%  { r: 110; stroke-opacity: 0.4; stroke-width: 3; }
+    100% { r: 170; stroke-opacity: 0;   stroke-width: 1.5; }
+  }
+  @keyframes glossary-fill-pulse {
+    0%, 100% { fill-opacity: 0.85; }
+    50%      { fill-opacity: 1; }
+  }
+  @keyframes glossary-dim-others {
+    0%   { opacity: 1; }
+    20%  { opacity: 0.15; }
+    100% { opacity: 0.15; }
+  }
+  /* Dim everything in the graph except the highlighted node + its halos */
+  #canvas-graph.glossary-spotlight g.graph-node:not(.glossary-highlight),
+  #canvas-graph.glossary-spotlight line.graph-link,
+  #canvas-graph.glossary-spotlight text.graph-link-label {
+    animation: glossary-dim-others 0.4s ease-out forwards;
+  }
+  #canvas-graph.glossary-spotlight g.graph-node.glossary-highlight {
+    opacity: 1 !important;
+  }
+  g.graph-node.glossary-highlight circle:not(.glossary-halo):not(.glossary-halo-outer) {
+    animation:
+      glossary-pulse 0.45s ease-in-out 10 alternate,
+      glossary-fill-pulse 0.45s ease-in-out 10 alternate;
+    stroke: #ffd13b !important;
+    fill: #ffd13b !important;
+    filter:
+      drop-shadow(0 0 10px #ffd13b)
+      drop-shadow(0 0 24px #ffd13baa)
+      drop-shadow(0 0 40px #ffd13b66);
+  }
+  g.graph-node.glossary-highlight text {
+    fill: #fff !important;
+    font-weight: 900 !important;
+    font-size: 15px !important;
+    paint-order: stroke fill;
+    stroke: #5a3a00;
+    stroke-width: 4px;
+    stroke-linejoin: round;
+    filter:
+      drop-shadow(0 0 6px #000)
+      drop-shadow(0 0 12px #ffd13b)
+      drop-shadow(0 0 20px #ffd13bcc);
+  }
+  circle.glossary-halo {
+    fill: none;
+    stroke: #ffd13b;
+    pointer-events: none;
+    animation: glossary-halo-pulse 1.1s ease-out 5;
+    filter: drop-shadow(0 0 8px #ffd13baa);
+  }
+  circle.glossary-halo-outer {
+    fill: none;
+    stroke: #ffae00;
+    pointer-events: none;
+    animation: glossary-halo-pulse-2 1.4s ease-out 5;
+    animation-delay: 0.18s;
+    filter: drop-shadow(0 0 12px #ffae0099);
+  }
+  /* mindmap pulse (uses a <circle> appended) */
+  circle.glossary-mm-halo {
+    fill: none;
+    stroke: #ffd13b;
+    pointer-events: none;
+    animation: glossary-halo-pulse 1.1s ease-out 5;
+    filter: drop-shadow(0 0 8px #ffd13baa);
+  }
+  circle.glossary-mm-halo-outer {
+    fill: none;
+    stroke: #ffae00;
+    pointer-events: none;
+    animation: glossary-halo-pulse-2 1.4s ease-out 5;
+    animation-delay: 0.18s;
+    filter: drop-shadow(0 0 12px #ffae0099);
+  }
+  /* toast banner shown when jumping from glossary */
+  #glossary-toast {
+    position: fixed; top: 60px; left: 50%; transform: translateX(-50%) translateY(-30px) scale(0.92);
+    background: linear-gradient(180deg, #2a1f0a, #1a1308);
+    border: 2px solid #ffd13b; border-left: 6px solid #ffd13b;
+    color: #fff5d6; padding: 12px 22px; border-radius: 10px;
+    font-size: 15px; font-weight: 700;
+    box-shadow:
+      0 10px 32px rgba(0,0,0,0.6),
+      0 0 36px rgba(255,209,59,0.45),
+      0 0 64px rgba(255,209,59,0.25);
+    opacity: 0; pointer-events: none;
+    transition: opacity .22s ease, transform .28s cubic-bezier(.2,1.2,.4,1);
+    z-index: 10000;
+    display: flex; align-items: center; gap: 12px;
+    max-width: 90vw;
+    text-shadow: 0 0 8px rgba(255,209,59,0.5);
+  }
+  #glossary-toast.show { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+  #glossary-toast .gt-icon { font-size: 22px; filter: drop-shadow(0 0 6px #ffd13b); }
+  #glossary-toast .gt-sub { color: #c9b88c; font-weight: 500; font-size: 12.5px; margin-left: 4px; }
+  #glossary-toast strong { color: #ffd13b; text-shadow: 0 0 10px rgba(255,209,59,0.6); }
+  @media (max-width: 768px) { #glossary-toast { top: 56px; font-size: 13px; padding: 10px 16px; } }
+  /* tooltip glossary footer link */
+  #tooltip .tt-glossary { margin-top: 6px; padding-top: 5px; border-top: 1px solid #30363d; }
+  #tooltip .tt-glossary:empty { display: none; }
+  #tooltip .tt-glossary a {
+    display: inline-block; padding: 2px 8px; border-radius: 4px;
+    background: rgba(210,168,255,0.10); color: #d2a8ff; text-decoration: none;
+    font-size: 11px; font-weight: 500; cursor: pointer; border: 1px solid rgba(210,168,255,0.25);
+  }
+  #tooltip .tt-glossary a:hover { background: rgba(210,168,255,0.22); border-color: #d2a8ff; }
+  #tooltip.has-glossary { pointer-events: auto; }
+/* === END glossary v1 css === */
 </style>
 </head>
 <body>
@@ -461,6 +783,21 @@
 <div id="view-problems" class="view">
   <div id="problems-container"></div>
 </div>
+<!-- BEGIN glossary v1 view -->
+<div id="view-glossary" class="view">
+  <div class="gloss-intro">
+    <strong>📖 Glossary.</strong> Every acronym, jargon term, and unit-of-art used across <em>Use Cases</em> and <em>Deep Dives</em> — defined here, cross-linked to the <strong>Topic Graph</strong> and <strong>Mind Map</strong> so you can jump from definition → diagram in one click.
+    <br><br>
+    <span style="color:#8b949e">Tip: click a related term to flash-jump to it. Click the 🌐 graph or 🧭 mindmap links to spotlight that node on its tab.</span>
+  </div>
+  <div class="glossary-controls">
+    <input type="text" id="glossary-search" placeholder="🔍 Search terms, acronyms, or definitions…" />
+    <div class="glossary-cat-pills" id="glossary-cat-pills"></div>
+    <span class="glossary-count" id="glossary-count"></span>
+  </div>
+  <div id="glossary-list" class="glossary-list"></div>
+</div>
+<!-- END glossary v1 view -->
 
 <!-- ═══════════════ SHARED OVERLAYS ═══════════════ -->
 <div id="tooltip"><div class="tt-title"></div><div class="tt-body"></div><div class="tt-slides"></div></div>
@@ -557,6 +894,24 @@ const COURSE_CONFIG = {
     name: "CS 6.824\nDistributed Systems",
     tooltip: "MIT 6.824: Distributed Systems — lectures, papers, and labs.",
     children: [
+      {
+        name: "Foundations & Theory",
+        tooltip: "Impossibility results, consistency models, and the algorithmic ancestry that motivates every paper in the course.",
+        children: [
+          { name: "FLP Impossibility", tooltip: "Fischer-Lynch-Paterson (1985): no deterministic asynchronous protocol can guarantee both safety and liveness of consensus with even one crash failure." },
+          { name: "CAP Theorem", tooltip: "Brewer/Gilbert-Lynch: under a network Partition you must choose between Consistency and Availability — you cannot have all three." },
+          { name: "Paxos", tooltip: "Lamport's classical consensus protocol (1998 \"The Part-Time Parliament\"). Provably correct, notoriously hard to implement — Raft was designed to replace it pedagogically." },
+          { name: "Consistency Models", tooltip: "Spectrum from strongest to weakest: linearizability \u2192 sequential \u2192 causal \u2192 eventual. Each gives up something to gain availability or performance.",
+            children: [
+              { name: "Linearizability", tooltip: "Strongest single-object model — every operation appears to take effect instantaneously at some point between invocation and response." },
+              { name: "Sequential", tooltip: "Lamport 1979: all processes see operations in the SAME order, but that order need not respect real time." },
+              { name: "Causal", tooltip: "If event A causally precedes event B (happens-before), everyone observes A before B. Concurrent events may be ordered differently." },
+              { name: "Eventual", tooltip: "If writes stop, replicas eventually converge. No bound on when — the weakest useful guarantee." }
+            ]
+          },
+          { name: "Fault Models", tooltip: "Crash-stop \u2192 crash-recovery \u2192 omission \u2192 Byzantine. Each strictly harder; Byzantine requires 3f+1 nodes to tolerate f faults instead of 2f+1." }
+        ]
+      },
       {
         name: "Week 1\nIntroduction",
         tooltip: "MapReduce, Google infrastructure",
@@ -719,7 +1074,10 @@ const COURSE_CONFIG = {
       { id: "bitcoin", label: "Bitcoin", cat: "applications", tip: "Decentralized cryptocurrency using proof-of-work consensus and blockchain" },
       { id: "linearizability", label: "Linearizability", cat: "consensus", tip: "Strongest single-object consistency — operations appear instantaneous" },
       { id: "fault-tolerance", label: "Fault Tolerance", cat: "consensus", tip: "System\'s ability to continue operating despite component failures" },
-      { id: "rpc", label: "RPC", cat: "applications", tip: "Remote Procedure Call — abstraction for invoking functions across network boundaries" }
+      { id: "rpc", label: "RPC", cat: "applications", tip: "Remote Procedure Call — abstraction for invoking functions across network boundaries" },
+      { id: "paxos", label: "Paxos", cat: "consensus", tip: "Lamport\'s classical asynchronous consensus protocol (1998) — provably correct foundation that Raft and ZAB are derived from" },
+      { id: "flp", label: "FLP Impossibility", cat: "consensus", tip: "Fischer-Lynch-Paterson (1985): no deterministic async protocol can guarantee both safety and liveness with even one crash" },
+      { id: "cap", label: "CAP Theorem", cat: "consensus", tip: "Brewer/Gilbert-Lynch: under a partition, you must choose Consistency OR Availability — you cannot have both" }
     ],
     edges: [
       { source: "mapreduce", target: "gfs", type: "depends" },
@@ -738,53 +1096,706 @@ const COURSE_CONFIG = {
       { source: "memcached", target: "linearizability", type: "related" },
       { source: "chain-replication", target: "cops", type: "related" },
       { source: "cops", target: "linearizability", type: "related" },
-      { source: "bitcoin", target: "raft", type: "related" }
+      { source: "bitcoin", target: "raft", type: "related" },
+      { source: "paxos", target: "raft", type: "related" },
+      { source: "paxos", target: "zookeeper", type: "enables" },
+      { source: "flp", target: "2pc", type: "related" },
+      { source: "flp", target: "paxos", type: "related" },
+      { source: "cap", target: "spanner", type: "related" },
+      { source: "cap", target: "cops", type: "related" },
+      { source: "linearizability", target: "spanner", type: "implements" }
     ]
   },
 
   deepDives: [
     {
-      id: "raft-consensus",
-      title: "Raft Consensus",
-      icon: "\ud83d\uddF3\ufe0f",
-      cards: [
-        { term: "Leader Election", detail: "Candidates request votes using term numbers; majority wins. Randomized election timeouts prevent split votes." },
-        { term: "Log Replication", detail: "Leader appends entries to its log and sends AppendEntries RPCs. Entries are committed once replicated on a majority." },
-        { term: "Safety", detail: "The election restriction ensures only candidates with up-to-date logs can become leader, guaranteeing committed entries are never lost." }
+      id: "rpc-semantics", num: "Concept 1 of 7", title: "RPC Delivery Semantics",
+      desc: "At-least-once vs at-most-once vs exactly-once \u2014 why retries break non-idempotent operations and how production systems navigate the trade-off.",
+      color: "#58a6ff", icon: "\ud83d\udce1",
+      svg: function(w, h) {
+        return '<svg viewBox="0 0 ' + w + ' ' + h + '" xmlns="http://www.w3.org/2000/svg" style="background:#0d1117">'
+          + '<text x="20" y="24" fill="#58a6ff" font-size="13" font-weight="700">Client</text>'
+          + '<text x="' + (w-80) + '" y="24" fill="#58a6ff" font-size="13" font-weight="700">Server</text>'
+          + '<line x1="60" y1="34" x2="60" y2="' + (h-20) + '" stroke="#30363d" stroke-dasharray="3,3"/>'
+          + '<line x1="' + (w-60) + '" y1="34" x2="' + (w-60) + '" y2="' + (h-20) + '" stroke="#30363d" stroke-dasharray="3,3"/>'
+          + '<line x1="60" y1="60" x2="' + (w-60) + '" y2="80" stroke="#7ee787" stroke-width="2" marker-end="url(#a1)"/>'
+          + '<text x="' + (w/2-40) + '" y="65" fill="#7ee787" font-size="11">REQ id=42 (try 1)</text>'
+          + '<rect x="' + (w-110) + '" y="86" width="50" height="14" fill="#ffa65730" stroke="#ffa657"/>'
+          + '<text x="' + (w-105) + '" y="97" fill="#ffa657" font-size="10">execute</text>'
+          + '<line x1="' + (w-60) + '" y1="110" x2="60" y2="135" stroke="#f85149" stroke-width="2" stroke-dasharray="4,3"/>'
+          + '<text x="' + (w/2-50) + '" y="125" fill="#f85149" font-size="11">REPLY (lost \u2717)</text>'
+          + '<line x1="60" y1="160" x2="' + (w-60) + '" y2="180" stroke="#7ee787" stroke-width="2" marker-end="url(#a1)"/>'
+          + '<text x="' + (w/2-50) + '" y="165" fill="#7ee787" font-size="11">REQ id=42 (try 2)</text>'
+          + '<rect x="' + (w-110) + '" y="186" width="50" height="14" fill="#7ee78730" stroke="#7ee787"/>'
+          + '<text x="' + (w-108) + '" y="197" fill="#7ee787" font-size="10">dedup\u2713</text>'
+          + '<line x1="' + (w-60) + '" y1="210" x2="60" y2="235" stroke="#7ee787" stroke-width="2" marker-end="url(#a1)"/>'
+          + '<text x="' + (w/2-60) + '" y="225" fill="#c9d1d9" font-size="11">REPLY cached</text>'
+          + '<defs><marker id="a1" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><polygon points="0 0, 6 3, 0 6" fill="#7ee787"/></marker></defs>'
+          + '</svg>';
+      },
+      sections: [
+        { title: "The Three Semantics", text: "Network failures are inevitable, so RPC libraries must define what happens when a request or reply is lost. <b>At-least-once</b> retries until an ack arrives \u2014 fast and simple, but the server may execute the call multiple times. <b>At-most-once</b> attaches a unique request ID and the server keeps a reply table so duplicates return the cached result without re-executing. <b>Exactly-once</b> is the holy grail and, in the general failure model, provably impossible: it requires either idempotent operations, transactional storage of both the side effect and the dedup record, or a consensus log behind every call." },
+        { title: "Why TCP is not enough", text: "TCP gives you reliable in-order bytes within a single connection, but it cannot mask process crashes or connection resets. If the server crashes after committing the side effect but before sending the reply, TCP will surface a connection error \u2014 the client sees \"unknown\" and must decide whether to retry. The 6.824 lab RPC layer makes this explicit: every Call() returns ok=false on timeout, and your higher-level code is responsible for deduplication. This is why Raft entries carry a client-id + sequence number." },
+        { title: "Mini protocol trace", text: "Client sends PUT(x=5) with id=42. Server applies it and replies, but the reply is dropped. Client times out and resends id=42. Without dedup the server applies x=5 twice (harmless for PUT, fatal for INCREMENT). With at-most-once, the server looks up id=42 in its reply table, sees it already executed, and returns the cached OK \u2014 same observable outcome as if the first reply had arrived." },
+        { title: "Pitfall \u2014 the exactly-once myth", text: "Kafka markets \"exactly-once semantics\" but it really means: idempotent producer (sequence numbers per partition) plus transactional writes coupling the message and the consumer offset. Outside that closed loop \u2014 e.g., a side effect to an external REST API \u2014 you are back to at-least-once + application-level idempotency keys (Stripe, Twilio, AWS API Gateway all expose this pattern explicitly)." }
+      ],
+      keypoints: [
+        { title: "Idempotency key", text: "PUT(k,v) and DELETE(k) are naturally idempotent; INCREMENT, APPEND, CHARGE_CARD are not. Wrap non-idempotent ops with a client-supplied UUID and a server-side dedup table keyed on (client_id, seq)." },
+        { title: "Reply cache GC", text: "Dedup tables grow unboundedly. Raft\u2019s solution: clients send a \"highest seq seen\" piggyback so the server can prune entries below that watermark for that client." },
+        { title: "FLP relevance", text: "Even with at-most-once, you cannot guarantee a client learns the outcome in a partition \u2014 FLP says no asynchronous protocol decides reliably with even one crash. Hence \"unknown\" is a first-class RPC outcome." },
+        { title: "Real-world tie-in", text: "gRPC + retry policy = at-least-once by default. AWS SDKs use exponential backoff with jitter and idempotency tokens for billing-safe APIs (e.g., RunInstances ClientToken)." }
       ]
     },
     {
-      id: "two-phase-commit",
-      title: "Two-Phase Commit",
-      icon: "\ud83e\udd1d",
-      cards: [
-        { term: "Coordinator", detail: "Initiates the transaction; sends PREPARE to all participants, then COMMIT or ABORT based on votes." },
-        { term: "Participants", detail: "Each participant votes YES (prepared) or NO (abort). Once voted YES, it must wait for the coordinator\u2019s decision." },
-        { term: "Blocking Problem", detail: "If the coordinator crashes after PREPARE, participants that voted YES are blocked\u2014they cannot commit or abort until the coordinator recovers." }
+      id: "mapreduce", num: "Concept 2 of 7", title: "MapReduce & the Shuffle",
+      desc: "Dean & Ghemawat 2004: how a 1800-machine job survives stragglers and disk failures by re-executing deterministic tasks.",
+      color: "#f778ba", icon: "\ud83d\uddfa\ufe0f",
+      svg: function(w, h) {
+        return '<svg viewBox="0 0 ' + w + ' ' + h + '" xmlns="http://www.w3.org/2000/svg" style="background:#0d1117">'
+          + '<text x="20" y="20" fill="#7ee787" font-size="12" font-weight="700">Input shards</text>'
+          + '<text x="' + (w/2-30) + '" y="20" fill="#f778ba" font-size="12" font-weight="700">Map workers</text>'
+          + '<text x="' + (w-130) + '" y="20" fill="#58a6ff" font-size="12" font-weight="700">Reduce workers</text>'
+          + '<g fill="#7ee78720" stroke="#7ee787">'
+          + '<rect x="20" y="40" width="70" height="22"/><rect x="20" y="80" width="70" height="22"/><rect x="20" y="120" width="70" height="22"/><rect x="20" y="160" width="70" height="22"/>'
+          + '</g>'
+          + '<g fill="#f778ba20" stroke="#f778ba">'
+          + '<rect x="' + (w/2-50) + '" y="55" width="80" height="22"/><rect x="' + (w/2-50) + '" y="105" width="80" height="22"/><rect x="' + (w/2-50) + '" y="155" width="80" height="22"/>'
+          + '</g>'
+          + '<g fill="#58a6ff20" stroke="#58a6ff">'
+          + '<rect x="' + (w-110) + '" y="65" width="90" height="22"/><rect x="' + (w-110) + '" y="125" width="90" height="22"/><rect x="' + (w-110) + '" y="185" width="90" height="22"/>'
+          + '</g>'
+          + '<g stroke="#30363d" stroke-width="1">'
+          + '<line x1="90" y1="51" x2="' + (w/2-50) + '" y2="66"/><line x1="90" y1="91" x2="' + (w/2-50) + '" y2="116"/><line x1="90" y1="131" x2="' + (w/2-50) + '" y2="116"/><line x1="90" y1="171" x2="' + (w/2-50) + '" y2="166"/>'
+          + '</g>'
+          + '<g stroke="#f778ba" stroke-width="1" stroke-dasharray="2,2">'
+          + '<line x1="' + (w/2+30) + '" y1="66" x2="' + (w-110) + '" y2="76"/><line x1="' + (w/2+30) + '" y1="66" x2="' + (w-110) + '" y2="136"/><line x1="' + (w/2+30) + '" y1="66" x2="' + (w-110) + '" y2="196"/>'
+          + '<line x1="' + (w/2+30) + '" y1="116" x2="' + (w-110) + '" y2="76"/><line x1="' + (w/2+30) + '" y1="116" x2="' + (w-110) + '" y2="136"/><line x1="' + (w/2+30) + '" y1="116" x2="' + (w-110) + '" y2="196"/>'
+          + '<line x1="' + (w/2+30) + '" y1="166" x2="' + (w-110) + '" y2="76"/><line x1="' + (w/2+30) + '" y1="166" x2="' + (w-110) + '" y2="136"/><line x1="' + (w/2+30) + '" y1="166" x2="' + (w-110) + '" y2="196"/>'
+          + '</g>'
+          + '<text x="' + (w/2-40) + '" y="' + (h-15) + '" fill="#8b949e" font-size="10">Shuffle = M\u00d7R network connections, partitioned by hash(key) mod R</text>'
+          + '</svg>';
+      },
+      sections: [
+        { title: "The two-function programming model", text: "Map(k1,v1) emits a list of (k2,v2). Reduce(k2, list&lt;v2&gt;) emits the final values. The user writes only those two pure functions; the framework handles partitioning, scheduling, network shuffle, and failure recovery. Because both functions are deterministic, re-executing a failed task yields the same output \u2014 this is the lever that makes fault tolerance cheap." },
+        { title: "The shuffle is the cost center", text: "With M map tasks and R reduce tasks, the shuffle opens up to M\u00d7R disk-to-disk transfers, partitioned by hash(key) mod R. For a 2000\u00d750 job that\u2019s 100,000 connections \u2014 dwarfing CPU. Real systems combat this with combiners (local mini-reduces before shuffle), backup tasks, and rack-aware scheduling. Spark fixed the long-tail problem by keeping intermediate data in memory and using DAG scheduling to skip the materialize-to-disk step between stages." },
+        { title: "Mini trace \u2014 word count", text: "Input \"the cat sat\" \u2192 Map emits (the,1)(cat,1)(sat,1). Hash partition sends \"cat\" to reducer 0 and \"the\",\"sat\" to reducer 2. Reducer 0 receives (cat,[1,1,1,...]) and emits (cat,N). If reducer 2 dies after pulling but before writing GFS, the master re-runs it; pulled data is regenerated from map outputs that still live on map-worker local disks." },
+        { title: "Stragglers and the backup-task trick", text: "Section 3.6 of the paper: when a job is near completion, the master speculatively launches duplicate copies of the slowest in-flight tasks; whichever finishes first wins, the other is killed. This single optimization cut sort-benchmark time by ~44%. The lesson generalizes \u2014 long tails dominate in any large fan-out system, which is why Tail at Scale (Dean & Barroso 2013) is required reading." }
+      ],
+      keypoints: [
+        { title: "Why master is a single point", text: "The 1-master/N-worker design is a deliberate trade: simpler code, and master state is small (~100 bytes/task). Master failure aborts the job \u2014 acceptable for batch. For streaming you need HA master (Borg, YARN ResourceManager HA)." },
+        { title: "Locality optimization", text: "Map tasks are scheduled on the GFS replica holding their input chunk \u2014 most reads are local disk, no network. ~80% locality observed at Google." },
+        { title: "Re-execution requires determinism", text: "If your map function reads system time or queries an external service, re-execution can produce a different result \u2014 silently corrupting reduce input. Functional purity is a hard requirement." },
+        { title: "Tie-in", text: "Hadoop = open-source MapReduce; Spark generalizes it to DAGs of RDDs; Beam/Dataflow exposes the same map+combine+reduce primitives over both batch and stream." }
       ]
     },
     {
-      id: "linearizability",
-      title: "Linearizability",
-      icon: "\ud83d\udccf",
-      cards: [
-        { term: "Strong Consistency", detail: "Every operation appears to execute atomically at some point between its invocation and response." },
-        { term: "Real-Time Ordering", detail: "If operation A completes before operation B starts, then A must appear before B in the linearization order." },
-        { term: "Verification", detail: "Check linearizability by finding a valid sequential ordering of all operations that respects real-time order and specification." }
+      id: "gfs-pipeline", num: "Concept 3 of 7", title: "GFS Chunk Write Pipeline",
+      desc: "Single-master metadata, 64 MB chunks, primary-secondary lease writes \u2014 and the 'at-least-once append' that leaves duplicates and padding in the file.",
+      color: "#7ee787", icon: "\ud83d\uddc4\ufe0f",
+      svg: function(w, h) {
+        return '<svg viewBox="0 0 ' + w + ' ' + h + '" xmlns="http://www.w3.org/2000/svg" style="background:#0d1117">'
+          + '<rect x="20" y="20" width="120" height="40" fill="#58a6ff20" stroke="#58a6ff"/>'
+          + '<text x="80" y="38" text-anchor="middle" fill="#58a6ff" font-size="12" font-weight="700">Client</text>'
+          + '<text x="80" y="52" text-anchor="middle" fill="#8b949e" font-size="10">writes data</text>'
+          + '<rect x="' + (w-180) + '" y="20" width="160" height="40" fill="#ffa65720" stroke="#ffa657"/>'
+          + '<text x="' + (w-100) + '" y="38" text-anchor="middle" fill="#ffa657" font-size="12" font-weight="700">Master</text>'
+          + '<text x="' + (w-100) + '" y="52" text-anchor="middle" fill="#8b949e" font-size="10">metadata + leases</text>'
+          + '<line x1="140" y1="40" x2="' + (w-180) + '" y2="40" stroke="#ffa657" marker-end="url(#a2)"/>'
+          + '<text x="' + (w/2-50) + '" y="34" fill="#ffa657" font-size="10">1. ask: who owns chunk?</text>'
+          + '<rect x="20" y="100" width="100" height="36" fill="#7ee78720" stroke="#7ee787"/>'
+          + '<text x="70" y="123" text-anchor="middle" fill="#7ee787" font-size="11" font-weight="700">Primary CS</text>'
+          + '<rect x="160" y="100" width="100" height="36" fill="#7ee78715" stroke="#7ee787"/>'
+          + '<text x="210" y="123" text-anchor="middle" fill="#7ee787" font-size="11">Secondary CS</text>'
+          + '<rect x="300" y="100" width="100" height="36" fill="#7ee78715" stroke="#7ee787"/>'
+          + '<text x="350" y="123" text-anchor="middle" fill="#7ee787" font-size="11">Secondary CS</text>'
+          + '<line x1="80" y1="60" x2="70" y2="100" stroke="#58a6ff" marker-end="url(#a2)"/>'
+          + '<text x="90" y="82" fill="#58a6ff" font-size="10">2. push data \u2192 nearest replica</text>'
+          + '<line x1="120" y1="118" x2="160" y2="118" stroke="#58a6ff" stroke-dasharray="2,2" marker-end="url(#a2)"/>'
+          + '<line x1="260" y1="118" x2="300" y2="118" stroke="#58a6ff" stroke-dasharray="2,2" marker-end="url(#a2)"/>'
+          + '<text x="160" y="148" fill="#58a6ff" font-size="10">data forwards down chain (LRU pipeline)</text>'
+          + '<line x1="70" y1="136" x2="70" y2="180" stroke="#f778ba" marker-end="url(#a2)"/>'
+          + '<text x="80" y="170" fill="#f778ba" font-size="10">3. client \u2192 primary: WRITE order</text>'
+          + '<line x1="70" y1="200" x2="210" y2="200" stroke="#f778ba" stroke-dasharray="3,2" marker-end="url(#a2)"/>'
+          + '<line x1="70" y1="220" x2="350" y2="220" stroke="#f778ba" stroke-dasharray="3,2" marker-end="url(#a2)"/>'
+          + '<text x="100" y="195" fill="#f778ba" font-size="10">4. primary picks serial #, tells secondaries to apply</text>'
+          + '<text x="100" y="240" fill="#7ee787" font-size="10">5. all ack \u2192 primary acks client; any fail \u2192 retry whole step</text>'
+          + '<defs><marker id="a2" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><polygon points="0 0, 6 3, 0 6" fill="#c9d1d9"/></marker></defs>'
+          + '</svg>';
+      },
+      sections: [
+        { title: "Single master, fat chunks", text: "GFS picks a deliberately unfashionable design: one master holds all metadata in RAM, chunks are 64 MB (vs typical 4 KB filesystem blocks). Big chunks shrink the metadata table by 4 orders of magnitude (a 1 PB file = ~16 K metadata entries) and amortize the master round-trip across many sequential reads. The cost is hot spots on small files \u2014 their entire content lives in one chunk and one chunkserver bears all the load." },
+        { title: "The lease + pipeline write", text: "To avoid asking the master on every write, the master grants a 60-second lease to one chunkserver designating it primary. Clients first push the bytes through the chunk\u2019s replica chain (chosen by network topology to maximize bandwidth), then send a tiny WRITE control message to the primary. The primary picks a serial number, tells secondaries to apply in that order, and acks the client once all confirm. Decoupling data flow from control flow lets writes saturate the network independently of who is sequencing." },
+        { title: "Record append \u2014 the relaxed-consistency escape hatch", text: "Concurrent writes to overlapping byte ranges interleave unpredictably (\"undefined\" regions). To avoid this, the paper introduces atomic record append: the primary picks an offset and guarantees the record lands intact. But \u2014 critical \u2014 it is only at-least-once. A network failure can leave a successful copy on some replicas and force the client to retry, producing duplicate records and padding bytes on replicas that already accepted the first try. Readers must tolerate both." },
+        { title: "Pitfall \u2014 master failover", text: "The master is a single point of failure. Recovery uses an operation log replicated to shadow masters via primary-backup; failover takes seconds. During failover, no namespace mutations succeed but reads continue (clients cache chunk locations for the lease duration). Subsequent systems (Colossus, HDFS HA) replaced the single master with a Paxos-replicated metadata service \u2014 directly motivated by GFS\u2019s scaling pain at >50 PB." }
+      ],
+      keypoints: [
+        { title: "Chunk version numbers", text: "Each chunk carries a version stamped by the master on every lease grant. Stale replicas (chunkserver was offline during a write) detect themselves by version mismatch and are garbage-collected." },
+        { title: "Two-level naming", text: "Filename \u2192 chunk handles (in master) \u2192 chunkserver list (in master) \u2014 keeps mutations local to the master and lets chunk locations drift without renaming files." },
+        { title: "Append-heavy assumption", text: "GFS optimizes for big sequential reads + many-writer appends. Random small writes are tolerated but slow; this matched MapReduce / log-ingestion workloads but not transactional databases \u2014 hence Spanner is built on Colossus, not vanilla GFS." },
+        { title: "Tie-in", text: "HDFS clones GFS verbatim (NameNode = master, DataNode = chunkserver, 128 MB blocks). S3 / GCS hide all this behind an HTTP API but keep the same large-object, write-once-read-many sweet spot." }
       ]
     },
     {
-      id: "mapreduce",
-      title: "MapReduce",
-      icon: "\ud83d\uddfa\ufe0f",
-      cards: [
-        { term: "Map Phase", detail: "User-defined map function processes input key-value pairs and emits intermediate key-value pairs." },
-        { term: "Shuffle", detail: "The framework groups all intermediate values by key and distributes them to reduce workers." },
-        { term: "Reduce Phase", detail: "User-defined reduce function merges all intermediate values for a given key into a final result." },
-        { term: "Fault Tolerance", detail: "Completed map tasks on a failed worker are re-executed (output is local). Reduce output goes to GFS for durability." }
+      id: "raft-consensus", num: "Concept 4 of 7", title: "Raft \u2014 Understandable Consensus",
+      desc: "Strong leader, randomized timeouts, log-matching invariant. Why Ongaro & Ousterhout's 2014 paper finally made consensus teachable.",
+      color: "#ffa657", icon: "\ud83d\uddf3\ufe0f",
+      svg: function(w, h) {
+        return '<svg viewBox="0 0 ' + w + ' ' + h + '" xmlns="http://www.w3.org/2000/svg" style="background:#0d1117">'
+          + '<rect x="40" y="40" width="120" height="60" rx="30" fill="#58a6ff20" stroke="#58a6ff"/>'
+          + '<text x="100" y="68" text-anchor="middle" fill="#58a6ff" font-size="13" font-weight="700">Follower</text>'
+          + '<text x="100" y="86" text-anchor="middle" fill="#8b949e" font-size="10">starts here</text>'
+          + '<rect x="' + (w/2-60) + '" y="40" width="120" height="60" rx="30" fill="#ffa65720" stroke="#ffa657"/>'
+          + '<text x="' + (w/2) + '" y="68" text-anchor="middle" fill="#ffa657" font-size="13" font-weight="700">Candidate</text>'
+          + '<text x="' + (w/2) + '" y="86" text-anchor="middle" fill="#8b949e" font-size="10">term++; vote self</text>'
+          + '<rect x="' + (w-160) + '" y="40" width="120" height="60" rx="30" fill="#7ee78720" stroke="#7ee787"/>'
+          + '<text x="' + (w-100) + '" y="68" text-anchor="middle" fill="#7ee787" font-size="13" font-weight="700">Leader</text>'
+          + '<text x="' + (w-100) + '" y="86" text-anchor="middle" fill="#8b949e" font-size="10">sends heartbeats</text>'
+          + '<line x1="160" y1="70" x2="' + (w/2-60) + '" y2="70" stroke="#ffa657" stroke-width="2" marker-end="url(#a3)"/>'
+          + '<text x="' + (w/2-130) + '" y="34" fill="#ffa657" font-size="10">election timeout (150-300 ms)</text>'
+          + '<line x1="' + (w/2+60) + '" y1="70" x2="' + (w-160) + '" y2="70" stroke="#7ee787" stroke-width="2" marker-end="url(#a3)"/>'
+          + '<text x="' + (w/2+70) + '" y="34" fill="#7ee787" font-size="10">majority of votes</text>'
+          + '<path d="M ' + (w-100) + ' 100 Q ' + (w-100) + ' 160 100 100" fill="none" stroke="#f85149" stroke-width="2" stroke-dasharray="4,3" marker-end="url(#a3r)"/>'
+          + '<text x="' + (w/2-80) + '" y="155" fill="#f85149" font-size="10">discovers higher term \u2192 step down</text>'
+          + '<path d="M ' + (w/2) + ' 100 Q ' + (w/2-30) + ' 130 100 100" fill="none" stroke="#8b949e" stroke-width="1" stroke-dasharray="3,3" marker-end="url(#a3g)"/>'
+          + '<text x="180" y="125" fill="#8b949e" font-size="10">timeout / split vote \u2192 retry</text>'
+          + '<g font-size="10" fill="#c9d1d9">'
+          + '<text x="20" y="200" font-weight="700" fill="#58a6ff">Log replication invariant</text>'
+          + '<text x="20" y="218">If two logs share an entry at index i with term t, then all entries before i are identical.</text>'
+          + '<text x="20" y="236">Enforced by the AppendEntries consistency check: leader sends prev_index+prev_term; follower rejects mismatches.</text>'
+          + '</g>'
+          + '<defs>'
+          + '<marker id="a3" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><polygon points="0 0, 6 3, 0 6" fill="#c9d1d9"/></marker>'
+          + '<marker id="a3r" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><polygon points="0 0, 6 3, 0 6" fill="#f85149"/></marker>'
+          + '<marker id="a3g" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><polygon points="0 0, 6 3, 0 6" fill="#8b949e"/></marker>'
+          + '</defs>'
+          + '</svg>';
+      },
+      sections: [
+        { title: "Leader election", text: "Every server starts as a follower. If it hears no heartbeat for the election timeout (a random value in 150\u2013300 ms, the magic that prevents perpetual split votes), it becomes a candidate, increments its term, votes for itself, and sends RequestVote to peers. A candidate wins by collecting a majority of votes for its term. Two safety filters apply: a server votes for at most one candidate per term, and it refuses to vote for a candidate whose log is shorter or older than its own. The combination guarantees at most one leader per term and that the new leader has every committed entry." },
+        { title: "Log replication & commit", text: "Client commands hit the leader, which appends an entry then issues parallel AppendEntries RPCs. An entry is committed once it is replicated on a majority \u2014 N/2+1 servers, which for 5 servers is 3 and tolerates 2 failures. After commit, the leader applies the entry to its state machine and returns to the client; followers learn the new commit index in the next heartbeat and apply in order. Commit is monotonic: once an entry at index i is committed, no future leader will ever overwrite it." },
+        { title: "Mini trace \u2014 election after a crash", text: "Term 4 leader S1 crashes. S2\u2019s timer fires first (timeout 187 ms); it becomes candidate, term 5, votes self, asks S3,S4,S5. S3\u2019s log is at least as up-to-date so it grants the vote; S4 grants too. S2 has 3/5 \u2192 leader. It sends an empty AppendEntries (no-op) at term 5 to assert leadership and discover follower log positions, then resumes serving clients. Total downtime is roughly one election timeout \u2014 around 200 ms." },
+        { title: "Pitfall \u2014 the Figure 8 anomaly", text: "The most subtle Raft bug: a leader cannot commit an entry from a previous term just because a majority store it. If S1 (term 2) replicates an old entry to a majority but crashes before committing it, a new term-3 leader could overwrite that entry. Fix (\u00a75.4.2): the leader only marks an entry committed once it has replicated a current-term entry on top of it \u2014 hence the no-op on election." }
+      ],
+      keypoints: [
+        { title: "Quorum size N/2+1", text: "Majority intersection guarantees that any two majorities share at least one server, so at most one leader per term and at least one majority remembers every committed entry." },
+        { title: "Randomized timeouts", text: "Without randomization three followers time out simultaneously, all become candidates, split the vote 1-1-1, and loop. Random spread makes one candidate likely to start first and win cleanly." },
+        { title: "Log-matching property", text: "If two logs share (index, term), they share all earlier entries. AppendEntries\u2019 prevLogIndex/prevLogTerm check enforces this inductively." },
+        { title: "Tie-in", text: "etcd, Consul, CockroachDB, TiKV, MongoDB\u2019s replication protocol \u2014 all are Raft. ZooKeeper uses ZAB, a close cousin. Kafka used ZooKeeper, then KRaft (Kafka\u2019s own Raft) since 2.8." }
+      ]
+    },
+    {
+      id: "two-phase-commit", num: "Concept 5 of 7", title: "Two-Phase Commit & Its Blocking Flaw",
+      desc: "Atomic commit across shards \u2014 the prepare/commit dance, why coordinator failure stalls participants, and how Spanner / Calvin work around it.",
+      color: "#d2a8ff", icon: "\ud83e\udd1d",
+      svg: function(w, h) {
+        return '<svg viewBox="0 0 ' + w + ' ' + h + '" xmlns="http://www.w3.org/2000/svg" style="background:#0d1117">'
+          + '<rect x="20" y="30" width="100" height="40" fill="#d2a8ff20" stroke="#d2a8ff"/>'
+          + '<text x="70" y="55" text-anchor="middle" fill="#d2a8ff" font-size="12" font-weight="700">Coordinator</text>'
+          + '<rect x="' + (w-260) + '" y="30" width="70" height="30" fill="#7ee78720" stroke="#7ee787"/><text x="' + (w-225) + '" y="50" text-anchor="middle" fill="#7ee787" font-size="11">P1</text>'
+          + '<rect x="' + (w-170) + '" y="30" width="70" height="30" fill="#7ee78720" stroke="#7ee787"/><text x="' + (w-135) + '" y="50" text-anchor="middle" fill="#7ee787" font-size="11">P2</text>'
+          + '<rect x="' + (w-80) + '" y="30" width="70" height="30" fill="#7ee78720" stroke="#7ee787"/><text x="' + (w-45) + '" y="50" text-anchor="middle" fill="#7ee787" font-size="11">P3</text>'
+          + '<line x1="70" y1="80" x2="70" y2="' + (h-30) + '" stroke="#30363d" stroke-dasharray="3,3"/>'
+          + '<line x1="' + (w-225) + '" y1="65" x2="' + (w-225) + '" y2="' + (h-30) + '" stroke="#30363d" stroke-dasharray="3,3"/>'
+          + '<line x1="' + (w-135) + '" y1="65" x2="' + (w-135) + '" y2="' + (h-30) + '" stroke="#30363d" stroke-dasharray="3,3"/>'
+          + '<line x1="' + (w-45) + '" y1="65" x2="' + (w-45) + '" y2="' + (h-30) + '" stroke="#30363d" stroke-dasharray="3,3"/>'
+          + '<g stroke="#58a6ff" stroke-width="1.5" marker-end="url(#a4)">'
+          + '<line x1="70" y1="100" x2="' + (w-225) + '" y2="105"/><line x1="70" y1="100" x2="' + (w-135) + '" y2="105"/><line x1="70" y1="100" x2="' + (w-45) + '" y2="105"/>'
+          + '</g>'
+          + '<text x="80" y="98" fill="#58a6ff" font-size="11" font-weight="700">Phase 1: PREPARE</text>'
+          + '<g stroke="#7ee787" stroke-width="1.5" marker-end="url(#a4g)">'
+          + '<line x1="' + (w-225) + '" y1="135" x2="70" y2="145"/><line x1="' + (w-135) + '" y1="135" x2="70" y2="145"/><line x1="' + (w-45) + '" y1="135" x2="70" y2="145"/>'
+          + '</g>'
+          + '<text x="80" y="158" fill="#7ee787" font-size="11">vote YES (durably logged)</text>'
+          + '<g stroke="#f778ba" stroke-width="1.5" marker-end="url(#a4p)">'
+          + '<line x1="70" y1="180" x2="' + (w-225) + '" y2="185"/><line x1="70" y1="180" x2="' + (w-135) + '" y2="185"/><line x1="70" y1="180" x2="' + (w-45) + '" y2="185"/>'
+          + '</g>'
+          + '<text x="80" y="178" fill="#f778ba" font-size="11" font-weight="700">Phase 2: COMMIT</text>'
+          + '<rect x="0" y="' + (h-25) + '" width="' + w + '" height="25" fill="#f8514920"/>'
+          + '<text x="' + (w/2) + '" y="' + (h-8) + '" text-anchor="middle" fill="#f85149" font-size="11" font-weight="700">If coordinator dies between phases \u2192 P1, P2, P3 hold locks forever</text>'
+          + '<defs>'
+          + '<marker id="a4" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><polygon points="0 0, 6 3, 0 6" fill="#58a6ff"/></marker>'
+          + '<marker id="a4g" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><polygon points="0 0, 6 3, 0 6" fill="#7ee787"/></marker>'
+          + '<marker id="a4p" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><polygon points="0 0, 6 3, 0 6" fill="#f778ba"/></marker>'
+          + '</defs>'
+          + '</svg>';
+      },
+      sections: [
+        { title: "The protocol \u2014 two phases, one decision", text: "A coordinator wants every participant to either commit or abort a distributed transaction. Phase 1 (PREPARE): the coordinator asks each participant if it can commit; participants log a YES record durably and reply, or reply NO and abort locally. Phase 2 (COMMIT): if all said YES the coordinator logs a COMMIT record and tells everyone to commit; otherwise it tells them to abort. The key invariant: a YES vote is a binding promise, so once a participant says YES it must wait for the verdict \u2014 it cannot unilaterally abort." },
+        { title: "Why it blocks", text: "The blocking failure mode is the coordinator crashing after some YES votes but before broadcasting the decision. Surviving participants who voted YES are stuck: they cannot abort (a peer might have already committed) and cannot commit (a peer might have voted NO). They must hold all locks and wait \u2014 indefinitely if the coordinator never recovers. Three-Phase Commit adds a PRE-COMMIT round to remove this, but only under synchrony assumptions that production networks routinely violate, so 3PC is rarely deployed." },
+        { title: "Mini trace \u2014 bank transfer", text: "Tx: debit acc_A on bank-X, credit acc_B on bank-Y. Coordinator sends PREPARE. X locks acc_A, logs YES, replies. Y locks acc_B, logs YES, replies. Coordinator logs COMMIT, sends COMMIT to both. X and Y apply, release locks, log DONE. If coordinator dies right after logging COMMIT but before sending it, recovery rereads the log and re-broadcasts \u2014 that\u2019s why the COMMIT record is forced to disk first (presumed-commit optimization)." },
+        { title: "Pitfall \u2014 the modern fix", text: "Spanner replaces the fragile single coordinator with a Paxos-replicated coordinator group: the COMMIT decision is itself committed via Paxos before being broadcast, so coordinator failure is just a leader election, not a stall. Calvin and FaunaDB sidestep 2PC entirely by deterministically pre-ordering transactions through a global log and skipping the prepare round. Lesson: 2PC is correct but its availability story is unacceptable \u2014 always wrap the coordinator in a consensus group." }
+      ],
+      keypoints: [
+        { title: "Forced-write logging", text: "PREPARE/YES, COMMIT, and ABORT records must be flushed to stable storage before sending the next message \u2014 otherwise a crash + restart loses the decision and breaks atomicity." },
+        { title: "Presumed-abort vs presumed-commit", text: "Optimizations that let participants/coordinator avoid certain log writes by assuming the default outcome on missing records. Most production systems use presumed-abort." },
+        { title: "Locks held across the network round-trip", text: "Latency = participant lock hold time. With 100 ms RTT and 1 K TPS, you need 100 K concurrent locks \u2014 hot rows become bottlenecks. This is why YugabyteDB / CockroachDB use sharded local Raft + parallel-commit shortcuts." },
+        { title: "Tie-in", text: "XA transactions in Java/JTA are 2PC; MSDTC on Windows; PostgreSQL\u2019s PREPARE TRANSACTION exposes the participant side. All inherit the blocking flaw unless the coordinator is itself replicated." }
+      ]
+    },
+    {
+      id: "spanner-truetime", num: "Concept 6 of 7", title: "Spanner & TrueTime",
+      desc: "External consistency at planet scale by paying for clock uncertainty: GPS + atomic clocks expose time as an interval, and commits wait it out.",
+      color: "#79c0ff", icon: "\ud83d\udd70\ufe0f",
+      svg: function(w, h) {
+        return '<svg viewBox="0 0 ' + w + ' ' + h + '" xmlns="http://www.w3.org/2000/svg" style="background:#0d1117">'
+          + '<text x="20" y="24" fill="#79c0ff" font-size="13" font-weight="700">TrueTime: now() returns [earliest, latest]</text>'
+          + '<line x1="40" y1="60" x2="' + (w-40) + '" y2="60" stroke="#30363d" stroke-width="1"/>'
+          + '<text x="40" y="56" fill="#8b949e" font-size="10">absolute time \u2192</text>'
+          + '<rect x="120" y="50" width="180" height="20" fill="#79c0ff30" stroke="#79c0ff"/>'
+          + '<text x="210" y="65" text-anchor="middle" fill="#79c0ff" font-size="11">TT.now() interval (\u00b1\u03b5)</text>'
+          + '<line x1="120" y1="45" x2="120" y2="75" stroke="#79c0ff"/><text x="100" y="42" fill="#79c0ff" font-size="10">earliest</text>'
+          + '<line x1="300" y1="45" x2="300" y2="75" stroke="#79c0ff"/><text x="290" y="42" fill="#79c0ff" font-size="10">latest</text>'
+          + '<text x="20" y="120" fill="#7ee787" font-size="13" font-weight="700">Commit-wait protocol</text>'
+          + '<rect x="40" y="135" width="100" height="22" fill="#7ee78720" stroke="#7ee787"/><text x="90" y="150" text-anchor="middle" fill="#7ee787" font-size="11">Acquire locks</text>'
+          + '<rect x="160" y="135" width="120" height="22" fill="#ffa65720" stroke="#ffa657"/><text x="220" y="150" text-anchor="middle" fill="#ffa657" font-size="11">Pick s = TT.now().latest</text>'
+          + '<rect x="300" y="135" width="160" height="22" fill="#f778ba20" stroke="#f778ba"/><text x="380" y="150" text-anchor="middle" fill="#f778ba" font-size="11">WAIT until TT.now().earliest &gt; s</text>'
+          + '<rect x="' + (w-160) + '" y="135" width="120" height="22" fill="#58a6ff20" stroke="#58a6ff"/><text x="' + (w-100) + '" y="150" text-anchor="middle" fill="#58a6ff" font-size="11">Release \u2192 ack client</text>'
+          + '<line x1="140" y1="146" x2="160" y2="146" stroke="#c9d1d9" marker-end="url(#a5)"/>'
+          + '<line x1="280" y1="146" x2="300" y2="146" stroke="#c9d1d9" marker-end="url(#a5)"/>'
+          + '<line x1="460" y1="146" x2="' + (w-160) + '" y2="146" stroke="#c9d1d9" marker-end="url(#a5)"/>'
+          + '<g font-size="11" fill="#c9d1d9">'
+          + '<text x="20" y="200" fill="#79c0ff" font-weight="700">Why this gives external consistency</text>'
+          + '<text x="20" y="220">Tx1 commits at s1, releases locks only after wall-clock surely past s1.</text>'
+          + '<text x="20" y="238">Any Tx2 that started after Tx1 acked will see TT.now().earliest &gt; s1 \u2192 picks s2 &gt; s1.</text>'
+          + '<text x="20" y="256">Cost: every commit pays ~2\u03b5 extra latency (~7 ms in Google\u2019s DCs).</text>'
+          + '</g>'
+          + '<defs><marker id="a5" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><polygon points="0 0, 6 3, 0 6" fill="#c9d1d9"/></marker></defs>'
+          + '</svg>';
+      },
+      sections: [
+        { title: "External consistency \u2014 stronger than linearizability across shards", text: "Spanner promises that if transaction T1 commits before T2 starts (in real wall-clock time, anywhere on Earth), then T1\u2019s commit timestamp is less than T2\u2019s. This is linearizability extended across independent Paxos groups \u2014 something no prior system could deliver without a global serialization point. The key insight: instead of fighting clock skew, expose it. TT.now() returns an interval [earliest, latest] guaranteed to bracket true time, with \u03b5 typically 1\u20137 ms thanks to GPS receivers and atomic clocks in every datacenter." },
+        { title: "Commit-wait \u2014 paying for uncertainty", text: "When a transaction is ready to commit, Spanner picks s = TT.now().latest as its timestamp. Before releasing locks (and replying to the client), it waits until TT.now().earliest > s, i.e. until wall-clock has provably moved past s everywhere. This wait is typically a few milliseconds and is overlapped with the Paxos round to replicate the commit, so most transactions pay zero observable latency. Without commit-wait, two datacenters with different clock readings could both timestamp transactions at \"10:00:00.000\" and lose external ordering." },
+        { title: "Mini trace \u2014 cross-shard commit", text: "Tx debits Tokyo shard, credits NYC shard. Coordinator (Tokyo) drives 2PC. Both Paxos groups PREPARE and reply with their local prepare timestamps. Coordinator picks commit timestamp s = max(prepare timestamps, TT.now().latest). It waits out commit-wait while broadcasting COMMIT through Paxos. Reads at timestamp r &lt; s see the pre-state; reads at r \u2265 s see the post-state \u2014 globally consistent without any cross-DC lock." },
+        { title: "Pitfall \u2014 what if a clock lies?", text: "If a server\u2019s TrueTime interval becomes wrong (a stuck atomic clock), commit-wait can finish too early and external consistency breaks. Spanner mitigates with cross-checking: every server periodically polls multiple TrueTime masters and panics (removes itself from quorum) on disagreement. The \u03b5 you see exposed is conservative \u2014 it grows during master polls and shrinks afterward, sawtooth-shaped, which is why 99th-percentile commits are more expensive than median." }
+      ],
+      keypoints: [
+        { title: "Why NTP isn\u2019t enough", text: "NTP gives \u00b150\u2013100 ms with no upper bound during outages. Commit-wait at 100 ms doubles transaction latency; with 1000 TPS hot-row, throughput collapses. TrueTime\u2019s \u00b17 ms makes the technique actually deployable." },
+        { title: "Snapshot reads are free", text: "Read-only transactions at a past timestamp t need only confirm that every shard\u2019s safe-time has advanced past t \u2014 no locks, no 2PC, no commit-wait. This is why Spanner is fast for analytics on top of OLTP." },
+        { title: "Paxos per shard, 2PC across shards", text: "Each shard is a Paxos group (handles replication & failover); cross-shard transactions layer 2PC on top, but the coordinator role is itself Paxos-replicated \u2014 fixing 2PC\u2019s blocking flaw." },
+        { title: "Tie-in", text: "CockroachDB approximates Spanner using HLCs (hybrid logical clocks) instead of atomic hardware \u2014 trading external consistency for serializable + bounded staleness. YugabyteDB does the same. AWS Aurora uses log-shipping + leader-only writes, sidestepping the problem entirely." }
+      ]
+    },
+    {
+      id: "linearizability", num: "Concept 7 of 7", title: "Linearizability \u2014 the Correctness Bar",
+      desc: "Herlihy & Wing\u2019s 1990 definition: every operation appears to take effect atomically at some point between invoke and respond, consistent with real-time order.",
+      color: "#f778ba", icon: "\ud83d\udccf",
+      svg: function(w, h) {
+        return '<svg viewBox="0 0 ' + w + ' ' + h + '" xmlns="http://www.w3.org/2000/svg" style="background:#0d1117">'
+          + '<line x1="40" y1="40" x2="' + (w-20) + '" y2="40" stroke="#30363d" marker-end="url(#a6)"/>'
+          + '<text x="' + (w-30) + '" y="32" fill="#8b949e" font-size="10">time</text>'
+          + '<text x="20" y="80" fill="#58a6ff" font-size="11" font-weight="700">A:</text>'
+          + '<rect x="60" y="65" width="180" height="22" fill="#58a6ff20" stroke="#58a6ff"/>'
+          + '<text x="150" y="80" text-anchor="middle" fill="#58a6ff" font-size="11">write x=1</text>'
+          + '<circle cx="170" cy="76" r="4" fill="#58a6ff"/>'
+          + '<text x="20" y="130" fill="#7ee787" font-size="11" font-weight="700">B:</text>'
+          + '<rect x="260" y="115" width="160" height="22" fill="#7ee78720" stroke="#7ee787"/>'
+          + '<text x="340" y="130" text-anchor="middle" fill="#7ee787" font-size="11">read x \u2192 1 \u2713</text>'
+          + '<circle cx="320" cy="126" r="4" fill="#7ee787"/>'
+          + '<text x="20" y="180" fill="#f778ba" font-size="11" font-weight="700">C:</text>'
+          + '<rect x="280" y="165" width="160" height="22" fill="#f8514920" stroke="#f85149" stroke-dasharray="4,2"/>'
+          + '<text x="360" y="180" text-anchor="middle" fill="#f85149" font-size="11">read x \u2192 0 \u2717 violation</text>'
+          + '<text x="40" y="220" fill="#c9d1d9" font-size="11">A\u2019s write completes at t=240. B\u2019s read starts after \u2192 must see x=1.</text>'
+          + '<text x="40" y="240" fill="#c9d1d9" font-size="11">C\u2019s read also starts after A finished \u2192 returning 0 violates real-time order.</text>'
+          + '<text x="40" y="' + (h-15) + '" fill="#8b949e" font-size="10">Linearization point = the atomic instant somewhere inside each box.</text>'
+          + '<defs><marker id="a6" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><polygon points="0 0, 6 3, 0 6" fill="#30363d"/></marker></defs>'
+          + '</svg>';
+      },
+      sections: [
+        { title: "The definition", text: "An execution is linearizable if there exists a total order of operations such that (1) it matches the sequential specification of the object (e.g., reads return the most recent write), and (2) it respects real-time order: if op X completed before op Y started, X comes before Y in the order. Each operation has a single linearization point somewhere inside its [invoke, respond] interval. Concurrent operations may be ordered either way \u2014 you only have to find one valid order, you do not have to commit to one upfront." },
+        { title: "Why we care", text: "Linearizability is the strongest single-object consistency model and the one that matches programmer intuition: the system behaves as if there is one copy and one operation runs at a time. Any violation is observable \u2014 a client could call your support line with a screenshot proving it. Weaker models (sequential consistency, causal, eventual) are cheaper but force application code to handle stale reads. ZooKeeper writes, etcd, Raft state machines, and (per shard) Spanner all promise linearizability." },
+        { title: "Mini trace \u2014 spotting a violation", text: "A executes write(x,1) from t=100 to t=240. B executes read(x) from t=260 to t=380 and returns 1 \u2014 fine, real-time order is preserved. C executes read(x) from t=300 to t=420 and returns 0 \u2014 violation: C started after A finished, so x must already be 1. A clever shopkeeper might argue \"the linearization point of write was at t=400\", but then B (which finished at t=380 returning 1) could not have seen it. No total order exists \u2014 the history is non-linearizable." },
+        { title: "Pitfall \u2014 stale leader reads", text: "Naive Raft \"read from the leader\" is NOT linearizable: a network-partitioned old leader does not yet know it has been deposed and can return a stale value. Fixes: (1) ReadIndex \u2014 leader confirms it is still leader by exchanging heartbeats with a quorum before serving the read; (2) lease reads \u2014 leader knows its lease has not expired by the local clock and so cannot have been replaced. etcd uses both. Without one of these, you have sequential consistency, not linearizability." }
+      ],
+      keypoints: [
+        { title: "Single-object only", text: "Linearizability composes \u2014 a system of linearizable objects is itself linearizable \u2014 but it doesn\u2019t bundle multi-object atomicity. For that you need serializable transactions (a different, stronger concept that doesn\u2019t imply real-time order)." },
+        { title: "Cost: a network round trip", text: "Linearizable reads require either a quorum confirm or a lease check; you cannot serve them from a stale local replica without protocol support. CAP says: in a partition you must give up either availability or linearizability \u2014 ZooKeeper picks the former, Cassandra the latter." },
+        { title: "How to test", text: "Jepsen\u2019s Knossos checker brute-forces all valid linearization orders; if none satisfies the history, the system is buggy. This caught real linearizability violations in MongoDB, Redis Sentinel, etcd 2.x, Galera, and many others." },
+        { title: "Tie-in", text: "Linearizability \u2248 atomic consistency \u2248 strong consistency in casual usage. AWS DynamoDB strong-consistent reads, Google Cloud Spanner default reads, and ZooKeeper sync()+read all promise it; eventually-consistent systems explicitly do not." }
       ]
     }
   ],
+
+  useCases: [
+    {
+      id: "raft-config-service", title: "Config Service on Raft (etcd-style)",
+      desc: "How Kubernetes\u2019 control plane stores cluster state in etcd \u2014 every Pod write is a Raft consensus round.",
+      icon: "\u2699\ufe0f", color: "#ffa657",
+      summary: "Every <strong>kubectl apply</strong> turns into a <strong>Raft log entry</strong>: the API server marshals the object, etcd's leader appends it locally, replicates to a majority via <strong>AppendEntries</strong>, fsyncs, and only then acks the client. <strong>Watchers</strong> (controllers, kubelets) are notified via gRPC streams so the cluster converges within tens of milliseconds.",
+      pipeline: "kubectl \u2192 kube-apiserver \u2192 etcd-client \u2192 [etcd leader]\n                                          \u2502 AppendEntries\n                                          \u251c\u2500\u2192 follower-1 (fsync + ack)\n                                          \u2514\u2500\u2192 follower-2 (fsync + ack)\n                                          \u2193  majority quorum\n                                       commit \u2192 apply \u2192 watch fanout\n                                                       \u2502\n                                            controllers + kubelets",
+      metrics: [
+        { label: "Heartbeat interval", value: "100 ms" },
+        { label: "Election timeout", value: "1000\u20131500 ms" },
+        { label: "Commit latency (1 AZ)", value: "5\u201310 ms" },
+        { label: "etcd write QPS (3-node)", value: "~10k ops/s" }
+      ],
+      extensions: "Read about etcd's <strong>ReadIndex</strong> path for linearizable reads without a log append, and explore <strong>leader-lease</strong> reads which trade safety bounds for one-RTT throughput.",
+      steps: [
+        { title: "Step 1 \u2014 Client write hits API server", component: "kube-apiserver", proto: "HTTPS / Protobuf",
+          intuition: "The API server is the single funnel \u2014 it normalizes, validates, and authorizes before any consensus cost is paid.",
+          complexity: "O(1) per request + admission webhooks",
+          detail: "kubectl apply translates YAML into a JSON patch and POSTs it to kube-apiserver. The apiserver authenticates, runs admission controllers, and serializes the resulting object as a protobuf blob.",
+          code: "kubectl apply -f deploy.yaml\n# \u2192 POST /api/v1/namespaces/default/deployments",
+          example: "In a 500-node Kubernetes cluster, the apiserver typically handles 2\u20135k req/s sustained, peaking at 10k during rollouts; admission webhooks add 1\u201320 ms each.",
+          pitfall: "Skipping resourceVersion checks turns optimistic concurrency into last-writer-wins \u2014 the apiserver returns 409 Conflict on mismatch for a reason." },
+        { title: "Step 2 \u2014 apiserver forwards to etcd leader", component: "etcd client", proto: "gRPC",
+          intuition: "All writes must funnel through one leader; followers refuse writes so the log has a single source of truth.",
+          complexity: "1 RTT to discover leader, then steady-state direct",
+          detail: "The apiserver opens a gRPC stream to the etcd cluster. etcd\u2019s client library auto-discovers the current leader; non-leader nodes return a redirect so all writes funnel to the leader.",
+          code: "etcdctl put /registry/deployments/default/web '<protobuf>'",
+          pitfall: "Pointing a client at a stale endpoint list causes redirect storms during leader change \u2014 always use the full cluster member list, not a single IP." },
+        { title: "Step 3 \u2014 Leader appends to its log", component: "etcd leader", proto: "Raft AppendEntries",
+          intuition: "The log is the timeline \u2014 once entry N is durable, every replica will eventually apply it in that exact order.",
+          complexity: "O(N) parallel RPCs to N followers, 1 fsync",
+          detail: "Leader assigns the next log index, appends the entry locally, then issues parallel AppendEntries RPCs to all followers. Heartbeat interval is 100 ms by default; election timeout 1000 ms.",
+          example: "etcd uses WAL files of 64 MB; on NVMe an fsync is ~0.3 ms, on EBS gp2 it can be 5\u201310 ms \u2014 disk latency dominates Raft latency.",
+          pitfall: "Setting election timeout too close to heartbeat (e.g., 200 ms with 100 ms heartbeats) causes spurious elections under GC pauses; use 10\u00d7 the heartbeat as the floor." },
+        { title: "Step 4 \u2014 Majority commit", component: "Raft state machine", proto: "Raft",
+          intuition: "Majority overlap guarantees any future leader has seen this entry \u2014 that's the entire safety argument of Raft.",
+          complexity: "O(1) wait for \u2308N/2\u2309 acks",
+          detail: "Once 2 of 3 (or 3 of 5) followers ack, the leader marks the entry committed, applies it to its in-memory key-value tree, and signals waiting clients. Commit latency: 1 disk fsync + 1 RTT, typically 5\u201310 ms in a single AZ.",
+          example: "A 3-node etcd cluster across us-east-1a/1b/1c (~1 ms RTT) commits in 3\u20137 ms; stretched across regions (us-east \u2194 us-west, 70 ms RTT) commit climbs to ~80 ms.",
+          pitfall: "Even-sized clusters (2, 4, 6) have the same fault tolerance as N\u22121 \u2014 always use 3, 5, or 7 nodes." },
+        { title: "Step 5 \u2014 Watch fanout to controllers", component: "etcd watch / controllers", proto: "gRPC stream",
+          intuition: "Push-based watches turn polling into event streams \u2014 controllers react in real time without hammering the API server.",
+          complexity: "O(watchers) per committed entry",
+          detail: "Deployment controller, scheduler, and kubelets hold long-lived gRPC watch streams. The committed entry triggers a watch event that cascades through the controller chain \u2014 within ~50 ms a kubelet on some node receives the new Pod spec.",
+          example: "A 5k-node Kubernetes cluster maintains ~50k open watches against etcd; the apiserver mirrors them so etcd itself sees only ~10 watch streams.",
+          pitfall: "Watch streams can be silently dropped when the apiserver compacts history past your last-seen resourceVersion \u2014 always handle 410 Gone by re-listing.",
+          refs: [{ label: "etcd Raft impl", url: "https://github.com/etcd-io/raft" }, { label: "Kubernetes API conventions", url: "https://kubernetes.io/docs/reference/using-api/api-concepts/" }] }
+      ]
+    },
+    {
+      id: "shard-migration", title: "Online Shard Migration (CockroachDB / Vitess)",
+      desc: "Splitting a hot shard into two without downtime \u2014 dual-writes, catch-up, atomic cutover.",
+      icon: "\u2702\ufe0f", color: "#7ee787",
+      summary: "A hot shard is split by <strong>snapshotting</strong> it, attaching three new <strong>learner replicas</strong> for the upper half, opening a <strong>dual-write window</strong> while learners catch up, then flipping a single <strong>range descriptor</strong> entry through Raft \u2014 an atomic, log-ordered cutover with no read downtime.",
+      pipeline: "[hot shard #42  keys k0..k9999]\n        \u2502 metrics flag hotspot\n        \u2193\n  pick split at k5000\n        \u2502\n        \u251c\u2500\u2192 snapshot + ship to learners (#42b)\n        \u251c\u2500\u2192 dual-write k5000..k9999 (old + new) \u23f3\n        \u251c\u2500\u2192 learners caught up?  \u2192 Raft commit: descriptor swap\n        \u2514\u2500\u2192 TTL + GC of old range data",
+      metrics: [
+        { label: "Range size target", value: "512 MiB (Cockroach)" },
+        { label: "Split duration", value: "~30 s for 1 GB" },
+        { label: "Cutover atomicity", value: "1 Raft entry (\u22645 ms)" },
+        { label: "Dual-write overhead", value: "+1 RTT per write" }
+      ],
+      extensions: "Investigate <strong>consistent hashing</strong> for shard placement, <strong>load-based splitting heuristics</strong>, and Vitess's <strong>VReplication</strong> for cross-keyspace resharding with binlog tailing.",
+      steps: [
+        { title: "Step 1 \u2014 Identify the hot shard", component: "Range manager", proto: "metric scrape",
+          intuition: "Splits aren't preventive \u2014 you split where load actually concentrates, because most workloads are skewed (Zipfian).",
+          complexity: "O(shards) scan of metrics",
+          detail: "QPS and CPU metrics flag shard #42 (key range [k0, k9999]) as hot \u2014 it sustains 4\u00d7 the cluster mean. The orchestrator picks split point k5000.",
+          example: "CockroachDB triggers a split when a range exceeds 512 MiB or sustains >2500 QPS for 5 minutes; the median split point is chosen from a reservoir sample of recent keys.",
+          pitfall: "Splitting on a key prefix that all hot writes share (e.g., today's date) just moves the hotspot \u2014 you need to split where the load distribution actually has structure." },
+        { title: "Step 2 \u2014 Snapshot + start follower learner", component: "Raft snapshot + InstallSnapshot", proto: "Raft",
+          intuition: "Learners receive log entries but don't vote \u2014 they catch up without affecting quorum or availability.",
+          complexity: "O(range size) for snapshot transfer",
+          detail: "Source shard\u2019s leader takes a Raft log snapshot at index N and ships it to three new replicas designated for shard #42b. Learners catch up via AppendEntries from index N+1 onward, without voting yet.",
+          example: "A 512 MiB range snapshot ships at ~100 MB/s on a 10 Gbps network, then learners stream incremental log entries (typ. 10\u201320 MB) over the next few seconds.",
+          pitfall: "If a learner is counted in the quorum prematurely, the cluster can lose progress when it can't keep up \u2014 always promote only after the learner is within a few entries of the leader." },
+        { title: "Step 3 \u2014 Dual-write window", component: "Coordinator", proto: "2PC across new+old groups",
+          intuition: "Dual-writes are the bridge: both replicas converge to the same state while the source of truth migrates.",
+          complexity: "O(2 Raft commits) per write during window",
+          detail: "Once learners have the snapshot, writes in the [k5000, k9999] range commit on BOTH old shard #42 and new shard #42b inside the same distributed transaction. Reads still go to #42.",
+          pitfall: "If 2PC isn't used and writes go to the two shards independently, a crash mid-write can leave them divergent forever \u2014 the migration is then unrecoverable without manual reconciliation." },
+        { title: "Step 4 \u2014 Atomic cutover", component: "Range descriptor write", proto: "Raft commit",
+          intuition: "The descriptor is itself a Raft-replicated record \u2014 so its swap is linearizable across all routers.",
+          complexity: "1 Raft entry, O(committed log length) routing refresh",
+          detail: "When new replicas are within a few entries of the leader, a single Raft entry rewrites the range descriptor: \"keys [k5000,k9999) now live in shard #42b\". From the next read onward, traffic routes there.",
+          code: "# Rebalance done\n# Old shard #42 now holds [k0,k5000), new #42b holds [k5000,k9999)",
+          example: "In CockroachDB the descriptor lives in a system range; a split bumps its `generation` counter so stale clients receive a `RangeKeyMismatchError` and re-fetch \u2014 typical refresh is 1\u20132 RTTs (<5 ms)." },
+        { title: "Step 5 \u2014 Retire old replicas", component: "Garbage collector", proto: "background",
+          intuition: "You must wait out the longest in-flight read with stale routing info before reclaiming \u2014 otherwise reads silently return missing data.",
+          complexity: "O(retired data size) reclaim",
+          detail: "After a TTL (so any in-flight reads with stale routing info finish), the old shard\u2019s [k5000,k9999) data is dropped and disk reclaimed.",
+          pitfall: "Aggressive GC can race long-running scans (e.g., a 30 s analytics query) and produce 'key not found' on rows that visibly existed \u2014 set TTL \u2265 longest expected statement timeout.",
+          refs: [{ label: "CockroachDB range splits", url: "https://www.cockroachlabs.com/docs/stable/architecture/distribution-layer.html" }] }
+      ]
+    },
+    {
+      id: "leader-lease-cache", title: "Leader Lease for Cache Coherence (Frangipani / Memcached)",
+      desc: "Time-bounded leases let a cache safely serve reads without a network check on every hit.",
+      icon: "\ud83d\udd11", color: "#79c0ff",
+      summary: "Instead of revalidating every read against a lock server, the client takes a <strong>time-bounded lease</strong>. Within the lease window it serves cached reads at memory speed. To invalidate, the server either gets a fast revoke ack \u2014 or simply <strong>waits out the lease</strong>. Correctness rests entirely on <strong>bounded clock skew</strong>.",
+      pipeline: "client          lock-server         writer\n  \u2502  GrantLease(K) \u2192\n  \u2502 \u2190 lease(10s)\n  \u2502 (cached reads, O(0) RPC)\n  \u2502                  \u2190  WriteReq(K)\n  \u2502 \u2190 Revoke(K) (callback)\n  \u2502  Ack \u2192             \u2192 grant write\n           or wait until expires_at",
+      metrics: [
+        { label: "Typical lease length", value: "10 s" },
+        { label: "Cache hit latency", value: "~100 ns (RAM)" },
+        { label: "Clock skew tolerance", value: "<1 s (NTP)" },
+        { label: "Throughput uplift", value: "100\u20131000\u00d7 vs RPC/read" }
+      ],
+      extensions: "Compare with <strong>etcd / Raft leader leases</strong> (used for one-RTT linearizable reads), and study Google's <strong>Chubby</strong> and ZooKeeper's <strong>session timeouts</strong> for stronger primitives.",
+      steps: [
+        { title: "Step 1 \u2014 Client requests a read lease", component: "Cache client", proto: "RPC",
+          intuition: "A lease is a time-bounded promise \u2014 it converts every future read into a free local check.",
+          complexity: "1 RPC per lease, then O(0) per read",
+          detail: "Client asks lock server for a read lease on key K. Lease grants the right to cache K\u2019s value for 10 seconds.",
+          example: "A Memcached cluster with 10s leases can absorb >1M reads/s per client with zero coordination cost as long as the working set is stable." },
+        { title: "Step 2 \u2014 Lock server records grant", component: "Lock server", proto: "internal log",
+          intuition: "The server's promise must be durable \u2014 a crash that forgets it can issue a write lease while a stale read lease still exists.",
+          complexity: "1 log append per grant",
+          detail: "Server logs (K, client, expires_at = now + 10 s) durably and replies. Server promises NOT to grant a write lease on K to anyone before expires_at \u2014 absent that promise, the client could not safely cache.",
+          pitfall: "Forgetting to fsync the lease record means a crash recovery can grant writes to data that's still cached \u2014 silent inconsistency." },
+        { title: "Step 3 \u2014 Client serves cached reads", component: "Cache", proto: "local",
+          intuition: "The whole point: lease == permission to skip the network.",
+          complexity: "O(1) per read, no RPC",
+          detail: "Reads on K within the lease window are served from local memory \u2014 no RPC. Throughput at L1-cache speed.",
+          example: "Frangipani benchmarks showed ~10\u00d7 fewer lock-server messages than equivalent NFS designs with the same workload." },
+        { title: "Step 4 \u2014 Writer wants to invalidate", component: "Lock server", proto: "callback",
+          intuition: "Fast path: ack the revoke. Slow path: wait. Either way the writer can proceed safely.",
+          complexity: "min(callback RTT, time until lease expires)",
+          detail: "Another client requests write on K. Lock server calls back current lease holder asking it to revoke. If client acks within timeout \u2014 invalidate immediately. If not \u2014 server simply WAITS until expires_at, then grants the write. Either way, no synchronization needed beyond clock skew bounds.",
+          code: "# Pseudocode\nif lease.expired() or holder.acks_revoke():\n    grant_write()\nelse:\n    sleep_until(lease.expires_at + safety_margin)",
+          pitfall: "Choosing leases that are too long stalls writers behind dead clients; too short and the cache benefit evaporates \u2014 10s is a common sweet spot." },
+        { title: "Step 5 \u2014 Bounded clock skew is the only assumption", component: "All nodes", proto: "NTP",
+          intuition: "Leases are correct only if clocks agree to within the safety margin \u2014 otherwise both sides can think they hold conflicting rights.",
+          complexity: "constant safety margin term",
+          detail: "Correctness requires |client_clock - server_clock| &lt; safety_margin (typ. 1 s). Without bounded skew, a sleeping client could think its lease is valid after the server gave it away \u2014 split-brain on the value.",
+          example: "Google's Spanner avoids this entire problem by replacing implicit NTP bounds with explicit TrueTime intervals (\u00b1\u03b5, typically \u22646 ms).",
+          pitfall: "VM live migration or pause can jump the clock by seconds \u2014 always include a paranoid margin or use a monotonic deadline like CLOCK_BOOTTIME.",
+          refs: [{ label: "Frangipani paper (SOSP 1997)", url: "https://www.usenix.org/legacy/publications/library/proceedings/osdi97/full_papers/thekkath/thekkath.pdf" }] }
+      ]
+    },
+    {
+      id: "idempotent-retry", title: "Idempotent Retry Across Network Failures (Stripe / AWS-style)",
+      desc: "Client-supplied idempotency key + server-side dedup table = exactly-once \u2018outcome\u2019 over at-least-once delivery.",
+      icon: "\ud83d\udd01", color: "#d2a8ff",
+      summary: "True 'exactly-once' over the network is impossible; the trick is to make the <strong>outcome</strong> exactly-once instead. The client mints a stable <strong>idempotency key</strong>; the server records a <strong>(key, status, response)</strong> row inside the same transaction as the side effect. Retries then return the cached reply.",
+      pipeline: "client                   API gateway              charge service\n  \u2502 mint UUID (durable)\n  \u2502  POST + Idempotency-Key \u2192\n                              dedup lookup \u2192 NEW\n                                                process side-effect\n                                                + write dedup row (1 txn)\n  \u2502 \u2190 200 OK (response cached)\n  \u2502 retry on timeout \u2192\n                              dedup lookup \u2192 COMPLETED\n  \u2502 \u2190 same cached 200 OK",
+      metrics: [
+        { label: "Idempotency-Key TTL", value: "24 h (Stripe)" },
+        { label: "Dedup table lookup", value: "<1 ms (Redis/DDB)" },
+        { label: "Storage per key", value: "~1\u20132 KB" },
+        { label: "Production overhead", value: "+1 DB write/req" }
+      ],
+      extensions: "Layer this with <strong>transactional outbox</strong> for cross-system side effects, and study <strong>SQS FIFO</strong> dedup tokens and <strong>Kafka exactly-once semantics</strong> (transactional producer + idempotent broker).",
+      steps: [
+        { title: "Step 1 \u2014 Client mints UUID per logical operation", component: "SDK", proto: "HTTPS",
+          intuition: "The key is the operation's identity \u2014 it must outlive any single attempt, including crashes.",
+          complexity: "O(1) per operation",
+          detail: "Before the first attempt, client generates a v4 UUID and stores it durably alongside the request payload. This UUID survives client retries \u2014 it is the operation\u2019s identity, not the attempt\u2019s.",
+          code: "POST /v1/charges\nIdempotency-Key: 7c2a...e9b1\n{\"amount\":1000,\"currency\":\"usd\",...}",
+          pitfall: "Generating a new UUID per retry attempt defeats the entire scheme \u2014 the server treats each attempt as a fresh charge." },
+        { title: "Step 2 \u2014 Server consults dedup table", component: "API gateway", proto: "DB lookup",
+          intuition: "Three states (NEW, IN_PROGRESS, COMPLETED) are the minimum state machine to make retries safe under concurrency.",
+          complexity: "O(1) hash lookup",
+          detail: "Gateway looks up the key in a dedup table (Redis or DynamoDB with TTL = 24 h). Three outcomes: NEW \u2192 process; IN_PROGRESS \u2192 wait/return 409; COMPLETED \u2192 return cached response.",
+          example: "Stripe stores idempotency records for 24 h in a sharded Redis with DynamoDB as the durable backstop; lookups are typically <1 ms.",
+          pitfall: "Missing the IN_PROGRESS state lets two concurrent retries both think they're 'new' and double-charge." },
+        { title: "Step 3 \u2014 Process and atomically record outcome", component: "Charge service", proto: "DB transaction",
+          intuition: "Atomicity binds the side effect to its dedup record \u2014 one cannot persist without the other.",
+          complexity: "1 ACID transaction",
+          detail: "Inside one DB transaction: insert charge row, set dedup table entry from IN_PROGRESS to COMPLETED with response body. Atomicity is critical \u2014 a crash between the side effect and the dedup write would let a retry double-charge.",
+          pitfall: "Storing the dedup row in a different database than the side effect re-introduces the same problem you set out to solve \u2014 you now need 2PC or an outbox." },
+        { title: "Step 4 \u2014 Reply lost \u2192 client retries", component: "Client", proto: "retry policy",
+          intuition: "Networks fail asymmetrically: the server may have succeeded while the client saw a timeout. Idempotency makes that ambiguity safe.",
+          complexity: "O(retry budget) attempts",
+          detail: "Connection drops before client sees 200 OK. Client retries with the SAME Idempotency-Key after exponential backoff.",
+          example: "AWS SDKs default to exponential backoff with full jitter (1s, 2s, 4s, ... up to ~30s) across 3\u20136 attempts." },
+        { title: "Step 5 \u2014 Server returns cached response", component: "API gateway", proto: "HTTPS",
+          intuition: "From the client's POV the operation has 'exactly-once' semantics, even though the wire saw it 1+ times.",
+          complexity: "O(1) cached return",
+          detail: "Gateway sees COMPLETED, returns the original response body and status code. Client perceives exactly-one charge despite at-least-once delivery.",
+          pitfall: "If the request body differs from the original (even by one byte) most implementations return a 422 \u2014 a retry must replay byte-identical input.",
+          refs: [{ label: "Stripe Idempotent Requests", url: "https://docs.stripe.com/api/idempotent_requests" }, { label: "AWS API Idempotency", url: "https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/" }] }
+      ]
+    },
+    {
+      id: "linearizable-read-index", title: "Linearizable Reads via ReadIndex (etcd / Raft)",
+      desc: "Serve strongly-consistent reads without writing to the log \u2014 confirm leadership, wait for apply, return.",
+      icon: "\ud83d\udd0d", color: "#58a6ff",
+      summary: "Raft's <strong>ReadIndex</strong> path serves linearizable reads <strong>without appending a log entry</strong>. The leader records its current commit index, exchanges <strong>heartbeats with a quorum</strong> to confirm it's still leader, waits until its state machine has applied through that index, then answers from local memory.",
+      pipeline: "client \u2192 leader\n           \u2502 record commitIndex = N\n           \u2502 broadcast heartbeat\n           \u2502 \u2190 quorum acks (still leader)\n           \u2502 wait until applyIndex \u2265 N\n           \u2192 return local read\n\n   (no disk write, no log entry)",
+      metrics: [
+        { label: "Latency vs log write", value: "~50% lower" },
+        { label: "Disk I/O", value: "0 fsyncs" },
+        { label: "Network cost", value: "1 heartbeat RTT" },
+        { label: "etcd default", value: "ReadIndex on by default" }
+      ],
+      extensions: "Compare to <strong>leader-lease reads</strong> (zero RPCs, but trust clock bound) and Spanner's <strong>safe-time reads</strong> (use timestamps to read from any replica).",
+      steps: [
+        { title: "Step 1 \u2014 Client sends read to leader", component: "etcd client", proto: "gRPC",
+          intuition: "Linearizable reads must be observed in real-time order \u2014 only the leader sees the latest committed prefix.",
+          complexity: "O(1) routing",
+          detail: "Client issues a Get(K) with `linearizable=true`. The client library forwards to the current leader; followers reject linearizable reads by default.",
+          pitfall: "Reading from a follower without ReadIndex returns potentially stale data \u2014 etcd's `--consistency=s` (serializable) mode does exactly that." },
+        { title: "Step 2 \u2014 Leader records its commitIndex", component: "Raft leader", proto: "in-memory",
+          intuition: "We need to read state at least as fresh as everything committed before this read arrived.",
+          complexity: "O(1) memory read",
+          detail: "Leader captures readIndex = current commitIndex. Any state that was visible to a client before this RPC must be at or below this index." },
+        { title: "Step 3 \u2014 Confirm leadership via heartbeats", component: "Raft leader", proto: "AppendEntries (empty)",
+          intuition: "A deposed leader doesn't know it's deposed \u2014 the only way to be sure is a fresh majority ack.",
+          complexity: "1 RTT to quorum",
+          detail: "Leader sends an empty AppendEntries to all followers; once a majority acks, it KNOWS no other leader has been elected (because elections require majority). Without this, a network-partitioned former leader could serve stale data.",
+          example: "etcd batches concurrent ReadIndex requests into one heartbeat round, so 1000 concurrent reads incur just one extra RTT total.",
+          pitfall: "Skipping this check (the so-called 'optimistic' read) is what made early etcd / Consul versions Jepsen-vulnerable." },
+        { title: "Step 4 \u2014 Wait until applyIndex \u2265 readIndex", component: "State machine", proto: "in-memory",
+          intuition: "The state machine may lag the log slightly; we must observe state AFTER the read's logical timestamp.",
+          complexity: "O(latency to next apply tick), typically <1 ms",
+          detail: "The leader's state machine applies committed entries asynchronously. The read blocks until applyIndex catches up to readIndex, ensuring the read observes all prior commits." },
+        { title: "Step 5 \u2014 Return value from local state", component: "State machine", proto: "local memory",
+          intuition: "Once leadership and apply position are confirmed, the local in-memory state is provably the right answer.",
+          complexity: "O(1) map lookup",
+          detail: "Leader returns the value from its in-memory key-value tree. Total latency \u2248 1 RTT + apply delay \u2014 about half of a full Raft write, with zero disk cost.",
+          example: "etcd benchmark: linearizable reads sustain ~50k QPS per leader, ~3\u00d7 the rate of linearizable writes.",
+          refs: [{ label: "Raft thesis \u00a76.4", url: "https://web.stanford.edu/~ouster/cgi-bin/papers/OngaroPhD.pdf" }, { label: "etcd linearizability", url: "https://etcd.io/docs/v3.5/learning/api_guarantees/" }] }
+      ]
+    },
+    {
+      id: "spanner-truetime", title: "External Consistency via TrueTime (Google Spanner)",
+      desc: "Globally-ordered transactions across continents using clocks with bounded uncertainty.",
+      icon: "\ud83d\udd70\ufe0f", color: "#f778ba",
+      summary: "Spanner replaces 'I think it's now t' with 'now is somewhere in [t\u2212\u03b5, t+\u03b5]'. A writer <strong>picks a commit timestamp</strong> after acquiring locks, then <strong>waits out the uncertainty interval</strong> before releasing them. That single <strong>commit-wait</strong> turns bounded clock skew into <strong>external consistency</strong> across datacenters.",
+      pipeline: "TT.now() \u2192 [earliest, latest]   (\u03b5 \u2248 6 ms)\n\nwriter:\n  acquire locks\n  pick s = TT.now().latest\n  replicate via Paxos\n  wait until TT.now().earliest > s     \u2190 'commit wait'\n  release locks\n\nreader at time T: read from any replica whose safe-time \u2265 T",
+      metrics: [
+        { label: "TrueTime \u03b5 (typical)", value: "1\u20137 ms" },
+        { label: "Commit wait (avg)", value: "~5 ms" },
+        { label: "GPS+atomic clocks/DC", value: "2 per cluster" },
+        { label: "Cross-region write", value: "~50\u2013150 ms" }
+      ],
+      extensions: "Read the original <strong>Spanner OSDI 2012</strong> paper; compare with <strong>CockroachDB HLC</strong> (hybrid logical clocks, no GPS) and <strong>YugabyteDB</strong>'s skew-bound variants.",
+      steps: [
+        { title: "Step 1 \u2014 Query TrueTime API", component: "TT.now()", proto: "local API",
+          intuition: "Don't pretend you know the time \u2014 measure how uncertain you are about it.",
+          complexity: "O(1) call",
+          detail: "Each server queries TT.now() and gets {earliest, latest} where the true wall-clock is guaranteed to lie. \u03b5 = (latest \u2212 earliest)/2 is the bound on local clock uncertainty.",
+          example: "In Google datacenters, \u03b5 averages ~2 ms in normal operation, with brief spikes to 6\u201310 ms after time-master failover.",
+          pitfall: "Treating TT.now() as a scalar timestamp throws away the very property that makes Spanner safe." },
+        { title: "Step 2 \u2014 Pick commit timestamp", component: "Transaction coordinator", proto: "local",
+          intuition: "Choosing TT.latest ensures the commit timestamp is at least as large as the real time of any transaction that committed before locks were acquired.",
+          complexity: "O(1)",
+          detail: "After acquiring all write locks but before releasing them, the coordinator picks commit timestamp s = TT.now().latest. This is provably \u2265 the real time at which the transaction logically committed." },
+        { title: "Step 3 \u2014 Paxos replicate the writes", component: "Paxos groups", proto: "Multi-Paxos",
+          intuition: "Replication is needed for durability \u2014 TrueTime only addresses ordering, not loss.",
+          complexity: "1 Paxos commit (~5\u201310 ms intra-region)",
+          detail: "The mutations + timestamp s are committed via Paxos to every shard touched by the transaction. Each Paxos group's leader propagates to its followers.",
+          example: "A two-shard transaction across us-central1 and us-east1 sees ~30 ms of Paxos latency dominated by the 40 ms cross-region RTT, in parallel.",
+          pitfall: "Without 2PC across Paxos groups, you'd lose atomicity \u2014 Spanner runs 2PC on top of Paxos so each phase is itself replicated." },
+        { title: "Step 4 \u2014 Commit-wait", component: "Coordinator", proto: "local sleep",
+          intuition: "Releasing locks before the chosen timestamp is 'in the past' would let a later reader observe inconsistent state.",
+          complexity: "O(\u03b5) wait, typically 1\u201310 ms",
+          detail: "Before releasing locks (and exposing the write to readers), the coordinator BLOCKS until TT.now().earliest > s. This guarantees the wall-clock has truly passed s on every server in the world.",
+          code: "while TT.now().earliest <= s:\n    sleep(1ms)\nrelease_locks()",
+          pitfall: "If \u03b5 grows (GPS antenna failure, NTP stretch), commit-wait grows too \u2014 Spanner intentionally throttles when \u03b5 exceeds ~10 ms to prevent runaway latency." },
+        { title: "Step 5 \u2014 Strongly-consistent reads from any replica", component: "Replica", proto: "snapshot read",
+          intuition: "Once a write's commit-wait has elapsed, every replica's safe-time advances past it \u2014 so even faraway replicas can serve reads correctly at that timestamp.",
+          complexity: "O(1) read from local snapshot",
+          detail: "Readers read at a chosen timestamp T against any replica whose safe-time \u2265 T \u2014 no leader round-trip needed. External consistency is preserved because no transaction with smaller s could have committed after one with larger s.",
+          example: "Spanner's F1 ad-serving backend issues most reads from a regional follower at staleness-bounded snapshots, achieving ~10 ms read latency globally.",
+          refs: [{ label: "Spanner OSDI 2012", url: "https://research.google/pubs/pub39966/" }, { label: "TrueTime overview", url: "https://cloud.google.com/spanner/docs/true-time-external-consistency" }] }
+      ]
+    }
+  ],
+
+  // === BEGIN glossary v1 data placeholder ===
+  glossary: [
+    { id:'rpc', term:'Remote Procedure Call', aka:'RPC', category:'systems',
+      short:'A function call that crosses a network boundary, marshalling arguments and returning a result or error.',
+      long:'RPC hides message-passing behind a local-looking function call: the stub serializes arguments, sends them over TCP, waits for a reply, and unmarshalls the result. Unlike a local call it can fail in partial ways — the request may be lost, the reply may be lost, or the server may crash mid-execution — so every RPC framework must define <code>at-least-once</code>, <code>at-most-once</code>, or idempotent semantics. Labs in 6.5840 build everything (Raft, KV, sharded store) on a tiny lossy RPC layer.',
+      seeAlso:['rpc-semantics','idempotent-retry','fault-tolerance'] },
+    { id:'rpc-semantics', term:'RPC Delivery Semantics', category:'concepts',
+      short:'The contract describing how many times a server may execute a call under retries and failures.',
+      long:'<b>At-least-once</b> retries until acknowledged, so the server may execute twice. <b>At-most-once</b> attaches a unique request id and a server-side dedup table to suppress duplicates. <b>Exactly-once</b> requires either idempotent operations or a transactional log binding the side effect to the dedup record. True exactly-once in the presence of arbitrary failures is impossible without consensus or idempotence.',
+      seeAlso:['rpc','idempotent-retry','raft'] },
+    { id:'idempotent-retry', term:'Idempotent Operation', aka:'Retry-Safe Op', category:'concepts',
+      short:'An operation that produces the same result whether applied once or many times.',
+      long:'Idempotence is the cheapest path to at-most-once: a PUT(x=5) can be safely retried, but INCREMENT(x) cannot. Designers either restrict the API to idempotent ops or pair each non-idempotent op with a client id + sequence number so the server can dedup. This pattern is baked into Raft labs, S3 PUTs, and HTTP PUT/DELETE.',
+      seeAlso:['rpc-semantics','rpc'] },
+    { id:'linearizability', term:'Linearizability', aka:'Strong Consistency, Atomic Consistency', category:'concepts',
+      short:'Each operation appears to take effect instantaneously at some point between its invocation and response, consistent with real time.',
+      long:'Linearizability is the gold-standard correctness condition for replicated objects. Formally, there exists a total order of operations that (a) respects real-time ordering across non-overlapping ops and (b) matches the sequential specification of the object. It composes — a system of linearizable objects is itself linearizable — which is why Raft + a deterministic state machine yields a linearizable KV store. Linearizability is strictly stronger than sequential or causal consistency.',
+      seeAlso:['raft','spanner','cap'] },
+    { id:'cap', term:'CAP Theorem', aka:'Brewer\'s Theorem', category:'concepts',
+      short:'During a network partition, a distributed system must sacrifice either consistency or availability.',
+      long:'Brewer\'s informal claim and Gilbert–Lynch\'s formal proof state that no asynchronous system can simultaneously guarantee linearizable Consistency, total Availability, and Partition tolerance. Because partitions are inevitable in real networks, the practical choice is CP (refuse writes on the minority side, like Raft/Spanner) versus AP (accept writes everywhere and reconcile later, like Dynamo/Cassandra). PACELC extends CAP by noting the latency-vs-consistency trade-off even when no partition is active.',
+      seeAlso:['linearizability','flp','fault-tolerance'] },
+    { id:'flp', term:'FLP Impossibility', aka:'Fischer–Lynch–Paterson', category:'concepts',
+      short:'No deterministic consensus protocol can guarantee termination in an asynchronous network with even one crash failure.',
+      long:'FLP (1985) proved that in a purely asynchronous model — where messages may be arbitrarily delayed — any deterministic consensus algorithm has an execution that runs forever. Real systems escape FLP by adding partial synchrony assumptions (Paxos, Raft use timeouts to trigger new leaders) or randomization (Ben-Or, blockchain). The lesson is that consensus is always live <i>most of the time</i>, never <i>always</i>.',
+      seeAlso:['paxos','raft','cap'] },
+    { id:'consensus', term:'Consensus', category:'concepts',
+      short:'All non-faulty nodes agree on a single value, even when some nodes crash or messages are lost.',
+      long:'Consensus is the building block under replicated state machines, leader election, atomic commit, and configuration management. A correct protocol guarantees agreement (no two nodes decide differently), validity (the decision was proposed by some node), and termination (every non-faulty node eventually decides). Paxos and Raft solve crash-fault consensus; PBFT and Nakamoto consensus tolerate Byzantine faults.',
+      seeAlso:['paxos','raft','flp','byzantine-fault'] },
+    { id:'paxos', term:'Paxos', category:'systems',
+      short:'Lamport\'s classic consensus protocol: a two-phase prepare/accept that tolerates crash failures.',
+      long:'Multi-Paxos elects a leader (proposer) that runs phase-1 once to claim a ballot, then drives phase-2 accepts for a stream of log entries. A value is chosen when a majority quorum accepts it. Paxos is famously subtle — flexible but hard to implement and reason about — which motivated Raft. Variants include Fast Paxos, Generalized Paxos, and EPaxos.',
+      seeAlso:['raft','consensus','two-phase-commit'] },
+    { id:'raft', term:'Raft', category:'systems',
+      short:'A consensus protocol designed for understandability: strong leader, append-only log, term-numbered elections.',
+      long:'Raft decomposes consensus into leader election, log replication, and safety. Time is divided into <i>terms</i>; each term elects at most one leader who appends entries to followers and commits an entry once a majority has stored it. Servers refuse to vote for candidates with stale logs (the election restriction), guaranteeing that committed entries are never lost. The 6.5840 labs implement Raft from scratch.',
+      seeAlso:['raft-consensus','paxos','leader-election','log-replication'] },
+    { id:'leader-election', term:'Leader Election', category:'concepts',
+      short:'The sub-protocol by which replicas pick a single primary to coordinate writes.',
+      long:'In Raft, a follower whose election timeout expires becomes a candidate, increments its term, and requests votes; a majority makes it leader. Randomized timeouts prevent split votes. ZooKeeper uses Zab; Paxos uses ballot numbers. A correct election guarantees at most one leader per term/epoch — critical to avoid split-brain.',
+      seeAlso:['raft','zookeeper','leader-lease-cache'] },
+    { id:'log-replication', term:'Replicated Log', aka:'Write-Ahead Log, Replicated State Machine', category:'concepts',
+      short:'A totally-ordered, durable sequence of commands that all replicas apply identically to stay in sync.',
+      long:'If every replica starts in the same state and applies the same deterministic commands in the same order, they end in the same state. Consensus protocols (Raft, Paxos) exist precisely to agree on the log. Once an entry is committed (stored on a majority), it is durable and will appear in every future leader\'s log. This is the abstraction behind KV stores, Spanner, etcd, ZooKeeper.',
+      seeAlso:['raft','paxos','linearizability'] },
+    { id:'quorum', term:'Quorum', aka:'Majority', category:'concepts',
+      short:'A subset of replicas large enough that any two such subsets must overlap, ensuring no two conflicting decisions.',
+      long:'In a 2f+1 node cluster, a majority of f+1 is a quorum tolerant of f crash failures. The overlap property guarantees that any read quorum intersects any write quorum, so the latest committed value is observable. Flexible Paxos and Dynamo-style R+W>N generalize the idea. Quorum size dictates both availability (smaller is better) and latency (smaller is faster).',
+      seeAlso:['raft','paxos','consensus'] },
+    { id:'two-phase-commit', term:'Two-Phase Commit', aka:'2PC', category:'systems',
+      short:'A blocking atomic-commit protocol: coordinator asks all participants to prepare, then commits if all vote yes.',
+      long:'Phase 1 (prepare): coordinator sends PREPARE, each participant writes a prepare record and votes yes/no. Phase 2 (commit): if all voted yes, coordinator logs commit and tells everyone to commit; otherwise abort. 2PC is <b>blocking</b> — if the coordinator crashes after some participants prepared, those participants must hold locks indefinitely. Spanner sidesteps this by running Paxos under each participant to make the coordinator highly available.',
+      seeAlso:['spanner','consensus','paxos'] },
+    { id:'mapreduce', term:'MapReduce', category:'systems',
+      short:'A batch-processing framework where users supply map() and reduce() functions and the system handles parallelism and faults.',
+      long:'The master partitions input into M map tasks (each producing R intermediate files keyed by hash) and R reduce tasks (each reading one shard from every mapper through the shuffle). Workers are stateless and idempotent so failed tasks are simply re-executed. Backup tasks mitigate stragglers. Lab 1 of 6.5840 reimplements a single-node MapReduce.',
+      seeAlso:['gfs','spark','fault-tolerance'] },
+    { id:'gfs', term:'GFS', aka:'Google File System', category:'systems',
+      short:'A distributed file system optimized for large sequential reads and appends across thousands of commodity disks.',
+      long:'GFS splits files into 64 MB chunks, each replicated three ways. A single master tracks the namespace and chunk locations; clients talk to chunkservers directly for data. Writes use a primary-secondary lease scheme with a pipelined data flow to maximize bandwidth. GFS pioneered the trade of strong POSIX semantics for relaxed append-only consistency in exchange for massive scale.',
+      seeAlso:['gfs-pipeline','chain-replication','mapreduce'] },
+    { id:'chain-replication', term:'Chain Replication', aka:'CRAQ', category:'systems',
+      short:'Replicas arranged in a chain: writes flow head→tail, reads served at the tail for linearizability.',
+      long:'Writes enter the head replica and propagate hop-by-hop down the chain; the tail acknowledges once the last replica has stored it. Because the tail sees only fully replicated state, reads there are linearizable without extra coordination. CRAQ extends this to allow reads at any node by tracking clean/dirty versions, trading off latency for read scalability. Used in production at Microsoft (FAWN-style) and Lyft\'s Envoy.',
+      seeAlso:['gfs','linearizability','fault-tolerance'] },
+    { id:'spanner', term:'Spanner', category:'systems',
+      short:'Google\'s globally-distributed database providing externally-consistent transactions via TrueTime.',
+      long:'Spanner shards data across Paxos groups and uses 2PC across groups for cross-shard transactions. Its breakthrough is <b>TrueTime</b>, a GPS+atomic-clock API that returns an interval [earliest, latest] bounding true time; transactions wait out this uncertainty so that commit timestamps strictly reflect real-time order. The result is global linearizability (Google calls it external consistency) with low-latency single-shard reads via timestamp-based snapshots.',
+      seeAlso:['spanner-truetime','two-phase-commit','linearizability'] },
+    { id:'truetime', term:'TrueTime', category:'systems',
+      short:'A clock API that returns a bounded interval rather than a single timestamp, exposing real clock uncertainty.',
+      long:'TT.now() returns [earliest, latest] where the true time is guaranteed to lie within. Spanner uses <i>commit wait</i> — sleeping until TT.after(t) — so the commit timestamp is provably in the past for all observers, providing external consistency. Uncertainty is typically a few milliseconds thanks to GPS receivers and atomic clocks in every datacenter.',
+      seeAlso:['spanner','linearizability'] },
+    { id:'zookeeper', term:'ZooKeeper', category:'systems',
+      short:'A coordination service exposing a small, replicated, hierarchical namespace with watches and ephemeral nodes.',
+      long:'ZooKeeper sits on top of Zab (a Paxos-like protocol) to provide linearizable writes and FIFO-consistent reads. Clients build leader election, locks, config distribution, and group membership from the primitive operations create, delete, exists, getData, and watch. Ephemeral znodes vanish when the session ends, making failure detection trivial. It is the canonical etcd alternative and underlies HBase, Kafka, and many YARN-era systems.',
+      seeAlso:['raft','leader-election','consensus'] },
+    { id:'spark', term:'Spark / RDD', category:'systems',
+      short:'A cluster compute framework built on Resilient Distributed Datasets — lineage-replayable, in-memory partitioned collections.',
+      long:'Each RDD records the deterministic transformations (lineage) used to build it from stable storage. On worker failure, Spark recomputes lost partitions by replaying the lineage rather than checkpointing every step, which fits iterative ML and graph workloads far better than MapReduce\'s disk-per-stage model. Narrow vs wide dependencies determine when shuffles occur.',
+      seeAlso:['mapreduce','fault-tolerance'] },
+    { id:'memcached', term:'Memcached at Facebook', category:'systems',
+      short:'A geo-replicated look-aside cache fronting MySQL, with lease and gutter tricks for thundering-herd and staleness.',
+      long:'Facebook\'s scale paper shows how a 10⁴-node memcached tier supports billions of reads/sec. <b>Leases</b> serialize cache-fill on a miss to prevent stampede; <b>gutter pools</b> absorb load from a dead host without remapping; <b>regional invalidations</b> via mcsqueal keep cross-DC caches roughly consistent. The system embraces eventual consistency to favor low latency.',
+      seeAlso:['leader-lease-cache','cops'] },
+    { id:'leader-lease-cache', term:'Lease', category:'concepts',
+      short:'A time-bounded grant of authority (e.g., to be primary, hold a lock, or serve cached data) that auto-expires.',
+      long:'Leases convert a distributed-agreement problem into a local timeout check: as long as clocks don\'t drift more than the lease epsilon, a leader holding a valid lease can serve reads without contacting peers (Spanner read leases, Chubby master leases, GFS chunk leases). When the lease expires, ownership is up for grabs, so renewals must complete before expiry.',
+      seeAlso:['leader-election','memcached','zookeeper'] },
+    { id:'cops', term:'COPS / Causal Consistency', category:'concepts',
+      short:'A relaxed consistency model: if write A causally precedes B, every replica must apply A before B; concurrent writes can diverge.',
+      long:'COPS attaches dependency metadata to each write so geo-replicas can apply updates respecting the happens-before relation while still serving local reads with low latency. It is strictly weaker than linearizability — concurrent writes are visible in different orders at different replicas — but strong enough to capture intuitions like "a reply must follow its post." Cleanly avoids the WAN round-trips that strong consistency would require.',
+      seeAlso:['linearizability','vector-clock','cap'] },
+    { id:'vector-clock', term:'Vector Clock', aka:'Version Vector', category:'concepts',
+      short:'A per-node counter vector that captures the causal/happens-before relation between events without a global clock.',
+      long:'Each node n increments its own entry V[n] on every local event and merges max-elementwise on receive. Event A happens-before B iff V_A ≤ V_B component-wise and V_A ≠ V_B; otherwise they are concurrent. Dynamo, Riak, and COPS use vector (or version) clocks to detect conflicting writes that the application must reconcile.',
+      seeAlso:['cops','linearizability'] },
+    { id:'shard-migration', term:'Sharding & Migration', aka:'Resharding', category:'systems',
+      short:'Splitting data across many groups by key range or hash, and moving shards between groups as load changes.',
+      long:'A configuration service (often Raft-backed) maps shards → replica groups; clients consult it to find the right group. Online migration must transfer state, drain in-flight writes, and switch the config atomically without violating linearizability — usually by pausing the shard\'s service during handoff and replaying any buffered ops on the new owner. Lab 4 of 6.5840 builds exactly this.',
+      seeAlso:['raft-config-service','raft','linearizability'] },
+    { id:'fault-tolerance', term:'Fault Tolerance', category:'concepts',
+      short:'The system\'s ability to keep providing its specification despite component failures.',
+      long:'Crash-fault tolerance assumes nodes fail-stop and is achievable with replication + consensus (Raft tolerates ⌊(n-1)/2⌋ crashes). Byzantine-fault tolerance assumes nodes may lie and requires 3f+1 nodes to tolerate f (PBFT, HotStuff). Fault tolerance is always relative to a failure model — exceeding the model (more failures than budgeted, or wrong failure type) breaks the guarantees.',
+      seeAlso:['raft','consensus','byzantine-fault','cap'] },
+    { id:'byzantine-fault', term:'Byzantine Fault', category:'concepts',
+      short:'A failure mode where a faulty node behaves arbitrarily — including lying, equivocating, or colluding.',
+      long:'Byzantine faults model malicious or buggy nodes that may send different messages to different peers, forge signatures (without crypto), or stay silent selectively. Tolerating f Byzantine nodes requires 3f+1 replicas and protocols like PBFT, Tendermint, or HotStuff; Bitcoin\'s Nakamoto consensus achieves probabilistic Byzantine tolerance via proof-of-work.',
+      seeAlso:['bitcoin','consensus','fault-tolerance'] }
+  ],
+  // === END glossary v1 data placeholder ===
 
   youtube: {
     videos: [
@@ -966,7 +1977,9 @@ if (C.graph && C.graph.nodes && C.graph.nodes.length) tabs.push({ id: 'graph',  
 if (C.deepDives && C.deepDives.length)  tabs.push({ id: 'deepdive', label: '📚 Deep Dives' });
 if (C.useCases && C.useCases.length)    tabs.push({ id: 'usecase',  label: '🔬 Use Cases' });
 if (C.youtube && C.youtube.videos && C.youtube.videos.length) tabs.push({ id: 'appendix', label: '📹 Appendix' });
+if (C.glossary && C.glossary.length)    tabs.push({ id: 'glossary', label: '📖 Glossary' }); /* glossary v1 tab */
 tabs.push({ id: 'problems', label: '🧠 Practice' });
+tabs.push({ id: 'quiz',     label: '🎯 Quiz' });
 
 document.getElementById('toolbar-title').textContent = '🧠 ' + C.course.code;
 document.title = C.course.code + ' — Interactive Study Tool';
@@ -1282,6 +2295,7 @@ function initGraph() {
   // Nodes
   const node = gGraph.selectAll("g.graph-node").data(nodes).enter().append("g")
     .attr("class", "graph-node")
+    .attr("data-id", d => d.id) /* glossary v1 data-id */
     .call(d3.drag().on("start", (evt, d) => { if (!evt.active) simul.alphaTarget(0.3).restart(); d.fx = d.x; d.fy = d.y; })
       .on("drag", (evt, d) => { d.fx = evt.x; d.fy = evt.y; })
       .on("end", (evt, d) => { if (!evt.active) simul.alphaTarget(0); d.fx = null; d.fy = null; }))
@@ -1623,6 +2637,8 @@ if (C.deepDives && C.deepDives.length) {
     // Full view
     const full = document.createElement('div'); full.className = 'dd-full'; full.id = 'dd-full-' + dd.id;
     let fhtml = `<div class="dd-infographic"><h2 style="color:${dd.color}">${dd.icon || ''} ${dd.title}</h2><div class="dd-subtitle">${dd.num || ''}${dd.num && dd.desc ? ' · ' : ''}${dd.desc || ''}</div>`;
+    // Navigator at the top for quick prev/grid/next without scrolling
+    fhtml += `<div class="dd-nav dd-nav-top"><button class="btn" onclick="navDD(-1)">← Prev</button><button class="btn" onclick="showCardGrid()">Grid</button><button class="btn" onclick="navDD(1)">Next →</button></div>`;
     if (dd.svg) fhtml += dd.svg(800, 300);
     // Render top-level content fields (markdown/body/content) as a single section
     const topText = dd.markdown || dd.body || dd.content || dd.detail;
@@ -1644,7 +2660,7 @@ if (C.deepDives && C.deepDives.length) {
       dd.keypoints.forEach(kp => { fhtml += `<div class="dd-kp"><strong>${kp.title}</strong><span>${kp.text || kp.body || ''}</span></div>`; });
       fhtml += '</div>';
     }
-    fhtml += `<div class="dd-nav"><button class="btn" onclick="navDD(-1)">← Prev</button><button class="btn" onclick="showCardGrid()">Grid</button><button class="btn" onclick="navDD(1)">Next →</button></div></div>`;
+    fhtml += `</div>`; // dd-nav v1 top inserted
     full.innerHTML = fhtml;
     fullContainer.appendChild(full);
   });
@@ -1712,6 +2728,20 @@ function showUseCase(idx) {
   html += '<button class="uc-back-btn" onclick="showUseCaseGrid()">← Back to All Use Cases</button>';
   html += `<h2>${uc.icon} ${uc.title}</h2>`;
   html += `<div class="uc-subtitle">${uc.desc}</div>`;
+  if (uc.summary || uc.pipeline || uc.metrics || uc.extensions) {
+    html += '<div class="uc-overview">';
+    if (uc.summary)   html += `<div class="uc-summary">${uc.summary}</div>`;
+    if (uc.pipeline)  html += `<div class="uc-pipeline">${uc.pipeline}</div>`;
+    if (uc.metrics && uc.metrics.length) {
+      html += '<div class="uc-metrics">';
+      uc.metrics.forEach(m => {
+        html += `<div class="uc-metric"><div class="uc-metric-label">${m.label}</div><div class="uc-metric-value">${m.value}</div></div>`;
+      });
+      html += '</div>';
+    }
+    if (uc.extensions) html += `<div class="uc-extensions"><strong>Where to go next:</strong> ${uc.extensions}</div>`;
+    html += '</div>';
+  }
   html += '<div class="uc-flow-controls">';
   html += '<button onclick="ucPrev()">← Previous</button>';
   html += '<button class="primary" onclick="ucNext()">Next Step →</button>';
@@ -1732,8 +2762,14 @@ function showUseCase(idx) {
     html += '<div class="uc-body">';
     html += `<div class="uc-title">${step.title}</div>`;
     html += `<div class="uc-component">📍 ${step.component}</div>`;
-    let detailHtml = `<p>${step.detail}</p><span class="uc-proto">${step.proto}</span>`;
+    let detailHtml = '';
+    if (step.intuition) detailHtml += `<div class="uc-intuition"><strong>💡 Intuition:</strong> ${step.intuition}</div>`;
+    detailHtml += `<p>${step.detail}</p>`;
+    if (step.proto) detailHtml += `<span class="uc-proto">${step.proto}</span>`;
+    if (step.complexity) detailHtml += `<span class="uc-complexity">⏱ ${step.complexity}</span>`;
     if (step.code) detailHtml += `<pre class="uc-code">${step.code}</pre>`;
+    if (step.example) detailHtml += `<div class="uc-example"><strong>📊 In practice:</strong> ${step.example}</div>`;
+    if (step.pitfall) detailHtml += `<div class="uc-pitfall"><strong>⚠ Pitfall:</strong> ${step.pitfall}</div>`;
     if (step.refs && step.refs.length) {
       detailHtml += '<div class="uc-refs">' + step.refs.map(r => `<a href="${r.url}" target="_blank" rel="noopener">${r.label}</a>`).join('') + '</div>';
     }
@@ -2064,150 +3100,824 @@ function toggleUnit(headerRow) {
 // ═══════════════════════════════════════════════════════════════════════
 const PROBLEMS = [
   { week: 'Week 1', title: 'MapReduce & Google Infrastructure',
+    hook: 'Why does Google let you write just two pure functions and trust the framework with 1800 machines? Because at that scale failure is the common case — and re-executing a deterministic task is cheaper than preventing failures.',
     items: [
-      { tag: 'design', text: 'You have 10 TB of web-crawl logs on 1000 machines. Design a system to count unique domains. What happens if 3 machines die mid-job? How do you know they died?',
+      { tag: 'design', star: true, text: 'You have 10 TB of web-crawl logs on 1000 machines. Design a system to count unique domains. What happens if 3 machines die mid-job? How do you know they died?',
         hint: 'Think: who detects the failure, who re-schedules, where does intermediate data live.' },
       { tag: 'derive', text: 'A MapReduce job has M=2000 map tasks and R=50 reduce tasks on a 200-machine cluster. How many shuffle connections open? Why does R × M scale badly?',
         hint: 'Each reducer pulls from every mapper — that\'s R×M TCP connections.' },
-      { tag: 'paper', text: 'Before reading the 2004 MapReduce paper: list 3 things you think will go wrong in a 1800-machine job and how they handle them. Then read §3.3–3.4 and score yourself.' },
+      { tag: 'paper', star: true, text: 'Before reading the 2004 MapReduce paper: list 3 things you think will go wrong in a 1800-machine job and how they handle them. Then read §3.3–3.4 and score yourself.' },
     ]
   },
   { week: 'Week 2', title: 'RPC & Threads (Go concurrency)',
+    hook: 'TCP gives you reliable bytes inside one connection — but it cannot tell you whether the server already executed your request before the reply was lost. Welcome to the exactly-once impossibility, the reason every retry-safe API needs an idempotency key.',
     items: [
-      { tag: 'code', text: 'Implement a concurrent web crawler in Go with max 5 in-flight fetches, deduplicated URLs, and graceful shutdown on Ctrl-C — all using channels only, no mutex.',
+      { tag: 'code', star: true, text: 'Implement a concurrent web crawler in Go with max 5 in-flight fetches, deduplicated URLs, and graceful shutdown on Ctrl-C — all using channels only, no mutex.',
         hint: 'Pattern: a semaphore channel for the 5-permit bound, a done channel for shutdown.' },
-      { tag: 'debug', text: 'An RPC call succeeds on server but the client\'s ACK was lost. If the client retries, what breaks? Give 2 scenarios where it breaks and 2 where it\'s safe.',
+      { tag: 'debug', star: true, text: 'An RPC call succeeds on server but the client\'s ACK was lost. If the client retries, what breaks? Give 2 scenarios where it breaks and 2 where it\'s safe.',
         hint: 'Idempotency is the keyword. Increment-counter vs set-key-to-value.' },
       { tag: 'derive', text: 'Compare at-least-once, at-most-once, exactly-once. Which does TCP give you? Which does your credit-card payment need?' },
     ]
   },
   { week: 'Week 3', title: 'GFS (Google File System)',
+    hook: 'What if append is 100× more common than random write, files are huge, and disks fail weekly? Then you build a filesystem that breaks POSIX on purpose: relaxed consistency, atomic record append, and 64 MB chunks.',
     items: [
-      { tag: 'design', text: 'Design a file system for 1000-machine clusters where append is 100× more common than random write. What changes vs POSIX? Then read the GFS paper and compare.',
+      { tag: 'design', star: true, text: 'Design a file system for 1000-machine clusters where append is 100× more common than random write. What changes vs POSIX? Then read the GFS paper and compare.',
         hint: 'Google noticed MapReduce-style workloads — lots of parallel appends, giant files, sequential reads.' },
-      { tag: 'debug', text: 'Two clients append to the same file concurrently. GFS guarantees "at least once" append. Client A expects 5 records, Client B expects 3. What can the file actually contain?',
+      { tag: 'debug', star: true, text: 'Two clients append to the same file concurrently. GFS guarantees "at least once" append. Client A expects 5 records, Client B expects 3. What can the file actually contain?',
         hint: 'Duplicates. Holes (padding). Out-of-order.' },
       { tag: 'paper', text: 'Before reading §3.1 of GFS: sketch how you\'d handle a primary chunkserver crashing mid-write. Compare with their lease + version-number approach.' },
     ]
   },
   { week: 'Week 4', title: 'Primary-Backup Replication (VMware FT)',
+    hook: 'Replicating a running OS byte-for-byte sounds simple — until you realize timer interrupts, RDTSC reads, and packet arrivals are all non-deterministic. Every shared variable is a split-brain waiting to happen.',
     items: [
-      { tag: 'design', text: 'You must replicate a running VM byte-for-byte so the backup can take over in &lt;1 s. Non-determinism (timer interrupts, RDTSC, network packet arrivals) breaks this. Name 3 sources and how you\'d fix each.',
+      { tag: 'design', star: true, text: 'You must replicate a running VM byte-for-byte so the backup can take over in &lt;1 s. Non-determinism (timer interrupts, RDTSC, network packet arrivals) breaks this. Name 3 sources and how you\'d fix each.',
         hint: 'Deterministic replay + interrupt delivery at exact instruction counts.' },
-      { tag: 'debug', text: 'Network between primary and backup drops for 500 ms. Both think the other is dead and start serving clients. This is split-brain. How does VMware FT prevent it?',
+      { tag: 'debug', star: true, text: 'Network between primary and backup drops for 500 ms. Both think the other is dead and start serving clients. This is split-brain. How does VMware FT prevent it?',
         hint: 'Shared-disk test-and-set — only one can win.' },
     ]
   },
   { week: 'Week 5-7', title: 'Raft Consensus',
+    hook: 'Paxos is provably correct but notoriously hard to implement (Lamport literally wrote "The Part-Time Parliament" as a parable). Raft\'s trick: elect ONE leader and force every decision through them, so reasoning collapses to single-machine logic — until that leader dies.',
     items: [
-      { tag: 'derive', text: 'Why must a leader have the longest log among a majority before being elected? Construct a 3-node example where skipping this rule causes committed entries to be lost.',
+      { tag: 'derive', star: true, text: 'Why must a leader have the longest log among a majority before being elected? Construct a 3-node example where skipping this rule causes committed entries to be lost.',
         hint: 'Figure 8 in the Raft paper — this is the trickiest safety case.' },
-      { tag: 'code', text: 'Implement leader election only (no log replication). 5 nodes, randomized election timeouts 150-300 ms. Verify: after leader crash, new leader elected within 1 s. No split votes last &gt;2 rounds.',
+      { tag: 'code', star: true, text: 'Implement leader election only (no log replication). 5 nodes, randomized election timeouts 150-300 ms. Verify: after leader crash, new leader elected within 1 s. No split votes last &gt;2 rounds.',
         hint: 'This is MIT 6.824 Lab 2A. Use Go + goroutines + a single mutex.' },
       { tag: 'debug', text: 'Leader commits entry at index 10, replies to client, then crashes before replicating to followers. Is the entry durable? What does the new leader do with it?',
         hint: 'If the leader got majority acks before crashing, yes. Otherwise the new leader may overwrite it.' },
-      { tag: 'paper', text: 'Read §5.4.2 (Committing entries from previous terms). Before, predict: can a leader commit an old-term entry just because it\'s replicated to a majority? Then read and score.' },
+      { tag: 'paper', star: true, text: 'Read §5.4.2 (Committing entries from previous terms). Before, predict: can a leader commit an old-term entry just because it\'s replicated to a majority? Then read and score.' },
     ]
   },
   { week: 'Week 8', title: 'Zookeeper',
+    hook: 'Zookeeper sells linearizable writes + only-sequential reads. The asymmetry is the whole point: linearizable reads would force every read through the leader and kill throughput; sequential reads from any replica are fast — at the cost of occasionally-stale data.',
     items: [
-      { tag: 'design', text: 'Build a distributed lock using Zookeeper ephemeral sequential znodes. Walk through what happens when lock holder\'s session times out mid-critical-section. Who releases the lock?',
+      { tag: 'design', star: true, text: 'Build a distributed lock using Zookeeper ephemeral sequential znodes. Walk through what happens when lock holder\'s session times out mid-critical-section. Who releases the lock?',
         hint: 'Ephemeral nodes auto-delete on session loss; next waiter gets notified via watch.' },
-      { tag: 'derive', text: 'Zookeeper reads are served by any replica (not just leader) but writes go through leader. What\'s the consistency model? Linearizable writes + sequential reads — why not linearizable reads?' },
+      { tag: 'derive', star: true, text: 'Zookeeper reads are served by any replica (not just leader) but writes go through leader. What\'s the consistency model? Linearizable writes + sequential reads — why not linearizable reads?' },
     ]
   },
   { week: 'Week 9', title: 'Chain Replication',
+    hook: 'Why willingly pay for 3 network hops on every write? Because in exchange you get free strong consistency (tail-only reads), a trivially-correct repair protocol, and the ability to apportion read load across the chain (CRAQ).',
     items: [
-      { tag: 'design', text: 'Compare Chain Replication to Primary-Backup for a 3-replica system. Which has lower write latency? Which has higher read throughput? Which tolerates head-vs-tail failures differently?',
+      { tag: 'design', star: true, text: 'Compare Chain Replication to Primary-Backup for a 3-replica system. Which has lower write latency? Which has higher read throughput? Which tolerates head-vs-tail failures differently?',
         hint: 'Chain: writes traverse head→tail (3 hops), reads hit tail only. P-B: writes 1 hop, reads from anyone.' },
-      { tag: 'debug', text: 'Middle node in a 5-chain crashes. How does the system repair the chain without losing committed writes?' },
+      { tag: 'debug', star: true, text: 'Middle node in a 5-chain crashes. How does the system repair the chain without losing committed writes?' },
     ]
   },
   { week: 'Week 10', title: 'Distributed Transactions & 2PC',
+    hook: 'FLP impossibility says no asynchronous protocol can guarantee both safety and liveness with even one crash failure. 2PC picked safety: when the coordinator dies after PREPARE, participants block forever rather than risk committing twice. Every consensus algorithm since is a workaround.',
     items: [
-      { tag: 'design', text: 'Bank transfer: debit acc-A on bank-X, credit acc-B on bank-Y. Write the 2PC protocol step-by-step. What happens if coordinator crashes after sending PREPARE but before COMMIT/ABORT?',
+      { tag: 'design', star: true, text: 'Bank transfer: debit acc-A on bank-X, credit acc-B on bank-Y. Write the 2PC protocol step-by-step. What happens if coordinator crashes after sending PREPARE but before COMMIT/ABORT?',
         hint: 'Participants are blocked — cannot unilaterally abort or commit.' },
-      { tag: 'derive', text: 'Prove 2PC is a blocking protocol. Show that no non-blocking protocol exists that tolerates arbitrary failures without synchrony assumptions (FLP impossibility intuition).' },
+      { tag: 'derive', star: true, text: 'Prove 2PC is a blocking protocol. Show that no non-blocking protocol exists that tolerates arbitrary failures without synchrony assumptions (FLP impossibility intuition).' },
     ]
   },
   { week: 'Week 11', title: 'Spanner & TrueTime',
+    hook: 'Time is a fiction in distributed systems — clocks drift, NTP lies. Spanner pays cash money (atomic clocks + GPS in every datacenter) to buy a small bounded uncertainty ε ≈ 7 ms, and then waits out that ε before releasing locks. Linearizable transactions across continents falls out for free.',
     items: [
-      { tag: 'design', text: 'Give a global database linearizability when nodes are on 5 continents. You have atomic clocks + GPS giving time within ±7 ms. How do you order transactions?',
+      { tag: 'design', star: true, text: 'Give a global database linearizability when nodes are on 5 continents. You have atomic clocks + GPS giving time within ±7 ms. How do you order transactions?',
         hint: 'Commit wait — wait out the clock uncertainty before releasing locks.' },
-      { tag: 'derive', text: 'A transaction commits at TrueTime interval [10, 17] ms. It holds locks until wall-clock passes 17 ms. Why is this necessary for external consistency?' },
+      { tag: 'derive', star: true, text: 'A transaction commits at TrueTime interval [10, 17] ms. It holds locks until wall-clock passes 17 ms. Why is this necessary for external consistency?' },
       { tag: 'paper', text: 'Before reading §4.2.1: what would break if Spanner used NTP clocks (±100 ms) instead of TrueTime? How much slower would commits be?' },
     ]
   },
   { week: 'Week 12-13', title: 'FaRM & Spark (in-memory systems)',
+    hook: 'When the network (RDMA) is faster than the disk (and your data fits in RAM cluster-wide), the bottleneck shifts. Suddenly lock-free reads via one-sided RDMA and lineage-based recomputation become more attractive than yet-another-replication-protocol.',
     items: [
-      { tag: 'design', text: 'Design an RDMA-based distributed memory system. If reads bypass the remote CPU (one-sided RDMA), how do you handle transactions and atomicity?',
+      { tag: 'design', star: true, text: 'Design an RDMA-based distributed memory system. If reads bypass the remote CPU (one-sided RDMA), how do you handle transactions and atomicity?',
         hint: 'FaRM\'s answer: optimistic concurrency + lock-free reads + version numbers.' },
-      { tag: 'derive', text: 'Spark RDDs are immutable + lineage-tracked. Why does lineage allow fault-tolerance without replication? What\'s the cost when lineage gets long?' },
+      { tag: 'derive', star: true, text: 'Spark RDDs are immutable + lineage-tracked. Why does lineage allow fault-tolerance without replication? What\'s the cost when lineage gets long?' },
     ]
   },
   { week: 'Week 14', title: 'Memcached at Facebook',
+    hook: 'A cache miss on a viral post is a thundering herd — 1 M requests hammer the DB before anyone can repopulate. Leases turn the herd into a single line: one lucky client gets the recompute permit, everyone else waits.',
     items: [
-      { tag: 'debug', text: 'A Facebook post gets 1 M read QPS. If cache misses, 1 M requests hammer the DB in ~10 ms (thundering herd). How do you prevent this?',
+      { tag: 'debug', star: true, text: 'A Facebook post gets 1 M read QPS. If cache misses, 1 M requests hammer the DB in ~10 ms (thundering herd). How do you prevent this?',
         hint: 'Leases — only one client gets permission to recompute.' },
-      { tag: 'design', text: 'When a user updates their profile, cache entries in 5 regions must be invalidated. Invalidations can reorder with writes. Describe the race that causes stale reads. How does Facebook handle it?' },
+      { tag: 'design', star: true, text: 'When a user updates their profile, cache entries in 5 regions must be invalidated. Invalidations can reorder with writes. Describe the race that causes stale reads. How does Facebook handle it?' },
     ]
   },
   { week: 'Week 15', title: 'COPS (Causal Consistency)',
+    hook: 'CAP forces a choice under partition: consistency OR availability — never both. COPS picks availability and then squeezes out the strongest model that survives: causal+ consistency. Anything stronger (linearizable, sequential) requires giving up wide-area availability.',
     items: [
-      { tag: 'derive', text: 'User A posts photo, then user B comments on it. User C sees the comment but not the photo (causal violation). Show a message reordering in a geo-replicated system that causes this.' },
-      { tag: 'design', text: 'COPS tracks "nearest dependencies" instead of full causal history. Why is this enough? When does it fail (what consistency is COPS-GT for)?' },
+      { tag: 'derive', star: true, text: 'User A posts photo, then user B comments on it. User C sees the comment but not the photo (causal violation). Show a message reordering in a geo-replicated system that causes this.' },
+      { tag: 'design', star: true, text: 'COPS tracks "nearest dependencies" instead of full causal history. Why is this enough? When does it fail (what consistency is COPS-GT for)?' },
     ]
   },
   { week: 'Week 16', title: 'Bitcoin & Blockchain',
+    hook: 'Crash failures are easy — a node just stops talking. Byzantine failures are evil — a node lies, equivocates, fakes signatures. Bitcoin tolerates ~30% Byzantine adversaries among ANONYMOUS participants, but only by making participation expensive (proof-of-work). Paxos/Raft assume a known crash-only quorum, and Sybil attacks would shatter them instantly.',
     items: [
-      { tag: 'derive', text: 'Bitcoin assumes honest majority of hash power. Calculate: with 30% attacker, what\'s the probability of reversing a 6-block confirmation? (Binomial / Nakamoto analysis.)' },
-      { tag: 'design', text: 'Why does Bitcoin use proof-of-work instead of Paxos/Raft? What would break if 1000 anonymous nodes ran Raft?',
+      { tag: 'derive', star: true, text: 'Bitcoin assumes honest majority of hash power. Calculate: with 30% attacker, what\'s the probability of reversing a 6-block confirmation? (Binomial / Nakamoto analysis.)' },
+      { tag: 'design', star: true, text: 'Why does Bitcoin use proof-of-work instead of Paxos/Raft? What would break if 1000 anonymous nodes ran Raft?',
         hint: 'Sybil attacks — Raft assumes known participant set.' },
     ]
   },
   { week: 'Week 17', title: 'Blockstack & Decentralized Naming',
+    hook: 'Zooko\'s triangle says a name system can have at most two of {human-readable, decentralized, globally-unique}. Blockstack cheats by layering: Bitcoin gives global agreement on name ownership, IPFS stores the actual content, and stale-OK reads keep the user-facing latency tolerable.',
     items: [
-      { tag: 'design', text: 'Design a DNS replacement that is censorship-resistant, globally unique, and human-readable (Zooko\'s triangle). Which of the three must you give up?',
+      { tag: 'design', star: true, text: 'Design a DNS replacement that is censorship-resistant, globally unique, and human-readable (Zooko\'s triangle). Which of the three must you give up?',
         hint: 'Blockstack picks all three by layering on Bitcoin + IPFS + stale-ok reads.' },
     ]
   },
+  { week: 'Cross-cutting', title: 'Operational patterns (idempotency, leases, sharding)',
+    hook: 'Real production systems are 80% boring repeated patterns: idempotency keys, leases, sharded ranges, dual-write windows. Master these and the papers feel obvious; skip them and the papers feel like magic incantations.',
+    items: [
+      { tag: 'design', star: true, text: 'Design an idempotency layer for a payments API on top of plain HTTP retries. Where exactly do you store the dedup record? What TTL? What goes wrong if the dedup write and the side-effect are in different databases?',
+        hint: 'Same DB transaction as the side effect. Stripe\'s 24 h TTL. Two-phase commit reappears if you split them.' },
+      { tag: 'debug', star: true, text: 'A Raft cluster of 5 nodes has been running for a month. After a network blip, two nodes claim to be leader simultaneously and both serve client writes for ~3 seconds. How is this possible if Raft guarantees one leader per term? What invariant got violated?',
+        hint: 'Old leader didn\'t realize it was deposed. ReadIndex / lease check would have caught it.' },
+      { tag: 'code', text: 'Implement online range-split for a key-value store backed by a single Raft group per range. Walk through the dual-write window. What atomic step actually performs the cutover?',
+        hint: 'A single Raft commit that rewrites the range descriptor is the linearization point of the split.' },
+      { tag: 'paper', star: true, text: 'Before reading the Spanner paper §3 (TrueTime): predict why exposing time as an interval [earliest, latest] is safer than a single estimate, and what \u03b5 you\'d need to make 1 ms commit-wait acceptable. Then check Table 1.' },
+    ]
+  },
 ];
+window.PROBLEMS_DATA = PROBLEMS;
+
+const PROB_STATE_KEY = STORAGE_KEY + '-probstate';
+function probLoadState() { try { return JSON.parse(localStorage.getItem(PROB_STATE_KEY) || '{}'); } catch(e) { return {}; } }
+function probSaveState(s) { try { localStorage.setItem(PROB_STATE_KEY, JSON.stringify(s)); } catch(e) {} }
+let _probState = probLoadState();
+let _probFilters = { tags: new Set(), search: '', status: 'all' };
+let _probFlat = []; // [{si, ii, p}]
 
 function renderProblems() {
   const container = document.getElementById('problems-container');
   if (!container || container.dataset.rendered) return;
+  const data = (window.PROBLEMS_DATA && window.PROBLEMS_DATA.length) ? window.PROBLEMS_DATA
+             : (C.problems && C.problems.length) ? C.problems : null;
+  if (!data) { container.innerHTML = '<div class="prob-intro">No practice problems defined yet for this course.</div>'; container.dataset.rendered = '1'; return; }
   container.dataset.rendered = '1';
+
+  // Build flat index + per-tag counts
+  _probFlat = [];
+  const tagCounts = {};
+  data.forEach((sec, si) => (sec.items||[]).forEach((p, ii) => {
+    _probFlat.push({ si, ii, p, key: si+':'+ii });
+    const t = p.tag || 'design';
+    tagCounts[t] = (tagCounts[t]||0) + 1;
+  }));
+  const TAGS = ['design','derive','debug','code','paper'];
+
   let html = `<div class="prob-intro">
     <strong>🧠 Problem-First Learning.</strong> Try each problem for 10 minutes <em>before</em> watching the lecture — flail, sketch, be wrong. Then watch with specific questions in mind. Your attention spikes 3–5×.
     <br><br>
     <strong style="color:#58a6ff">Tags:</strong>
-    <span class="prob-tag design">design</span> architect it on paper &nbsp;
+    <span class="prob-tag design">design</span> architect on paper &nbsp;
     <span class="prob-tag derive">derive</span> math / proof &nbsp;
     <span class="prob-tag debug">debug</span> find the failure mode &nbsp;
-    <span class="prob-tag code">code</span> hands-on implementation &nbsp;
+    <span class="prob-tag code">code</span> hands-on &nbsp;
     <span class="prob-tag paper">paper</span> predict before reading
-  </div>`;
-  PROBLEMS.forEach((sec, i) => {
-    html += `<details class="prob-section"${i < 2 ? ' open' : ''}>
-      <summary><span class="wk">${sec.week}</span> ${sec.title}</summary>
-      <div class="prob-body"><ol>`;
-    sec.items.forEach(p => {
-      html += `<li><span class="prob-tag ${p.tag}">${p.tag}</span>${p.text}`;
-      if (p.hint) html += `<span class="prob-hint">${p.hint}</span>`;
-      html += `</li>`;
+    <br><br>
+    <strong style="color:#ffa657">⭐ starred</strong> problems are curiosity-piquing — start there if you're new.
+    Reveals come in three layers: <strong style="color:#d2a8ff">💡 hint</strong> (nudge) · <strong style="color:#79c0ff">🔑 approach</strong> (how to attack) · <strong style="color:#7ee787">📐 answer</strong> (the result). Try the problem before peeking.
+  </div>
+  <div class="prob-toolbar">
+    <input id="prob-search" class="prob-search" type="text" placeholder="🔍 Search problems by keyword…" />
+    <div class="prob-filter-row" id="prob-tag-row">
+      ${TAGS.map(t => `<span class="prob-chip ${t}" data-tag="${t}">${t}<span class="count">${tagCounts[t]||0}</span></span>`).join('')}
+    </div>
+    <div class="prob-filter-row" id="prob-status-row">
+      <span class="prob-chip" data-status="all">All</span>
+      <span class="prob-chip" data-status="unattempted">○ New</span>
+      <span class="prob-chip" data-status="thinking">🤔 Thinking</span>
+      <span class="prob-chip" data-status="got">💡 Got it</span>
+      <span class="prob-chip" data-status="stuck">❓ Stuck</span>
+    </div>
+    <button id="prob-surprise" class="prob-actbtn primary" title="Open a random problem">🎲 Surprise me</button>
+    <button id="prob-reset" class="prob-actbtn" title="Clear all status">↺ Reset</button>
+    <div class="prob-progress" title="Problems attempted (thinking / got / stuck)">
+      <span id="prob-progress-text">0/${_probFlat.length}</span>
+      <div class="prob-progress-bar"><div id="prob-progress-fill" class="prob-progress-fill" style="width:0%"></div></div>
+    </div>
+  </div>
+  <div id="prob-sections">`;
+
+  data.forEach((sec, si) => {
+    const secTotal = (sec.items||[]).length;
+    html += `<details class="prob-section" data-si="${si}"${si < 2 ? ' open' : ''}>
+      <summary><span class="wk">${sec.week||''}</span> <span class="sec-title">${sec.title||''}</span>
+        <span class="sec-meta"><span class="done-count" data-sec-done="${si}">0</span>/<span>${secTotal}</span></span>
+      </summary>`;
+    if (sec.hook) html += `<div class="prob-hook">${sec.hook}</div>`;
+    html += `<div class="prob-body">`;
+    (sec.items||[]).forEach((p, ii) => {
+      const key = si+':'+ii;
+      const st = _probState[key] || {};
+      const tag = p.tag || 'design';
+      const statusCls = st.status ? ' status-'+st.status : '';
+      html += `<div class="prob-card${statusCls}" data-key="${key}" data-tag="${tag}" data-status="${st.status||''}">
+        <div class="pc-head">
+          <span class="pc-num">${(ii+1).toString().padStart(2,'0')}</span>
+          <span class="prob-tag ${tag}">${tag}</span>
+          ${p.star ? '<span class="pc-star" title="Curiosity pick">★</span>' : ''}
+          <div class="prob-status-btns">
+            <button class="prob-statbtn thinking${st.status==='thinking'?' active':''}" data-status="thinking" title="I'm working on this">🤔</button>
+            <button class="prob-statbtn got${st.status==='got'?' active':''}"           data-status="got"      title="Got it">💡</button>
+            <button class="prob-statbtn stuck${st.status==='stuck'?' active':''}"       data-status="stuck"    title="Stuck">❓</button>
+          </div>
+        </div>
+        <div class="pc-text">${p.text||''}</div>`;
+      const reveals = [];
+      if (p.hint)     reveals.push({ kind:'hint',     label:'💡 Reveal hint',   field:'hint',     btnCls:'',          panelCls:'prob-hint',     tag:'Hint' });
+      if (p.approach) reveals.push({ kind:'approach', label:'🔑 Show approach', field:'approach', btnCls:'approach',  panelCls:'prob-approach', tag:'Approach' });
+      if (p.answer)   reveals.push({ kind:'answer',   label:'📐 Show answer',   field:'answer',   btnCls:'answer',    panelCls:'prob-answer',   tag:'Answer' });
+      if (reveals.length) {
+        html += `<div class="pc-actions">`;
+        reveals.forEach(r => {
+          const shown = st[r.kind+'Shown'];
+          html += `<button class="prob-revealbtn ${r.btnCls}" data-action="${r.kind}" ${shown?'style="display:none"':''}>${r.label}</button>`;
+        });
+        html += `</div>`;
+        reveals.forEach(r => {
+          const shown = st[r.kind+'Shown'];
+          html += `<div class="prob-reveal-panel ${r.panelCls}${shown?' shown':''}" data-panel="${r.kind}"><span class="rh-label">${r.tag}</span>${p[r.field]}</div>`;
+        });
+      }
+      html += `</div>`;
     });
-    html += `</ol></div></details>`;
+    html += `</div></details>`;
   });
+  html += `</div>
+  <div class="prob-spotlight" id="prob-spotlight">
+    <div class="prob-spotlight-card">
+      <button class="sl-close" onclick="probCloseSpotlight()">×</button>
+      <h3>🎲 Surprise Problem</h3>
+      <div id="prob-spotlight-body"></div>
+    </div>
+  </div>`;
+
   container.innerHTML = html;
+
+  // Wire interactions
+  container.querySelectorAll('#prob-tag-row .prob-chip').forEach(c => c.addEventListener('click', () => {
+    const tag = c.dataset.tag;
+    if (_probFilters.tags.has(tag)) _probFilters.tags.delete(tag); else _probFilters.tags.add(tag);
+    c.classList.toggle('active');
+    probApplyFilters();
+  }));
+  container.querySelectorAll('#prob-status-row .prob-chip').forEach(c => c.addEventListener('click', () => {
+    container.querySelectorAll('#prob-status-row .prob-chip').forEach(x => x.classList.remove('active'));
+    c.classList.add('active');
+    _probFilters.status = c.dataset.status;
+    probApplyFilters();
+  }));
+  container.querySelector('#prob-status-row .prob-chip[data-status="all"]').classList.add('active');
+
+  const searchEl = container.querySelector('#prob-search');
+  searchEl.addEventListener('input', () => { _probFilters.search = searchEl.value.toLowerCase().trim(); probApplyFilters(); });
+
+  container.querySelector('#prob-surprise').addEventListener('click', probSurpriseMe);
+  container.querySelector('#prob-reset').addEventListener('click', () => {
+    if (!confirm('Clear status on all '+_probFlat.length+' problems?')) return;
+    _probState = {}; probSaveState(_probState);
+    container.dataset.rendered = ''; container.innerHTML = ''; renderProblems();
+  });
+
+  container.querySelectorAll('.prob-card').forEach(card => {
+    card.querySelectorAll('.prob-statbtn').forEach(btn => btn.addEventListener('click', e => {
+      e.stopPropagation();
+      const key = card.dataset.key;
+      const newStatus = btn.dataset.status;
+      const st = _probState[key] || {};
+      st.status = (st.status === newStatus) ? null : newStatus;
+      _probState[key] = st; probSaveState(_probState);
+      card.classList.remove('status-thinking','status-got','status-stuck');
+      if (st.status) card.classList.add('status-'+st.status);
+      card.dataset.status = st.status || '';
+      card.querySelectorAll('.prob-statbtn').forEach(b => b.classList.toggle('active', b.dataset.status === st.status));
+      probUpdateProgress();
+      if (_probFilters.status !== 'all') probApplyFilters();
+    }));
+    const revealBtns = card.querySelectorAll('[data-action="hint"],[data-action="approach"],[data-action="answer"]');
+    revealBtns.forEach(btn => btn.addEventListener('click', () => {
+      const kind = btn.dataset.action;
+      const panel = card.querySelector(`.prob-reveal-panel[data-panel="${kind}"]`);
+      if (panel) panel.classList.add('shown');
+      btn.style.display = 'none';
+      const key = card.dataset.key;
+      const st = _probState[key] || {};
+      st[kind+'Shown'] = true; _probState[key] = st; probSaveState(_probState);
+    }));
+  });
+
+  probUpdateProgress();
 }
 
-// Hook into tab switching — re-render lazily on first view
-const _origSwitchTab = switchTab;
-switchTab = function(tab) {
-  _origSwitchTab(tab);
-  if (tab === 'problems') renderProblems();
+function probApplyFilters() {
+  const container = document.getElementById('problems-container');
+  const { tags, search, status } = _probFilters;
+  container.querySelectorAll('.prob-card').forEach(card => {
+    const tag = card.dataset.tag;
+    const cardStatus = card.dataset.status || '';
+    const text = card.querySelector('.pc-text').textContent.toLowerCase();
+    let show = true;
+    if (tags.size > 0 && !tags.has(tag)) show = false;
+    if (search && !text.includes(search)) show = false;
+    if (status !== 'all') {
+      if (status === 'unattempted') { if (cardStatus) show = false; }
+      else if (cardStatus !== status) show = false;
+    }
+    card.classList.toggle('hidden', !show);
+  });
+  // Auto-open sections with visible cards; hide empty sections
+  container.querySelectorAll('.prob-section').forEach(sec => {
+    const visible = sec.querySelectorAll('.prob-card:not(.hidden)').length;
+    sec.style.display = visible === 0 ? 'none' : '';
+    if (visible > 0 && (tags.size || search || status !== 'all')) sec.open = true;
+  });
+}
+
+function probUpdateProgress() {
+  const total = _probFlat.length;
+  let attempted = 0;
+  const perSec = {};
+  _probFlat.forEach(({si, key}) => {
+    const st = _probState[key];
+    if (st && st.status) { attempted++; perSec[si] = (perSec[si]||0) + 1; }
+  });
+  const txt = document.getElementById('prob-progress-text');
+  const fill = document.getElementById('prob-progress-fill');
+  if (txt) txt.textContent = attempted + '/' + total;
+  if (fill) fill.style.width = (total ? (attempted/total*100) : 0) + '%';
+  document.querySelectorAll('[data-sec-done]').forEach(el => {
+    const si = +el.dataset.secDone;
+    el.textContent = perSec[si] || 0;
+  });
+}
+
+function probSurpriseMe() {
+  if (!_probFlat.length) return;
+  // Prefer starred & unattempted; otherwise unattempted; otherwise any
+  const starredNew = _probFlat.filter(x => x.p.star && !(_probState[x.key]||{}).status);
+  const anyNew     = _probFlat.filter(x => !(_probState[x.key]||{}).status);
+  const pool = starredNew.length ? starredNew : (anyNew.length ? anyNew : _probFlat);
+  const pick = pool[Math.floor(Math.random()*pool.length)];
+  const { p, si, ii, key } = pick;
+  const sec = (window.PROBLEMS_DATA || (C.problems||[]))[si];
+  const tag = p.tag || 'design';
+  const body = document.getElementById('prob-spotlight-body');
+  body.innerHTML = `
+    <div style="display:flex;gap:8px;align-items:center;margin-bottom:6px;flex-wrap:wrap">
+      <span class="prob-tag ${tag}">${tag}</span>
+      ${p.star ? '<span style="color:#ffa657">★</span>' : ''}
+      <span style="color:#8b949e;font-size:12px">${sec.week||''} · ${sec.title||''} · #${ii+1}</span>
+    </div>
+    <div class="pc-text">${p.text||''}</div>
+    ${(()=>{const L=[];if(p.hint)L.push({s:'💡 Reveal hint',c:'prob-hint',t:'Hint',b:p.hint});if(p.approach)L.push({s:'🔑 Show approach',c:'prob-approach',t:'Approach',b:p.approach});if(p.answer)L.push({s:'📐 Show answer',c:'prob-answer',t:'Answer',b:p.answer});return L.map(l=>`<details style="margin-top:10px"><summary style="cursor:pointer;color:#8b949e;font-size:12px;padding:4px 0">${l.s}</summary><div class="prob-reveal-panel ${l.c} shown" style="margin-top:6px"><span class="rh-label">${l.t}</span>${l.b}</div></details>`).join('');})()}
+    <div style="margin-top:14px;display:flex;gap:6px;flex-wrap:wrap">
+      <button class="prob-actbtn" onclick="probJumpTo('${key}')">↗ Jump to it</button>
+      <button class="prob-actbtn" onclick="probSurpriseMe()">🎲 Another</button>
+    </div>`;
+  document.getElementById('prob-spotlight').classList.add('open');
+}
+function probCloseSpotlight() { const el = document.getElementById('prob-spotlight'); if (el) el.classList.remove('open'); }
+function probJumpTo(key) {
+  probCloseSpotlight();
+  const card = document.querySelector(`.prob-card[data-key="${key}"]`);
+  if (!card) return;
+  const sec = card.closest('.prob-section');
+  if (sec) sec.open = true;
+  card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  card.style.transition = 'box-shadow .3s'; card.style.boxShadow = '0 0 0 2px #58a6ff';
+  setTimeout(() => { card.style.boxShadow = ''; }, 1500);
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') probCloseSpotlight(); });
+if (typeof switchTab === 'function') {
+  const _origSwitchTab_prob = switchTab;
+  switchTab = function(tab) { _origSwitchTab_prob(tab); if (tab === 'problems') renderProblems(); };
+}
+
+
+// === BEGIN glossary v1 js ===
+// ═══════════════════════════════════════════════════════════════════════
+// GLOSSARY — definitions + cross-references with graph & mindmap
+// ═══════════════════════════════════════════════════════════════════════
+(function initGlossaryMaps() {
+  const gloss = (C && C.glossary) || [];
+  if (!gloss.length) return;
+
+  // 1. Build id → entry maps and "label/aka" → id reverse map.
+  const byId = {};
+  const byLabel = {}; // lowercased term/aka → id
+  gloss.forEach(g => {
+    byId[g.id] = g;
+    const keys = [g.term].concat(g.aka || []);
+    keys.forEach(k => { if (k) byLabel[k.toLowerCase().trim()] = g.id; });
+  });
+
+  // 2. Patch graph node tips for any node whose id matches a glossary entry.
+  let graphMatched = 0;
+  const glossByGraphNode = {};
+  if (C.graph && Array.isArray(C.graph.nodes)) {
+    C.graph.nodes.forEach(n => {
+      if (byId[n.id]) {
+        glossByGraphNode[n.id] = n.id;
+        graphMatched++;
+        if (n.tip && n.tip.indexOf('📖') < 0) n.tip = n.tip + ' · 📖 in glossary';
+      } else {
+        // Fallback: try label/aka match
+        const k = (n.label || '').toLowerCase().trim();
+        if (byLabel[k]) {
+          glossByGraphNode[n.id] = byLabel[k];
+          graphMatched++;
+          if (n.tip && n.tip.indexOf('📖') < 0) n.tip = n.tip + ' · 📖 in glossary';
+        }
+      }
+    });
+  }
+
+  // 3. Walk mindmap and build name → glossary-id map. Match relaxed:
+  //    full name (newlines → space) OR each line.
+  let mindmapMatched = 0;
+  const glossByMindmapName = {};
+  function walkMm(node) {
+    if (!node) return;
+    if (node.name) {
+      const full = node.name.replace(/\n/g, ' ').trim();
+      const candidates = [full].concat(node.name.split(/\n+/).map(s => s.trim()).filter(Boolean));
+      for (const c of candidates) {
+        const id = byLabel[c.toLowerCase()];
+        if (id) {
+          glossByMindmapName[full] = id;
+          mindmapMatched++;
+          break;
+        }
+      }
+    }
+    (node.children || []).forEach(walkMm);
+  }
+  if (C.mindmap) walkMm(C.mindmap);
+
+  window._glossaryById = byId;
+  window._glossaryByLabel = byLabel;
+  window._glossaryIdByGraphNode = glossByGraphNode;
+  window._glossaryIdByMindmapName = glossByMindmapName;
+  window._glossaryStats = { graphMatched: graphMatched, mindmapMatched: mindmapMatched };
+
+  // 4. Monkey-patch showTooltip so it appends a "📖 Defined in glossary →" link
+  //    whenever the hovered name corresponds to a glossary entry.
+  if (typeof window.showTooltip === 'function') {
+    const _origShowTooltip = window.showTooltip;
+    const ttRoot = document.getElementById('tooltip');
+    let glossFooter = ttRoot.querySelector('.tt-glossary');
+    if (!glossFooter) {
+      glossFooter = document.createElement('div');
+      glossFooter.className = 'tt-glossary';
+      ttRoot.appendChild(glossFooter);
+    }
+    window.showTooltip = function(evt, name, tip, slides) {
+      _origShowTooltip(evt, name, tip, slides);
+      glossFooter.innerHTML = '';
+      ttRoot.classList.remove('has-glossary');
+      if (!name) return;
+      const plain = String(name).replace(/\n/g, ' ').trim();
+      const key = plain.toLowerCase();
+      let id = byLabel[key] || glossByMindmapName[plain] || null;
+      if (!id) {
+        // strip parenthetical suffix e.g. "Optical Switch (OCS)" → "Optical Switch"
+        const stripped = plain.replace(/\s*\([^)]*\)\s*$/, '').toLowerCase();
+        if (stripped !== key) id = byLabel[stripped] || null;
+      }
+      if (id) {
+        const a = document.createElement('a');
+        a.textContent = '📖 Defined in glossary →';
+        a.onclick = (e) => {
+          e.stopPropagation();
+          if (typeof window.glossaryJumpToTerm === 'function') window.glossaryJumpToTerm(id);
+        };
+        glossFooter.appendChild(a);
+        ttRoot.classList.add('has-glossary');
+      }
+    };
+  }
+})();
+
+// ─── renderGlossary ───────────────────────────────────────────────────
+let _glossSelectedCat = 'all';
+let _glossSearch = '';
+let _glossSearchTimer = null;
+let _glossBuilt = false;
+
+const GLOSS_CAT_COLORS = {
+  hardware:    '#58a6ff',
+  software:    '#7ee787',
+  numerics:    '#79c0ff',
+  systems:     '#d2a8ff',
+  performance: '#f778ba',
+  concepts:    '#ffa657'
 };
 
+function renderGlossary() {
+  const data = (C.glossary || []).slice().sort((a, b) =>
+    a.term.toLowerCase().localeCompare(b.term.toLowerCase()));
+  const list = document.getElementById('glossary-list');
+  const pillBar = document.getElementById('glossary-cat-pills');
+  const countEl = document.getElementById('glossary-count');
+  const searchEl = document.getElementById('glossary-search');
+  if (!list || !pillBar || !countEl || !searchEl) return;
+
+  // Build category pills + search input wiring once.
+  if (!_glossBuilt) {
+    const cats = ['all'].concat(
+      Array.from(new Set(data.map(d => d.category))).sort());
+    pillBar.innerHTML = '';
+    cats.forEach(cat => {
+      const btn = document.createElement('button');
+      btn.textContent = cat === 'all' ? `All (${data.length})` :
+        `${cat} (${data.filter(d => d.category === cat).length})`;
+      btn.dataset.cat = cat;
+      const color = cat === 'all' ? '#58a6ff' : (GLOSS_CAT_COLORS[cat] || '#58a6ff');
+      btn.style.setProperty('--pill-color', color);
+      btn.style.setProperty('--pill-bg', color + '22');
+      if (cat === _glossSelectedCat) btn.classList.add('active');
+      btn.onclick = () => {
+        _glossSelectedCat = cat;
+        pillBar.querySelectorAll('button').forEach(b =>
+          b.classList.toggle('active', b.dataset.cat === cat));
+        renderGlossary();
+      };
+      pillBar.appendChild(btn);
+    });
+    searchEl.addEventListener('input', () => {
+      if (_glossSearchTimer) clearTimeout(_glossSearchTimer);
+      _glossSearchTimer = setTimeout(() => {
+        _glossSearch = searchEl.value.trim().toLowerCase();
+        renderGlossary();
+      }, 120);
+    });
+    _glossBuilt = true;
+  }
+
+  // Filter
+  const q = _glossSearch;
+  const visible = data.filter(d => {
+    if (_glossSelectedCat !== 'all' && d.category !== _glossSelectedCat) return false;
+    if (!q) return true;
+    const hay = [d.term, (Array.isArray(d.aka) ? d.aka.join(' ') : (d.aka || '')), d.short, d.long || ''].join(' ').toLowerCase();
+    return hay.indexOf(q) >= 0;
+  });
+
+  countEl.textContent = `${visible.length} of ${data.length} terms`;
+
+  const graphIds = new Set();
+  if (C.graph && C.graph.nodes) C.graph.nodes.forEach(n => graphIds.add(n.id));
+  const glossIds = new Set(data.map(d => d.id));
+  const mindmapNames = window._glossaryIdByMindmapName || {};
+  const reverseMindmap = {}; // glossary-id → mindmap label
+  Object.keys(mindmapNames).forEach(name => { reverseMindmap[mindmapNames[name]] = name; });
+
+  list.innerHTML = '';
+  visible.forEach(d => {
+    const color = GLOSS_CAT_COLORS[d.category] || '#58a6ff';
+    const card = document.createElement('div');
+    card.className = 'glossary-card';
+    card.dataset.id = d.id;
+    card.style.setProperty('--cat-color', color);
+
+    const head = document.createElement('div');
+    head.className = 'glossary-term-row';
+    const term = document.createElement('span');
+    term.className = 'glossary-term';
+    term.textContent = d.term;
+    head.appendChild(term);
+    const badge = document.createElement('span');
+    badge.className = 'glossary-cat-badge';
+    badge.textContent = d.category;
+    badge.style.setProperty('--cat-color', color);
+    head.appendChild(badge);
+    card.appendChild(head);
+
+    if (d.aka && d.aka.length) {
+      const aka = document.createElement('div');
+      aka.className = 'glossary-aka';
+      aka.textContent = 'aka ' + (Array.isArray(d.aka) ? d.aka.join(', ') : d.aka);
+      card.appendChild(aka);
+    }
+
+    const shortEl = document.createElement('div');
+    shortEl.className = 'glossary-short';
+    shortEl.textContent = d.short || '';
+    card.appendChild(shortEl);
+
+    if (d.long) {
+      const longEl = document.createElement('div');
+      longEl.className = 'glossary-long';
+      longEl.innerHTML = d.long;
+      card.appendChild(longEl);
+      const toggle = document.createElement('button');
+      toggle.className = 'glossary-toggle';
+      toggle.textContent = 'Show more ▾';
+      toggle.onclick = () => {
+        const expanded = card.classList.toggle('expanded');
+        toggle.textContent = expanded ? 'Show less ▴' : 'Show more ▾';
+      };
+      card.appendChild(toggle);
+    }
+
+    const links = document.createElement('div');
+    links.className = 'glossary-links';
+    if (graphIds.has(d.id)) {
+      const b = document.createElement('button');
+      b.textContent = '🔗 Topic Graph';
+      b.onclick = () => window.glossaryJumpToGraphNode(d.id);
+      links.appendChild(b);
+    }
+    if (reverseMindmap[d.id]) {
+      const b = document.createElement('button');
+      b.textContent = '📐 Mind Map';
+      b.onclick = () => window.glossaryJumpToMindmapNode(reverseMindmap[d.id]);
+      links.appendChild(b);
+    }
+    (d.seeAlso || []).forEach(otherId => {
+      if (!glossIds.has(otherId)) return;
+      const other = (C.glossary || []).find(x => x.id === otherId);
+      if (!other) return;
+      const b = document.createElement('button');
+      b.textContent = '→ ' + other.term;
+      b.onclick = () => window.glossaryJumpToTerm(otherId);
+      links.appendChild(b);
+    });
+    if (links.children.length) card.appendChild(links);
+
+    list.appendChild(card);
+  });
+}
+
+// ─── Cross-tab jump helpers ───────────────────────────────────────────
+window.glossaryJumpToTerm = function(id) {
+  if (typeof switchTab === 'function') switchTab('glossary');
+  setTimeout(() => {
+    const card = document.querySelector('.glossary-card[data-id="' + CSS.escape(id) + '"]');
+    if (!card) return;
+    card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    card.classList.remove('flash');
+    void card.offsetWidth; // restart animation
+    card.classList.add('flash');
+    // Pull the display term from the card itself so the toast matches what the user sees
+    const labelEl = card.querySelector('.glossary-term');
+    const label = labelEl ? labelEl.textContent.trim() : id;
+    if (typeof showGlossaryToast === 'function') showGlossaryToast('Glossary', label, 'glossary');
+    setTimeout(() => card.classList.remove('flash'), 2800);
+  }, 60);
+};
+
+window.glossaryJumpToGraphNode = function(id) {
+  if (typeof switchTab === 'function') switchTab('graph');
+  const tryFlash = (attempt) => {
+    const g = document.querySelector('g.graph-node[data-id="' + CSS.escape(id) + '"]');
+    if (!g) {
+      if (attempt < 12) return setTimeout(() => tryFlash(attempt + 1), 120);
+      return;
+    }
+    // Pull the node's force-simulation position from its bound datum
+    let d = null;
+    try { d = (typeof d3 !== 'undefined') ? d3.select(g).datum() : null; } catch(_) {}
+    const label = (d && (d.label || d.id)) || id;
+
+    // 1) Pan + zoom the SVG so the node is centered and reasonably zoomed in
+    try {
+      if (d && typeof d.x === 'number' && typeof d.y === 'number' && typeof d3 !== 'undefined' && typeof graphZoom !== 'undefined') {
+        const svgEl = document.getElementById('canvas-graph');
+        const W = (svgEl && svgEl.clientWidth)  || window.innerWidth;
+        const H = (svgEl && svgEl.clientHeight) || window.innerHeight;
+        const k = 1.6;
+        const tx = W / 2 - k * d.x;
+        const ty = H / 2 - k * d.y;
+        d3.select('#canvas-graph')
+          .transition().duration(650)
+          .call(graphZoom.transform, d3.zoomIdentity.translate(tx, ty).scale(k));
+      } else {
+        g.querySelector('circle') && g.querySelector('circle').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    } catch(_) {}
+
+    // 2) Big halo ring + bold class on the node group
+    g.classList.remove('glossary-highlight');
+    void g.getBoundingClientRect();
+    g.classList.add('glossary-highlight');
+    try {
+      // remove any previous halo
+      g.querySelectorAll('circle.glossary-halo').forEach(c => c.remove());
+      const halo = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+      halo.setAttribute('class', 'glossary-halo');
+      halo.setAttribute('cx', '0');
+      halo.setAttribute('cy', '0');
+      halo.setAttribute('r', '14');
+      g.insertBefore(halo, g.firstChild); // behind the node circle
+    } catch(_) {}
+
+    // 3) Top-of-screen toast
+    showGlossaryToast('Topic Graph', label, 'graph');
+
+    setTimeout(() => {
+      g.classList.remove('glossary-highlight');
+      g.querySelectorAll('circle.glossary-halo').forEach(c => c.remove());
+    }, 4200);
+  };
+  requestAnimationFrame(() => requestAnimationFrame(() => tryFlash(0)));
+};
+
+window.glossaryJumpToMindmapNode = function(label) {
+  if (typeof switchTab === 'function') switchTab('mindmap');
+  const target = (label || '').replace(/\n/g, ' ').trim().toLowerCase();
+  const tryFlash = (attempt) => {
+    const groups = document.querySelectorAll('#canvas g');
+    let hit = null;
+    groups.forEach(g => {
+      if (hit) return;
+      const txt = (g.textContent || '').replace(/\s+/g, ' ').trim().toLowerCase();
+      if (txt === target) hit = g;
+    });
+    if (!hit) {
+      if (attempt < 10) return setTimeout(() => tryFlash(attempt + 1), 150);
+      return;
+    }
+
+    // 1) Pan the mindmap so the hit node is roughly centered
+    try {
+      if (typeof d3 !== 'undefined' && typeof mmZoom !== 'undefined') {
+        const svgEl = document.getElementById('canvas');
+        const W = (svgEl && svgEl.clientWidth)  || window.innerWidth;
+        const H = (svgEl && svgEl.clientHeight) || window.innerHeight;
+        // Read the node's local SVG position from its existing transform attribute (form: translate(x,y))
+        const tr = hit.getAttribute('transform') || '';
+        const m = tr.match(/translate\(\s*([-0-9.]+)\s*[ ,]\s*([-0-9.]+)/);
+        if (m) {
+          const x = parseFloat(m[1]), y = parseFloat(m[2]);
+          const k = 1.3;
+          const tx = W / 2 - k * x;
+          const ty = H / 2 - k * y;
+          d3.select('#canvas')
+            .transition().duration(650)
+            .call(mmZoom.transform, d3.zoomIdentity.translate(tx, ty).scale(k));
+        } else {
+          hit.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      } else {
+        hit.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    } catch(_) {}
+
+    // 2) Halo ring on the mindmap node
+    try {
+      hit.querySelectorAll('circle.glossary-mm-halo').forEach(c => c.remove());
+      const halo = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+      halo.setAttribute('class', 'glossary-mm-halo');
+      halo.setAttribute('cx', '0');
+      halo.setAttribute('cy', '0');
+      halo.setAttribute('r', '14');
+      hit.insertBefore(halo, hit.firstChild);
+      setTimeout(() => halo.remove(), 4200);
+    } catch(_) {}
+
+    // 3) Stroke flash on the shape
+    const shape = hit.querySelector('circle, rect');
+    if (shape) {
+      const prev = shape.getAttribute('stroke');
+      const prevW = shape.getAttribute('stroke-width');
+      shape.setAttribute('stroke', '#f0c000');
+      shape.setAttribute('stroke-width', '5');
+      setTimeout(() => {
+        if (prev !== null) shape.setAttribute('stroke', prev); else shape.removeAttribute('stroke');
+        if (prevW !== null) shape.setAttribute('stroke-width', prevW); else shape.removeAttribute('stroke-width');
+      }, 3000);
+    }
+
+    // 4) Toast
+    showGlossaryToast('Mind Map', (label || '').replace(/\n/g, ' '), 'mindmap');
+  };
+  requestAnimationFrame(() => requestAnimationFrame(() => tryFlash(0)));
+};
+
+// Floating toast helper — visible regardless of where the target node ended up
+function showGlossaryToast(where, label, kind) {
+  let t = document.getElementById('glossary-toast');
+  if (!t) {
+    t = document.createElement('div');
+    t.id = 'glossary-toast';
+    document.body.appendChild(t);
+  }
+  const icon = kind === 'graph' ? '🔗' : (kind === 'mindmap' ? '📐' : '📖');
+  t.innerHTML = '<span class="gt-icon">' + icon + '</span>'
+              + '<span>Jumped to: <strong>' + (label || '').replace(/[<>&]/g, '') + '</strong></span>'
+              + '<span class="gt-sub">in ' + where + '</span>';
+  // restart animation
+  t.classList.remove('show');
+  void t.offsetWidth;
+  t.classList.add('show');
+  clearTimeout(t._hideTimer);
+  t._hideTimer = setTimeout(() => t.classList.remove('show'), 3200);
+}
+
+// Lazy-render hook
+if (typeof switchTab === 'function') {
+  const _origSwitchTab_gloss = switchTab;
+  switchTab = function(tab) { _origSwitchTab_gloss(tab); if (tab === 'glossary') renderGlossary(); };
+}
+// === END glossary v1 js ===
 </script>
 <!-- BEGIN tooltip-pin (click pins, click outside closes) -->
 <style>

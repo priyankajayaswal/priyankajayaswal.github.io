@@ -253,6 +253,36 @@
     border-radius: 4px; font-size: 10px; color: #79c0ff; text-decoration: none; transition: all .2s;
   }
   .uc-refs a:hover { border-color: #58a6ff; color: #58a6ff; background: #0d1117; }
+  /* ── Use-case enrichment v2 ── */
+  .uc-overview { background: linear-gradient(135deg, #0d1117 0%, #161b22 100%); border: 1px solid #30363d;
+    border-left: 3px solid #58a6ff; border-radius: 10px; padding: 16px 18px; margin: 16px 0 20px; }
+  .uc-overview .uc-summary { font-size: 13px; color: #c9d1d9; line-height: 1.7; }
+  .uc-overview .uc-summary strong { color: #79c0ff; }
+  .uc-pipeline { margin-top: 14px; padding: 10px 12px; background: #0d1117; border: 1px solid #30363d;
+    border-radius: 6px; font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+    font-size: 11px; color: #7ee787; line-height: 1.6; white-space: pre-wrap; overflow-x: auto; }
+  .uc-metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 10px; margin-top: 14px; }
+  .uc-metric { background: #0d1117; border: 1px solid #30363d; border-radius: 8px; padding: 10px 12px; }
+  .uc-metric .uc-metric-label { font-size: 10px; color: #8b949e; text-transform: uppercase; letter-spacing: 0.5px; }
+  .uc-metric .uc-metric-value { font-size: 14px; color: #ffa657; font-weight: 600; margin-top: 4px; line-height: 1.4; }
+  .uc-extensions { margin-top: 14px; padding: 10px 12px; background: rgba(210, 168, 255, 0.06);
+    border: 1px solid rgba(210, 168, 255, 0.25); border-radius: 6px; font-size: 12px; color: #c9d1d9; line-height: 1.6; }
+  .uc-extensions strong { color: #d2a8ff; }
+  .uc-step .uc-intuition { margin-top: 8px; padding: 8px 10px; background: rgba(126, 231, 135, 0.08);
+    border-left: 2px solid #3fb950; border-radius: 4px; font-size: 12px; color: #c9d1d9; line-height: 1.55; display: none; }
+  .uc-step.active .uc-intuition { display: block; }
+  .uc-step .uc-intuition strong { color: #7ee787; }
+  .uc-step .uc-complexity { display: inline-block; margin-top: 8px; margin-right: 6px;
+    background: rgba(31, 111, 235, 0.15); border: 1px solid rgba(88, 166, 255, 0.35); border-radius: 4px;
+    padding: 2px 8px; font-size: 10px; color: #79c0ff; font-family: 'Cascadia Code', 'Consolas', monospace; }
+  .uc-step .uc-pitfall { margin-top: 8px; padding: 8px 10px; background: rgba(255, 123, 114, 0.08);
+    border-left: 2px solid #ff7b72; border-radius: 4px; font-size: 12px; color: #c9d1d9; line-height: 1.55; display: none; }
+  .uc-step.active .uc-pitfall { display: block; }
+  .uc-step .uc-pitfall strong { color: #ff7b72; }
+  .uc-step .uc-example { margin-top: 8px; padding: 8px 10px; background: rgba(255, 166, 87, 0.06);
+    border-left: 2px solid #ffa657; border-radius: 4px; font-size: 12px; color: #c9d1d9; line-height: 1.55; display: none; }
+  .uc-step.active .uc-example { display: block; }
+  .uc-step .uc-example strong { color: #ffa657; }
   .legend-close {
     position: absolute; top: 8px; right: 8px; background: none; border: none;
     color: #8b949e; font-size: 16px; cursor: pointer; line-height: 1; padding: 2px 6px;
@@ -320,27 +350,92 @@
   /* ── Practice Problems (Problem-First) ── */
   #problems-container { position: relative; top: 0; width: 100%; max-width: 1100px; margin: 0 auto; padding: 24px 16px 60px; }
   #view-problems { overflow-y: auto; height: calc(100vh - 50px); margin-top: 50px; }
-  .prob-intro { background: #161b22; border: 1px solid #30363d; border-left: 3px solid #7ee787; border-radius: 6px; padding: 14px 18px; margin-bottom: 22px; color: #c9d1d9; font-size: 14px; line-height: 1.6; }
+  .prob-intro { background: #161b22; border: 1px solid #30363d; border-left: 3px solid #7ee787; border-radius: 6px; padding: 14px 18px; margin-bottom: 18px; color: #c9d1d9; font-size: 14px; line-height: 1.6; }
   .prob-intro strong { color: #7ee787; }
-  .prob-section { margin-bottom: 22px; border: 1px solid #30363d; border-radius: 8px; background: #161b22; overflow: hidden; }
-  .prob-section > summary { padding: 14px 18px; font-size: 15px; font-weight: 600; color: #e6edf3; cursor: pointer; list-style: none; display: flex; align-items: center; gap: 10px; user-select: none; transition: background .15s; }
+  /* Toolbar */
+  .prob-toolbar { position: sticky; top: 0; z-index: 5; background: rgba(13,17,23,0.95); backdrop-filter: blur(6px); padding: 10px 0 12px; margin-bottom: 14px; border-bottom: 1px solid #21262d; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  .prob-search { flex: 1 1 200px; min-width: 180px; background: #0d1117; border: 1px solid #30363d; border-radius: 6px; padding: 7px 12px; color: #c9d1d9; font-size: 13px; outline: none; }
+  .prob-search:focus { border-color: #58a6ff; }
+  .prob-filter-row { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+  .prob-chip { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 12px; cursor: pointer; background: #161b22; border: 1px solid #30363d; color: #8b949e; text-transform: uppercase; letter-spacing: .4px; transition: all .15s; user-select: none; }
+  .prob-chip:hover { border-color: #58a6ff; color: #c9d1d9; }
+  .prob-chip.active { background: #1f6feb22; border-color: #58a6ff; color: #58a6ff; }
+  .prob-chip.design.active  { background: #58a6ff22; border-color: #58a6ff; color: #58a6ff; }
+  .prob-chip.derive.active  { background: #ffa65722; border-color: #ffa657; color: #ffa657; }
+  .prob-chip.debug.active   { background: #f8514922; border-color: #f85149; color: #f85149; }
+  .prob-chip.code.active    { background: #7ee78722; border-color: #7ee787; color: #7ee787; }
+  .prob-chip.paper.active   { background: #d2a8ff22; border-color: #d2a8ff; color: #d2a8ff; }
+  .prob-chip .count { font-size: 9px; opacity: .7; font-weight: 500; }
+  .prob-actbtn { background: #161b22; border: 1px solid #30363d; color: #c9d1d9; padding: 6px 12px; border-radius: 6px; font-size: 12px; cursor: pointer; transition: all .15s; }
+  .prob-actbtn:hover { border-color: #58a6ff; color: #58a6ff; }
+  .prob-actbtn.primary { background: #1f6feb; border-color: #58a6ff; color: #fff; }
+  .prob-actbtn.primary:hover { background: #388bfd; }
+  .prob-progress { display: flex; align-items: center; gap: 10px; flex: 0 0 auto; font-size: 11px; color: #8b949e; margin-left: auto; }
+  .prob-progress-bar { width: 100px; height: 6px; background: #21262d; border-radius: 3px; overflow: hidden; }
+  .prob-progress-fill { height: 100%; background: linear-gradient(90deg, #7ee787, #58a6ff); transition: width .3s; }
+  /* Sections */
+  .prob-section { margin-bottom: 16px; border: 1px solid #30363d; border-radius: 8px; background: #161b22; overflow: hidden; }
+  .prob-section > summary { padding: 13px 18px; font-size: 14px; font-weight: 600; color: #e6edf3; cursor: pointer; list-style: none; display: flex; align-items: center; gap: 10px; user-select: none; transition: background .15s; flex-wrap: wrap; }
   .prob-section > summary::-webkit-details-marker { display: none; }
   .prob-section > summary::before { content: '▸'; color: #8b949e; font-size: 11px; transition: transform .2s; }
   .prob-section[open] > summary::before { transform: rotate(90deg); }
   .prob-section > summary:hover { background: rgba(88,166,255,0.04); }
-  .prob-section .wk { color: #8b949e; font-size: 12px; font-weight: 500; background: #0d1117; padding: 2px 8px; border-radius: 10px; border: 1px solid #30363d; }
-  .prob-body { padding: 6px 20px 18px 40px; }
-  .prob-body > ol { padding-left: 22px; margin: 8px 0 4px; }
-  .prob-body > ol > li { margin: 12px 0; color: #c9d1d9; font-size: 14px; line-height: 1.55; }
-  .prob-body > ol > li::marker { color: #7ee787; font-weight: 600; }
-  .prob-hint { display: block; margin-top: 4px; color: #8b949e; font-size: 12.5px; font-style: italic; }
-  .prob-hint::before { content: '💡 '; font-style: normal; }
-  .prob-tag { display: inline-block; font-size: 10px; font-weight: 600; padding: 1px 7px; border-radius: 8px; margin-right: 6px; vertical-align: middle; text-transform: uppercase; letter-spacing: .4px; }
+  .prob-section .wk { color: #8b949e; font-size: 11px; font-weight: 500; background: #0d1117; padding: 2px 8px; border-radius: 10px; border: 1px solid #30363d; }
+  .prob-section .sec-meta { margin-left: auto; font-size: 11px; color: #6e7681; font-weight: 500; }
+  .prob-section .sec-meta .done-count { color: #7ee787; font-weight: 600; }
+  .prob-hook { background: #0d1117; border-bottom: 1px solid #21262d; padding: 12px 22px; font-size: 13px; color: #d2a8ff; font-style: italic; line-height: 1.6; display: flex; gap: 8px; align-items: flex-start; }
+  .prob-hook::before { content: '🪝'; font-style: normal; flex-shrink: 0; }
+  .prob-body { padding: 12px 18px 16px; display: flex; flex-direction: column; gap: 10px; }
+  /* Problem cards */
+  .prob-card { background: #0d1117; border: 1px solid #21262d; border-radius: 8px; padding: 12px 14px; transition: all .15s; position: relative; }
+  .prob-card:hover { border-color: #30363d; }
+  .prob-card.status-thinking { border-left: 3px solid #d2a8ff; }
+  .prob-card.status-got      { border-left: 3px solid #7ee787; opacity: .75; }
+  .prob-card.status-stuck    { border-left: 3px solid #f85149; }
+  .prob-card.hidden          { display: none; }
+  .prob-card .pc-head { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 4px; }
+  .prob-card .pc-num { color: #6e7681; font-size: 11px; font-weight: 600; font-family: 'Cascadia Code', monospace; }
+  .prob-card .pc-star { color: #ffa657; font-size: 13px; }
+  .prob-tag { display: inline-block; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 8px; text-transform: uppercase; letter-spacing: .4px; }
   .prob-tag.design { background: #58a6ff20; color: #58a6ff; }
   .prob-tag.debug  { background: #f8514920; color: #f85149; }
   .prob-tag.paper  { background: #d2a8ff20; color: #d2a8ff; }
   .prob-tag.code   { background: #7ee78720; color: #7ee787; }
   .prob-tag.derive { background: #ffa65720; color: #ffa657; }
+  .prob-card .pc-text { color: #c9d1d9; font-size: 13.5px; line-height: 1.6; margin: 2px 0 6px; }
+  .prob-card .pc-actions { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; margin-top: 6px; }
+  .prob-revealbtn { background: transparent; border: 1px dashed #30363d; color: #8b949e; padding: 3px 10px; border-radius: 12px; font-size: 11px; cursor: pointer; transition: all .15s; }
+  .prob-revealbtn:hover { border-color: #d2a8ff; color: #d2a8ff; border-style: solid; }
+  .prob-revealbtn.approach:hover { border-color: #79c0ff; color: #79c0ff; }
+  .prob-revealbtn.answer:hover   { border-color: #7ee787; color: #7ee787; }
+  .prob-reveal-panel { display: none; margin-top: 8px; padding: 10px 14px; background: #161b22; border-radius: 4px; color: #c9d1d9; font-size: 12.5px; line-height: 1.65; }
+  .prob-reveal-panel.shown { display: block; }
+  .prob-reveal-panel ul, .prob-reveal-panel ol { margin: 4px 0 4px 18px; padding: 0; }
+  .prob-reveal-panel li { margin: 3px 0; }
+  .prob-reveal-panel code { background: #0d1117; padding: 1px 5px; border-radius: 3px; font-size: 11.5px; color: #79c0ff; font-family: 'Cascadia Code', 'Consolas', monospace; }
+  .prob-reveal-panel strong { color: #e6edf3; }
+  .prob-reveal-panel .rh-label { display: inline-block; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .6px; margin-right: 8px; padding: 1px 6px; border-radius: 4px; vertical-align: middle; }
+  .prob-hint     { border-left: 2px solid #d2a8ff; }
+  .prob-hint     .rh-label { background: #d2a8ff22; color: #d2a8ff; }
+  .prob-approach { border-left: 2px solid #79c0ff; }
+  .prob-approach .rh-label { background: #79c0ff22; color: #79c0ff; }
+  .prob-answer   { border-left: 2px solid #7ee787; background: #0d1f17; }
+  .prob-answer   .rh-label { background: #7ee78722; color: #7ee787; }
+  .prob-status-btns { display: flex; gap: 4px; margin-left: auto; }
+  .prob-statbtn { background: transparent; border: 1px solid #30363d; color: #6e7681; padding: 3px 9px; border-radius: 12px; font-size: 11px; cursor: pointer; transition: all .15s; }
+  .prob-statbtn:hover { border-color: #58a6ff; color: #c9d1d9; }
+  .prob-statbtn.active.thinking { background: #d2a8ff22; border-color: #d2a8ff; color: #d2a8ff; }
+  .prob-statbtn.active.got      { background: #7ee78722; border-color: #7ee787; color: #7ee787; }
+  .prob-statbtn.active.stuck    { background: #f8514922; border-color: #f85149; color: #f85149; }
+  .prob-empty { text-align: center; padding: 40px 20px; color: #6e7681; font-size: 13px; }
+  /* Modal for surprise-me */
+  .prob-spotlight { position: fixed; inset: 0; background: rgba(13,17,23,0.85); backdrop-filter: blur(4px); display: none; align-items: center; justify-content: center; z-index: 100; padding: 20px; }
+  .prob-spotlight.open { display: flex; }
+  .prob-spotlight-card { background: #161b22; border: 1px solid #58a6ff; border-radius: 12px; max-width: 600px; width: 100%; padding: 24px 28px; box-shadow: 0 12px 60px rgba(88,166,255,0.3); }
+  .prob-spotlight-card h3 { color: #58a6ff; font-size: 14px; margin: 0 0 4px; text-transform: uppercase; letter-spacing: 1px; }
+  .prob-spotlight-card .pc-text { font-size: 16px; line-height: 1.55; color: #e6edf3; margin: 10px 0; }
+  .prob-spotlight-card .sl-close { background: transparent; border: none; color: #8b949e; font-size: 22px; cursor: pointer; float: right; line-height: 1; }
+  .prob-spotlight-card .sl-close:hover { color: #c9d1d9; }
   .appendix-table .watch-link:hover { color: #ff0000; text-decoration: underline; }
   /* ── Progress checkbox ── */
   .appendix-table .vid-check { width: 18px; height: 18px; cursor: pointer; accent-color: #7ee787; vertical-align: middle; }
@@ -398,6 +493,233 @@
     .dd-card-img { height: 120px; }
     .dd-keypoints { grid-template-columns: 1fr; }
   }
+
+/* === BEGIN glossary v1 css === */
+  /* dd-nav sticky top */
+  .dd-nav.dd-nav-top {
+    position: sticky; top: 0; z-index: 5;
+    margin: -4px -4px 14px; padding: 10px 8px;
+    background: linear-gradient(180deg, rgba(13,17,23,0.96) 75%, rgba(13,17,23,0));
+    backdrop-filter: blur(4px);
+    border-bottom: 1px solid #21262d;
+  }
+  /* ── Glossary ── */
+  .gloss-intro { background: #161b22; border: 1px solid #30363d; border-left: 3px solid #d2a8ff; border-radius: 6px; padding: 14px 18px; margin-bottom: 14px; color: #c9d1d9; font-size: 14px; line-height: 1.6; }
+  .gloss-intro strong { color: #d2a8ff; }
+  #view-glossary { overflow-y: auto; height: calc(100vh - 50px); margin-top: 50px; padding: 20px; box-sizing: border-box; }
+  @media (max-width: 768px) { #view-glossary { margin-top: 48px; padding: 12px; } }
+  .glossary-controls { position: sticky; top: 0; z-index: 5; background: rgba(13,17,23,0.95); backdrop-filter: blur(6px); padding: 10px 0 12px; margin: -8px 0 14px; border-bottom: 1px solid #21262d; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  #glossary-search { flex: 1 1 240px; min-width: 200px; background: #0d1117; border: 1px solid #30363d; border-radius: 6px; padding: 7px 12px; color: #c9d1d9; font-size: 13px; outline: none; }
+  #glossary-search:focus { border-color: #58a6ff; }
+  .glossary-cat-pills { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+  .glossary-cat-pills button { background: #161b22; border: 1px solid #30363d; color: #8b949e; padding: 4px 10px; border-radius: 12px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .4px; cursor: pointer; transition: all .15s; }
+  .glossary-cat-pills button:hover { border-color: #58a6ff; color: #c9d1d9; }
+  .glossary-cat-pills button.active { background: var(--pill-bg, #1f6feb22); border-color: var(--pill-color, #58a6ff); color: var(--pill-color, #58a6ff); }
+  .glossary-count { font-size: 11px; color: #8b949e; margin-left: auto; }
+  .glossary-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 14px; max-width: 1400px; margin: 0 auto; }
+  .glossary-card { background: #161b22; border: 1px solid #30363d; border-radius: 10px; padding: 14px; transition: border-color .15s, box-shadow .15s, transform .15s; }
+  .glossary-card:hover { border-color: var(--cat-color, #58a6ff); box-shadow: 0 4px 14px rgba(0,0,0,0.35); }
+  .glossary-card.flash {
+    animation: glossary-flash 2.6s cubic-bezier(.4,0,.2,1) 1 forwards;
+    position: relative;
+    z-index: 2;
+  }
+  @keyframes glossary-flash {
+    0% {
+      background: #161b22;
+      border-color: #30363d;
+      box-shadow: 0 0 0 rgba(0,0,0,0);
+      transform: scale(1);
+    }
+    8% {
+      background: color-mix(in srgb, var(--cat-color, #58a6ff) 55%, #161b22);
+      border-color: var(--cat-color, #58a6ff);
+      box-shadow:
+        0 0 0 4px var(--cat-color, #58a6ff),
+        0 0 28px 6px color-mix(in srgb, var(--cat-color, #58a6ff) 70%, transparent),
+        0 14px 36px rgba(0,0,0,0.55);
+      transform: scale(1.045);
+    }
+    22% {
+      background: color-mix(in srgb, var(--cat-color, #58a6ff) 30%, #161b22);
+      border-color: var(--cat-color, #58a6ff);
+      box-shadow:
+        0 0 0 3px var(--cat-color, #58a6ff),
+        0 0 22px 4px color-mix(in srgb, var(--cat-color, #58a6ff) 55%, transparent),
+        0 10px 28px rgba(0,0,0,0.5);
+      transform: scale(1.03);
+    }
+    45% {
+      background: color-mix(in srgb, var(--cat-color, #58a6ff) 45%, #161b22);
+      border-color: var(--cat-color, #58a6ff);
+      box-shadow:
+        0 0 0 3px var(--cat-color, #58a6ff),
+        0 0 26px 5px color-mix(in srgb, var(--cat-color, #58a6ff) 60%, transparent),
+        0 12px 32px rgba(0,0,0,0.5);
+      transform: scale(1.035);
+    }
+    70% {
+      background: color-mix(in srgb, var(--cat-color, #58a6ff) 22%, #161b22);
+      border-color: color-mix(in srgb, var(--cat-color, #58a6ff) 80%, #30363d);
+      box-shadow:
+        0 0 0 2px color-mix(in srgb, var(--cat-color, #58a6ff) 70%, transparent),
+        0 0 18px 3px color-mix(in srgb, var(--cat-color, #58a6ff) 40%, transparent);
+      transform: scale(1.015);
+    }
+    100% {
+      background: #161b22;
+      border-color: #30363d;
+      box-shadow: 0 0 0 rgba(0,0,0,0);
+      transform: scale(1);
+    }
+  }
+  /* Fallback for browsers without color-mix: solid tinted backgrounds */
+  @supports not (background: color-mix(in srgb, red, blue)) {
+    @keyframes glossary-flash {
+      0%,100% { background: #161b22; border-color: #30363d; box-shadow: none; transform: scale(1); }
+      8%, 45% {
+        background: rgba(88,166,255,0.32);
+        border-color: var(--cat-color, #58a6ff);
+        box-shadow: 0 0 0 4px var(--cat-color, #58a6ff), 0 0 28px var(--cat-color, #58a6ff);
+        transform: scale(1.04);
+      }
+    }
+  }
+  .glossary-term-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .glossary-term { font-size: 16px; font-weight: 700; color: #e6edf3; }
+  .glossary-cat-badge { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; padding: 2px 7px; border-radius: 10px; border: 1px solid var(--cat-color, #58a6ff); color: var(--cat-color, #58a6ff); background: rgba(0,0,0,0.2); }
+  .glossary-aka { font-size: 11px; color: #8b949e; font-style: italic; margin-top: 3px; }
+  .glossary-short { font-size: 13px; color: #c9d1d9; margin-top: 8px; line-height: 1.5; }
+  .glossary-long { font-size: 13px; color: #8b949e; margin-top: 8px; line-height: 1.55; display: none; }
+  .glossary-long code { background: #0d1117; border: 1px solid #21262d; border-radius: 4px; padding: 1px 5px; font-family: 'Cascadia Code', monospace; font-size: 12px; color: #d2a8ff; }
+  .glossary-card.expanded .glossary-long { display: block; }
+  .glossary-toggle { background: none; border: none; color: #58a6ff; font-size: 11px; cursor: pointer; padding: 6px 0 0; }
+  .glossary-toggle:hover { text-decoration: underline; }
+  .glossary-links { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+  .glossary-links button { background: #0d1117; border: 1px solid #30363d; color: #c9d1d9; padding: 3px 9px; border-radius: 10px; font-size: 11px; cursor: pointer; transition: all .15s; }
+  .glossary-links button:hover { border-color: #58a6ff; color: #58a6ff; }
+  /* graph-node pulse when jumped to from glossary */
+  @keyframes glossary-pulse {
+    0%   { stroke-opacity: 1; stroke-width: 14; }
+    100% { stroke-opacity: 0.55; stroke-width: 5; }
+  }
+  @keyframes glossary-halo-pulse {
+    0%   { r: 16;  stroke-opacity: 1;    stroke-width: 10; }
+    60%  { r: 90;  stroke-opacity: 0.55; stroke-width: 5; }
+    100% { r: 140; stroke-opacity: 0;    stroke-width: 2; }
+  }
+  @keyframes glossary-halo-pulse-2 {
+    0%   { r: 16;  stroke-opacity: 0.9; stroke-width: 6; }
+    60%  { r: 110; stroke-opacity: 0.4; stroke-width: 3; }
+    100% { r: 170; stroke-opacity: 0;   stroke-width: 1.5; }
+  }
+  @keyframes glossary-fill-pulse {
+    0%, 100% { fill-opacity: 0.85; }
+    50%      { fill-opacity: 1; }
+  }
+  @keyframes glossary-dim-others {
+    0%   { opacity: 1; }
+    20%  { opacity: 0.15; }
+    100% { opacity: 0.15; }
+  }
+  /* Dim everything in the graph except the highlighted node + its halos */
+  #canvas-graph.glossary-spotlight g.graph-node:not(.glossary-highlight),
+  #canvas-graph.glossary-spotlight line.graph-link,
+  #canvas-graph.glossary-spotlight text.graph-link-label {
+    animation: glossary-dim-others 0.4s ease-out forwards;
+  }
+  #canvas-graph.glossary-spotlight g.graph-node.glossary-highlight {
+    opacity: 1 !important;
+  }
+  g.graph-node.glossary-highlight circle:not(.glossary-halo):not(.glossary-halo-outer) {
+    animation:
+      glossary-pulse 0.45s ease-in-out 10 alternate,
+      glossary-fill-pulse 0.45s ease-in-out 10 alternate;
+    stroke: #ffd13b !important;
+    fill: #ffd13b !important;
+    filter:
+      drop-shadow(0 0 10px #ffd13b)
+      drop-shadow(0 0 24px #ffd13baa)
+      drop-shadow(0 0 40px #ffd13b66);
+  }
+  g.graph-node.glossary-highlight text {
+    fill: #fff !important;
+    font-weight: 900 !important;
+    font-size: 15px !important;
+    paint-order: stroke fill;
+    stroke: #5a3a00;
+    stroke-width: 4px;
+    stroke-linejoin: round;
+    filter:
+      drop-shadow(0 0 6px #000)
+      drop-shadow(0 0 12px #ffd13b)
+      drop-shadow(0 0 20px #ffd13bcc);
+  }
+  circle.glossary-halo {
+    fill: none;
+    stroke: #ffd13b;
+    pointer-events: none;
+    animation: glossary-halo-pulse 1.1s ease-out 5;
+    filter: drop-shadow(0 0 8px #ffd13baa);
+  }
+  circle.glossary-halo-outer {
+    fill: none;
+    stroke: #ffae00;
+    pointer-events: none;
+    animation: glossary-halo-pulse-2 1.4s ease-out 5;
+    animation-delay: 0.18s;
+    filter: drop-shadow(0 0 12px #ffae0099);
+  }
+  /* mindmap pulse (uses a <circle> appended) */
+  circle.glossary-mm-halo {
+    fill: none;
+    stroke: #ffd13b;
+    pointer-events: none;
+    animation: glossary-halo-pulse 1.1s ease-out 5;
+    filter: drop-shadow(0 0 8px #ffd13baa);
+  }
+  circle.glossary-mm-halo-outer {
+    fill: none;
+    stroke: #ffae00;
+    pointer-events: none;
+    animation: glossary-halo-pulse-2 1.4s ease-out 5;
+    animation-delay: 0.18s;
+    filter: drop-shadow(0 0 12px #ffae0099);
+  }
+  /* toast banner shown when jumping from glossary */
+  #glossary-toast {
+    position: fixed; top: 60px; left: 50%; transform: translateX(-50%) translateY(-30px) scale(0.92);
+    background: linear-gradient(180deg, #2a1f0a, #1a1308);
+    border: 2px solid #ffd13b; border-left: 6px solid #ffd13b;
+    color: #fff5d6; padding: 12px 22px; border-radius: 10px;
+    font-size: 15px; font-weight: 700;
+    box-shadow:
+      0 10px 32px rgba(0,0,0,0.6),
+      0 0 36px rgba(255,209,59,0.45),
+      0 0 64px rgba(255,209,59,0.25);
+    opacity: 0; pointer-events: none;
+    transition: opacity .22s ease, transform .28s cubic-bezier(.2,1.2,.4,1);
+    z-index: 10000;
+    display: flex; align-items: center; gap: 12px;
+    max-width: 90vw;
+    text-shadow: 0 0 8px rgba(255,209,59,0.5);
+  }
+  #glossary-toast.show { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+  #glossary-toast .gt-icon { font-size: 22px; filter: drop-shadow(0 0 6px #ffd13b); }
+  #glossary-toast .gt-sub { color: #c9b88c; font-weight: 500; font-size: 12.5px; margin-left: 4px; }
+  #glossary-toast strong { color: #ffd13b; text-shadow: 0 0 10px rgba(255,209,59,0.6); }
+  @media (max-width: 768px) { #glossary-toast { top: 56px; font-size: 13px; padding: 10px 16px; } }
+  /* tooltip glossary footer link */
+  #tooltip .tt-glossary { margin-top: 6px; padding-top: 5px; border-top: 1px solid #30363d; }
+  #tooltip .tt-glossary:empty { display: none; }
+  #tooltip .tt-glossary a {
+    display: inline-block; padding: 2px 8px; border-radius: 4px;
+    background: rgba(210,168,255,0.10); color: #d2a8ff; text-decoration: none;
+    font-size: 11px; font-weight: 500; cursor: pointer; border: 1px solid rgba(210,168,255,0.25);
+  }
+  #tooltip .tt-glossary a:hover { background: rgba(210,168,255,0.22); border-color: #d2a8ff; }
+  #tooltip.has-glossary { pointer-events: auto; }
+/* === END glossary v1 css === */
 </style>
 </head>
 <body>
@@ -458,6 +780,21 @@
 <div id="view-problems" class="view">
   <div id="problems-container"></div>
 </div>
+<!-- BEGIN glossary v1 view -->
+<div id="view-glossary" class="view">
+  <div class="gloss-intro">
+    <strong>📖 Glossary.</strong> Every acronym, jargon term, and unit-of-art used across <em>Use Cases</em> and <em>Deep Dives</em> — defined here, cross-linked to the <strong>Topic Graph</strong> and <strong>Mind Map</strong> so you can jump from definition → diagram in one click.
+    <br><br>
+    <span style="color:#8b949e">Tip: click a related term to flash-jump to it. Click the 🌐 graph or 🧭 mindmap links to spotlight that node on its tab.</span>
+  </div>
+  <div class="glossary-controls">
+    <input type="text" id="glossary-search" placeholder="🔍 Search terms, acronyms, or definitions…" />
+    <div class="glossary-cat-pills" id="glossary-cat-pills"></div>
+    <span class="glossary-count" id="glossary-count"></span>
+  </div>
+  <div id="glossary-list" class="glossary-list"></div>
+</div>
+<!-- END glossary v1 view -->
 
 <!-- ═══════════════ SHARED OVERLAYS ═══════════════ -->
 <div id="tooltip"><div class="tt-title"></div><div class="tt-body"></div><div class="tt-slides"></div></div>
@@ -554,18 +891,39 @@ const COURSE_CONFIG = {
     name: "Nuclear &\nParticle Physics",
     tooltip: "MIT 8.701 – Introduction to Nuclear & Particle Physics",
     children: [
-      { name: "Standard Model", tooltip: "Quarks, leptons, gauge bosons, Higgs", children: [] },
-      { name: "Nuclear Structure", tooltip: "Nuclear size, binding energy, shell model, collective model", children: [] },
-      { name: "Radioactivity", tooltip: "Alpha, beta, gamma decay, decay chains, half-life", children: [] },
-      { name: "Nuclear Reactions", tooltip: "Cross sections, Q-value, compound nucleus", children: [] },
-      { name: "Feynman Diagrams", tooltip: "Vertex rules, propagators, matrix elements", children: [] },
-      { name: "Quantum\nElectrodynamics", tooltip: "QED, photon exchange, scattering", children: [] },
-      { name: "Quantum\nChromodynamics", tooltip: "QCD, color charge, confinement, asymptotic freedom", children: [] },
-      { name: "Weak Interactions", tooltip: "W/Z bosons, beta decay, neutrino oscillations", children: [] },
-      { name: "Higgs Mechanism", tooltip: "Spontaneous symmetry breaking, mass generation", children: [] },
-      { name: "Accelerators &\nDetectors", tooltip: "Cyclotron, synchrotron, calorimeters, tracking", children: [] },
-      { name: "Nuclear Fission", tooltip: "Chain reaction, criticality, reactors", children: [] },
-      { name: "Nuclear Fusion", tooltip: "Stellar nucleosynthesis, tokamak, inertial confinement", children: [] }
+      { name: "Standard Model", tooltip: "Quarks, leptons, gauge bosons, Higgs — 17 fundamental particles in three families", children: [
+        { name: "Quarks", tooltip: "6 flavors (u,d,c,s,t,b) carrying color charge — never observed free (confinement)" },
+        { name: "Leptons", tooltip: "6 particles (e,μ,τ + neutrinos) — feel weak & EM but not strong force" },
+        { name: "Gauge Bosons", tooltip: "Force carriers: photon (EM), gluon (strong), W±/Z⁰ (weak)" }
+      ] },
+      { name: "Nuclear Structure", tooltip: "Nuclear size, binding energy, shell model, collective model", children: [
+        { name: "Nucleon", tooltip: "Proton or neutron — the two constituents of every nucleus; each is a uud/udd 3-quark bound state" },
+        { name: "Isotope", tooltip: "Same Z, different N — chemically identical, nuclearly distinct (e.g., ¹²C vs ¹⁴C)" },
+        { name: "Binding Energy", tooltip: "Mass deficit Δm·c² that holds nucleons together — BE/A peaks at ⁵⁶Fe ≈ 8.79 MeV" },
+        { name: "Shell Model", tooltip: "Magic numbers 2,8,20,28,50,82,126 — nucleons fill quantum levels like electrons in atoms" },
+        { name: "Liquid Drop\nModel", tooltip: "SEMF: volume + surface + Coulomb + asymmetry + pairing terms predict masses to <1%" }
+      ] },
+      { name: "Radioactivity", tooltip: "Alpha, beta, gamma decay, decay chains, half-life", children: [
+        { name: "Decay Modes", tooltip: "α (heavy nuclei tunneling), β⁻/β⁺ (weak n↔p), γ (excited→ground), EC, spontaneous fission, IT" },
+        { name: "Half-life", tooltip: "t½ = ln2/λ — universal exponential law N(t)=N₀e^(−λt) governs every radioactive species" },
+        { name: "Dosimetry", tooltip: "Bq (activity) → gray (energy deposited) → sievert (biological weighting w_R) — ALARA, regulatory limits" }
+      ] },
+      { name: "Nuclear Reactions", tooltip: "Cross sections, Q-value, compound nucleus", children: [
+        { name: "Cross-Section", tooltip: "σ (barns, 10⁻²⁴ cm²) = effective target area for a reaction — varies by orders of magnitude with energy (resonances)" },
+        { name: "Q-value", tooltip: "Q = (m_initial − m_final)·c² — positive Q means exoergic (energy released)" },
+        { name: "Compound\nNucleus", tooltip: "Bohr's idea: projectile + target equilibrate into one excited nucleus that 'forgets' how it formed before decaying" }
+      ] },
+      { name: "Feynman Diagrams", tooltip: "Vertex rules, propagators, matrix elements — pictures that compute scattering amplitudes order by order" },
+      { name: "Quantum\nElectrodynamics", tooltip: "QED, photon exchange, scattering — agreement with experiment to 12 decimal places (g−2)" },
+      { name: "Quantum\nChromodynamics", tooltip: "QCD, color charge, confinement, asymptotic freedom — quarks bind tighter when pulled apart" },
+      { name: "Weak Interactions", tooltip: "W/Z bosons, beta decay, neutrino oscillations, parity violation" },
+      { name: "Higgs Mechanism", tooltip: "Spontaneous symmetry breaking, mass generation — 2012 LHC discovery at 125 GeV" },
+      { name: "Accelerators &\nDetectors", tooltip: "Cyclotron, synchrotron, calorimeters, tracking — from 1930s Lawrence cyclotron to 27 km LHC" },
+      { name: "Nuclear Fission", tooltip: "Chain reaction, criticality, reactors", children: [
+        { name: "Reactor Types", tooltip: "PWR/BWR (thermal LWRs), CANDU (heavy water), HTGR (gas), SFR/LFR (fast breeders), MSR (molten salt), SMR (small modular)" },
+        { name: "Criticality", tooltip: "k_eff = 1 marks self-sustaining chain. Six-factor formula k_∞ = ηfpε; delayed neutrons make reactor control possible" }
+      ] },
+      { name: "Nuclear Fusion", tooltip: "Stellar nucleosynthesis, tokamak, inertial confinement — Lawson criterion n·T·τ_E for ignition (Q>1)" }
     ]
   },
 
@@ -581,8 +939,15 @@ const COURSE_CONFIG = {
       { id: "weak-force", label: "Weak Force", cat: "interactions", tip: "Mediates beta decay and flavor changes via W±/Z⁰ bosons" },
       { id: "higgs", label: "Higgs", cat: "particles", tip: "Higgs boson — excitation of Higgs field, gives mass to W/Z and fermions" },
       { id: "nuclear-structure", label: "Nuclear Structure", cat: "nuclear", tip: "Nuclear shell model, binding energy, valley of stability" },
+      { id: "nucleon", label: "Nucleon", cat: "nuclear", tip: "Proton or neutron — the two constituents of every nucleus; each a 3-quark bound state (uud / udd)" },
+      { id: "isotope", label: "Isotope", cat: "nuclear", tip: "Same Z, different N — chemically identical, nuclearly distinct (e.g., ¹²C vs ¹⁴C)" },
+      { id: "binding-energy", label: "Binding Energy", cat: "nuclear", tip: "Mass deficit Δm·c² holding nucleons together — BE/A peaks at ⁵⁶Fe ≈ 8.79 MeV" },
+      { id: "decay-modes", label: "Decay Modes", cat: "nuclear", tip: "α, β⁻/β⁺, γ, electron capture, spontaneous fission — each conserves charge, energy, and lepton number" },
+      { id: "cross-section", label: "Cross-Section", cat: "nuclear", tip: "σ (barns, 10⁻²⁴ cm²) — effective target area; varies by orders of magnitude with energy via resonances" },
       { id: "fission", label: "Fission", cat: "nuclear", tip: "Heavy nucleus splits into lighter fragments — chain reactions, reactors" },
       { id: "fusion", label: "Fusion", cat: "nuclear", tip: "Light nuclei combine — powers stars, tokamaks, inertial confinement" },
+      { id: "reactor-types", label: "Reactor Types", cat: "nuclear", tip: "PWR/BWR thermal LWRs, CANDU heavy-water, HTGR gas, SFR/LFR fast breeders, MSR molten salt, SMR small modular" },
+      { id: "dosimetry", label: "Dosimetry", cat: "experimental", tip: "Bq (activity) → gray (J/kg) → sievert (biological w_R) — ALARA principle, regulatory limits" },
       { id: "accelerators", label: "Accelerators", cat: "experimental", tip: "Particle accelerators — cyclotrons, synchrotrons, linear colliders" },
       { id: "feynman-diagrams", label: "Feynman Diagrams", cat: "interactions", tip: "Visual calculus for particle interactions — vertices, propagators, loops" }
     ],
@@ -594,15 +959,710 @@ const COURSE_CONFIG = {
       { source: "weak-force", target: "higgs", type: "related" },
       { source: "nuclear-structure", target: "fission", type: "enables" },
       { source: "nuclear-structure", target: "fusion", type: "enables" },
-      { source: "accelerators", target: "standard-model", type: "related" }
+      { source: "accelerators", target: "standard-model", type: "related" },
+      { source: "quarks", target: "nucleon", type: "implements" },
+      { source: "nucleon", target: "nuclear-structure", type: "implements" },
+      { source: "nucleon", target: "isotope", type: "related" },
+      { source: "nuclear-structure", target: "binding-energy", type: "depends" },
+      { source: "binding-energy", target: "fission", type: "enables" },
+      { source: "binding-energy", target: "fusion", type: "enables" },
+      { source: "weak-force", target: "decay-modes", type: "enables" },
+      { source: "isotope", target: "decay-modes", type: "related" },
+      { source: "decay-modes", target: "dosimetry", type: "enables" },
+      { source: "cross-section", target: "fission", type: "depends" },
+      { source: "cross-section", target: "fusion", type: "depends" },
+      { source: "fission", target: "reactor-types", type: "enables" },
+      { source: "accelerators", target: "cross-section", type: "enables" }
     ]
   },
 
   deepDives: [
-    { title: "Standard Model", icon: "⚛️", markdown: "The **Standard Model** describes 17 fundamental particles — 6 quarks, 6 leptons, 4 gauge bosons, and the Higgs boson — and three of the four fundamental forces (electromagnetic, weak, and strong). It explains matter–antimatter symmetry and the interactions that govern subatomic physics." },
-    { title: "Nuclear Binding Energy", icon: "🔗", markdown: "The **semi-empirical mass formula** (Weizsäcker formula) models nuclear binding energy as a sum of volume, surface, Coulomb, asymmetry, and pairing terms. The **valley of stability** maps isotopes with maximum binding energy per nucleon, peaking near iron-56." },
-    { title: "Feynman Diagrams", icon: "✏️", markdown: "**Feynman diagrams** are a visual calculus for particle interactions. Each vertex, propagator, and external line corresponds to a mathematical factor in the matrix element. They simplify perturbative calculations in QED, QCD, and electroweak theory." },
-    { title: "Nuclear Fission", icon: "☢️", markdown: "**Nuclear fission** splits heavy nuclei (e.g., U-235) into lighter fragments, releasing energy. A **chain reaction** occurs when emitted neutrons trigger further fissions. **Criticality** is the balance point; reactors control this via moderators and control rods." }
+    {
+      id: "dd-binding-energy", num: "Concept 1 of 5", title: "Nuclear Binding Energy & SEMF",
+      desc: "Why iron sits at the bottom of the energy well — the binding-energy-per-nucleon curve and the semi-empirical mass formula.",
+      color: "#58a6ff", icon: "🔗",
+      svg: function(w, h) {
+        // BE/A vs A curve — sampled points (A, MeV/nucleon)
+        var pts = [[2,1.11],[4,7.07],[6,5.33],[8,7.06],[12,7.68],[16,7.98],[20,8.03],[28,8.55],[40,8.55],[56,8.79],[84,8.72],[120,8.50],[150,8.25],[180,8.00],[208,7.87],[235,7.59],[238,7.57]];
+        var x0=55, y0=h-50, xw=w-90, yh=h-90;
+        var sx=function(A){return x0+(A/240)*xw;}, sy=function(B){return y0-(B/9.2)*yh;};
+        var path='M '+sx(pts[0][0])+' '+sy(pts[0][1]);
+        for(var i=1;i<pts.length;i++) path+=' L '+sx(pts[i][0])+' '+sy(pts[i][1]);
+        var grid='';
+        for(var b=2;b<=8;b+=2) grid+='<line x1="'+x0+'" y1="'+sy(b)+'" x2="'+(x0+xw)+'" y2="'+sy(b)+'" stroke="#30363d" stroke-dasharray="2,3"/><text x="'+(x0-8)+'" y="'+(sy(b)+4)+'" text-anchor="end" fill="#8b949e" font-size="10">'+b+'</text>';
+        for(var a=50;a<=200;a+=50) grid+='<line x1="'+sx(a)+'" y1="'+y0+'" x2="'+sx(a)+'" y2="'+(y0-yh)+'" stroke="#30363d" stroke-dasharray="2,3"/><text x="'+sx(a)+'" y="'+(y0+15)+'" text-anchor="middle" fill="#8b949e" font-size="10">'+a+'</text>';
+        var marks='';
+        var mk=[[4,7.07,'⁴He',"#ffa657"],[56,8.79,'⁵⁶Fe peak',"#7ee787"],[235,7.59,'²³⁵U',"#f778ba"]];
+        for(var j=0;j<mk.length;j++){var m=mk[j];marks+='<circle cx="'+sx(m[0])+'" cy="'+sy(m[1])+'" r="4" fill="'+m[3]+'"/><text x="'+(sx(m[0])+8)+'" y="'+(sy(m[1])-6)+'" fill="'+m[3]+'" font-size="11" font-weight="600">'+m[2]+'</text>';}
+        return '<svg viewBox="0 0 '+w+' '+h+'" xmlns="http://www.w3.org/2000/svg" style="background:#0d1117">'
+          +'<text x="'+(w/2)+'" y="20" text-anchor="middle" fill="#c9d1d9" font-size="13" font-weight="600">Binding Energy per Nucleon (MeV) vs Mass Number A</text>'
+          +grid
+          +'<line x1="'+x0+'" y1="'+y0+'" x2="'+(x0+xw)+'" y2="'+y0+'" stroke="#8b949e"/>'
+          +'<line x1="'+x0+'" y1="'+y0+'" x2="'+x0+'" y2="'+(y0-yh)+'" stroke="#8b949e"/>'
+          +'<path d="'+path+'" fill="none" stroke="#58a6ff" stroke-width="2"/>'
+          +'<text x="'+(x0+xw/2)+'" y="'+(h-8)+'" text-anchor="middle" fill="#8b949e" font-size="11">A (mass number)</text>'
+          +'<text x="15" y="'+(y0-yh/2)+'" text-anchor="middle" fill="#8b949e" font-size="11" transform="rotate(-90 15 '+(y0-yh/2)+')">BE/A (MeV)</text>'
+          +marks
+          +'<text x="'+sx(120)+'" y="'+(sy(8.5)-25)+'" fill="#7ee787" font-size="10" text-anchor="middle">← FUSION releases  |  FISSION releases →</text>'
+          +'</svg>';
+      },
+      sections: [
+        { title: "Why nuclei bind", text: "The mass of a bound nucleus is less than the sum of its free nucleons. The deficit Δm shows up as binding energy via E = Δm·c². For ⁴He, four free nucleons mass-3756.96 MeV/c²; the bound nucleus is 28.3 MeV lighter, giving BE/A ≈ 7.07 MeV. Plot BE/A versus A and you get a curve that rises sharply from H-2, peaks near ⁵⁶Fe at 8.79 MeV/nucleon, then slowly declines to ~7.6 MeV at U-238. Iron is the bottom of the energy well: nothing below it can release energy by fusion, nothing above it can release energy by fission to lighter products." },
+        { title: "Semi-Empirical Mass Formula", formula: "BE(A,Z) = a_v·A − a_s·A^(2/3) − a_c·Z(Z−1)/A^(1/3) − a_a·(A−2Z)²/A + δ(A,Z)" },
+        { title: "Reading the five terms", text: "Volume (a_v ≈ 15.8 MeV) reflects short-range nucleon attraction — every nucleon binds to its ~12 neighbors. Surface (a_s ≈ 17.8) penalizes nucleons on the boundary; this is what makes small nuclei less bound than the bulk limit. Coulomb (a_c ≈ 0.71) costs energy for proton-proton repulsion and grows like Z²/A^(1/3). Asymmetry (a_a ≈ 23.7) punishes neutron/proton imbalance — Pauli forces them into higher levels. Pairing δ ≈ ±12/√A favors even-even and disfavors odd-odd, which is why ⁵⁶Fe and ⁵⁸Ni vie for most-bound." },
+        { title: "Energy from fission and fusion", text: "Fission of ²³⁵U → ¹⁴¹Ba + ⁹²Kr + 3n: products average ~8.5 MeV/A versus 7.59 for U-235, so ΔBE ≈ 235·(8.5−7.59) ≈ 200 MeV per fission. Fusion ⁴×¹H → ⁴He releases (4·0 − 4·7.07)·(−1) = 28.3 MeV (~7 MeV/nucleon, ~1% of rest mass — six-fold larger per kg than fission). The peak at iron also dictates stellar nucleosynthesis: stars stop fusing at iron and core-collapse supernovae are needed to forge heavier elements." }
+      ],
+      keypoints: [
+        { title: "BE/A peaks at ⁵⁶Fe ≈ 8.79 MeV", text: "Iron-56 (and nickel-62 at 8.794) sit at the bottom of the nuclear potential well. All energy-releasing nuclear reactions move products toward this peak." },
+        { title: "200 MeV per ²³⁵U fission", text: "About 0.085% of rest mass converts to kinetic energy of fragments (~165 MeV), prompt neutrons, gammas, and delayed beta/neutrino energy. 1 g of U-235 ≈ 1 MW·day." },
+        { title: "Coulomb term scales Z²/A^(1/3)", text: "Why heavy nuclei become unstable: proton repulsion grows faster than surface area can confine them. Above Z ≈ 92 spontaneous fission and α-decay dominate." },
+        { title: "Mass defect Δm via E=Δmc²", text: "1 atomic mass unit (u) = 931.494 MeV/c². Tabulated atomic masses give BE = [Z·m_H + N·m_n − M(A,Z)]·c² directly." }
+      ]
+    },
+    {
+      id: "dd-radioactive-decay", num: "Concept 2 of 5", title: "Radioactive Decay: α, β, γ",
+      desc: "Three decay modes, three signatures — and the exponential law N(t) = N₀ e^(−λt) that governs them all.",
+      color: "#f778ba", icon: "☢️",
+      svg: function(w, h) {
+        var cy=h/2, cx1=w*0.18, cx2=w*0.5, cx3=w*0.82;
+        function nuc(cx,col,lbl,sub){
+          return '<circle cx="'+cx+'" cy="'+cy+'" r="34" fill="'+col+'25" stroke="'+col+'" stroke-width="1.5"/>'
+            +'<text x="'+cx+'" y="'+(cy+5)+'" text-anchor="middle" fill="'+col+'" font-size="13" font-weight="700">'+lbl+'</text>'
+            +'<text x="'+cx+'" y="'+(cy-50)+'" text-anchor="middle" fill="#c9d1d9" font-size="12" font-weight="600">'+sub+'</text>';
+        }
+        // alpha panel
+        var alpha=nuc(cx1,'#ffa657','²³⁸U','α decay')
+          +'<path d="M '+(cx1+34)+' '+cy+' Q '+(cx1+70)+' '+(cy-15)+' '+(cx1+95)+' '+cy+'" fill="none" stroke="#ffa657" stroke-width="2" marker-end="url(#ah)"/>'
+          +'<circle cx="'+(cx1+105)+'" cy="'+cy+'" r="10" fill="#ffa657" stroke="#ffa657"/>'
+          +'<text x="'+(cx1+105)+'" y="'+(cy+4)+'" text-anchor="middle" fill="#0d1117" font-size="9" font-weight="700">α</text>'
+          +'<text x="'+(cx1+50)+'" y="'+(cy+50)+'" text-anchor="middle" fill="#8b949e" font-size="10">→ ²³⁴Th + ⁴He</text>'
+          +'<text x="'+(cx1+50)+'" y="'+(cy+64)+'" text-anchor="middle" fill="#8b949e" font-size="10">Q = 4.27 MeV</text>';
+        // beta panel
+        var beta=nuc(cx2,'#7ee787','¹⁴C','β⁻ decay')
+          +'<path d="M '+(cx2+34)+' '+(cy-5)+' L '+(cx2+95)+' '+(cy-25)+'" stroke="#7ee787" stroke-width="2" marker-end="url(#ah)"/>'
+          +'<text x="'+(cx2+105)+'" y="'+(cy-22)+'" fill="#7ee787" font-size="11" font-weight="700">e⁻</text>'
+          +'<path d="M '+(cx2+34)+' '+(cy+10)+' L '+(cx2+95)+' '+(cy+30)+'" stroke="#d2a8ff" stroke-width="2" stroke-dasharray="3,2" marker-end="url(#ah2)"/>'
+          +'<text x="'+(cx2+105)+'" y="'+(cy+33)+'" fill="#d2a8ff" font-size="11" font-weight="700">ν̄</text>'
+          +'<text x="'+(cx2)+'" y="'+(cy+50)+'" text-anchor="middle" fill="#8b949e" font-size="10">n → p + e⁻ + ν̄_e</text>'
+          +'<text x="'+(cx2)+'" y="'+(cy+64)+'" text-anchor="middle" fill="#8b949e" font-size="10">Q = 156 keV, t½ = 5730 yr</text>';
+        // gamma panel
+        var gamma=nuc(cx3,'#79c0ff','⁶⁰Co*','γ decay')
+          +'<path d="M '+(cx3+34)+' '+cy+' l 8 -6 l 8 6 l 8 -6 l 8 6 l 8 -6 l 8 6 l 8 -6 l 8 6" fill="none" stroke="#79c0ff" stroke-width="2" marker-end="url(#ah3)"/>'
+          +'<text x="'+(cx3+105)+'" y="'+(cy+4)+'" fill="#79c0ff" font-size="11" font-weight="700">γ</text>'
+          +'<text x="'+(cx3)+'" y="'+(cy+50)+'" text-anchor="middle" fill="#8b949e" font-size="10">excited → ground</text>'
+          +'<text x="'+(cx3)+'" y="'+(cy+64)+'" text-anchor="middle" fill="#8b949e" font-size="10">E_γ = 1.17, 1.33 MeV</text>';
+        return '<svg viewBox="0 0 '+w+' '+h+'" xmlns="http://www.w3.org/2000/svg" style="background:#0d1117">'
+          +'<defs>'
+          +'<marker id="ah" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#ffa657"/></marker>'
+          +'<marker id="ah2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#d2a8ff"/></marker>'
+          +'<marker id="ah3" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#79c0ff"/></marker>'
+          +'</defs>'
+          +'<text x="'+(w/2)+'" y="20" text-anchor="middle" fill="#c9d1d9" font-size="13" font-weight="600">Three Decay Modes — Each Conserves Energy, Charge, and (lepton) Number</text>'
+          +alpha+beta+gamma
+          +'</svg>';
+      },
+      sections: [
+        { title: "Alpha decay — quantum tunneling", text: "Heavy nuclei (A > 150, especially A > 210) emit a ⁴He nucleus to shed both protons and neutrons. The α particle is born inside the nuclear well at ~25 MeV but must tunnel through a Coulomb barrier of ~30 MeV. Gamow's 1928 theory gives log t½ ∝ Z/√Q, predicting half-lives spanning 30 orders of magnitude — from ²¹²Po (0.3 µs) to ²³²Th (1.4×10¹⁰ yr). Energies cluster in 4–9 MeV; α's stop within centimeters in air or a sheet of paper, but inside lung tissue (e.g., inhaled radon daughters) they deposit enormous local dose." },
+        { title: "Beta decay — weak interaction at work", text: "β⁻: a neutron converts to a proton, emitting an electron and electron antineutrino (n → p + e⁻ + ν̄_e), mediated by W⁻. β⁺ runs the opposite way (proton-rich nuclei) emitting a positron and ν_e. Electron capture is the third weak channel: an inner-shell e⁻ is absorbed (p + e⁻ → n + ν_e), detected by characteristic X-rays. The shared decay energy Q is split continuously between e and ν, producing the famous broad β spectrum that led Pauli to postulate the neutrino in 1930." },
+        { title: "Gamma decay — nuclear photons", text: "After α or β leaves a daughter in an excited state, the nucleus relaxes by emitting a photon — typically 0.1–10 MeV. ⁶⁰Co (β⁻ to ⁶⁰Ni*) emits the famous 1.17 + 1.33 MeV cascade used in radiotherapy. Selection rules involve angular momentum (multipolarity E1, M1, E2…) and parity. Internal conversion is the competing channel — instead of a photon, the nucleus ejects an inner electron, producing characteristic X-rays in cascade." },
+        { title: "Decay law and half-life", formula: "N(t) = N₀ e^(−λt),   t½ = ln 2 / λ,   A(t) = λ N(t)" }
+      ],
+      keypoints: [
+        { title: "Activity in becquerels", text: "1 Bq = 1 decay/s; 1 Ci = 3.7×10¹⁰ Bq. A 1 µCi sealed source gives 37,000 decays/s — clinically routine, dosimetrically negligible if shielded." },
+        { title: "Penetration: α stops in paper, β in mm Al, γ in cm Pb", text: "Range of 5 MeV α ≈ 4 cm air or 25 µm tissue; 1 MeV β ≈ 4 m air or 5 mm Al; γ HVL in lead ≈ 1 cm at 1 MeV. Shielding strategy depends on isotope mix." },
+        { title: "Activity vs absorbed dose vs equivalent dose", text: "Bq measures source strength, gray (J/kg) measures energy deposited, sievert weights gray by radiation type (w_R = 1 for β/γ, 20 for α). 1 Sv whole-body ≈ 5% lethal." },
+        { title: "Worked example — ¹⁴C dating", text: "λ = ln2/5730 yr = 1.21×10⁻⁴/yr. A bone with 25% modern ¹⁴C activity: t = ln(4)/λ = 1.386/1.21×10⁻⁴ ≈ 11,460 yr — exactly two half-lives." }
+      ]
+    },
+    {
+      id: "dd-fission-chain", num: "Concept 3 of 5", title: "Fission & Chain Reactions",
+      desc: "How one neutron multiplies into a self-sustaining release — and the difference between a reactor and a bomb.",
+      color: "#ffa657", icon: "💥",
+      svg: function(w, h) {
+        // Branching tree: gen 0 -> 1 -> 2 -> 3 (k=2 effective for clarity)
+        var levels=[1,2,4,8];
+        var dx=w/5, dy=(h-40)/3;
+        var nodes=[];
+        for(var g=0; g<levels.length; g++){
+          var n=levels[g], xw=w-80, gap=xw/(n+1);
+          for(var i=0;i<n;i++) nodes.push({g:g, i:i, x:40+gap*(i+1), y:30+g*dy});
+        }
+        var lines='';
+        for(var g=0; g<levels.length-1; g++){
+          var cur=nodes.filter(function(n){return n.g===g;});
+          var nxt=nodes.filter(function(n){return n.g===g+1;});
+          for(var i=0;i<cur.length;i++){
+            // each splits into 2 next
+            var c=cur[i];
+            for(var j=0;j<2;j++){
+              var t=nxt[i*2+j];
+              if(!t) continue;
+              lines+='<line x1="'+c.x+'" y1="'+(c.y+12)+'" x2="'+t.x+'" y2="'+(t.y-12)+'" stroke="#ffa65780" stroke-width="1.2" marker-end="url(#nh)"/>';
+            }
+          }
+        }
+        var circles='';
+        for(var k=0;k<nodes.length;k++){
+          var n=nodes[k];
+          var col=(n.g===0)?'#79c0ff':(n.g===levels.length-1?'#f778ba':'#ffa657');
+          circles+='<circle cx="'+n.x+'" cy="'+n.y+'" r="11" fill="'+col+'30" stroke="'+col+'" stroke-width="1.2"/>'
+            +'<text x="'+n.x+'" y="'+(n.y+3)+'" text-anchor="middle" fill="'+col+'" font-size="9" font-weight="700">U</text>';
+        }
+        var labels='';
+        var lab=['Gen 0  (1n → ²³⁵U)','Gen 1  (k≈2)','Gen 2','Gen 3  (8 fissions, ~1.6 GeV)'];
+        for(var g=0;g<4;g++) labels+='<text x="10" y="'+(30+g*dy+4)+'" fill="#8b949e" font-size="10">'+lab[g]+'</text>';
+        return '<svg viewBox="0 0 '+w+' '+h+'" xmlns="http://www.w3.org/2000/svg" style="background:#0d1117">'
+          +'<defs><marker id="nh" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L5,3 L0,6 z" fill="#ffa657"/></marker></defs>'
+          +'<text x="'+(w/2)+'" y="16" text-anchor="middle" fill="#c9d1d9" font-size="13" font-weight="600">Fission Chain Reaction — Multiplication Factor k</text>'
+          +lines+circles+labels
+          +'<text x="'+(w-20)+'" y="'+(h-10)+'" text-anchor="end" fill="#7ee787" font-size="10">k&lt;1 sub  |  k=1 critical  |  k&gt;1 super</text>'
+          +'</svg>';
+      },
+      sections: [
+        { title: "The fission process", text: "When ²³⁵U absorbs a thermal neutron it forms ²³⁶U* — an excited compound nucleus that oscillates and then deforms past the saddle point of the liquid-drop barrier. The Coulomb repulsion between the two emerging halves overwhelms surface tension and the nucleus tears apart, typically asymmetrically (peaks at A ≈ 95 and 138). On average 2.43 prompt neutrons are released per ²³⁵U fission with energies ~2 MeV. Total energy ≈ 200 MeV: 165 MeV in fragment KE, 5 MeV prompt n, 7 MeV prompt γ, 7 MeV β, 6 MeV β-decay γ, and ~10 MeV escapes as antineutrinos." },
+        { title: "Multiplication factor k", text: "Define k = (neutrons in generation n+1)/(generation n). The six-factor formula is k_∞ = η · f · p · ε with leakage corrections giving k_eff. k < 1 = subcritical (chain dies), k = 1 = critical (steady reactor), k > 1 = supercritical (power rising). A reactor stays just barely supercritical on prompt neutrons (k_p ≈ 0.993) and uses delayed neutrons (β ≈ 0.0065 of total) — emitted seconds after fission by certain fragments — to give operators time to insert control rods." },
+        { title: "Cross sections in barns", text: "1 barn = 10⁻²⁴ cm² — invented because nuclear physicists joked targets were 'big as a barn' compared to atomic scales. ²³⁵U thermal fission cross section σ_f = 585 b; capture σ_γ = 99 b. ²³⁸U fission is essentially zero at thermal energies but has a 1.8 b fast threshold above 1 MeV. The 1/v law: σ ∝ 1/v at low energy, so a moderator that slows neutrons from 2 MeV to 0.025 eV boosts the fission probability ~500×." },
+        { title: "Worked example — Q-value", formula: "²³⁵U + n → ¹⁴¹Ba + ⁹²Kr + 3n,   Q = [M(²³⁵U)+M_n − M(¹⁴¹Ba)−M(⁹²Kr)−3M_n]·c² ≈ 173 MeV (prompt)" }
+      ],
+      keypoints: [
+        { title: "200 MeV/fission ≈ 8×10¹⁰ J/g of U-235", text: "Compare ~33 J/g for TNT or ~50 kJ/g for gasoline: U-235 is ~2 million times denser in energy than chemical fuels." },
+        { title: "Critical mass depends on geometry & enrichment", text: "Bare-sphere ²³⁵U: ~52 kg at 100% enrichment; with neutron reflector ~15 kg; reactor LEU at 5% needs water moderation to be critical at all." },
+        { title: "Delayed neutrons make reactors controllable", text: "Without the 0.65% delayed fraction, prompt-neutron lifetime ~100 µs would force k to be controlled to <10⁻⁴ — physically impossible. Delayed neutrons stretch effective response to seconds." },
+        { title: "Pitfall: fissile vs fertile", text: "²³⁵U, ²³³U, ²³⁹Pu are FISSILE (split with thermal n). ²³⁸U and ²³²Th are FERTILE — they capture neutrons to breed fissile ²³⁹Pu and ²³³U. Mixing the two terms is the most common student error." }
+      ]
+    },
+    {
+      id: "dd-fusion-lawson", num: "Concept 4 of 5", title: "Fusion & the Coulomb Barrier",
+      desc: "Why stars are hot and tokamaks are hard — Coulomb tunneling, D-T reaction, and the Lawson criterion.",
+      color: "#7ee787", icon: "☀️",
+      svg: function(w, h) {
+        // V(r) potential well + barrier
+        var x0=50, y0=h-40, xw=w-80, yh=h-80;
+        var cx=x0+xw*0.35; // barrier peak
+        // sample piecewise: well from r=0 to r_n (drops), then Coulomb 1/r outside
+        var pts=[];
+        var rN=cx-x0; // nuclear radius (in svg units)
+        // inside well: flat negative
+        pts.push([x0, y0-yh*0.2]);
+        pts.push([cx-2, y0-yh*0.2]);
+        // jump up to barrier peak
+        pts.push([cx, y0-yh*0.85]);
+        // Coulomb tail
+        for(var i=1;i<=40;i++){
+          var r=cx + i*( (x0+xw-cx)/40 );
+          var d=(r-cx)+8;
+          var V=y0 - yh*0.85 * (8/d);
+          pts.push([r,V]);
+        }
+        var path='M '+pts[0][0]+' '+pts[0][1];
+        for(var k=1;k<pts.length;k++) path+=' L '+pts[k][0]+' '+pts[k][1];
+        // tunneling KE line
+        var keY=y0-yh*0.45;
+        return '<svg viewBox="0 0 '+w+' '+h+'" xmlns="http://www.w3.org/2000/svg" style="background:#0d1117">'
+          +'<text x="'+(w/2)+'" y="20" text-anchor="middle" fill="#c9d1d9" font-size="13" font-weight="600">Coulomb Barrier — Two Nuclei Approaching</text>'
+          +'<line x1="'+x0+'" y1="'+y0+'" x2="'+(x0+xw)+'" y2="'+y0+'" stroke="#8b949e"/>'
+          +'<line x1="'+x0+'" y1="'+y0+'" x2="'+x0+'" y2="40" stroke="#8b949e"/>'
+          +'<text x="'+(x0+xw/2)+'" y="'+(h-12)+'" text-anchor="middle" fill="#8b949e" font-size="11">separation r →</text>'
+          +'<text x="20" y="'+(40+yh/2)+'" fill="#8b949e" font-size="11" transform="rotate(-90 20 '+(40+yh/2)+')">V(r)</text>'
+          +'<path d="'+path+'" fill="none" stroke="#7ee787" stroke-width="2"/>'
+          +'<line x1="'+(cx-2)+'" y1="'+keY+'" x2="'+(x0+xw-10)+'" y2="'+keY+'" stroke="#ffa657" stroke-dasharray="4,3" stroke-width="1.5"/>'
+          +'<text x="'+(x0+xw-15)+'" y="'+(keY-5)+'" text-anchor="end" fill="#ffa657" font-size="11">thermal KE (~10 keV)</text>'
+          +'<text x="'+cx+'" y="'+(y0-yh*0.85-5)+'" text-anchor="middle" fill="#f778ba" font-size="11">B_C ≈ 0.4 MeV (D-T)</text>'
+          +'<text x="'+(x0+30)+'" y="'+(y0-yh*0.2-5)+'" fill="#79c0ff" font-size="10">strong-force well</text>'
+          +'<path d="M '+(cx-15)+' '+keY+' Q '+cx+' '+(y0-yh*0.95)+' '+(cx+15)+' '+keY+'" fill="none" stroke="#d2a8ff" stroke-dasharray="2,2"/>'
+          +'<text x="'+(cx)+'" y="'+(keY-25)+'" text-anchor="middle" fill="#d2a8ff" font-size="10">tunneling P ∝ e^(−2πη)</text>'
+          +'<text x="'+(x0+10)+'" y="'+(40+15)+'" fill="#7ee787" font-size="11" font-weight="600">D + T → ⁴He (3.5 MeV) + n (14.1 MeV)</text>'
+          +'</svg>';
+      },
+      sections: [
+        { title: "Why fusion needs heat", text: "Two deuterons must approach within ~1 fm for the strong force to bind them. To get there they must climb a Coulomb barrier B_C = (Z₁Z₂e²)/(4πε₀·r) ≈ 0.4 MeV for D-T. Classical thermal energy at 'fusion temperatures' of 100 million K is only kT ≈ 8.6 keV — fifty times too small. Fusion proceeds entirely by quantum tunneling. The Gamow factor exp(−2πη), where η = Z₁Z₂α√(mc²/2E), means cross sections rise steeply with temperature: σv for D-T grows by 10⁵ between 1 keV and 30 keV." },
+        { title: "The big four reactions", text: "D + T → ⁴He + n + 17.6 MeV (chosen by ITER: lowest barrier, largest cross section, peak σv at 70 keV). D + D → ³He + n + 3.27 MeV or → T + p + 4.03 MeV (50/50 branching, no tritium fuel needed). D + ³He → ⁴He + p + 18.3 MeV (aneutronic but high T_ignition). p-p chain in the Sun: 4¹H → ⁴He + 2e⁺ + 2ν_e + 26.7 MeV, rate-limited by p+p → d+e⁺+ν (weak interaction, mean reaction time per proton ≈ 10¹⁰ years, which is why the Sun lasts so long)." },
+        { title: "Lawson criterion", formula: "n · T · τ_E  >  ~5 × 10²¹  keV·s/m³   (D-T ignition)" },
+        { title: "Confinement strategies", text: "Magnetic confinement (tokamak): n ~ 10²⁰/m³, T ~ 15 keV, τ_E ~ a few seconds. ITER targets Q = P_fus/P_in = 10. Inertial confinement (NIF): laser-compressed pellet at n ~ 10³¹/m³ for τ ~ 100 ps. NIF achieved Q = 1.5 (ignition) in Dec 2022. Stellarators (Wendelstein 7-X) trade pulsed for steady-state operation. Brute-force gravity (the Sun) does it with τ ≈ age-of-Sun and n ~ 10³² electrons/m³ but trivially low T ~ 1.3 keV at the core — only because the Sun has 2×10³⁰ kg to fall back on." }
+      ],
+      keypoints: [
+        { title: "Per nucleon, fusion ≫ fission", text: "D-T releases 17.6 MeV / 5 nucleons = 3.5 MeV/A. Fission gives 200/235 = 0.85 MeV/A. Per kg of fuel, D-T fusion ≈ 4× fission ≈ 10⁷× chemical." },
+        { title: "Coulomb barrier scales Z₁Z₂", text: "p-p (Z=1·1) needs ~0.55 MeV; D-T (1·1) ~0.4 MeV; ¹²C+¹²C (6·6) needs ~9 MeV — only viable in stellar cores >5×10⁸ K." },
+        { title: "ν_e from the Sun: 6.5×10¹⁰ /cm²/s at Earth", text: "Detected by Homestake, Super-K, SNO. The 'solar neutrino problem' (1968–2001) was resolved by neutrino oscillations — direct nuclear-physics evidence beyond the Standard Model." },
+        { title: "Pitfall — ignition vs Q vs net electricity", text: "NIF's 'ignition' Q_sci > 1 measures fusion-out / laser-energy-on-target. Wall-plug Q including 1% laser efficiency was still ~0.01. Engineering breakeven for a power plant requires Q ≳ 10." }
+      ]
+    },
+    {
+      id: "dd-reactor-core", num: "Concept 5 of 5", title: "Pressurized Water Reactor",
+      desc: "From fuel pellet to grid: PWR core layout, neutron economy, and the four physical barriers to release.",
+      color: "#d2a8ff", icon: "⚛️",
+      svg: function(w, h) {
+        // PWR vessel cross-section: outer vessel, fuel assemblies grid, control rods
+        var cx=w/2, cy=h/2+10;
+        var R=Math.min(w,h)*0.38;
+        // Outer pressure vessel
+        var vessel='<circle cx="'+cx+'" cy="'+cy+'" r="'+R+'" fill="none" stroke="#8b949e" stroke-width="3"/>'
+          +'<circle cx="'+cx+'" cy="'+cy+'" r="'+(R-6)+'" fill="none" stroke="#8b949e" stroke-width="1" stroke-dasharray="2,3"/>';
+        // Fuel assemblies — 7x7 grid, mask to circle
+        var assemblies='', rods='';
+        var gs=R*1.4/7;
+        for(var i=0;i<7;i++){
+          for(var j=0;j<7;j++){
+            var x=cx-3.5*gs+(i+0.5)*gs;
+            var y=cy-3.5*gs+(j+0.5)*gs;
+            var dist=Math.sqrt((x-cx)*(x-cx)+(y-cy)*(y-cy));
+            if(dist>R-12) continue;
+            var isCtrl=((i+j)%2===0 && (i===2||i===4||j===2||j===4));
+            if(isCtrl){
+              rods+='<rect x="'+(x-gs*0.35)+'" y="'+(y-gs*0.35)+'" width="'+(gs*0.7)+'" height="'+(gs*0.7)+'" fill="#f778ba30" stroke="#f778ba" stroke-width="1.2" rx="1"/>';
+            }else{
+              assemblies+='<rect x="'+(x-gs*0.4)+'" y="'+(y-gs*0.4)+'" width="'+(gs*0.8)+'" height="'+(gs*0.8)+'" fill="#7ee78720" stroke="#7ee787" stroke-width="0.8" rx="1"/>';
+            }
+          }
+        }
+        // Coolant arrows
+        var arrows='<path d="M '+(cx-R-15)+' '+(cy+R-10)+' L '+(cx-R-15)+' '+(cy-R+10)+'" stroke="#58a6ff" stroke-width="2" marker-end="url(#wh)"/>'
+          +'<path d="M '+(cx+R+15)+' '+(cy-R+10)+' L '+(cx+R+15)+' '+(cy+R-10)+'" stroke="#ffa657" stroke-width="2" marker-end="url(#wh2)"/>'
+          +'<text x="'+(cx-R-25)+'" y="'+cy+'" text-anchor="end" fill="#58a6ff" font-size="11">cold leg</text>'
+          +'<text x="'+(cx-R-25)+'" y="'+(cy+13)+'" text-anchor="end" fill="#58a6ff" font-size="10">~290 °C</text>'
+          +'<text x="'+(cx+R+25)+'" y="'+cy+'" fill="#ffa657" font-size="11">hot leg</text>'
+          +'<text x="'+(cx+R+25)+'" y="'+(cy+13)+'" fill="#ffa657" font-size="10">~325 °C</text>';
+        // Legend
+        var legend='<rect x="12" y="'+(h-50)+'" width="11" height="11" fill="#7ee78720" stroke="#7ee787"/><text x="28" y="'+(h-41)+'" fill="#c9d1d9" font-size="10">UO₂ fuel assembly (157 in real PWR)</text>'
+          +'<rect x="12" y="'+(h-32)+'" width="11" height="11" fill="#f778ba30" stroke="#f778ba"/><text x="28" y="'+(h-23)+'" fill="#c9d1d9" font-size="10">B₄C / Ag-In-Cd control rod cluster</text>';
+        return '<svg viewBox="0 0 '+w+' '+h+'" xmlns="http://www.w3.org/2000/svg" style="background:#0d1117">'
+          +'<defs>'
+          +'<marker id="wh" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#58a6ff"/></marker>'
+          +'<marker id="wh2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#ffa657"/></marker>'
+          +'</defs>'
+          +'<text x="'+(w/2)+'" y="18" text-anchor="middle" fill="#c9d1d9" font-size="13" font-weight="600">PWR Core — Top View Through Pressure Vessel (155 bar, ~3000 MWth)</text>'
+          +vessel+assemblies+rods+arrows+legend
+          +'</svg>';
+      },
+      sections: [
+        { title: "Neutron economy and the six-factor formula", text: "k_eff = η·f·p·ε·P_FNL·P_TNL. η is fissions per absorption in fuel (≈2.07 for ⁴%-enriched LEU); f is the thermal utilization (fraction of thermal absorptions in fuel vs water+structures, ≈0.71); p is resonance escape probability (chance a fast neutron slows past ²³⁸U capture resonances, ≈0.87); ε is fast-fission factor (≈1.04). Multiplied with non-leakage probabilities P_FNL·P_TNL ≈ 0.97, a fresh PWR core sits near k_eff ≈ 1.20 — operators borrow that excess reactivity over an 18-month cycle as fuel burns and fission products poison the core (notably ¹³⁵Xe, σ_a = 2.6×10⁶ b)." },
+        { title: "PWR thermodynamics", text: "Primary loop: 155 bar pressurized water enters the core at 290 °C and leaves at 325 °C without boiling. Pumps drive ~70,000 m³/h through 157 fuel assemblies, each ~4 m tall with 264 Zircaloy-clad UO₂ rods. Heat transfers in steam generators to a secondary loop at 70 bar that boils water to drive turbines (Carnot η ≈ 33%). A 1 GWe PWR consumes ~25 t of ~4% enriched uranium per year — fission of ~1 t U-235 yielding 8×10¹⁶ J electrical." },
+        { title: "Defense in depth — four barriers", text: "(1) UO₂ pellet matrix retains ~98% of fission products. (2) Zircaloy fuel cladding seals the rod (failure temperature ~1200 °C — Zr starts exothermically oxidizing in steam, producing H₂; this is what blew the Fukushima Unit 1 building). (3) Reactor coolant pressure boundary (forged steel vessel + piping). (4) Containment building: 1+ m of pre-stressed concrete + steel liner, designed for full LOCA pressure (~5 bar) plus aircraft impact in Gen-III+." },
+        { title: "Fission product decay heat", formula: "P_decay(t) ≈ 0.066 · P₀ · [t^(−0.2) − (t+t_op)^(−0.2)]   (Way-Wigner)" }
+      ],
+      keypoints: [
+        { title: "Decay heat is what kills you after SCRAM", text: "Immediately after shutdown a 3000 MWth core releases ~200 MW from fission-product decay. After 1 hour ~1%; after 1 day ~0.4%. This is what melted Fukushima cores when their cooling pumps lost power." },
+        { title: "Boron control + control rods + chemical shim", text: "Long-term reactivity is trimmed by boric acid in coolant (B-10 σ_a = 3837 b, swap a knob over months); short-term and shutdown by Ag-In-Cd or B₄C rod insertion (seconds). Burnable poisons (Gd₂O₃ in pellets) flatten cycle reactivity." },
+        { title: "Fuel cycle: 0.7% → 4% → 0.7% → reprocess?", text: "Natural U is 0.7% U-235 / 99.3% U-238. Centrifuge enrichment lifts to 3–5% for LEU power; >20% is HEU (weapons-usable). Spent LEU is ~1% U-235 + 1% Pu (mostly ²³⁹Pu) + 4% fission products + 94% U-238 — reprocessable into MOX fuel." },
+        { title: "Pitfall: positive vs negative void coefficient", text: "PWRs have a strongly negative moderator-temperature coefficient — lose water → lose moderator → k drops → power drops. RBMK (Chernobyl) had a positive void coefficient at low power; this geometry-design choice is why a control-rod insertion accident could spike power 100× in 4 seconds." }
+      ]
+    }
+  ],
+
+  useCases: [
+    {
+      id: "uc-pwr-power", title: "PWR Generates 1 GWe of Grid Power",
+      desc: "Trace one fission event from a UO₂ pellet through the steam cycle to a household light bulb.",
+      icon: "⚡", color: "#58a6ff",
+      summary: "A <strong>thermal neutron</strong> absorbed by a U-235 nucleus deposits ~200 MeV into a UO₂ pellet — 50 million times the energy of burning one carbon atom. That heat is wrung out by 155-bar water, handed off to a <strong>second loop</strong> for radiological isolation, and turned into 1 GWe of grid power via a Rankine cycle at ~33% efficiency. The whole machine is a brute-force converter: <strong>3 kg of U-235 → 1 GW-day of electricity</strong>.",
+      pipeline: "neutron (0.025 eV)\n   │\n   ▼\nU-235 + n ──► U-236* ──► Ba-141 + Kr-92 + 3n + 200 MeV\n                                      │\n                                      ▼ (fragment KE → heat in <1mm)\n                              UO₂ pellet (1500 °C core)\n                                      │ conduction\n                                      ▼\n                              Zircaloy cladding (350 °C)\n                                      │ convection (h≈30 kW/m²K)\n                                      ▼\n                              Primary water (325 °C, 155 bar)\n                                      │ heat exchange\n                                      ▼\n                              Secondary steam (285 °C, 70 bar)\n                                      │ Rankine cycle (η≈33%)\n                                      ▼\n                              Turbine → 1000 MWe → 400 kV grid",
+      metrics: [
+        { label: "Energy per fission", value: "~200 MeV (3.2×10⁻¹¹ J)" },
+        { label: "Fuel burn rate", value: "~3 kg U-235 / GWe·day" },
+        { label: "Power density (core)", value: "~100 MW/m³" },
+        { label: "Thermal efficiency", value: "~33% (Carnot-limited)" }
+      ],
+      extensions: "Study advanced cycles (supercritical CO₂ Brayton at 50%+ efficiency), Gen-IV designs (sodium-cooled fast reactors, molten-salt), and load-following control via xenon transient management.",
+      steps: [
+        { title: "Step 1 — Neutron absorption in UO₂ fuel pellet", component: "Fuel rod (Zircaloy-clad ceramic UO₂)", proto: "Thermal fission, σ_f(U-235)=585 b",
+          detail: "A thermal neutron (E ≈ 0.025 eV) drifts into a 4%-enriched UO₂ pellet inside one of 264 fuel rods in an assembly. It is absorbed by a U-235 nucleus, forming U-236*. Within 10⁻¹⁴ s the compound nucleus deforms past the saddle point and splits — most often into Ba-141 + Kr-92 + 3n with Q ≈ 200 MeV (165 MeV in fragment KE, the rest in n, γ, β, ν).",
+          intuition: "Slow neutrons are <em>more</em> reactive than fast ones — at 0.025 eV the U-235 cross-section is 585 barns versus &lt;2 barns at fission-spectrum energies. Moderation buys you ~300× absorption probability.",
+          complexity: "τ_compound ≈ 10⁻¹⁴ s — far faster than any mechanical control",
+          example: "A 3 GWth core fissions ~9.4×10¹⁹ U-235 nuclei per second. At 200 MeV each, that's 3×10⁹ J/s = 3 GW.",
+          pitfall: "Cross-section σ_f is energy-dependent; using the 0.025 eV value for a fast-spectrum reactor underpredicts critical mass by orders of magnitude. Always pick the right energy group.",
+          refs: [{ label: "ENDF/B-VIII.0 cross sections", url: "https://www.nndc.bnl.gov/endf/" }] },
+        { title: "Step 2 — Heat conduction pellet → cladding → coolant", component: "Pellet/cladding gap + Zircaloy-4", proto: "Conduction (UO₂ k ≈ 3 W/m·K), then convection to PWR water",
+          detail: "Fragment KE thermalizes in <1 mm of UO₂. The pellet centerline runs at ~1500 °C while the cladding outer surface stays near 350 °C — a 1000 °C gradient across 4 mm. Pressurized water (155 bar, sub-cooled boiling regime) at ~5 m/s removes heat with h ≈ 30 kW/m²·K.",
+          intuition: "UO₂ is a <em>terrible</em> conductor (k ≈ 3 W/m·K, like brick) — that's why the centerline is so hot. The thermal limit isn't the fuel melting (2865 °C) but cladding integrity at &gt;1200 °C.",
+          complexity: "Linear power density q' ≈ 18 kW/m typical; design margin to DNB ratio &gt; 1.3",
+          example: "AP1000: 157 assemblies × 264 rods × 4 m active length → ~165,000 rods sharing 3400 MWth ≈ 5 kW/rod average.",
+          pitfall: "Loss-of-coolant accident (LOCA): even at zero fission power, decay heat is ~6% of rated → 200 MW residual in a 3 GW core. Without forced cooling, cladding heats &gt;1200 °C in minutes and Zr+H₂O reacts exothermically producing H₂ (Fukushima).",
+          refs: [{ label: "Lamarsh & Baratta — Nuclear Engineering", url: "https://en.wikipedia.org/wiki/Pressurized_water_reactor" }] },
+        { title: "Step 3 — Primary → secondary loop heat exchange", component: "U-tube steam generator (~16,000 Inconel tubes)", proto: "Counter-flow heat exchanger",
+          detail: "Hot leg water (325 °C, 155 bar) enters steam generators and transfers ~3000 MWth across thin tube walls to the secondary loop, which boils at 70 bar / 285 °C, producing 1500 t/h of dry steam. The primary loop never mixes with the steam loop — the radiologically active water stays inside containment.",
+          intuition: "The two-loop split is a containment strategy: tritium and activated corrosion products stay on the primary side; the turbine hall sees only clean steam, so maintenance can happen at full power.",
+          complexity: "ΔT_lm ≈ 30 °C across tubes; heat flux ~600 kW/m² in the boiling section",
+          example: "A typical 4-loop Westinghouse PWR: 4 steam generators × 750 MWth each, ~16,000 Inconel-690 U-tubes per SG, 20 mm OD × 1.1 mm wall.",
+          pitfall: "Steam generator tube rupture (SGTR) — pinhole through a tube means primary coolant leaks into secondary side and can bypass containment. Eddy-current inspection of every tube every refueling outage is non-negotiable.",
+          refs: [{ label: "NRC PWR Systems", url: "https://www.nrc.gov/reactors/pwrs.html" }] },
+        { title: "Step 4 — Turbine, generator, grid", component: "Tandem-compound HP+LP turbines, 4-pole 1500 RPM generator", proto: "Rankine cycle, ~33% thermal efficiency",
+          detail: "Steam expands through HP and LP turbines (~1000 MW shaft power), reheated between stages. The 24 kV alternator output is stepped up to 400 kV for transmission. A 3000 MWth PWR delivers ~1000 MWe — enough for a million European homes.",
+          intuition: "The 33% efficiency ceiling comes from Carnot: η_max = 1 − T_cold/T_hot ≈ 1 − 300 K / 560 K = 46%. Real cycles lose ~30% of Carnot to irreversibilities. To beat this you need hotter steam (Gen-IV) or a different cycle (Brayton, sCO₂).",
+          complexity: "Turbine blade length up to 1.8 m on LP stage; tip speeds approach Mach 1",
+          example: "EDF Civaux-1 (1561 MWe): 3000 t/h steam, condenser cooled by 50 m³/s of Vienne River water, raising its temperature by ~14 °C downstream.",
+          pitfall: "Loss-of-load (grid trip) causes turbine overspeed in seconds → the reactor must shed power instantly. A failed turbine stop valve once destroyed an 1100 MW machine at TMI-2 in 90 s.",
+          code: "P_elec  = η_th · P_thermal\n        ≈ 0.33 · 3000 MWth\n        ≈ 1000 MWe\nFuel: ~3 kg of U-235 fissioned per day per GWe" }
+      ]
+    },
+    {
+      id: "uc-pet-f18", title: "PET Imaging with ¹⁸F-FDG",
+      desc: "Cyclotron → radiochemistry → patient → coincidence detection — a positron-emitting glucose analog tracks brain and tumor metabolism.",
+      icon: "🧠", color: "#f778ba",
+      summary: "A medical cyclotron transmutes ¹⁸O water into ¹⁸F via the <strong>(p,n) reaction</strong>; chemistry attaches the ¹⁸F to a deoxyglucose backbone; the patient's glucose-hungry tissues trap it; and a PET scanner uses <strong>back-to-back 511 keV annihilation photons</strong> to localize the decays in 3D. The whole pipeline is paced by <strong>t½ = 110 min</strong> — every step is decay-corrected and every minute of delay costs 0.6% of dose.",
+      pipeline: "p⁺ (11 MeV) ──► ¹⁸O(p,n)¹⁸F  [cyclotron, 60 µA·90 min]\n                  │   ~80 GBq batch\n                  ▼\n          Hot cell: nucleophilic\n          fluorination of mannose\n          triflate → ¹⁸F-FDG (~25 min)\n                  │   yield ~70%\n                  ▼\n          IV inject ~370 MBq into patient\n                  │   60 min uptake\n                  ▼\n          ¹⁸F → ¹⁸O + β⁺  (t½=109.7 min)\n                  │\n          β⁺ travels ~2 mm in tissue\n                  │\n          e⁺ + e⁻ → 2γ (511 keV, 180° apart)\n                  │\n                  ▼\n          PET ring: coincidence within 5 ns\n          → line-of-response → OSEM recon",
+      metrics: [
+        { label: "¹⁸F half-life", value: "109.7 min" },
+        { label: "Annihilation γ energy", value: "511 keV (each)" },
+        { label: "Spatial resolution", value: "~4–5 mm FWHM" },
+        { label: "Effective dose", value: "~7 mSv/scan" }
+      ],
+      extensions: "Move on to longer-lived PET tracers (⁶⁸Ga-DOTATATE, ⁸⁹Zr-mAbs), theranostics (¹⁷⁷Lu/²²⁵Ac), and reconstruction physics — TOF-PET, scatter/randoms correction, deep-learning attenuation maps from MR.",
+      steps: [
+        { title: "Step 1 — Produce ¹⁸F in a medical cyclotron", component: "11–18 MeV proton cyclotron, H₂¹⁸O target", proto: "¹⁸O(p,n)¹⁸F reaction",
+          detail: "Protons accelerated to 11 MeV strike enriched ¹⁸O water. Cross section peaks at ~5 MeV at ~700 mb. A typical 60 µA · 90 min irradiation yields 50–100 GBq of ¹⁸F⁻ in solution. Half-life t½ = 109.7 min sets a hard logistics clock — every minute of delay loses 0.6% of activity.",
+          intuition: "Cyclotrons turn cheap, abundant ¹⁸O (~30 €/g) into a tracer worth ~$10/MBq — value comes from the unstable nuclear state, not the chemistry. Half-life sets the supply radius: ~3 hours' drive from any cyclotron.",
+          complexity: "Yield N(t) = (φσN_target/λ)·(1−e^(−λt)) — saturates after ~4 half-lives",
+          example: "PETNET's GE PETtrace runs at 75 µA proton current and produces ~370 GBq end-of-bombardment after 2 h, enough for ~50 patient doses delivered within 3 hr.",
+          pitfall: "Target window failure: 11 MeV protons in a flowing water target at 30 W/cm² will burst a Havar foil in seconds if cooling fails — losing the run and contaminating the cyclotron vault.",
+          refs: [{ label: "IAEA Cyclotron Production of Medical Radioisotopes", url: "https://www.iaea.org/publications" }] },
+        { title: "Step 2 — Synthesize FDG", component: "Automated radiosynthesis hot cell", proto: "Nucleophilic substitution on mannose triflate",
+          detail: "¹⁸F⁻ is dried, reacted with the protected sugar, hydrolyzed, and purified by HPLC in ~25 min — all behind 75 mm of lead with remote manipulators. Yield ~70% decay-corrected. Quality control: pH, residual Kryptofix, sterility, radiochemical purity by TLC.",
+          intuition: "The whole synthesis is a race against decay: every minute of work loses 0.6%. So FDG modules are <em>cassette-based</em> — single-use disposables that swap in 5 min for the next patient batch.",
+          complexity: "~25 min synthesis = 14% of t½ → ~9% decay loss baked into the chemistry",
+          example: "GE FASTlab or Trasis AllInOne synthesizer: 70 GBq in → ~30 GBq FDG out of HPLC, enough for ~80 individual unit doses.",
+          pitfall: "Residual Kryptofix-222 (the phase-transfer catalyst) is acutely toxic at &gt;50 µg/mL — every batch must be spot-tested by iodoplatinate TLC before release.",
+          refs: [{ label: "EANM FDG Synthesis Guidelines", url: "https://www.eanm.org/publications/guidelines/" }] },
+        { title: "Step 3 — Inject and image", component: "PET/CT scanner with BGO or LYSO detectors", proto: "511 keV annihilation γ coincidence",
+          detail: "Patient receives ~370 MBq IV. After 60 min uptake, FDG is trapped in glucose-hungry cells (brain, heart, tumors). Each ¹⁸F decay emits β⁺ that travels ~2 mm before annihilating with an e⁻ into two back-to-back 511 keV γ rays. Detectors register coincidences within a 5 ns time-of-flight window; image is reconstructed by OSEM.",
+          intuition: "PET's localization trick: a single γ tells you nothing about origin, but two γ in coincidence define a <em>line</em>; millions of lines → tomographic reconstruction. Time-of-flight (TOF) at 200 ps adds ~10 cm of axial localization, boosting SNR ~2×.",
+          complexity: "OSEM reconstruction: ~10⁹ LORs × 4 subsets × 3 iterations ≈ 10¹⁰ FLOPs/slice",
+          example: "Siemens Biograph Vision: 80 ps TOF, 3.5 mm FWHM, scans whole body in 6 min versus 20 min on previous-gen.",
+          pitfall: "Random coincidences scale as singles² — at high activity (early post-injection), randoms can swamp trues and produce a hot 'soup' background. Activity timing matters as much as anatomy.",
+          code: "Patient dose ≈ 7 mSv (effective)\nResolution ≈ 4–5 mm FWHM\nDecay limit: scan within 4–5 t½ = ~8 hr after EOB" },
+        { title: "Step 4 — Decay to harmless ¹⁸O", component: "—", proto: "β⁺ decay (97%) + EC (3%)",
+          detail: "After scanning, residual activity in the patient drops by half every 110 min — within 24 hours (~13 t½) it is reduced 8000×. ¹⁸F → ¹⁸O is stable. This decoupling of ‘useful imaging window’ from ‘persistent contamination’ is what makes short-lived PET tracers ALARA-friendly compared to long-lived diagnostics like ⁹⁹ᵐTc-MIBI.",
+          intuition: "Short half-life is a <em>feature</em>: it gives high specific activity (decays/s per mole) for imaging, and the patient is biologically clean within a day. The trade is a logistics chain shorter than a pizza delivery.",
+          complexity: "Activity decay: A(t) = A₀·exp(−ln2·t/t½)",
+          example: "A patient injected with 370 MBq at 10 am has 23 MBq left at 6 pm (4 half-lives) and 0.7 MBq at 8 am next day (13 half-lives) — below clinical relevance.",
+          pitfall: "Patient urine immediately post-scan is the dominant radioactive waste path — staff handling diapers/incontinence need a 12 h delay or shielded handling." }
+      ]
+    },
+    {
+      id: "uc-c14-dating", title: "Radiocarbon Dating of an Archaeological Bone",
+      desc: "Cosmogenic ¹⁴C in the atmosphere becomes a 50,000-year clock — counted today by accelerator mass spectrometry.",
+      icon: "🦴", color: "#7ee787",
+      summary: "Cosmic-ray neutrons make <strong>¹⁴C in the upper atmosphere</strong>; photosynthesis mixes it into every living organism at a steady ratio of 1.2×10⁻¹²; on death, the clock starts. AMS counts <strong>individual ¹⁴C atoms</strong> against ¹²C with sensitivity of 10⁻¹⁶, then IntCal20 maps the radiocarbon age to a real calendar date. The technique pushes back to <strong>~50,000 years</strong> — 9 half-lives — beyond which the signal is lost in background.",
+      pipeline: "cosmic-ray p⁺ (GeV)\n         │  air shower\n         ▼\n  secondary n  ──►  ¹⁴N(n,p)¹⁴C\n         │\n         ▼\n  ¹⁴CO₂ (atmosphere, well-mixed)\n         │  photosynthesis\n         ▼\n  Living organism: ¹⁴C/¹²C ≈ 1.2×10⁻¹²\n         │  death — clock starts\n         ▼\n  Bone collagen (sample, ~5 mg)\n         │  ABA pretreatment + graphitization\n         ▼\n  Graphite target on Al cathode\n         │  Cs⁺ sputter → tandem AMS\n         ▼\n  Count ¹⁴C atoms vs ¹²C beam\n         │\n         ▼\n  Age = −8033·ln(F)  →  IntCal20  →  cal BP",
+      metrics: [
+        { label: "¹⁴C half-life", value: "5,730 yr (Cambridge)" },
+        { label: "Living ¹⁴C/¹²C", value: "~1.2×10⁻¹²" },
+        { label: "AMS sensitivity", value: "~10⁻¹⁶ ratio" },
+        { label: "Useful range", value: "~50,000 yr (9 t½)" }
+      ],
+      extensions: "Explore U-Th dating of corals/speleothems (250 ky reach), K-Ar/Ar-Ar for million-year volcanic ages, cosmogenic ¹⁰Be/²⁶Al exposure dating, and Bayesian chronology with OxCal phase models.",
+      steps: [
+        { title: "Step 1 — Atmospheric production", component: "Upper troposphere / lower stratosphere", proto: "¹⁴N(n,p)¹⁴C, secondary cosmic-ray neutrons",
+          detail: "Cosmic rays produce ~1 ¹⁴C atom per cm² per second in the atmosphere. ¹⁴C oxidizes to ¹⁴CO₂, mixes globally, and enters the biosphere through photosynthesis, giving living tissue a ratio ¹⁴C/¹²C ≈ 1.2 × 10⁻¹². Once an organism dies, no new ¹⁴C is incorporated and the clock starts.",
+          intuition: "The whole technique depends on a <em>steady-state</em> atmospheric ¹⁴C/¹²C — production by cosmic rays balanced by decay and ocean uptake. Without that, no clock.",
+          complexity: "Global ¹⁴C inventory ≈ 8 kg (sic — only 8 kg!) in steady state",
+          example: "1 g of modern carbon contains ~6×10¹⁰ ¹⁴C atoms, of which ~14 decay per minute — Libby's original counting rate.",
+          pitfall: "The Suess effect: fossil-fuel CO₂ (¹⁴C-dead) has diluted modern atmospheric ¹⁴C by ~3% since 1850, while 1950s nuclear weapons tests doubled it. Post-1950 samples need separate calibration.",
+          refs: [{ label: "Libby — Nobel Lecture 1960", url: "https://www.nobelprize.org/prizes/chemistry/1960/libby/lecture/" }] },
+        { title: "Step 2 — Sample prep — ABA + graphitization", component: "Wet chemistry lab", proto: "Acid-Base-Acid pretreatment, then combustion to CO₂, then catalytic reduction over Fe to graphite",
+          detail: "A ~5 mg collagen sample from the bone is cleaned of carbonate contamination (acid), humic acids (base), and re-acidified; combusted to CO₂ at 900 °C; reduced with H₂ over an iron catalyst at 600 °C to a few mg of pure graphite pressed into a target.",
+          intuition: "Most of the work in radiocarbon dating is <em>removing contamination</em>. Even 1% modern carbon contamination in a 40,000-yr sample shifts the apparent age by 7,000 yr.",
+          complexity: "ABA pretreatment yield typically 5–30% of original mass — lots is lost on purpose",
+          example: "A clean 1.0 mg C target on AMS gives ~25,000 counts of ¹⁴C in 30 min for a Holocene sample — ±0.6% statistical precision.",
+          pitfall: "Bone &gt;30 ka often has &lt;1% collagen left; the remainder is exchanged carbonate that gives 'infinite age' contamination signatures. Single-amino-acid (hydroxyproline) dating is the workaround." },
+        { title: "Step 3 — Accelerator Mass Spectrometry", component: "1–3 MV tandem AMS (e.g., NEC 1.5SDH)", proto: "Negative-ion sputter source → tandem accelerator → magnetic + electrostatic analyzers",
+          detail: "Cs⁺ sputters C⁻ ions from the target; tandem acceleration strips electrons, breaking up molecular isobars (¹³CH⁻, ¹²CH₂⁻); a high-energy magnet selects A=14; an ionization detector counts individual ¹⁴C atoms. Modern AMS reaches ¹⁴C/¹²C sensitivity of ~10⁻¹⁶ — distinguishing ages out to ~50,000 yr (≈9 half-lives).",
+          intuition: "AMS doesn't <em>wait</em> for ¹⁴C to decay (decay counting needs grams and weeks). It <em>counts the atoms directly</em> — 1 mg of sample, 30 min on the machine. The tandem accelerator is just a molecular-isobar killer: ¹⁴N has no stable negative ion, ¹³CH⁻ is shattered by stripping.",
+          complexity: "Throughput ~50 samples/day per AMS; sensitivity floor set by ion-source memory at ~10⁻¹⁶",
+          example: "The Shroud of Turin (1988): three AMS labs independently dated linen samples to 1260–1390 CE (95% CI) — radiocarbon-age 691±31 BP — matching medieval origin, not 1st-century.",
+          pitfall: "Cross-contamination in the sputter source: if the previous target was modern, residue can spike a Pleistocene sample's apparent ¹⁴C/¹²C by 10⁻¹⁵. Run blank targets between samples spanning &gt;10 ka.",
+          code: "Measured ratio R = ¹⁴C/¹²C\nFraction modern F = R_sample / R_modern\nAge = -8033 · ln(F)   yr  (using Libby half-life 5568)\n     calibrated via IntCal20 to calendar years" },
+        { title: "Step 4 — Calibrate to calendar years", component: "OxCal / IntCal20", proto: "Bayesian wiggle-match to dendrochronology",
+          detail: "Atmospheric ¹⁴C has not been constant — solar activity, geomagnetic field, and the post-1950 'bomb spike' all perturbed it. The IntCal20 curve, anchored on tree rings back 14,000 yr and corals/speleothems beyond, converts a measured radiocarbon age into a calibrated calendar range with ±50 yr precision typical for Holocene samples.",
+          intuition: "A <em>radiocarbon</em> age is not a calendar age — it's a value in 'Libby years' assuming constant atmospheric ¹⁴C. Calibration via tree-ring-counted ¹⁴C measurements bends Libby-time back onto real time.",
+          complexity: "Bayesian deposition models in OxCal scale O(n²) in n stratigraphic samples but tighten CIs by 2–10×",
+          example: "A measured age of 4500 ± 30 ¹⁴C BP calibrates to 3340–3091 cal BCE (95.4%) — a 250 yr window even with 30 yr lab precision, because the IntCal curve wiggles in this period.",
+          pitfall: "The 800–400 BCE 'Hallstatt plateau' is essentially flat in ¹⁴C-vs-time, so single Iron-Age dates spread over 400 yr no matter how precise the AMS. Use Bayesian sequencing of stratified samples to escape it." }
+      ]
+    },
+    {
+      id: "uc-am241-smoke", title: "Am-241 Smoke Detector",
+      desc: "How a household ionization-chamber smoke alarm uses 1 µCi of an actinide and α-decay to save lives.",
+      icon: "🚨", color: "#ffa657",
+      summary: "An ionization smoke detector uses <strong>1 µCi (37 kBq) of ²⁴¹Am</strong> — a transuranic isotope bred in spent reactor fuel — to maintain a steady picoamp current of air ions. <strong>Smoke aerosols absorb those ions</strong>, current drops, a comparator trips, and the piezo screams. Half-life of 432 years means the source outlives the smoke alarm by an order of magnitude — the chemistry of decay does the work, no batteries required.",
+      pipeline: "²⁴¹Am (AmO₂ ceramic, 37 kBq)\n        │  α-decay, t½=432 yr\n        ▼\n  α particle (5.486 MeV) escapes through Au foil\n        │  range in air ≈ 4 cm\n        ▼\n  Ionizes N₂/O₂ along track\n  → ~1.5×10⁵ ion pairs per α\n        │  9 V bias sweeps charges\n        ▼\n  Steady chamber current ~picoamp\n        │\n        ▼   ◄── SMOKE ──┐\n  Aerosols attach to ions  │\n  → mobility drops 1000×   │\n        │                  │\n        ▼                  │\n  Current falls below threshold\n        │\n        ▼\n  Comparator IC trips → 85 dB piezo",
+      metrics: [
+        { label: "²⁴¹Am activity", value: "~37 kBq (1 µCi)" },
+        { label: "²⁴¹Am half-life", value: "432.2 yr" },
+        { label: "α energy", value: "5.486 MeV" },
+        { label: "Public annual dose", value: "~0.01 µSv (background ~2 mSv)" }
+      ],
+      extensions: "Compare with photoelectric smoke detectors (better for smoldering fires), neutron detectors using AmBe sources, and the broader question of orphan-source recovery for legacy ²²⁶Ra and ⁹⁰Sr sealed sources.",
+      steps: [
+        { title: "Step 1 — Source", component: "AmO₂ ceramic foil, ~37 kBq (1 µCi)", proto: "²⁴¹Am → ²³⁷Np + α (5.486 MeV) + γ (59.5 keV); t½ = 432 yr",
+          detail: "The americium-241 in a smoke alarm is a fission byproduct extracted from spent reactor fuel. The 432-year half-life means the source effectively never weakens during a detector's lifetime. A thin gold foil seals the AmO₂ to absorb the 59.5 keV γ and contain the alpha, while still allowing α to escape into the air gap.",
+          intuition: "The ²⁴¹Am decay-rate constant λ = ln2/t½ ≈ 5×10⁻¹¹ s⁻¹ — slow enough to be stable in inventory, fast enough that 37 kBq of decays happen reliably every second.",
+          complexity: "Source self-thinning &lt;1% over 50-year detector life",
+          example: "Global production ~1.5 kg/yr of ²⁴¹Am, mostly from aged plutonium (²⁴¹Pu β-decay, t½=14 yr). One smoke detector contains ~0.3 µg — a kilogram supplies several million units.",
+          pitfall: "²⁴¹Am decays into ²³⁷Np (t½=2.14 My) — a long-lived bone-seeker. Crushing/burning the foil aerosolizes the daughter and bypasses the sealed-source containment that makes the device exempt." },
+        { title: "Step 2 — Air ionization", component: "Two-electrode chamber, ~9 V bias", proto: "α produces ~150,000 ion pairs per particle in air (W = 35 eV/ion pair)",
+          detail: "Each emitted α loses 5.486 MeV across its ~4 cm range in air, ionizing N₂/O₂ along the way. A small DC voltage between the chamber electrodes sweeps the freed electrons and ions to the plates, producing a steady ~picoamp 'baseline' current.",
+          intuition: "An α particle is a 'paint roller': it deposits all its energy in a fixed short path (4 cm in air), creating <em>predictable</em> ion-pair counts. That deterministic-per-α charge yield is what makes the chamber current calibratable.",
+          complexity: "Saturation current I = n_α · q · N_pairs · e ≈ 4×10⁴ · 1.5×10⁵ · 1.6×10⁻¹⁹ ≈ 1 pA",
+          example: "37 kBq × 1.5×10⁵ pairs × 1.6×10⁻¹⁹ C ≈ 0.9 pA of saturation current at 9 V — well above the comparator's ~10 fA noise floor.",
+          pitfall: "Humidity above 90% RH attaches water clusters to ions, dropping mobility and the baseline current, producing false alarms. Most detectors include a humidity-compensation reference chamber for this reason.",
+          code: "Ions per α  = E_α / W\n            ≈ 5.486e6 eV / 35 eV/pair\n            ≈ 1.57e5 ion pairs" },
+        { title: "Step 3 — Smoke disrupts current", component: "Comparator IC", proto: "Ion-mobility quenching",
+          detail: "Smoke aerosols are vastly more massive than air ions; ions stick to smoke particles, drift orders of magnitude slower, and many recombine before reaching the electrode. Current drops; the comparator trips when the drop exceeds a threshold; the 85 dB piezo wails.",
+          intuition: "Detection is by <em>kinematics, not chemistry</em>: a 0.1 µm soot particle is ~10⁹ heavier than an O₂⁺ ion, so mobility µ = q/(6πηr) drops by ~10³. Same physics works for any smoke composition.",
+          complexity: "Response time ~10 s from smoke entry to alarm (limited by chamber air exchange)",
+          example: "UL 217 requires alarm within 4 min at 0.06–0.40 dB/ft obscuration — a barely-visible plume. Ionization types are most sensitive to small flaming-fire particles (~0.05 µm).",
+          pitfall: "Ionization-type alarms are notoriously slow to detect smoldering fires (large 1+ µm particles) — that's the photoelectric-detector use case. Most safety codes now require both technologies or a dual-sensor unit." },
+        { title: "Step 4 — Disposal & dose", component: "Household waste / regulated source recovery", proto: "Regulatory oversight (NRC general license / IAEA exempt source)",
+          detail: "Sealed at 1 µCi the source is below most regulatory thresholds — annual public dose ~0.01 µSv (10⁻⁵ of natural background). The hazard is ingestion or inhalation, since ²⁴¹Am is a bone-seeker. Hence: do not crush, do not incinerate uncontrolled. Modern photoelectric detectors are gradually replacing ionization-type units for this reason.",
+          intuition: "External α exposure is essentially harmless — alpha can't penetrate the dead outer skin layer. The whole regulatory frame is about <em>internal</em> exposure: keep the foil intact and the source is exempt.",
+          complexity: "ALI (Annual Limit on Intake) for ²⁴¹Am ingestion ≈ 50 kBq — more than the entire detector contents",
+          example: "France recovers ~3 million smoke detectors per year via dedicated collection; only ~10% of households actually return them. Most end up in landfill, with no measurable environmental signal.",
+          pitfall: "David Hahn ('Radioactive Boy Scout', 1995) extracted ²⁴¹Am from ~100 smoke detectors to build a homebrew neutron source — a textbook case of why sealed-source aggregation defeats the 'exempt quantity' regime." }
+      ]
+    },
+    {
+      id: "uc-smr-design", title: "Design a 300 MWe Small Modular Reactor (SMR)",
+      desc: "Trade-offs from neutronics through factory fabrication for a passively-safe integral PWR like NuScale or BWRX-300.",
+      icon: "🏭", color: "#a371f7",
+      summary: "An SMR is a <strong>factory-built, sub-300 MWe</strong> reactor that trades economy-of-scale for economy-of-multiples and inherent safety. The design starts with neutronics (4.95% LEU, ~24-month cycle), wraps the primary loop into a single integral pressure vessel (no large-bore piping → no LOCA), and relies on <strong>natural-circulation cooling</strong> with passive heat rejection to an external water pool. The whole NSSS ships by rail.",
+      pipeline: "Requirements: ~300 MWe, factory-built, n=12 modules\n         │\n         ▼\n  Neutronics:  k_eff=1.05 BOC, 4.95% U-235\n  Lattice pitch, burnable Gd₂O₃, ~24-mo cycle\n         │\n         ▼\n  Thermal-hydraulics: natural circulation\n  ΔT ~80 °C drives 1500 kg/s flow, no pumps\n         │\n         ▼\n  Integral vessel: SG + pressurizer inside RPV\n  → no large-bore pipes → LOCA eliminated\n         │\n         ▼\n  Passive safety: vessel sits in water pool\n  → decay heat removed by boiling pool for 30+ d\n         │\n         ▼\n  Factory fab → rail shipment → site install\n  6× cheaper $/kW capex schedule vs Gen-III+",
+      metrics: [
+        { label: "Power per module", value: "50–300 MWe" },
+        { label: "Enrichment", value: "4.95% (LEU+, &lt;5%)" },
+        { label: "Cycle length", value: "~24 months" },
+        { label: "Passive cooling duration", value: "≥7 days, often ∞" }
+      ],
+      extensions: "Compare with microreactors (&lt;20 MWe, TRISO fuel), HALEU economics (5–20% enrichment), and Gen-IV concepts: molten-salt (TerraPower, Kairos), gas-cooled (X-energy), lead-cooled (Newcleo).",
+      steps: [
+        { title: "Step 1 — Neutronics & fuel design", component: "Reactor core, MCNP/Serpent calculations", proto: "Diffusion + transport, 6-factor formula, k_eff = ηεpfP_NL·P_TL",
+          detail: "Pick enrichment (4.95% to stay under HALEU regulatory threshold), lattice pitch (~12.6 mm UO₂ rod with 1.26 cm pitch), and burnable poison loading (Gd₂O₃ at 4–8% in select rods). Target k_eff = 1.05 at BOC, 1.00 at EOC, with sufficient negative MTC at all conditions. Burnup target ~45 GWd/tU.",
+          intuition: "The 6-factor formula is a budget: every neutron either causes a fission, leaks out, or is absorbed in non-fuel. SMRs lose more neutrons to leakage (high surface/volume) — you compensate with slightly higher enrichment.",
+          complexity: "Monte Carlo k_eff convergence: ~10⁹ neutron histories for 0.0001 σ on k",
+          example: "NuScale's 77 MWe module: 37 fuel assemblies, 17×17 lattice, 2-yr cycle, 4.95% enrichment. Compared to AP1000's 157 assemblies, the smaller core has ~25% higher fast-leakage probability — driven by geometry alone.",
+          pitfall: "Forgetting that depletion shifts both k_eff <em>and</em> reactivity coefficients. A core that's safe at BOC can develop a positive moderator-temperature coefficient at EOC if soluble boron is over-relied-upon for shimming." },
+        { title: "Step 2 — Integral primary loop", component: "Single reactor pressure vessel (RPV)", proto: "All primary components inside one forging — no large-bore piping",
+          detail: "Place the steam generators (helical coil or once-through), pressurizer, and (optionally) control rod drives inside the RPV. This eliminates the loss-of-coolant-accident (LOCA) class entirely for break sizes &gt; 1 inch, because there is no large-bore pipe to break. The RPV becomes the dominant cost and shipping constraint.",
+          intuition: "Big PWRs have ~4 large hot-leg/cold-leg pipes per loop, each ~30 inch diameter. Cut those out, put the SGs <em>inside</em> the vessel, and the whole LOCA design-basis envelope collapses to small-break only — far easier to mitigate passively.",
+          complexity: "RPV diameter limited by rail/road shipping: ~4.5 m max for standard rail, ~9 m for barge",
+          example: "NuScale Power Module: 23 m tall × 4.6 m OD, ships by truck or rail to site, immersed in a water pool that itself is inside a Class-1 seismic-rated building.",
+          pitfall: "Integral SGs can't be replaced — if helical-coil tubes fail (PWSCC at hot-leg conditions), the whole module is retired. Material selection (Alloy 690TT) is more critical than in a conventional plant with replaceable SGs." },
+        { title: "Step 3 — Natural circulation thermal-hydraulics", component: "Riser + downcomer geometry", proto: "Buoyancy-driven flow, ṁ ∝ √(ΔT · L)",
+          detail: "Replace forced reactor coolant pumps with a tall riser above the core. Heated water rises, cools at the SGs at the top, falls down the downcomer outside the core barrel. Driving head ρgβΔT·L is matched to friction losses. NuScale runs ~1500 kg/s entirely by buoyancy — no pumps, no AC power needed for cooling.",
+          intuition: "Pumps are reliable until they aren't (Fukushima lost all AC power). Natural circulation works as long as gravity and ΔT exist — and ΔT comes for free from any residual core heat.",
+          complexity: "Flow scales as ṁ ∝ √(ΔT·L); doubling power requires ~4× the ΔT, so power density is fundamentally bounded",
+          example: "ESBWR (large 1500 MWe natural-circulation BWR) needs a 27 m tall vessel — the chimney is most of the cost. SMRs avoid this by accepting lower power density (~30 MW/m³ vs ~100 in a PWR).",
+          pitfall: "Natural circulation can stall under flow oscillations (density-wave instability) at low-power startup. Designers must verify stability across all anticipated transients — not just steady state." },
+        { title: "Step 4 — Passive decay-heat removal", component: "External water pool + heat-exchanger loop", proto: "Decay heat → boiling pool → atmosphere, no operator action",
+          detail: "After scram, decay heat is ~6% of rated → ~5 MWth in a 77 MWe module, falling to ~1% after a day. Reject it via an isolation condenser to the external pool. Pool boils away over 7+ days, removing ~10⁻⁹ of pre-scram core damage probability without any AC power, operator action, or off-site assistance. Once empty, air-cooling alone can hold cladding &lt; safe limits indefinitely.",
+          intuition: "Fukushima's lesson: decay heat doesn't care about the grid. Passive systems are <em>thermodynamic</em>, not mechanical — they work because hot things give off heat to cold things, and that's a physical inevitability.",
+          complexity: "Pool sizing: m·c_p·ΔT_boil + m·h_fg ≥ ∫₀^T_grace P_decay(t)·dt",
+          example: "NuScale pool: ~16,000 m³ shared by 12 modules. Boiling rate at peak decay heat ~1 kg/s/module → 7-day grace period before refill required, then indefinite air cooling.",
+          pitfall: "Beyond-design-basis events (long-duration station blackout combined with site flooding) can still defeat passive systems if the pool is breached. Plus, regulators have struggled to license 'walk-away safe' — there's no precedent for a reactor with no required operator action." },
+        { title: "Step 5 — Factory fab & modular economics", component: "Assembly line + rail/barge logistics", proto: "Manufacturing learning curve, ~85% per doubling of units",
+          detail: "Build the entire NSSS (RPV, SGs, pressurizer, control rod drives) in a controlled factory, weld-tested, and ship complete by rail or barge to the site. Site work becomes 'plug-and-play' civil + piping connections. Total construction schedule drops from 8+ years to ~3 years; LCOE drops as factory throughput climbs Wright's Law curve.",
+          intuition: "Big reactors have a 30-year history of construction cost overruns (Vogtle, Hinkley Point C). The SMR thesis: take engineering uncertainty out of the field and into a factory where it's been mastered (shipbuilding, aircraft).",
+          complexity: "Learning rate ~15% cost reduction per doubling of cumulative units shipped (typical of complex manufactured systems)",
+          example: "BWRX-300 targets $2,250/kW overnight by unit ~10; first-of-a-kind (Darlington, ON) is currently estimated at $5,000/kW — still half of recent large LWRs.",
+          pitfall: "The economics only work if you actually deploy enough units to ride the learning curve. A single FOAK SMR is the worst of both worlds: small enough to lose economies of scale, novel enough to need expensive licensing." }
+      ]
+    },
+    {
+      id: "uc-dosimetry", title: "Build a Radiation Dosimetry System for a Hospital Cyclotron Facility",
+      desc: "From neutron source term to ALARA staff dose — design shielding, monitoring, and protocols to keep workers under 20 mSv/yr.",
+      icon: "🛡️", color: "#79c0ff",
+      summary: "A medical cyclotron facility presents three radiation hazards: <strong>prompt neutrons</strong> from (p,n) production, <strong>activated targets and machine parts</strong>, and <strong>airborne radionuclides</strong>. Dosimetry design starts with a source-term model (n/s and γ MeV/s), runs MCNP to size concrete shielding, deploys real-time area monitors plus personal TLD/EPD badges, and bakes the whole stack into an <strong>ALARA program</strong> targeting &lt; 1/10 of the 20 mSv/yr regulatory limit.",
+      pipeline: "Cyclotron operation: 75 µA × 11 MeV on H₂¹⁸O\n         │  ¹⁸O(p,n)¹⁸F yields ~10¹³ neutrons/s\n         ▼\n  Source term: prompt n + activation γ\n         │\n         ▼\n  MCNP-shield sizing: B-doped concrete + Pb\n  → 2.5 m walls, &lt;0.5 µSv/h at boundary\n         │\n         ▼\n  Real-time monitors:\n    · area neutron rem-meter (Bonner sphere)\n    · area γ ion-chamber\n    · stack effluent ¹¹C/¹³N CPM\n         │\n         ▼\n  Personal dosimetry: TLD (monthly) + EPD\n  (electronic, real-time alarm at 100 µSv)\n         │\n         ▼\n  ALARA: time/distance/shielding\n  → target staff dose &lt; 2 mSv/yr (1/10 limit)",
+      metrics: [
+        { label: "Worker dose limit", value: "20 mSv/yr (5-yr avg, ICRP)" },
+        { label: "Cyclotron neutron yield", value: "~10¹³ n/s at 75 µA" },
+        { label: "Shield wall (heavy concrete)", value: "~2–3 m thickness" },
+        { label: "ALARA target", value: "&lt; 2 mSv/yr (1/10 limit)" }
+      ],
+      extensions: "Extend to high-energy proton therapy (250 MeV, n-spectrum reaches GeV), particle-physics beamlines (skyshine, sky-glow), and radwaste characterization for decommissioning activated cyclotron components.",
+      steps: [
+        { title: "Step 1 — Source-term characterization", component: "Beam-target interaction model", proto: "(p,n), (p,α), (p,γ) reaction yields from TENDL / EXFOR",
+          detail: "For each operational mode, sum prompt neutron yields and activation γ rates. A 75 µA, 11 MeV proton beam on H₂¹⁸O produces ~6×10¹² neutrons/s with a spectrum peaking at ~3 MeV (evaporation-like). Activation: ~370 GBq ¹⁸F (the product), plus secondaries like ¹³N, ¹¹C from target body, ⁶⁵Zn from cyclotron Cu structure.",
+          intuition: "Shielding is built for the <em>worst-case</em> beam-on condition, but staff dose is dominated by the <em>activation</em> term that lingers after beam-off — when humans actually enter the vault.",
+          complexity: "Neutron yield per microcoulomb scales roughly as E_p^2 above the (p,n) threshold",
+          example: "GE PETtrace at 75 µA, 16.5 MeV (¹⁸F production): ~10¹³ n/s, dose rate inside vault ~1 Sv/h at 1 m unshielded — lethal in &lt;5 min.",
+          pitfall: "Forgetting target body activation: a Havar target window foil takes 100 µSv/h γ contact dose for hours after a run. Maintenance interlocks must enforce decay-out before access.",
+          refs: [{ label: "IAEA TRS-471 Cyclotron Radioisotope Production", url: "https://www-pub.iaea.org/MTCD/Publications/PDF/Pub1432_web.pdf" }] },
+        { title: "Step 2 — Shielding design with Monte Carlo", component: "MCNP6 / FLUKA / PHITS, point-kernel codes", proto: "Coupled n/γ transport, ANSI/ANS-6.4 design rules",
+          detail: "Model the vault geometry (concrete walls, maze entry, ducts, conduit penetrations) and run MCNP6 with a realistic source term. Target &lt; 0.5 µSv/h at the public boundary and &lt; 5 µSv/h in adjacent occupied corridors. Heavy concrete (ρ=3.5 g/cm³, with boron and iron aggregate) is the workhorse — typically 2–3 m for an 11 MeV cyclotron, more for higher-energy machines.",
+          intuition: "Neutrons need <em>mass and hydrogen</em> (for moderation) plus <em>thermal absorbers</em> (boron) — that's why ordinary concrete works so well. Photons need <em>density</em> alone (lead, depleted U) but are usually a minor design driver for medical cyclotrons.",
+          complexity: "Neutron tenth-value layer ~30 cm of concrete; full 6 TVL shield is ~2 m",
+          example: "A typical PET cyclotron vault: 2.0 m heavy-concrete walls + 1.8 m ceiling + 0.6 m self-shield around the cyclotron itself. MCNP confirms &lt;0.3 µSv/h at the unrestricted exterior wall.",
+          pitfall: "Maze entries and penetrations are dose-rate hotspots. A straight-shot duct can leak orders of magnitude more than the bulk shield it traverses; design every penetration with offsets, baffles, or local shielding." },
+        { title: "Step 3 — Area & personal monitoring", component: "Bonner sphere, ion chambers, TLDs, electronic personal dosimeters (EPDs)", proto: "ANSI N42.18 / IEC 61526 — operational quantity Hp(10)",
+          detail: "Permanently mounted area monitors stream dose rate to a control room: neutron rem-counters at the maze entry, γ ion chambers in the chemistry hot cell, stack monitors for airborne ¹¹C/¹³N. Each worker wears a TLD badge (read monthly, legal record of dose) plus an EPD (real-time, alarms at e.g. 100 µSv accumulated or 10 µSv/h rate). All data feeds into a dose registry.",
+          intuition: "TLDs are the <em>legal record</em>; EPDs are the <em>operational tool</em>. The EPD lets a worker decide in real time whether to step back; the TLD tells the regulator what actually happened.",
+          complexity: "TLD readout noise ~10 µSv; EPD response ~1 s with ~5% accuracy on Hp(10) for AmBe spectrum",
+          example: "A radiochemist running 4 FDG productions/day typically accrues 1–3 mSv/yr — most of it from manipulating the precursor in the dispensing hot cell, not from the cyclotron itself.",
+          pitfall: "Workers leave their EPD in the locker room. Without robust badge-issue interlocks (turnstile + RFID), undosed entries to the vault become invisible — a serious 'unmonitored exposure' finding on inspection." },
+        { title: "Step 4 — ALARA program & dose accounting", component: "Radiation safety officer (RSO), procedure library, training", proto: "ICRP 103, 10 CFR 20 / EU BSS 2013/59",
+          detail: "ALARA = As Low As Reasonably Achievable. Beyond regulatory limits (20 mSv/yr worker, 1 mSv/yr public), the facility sets <em>investigation</em> and <em>action</em> levels at typically 1/10 and 1/4 of limit. Quarterly dose reviews trigger procedural changes when trends appear. Time-distance-shielding is enforced via written radiation work procedures and a 'pre-job briefing' culture.",
+          intuition: "ALARA is a <em>management system</em>, not a number. Workers stay well below the legal cap because procedures, automation (remote manipulators), and training make 'low dose' the path of least resistance.",
+          complexity: "Effective dose E = Σ_T w_T·H_T — bone marrow (w=0.12), colon (0.12), lung (0.12), etc.",
+          example: "Typical PET/cyclotron facility worker doses: median 0.8 mSv/yr, 90th percentile 4 mSv/yr — well under the 20 mSv limit. The 5-yr cumulative limit of 100 mSv is essentially never approached.",
+          pitfall: "Internal contamination dose is harder to quantify than external. A single ingestion of ¹⁸F is usually trivial, but ¹³N/¹¹C inhalation from a hot-cell breach can deliver tens of mSv via lung CED — only detected post-hoc via whole-body counting." }
+        ]
+      }
+    ],
+
+  // === BEGIN glossary v1 data placeholder ===
+  glossary: [
+    { id: "binding-energy", term: "Binding Energy", aka: "BE, nuclear binding energy", category: "concepts",
+      short: "Energy released when free nucleons assemble into a nucleus; equals the mass defect times c².",
+      long: "Tabulated as BE(A,Z) = [Z·m_H + N·m_n − M(A,Z)]·c². Dividing by A gives binding energy per nucleon, which rises steeply from H-2, peaks at ⁵⁶Fe (~8.79 MeV/nucleon), and slowly declines to ~7.6 MeV at U-238. Energy-releasing reactions always move products toward this peak — fusion from below, fission from above.",
+      seeAlso: ["mass-defect", "semf", "fission", "fusion"] },
+    { id: "mass-defect", term: "Mass Defect", aka: "Δm", category: "numerics",
+      short: "Difference between the sum of free-nucleon masses and the bound nuclear mass; Δm·c² = BE.",
+      long: "Atomic mass unit u = 931.494 MeV/c², so a 1 mu mass difference equals ~931 MeV of binding. Example: ⁴He free nucleons mass 4.032980 u, the bound nucleus 4.002603 u, defect 0.030377 u → BE ≈ 28.3 MeV (~7.07 MeV/A).",
+      seeAlso: ["binding-energy", "q-value"] },
+    { id: "semf", term: "Semi-Empirical Mass Formula", aka: "Bethe-Weizsäcker formula, liquid-drop model", category: "numerics",
+      short: "BE(A,Z) ≈ a_v·A − a_s·A^(2/3) − a_c·Z(Z−1)/A^(1/3) − a_a·(A−2Z)²/A + δ.",
+      long: "Five-term parametrization with a_v≈15.8, a_s≈17.8, a_c≈0.71, a_a≈23.7 MeV and pairing δ ≈ ±12/√A. The volume term is bulk binding; surface penalizes boundary nucleons; Coulomb penalizes proton repulsion; asymmetry punishes N≠Z; pairing favors even-even nuclei. Predicts BE/A within a few percent across the chart of nuclides.",
+      seeAlso: ["binding-energy", "shell-model"] },
+    { id: "nucleon", term: "Nucleon", category: "concepts",
+      short: "Generic name for a proton or neutron — the two constituents of every atomic nucleus.",
+      long: "Each nucleon is itself a three-quark bound state: proton = uud (charge +1), neutron = udd (charge 0). Mass ≈ 939 MeV/c²; size ≈ 0.84 fm. Inside the nucleus they interact via the residual strong force (effective range ~1–2 fm) mediated chiefly by pion exchange.",
+      seeAlso: ["isotope", "binding-energy"] },
+    { id: "isotope", term: "Isotope", category: "concepts",
+      short: "Nuclides with the same Z (proton number) but different N (neutron number).",
+      long: "Isotopes are chemically identical but nuclearly distinct: ¹²C (stable) and ¹⁴C (β⁻, t½ = 5730 y) bond the same way but decay differently. Stable isotopes follow the valley of stability; far from it, β-decay restores the N/Z balance. Distinguish from isotones (same N), isobars (same A), and isomers (same nuclide, different excitation).",
+      seeAlso: ["nucleon", "decay-modes"] },
+    { id: "half-life", term: "Half-Life", aka: "t½", category: "numerics",
+      short: "Time for half of a radioactive sample to decay; t½ = ln(2)/λ ≈ 0.693/λ.",
+      long: "Half-lives span 60 orders of magnitude — from ²¹²Po at 0.3 µs to ²³²Th at 1.4·10¹⁰ y. After n half-lives, N(t)/N₀ = (1/2)ⁿ. Mean lifetime τ = 1/λ = t½/ln 2 ≈ 1.443 t½. Used for dating (¹⁴C, ⁴⁰K, U-Pb), medical tracers, and waste-storage planning.",
+      seeAlso: ["decay-constant", "activity", "decay-chain"] },
+    { id: "decay-constant", term: "Decay Constant", aka: "λ", category: "numerics",
+      short: "Probability per unit time that a given nucleus decays; dN/dt = −λN.",
+      long: "Solution N(t) = N₀·e^(−λt) gives the universal exponential decay law. λ is independent of temperature, pressure, and chemistry to one part in 10⁶ (tiny corrections for electron-capture isotopes under extreme ionization). For a branching nuclide, λ_total = Σ λ_i and branching ratios are λ_i/λ_total.",
+      seeAlso: ["half-life", "activity"] },
+    { id: "activity", term: "Activity", aka: "Bq, Ci", category: "numerics",
+      short: "Decay rate of a sample, A = λN; SI unit becquerel (1 Bq = 1 decay/s).",
+      long: "Historical unit curie: 1 Ci = 3.7·10¹⁰ Bq (activity of 1 g of ²²⁶Ra). Specific activity scales as 1/t½ for a given mass: 1 g of ¹⁴C is 165 GBq while 1 g of ²³⁸U is only 12.4 kBq. Activity drives instrument readings; dose requires also the energy and biological weighting.",
+      seeAlso: ["half-life", "decay-constant", "dosimetry"] },
+    { id: "decay-modes", term: "Decay Modes", category: "concepts",
+      short: "Allowed ways an unstable nucleus sheds energy: α, β⁻, β⁺, EC, γ, IT, spontaneous fission.",
+      long: "Each mode conserves charge, baryon number, energy-momentum, and lepton number. The dominant channel depends on the imbalance: neutron-rich nuclides go β⁻, proton-rich go β⁺ or EC, heavy (Z>82) go α, and superheavy may go spontaneous fission. Excited daughters relax via γ emission or internal conversion.",
+      seeAlso: ["alpha-decay", "beta-decay", "gamma-decay", "electron-capture", "decay-chain"] },
+    { id: "alpha-decay", term: "Alpha Decay", category: "concepts",
+      short: "Emission of a ⁴He nucleus (2p+2n); A→A−4, Z→Z−2. Energies 4–9 MeV, range cm in air.",
+      long: "Driven by the exceptional binding of the α particle (28.3 MeV). The Gamow theory treats it as quantum tunneling through the Coulomb barrier, yielding the Geiger-Nuttall relation log t½ ∝ Z/√E — a 1 MeV change in Q swings the half-life by ~10⁵. Dominant for Z > 82 (e.g., ²³⁸U, ²²⁶Ra, ²¹⁰Po).",
+      seeAlso: ["decay-modes", "coulomb-barrier"] },
+    { id: "beta-decay", term: "Beta Decay", aka: "β⁻, β⁺", category: "concepts",
+      short: "Weak-force transmutation: β⁻ is n→p+e⁻+ν̄_e; β⁺ is p→n+e⁺+ν_e (requires Q>1.022 MeV).",
+      long: "Mediated by W boson exchange; the continuous electron spectrum (Pauli 1930, Reines 1956) is what required the neutrino. β⁻ moves neutron-rich nuclides toward stability (¹⁴C, ⁹⁰Sr, ¹³⁷Cs); β⁺/EC moves proton-rich the other way (¹⁸F, ²²Na). Selection rules (Fermi/Gamow-Teller, allowed/forbidden) determine log ft values and half-lives.",
+      seeAlso: ["decay-modes", "electron-capture"] },
+    { id: "gamma-decay", term: "Gamma Decay", aka: "γ, IT", category: "concepts",
+      short: "Photon emission from an excited nuclear state; no change in A or Z.",
+      long: "Energies typically 0.05–10 MeV; competing internal conversion ejects an inner-shell electron instead. Multipolarity (E1, M1, E2…) and selection rules set the lifetime, which ranges from sub-femtoseconds to the years of isomeric states like ⁹⁹ᵐTc (t½ = 6 h, the workhorse of nuclear medicine).",
+      seeAlso: ["decay-modes"] },
+    { id: "electron-capture", term: "Electron Capture", aka: "EC, K-capture", category: "concepts",
+      short: "Inner-shell electron absorbed by a proton: p+e⁻→n+ν_e; Z→Z−1, A unchanged.",
+      long: "Competes with β⁺ but is allowed even when Q < 1.022 MeV (no positron rest mass to make). Signature is the characteristic X-ray and Auger cascade from the daughter atom filling the K-shell hole. Examples: ⁷Be→⁷Li (t½ = 53 d, important for the solar neutrino problem), ⁴⁰K branch to ⁴⁰Ar (geochronology).",
+      seeAlso: ["beta-decay", "decay-modes"] },
+    { id: "decay-chain", term: "Decay Chain", aka: "radioactive series", category: "concepts",
+      short: "Sequence of decays from a long-lived parent to a stable end nuclide.",
+      long: "Four natural chains exist, named by A mod 4: thorium (4n, ²³²Th→²⁰⁸Pb), neptunium (4n+1, extinct), uranium (4n+2, ²³⁸U→²⁰⁶Pb), actinium (4n+3, ²³⁵U→²⁰⁷Pb). After many half-lives, secular equilibrium yields N_i·λ_i = constant — the basis for ²²²Rn hazard estimates and U-series dating.",
+      seeAlso: ["half-life", "alpha-decay", "beta-decay"] },
+    { id: "cross-section", term: "Cross-Section", aka: "σ", category: "numerics",
+      short: "Effective target area for a nuclear reaction; reaction rate R = n·v·N·σ.",
+      long: "Measured in barns (1 b = 10⁻²⁴ cm²). Varies by orders of magnitude with projectile energy: smooth 1/v at thermal energies, sharp resonances in the keV–MeV range, and ~geometrical πR² at high energy. Distinguish total, elastic, absorption, capture (n,γ), fission, and partial cross-sections.",
+      seeAlso: ["barn", "fission", "fusion"] },
+    { id: "barn", term: "Barn", aka: "b", category: "numerics",
+      short: "Nuclear cross-section unit: 1 barn = 10⁻²⁴ cm² = 10⁻²⁸ m² ≈ geometric area of a U nucleus.",
+      long: "Named for being \"as big as a barn\" relative to the surprisingly large measured U fission cross-section. Common subdivisions: millibarn (mb, 10⁻³ b), microbarn (µb), nanobarn (LHC cross-sections), femtobarn (rare Higgs production). Inverse units (fb⁻¹) measure integrated luminosity.",
+      seeAlso: ["cross-section"] },
+    { id: "fission", term: "Nuclear Fission", category: "concepts",
+      short: "Heavy nucleus splits into two intermediate-mass fragments plus 2–3 neutrons and ~200 MeV.",
+      long: "Fissile nuclides (²³³U, ²³⁵U, ²³⁹Pu) split with thermal neutrons; fertile (²³⁸U, ²³²Th) need fast neutrons. Mass distribution is asymmetric (peaks near A=95 and A=140). Of the ~200 MeV released, ~165 MeV is fragment kinetic energy, ~5 MeV prompt neutrons, ~7 MeV prompt γ, and ~20 MeV delayed β/γ — the source of decay-heat issues after shutdown.",
+      seeAlso: ["chain-reaction", "critical-mass", "binding-energy"] },
+    { id: "fusion", term: "Nuclear Fusion", category: "concepts",
+      short: "Light nuclei combine into a heavier one; the energy source of stars and H-bombs.",
+      long: "Easiest terrestrial reaction is D+T → ⁴He + n + 17.6 MeV, peak cross-section near 65 keV. Stars run the pp-chain and CNO cycle at far lower temperatures via quantum tunneling through the Coulomb barrier. Net energy gain (Q > 1) requires the Lawson criterion to be satisfied — achieved as a controlled burn at NIF in Dec 2022.",
+      seeAlso: ["coulomb-barrier", "lawson-criterion", "binding-energy"] },
+    { id: "chain-reaction", term: "Chain Reaction", aka: "k_eff, multiplication factor", category: "concepts",
+      short: "Self-sustaining sequence in which each fission's neutrons trigger further fissions; k=1 is critical.",
+      long: "Effective multiplication k_eff = (neutrons in gen n+1)/(generation n). k<1 subcritical, k=1 critical, k>1 supercritical. Reactor control exploits the ~0.65% delayed neutrons from fission-product β-decay: the prompt fraction alone must stay below k=1 (prompt-critical excursion is what destroyed Chernobyl Unit 4).",
+      seeAlso: ["fission", "critical-mass", "control-rod"] },
+    { id: "critical-mass", term: "Critical Mass", category: "performance",
+      short: "Minimum mass of fissile material that sustains a chain reaction (k_eff = 1) in a given geometry.",
+      long: "A bare sphere of ²³⁵U has critical mass ~52 kg; ²³⁹Pu ~10 kg; reduced by neutron reflectors (Be, W) and increased density (implosion). Reflected, Pu pit masses drop to ~4 kg. The Demon Core (1945–46) demonstrated how sensitive criticality is to geometry — two fatal accidents from briefly bringing a 6.2 kg Pu sphere to prompt-critical.",
+      seeAlso: ["chain-reaction", "fission"] },
+    { id: "moderator", term: "Moderator", category: "systems",
+      short: "Material that slows fast fission neutrons to thermal energies where σ_fission for ²³⁵U is largest.",
+      long: "Good moderators have low mass number (best energy transfer per collision) and low absorption cross-section. Light water (H₂O) absorbs enough that enriched fuel is needed; heavy water (D₂O, CANDU) and reactor-grade graphite (RBMK, Magnox) allow natural-uranium fuel. Each collision loses ~ln(A) of log-energy; ~20 collisions in H₂O take neutrons from 2 MeV to 0.025 eV.",
+      seeAlso: ["reactor-types", "cross-section"] },
+    { id: "control-rod", term: "Control Rod", category: "systems",
+      short: "Movable neutron absorber (B₄C, Ag-In-Cd, Hf) inserted into the core to regulate k_eff.",
+      long: "Boron-10 absorbs thermal neutrons (σ ≈ 3840 b) via ¹⁰B(n,α)⁷Li. Withdrawing rods adds reactivity (positive Δk), inserting subtracts; SCRAM drops them all into the core in seconds for emergency shutdown. Worth and burnup must be tracked against xenon-135 transients, which themselves change reactivity by ~5%Δk during load following.",
+      seeAlso: ["chain-reaction", "reactor-types"] },
+    { id: "reactor-types", term: "Reactor Types", category: "systems",
+      short: "PWR/BWR thermal LWRs, CANDU heavy-water, HTGR gas, SFR/LFR fast breeders, MSR molten salt, SMR.",
+      long: "Thermal LWRs (PWR, BWR) dominate today's grid (~85% of civil capacity); they need 3–5% enriched fuel and water moderator/coolant. Pressurized heavy-water (CANDU) runs on natural U. Gen-IV designs aim for higher temperatures (HTGR ~750 °C for hydrogen production), inherent safety (passive cooling), or breeding/transmutation (SFR, MSR). SMRs (≤300 MWe) trade scale for factory fabrication.",
+      seeAlso: ["moderator", "control-rod", "breeder-reactor"] },
+    { id: "breeder-reactor", term: "Breeder Reactor", category: "systems",
+      short: "Fast-spectrum reactor that produces more fissile fuel than it consumes via fertile capture.",
+      long: "Operates on ²³⁸U(n,γ)→²³⁹U→²³⁹Np→²³⁹Pu, or ²³²Th(n,γ)→²³³Pa→²³³U. Conversion ratio CR > 1 needs fast neutrons (no moderator), liquid-metal coolant (Na, Pb-Bi), and Pu/MA-rich fuel. Promises ~60× the energy from natural U and shorter-lived waste, but has historically struggled with sodium fires, economics, and proliferation optics.",
+      seeAlso: ["reactor-types", "fission"] },
+    { id: "lawson-criterion", term: "Lawson Criterion", aka: "triple product n·T·τ_E", category: "performance",
+      short: "Threshold for net-energy fusion: the product of density, temperature, and confinement time.",
+      long: "For D-T ignition, n·T·τ_E ≳ 3·10²¹ keV·s/m³ at T ≈ 15 keV. Magnetic confinement (tokamak ITER) reaches with low n and long τ_E ~ seconds; inertial confinement (NIF) reaches with extreme n and τ_E ~ 100 ps. NIF achieved Q_fuel > 1 in 2022, the first laboratory ignition.",
+      seeAlso: ["fusion", "coulomb-barrier"] },
+    { id: "coulomb-barrier", term: "Coulomb Barrier", category: "concepts",
+      short: "Electrostatic potential V = Z₁Z₂e²/(4πε₀r) two nuclei must overcome to fuse.",
+      long: "For D-T, peak V ≈ 0.4 MeV at r ≈ 5 fm — far above the keV thermal energies of stellar plasma. Fusion proceeds anyway by quantum tunneling, with rate ∝ exp(−√(E_G/E)) (Gamow factor). The same barrier from the inside makes α-decay possible and slow, governed by the Geiger-Nuttall law.",
+      seeAlso: ["fusion", "alpha-decay"] },
+    { id: "q-value", term: "Q-value", category: "numerics",
+      short: "Net energy released by a nuclear reaction: Q = (Σm_initial − Σm_final)·c².",
+      long: "Q > 0 is exothermic (energy released as kinetic energy of products); Q < 0 is endothermic and needs a threshold beam energy E_th = −Q·(m_target+m_proj)/m_target (lab frame). Examples: D+T fusion Q = +17.6 MeV; ²³⁵U thermal fission Q ≈ +200 MeV; ¹⁴N(α,p)¹⁷O Q = −1.19 MeV.",
+      seeAlso: ["mass-defect", "binding-energy"] },
+    { id: "shell-model", term: "Nuclear Shell Model", aka: "magic numbers", category: "concepts",
+      short: "Nucleons fill quantized shells with strong spin-orbit coupling; closed shells at 2, 8, 20, 28, 50, 82, 126.",
+      long: "Goeppert-Mayer & Jensen (1949) explained the exceptional stability and abundance of \"magic\" nuclei (⁴He, ¹⁶O, ⁴⁰Ca, ⁴⁸Ca, ²⁰⁸Pb). Doubly magic ²⁰⁸Pb (Z=82, N=126) is the heaviest stable nuclide. Predicts ground-state spins/parities and motivates the search for the next island of stability near Z ≈ 114, N ≈ 184.",
+      seeAlso: ["binding-energy", "nucleon"] },
+    { id: "dosimetry", term: "Dosimetry", category: "performance",
+      short: "Quantifies radiation exposure: activity (Bq) → absorbed dose (gray, J/kg) → equivalent dose (sievert).",
+      long: "1 Gy = 1 J/kg of energy deposited; 1 Sv weights by radiation type (w_R=1 for β/γ, 20 for α). Annual public limit 1 mSv; occupational 20 mSv; natural background ~2.4 mSv/y. ALARA principle: time, distance, shielding. Acute >1 Sv triggers radiation sickness; LD50/30 ≈ 4 Sv whole-body.",
+      seeAlso: ["activity", "decay-modes"] }
+  ],
+  // === END glossary v1 data placeholder ===
+
+  problems: [
+    {
+      week: "Nuclear Structure",
+      title: "Binding Energy & SEMF",
+      hook: "The BE/A curve hides a secret: iron-56 isn't just \"stable\" — it's the bottom of the energy well that dictates every nuclear power plant, every stellar furnace, and why supernovae must exist to make gold.",
+      items: [
+        { tag: "derive", star: true, text: "Use the SEMF (a_v=15.8, a_s=17.8, a_c=0.71, a_a=23.7 MeV) to predict BE/A for ⁵⁶Fe and ²³⁸U. Compare with measured 8.79 and 7.57 MeV/nucleon. Which term dominates the difference?", hint: "The asymmetry term (A−2Z)²/A and the Coulomb term Z(Z−1)/A^(1/3) both blow up for heavy nuclei." },
+        { tag: "derive", star: true, text: "From the SEMF, derive the most stable Z for given A (set ∂BE/∂Z = 0 at fixed A). Predict Z for A=120 and check against the chart of nuclides.", hint: "You should get Z ≈ A/(2 + a_c·A^(2/3)/(2a_a)). Numerically ~50 for A=120, matching ¹²⁰Sn." }
+      ]
+    },
+    {
+      week: "Decay & Activity",
+      title: "Half-life, Activity, and Dose",
+      hook: "Half-life sounds deterministic but each individual atom decays at a perfectly random moment — the exponential law is pure statistics. The same physics powers radiocarbon dating, PET scans, and the \"clicks\" of a Geiger counter.",
+      items: [
+        { tag: "derive", star: true, text: "A ¹³¹I (t½=8.02 d) thyroid-ablation dose contains 3.7 GBq at noon Monday. Compute the activity at noon Friday and the cumulative number of decays over those 4 days.", hint: "A(t)=A₀·2^(-t/t½); cumulative N = (A₀-A(t))/λ with λ=ln2/t½." },
+        { tag: "derive", star: true, text: "A bone fragment shows a measured ¹⁴C/¹²C ratio of 30% modern. Compute its conventional radiocarbon age using λ = ln2/5730 yr and explain why the published calendar age may differ by hundreds of years.", hint: "Age = ln(1/0.30)/λ ≈ 9950 yr. Calibration via IntCal20 corrects for atmospheric fluctuation." },
+        { tag: "debug", text: "A health-physics tech reports a survey meter reading 'too high by 100×' near a ¹³⁷Cs source compared to a calculated value. List four diagnoses you'd test before assuming the source moved. Order them by ease.", hint: "Inverse-square distance error; meter on wrong scale; calibration drift; geometry/scatter; energy-response correction missing for 662 keV; another nearby source." },
+        { tag: "paper", star: true, text: "Read Figure 1 of any modern decay-data evaluation (e.g., NNDC for ⁶⁰Co). Predict — before looking — the relative intensities of the 1.17 and 1.33 MeV γ lines. Explain via the level scheme why both appear in nearly every β⁻ decay of ⁶⁰Co." }
+      ]
+    },
+    {
+      week: "Reactions, Fission, Fusion",
+      title: "Cross Sections & Q-values",
+      hook: "E=mc² becomes engineering: fission liberates ~0.085% of rest mass, fusion ~0.7%, and the criticality threshold k=1 separates a power reactor from a fizzling pile — or a bomb. ITER's quest for Q>1 is humanity's hardest plumbing problem.",
+      items: [
+        { tag: "derive", star: true, text: "U-235 + n → fission. Compute energy released per fission using the binding-energy curve: ΔBE = 235·(BE/A_products − BE/A_U). Why does this give ~200 MeV?", hint: "Use ~8.5 MeV/A for products (A≈95,138) vs 7.59 for U-235." },
+        { tag: "design", star: true, text: "A tokamak D-T burn needs n·T·τ_E > 5×10²¹ keV·s/m³. ITER targets T≈15 keV and n≈10²⁰/m³. What τ_E is needed? Why is reaching it a multi-decade engineering challenge?", hint: "τ_E ≈ 5×10²¹/(15·10²⁰) ≈ 3.3 s. Energy confinement scales weakly with size — hence ITER's 6 m plasma radius." },
+        { tag: "debug", text: "A neutron detector behind a reactor shield registers 10× the Monte-Carlo–predicted rate. List in order what you would test: gamma pile-up in the PMT? Streaming through a penetration? Detector dead-time off? Source-term wrong?", hint: "Gate on TOF or pulse shape to reject γ; coincidence between two detectors to confirm directionality; dead-time correction; back-calculate source." },
+        { tag: "code", star: true, text: "Write a 30-line Python (or pseudocode) point-kinetics simulator: dn/dt = ((ρ−β)/Λ)·n + Σλᵢcᵢ; dcᵢ/dt = (βᵢ/Λ)·n − λᵢcᵢ. Insert a $1 reactivity step and plot n(t) for 0–10 s. Why doesn't n diverge instantly?", hint: "Use 6 delayed groups (tabulated for U-235); β≈0.0065, Λ≈10⁻⁵ s. Delayed precursors smear out the response over τ ~ 1/λ̄ ~ 10 s." },
+        { tag: "design", text: "Sketch a back-of-envelope design for a sodium-cooled fast reactor breeder. What enrichment? Why no moderator? What's the breeding ratio target and how does it follow from η>2 in the fast spectrum?", hint: "Pu-239 fast η ≈ 2.9 vs ~2.07 thermal: extra >1 neutron breeds U-238 → Pu-239, giving BR > 1." }
+      ]
+    }
   ],
 
   youtube: {
@@ -785,7 +1845,9 @@ if (C.graph && C.graph.nodes && C.graph.nodes.length) tabs.push({ id: 'graph',  
 if (C.deepDives && C.deepDives.length)  tabs.push({ id: 'deepdive', label: '📚 Deep Dives' });
 if (C.useCases && C.useCases.length)    tabs.push({ id: 'usecase',  label: '🔬 Use Cases' });
 if (C.youtube && C.youtube.videos && C.youtube.videos.length) tabs.push({ id: 'appendix', label: '📹 Appendix' });
+if (C.glossary && C.glossary.length)    tabs.push({ id: 'glossary', label: '📖 Glossary' }); /* glossary v1 tab */
 tabs.push({ id: 'problems', label: '🧠 Practice' });
+tabs.push({ id: 'quiz',     label: '🎯 Quiz' });
 
 document.getElementById('toolbar-title').textContent = '🧠 ' + C.course.code;
 document.title = C.course.code + ' — Interactive Study Tool';
@@ -1101,6 +2163,7 @@ function initGraph() {
   // Nodes
   const node = gGraph.selectAll("g.graph-node").data(nodes).enter().append("g")
     .attr("class", "graph-node")
+    .attr("data-id", d => d.id) /* glossary v1 data-id */
     .call(d3.drag().on("start", (evt, d) => { if (!evt.active) simul.alphaTarget(0.3).restart(); d.fx = d.x; d.fy = d.y; })
       .on("drag", (evt, d) => { d.fx = evt.x; d.fy = evt.y; })
       .on("end", (evt, d) => { if (!evt.active) simul.alphaTarget(0); d.fx = null; d.fy = null; }))
@@ -1442,6 +2505,8 @@ if (C.deepDives && C.deepDives.length) {
     // Full view
     const full = document.createElement('div'); full.className = 'dd-full'; full.id = 'dd-full-' + dd.id;
     let fhtml = `<div class="dd-infographic"><h2 style="color:${dd.color}">${dd.icon || ''} ${dd.title}</h2><div class="dd-subtitle">${dd.num || ''}${dd.num && dd.desc ? ' · ' : ''}${dd.desc || ''}</div>`;
+    // Navigator at the top for quick prev/grid/next without scrolling
+    fhtml += `<div class="dd-nav dd-nav-top"><button class="btn" onclick="navDD(-1)">← Prev</button><button class="btn" onclick="showCardGrid()">Grid</button><button class="btn" onclick="navDD(1)">Next →</button></div>`;
     if (dd.svg) fhtml += dd.svg(800, 300);
     // Render top-level content fields (markdown/body/content) as a single section
     const topText = dd.markdown || dd.body || dd.content || dd.detail;
@@ -1463,7 +2528,7 @@ if (C.deepDives && C.deepDives.length) {
       dd.keypoints.forEach(kp => { fhtml += `<div class="dd-kp"><strong>${kp.title}</strong><span>${kp.text || kp.body || ''}</span></div>`; });
       fhtml += '</div>';
     }
-    fhtml += `<div class="dd-nav"><button class="btn" onclick="navDD(-1)">← Prev</button><button class="btn" onclick="showCardGrid()">Grid</button><button class="btn" onclick="navDD(1)">Next →</button></div></div>`;
+    fhtml += `</div>`; // dd-nav v1 top inserted
     full.innerHTML = fhtml;
     fullContainer.appendChild(full);
   });
@@ -1531,6 +2596,20 @@ function showUseCase(idx) {
   html += '<button class="uc-back-btn" onclick="showUseCaseGrid()">← Back to All Use Cases</button>';
   html += `<h2>${uc.icon} ${uc.title}</h2>`;
   html += `<div class="uc-subtitle">${uc.desc}</div>`;
+  if (uc.summary || uc.pipeline || uc.metrics || uc.extensions) {
+    html += '<div class="uc-overview">';
+    if (uc.summary)   html += `<div class="uc-summary">${uc.summary}</div>`;
+    if (uc.pipeline)  html += `<div class="uc-pipeline">${uc.pipeline}</div>`;
+    if (uc.metrics && uc.metrics.length) {
+      html += '<div class="uc-metrics">';
+      uc.metrics.forEach(m => {
+        html += `<div class="uc-metric"><div class="uc-metric-label">${m.label}</div><div class="uc-metric-value">${m.value}</div></div>`;
+      });
+      html += '</div>';
+    }
+    if (uc.extensions) html += `<div class="uc-extensions"><strong>Where to go next:</strong> ${uc.extensions}</div>`;
+    html += '</div>';
+  }
   html += '<div class="uc-flow-controls">';
   html += '<button onclick="ucPrev()">← Previous</button>';
   html += '<button class="primary" onclick="ucNext()">Next Step →</button>';
@@ -1551,8 +2630,14 @@ function showUseCase(idx) {
     html += '<div class="uc-body">';
     html += `<div class="uc-title">${step.title}</div>`;
     html += `<div class="uc-component">📍 ${step.component}</div>`;
-    let detailHtml = `<p>${step.detail}</p><span class="uc-proto">${step.proto}</span>`;
+    let detailHtml = '';
+    if (step.intuition) detailHtml += `<div class="uc-intuition"><strong>💡 Intuition:</strong> ${step.intuition}</div>`;
+    detailHtml += `<p>${step.detail}</p>`;
+    if (step.proto) detailHtml += `<span class="uc-proto">${step.proto}</span>`;
+    if (step.complexity) detailHtml += `<span class="uc-complexity">⏱ ${step.complexity}</span>`;
     if (step.code) detailHtml += `<pre class="uc-code">${step.code}</pre>`;
+    if (step.example) detailHtml += `<div class="uc-example"><strong>📊 In practice:</strong> ${step.example}</div>`;
+    if (step.pitfall) detailHtml += `<div class="uc-pitfall"><strong>⚠ Pitfall:</strong> ${step.pitfall}</div>`;
     if (step.refs && step.refs.length) {
       detailHtml += '<div class="uc-refs">' + step.refs.map(r => `<a href="${r.url}" target="_blank" rel="noopener">${r.label}</a>`).join('') + '</div>';
     }
@@ -1880,10 +2965,18 @@ function toggleUnit(headerRow) {
 
 
 
-window.PROBLEMS_DATA=[{week:'Standard Model',title:'Particles & Interactions',items:[{tag:'derive',text:'Using Feynman rules for QED, compute the amplitude for e-e- scattering at tree level (Møller scattering). Identify t-channel and u-channel diagrams.'},{tag:'design',text:'You want to discover a new 100 GeV particle at the LHC. What production channel? What decay signature minimizes background? How many events needed for 5-sigma?'}]},{week:'QCD & Strong Force',title:'Quarks, Gluons, Confinement',items:[{tag:'derive',text:'Why can you never observe a free quark? Explain color confinement using the string model: energy grows with separation, string breaks forming qqbar pair.'}]},{week:'Nuclear Reactions',title:'Fission & Fusion',items:[{tag:'derive',text:'U-235 + n -> fission. Compute energy released per fission using binding energy curve: sum(products) - reactants. Why ~200 MeV?'},{tag:'design',text:'Tokamak D-T fusion needs n*T*tau > 5e21 keV*s/m^3 (Lawson). ITER targets T~150M K, n~1e20/m^3. What tau needed? Why is this so hard?'},{tag:'debug',text:'A neutron detector registers 10x expected rate. Gamma background? Real signal? Electronic noise? How do you diagnose in 3 tests?'}]}];
+// PROBLEMS_DATA legacy override removed — now sourced from COURSE_CONFIG.problems
+
 // ═══════════════════════════════════════════════════════════════════════
 // PRACTICE PROBLEMS (Problem-First learning)
 // ═══════════════════════════════════════════════════════════════════════
+const PROB_STATE_KEY = STORAGE_KEY + '-probstate';
+function probLoadState() { try { return JSON.parse(localStorage.getItem(PROB_STATE_KEY) || '{}'); } catch(e) { return {}; } }
+function probSaveState(s) { try { localStorage.setItem(PROB_STATE_KEY, JSON.stringify(s)); } catch(e) {} }
+let _probState = probLoadState();
+let _probFilters = { tags: new Set(), search: '', status: 'all' };
+let _probFlat = []; // [{si, ii, p}]
+
 function renderProblems() {
   const container = document.getElementById('problems-container');
   if (!container || container.dataset.rendered) return;
@@ -1891,6 +2984,17 @@ function renderProblems() {
              : (C.problems && C.problems.length) ? C.problems : null;
   if (!data) { container.innerHTML = '<div class="prob-intro">No practice problems defined yet for this course.</div>'; container.dataset.rendered = '1'; return; }
   container.dataset.rendered = '1';
+
+  // Build flat index + per-tag counts
+  _probFlat = [];
+  const tagCounts = {};
+  data.forEach((sec, si) => (sec.items||[]).forEach((p, ii) => {
+    _probFlat.push({ si, ii, p, key: si+':'+ii });
+    const t = p.tag || 'design';
+    tagCounts[t] = (tagCounts[t]||0) + 1;
+  }));
+  const TAGS = ['design','derive','debug','code','paper'];
+
   let html = `<div class="prob-intro">
     <strong>🧠 Problem-First Learning.</strong> Try each problem for 10 minutes <em>before</em> watching the lecture — flail, sketch, be wrong. Then watch with specific questions in mind. Your attention spikes 3–5×.
     <br><br>
@@ -1900,24 +3004,653 @@ function renderProblems() {
     <span class="prob-tag debug">debug</span> find the failure mode &nbsp;
     <span class="prob-tag code">code</span> hands-on &nbsp;
     <span class="prob-tag paper">paper</span> predict before reading
-  </div>`;
-  data.forEach((sec, i) => {
-    html += `<details class="prob-section"${i < 2 ? ' open' : ''}>
-      <summary><span class="wk">${sec.week||''}</span> ${sec.title||''}</summary>
-      <div class="prob-body"><ol>`;
-    (sec.items||[]).forEach(p => {
-      html += `<li><span class="prob-tag ${p.tag||'design'}">${p.tag||'design'}</span>${p.text||''}`;
-      if (p.hint) html += `<span class="prob-hint">${p.hint}</span>`;
-      html += `</li>`;
+    <br><br>
+    <strong style="color:#ffa657">⭐ starred</strong> problems are curiosity-piquing — start there if you're new.
+    Reveals come in three layers: <strong style="color:#d2a8ff">💡 hint</strong> (nudge) · <strong style="color:#79c0ff">🔑 approach</strong> (how to attack) · <strong style="color:#7ee787">📐 answer</strong> (the result). Try the problem before peeking.
+  </div>
+  <div class="prob-toolbar">
+    <input id="prob-search" class="prob-search" type="text" placeholder="🔍 Search problems by keyword…" />
+    <div class="prob-filter-row" id="prob-tag-row">
+      ${TAGS.map(t => `<span class="prob-chip ${t}" data-tag="${t}">${t}<span class="count">${tagCounts[t]||0}</span></span>`).join('')}
+    </div>
+    <div class="prob-filter-row" id="prob-status-row">
+      <span class="prob-chip" data-status="all">All</span>
+      <span class="prob-chip" data-status="unattempted">○ New</span>
+      <span class="prob-chip" data-status="thinking">🤔 Thinking</span>
+      <span class="prob-chip" data-status="got">💡 Got it</span>
+      <span class="prob-chip" data-status="stuck">❓ Stuck</span>
+    </div>
+    <button id="prob-surprise" class="prob-actbtn primary" title="Open a random problem">🎲 Surprise me</button>
+    <button id="prob-reset" class="prob-actbtn" title="Clear all status">↺ Reset</button>
+    <div class="prob-progress" title="Problems attempted (thinking / got / stuck)">
+      <span id="prob-progress-text">0/${_probFlat.length}</span>
+      <div class="prob-progress-bar"><div id="prob-progress-fill" class="prob-progress-fill" style="width:0%"></div></div>
+    </div>
+  </div>
+  <div id="prob-sections">`;
+
+  data.forEach((sec, si) => {
+    const secTotal = (sec.items||[]).length;
+    html += `<details class="prob-section" data-si="${si}"${si < 2 ? ' open' : ''}>
+      <summary><span class="wk">${sec.week||''}</span> <span class="sec-title">${sec.title||''}</span>
+        <span class="sec-meta"><span class="done-count" data-sec-done="${si}">0</span>/<span>${secTotal}</span></span>
+      </summary>`;
+    if (sec.hook) html += `<div class="prob-hook">${sec.hook}</div>`;
+    html += `<div class="prob-body">`;
+    (sec.items||[]).forEach((p, ii) => {
+      const key = si+':'+ii;
+      const st = _probState[key] || {};
+      const tag = p.tag || 'design';
+      const statusCls = st.status ? ' status-'+st.status : '';
+      html += `<div class="prob-card${statusCls}" data-key="${key}" data-tag="${tag}" data-status="${st.status||''}">
+        <div class="pc-head">
+          <span class="pc-num">${(ii+1).toString().padStart(2,'0')}</span>
+          <span class="prob-tag ${tag}">${tag}</span>
+          ${p.star ? '<span class="pc-star" title="Curiosity pick">★</span>' : ''}
+          <div class="prob-status-btns">
+            <button class="prob-statbtn thinking${st.status==='thinking'?' active':''}" data-status="thinking" title="I'm working on this">🤔</button>
+            <button class="prob-statbtn got${st.status==='got'?' active':''}"           data-status="got"      title="Got it">💡</button>
+            <button class="prob-statbtn stuck${st.status==='stuck'?' active':''}"       data-status="stuck"    title="Stuck">❓</button>
+          </div>
+        </div>
+        <div class="pc-text">${p.text||''}</div>`;
+      const reveals = [];
+      if (p.hint)     reveals.push({ kind:'hint',     label:'💡 Reveal hint',   field:'hint',     btnCls:'',          panelCls:'prob-hint',     tag:'Hint' });
+      if (p.approach) reveals.push({ kind:'approach', label:'🔑 Show approach', field:'approach', btnCls:'approach',  panelCls:'prob-approach', tag:'Approach' });
+      if (p.answer)   reveals.push({ kind:'answer',   label:'📐 Show answer',   field:'answer',   btnCls:'answer',    panelCls:'prob-answer',   tag:'Answer' });
+      if (reveals.length) {
+        html += `<div class="pc-actions">`;
+        reveals.forEach(r => {
+          const shown = st[r.kind+'Shown'];
+          html += `<button class="prob-revealbtn ${r.btnCls}" data-action="${r.kind}" ${shown?'style="display:none"':''}>${r.label}</button>`;
+        });
+        html += `</div>`;
+        reveals.forEach(r => {
+          const shown = st[r.kind+'Shown'];
+          html += `<div class="prob-reveal-panel ${r.panelCls}${shown?' shown':''}" data-panel="${r.kind}"><span class="rh-label">${r.tag}</span>${p[r.field]}</div>`;
+        });
+      }
+      html += `</div>`;
     });
-    html += `</ol></div></details>`;
+    html += `</div></details>`;
   });
+  html += `</div>
+  <div class="prob-spotlight" id="prob-spotlight">
+    <div class="prob-spotlight-card">
+      <button class="sl-close" onclick="probCloseSpotlight()">×</button>
+      <h3>🎲 Surprise Problem</h3>
+      <div id="prob-spotlight-body"></div>
+    </div>
+  </div>`;
+
   container.innerHTML = html;
+
+  // Wire interactions
+  container.querySelectorAll('#prob-tag-row .prob-chip').forEach(c => c.addEventListener('click', () => {
+    const tag = c.dataset.tag;
+    if (_probFilters.tags.has(tag)) _probFilters.tags.delete(tag); else _probFilters.tags.add(tag);
+    c.classList.toggle('active');
+    probApplyFilters();
+  }));
+  container.querySelectorAll('#prob-status-row .prob-chip').forEach(c => c.addEventListener('click', () => {
+    container.querySelectorAll('#prob-status-row .prob-chip').forEach(x => x.classList.remove('active'));
+    c.classList.add('active');
+    _probFilters.status = c.dataset.status;
+    probApplyFilters();
+  }));
+  container.querySelector('#prob-status-row .prob-chip[data-status="all"]').classList.add('active');
+
+  const searchEl = container.querySelector('#prob-search');
+  searchEl.addEventListener('input', () => { _probFilters.search = searchEl.value.toLowerCase().trim(); probApplyFilters(); });
+
+  container.querySelector('#prob-surprise').addEventListener('click', probSurpriseMe);
+  container.querySelector('#prob-reset').addEventListener('click', () => {
+    if (!confirm('Clear status on all '+_probFlat.length+' problems?')) return;
+    _probState = {}; probSaveState(_probState);
+    container.dataset.rendered = ''; container.innerHTML = ''; renderProblems();
+  });
+
+  container.querySelectorAll('.prob-card').forEach(card => {
+    card.querySelectorAll('.prob-statbtn').forEach(btn => btn.addEventListener('click', e => {
+      e.stopPropagation();
+      const key = card.dataset.key;
+      const newStatus = btn.dataset.status;
+      const st = _probState[key] || {};
+      st.status = (st.status === newStatus) ? null : newStatus;
+      _probState[key] = st; probSaveState(_probState);
+      card.classList.remove('status-thinking','status-got','status-stuck');
+      if (st.status) card.classList.add('status-'+st.status);
+      card.dataset.status = st.status || '';
+      card.querySelectorAll('.prob-statbtn').forEach(b => b.classList.toggle('active', b.dataset.status === st.status));
+      probUpdateProgress();
+      if (_probFilters.status !== 'all') probApplyFilters();
+    }));
+    const revealBtns = card.querySelectorAll('[data-action="hint"],[data-action="approach"],[data-action="answer"]');
+    revealBtns.forEach(btn => btn.addEventListener('click', () => {
+      const kind = btn.dataset.action;
+      const panel = card.querySelector(`.prob-reveal-panel[data-panel="${kind}"]`);
+      if (panel) panel.classList.add('shown');
+      btn.style.display = 'none';
+      const key = card.dataset.key;
+      const st = _probState[key] || {};
+      st[kind+'Shown'] = true; _probState[key] = st; probSaveState(_probState);
+    }));
+  });
+
+  probUpdateProgress();
 }
+
+function probApplyFilters() {
+  const container = document.getElementById('problems-container');
+  const { tags, search, status } = _probFilters;
+  container.querySelectorAll('.prob-card').forEach(card => {
+    const tag = card.dataset.tag;
+    const cardStatus = card.dataset.status || '';
+    const text = card.querySelector('.pc-text').textContent.toLowerCase();
+    let show = true;
+    if (tags.size > 0 && !tags.has(tag)) show = false;
+    if (search && !text.includes(search)) show = false;
+    if (status !== 'all') {
+      if (status === 'unattempted') { if (cardStatus) show = false; }
+      else if (cardStatus !== status) show = false;
+    }
+    card.classList.toggle('hidden', !show);
+  });
+  // Auto-open sections with visible cards; hide empty sections
+  container.querySelectorAll('.prob-section').forEach(sec => {
+    const visible = sec.querySelectorAll('.prob-card:not(.hidden)').length;
+    sec.style.display = visible === 0 ? 'none' : '';
+    if (visible > 0 && (tags.size || search || status !== 'all')) sec.open = true;
+  });
+}
+
+function probUpdateProgress() {
+  const total = _probFlat.length;
+  let attempted = 0;
+  const perSec = {};
+  _probFlat.forEach(({si, key}) => {
+    const st = _probState[key];
+    if (st && st.status) { attempted++; perSec[si] = (perSec[si]||0) + 1; }
+  });
+  const txt = document.getElementById('prob-progress-text');
+  const fill = document.getElementById('prob-progress-fill');
+  if (txt) txt.textContent = attempted + '/' + total;
+  if (fill) fill.style.width = (total ? (attempted/total*100) : 0) + '%';
+  document.querySelectorAll('[data-sec-done]').forEach(el => {
+    const si = +el.dataset.secDone;
+    el.textContent = perSec[si] || 0;
+  });
+}
+
+function probSurpriseMe() {
+  if (!_probFlat.length) return;
+  // Prefer starred & unattempted; otherwise unattempted; otherwise any
+  const starredNew = _probFlat.filter(x => x.p.star && !(_probState[x.key]||{}).status);
+  const anyNew     = _probFlat.filter(x => !(_probState[x.key]||{}).status);
+  const pool = starredNew.length ? starredNew : (anyNew.length ? anyNew : _probFlat);
+  const pick = pool[Math.floor(Math.random()*pool.length)];
+  const { p, si, ii, key } = pick;
+  const sec = (window.PROBLEMS_DATA || (C.problems||[]))[si];
+  const tag = p.tag || 'design';
+  const body = document.getElementById('prob-spotlight-body');
+  body.innerHTML = `
+    <div style="display:flex;gap:8px;align-items:center;margin-bottom:6px;flex-wrap:wrap">
+      <span class="prob-tag ${tag}">${tag}</span>
+      ${p.star ? '<span style="color:#ffa657">★</span>' : ''}
+      <span style="color:#8b949e;font-size:12px">${sec.week||''} · ${sec.title||''} · #${ii+1}</span>
+    </div>
+    <div class="pc-text">${p.text||''}</div>
+    ${(()=>{const L=[];if(p.hint)L.push({s:'💡 Reveal hint',c:'prob-hint',t:'Hint',b:p.hint});if(p.approach)L.push({s:'🔑 Show approach',c:'prob-approach',t:'Approach',b:p.approach});if(p.answer)L.push({s:'📐 Show answer',c:'prob-answer',t:'Answer',b:p.answer});return L.map(l=>`<details style="margin-top:10px"><summary style="cursor:pointer;color:#8b949e;font-size:12px;padding:4px 0">${l.s}</summary><div class="prob-reveal-panel ${l.c} shown" style="margin-top:6px"><span class="rh-label">${l.t}</span>${l.b}</div></details>`).join('');})()}
+    <div style="margin-top:14px;display:flex;gap:6px;flex-wrap:wrap">
+      <button class="prob-actbtn" onclick="probJumpTo('${key}')">↗ Jump to it</button>
+      <button class="prob-actbtn" onclick="probSurpriseMe()">🎲 Another</button>
+    </div>`;
+  document.getElementById('prob-spotlight').classList.add('open');
+}
+function probCloseSpotlight() { const el = document.getElementById('prob-spotlight'); if (el) el.classList.remove('open'); }
+function probJumpTo(key) {
+  probCloseSpotlight();
+  const card = document.querySelector(`.prob-card[data-key="${key}"]`);
+  if (!card) return;
+  const sec = card.closest('.prob-section');
+  if (sec) sec.open = true;
+  card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  card.style.transition = 'box-shadow .3s'; card.style.boxShadow = '0 0 0 2px #58a6ff';
+  setTimeout(() => { card.style.boxShadow = ''; }, 1500);
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') probCloseSpotlight(); });
 if (typeof switchTab === 'function') {
   const _origSwitchTab_prob = switchTab;
   switchTab = function(tab) { _origSwitchTab_prob(tab); if (tab === 'problems') renderProblems(); };
 }
+
+// === BEGIN glossary v1 js ===
+// ═══════════════════════════════════════════════════════════════════════
+// GLOSSARY — definitions + cross-references with graph & mindmap
+// ═══════════════════════════════════════════════════════════════════════
+(function initGlossaryMaps() {
+  const gloss = (C && C.glossary) || [];
+  if (!gloss.length) return;
+
+  // 1. Build id → entry maps and "label/aka" → id reverse map.
+  const byId = {};
+  const byLabel = {}; // lowercased term/aka → id
+  gloss.forEach(g => {
+    byId[g.id] = g;
+    const keys = [g.term].concat(g.aka || []);
+    keys.forEach(k => { if (k) byLabel[k.toLowerCase().trim()] = g.id; });
+  });
+
+  // 2. Patch graph node tips for any node whose id matches a glossary entry.
+  let graphMatched = 0;
+  const glossByGraphNode = {};
+  if (C.graph && Array.isArray(C.graph.nodes)) {
+    C.graph.nodes.forEach(n => {
+      if (byId[n.id]) {
+        glossByGraphNode[n.id] = n.id;
+        graphMatched++;
+        if (n.tip && n.tip.indexOf('📖') < 0) n.tip = n.tip + ' · 📖 in glossary';
+      } else {
+        // Fallback: try label/aka match
+        const k = (n.label || '').toLowerCase().trim();
+        if (byLabel[k]) {
+          glossByGraphNode[n.id] = byLabel[k];
+          graphMatched++;
+          if (n.tip && n.tip.indexOf('📖') < 0) n.tip = n.tip + ' · 📖 in glossary';
+        }
+      }
+    });
+  }
+
+  // 3. Walk mindmap and build name → glossary-id map. Match relaxed:
+  //    full name (newlines → space) OR each line.
+  let mindmapMatched = 0;
+  const glossByMindmapName = {};
+  function walkMm(node) {
+    if (!node) return;
+    if (node.name) {
+      const full = node.name.replace(/\n/g, ' ').trim();
+      const candidates = [full].concat(node.name.split(/\n+/).map(s => s.trim()).filter(Boolean));
+      for (const c of candidates) {
+        const id = byLabel[c.toLowerCase()];
+        if (id) {
+          glossByMindmapName[full] = id;
+          mindmapMatched++;
+          break;
+        }
+      }
+    }
+    (node.children || []).forEach(walkMm);
+  }
+  if (C.mindmap) walkMm(C.mindmap);
+
+  window._glossaryById = byId;
+  window._glossaryByLabel = byLabel;
+  window._glossaryIdByGraphNode = glossByGraphNode;
+  window._glossaryIdByMindmapName = glossByMindmapName;
+  window._glossaryStats = { graphMatched: graphMatched, mindmapMatched: mindmapMatched };
+
+  // 4. Monkey-patch showTooltip so it appends a "📖 Defined in glossary →" link
+  //    whenever the hovered name corresponds to a glossary entry.
+  if (typeof window.showTooltip === 'function') {
+    const _origShowTooltip = window.showTooltip;
+    const ttRoot = document.getElementById('tooltip');
+    let glossFooter = ttRoot.querySelector('.tt-glossary');
+    if (!glossFooter) {
+      glossFooter = document.createElement('div');
+      glossFooter.className = 'tt-glossary';
+      ttRoot.appendChild(glossFooter);
+    }
+    window.showTooltip = function(evt, name, tip, slides) {
+      _origShowTooltip(evt, name, tip, slides);
+      glossFooter.innerHTML = '';
+      ttRoot.classList.remove('has-glossary');
+      if (!name) return;
+      const plain = String(name).replace(/\n/g, ' ').trim();
+      const key = plain.toLowerCase();
+      let id = byLabel[key] || glossByMindmapName[plain] || null;
+      if (!id) {
+        // strip parenthetical suffix e.g. "Optical Switch (OCS)" → "Optical Switch"
+        const stripped = plain.replace(/\s*\([^)]*\)\s*$/, '').toLowerCase();
+        if (stripped !== key) id = byLabel[stripped] || null;
+      }
+      if (id) {
+        const a = document.createElement('a');
+        a.textContent = '📖 Defined in glossary →';
+        a.onclick = (e) => {
+          e.stopPropagation();
+          if (typeof window.glossaryJumpToTerm === 'function') window.glossaryJumpToTerm(id);
+        };
+        glossFooter.appendChild(a);
+        ttRoot.classList.add('has-glossary');
+      }
+    };
+  }
+})();
+
+// ─── renderGlossary ───────────────────────────────────────────────────
+let _glossSelectedCat = 'all';
+let _glossSearch = '';
+let _glossSearchTimer = null;
+let _glossBuilt = false;
+
+const GLOSS_CAT_COLORS = {
+  hardware:    '#58a6ff',
+  software:    '#7ee787',
+  numerics:    '#79c0ff',
+  systems:     '#d2a8ff',
+  performance: '#f778ba',
+  concepts:    '#ffa657'
+};
+
+function renderGlossary() {
+  const data = (C.glossary || []).slice().sort((a, b) =>
+    a.term.toLowerCase().localeCompare(b.term.toLowerCase()));
+  const list = document.getElementById('glossary-list');
+  const pillBar = document.getElementById('glossary-cat-pills');
+  const countEl = document.getElementById('glossary-count');
+  const searchEl = document.getElementById('glossary-search');
+  if (!list || !pillBar || !countEl || !searchEl) return;
+
+  // Build category pills + search input wiring once.
+  if (!_glossBuilt) {
+    const cats = ['all'].concat(
+      Array.from(new Set(data.map(d => d.category))).sort());
+    pillBar.innerHTML = '';
+    cats.forEach(cat => {
+      const btn = document.createElement('button');
+      btn.textContent = cat === 'all' ? `All (${data.length})` :
+        `${cat} (${data.filter(d => d.category === cat).length})`;
+      btn.dataset.cat = cat;
+      const color = cat === 'all' ? '#58a6ff' : (GLOSS_CAT_COLORS[cat] || '#58a6ff');
+      btn.style.setProperty('--pill-color', color);
+      btn.style.setProperty('--pill-bg', color + '22');
+      if (cat === _glossSelectedCat) btn.classList.add('active');
+      btn.onclick = () => {
+        _glossSelectedCat = cat;
+        pillBar.querySelectorAll('button').forEach(b =>
+          b.classList.toggle('active', b.dataset.cat === cat));
+        renderGlossary();
+      };
+      pillBar.appendChild(btn);
+    });
+    searchEl.addEventListener('input', () => {
+      if (_glossSearchTimer) clearTimeout(_glossSearchTimer);
+      _glossSearchTimer = setTimeout(() => {
+        _glossSearch = searchEl.value.trim().toLowerCase();
+        renderGlossary();
+      }, 120);
+    });
+    _glossBuilt = true;
+  }
+
+  // Filter
+  const q = _glossSearch;
+  const visible = data.filter(d => {
+    if (_glossSelectedCat !== 'all' && d.category !== _glossSelectedCat) return false;
+    if (!q) return true;
+    const hay = [d.term, (Array.isArray(d.aka) ? d.aka.join(' ') : (d.aka || '')), d.short, d.long || ''].join(' ').toLowerCase();
+    return hay.indexOf(q) >= 0;
+  });
+
+  countEl.textContent = `${visible.length} of ${data.length} terms`;
+
+  const graphIds = new Set();
+  if (C.graph && C.graph.nodes) C.graph.nodes.forEach(n => graphIds.add(n.id));
+  const glossIds = new Set(data.map(d => d.id));
+  const mindmapNames = window._glossaryIdByMindmapName || {};
+  const reverseMindmap = {}; // glossary-id → mindmap label
+  Object.keys(mindmapNames).forEach(name => { reverseMindmap[mindmapNames[name]] = name; });
+
+  list.innerHTML = '';
+  visible.forEach(d => {
+    const color = GLOSS_CAT_COLORS[d.category] || '#58a6ff';
+    const card = document.createElement('div');
+    card.className = 'glossary-card';
+    card.dataset.id = d.id;
+    card.style.setProperty('--cat-color', color);
+
+    const head = document.createElement('div');
+    head.className = 'glossary-term-row';
+    const term = document.createElement('span');
+    term.className = 'glossary-term';
+    term.textContent = d.term;
+    head.appendChild(term);
+    const badge = document.createElement('span');
+    badge.className = 'glossary-cat-badge';
+    badge.textContent = d.category;
+    badge.style.setProperty('--cat-color', color);
+    head.appendChild(badge);
+    card.appendChild(head);
+
+    if (d.aka && d.aka.length) {
+      const aka = document.createElement('div');
+      aka.className = 'glossary-aka';
+      aka.textContent = 'aka ' + (Array.isArray(d.aka) ? d.aka.join(', ') : d.aka);
+      card.appendChild(aka);
+    }
+
+    const shortEl = document.createElement('div');
+    shortEl.className = 'glossary-short';
+    shortEl.textContent = d.short || '';
+    card.appendChild(shortEl);
+
+    if (d.long) {
+      const longEl = document.createElement('div');
+      longEl.className = 'glossary-long';
+      longEl.innerHTML = d.long;
+      card.appendChild(longEl);
+      const toggle = document.createElement('button');
+      toggle.className = 'glossary-toggle';
+      toggle.textContent = 'Show more ▾';
+      toggle.onclick = () => {
+        const expanded = card.classList.toggle('expanded');
+        toggle.textContent = expanded ? 'Show less ▴' : 'Show more ▾';
+      };
+      card.appendChild(toggle);
+    }
+
+    const links = document.createElement('div');
+    links.className = 'glossary-links';
+    if (graphIds.has(d.id)) {
+      const b = document.createElement('button');
+      b.textContent = '🔗 Topic Graph';
+      b.onclick = () => window.glossaryJumpToGraphNode(d.id);
+      links.appendChild(b);
+    }
+    if (reverseMindmap[d.id]) {
+      const b = document.createElement('button');
+      b.textContent = '📐 Mind Map';
+      b.onclick = () => window.glossaryJumpToMindmapNode(reverseMindmap[d.id]);
+      links.appendChild(b);
+    }
+    (d.seeAlso || []).forEach(otherId => {
+      if (!glossIds.has(otherId)) return;
+      const other = (C.glossary || []).find(x => x.id === otherId);
+      if (!other) return;
+      const b = document.createElement('button');
+      b.textContent = '→ ' + other.term;
+      b.onclick = () => window.glossaryJumpToTerm(otherId);
+      links.appendChild(b);
+    });
+    if (links.children.length) card.appendChild(links);
+
+    list.appendChild(card);
+  });
+}
+
+// ─── Cross-tab jump helpers ───────────────────────────────────────────
+window.glossaryJumpToTerm = function(id) {
+  if (typeof switchTab === 'function') switchTab('glossary');
+  setTimeout(() => {
+    const card = document.querySelector('.glossary-card[data-id="' + CSS.escape(id) + '"]');
+    if (!card) return;
+    card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    card.classList.remove('flash');
+    void card.offsetWidth; // restart animation
+    card.classList.add('flash');
+    // Pull the display term from the card itself so the toast matches what the user sees
+    const labelEl = card.querySelector('.glossary-term');
+    const label = labelEl ? labelEl.textContent.trim() : id;
+    if (typeof showGlossaryToast === 'function') showGlossaryToast('Glossary', label, 'glossary');
+    setTimeout(() => card.classList.remove('flash'), 2800);
+  }, 60);
+};
+
+window.glossaryJumpToGraphNode = function(id) {
+  if (typeof switchTab === 'function') switchTab('graph');
+  const tryFlash = (attempt) => {
+    const g = document.querySelector('g.graph-node[data-id="' + CSS.escape(id) + '"]');
+    if (!g) {
+      if (attempt < 12) return setTimeout(() => tryFlash(attempt + 1), 120);
+      return;
+    }
+    // Pull the node's force-simulation position from its bound datum
+    let d = null;
+    try { d = (typeof d3 !== 'undefined') ? d3.select(g).datum() : null; } catch(_) {}
+    const label = (d && (d.label || d.id)) || id;
+
+    // 1) Pan + zoom the SVG so the node is centered and reasonably zoomed in
+    try {
+      if (d && typeof d.x === 'number' && typeof d.y === 'number' && typeof d3 !== 'undefined' && typeof graphZoom !== 'undefined') {
+        const svgEl = document.getElementById('canvas-graph');
+        const W = (svgEl && svgEl.clientWidth)  || window.innerWidth;
+        const H = (svgEl && svgEl.clientHeight) || window.innerHeight;
+        const k = 1.6;
+        const tx = W / 2 - k * d.x;
+        const ty = H / 2 - k * d.y;
+        d3.select('#canvas-graph')
+          .transition().duration(650)
+          .call(graphZoom.transform, d3.zoomIdentity.translate(tx, ty).scale(k));
+      } else {
+        g.querySelector('circle') && g.querySelector('circle').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    } catch(_) {}
+
+    // 2) Big halo ring + bold class on the node group
+    g.classList.remove('glossary-highlight');
+    void g.getBoundingClientRect();
+    g.classList.add('glossary-highlight');
+    try {
+      // remove any previous halo
+      g.querySelectorAll('circle.glossary-halo').forEach(c => c.remove());
+      const halo = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+      halo.setAttribute('class', 'glossary-halo');
+      halo.setAttribute('cx', '0');
+      halo.setAttribute('cy', '0');
+      halo.setAttribute('r', '14');
+      g.insertBefore(halo, g.firstChild); // behind the node circle
+    } catch(_) {}
+
+    // 3) Top-of-screen toast
+    showGlossaryToast('Topic Graph', label, 'graph');
+
+    setTimeout(() => {
+      g.classList.remove('glossary-highlight');
+      g.querySelectorAll('circle.glossary-halo').forEach(c => c.remove());
+    }, 4200);
+  };
+  requestAnimationFrame(() => requestAnimationFrame(() => tryFlash(0)));
+};
+
+window.glossaryJumpToMindmapNode = function(label) {
+  if (typeof switchTab === 'function') switchTab('mindmap');
+  const target = (label || '').replace(/\n/g, ' ').trim().toLowerCase();
+  const tryFlash = (attempt) => {
+    const groups = document.querySelectorAll('#canvas g');
+    let hit = null;
+    groups.forEach(g => {
+      if (hit) return;
+      const txt = (g.textContent || '').replace(/\s+/g, ' ').trim().toLowerCase();
+      if (txt === target) hit = g;
+    });
+    if (!hit) {
+      if (attempt < 10) return setTimeout(() => tryFlash(attempt + 1), 150);
+      return;
+    }
+
+    // 1) Pan the mindmap so the hit node is roughly centered
+    try {
+      if (typeof d3 !== 'undefined' && typeof mmZoom !== 'undefined') {
+        const svgEl = document.getElementById('canvas');
+        const W = (svgEl && svgEl.clientWidth)  || window.innerWidth;
+        const H = (svgEl && svgEl.clientHeight) || window.innerHeight;
+        // Read the node's local SVG position from its existing transform attribute (form: translate(x,y))
+        const tr = hit.getAttribute('transform') || '';
+        const m = tr.match(/translate\(\s*([-0-9.]+)\s*[ ,]\s*([-0-9.]+)/);
+        if (m) {
+          const x = parseFloat(m[1]), y = parseFloat(m[2]);
+          const k = 1.3;
+          const tx = W / 2 - k * x;
+          const ty = H / 2 - k * y;
+          d3.select('#canvas')
+            .transition().duration(650)
+            .call(mmZoom.transform, d3.zoomIdentity.translate(tx, ty).scale(k));
+        } else {
+          hit.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      } else {
+        hit.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    } catch(_) {}
+
+    // 2) Halo ring on the mindmap node
+    try {
+      hit.querySelectorAll('circle.glossary-mm-halo').forEach(c => c.remove());
+      const halo = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+      halo.setAttribute('class', 'glossary-mm-halo');
+      halo.setAttribute('cx', '0');
+      halo.setAttribute('cy', '0');
+      halo.setAttribute('r', '14');
+      hit.insertBefore(halo, hit.firstChild);
+      setTimeout(() => halo.remove(), 4200);
+    } catch(_) {}
+
+    // 3) Stroke flash on the shape
+    const shape = hit.querySelector('circle, rect');
+    if (shape) {
+      const prev = shape.getAttribute('stroke');
+      const prevW = shape.getAttribute('stroke-width');
+      shape.setAttribute('stroke', '#f0c000');
+      shape.setAttribute('stroke-width', '5');
+      setTimeout(() => {
+        if (prev !== null) shape.setAttribute('stroke', prev); else shape.removeAttribute('stroke');
+        if (prevW !== null) shape.setAttribute('stroke-width', prevW); else shape.removeAttribute('stroke-width');
+      }, 3000);
+    }
+
+    // 4) Toast
+    showGlossaryToast('Mind Map', (label || '').replace(/\n/g, ' '), 'mindmap');
+  };
+  requestAnimationFrame(() => requestAnimationFrame(() => tryFlash(0)));
+};
+
+// Floating toast helper — visible regardless of where the target node ended up
+function showGlossaryToast(where, label, kind) {
+  let t = document.getElementById('glossary-toast');
+  if (!t) {
+    t = document.createElement('div');
+    t.id = 'glossary-toast';
+    document.body.appendChild(t);
+  }
+  const icon = kind === 'graph' ? '🔗' : (kind === 'mindmap' ? '📐' : '📖');
+  t.innerHTML = '<span class="gt-icon">' + icon + '</span>'
+              + '<span>Jumped to: <strong>' + (label || '').replace(/[<>&]/g, '') + '</strong></span>'
+              + '<span class="gt-sub">in ' + where + '</span>';
+  // restart animation
+  t.classList.remove('show');
+  void t.offsetWidth;
+  t.classList.add('show');
+  clearTimeout(t._hideTimer);
+  t._hideTimer = setTimeout(() => t.classList.remove('show'), 3200);
+}
+
+// Lazy-render hook
+if (typeof switchTab === 'function') {
+  const _origSwitchTab_gloss = switchTab;
+  switchTab = function(tab) { _origSwitchTab_gloss(tab); if (tab === 'glossary') renderGlossary(); };
+}
+// === END glossary v1 js ===
 </script>
 <!-- BEGIN tooltip-pin (click pins, click outside closes) -->
 <style>

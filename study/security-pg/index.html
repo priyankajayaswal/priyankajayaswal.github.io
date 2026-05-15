@@ -253,6 +253,36 @@
     border-radius: 4px; font-size: 10px; color: #79c0ff; text-decoration: none; transition: all .2s;
   }
   .uc-refs a:hover { border-color: #58a6ff; color: #58a6ff; background: #0d1117; }
+  /* ── Use-case enrichment v2 ── */
+  .uc-overview { background: linear-gradient(135deg, #0d1117 0%, #161b22 100%); border: 1px solid #30363d;
+    border-left: 3px solid #58a6ff; border-radius: 10px; padding: 16px 18px; margin: 16px 0 20px; }
+  .uc-overview .uc-summary { font-size: 13px; color: #c9d1d9; line-height: 1.7; }
+  .uc-overview .uc-summary strong { color: #79c0ff; }
+  .uc-pipeline { margin-top: 14px; padding: 10px 12px; background: #0d1117; border: 1px solid #30363d;
+    border-radius: 6px; font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+    font-size: 11px; color: #7ee787; line-height: 1.6; white-space: pre-wrap; overflow-x: auto; }
+  .uc-metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 10px; margin-top: 14px; }
+  .uc-metric { background: #0d1117; border: 1px solid #30363d; border-radius: 8px; padding: 10px 12px; }
+  .uc-metric .uc-metric-label { font-size: 10px; color: #8b949e; text-transform: uppercase; letter-spacing: 0.5px; }
+  .uc-metric .uc-metric-value { font-size: 14px; color: #ffa657; font-weight: 600; margin-top: 4px; line-height: 1.4; }
+  .uc-extensions { margin-top: 14px; padding: 10px 12px; background: rgba(210, 168, 255, 0.06);
+    border: 1px solid rgba(210, 168, 255, 0.25); border-radius: 6px; font-size: 12px; color: #c9d1d9; line-height: 1.6; }
+  .uc-extensions strong { color: #d2a8ff; }
+  .uc-step .uc-intuition { margin-top: 8px; padding: 8px 10px; background: rgba(126, 231, 135, 0.08);
+    border-left: 2px solid #3fb950; border-radius: 4px; font-size: 12px; color: #c9d1d9; line-height: 1.55; display: none; }
+  .uc-step.active .uc-intuition { display: block; }
+  .uc-step .uc-intuition strong { color: #7ee787; }
+  .uc-step .uc-complexity { display: inline-block; margin-top: 8px; margin-right: 6px;
+    background: rgba(31, 111, 235, 0.15); border: 1px solid rgba(88, 166, 255, 0.35); border-radius: 4px;
+    padding: 2px 8px; font-size: 10px; color: #79c0ff; font-family: 'Cascadia Code', 'Consolas', monospace; }
+  .uc-step .uc-pitfall { margin-top: 8px; padding: 8px 10px; background: rgba(255, 123, 114, 0.08);
+    border-left: 2px solid #ff7b72; border-radius: 4px; font-size: 12px; color: #c9d1d9; line-height: 1.55; display: none; }
+  .uc-step.active .uc-pitfall { display: block; }
+  .uc-step .uc-pitfall strong { color: #ff7b72; }
+  .uc-step .uc-example { margin-top: 8px; padding: 8px 10px; background: rgba(255, 166, 87, 0.06);
+    border-left: 2px solid #ffa657; border-radius: 4px; font-size: 12px; color: #c9d1d9; line-height: 1.55; display: none; }
+  .uc-step.active .uc-example { display: block; }
+  .uc-step .uc-example strong { color: #ffa657; }
   .legend-close {
     position: absolute; top: 8px; right: 8px; background: none; border: none;
     color: #8b949e; font-size: 16px; cursor: pointer; line-height: 1; padding: 2px 6px;
@@ -320,27 +350,92 @@
   /* ── Practice Problems (Problem-First) ── */
   #problems-container { position: relative; top: 0; width: 100%; max-width: 1100px; margin: 0 auto; padding: 24px 16px 60px; }
   #view-problems { overflow-y: auto; height: calc(100vh - 50px); margin-top: 50px; }
-  .prob-intro { background: #161b22; border: 1px solid #30363d; border-left: 3px solid #7ee787; border-radius: 6px; padding: 14px 18px; margin-bottom: 22px; color: #c9d1d9; font-size: 14px; line-height: 1.6; }
+  .prob-intro { background: #161b22; border: 1px solid #30363d; border-left: 3px solid #7ee787; border-radius: 6px; padding: 14px 18px; margin-bottom: 18px; color: #c9d1d9; font-size: 14px; line-height: 1.6; }
   .prob-intro strong { color: #7ee787; }
-  .prob-section { margin-bottom: 22px; border: 1px solid #30363d; border-radius: 8px; background: #161b22; overflow: hidden; }
-  .prob-section > summary { padding: 14px 18px; font-size: 15px; font-weight: 600; color: #e6edf3; cursor: pointer; list-style: none; display: flex; align-items: center; gap: 10px; user-select: none; transition: background .15s; }
+  /* Toolbar */
+  .prob-toolbar { position: sticky; top: 0; z-index: 5; background: rgba(13,17,23,0.95); backdrop-filter: blur(6px); padding: 10px 0 12px; margin-bottom: 14px; border-bottom: 1px solid #21262d; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  .prob-search { flex: 1 1 200px; min-width: 180px; background: #0d1117; border: 1px solid #30363d; border-radius: 6px; padding: 7px 12px; color: #c9d1d9; font-size: 13px; outline: none; }
+  .prob-search:focus { border-color: #58a6ff; }
+  .prob-filter-row { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+  .prob-chip { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 12px; cursor: pointer; background: #161b22; border: 1px solid #30363d; color: #8b949e; text-transform: uppercase; letter-spacing: .4px; transition: all .15s; user-select: none; }
+  .prob-chip:hover { border-color: #58a6ff; color: #c9d1d9; }
+  .prob-chip.active { background: #1f6feb22; border-color: #58a6ff; color: #58a6ff; }
+  .prob-chip.design.active  { background: #58a6ff22; border-color: #58a6ff; color: #58a6ff; }
+  .prob-chip.derive.active  { background: #ffa65722; border-color: #ffa657; color: #ffa657; }
+  .prob-chip.debug.active   { background: #f8514922; border-color: #f85149; color: #f85149; }
+  .prob-chip.code.active    { background: #7ee78722; border-color: #7ee787; color: #7ee787; }
+  .prob-chip.paper.active   { background: #d2a8ff22; border-color: #d2a8ff; color: #d2a8ff; }
+  .prob-chip .count { font-size: 9px; opacity: .7; font-weight: 500; }
+  .prob-actbtn { background: #161b22; border: 1px solid #30363d; color: #c9d1d9; padding: 6px 12px; border-radius: 6px; font-size: 12px; cursor: pointer; transition: all .15s; }
+  .prob-actbtn:hover { border-color: #58a6ff; color: #58a6ff; }
+  .prob-actbtn.primary { background: #1f6feb; border-color: #58a6ff; color: #fff; }
+  .prob-actbtn.primary:hover { background: #388bfd; }
+  .prob-progress { display: flex; align-items: center; gap: 10px; flex: 0 0 auto; font-size: 11px; color: #8b949e; margin-left: auto; }
+  .prob-progress-bar { width: 100px; height: 6px; background: #21262d; border-radius: 3px; overflow: hidden; }
+  .prob-progress-fill { height: 100%; background: linear-gradient(90deg, #7ee787, #58a6ff); transition: width .3s; }
+  /* Sections */
+  .prob-section { margin-bottom: 16px; border: 1px solid #30363d; border-radius: 8px; background: #161b22; overflow: hidden; }
+  .prob-section > summary { padding: 13px 18px; font-size: 14px; font-weight: 600; color: #e6edf3; cursor: pointer; list-style: none; display: flex; align-items: center; gap: 10px; user-select: none; transition: background .15s; flex-wrap: wrap; }
   .prob-section > summary::-webkit-details-marker { display: none; }
   .prob-section > summary::before { content: '▸'; color: #8b949e; font-size: 11px; transition: transform .2s; }
   .prob-section[open] > summary::before { transform: rotate(90deg); }
   .prob-section > summary:hover { background: rgba(88,166,255,0.04); }
-  .prob-section .wk { color: #8b949e; font-size: 12px; font-weight: 500; background: #0d1117; padding: 2px 8px; border-radius: 10px; border: 1px solid #30363d; }
-  .prob-body { padding: 6px 20px 18px 40px; }
-  .prob-body > ol { padding-left: 22px; margin: 8px 0 4px; }
-  .prob-body > ol > li { margin: 12px 0; color: #c9d1d9; font-size: 14px; line-height: 1.55; }
-  .prob-body > ol > li::marker { color: #7ee787; font-weight: 600; }
-  .prob-hint { display: block; margin-top: 4px; color: #8b949e; font-size: 12.5px; font-style: italic; }
-  .prob-hint::before { content: '💡 '; font-style: normal; }
-  .prob-tag { display: inline-block; font-size: 10px; font-weight: 600; padding: 1px 7px; border-radius: 8px; margin-right: 6px; vertical-align: middle; text-transform: uppercase; letter-spacing: .4px; }
+  .prob-section .wk { color: #8b949e; font-size: 11px; font-weight: 500; background: #0d1117; padding: 2px 8px; border-radius: 10px; border: 1px solid #30363d; }
+  .prob-section .sec-meta { margin-left: auto; font-size: 11px; color: #6e7681; font-weight: 500; }
+  .prob-section .sec-meta .done-count { color: #7ee787; font-weight: 600; }
+  .prob-hook { background: #0d1117; border-bottom: 1px solid #21262d; padding: 12px 22px; font-size: 13px; color: #d2a8ff; font-style: italic; line-height: 1.6; display: flex; gap: 8px; align-items: flex-start; }
+  .prob-hook::before { content: '🪝'; font-style: normal; flex-shrink: 0; }
+  .prob-body { padding: 12px 18px 16px; display: flex; flex-direction: column; gap: 10px; }
+  /* Problem cards */
+  .prob-card { background: #0d1117; border: 1px solid #21262d; border-radius: 8px; padding: 12px 14px; transition: all .15s; position: relative; }
+  .prob-card:hover { border-color: #30363d; }
+  .prob-card.status-thinking { border-left: 3px solid #d2a8ff; }
+  .prob-card.status-got      { border-left: 3px solid #7ee787; opacity: .75; }
+  .prob-card.status-stuck    { border-left: 3px solid #f85149; }
+  .prob-card.hidden          { display: none; }
+  .prob-card .pc-head { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 4px; }
+  .prob-card .pc-num { color: #6e7681; font-size: 11px; font-weight: 600; font-family: 'Cascadia Code', monospace; }
+  .prob-card .pc-star { color: #ffa657; font-size: 13px; }
+  .prob-tag { display: inline-block; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 8px; text-transform: uppercase; letter-spacing: .4px; }
   .prob-tag.design { background: #58a6ff20; color: #58a6ff; }
   .prob-tag.debug  { background: #f8514920; color: #f85149; }
   .prob-tag.paper  { background: #d2a8ff20; color: #d2a8ff; }
   .prob-tag.code   { background: #7ee78720; color: #7ee787; }
   .prob-tag.derive { background: #ffa65720; color: #ffa657; }
+  .prob-card .pc-text { color: #c9d1d9; font-size: 13.5px; line-height: 1.6; margin: 2px 0 6px; }
+  .prob-card .pc-actions { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; margin-top: 6px; }
+  .prob-revealbtn { background: transparent; border: 1px dashed #30363d; color: #8b949e; padding: 3px 10px; border-radius: 12px; font-size: 11px; cursor: pointer; transition: all .15s; }
+  .prob-revealbtn:hover { border-color: #d2a8ff; color: #d2a8ff; border-style: solid; }
+  .prob-revealbtn.approach:hover { border-color: #79c0ff; color: #79c0ff; }
+  .prob-revealbtn.answer:hover   { border-color: #7ee787; color: #7ee787; }
+  .prob-reveal-panel { display: none; margin-top: 8px; padding: 10px 14px; background: #161b22; border-radius: 4px; color: #c9d1d9; font-size: 12.5px; line-height: 1.65; }
+  .prob-reveal-panel.shown { display: block; }
+  .prob-reveal-panel ul, .prob-reveal-panel ol { margin: 4px 0 4px 18px; padding: 0; }
+  .prob-reveal-panel li { margin: 3px 0; }
+  .prob-reveal-panel code { background: #0d1117; padding: 1px 5px; border-radius: 3px; font-size: 11.5px; color: #79c0ff; font-family: 'Cascadia Code', 'Consolas', monospace; }
+  .prob-reveal-panel strong { color: #e6edf3; }
+  .prob-reveal-panel .rh-label { display: inline-block; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .6px; margin-right: 8px; padding: 1px 6px; border-radius: 4px; vertical-align: middle; }
+  .prob-hint     { border-left: 2px solid #d2a8ff; }
+  .prob-hint     .rh-label { background: #d2a8ff22; color: #d2a8ff; }
+  .prob-approach { border-left: 2px solid #79c0ff; }
+  .prob-approach .rh-label { background: #79c0ff22; color: #79c0ff; }
+  .prob-answer   { border-left: 2px solid #7ee787; background: #0d1f17; }
+  .prob-answer   .rh-label { background: #7ee78722; color: #7ee787; }
+  .prob-status-btns { display: flex; gap: 4px; margin-left: auto; }
+  .prob-statbtn { background: transparent; border: 1px solid #30363d; color: #6e7681; padding: 3px 9px; border-radius: 12px; font-size: 11px; cursor: pointer; transition: all .15s; }
+  .prob-statbtn:hover { border-color: #58a6ff; color: #c9d1d9; }
+  .prob-statbtn.active.thinking { background: #d2a8ff22; border-color: #d2a8ff; color: #d2a8ff; }
+  .prob-statbtn.active.got      { background: #7ee78722; border-color: #7ee787; color: #7ee787; }
+  .prob-statbtn.active.stuck    { background: #f8514922; border-color: #f85149; color: #f85149; }
+  .prob-empty { text-align: center; padding: 40px 20px; color: #6e7681; font-size: 13px; }
+  /* Modal for surprise-me */
+  .prob-spotlight { position: fixed; inset: 0; background: rgba(13,17,23,0.85); backdrop-filter: blur(4px); display: none; align-items: center; justify-content: center; z-index: 100; padding: 20px; }
+  .prob-spotlight.open { display: flex; }
+  .prob-spotlight-card { background: #161b22; border: 1px solid #58a6ff; border-radius: 12px; max-width: 600px; width: 100%; padding: 24px 28px; box-shadow: 0 12px 60px rgba(88,166,255,0.3); }
+  .prob-spotlight-card h3 { color: #58a6ff; font-size: 14px; margin: 0 0 4px; text-transform: uppercase; letter-spacing: 1px; }
+  .prob-spotlight-card .pc-text { font-size: 16px; line-height: 1.55; color: #e6edf3; margin: 10px 0; }
+  .prob-spotlight-card .sl-close { background: transparent; border: none; color: #8b949e; font-size: 22px; cursor: pointer; float: right; line-height: 1; }
+  .prob-spotlight-card .sl-close:hover { color: #c9d1d9; }
   .appendix-table .watch-link:hover { color: #ff0000; text-decoration: underline; }
   /* ── Progress checkbox ── */
   .appendix-table .vid-check { width: 18px; height: 18px; cursor: pointer; accent-color: #7ee787; vertical-align: middle; }
@@ -398,6 +493,233 @@
     .dd-card-img { height: 120px; }
     .dd-keypoints { grid-template-columns: 1fr; }
   }
+
+/* === BEGIN glossary v1 css === */
+  /* dd-nav sticky top */
+  .dd-nav.dd-nav-top {
+    position: sticky; top: 0; z-index: 5;
+    margin: -4px -4px 14px; padding: 10px 8px;
+    background: linear-gradient(180deg, rgba(13,17,23,0.96) 75%, rgba(13,17,23,0));
+    backdrop-filter: blur(4px);
+    border-bottom: 1px solid #21262d;
+  }
+  /* ── Glossary ── */
+  .gloss-intro { background: #161b22; border: 1px solid #30363d; border-left: 3px solid #d2a8ff; border-radius: 6px; padding: 14px 18px; margin-bottom: 14px; color: #c9d1d9; font-size: 14px; line-height: 1.6; }
+  .gloss-intro strong { color: #d2a8ff; }
+  #view-glossary { overflow-y: auto; height: calc(100vh - 50px); margin-top: 50px; padding: 20px; box-sizing: border-box; }
+  @media (max-width: 768px) { #view-glossary { margin-top: 48px; padding: 12px; } }
+  .glossary-controls { position: sticky; top: 0; z-index: 5; background: rgba(13,17,23,0.95); backdrop-filter: blur(6px); padding: 10px 0 12px; margin: -8px 0 14px; border-bottom: 1px solid #21262d; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  #glossary-search { flex: 1 1 240px; min-width: 200px; background: #0d1117; border: 1px solid #30363d; border-radius: 6px; padding: 7px 12px; color: #c9d1d9; font-size: 13px; outline: none; }
+  #glossary-search:focus { border-color: #58a6ff; }
+  .glossary-cat-pills { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+  .glossary-cat-pills button { background: #161b22; border: 1px solid #30363d; color: #8b949e; padding: 4px 10px; border-radius: 12px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .4px; cursor: pointer; transition: all .15s; }
+  .glossary-cat-pills button:hover { border-color: #58a6ff; color: #c9d1d9; }
+  .glossary-cat-pills button.active { background: var(--pill-bg, #1f6feb22); border-color: var(--pill-color, #58a6ff); color: var(--pill-color, #58a6ff); }
+  .glossary-count { font-size: 11px; color: #8b949e; margin-left: auto; }
+  .glossary-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 14px; max-width: 1400px; margin: 0 auto; }
+  .glossary-card { background: #161b22; border: 1px solid #30363d; border-radius: 10px; padding: 14px; transition: border-color .15s, box-shadow .15s, transform .15s; }
+  .glossary-card:hover { border-color: var(--cat-color, #58a6ff); box-shadow: 0 4px 14px rgba(0,0,0,0.35); }
+  .glossary-card.flash {
+    animation: glossary-flash 2.6s cubic-bezier(.4,0,.2,1) 1 forwards;
+    position: relative;
+    z-index: 2;
+  }
+  @keyframes glossary-flash {
+    0% {
+      background: #161b22;
+      border-color: #30363d;
+      box-shadow: 0 0 0 rgba(0,0,0,0);
+      transform: scale(1);
+    }
+    8% {
+      background: color-mix(in srgb, var(--cat-color, #58a6ff) 55%, #161b22);
+      border-color: var(--cat-color, #58a6ff);
+      box-shadow:
+        0 0 0 4px var(--cat-color, #58a6ff),
+        0 0 28px 6px color-mix(in srgb, var(--cat-color, #58a6ff) 70%, transparent),
+        0 14px 36px rgba(0,0,0,0.55);
+      transform: scale(1.045);
+    }
+    22% {
+      background: color-mix(in srgb, var(--cat-color, #58a6ff) 30%, #161b22);
+      border-color: var(--cat-color, #58a6ff);
+      box-shadow:
+        0 0 0 3px var(--cat-color, #58a6ff),
+        0 0 22px 4px color-mix(in srgb, var(--cat-color, #58a6ff) 55%, transparent),
+        0 10px 28px rgba(0,0,0,0.5);
+      transform: scale(1.03);
+    }
+    45% {
+      background: color-mix(in srgb, var(--cat-color, #58a6ff) 45%, #161b22);
+      border-color: var(--cat-color, #58a6ff);
+      box-shadow:
+        0 0 0 3px var(--cat-color, #58a6ff),
+        0 0 26px 5px color-mix(in srgb, var(--cat-color, #58a6ff) 60%, transparent),
+        0 12px 32px rgba(0,0,0,0.5);
+      transform: scale(1.035);
+    }
+    70% {
+      background: color-mix(in srgb, var(--cat-color, #58a6ff) 22%, #161b22);
+      border-color: color-mix(in srgb, var(--cat-color, #58a6ff) 80%, #30363d);
+      box-shadow:
+        0 0 0 2px color-mix(in srgb, var(--cat-color, #58a6ff) 70%, transparent),
+        0 0 18px 3px color-mix(in srgb, var(--cat-color, #58a6ff) 40%, transparent);
+      transform: scale(1.015);
+    }
+    100% {
+      background: #161b22;
+      border-color: #30363d;
+      box-shadow: 0 0 0 rgba(0,0,0,0);
+      transform: scale(1);
+    }
+  }
+  /* Fallback for browsers without color-mix: solid tinted backgrounds */
+  @supports not (background: color-mix(in srgb, red, blue)) {
+    @keyframes glossary-flash {
+      0%,100% { background: #161b22; border-color: #30363d; box-shadow: none; transform: scale(1); }
+      8%, 45% {
+        background: rgba(88,166,255,0.32);
+        border-color: var(--cat-color, #58a6ff);
+        box-shadow: 0 0 0 4px var(--cat-color, #58a6ff), 0 0 28px var(--cat-color, #58a6ff);
+        transform: scale(1.04);
+      }
+    }
+  }
+  .glossary-term-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .glossary-term { font-size: 16px; font-weight: 700; color: #e6edf3; }
+  .glossary-cat-badge { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; padding: 2px 7px; border-radius: 10px; border: 1px solid var(--cat-color, #58a6ff); color: var(--cat-color, #58a6ff); background: rgba(0,0,0,0.2); }
+  .glossary-aka { font-size: 11px; color: #8b949e; font-style: italic; margin-top: 3px; }
+  .glossary-short { font-size: 13px; color: #c9d1d9; margin-top: 8px; line-height: 1.5; }
+  .glossary-long { font-size: 13px; color: #8b949e; margin-top: 8px; line-height: 1.55; display: none; }
+  .glossary-long code { background: #0d1117; border: 1px solid #21262d; border-radius: 4px; padding: 1px 5px; font-family: 'Cascadia Code', monospace; font-size: 12px; color: #d2a8ff; }
+  .glossary-card.expanded .glossary-long { display: block; }
+  .glossary-toggle { background: none; border: none; color: #58a6ff; font-size: 11px; cursor: pointer; padding: 6px 0 0; }
+  .glossary-toggle:hover { text-decoration: underline; }
+  .glossary-links { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+  .glossary-links button { background: #0d1117; border: 1px solid #30363d; color: #c9d1d9; padding: 3px 9px; border-radius: 10px; font-size: 11px; cursor: pointer; transition: all .15s; }
+  .glossary-links button:hover { border-color: #58a6ff; color: #58a6ff; }
+  /* graph-node pulse when jumped to from glossary */
+  @keyframes glossary-pulse {
+    0%   { stroke-opacity: 1; stroke-width: 14; }
+    100% { stroke-opacity: 0.55; stroke-width: 5; }
+  }
+  @keyframes glossary-halo-pulse {
+    0%   { r: 16;  stroke-opacity: 1;    stroke-width: 10; }
+    60%  { r: 90;  stroke-opacity: 0.55; stroke-width: 5; }
+    100% { r: 140; stroke-opacity: 0;    stroke-width: 2; }
+  }
+  @keyframes glossary-halo-pulse-2 {
+    0%   { r: 16;  stroke-opacity: 0.9; stroke-width: 6; }
+    60%  { r: 110; stroke-opacity: 0.4; stroke-width: 3; }
+    100% { r: 170; stroke-opacity: 0;   stroke-width: 1.5; }
+  }
+  @keyframes glossary-fill-pulse {
+    0%, 100% { fill-opacity: 0.85; }
+    50%      { fill-opacity: 1; }
+  }
+  @keyframes glossary-dim-others {
+    0%   { opacity: 1; }
+    20%  { opacity: 0.15; }
+    100% { opacity: 0.15; }
+  }
+  /* Dim everything in the graph except the highlighted node + its halos */
+  #canvas-graph.glossary-spotlight g.graph-node:not(.glossary-highlight),
+  #canvas-graph.glossary-spotlight line.graph-link,
+  #canvas-graph.glossary-spotlight text.graph-link-label {
+    animation: glossary-dim-others 0.4s ease-out forwards;
+  }
+  #canvas-graph.glossary-spotlight g.graph-node.glossary-highlight {
+    opacity: 1 !important;
+  }
+  g.graph-node.glossary-highlight circle:not(.glossary-halo):not(.glossary-halo-outer) {
+    animation:
+      glossary-pulse 0.45s ease-in-out 10 alternate,
+      glossary-fill-pulse 0.45s ease-in-out 10 alternate;
+    stroke: #ffd13b !important;
+    fill: #ffd13b !important;
+    filter:
+      drop-shadow(0 0 10px #ffd13b)
+      drop-shadow(0 0 24px #ffd13baa)
+      drop-shadow(0 0 40px #ffd13b66);
+  }
+  g.graph-node.glossary-highlight text {
+    fill: #fff !important;
+    font-weight: 900 !important;
+    font-size: 15px !important;
+    paint-order: stroke fill;
+    stroke: #5a3a00;
+    stroke-width: 4px;
+    stroke-linejoin: round;
+    filter:
+      drop-shadow(0 0 6px #000)
+      drop-shadow(0 0 12px #ffd13b)
+      drop-shadow(0 0 20px #ffd13bcc);
+  }
+  circle.glossary-halo {
+    fill: none;
+    stroke: #ffd13b;
+    pointer-events: none;
+    animation: glossary-halo-pulse 1.1s ease-out 5;
+    filter: drop-shadow(0 0 8px #ffd13baa);
+  }
+  circle.glossary-halo-outer {
+    fill: none;
+    stroke: #ffae00;
+    pointer-events: none;
+    animation: glossary-halo-pulse-2 1.4s ease-out 5;
+    animation-delay: 0.18s;
+    filter: drop-shadow(0 0 12px #ffae0099);
+  }
+  /* mindmap pulse (uses a <circle> appended) */
+  circle.glossary-mm-halo {
+    fill: none;
+    stroke: #ffd13b;
+    pointer-events: none;
+    animation: glossary-halo-pulse 1.1s ease-out 5;
+    filter: drop-shadow(0 0 8px #ffd13baa);
+  }
+  circle.glossary-mm-halo-outer {
+    fill: none;
+    stroke: #ffae00;
+    pointer-events: none;
+    animation: glossary-halo-pulse-2 1.4s ease-out 5;
+    animation-delay: 0.18s;
+    filter: drop-shadow(0 0 12px #ffae0099);
+  }
+  /* toast banner shown when jumping from glossary */
+  #glossary-toast {
+    position: fixed; top: 60px; left: 50%; transform: translateX(-50%) translateY(-30px) scale(0.92);
+    background: linear-gradient(180deg, #2a1f0a, #1a1308);
+    border: 2px solid #ffd13b; border-left: 6px solid #ffd13b;
+    color: #fff5d6; padding: 12px 22px; border-radius: 10px;
+    font-size: 15px; font-weight: 700;
+    box-shadow:
+      0 10px 32px rgba(0,0,0,0.6),
+      0 0 36px rgba(255,209,59,0.45),
+      0 0 64px rgba(255,209,59,0.25);
+    opacity: 0; pointer-events: none;
+    transition: opacity .22s ease, transform .28s cubic-bezier(.2,1.2,.4,1);
+    z-index: 10000;
+    display: flex; align-items: center; gap: 12px;
+    max-width: 90vw;
+    text-shadow: 0 0 8px rgba(255,209,59,0.5);
+  }
+  #glossary-toast.show { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+  #glossary-toast .gt-icon { font-size: 22px; filter: drop-shadow(0 0 6px #ffd13b); }
+  #glossary-toast .gt-sub { color: #c9b88c; font-weight: 500; font-size: 12.5px; margin-left: 4px; }
+  #glossary-toast strong { color: #ffd13b; text-shadow: 0 0 10px rgba(255,209,59,0.6); }
+  @media (max-width: 768px) { #glossary-toast { top: 56px; font-size: 13px; padding: 10px 16px; } }
+  /* tooltip glossary footer link */
+  #tooltip .tt-glossary { margin-top: 6px; padding-top: 5px; border-top: 1px solid #30363d; }
+  #tooltip .tt-glossary:empty { display: none; }
+  #tooltip .tt-glossary a {
+    display: inline-block; padding: 2px 8px; border-radius: 4px;
+    background: rgba(210,168,255,0.10); color: #d2a8ff; text-decoration: none;
+    font-size: 11px; font-weight: 500; cursor: pointer; border: 1px solid rgba(210,168,255,0.25);
+  }
+  #tooltip .tt-glossary a:hover { background: rgba(210,168,255,0.22); border-color: #d2a8ff; }
+  #tooltip.has-glossary { pointer-events: auto; }
+/* === END glossary v1 css === */
 </style>
 </head>
 <body>
@@ -458,6 +780,21 @@
 <div id="view-problems" class="view">
   <div id="problems-container"></div>
 </div>
+<!-- BEGIN glossary v1 view -->
+<div id="view-glossary" class="view">
+  <div class="gloss-intro">
+    <strong>📖 Glossary.</strong> Every acronym, jargon term, and unit-of-art used across <em>Use Cases</em> and <em>Deep Dives</em> — defined here, cross-linked to the <strong>Topic Graph</strong> and <strong>Mind Map</strong> so you can jump from definition → diagram in one click.
+    <br><br>
+    <span style="color:#8b949e">Tip: click a related term to flash-jump to it. Click the 🌐 graph or 🧭 mindmap links to spotlight that node on its tab.</span>
+  </div>
+  <div class="glossary-controls">
+    <input type="text" id="glossary-search" placeholder="🔍 Search terms, acronyms, or definitions…" />
+    <div class="glossary-cat-pills" id="glossary-cat-pills"></div>
+    <span class="glossary-count" id="glossary-count"></span>
+  </div>
+  <div id="glossary-list" class="glossary-list"></div>
+</div>
+<!-- END glossary v1 view -->
 
 <!-- ═══════════════ SHARED OVERLAYS ═══════════════ -->
 <div id="tooltip"><div class="tt-title"></div><div class="tt-body"></div><div class="tt-slides"></div></div>
@@ -646,65 +983,806 @@ const COURSE_CONFIG = {
       { source: "tls",             target: "kerberos",      type: "related",  label: "complements" },
       { source: "spectre",         target: "aslr",          type: "related",     label: "bypasses" },
       { source: "symbolic-exec",   target: "formal-verify", type: "related",      label: "related" },
-      { source: "tor",             target: "tls",           type: "depends",         label: "uses" }
+      { source: "tor",             target: "tls",           type: "depends",         label: "uses" },
+      { source: "symbolic-exec",   target: "buffer-overflow", type: "enables",      label: "finds" },
+      { source: "formal-verify",   target: "sandboxing",    type: "implements",   label: "guarantees" },
+      { source: "selinux",         target: "buffer-overflow", type: "implements", label: "contains" },
+      { source: "spectre",         target: "tls",           type: "related",      label: "leaks keys" }
     ]
   },
 
   deepDives: [
     {
-      id: "dd-buffer-overflow", num: "Concept 1 of 4", title: "Buffer Overflow & ROP",
-      desc: "Stack layout, return address overwrite, gadget chains.", color: "#58a6ff", icon: "💥",
+      id: "dd-buffer-overflow", num: "Concept 1 of 9", title: "Buffer Overflow & ROP",
+      desc: "Stack frames, return-address hijack, gadget chains, CFI.", color: "#58a6ff", icon: "💥",
+      svg: function(w, h) {
+        return '<svg viewBox="0 0 ' + w + ' ' + h + '" xmlns="http://www.w3.org/2000/svg" style="background:#0d1117">'
+          + '<text x="20" y="24" fill="#8b949e" font-size="11" font-family="monospace">high addr</text>'
+          + '<rect x="80" y="30" width="160" height="28" fill="#58a6ff20" stroke="#58a6ff"/><text x="160" y="49" text-anchor="middle" fill="#58a6ff" font-size="11" font-family="monospace">saved RIP (target)</text>'
+          + '<rect x="80" y="60" width="160" height="24" fill="#30363d" stroke="#8b949e"/><text x="160" y="76" text-anchor="middle" fill="#c9d1d9" font-size="10" font-family="monospace">saved RBP</text>'
+          + '<rect x="80" y="86" width="160" height="80" fill="#21262d" stroke="#8b949e"/><text x="160" y="104" text-anchor="middle" fill="#c9d1d9" font-size="10" font-family="monospace">char buf[64]</text>'
+          + '<rect x="80" y="108" width="160" height="56" fill="#f8514920" stroke="#f85149" stroke-dasharray="3 2"/><text x="160" y="140" text-anchor="middle" fill="#f85149" font-size="11" font-family="monospace">AAAAAAAA…</text>'
+          + '<text x="20" y="180" fill="#8b949e" font-size="11" font-family="monospace">low addr</text>'
+          + '<path d="M 250 122 Q 310 122 310 50 L 250 44" stroke="#f85149" stroke-width="1.5" fill="none" marker-end="url(#a)"/>'
+          + '<defs><marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#f85149"/></marker></defs>'
+          + '<text x="320" y="80" fill="#f85149" font-size="11">overflow</text>'
+          + '<g transform="translate(360,30)">'
+          + '<text x="0" y="12" fill="#7ee787" font-size="11" font-weight="600">ROP chain</text>'
+          + '<rect x="0" y="20" width="120" height="20" fill="#7ee78720" stroke="#7ee787"/><text x="60" y="34" text-anchor="middle" fill="#7ee787" font-size="10" font-family="monospace">pop rdi; ret</text>'
+          + '<rect x="0" y="44" width="120" height="20" fill="#7ee78720" stroke="#7ee787"/><text x="60" y="58" text-anchor="middle" fill="#7ee787" font-size="10" font-family="monospace">/bin/sh addr</text>'
+          + '<rect x="0" y="68" width="120" height="20" fill="#7ee78720" stroke="#7ee787"/><text x="60" y="82" text-anchor="middle" fill="#7ee787" font-size="10" font-family="monospace">system()</text>'
+          + '<text x="0" y="110" fill="#8b949e" font-size="10">gadgets ∈ libc</text>'
+          + '</g>'
+          + '</svg>';
+      },
       sections: [
-        { title: "Stack Layout", text: "A function's stack frame contains local variables, the saved frame pointer, and the return address. A buffer overflow writes past the allocated buffer, overwriting the return address to redirect control flow." },
-        { title: "Return-Oriented Programming", text: "ROP chains together short instruction sequences (gadgets) ending in RET, already present in the binary. This bypasses DEP since no new code is injected — only existing code is reused in a new order." },
-        { title: "Defenses", text: "Stack canaries detect overwrites before returns. ASLR randomizes memory layout. DEP/NX marks stack non-executable. Control-Flow Integrity (CFI) restricts valid branch targets." }
+        { title: "Stack Layout & Smashing", text: "On x86-64 SysV, a stack frame holds saved RIP, saved RBP, then locals growing downward. Writing past a fixed-size buffer with strcpy/gets/memcpy(n) lets the attacker overwrite the saved return address. When the function executes RET, control transfers to attacker-chosen code. The classic AlephOne attack (Phrack 49, 1996) injects shellcode into the buffer and points RIP at it. Modern DEP/NX marks the stack W^X, so direct shellcode injection fails — pushing attackers toward code-reuse." },
+        { title: "Return-Oriented Programming", text: "ROP (Shacham, CCS'07) chains 'gadgets' — short instruction sequences ending in RET — already mapped in the binary or libc. Each stack slot becomes a gadget pointer; RET pops the next one, yielding a Turing-complete computation without injecting code. JOP/COP variants use indirect JMP/CALL endings. Tools like ROPgadget and angrop automate gadget discovery. Mitigations narrow the gadget pool: ASLR randomises base addresses (defeated by 1-byte info-leaks), and CFI restricts indirect transfers to legal targets." },
+        { title: "Defenses & Their Limits", text: "Stack canaries (StackGuard, /GS) place a random word before saved RIP and check it before RET — but linear-overflow only; doesn't catch out-of-bounds writes that skip the canary. ASLR adds ~28 bits entropy on 64-bit but is broken by any leaked pointer. DEP/NX blocks shellcode but not ROP. Coarse-grained CFI (CCFIR, kCFI) is bypassable by gadget-stitching (Göktaş, Oakland'14); only fine-grained CFI + shadow stacks (Intel CET, ARM PAC) raise the bar materially." },
+        { title: "Formal Bound", formula: "P[guess base] = 1 / 2^k   where k ≈ 28 (PIE x86-64)" }
       ],
       keypoints: [
-        { title: "Stack Smashing", text: "Overwriting the return address lets an attacker redirect execution." },
-        { title: "Gadget Chains", text: "ROP reuses existing code snippets to build arbitrary computation." },
-        { title: "Defense in Depth", text: "Canaries + ASLR + DEP + CFI provide layered protection." }
+        { title: "AlephOne 1996", text: "Phrack 49 'Smashing the Stack for Fun and Profit' formalised the attack pattern still tested in CTFs today." },
+        { title: "ROP gadget density", text: "libc-2.31 contains ~10⁵ usable gadgets; Shacham proved Turing-completeness with just RET-ending sequences in libc." },
+        { title: "CFI cost", text: "Forward-edge CFI (LLVM CFI) adds <5% overhead; backward-edge shadow stack via Intel CET adds ~2%. Without both, ROP survives." },
+        { title: "CVE refs", text: "CVE-2014-0160 (Heartbleed leak → ASLR bypass), CVE-2017-11176 (Linux mq_notify UAF → kernel ROP), CVE-2021-3156 (Sudo Baron Samedit heap overflow)." }
       ]
     },
     {
-      id: "dd-sop", num: "Concept 2 of 4", title: "Same-Origin Policy",
-      desc: "Origin = scheme+host+port, CORS, postMessage.", color: "#7ee787", icon: "🌐",
+      id: "dd-sop", num: "Concept 2 of 9", title: "Same-Origin Policy & Web Isolation",
+      desc: "Origin tuple, CORS, CSP, postMessage, SameSite cookies.", color: "#7ee787", icon: "🌐",
+      svg: function(w, h) {
+        return '<svg viewBox="0 0 ' + w + ' ' + h + '" xmlns="http://www.w3.org/2000/svg" style="background:#0d1117">'
+          + '<text x="20" y="24" fill="#7ee787" font-size="13" font-weight="600">Origin = (scheme, host, port)</text>'
+          + '<g font-family="monospace" font-size="11">'
+          + '<rect x="20" y="40" width="240" height="22" fill="#7ee78720" stroke="#7ee787"/><text x="30" y="56" fill="#7ee787">https://bank.com:443/x</text>'
+          + '<rect x="20" y="68" width="240" height="22" fill="#7ee78720" stroke="#7ee787"/><text x="30" y="84" fill="#7ee787">https://bank.com:443/y  ✓ same</text>'
+          + '<rect x="20" y="96" width="240" height="22" fill="#f8514920" stroke="#f85149"/><text x="30" y="112" fill="#f85149">http://bank.com:443/   ✗ scheme</text>'
+          + '<rect x="20" y="124" width="240" height="22" fill="#f8514920" stroke="#f85149"/><text x="30" y="140" fill="#f85149">https://api.bank.com/  ✗ host</text>'
+          + '<rect x="20" y="152" width="240" height="22" fill="#f8514920" stroke="#f85149"/><text x="30" y="168" fill="#f85149">https://bank.com:8443/ ✗ port</text>'
+          + '</g>'
+          + '<g transform="translate(290,40)" font-size="11" font-family="monospace">'
+          + '<text x="0" y="0" fill="#58a6ff" font-weight="600">CORS preflight</text>'
+          + '<text x="0" y="18" fill="#c9d1d9">OPTIONS /api</text>'
+          + '<text x="0" y="34" fill="#c9d1d9">Origin: a.com</text>'
+          + '<text x="0" y="56" fill="#7ee787">→ Access-Control-</text>'
+          + '<text x="0" y="70" fill="#7ee787">  Allow-Origin: a.com</text>'
+          + '<text x="0" y="86" fill="#7ee787">  Allow-Credentials: true</text>'
+          + '<text x="0" y="110" fill="#ffa657" font-weight="600">CSP</text>'
+          + '<text x="0" y="126" fill="#c9d1d9">script-src \'self\'</text>'
+          + '<text x="0" y="140" fill="#c9d1d9">  \'nonce-r4nd\'</text>'
+          + '</g>'
+          + '</svg>';
+      },
       sections: [
-        { title: "Origin Definition", text: "An origin is defined by the tuple (scheme, host, port). Scripts from one origin cannot read resources from a different origin unless explicitly allowed." },
-        { title: "CORS", text: "Cross-Origin Resource Sharing uses HTTP headers (Access-Control-Allow-Origin) to let servers opt in to cross-origin requests. Preflight OPTIONS requests verify permissions for non-simple methods." },
-        { title: "postMessage", text: "The window.postMessage API enables safe cross-origin communication between frames. The receiver must validate the origin of incoming messages to prevent abuse." }
+        { title: "Origin Tuple & Read Boundary", text: "An origin is the tuple (scheme, host, port) per RFC 6454. SOP forbids document.A from reading the DOM, cookies, or response body of document.B if origins differ. Writes/navigations are looser: a page may POST a form to any origin (this is the root of CSRF). 'Site' (eTLD+1) is a coarser unit used by SameSite cookies and Schemeful Same-Site, while 'origin' is the fine-grained unit enforced by the JS engine. Subdomain isolation matters: api.bank.com is cross-origin to bank.com unless document.domain is set on both sides (deprecated)." },
+        { title: "CORS, CSP & postMessage", text: "CORS opt-in: the server returns Access-Control-Allow-Origin (must echo a single origin or '*' but not '*' with credentials). 'Simple' requests (GET/POST text/plain) skip preflight; 'non-simple' (custom headers, JSON content-type, PUT/DELETE) trigger an OPTIONS preflight. CSP defence-in-depth restricts script sources; nonces and hashes block inline-injection XSS. postMessage gives sandboxed cross-origin messaging — but the receiver MUST check event.origin against an allow-list, otherwise any framing page can spoof messages." },
+        { title: "SameSite Cookies & CSRF", text: "Cookies default to SameSite=Lax in modern Chrome/Firefox: cross-site top-level navigations send the cookie but cross-site sub-resource POSTs do not. This kills classic form-CSRF for compliant clients. Strict blocks all cross-site, breaking SSO redirects; None requires Secure. CSRF tokens (synchroniser pattern) and Origin/Referer header checks remain belt-and-braces. Sites serving credentialed cross-origin APIs must set SameSite=None; Secure AND validate Origin server-side, since Lax allows GET-prefetch leaks." },
+        { title: "Trust formula", formula: "trust(A → B) ⇔ origin(A)=origin(B) ∨ B sends ACAO: origin(A)" }
       ],
       keypoints: [
-        { title: "Origin Tuple", text: "scheme + host + port uniquely identifies an origin." },
-        { title: "CORS Headers", text: "Servers whitelist allowed origins via Access-Control-Allow-Origin." },
-        { title: "postMessage Safety", text: "Always verify event.origin when receiving cross-origin messages." }
+        { title: "ACAO + credentials", text: "Setting Access-Control-Allow-Origin: * with Allow-Credentials: true is rejected by browsers — must echo a specific origin." },
+        { title: "Trinity Mining 2018", text: "Reflective XSS in Trinity Mining → cookie theft because CSP allowed unsafe-inline. Modern CSP3 strict-dynamic + nonces blocks this class entirely." },
+        { title: "Schemeful Same-Site", text: "Since Chrome 89, http://x and https://x are cross-site for cookies — protects against network-attacker downgrade CSRF." },
+        { title: "Spec refs", text: "RFC 6454 (Origin), Fetch §3.2 (CORS), CSP Level 3 W3C CR, draft-ietf-httpbis-rfc6265bis (SameSite)." }
       ]
     },
     {
-      id: "dd-spectre", num: "Concept 3 of 4", title: "Spectre / Meltdown",
-      desc: "Speculative execution, cache timing, kernel page isolation.", color: "#ffa657", icon: "👻",
+      id: "dd-spectre", num: "Concept 3 of 9", title: "Spectre / Meltdown — Transient Execution",
+      desc: "Speculative loads, branch-predictor poisoning, cache covert channel.", color: "#ffa657", icon: "👻",
+      svg: function(w, h) {
+        return '<svg viewBox="0 0 ' + w + ' ' + h + '" xmlns="http://www.w3.org/2000/svg" style="background:#0d1117">'
+          + '<text x="20" y="22" fill="#ffa657" font-size="12" font-weight="600">Spectre v1 (BCB)</text>'
+          + '<g font-family="monospace" font-size="10" fill="#c9d1d9">'
+          + '<text x="20" y="40">if (x &lt; arr1.len)        ← train: always true</text>'
+          + '<text x="20" y="54">  y = arr2[arr1[x]*64]    ← speculative load</text>'
+          + '<text x="20" y="68">// attacker sets x = secret_offset</text>'
+          + '<text x="20" y="82">// CPU speculatively reads secret byte b</text>'
+          + '<text x="20" y="96">// → arr2[b*64] cached as side effect</text>'
+          + '</g>'
+          + '<text x="20" y="120" fill="#58a6ff" font-size="12" font-weight="600">Flush + Reload probe</text>'
+          + '<g transform="translate(20,130)">'
+          + '<rect x="0" y="0" width="20" height="40" fill="#21262d" stroke="#8b949e"/><text x="10" y="55" text-anchor="middle" fill="#8b949e" font-size="9">0</text>'
+          + '<rect x="22" y="0" width="20" height="40" fill="#21262d" stroke="#8b949e"/><text x="32" y="55" text-anchor="middle" fill="#8b949e" font-size="9">…</text>'
+          + '<rect x="44" y="0" width="20" height="40" fill="#7ee78760" stroke="#7ee787"/><text x="54" y="55" text-anchor="middle" fill="#7ee787" font-size="9">b=42</text>'
+          + '<rect x="66" y="0" width="20" height="40" fill="#21262d" stroke="#8b949e"/><text x="76" y="55" text-anchor="middle" fill="#8b949e" font-size="9">…</text>'
+          + '<rect x="88" y="0" width="20" height="40" fill="#21262d" stroke="#8b949e"/><text x="98" y="55" text-anchor="middle" fill="#8b949e" font-size="9">255</text>'
+          + '<text x="120" y="22" fill="#7ee787" font-size="10" font-family="monospace">fast hit → secret = 42</text>'
+          + '</g>'
+          + '<g transform="translate(310,30)">'
+          + '<text x="0" y="0" fill="#d2a8ff" font-size="12" font-weight="600">Branch predictor</text>'
+          + '<rect x="0" y="10" width="160" height="24" fill="#d2a8ff20" stroke="#d2a8ff"/><text x="80" y="26" text-anchor="middle" fill="#d2a8ff" font-size="10" font-family="monospace">BHB[hash(PC)] = T</text>'
+          + '<text x="0" y="50" fill="#8b949e" font-size="10">v2 (BTI): poison BTB</text>'
+          + '<text x="0" y="64" fill="#8b949e" font-size="10">Meltdown: rogue load</text>'
+          + '<text x="0" y="78" fill="#8b949e" font-size="10">  bypasses ring check</text>'
+          + '<text x="0" y="98" fill="#f85149" font-size="10" font-family="monospace">~10 KB/s leak rate</text>'
+          + '</g>'
+          + '</svg>';
+      },
       sections: [
-        { title: "Speculative Execution", text: "CPUs predict branch outcomes and execute instructions speculatively. If the prediction is wrong, architectural state is rolled back — but microarchitectural side effects (cache state) remain." },
-        { title: "Cache Timing Channel", text: "Spectre exploits speculative loads that bring secret data into the cache. A subsequent timed memory access reveals which cache lines were loaded, leaking the secret one byte at a time." },
-        { title: "Mitigations", text: "Kernel Page Table Isolation (KPTI) separates kernel/user page tables to block Meltdown. Retpoline replaces indirect branches with return-based sequences to block Spectre variant 2. Microcode updates add speculation barriers." }
+        { title: "Why Speculation Leaks", text: "Out-of-order x86 cores execute hundreds of µops past an unresolved branch. Architecturally the squash on misprediction restores RIP and registers, but microarchitectural state (L1/L2 cache lines, BTB entries, TLB) is NOT rolled back. Spectre v1 (Kocher, S&P'19, CVE-2017-5753) trains a bounds-check branch to be true, then supplies an out-of-bounds index; the speculative load reads attacker-chosen kernel/sandbox memory, and a dependent load encodes that byte into a cache line. A Flush+Reload (Yarom-Falkner, USENIX'14) probe times 256 cache lines; the fast one reveals the leaked byte. Throughput ≈ 10 kB/s." },
+        { title: "Variants & Microarch State", text: "Spectre v2 / Branch Target Injection (CVE-2017-5715) poisons the BTB so an indirect call speculatively jumps to an attacker-chosen gadget across privilege boundaries. Meltdown (CVE-2017-5754) abuses Intel's deferred privilege-check on rogue data-cache loads — speculative loads read kernel pages from user mode. MDS/RIDL/Fallout (2019) leak from line-fill buffers and store buffers. LVI (2020) injects faults to steer speculation. Each variant has its own microarchitectural buffer; mitigations are fragmented per-CPU." },
+        { title: "Mitigations & Their Cost", text: "KPTI (Kernel Page Table Isolation, formerly KAISER) unmaps kernel pages from the user CR3 to block Meltdown — costs 5–30% on syscall-heavy workloads. Retpoline replaces 'jmp *%rax' with a return trampoline that traps the BTB into a benign loop, blocking v2 at ~5% throughput cost. IBRS/STIBP/SSBD are microcode MSRs that flush predictors on context switch. eIBRS on newer Intel makes this cheaper. For v1, manual lfence after bounds checks or Speculative Load Hardening (LLVM SLH) masks the index — these need compiler help and only protect specific gadgets." },
+        { title: "Leak rate", formula: "T_leak ≈ 1 byte / (T_train + T_squash + T_probe)  ≈  10 kB/s typical" }
       ],
       keypoints: [
-        { title: "Transient Execution", text: "Speculatively executed instructions leave measurable cache traces." },
-        { title: "Flush+Reload", text: "Attacker flushes cache, triggers victim, then times reloads to detect access." },
-        { title: "KPTI", text: "Kernel page-table isolation prevents Meltdown by unmapping kernel pages in user mode." }
+        { title: "Kocher et al. 2018", text: "'Spectre Attacks: Exploiting Speculative Execution' — the canonical paper, IEEE S&P 2019. Demonstrates JS-from-browser leaking same-process secrets pre-Site-Isolation." },
+        { title: "Site Isolation", text: "Chrome's per-origin process model (M67) is the only practical browser defence: cross-origin secrets can't be leaked because they're never in the renderer's address space." },
+        { title: "BHI/Retbleed 2022", text: "Branch History Injection (CVE-2022-0001) and Retbleed (CVE-2022-29900/29901) bypass retpoline on pre-Spectre-BHB CPUs — proving microarch fixes need new silicon, not just software." },
+        { title: "Constant-time mantra", text: "Cryptographic code MUST be data-independent in branches AND memory accesses (no secret-indexed table lookups). See BearSSL / libsodium constant-time idioms." }
       ]
     },
     {
-      id: "dd-tor", num: "Concept 4 of 4", title: "Tor Onion Routing",
-      desc: "Circuit construction, relay types, traffic analysis defense.", color: "#d2a8ff", icon: "🧅",
+      id: "dd-tor", num: "Concept 4 of 9", title: "Tor Onion Routing & Anonymity",
+      desc: "3-hop circuits, telescoping handshake, traffic-analysis defence.", color: "#d2a8ff", icon: "🧅",
+      svg: function(w, h) {
+        return '<svg viewBox="0 0 ' + w + ' ' + h + '" xmlns="http://www.w3.org/2000/svg" style="background:#0d1117">'
+          + '<g font-family="monospace" font-size="11">'
+          + '<circle cx="50" cy="100" r="22" fill="#58a6ff20" stroke="#58a6ff"/><text x="50" y="104" text-anchor="middle" fill="#58a6ff">Cli</text>'
+          + '<circle cx="160" cy="100" r="22" fill="#7ee78720" stroke="#7ee787"/><text x="160" y="104" text-anchor="middle" fill="#7ee787">G</text>'
+          + '<circle cx="270" cy="100" r="22" fill="#ffa65720" stroke="#ffa657"/><text x="270" y="104" text-anchor="middle" fill="#ffa657">M</text>'
+          + '<circle cx="380" cy="100" r="22" fill="#f8514920" stroke="#f85149"/><text x="380" y="104" text-anchor="middle" fill="#f85149">E</text>'
+          + '<circle cx="490" cy="100" r="22" fill="#d2a8ff20" stroke="#d2a8ff"/><text x="490" y="104" text-anchor="middle" fill="#d2a8ff">Dst</text>'
+          + '<line x1="72" y1="100" x2="138" y2="100" stroke="#8b949e"/>'
+          + '<line x1="182" y1="100" x2="248" y2="100" stroke="#8b949e"/>'
+          + '<line x1="292" y1="100" x2="358" y2="100" stroke="#8b949e"/>'
+          + '<line x1="402" y1="100" x2="468" y2="100" stroke="#8b949e" stroke-dasharray="3 2"/>'
+          + '<text x="50" y="135" text-anchor="middle" fill="#8b949e" font-size="10">Client</text>'
+          + '<text x="160" y="135" text-anchor="middle" fill="#8b949e" font-size="10">Guard</text>'
+          + '<text x="270" y="135" text-anchor="middle" fill="#8b949e" font-size="10">Middle</text>'
+          + '<text x="380" y="135" text-anchor="middle" fill="#8b949e" font-size="10">Exit</text>'
+          + '<text x="490" y="135" text-anchor="middle" fill="#8b949e" font-size="10">Server</text>'
+          + '<rect x="34" y="40" width="32" height="32" fill="#d2a8ff80" stroke="#d2a8ff"/><text x="50" y="60" text-anchor="middle" fill="#0d1117" font-size="10">E_G</text>'
+          + '<text x="50" y="32" text-anchor="middle" fill="#c9d1d9" font-size="9">E_G(E_M(E_E(payload)))</text>'
+          + '<rect x="144" y="40" width="32" height="32" fill="#d2a8ff60" stroke="#d2a8ff"/><text x="160" y="60" text-anchor="middle" fill="#0d1117" font-size="10">E_M</text>'
+          + '<rect x="254" y="40" width="32" height="32" fill="#d2a8ff40" stroke="#d2a8ff"/><text x="270" y="60" text-anchor="middle" fill="#c9d1d9" font-size="10">E_E</text>'
+          + '<rect x="364" y="40" width="32" height="32" fill="none" stroke="#8b949e" stroke-dasharray="2 2"/><text x="380" y="60" text-anchor="middle" fill="#8b949e" font-size="10">plain</text>'
+          + '</g>'
+          + '<text x="20" y="180" fill="#8b949e" font-size="10" font-family="monospace">512-byte fixed cells · ntor handshake · TLS to each relay</text>'
+          + '</svg>';
+      },
       sections: [
-        { title: "Circuit Construction", text: "Tor builds a circuit through three relays: guard, middle, and exit. The client negotiates a shared key with each relay using Diffie-Hellman, wrapping each layer of encryption like an onion." },
-        { title: "Relay Types", text: "Guard relays are the entry point and are chosen for stability. Middle relays forward traffic. Exit relays connect to the destination and see unencrypted traffic. Bridge relays are unlisted guards for censorship circumvention." },
-        { title: "Traffic Analysis", text: "Adversaries controlling both entry and exit can correlate timing/volume patterns. Defenses include padding, traffic shaping, and using long-lived guard nodes to limit exposure to malicious entry points." }
+        { title: "Telescoping Circuit Build", text: "The Tor client picks 3 relays from the consensus directory (signed hourly by 9 directory authorities) weighted by bandwidth. It runs the ntor one-way authenticated DH (RFC 7748 / tor-spec §5.1.4) with the Guard, deriving k1; then through that tunnel runs ntor with the Middle for k2; then with the Exit for k3. This 'telescoping' means each relay only learns its predecessor and successor — never both endpoints. All cells are padded to a fixed 512 bytes to deny size-correlation. Circuits are rotated every ~10 min (MaxCircuitDirtiness)." },
+        { title: "Threat Model & Limits", text: "Tor protects against a non-global passive adversary: anyone watching a single link can't link sender to receiver. It does NOT defend against a global passive adversary who sees both ends — end-to-end timing/volume correlation succeeds with very few packets (Murdoch & Danezis, S&P'05; Nasr et al., CCS'18 ML-based correlation). Hidden services (.onion v3) avoid the exit problem by rendezvous: client + service each build a 3-hop circuit to a meeting point, total 6 hops, both anonymous. Snowflake / obfs4 pluggable transports defeat protocol-level censorship." },
+        { title: "Guard Pinning & AS-level Adversaries", text: "Choosing 3 fresh relays per circuit gives an attacker controlling fraction f of bandwidth a per-circuit compromise prob f² (entry × exit). Over many circuits, eventually one is fully compromised. Guard pinning fixes the entry for ~3 months; an honest user gets a malicious guard with prob f and is then safe forever (or compromised forever) — this trades a small first-deanon risk for long-term reduction. AS/IXP-level adversaries who see many links can still correlate; AS-aware path selection (Astoria, NDSS'17) is a research mitigation." },
+        { title: "Compromise probability", formula: "P[full deanon | n circuits, fraction f] = 1 − (1 − f²)^n  ≈  n·f²  for small f²" }
       ],
       keypoints: [
-        { title: "Three-Hop Circuit", text: "Guard → Middle → Exit provides sender anonymity from the destination." },
-        { title: "Layered Encryption", text: "Each relay peels one encryption layer; no single relay knows both source and destination." },
-        { title: "Guard Pinning", text: "Using persistent guard nodes reduces the chance of choosing a malicious entry." }
+        { title: "Dingledine et al. 2004", text: "'Tor: The Second-Generation Onion Router', USENIX Security 2004 — the canonical design paper, still the spec's foundation." },
+        { title: "ntor handshake", text: "Replaced TAP in 2011: uses Curve25519 + HKDF-SHA256, gives one-way authentication (client authenticates relay; relay stays anonymous), forward secrecy via ephemeral DH." },
+        { title: "v3 onion services", text: "56-char base32 addresses are SHA3-256 of a long-term ed25519 key — defeats enumeration attacks against legacy 16-char v2." },
+        { title: "Real-world deanon", text: "FBI's 2013 'Operation Torpedo' used a Flash-based exploit (CVE-2013-1690) inside Tor Browser to leak real IPs — the network was secure; the endpoint wasn't. Tor Browser dropped Flash and disabled JS-by-default for the security slider 'Safest' mode." }
+      ]
+    },
+    {
+      id: "dd-lwe", num: "Concept 5 of 9", title: "Lattice-Based PQC (LWE & Kyber)",
+      desc: "Learning With Errors, NIST PQC standard ML-KEM, parameter selection.", color: "#79c0ff", icon: "🔐",
+      svg: function(w, h) {
+        var s = '<svg viewBox="0 0 ' + w + ' ' + h + '" xmlns="http://www.w3.org/2000/svg" style="background:#0d1117">';
+        s += '<text x="20" y="22" fill="#79c0ff" font-size="13" font-weight="600">2-D LWE lattice (q=17)</text>';
+        for (var i = 0; i < 9; i++) for (var j = 0; j < 5; j++) {
+          s += '<circle cx="' + (40 + i*30) + '" cy="' + (50 + j*25) + '" r="2" fill="#30363d"/>';
+        }
+        s += '<line x1="40" y1="50" x2="160" y2="125" stroke="#79c0ff" stroke-width="1.5" marker-end="url(#ar)"/>';
+        s += '<line x1="40" y1="50" x2="220" y2="75" stroke="#7ee787" stroke-width="1.5" marker-end="url(#ar)"/>';
+        s += '<text x="120" y="100" fill="#79c0ff" font-size="10" font-family="monospace">b1</text>';
+        s += '<text x="170" y="68" fill="#7ee787" font-size="10" font-family="monospace">b2</text>';
+        s += '<circle cx="190" cy="105" r="4" fill="#f85149"/><text x="200" y="108" fill="#f85149" font-size="10" font-family="monospace">b·s + e</text>';
+        s += '<circle cx="187" cy="100" r="2" fill="#ffa657"/><text x="200" y="93" fill="#ffa657" font-size="9" font-family="monospace">noise e</text>';
+        s += '<defs><marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker></defs>';
+        s += '<g transform="translate(290,40)" font-family="monospace" font-size="10" fill="#c9d1d9">';
+        s += '<text x="0" y="0" fill="#d2a8ff" font-weight="600">Search-LWE</text>';
+        s += '<text x="0" y="16">Public:  A ∈ Z_q^{m×n}, b = As+e</text>';
+        s += '<text x="0" y="30">Find:    s ∈ Z_q^n  (hard)</text>';
+        s += '<text x="0" y="50" fill="#d2a8ff" font-weight="600">Decision-LWE</text>';
+        s += '<text x="0" y="66">Distinguish (A, As+e) from (A, u)</text>';
+        s += '<text x="0" y="86" fill="#7ee787">ML-KEM-768: n=256, k=3, q=3329</text>';
+        s += '<text x="0" y="100" fill="#7ee787">  η₁=2, η₂=2, ~192-bit security</text>';
+        s += '</g>';
+        s += '</svg>';
+        return s;
+      },
+      sections: [
+        { title: "The LWE Problem", text: "Learning With Errors (Regev, STOC'05) asks: given many samples (a_i, b_i = ⟨a_i, s⟩ + e_i mod q), where a_i ∈ Z_q^n is uniform, s ∈ Z_q^n is a fixed secret, and e_i is small noise from a centred binomial or discrete Gaussian, recover s. Without the noise it's trivial Gaussian elimination; with noise of width η, the best classical attack (BKZ lattice reduction on the dual lattice) runs in time roughly 2^(0.292·β) where β is the BKZ block size needed. Regev proved a quantum reduction from worst-case GapSVP on n-dimensional lattices to average-case LWE — so breaking LWE breaks lattice problems believed quantum-hard." },
+        { title: "Module-LWE & Kyber/ML-KEM", text: "ML-KEM (FIPS 203, Aug 2024 — formerly CRYSTALS-Kyber) is the NIST-standardised PQ KEM. It uses Module-LWE over the polynomial ring R_q = Z_q[X]/(X^256 + 1) with q = 3329. ML-KEM-768 (~AES-192 strength) has rank k=3, public key 1184 B, ciphertext 1088 B, encaps in ~50 µs on x86. The KEM is IND-CCA2 via Fujisaki-Okamoto transform on an underlying IND-CPA PKE. Encapsulation: pick m, derive (K, r) = G(m‖H(pk)), produce ciphertext c = Enc(pk, m; r); decapsulation re-encrypts to verify, providing implicit rejection on tamper." },
+        { title: "Parameter Selection & Pitfalls", text: "Security depends on (n, q, η, k). Too-small η weakens noise → BKZ wins; too-large η causes decryption failure (must be < 2^-128 for CCA security, else Hofheinz-style failure attack recovers s). Implementation pitfalls dominate practice: the 2022 KyberSlash side-channel (Pessl et al.) recovered keys from non-constant-time division by q; Bernstein et al. showed FO-transform timing leaks. Always use the reference C with the official ChaCha20-based PRG, constant-time NTT, and run the masked variant on smartcards. Hybrid X25519+ML-KEM-768 (RFC 9420 deployment in TLS 1.3 since 2024) hedges against unknown lattice attacks." },
+        { title: "Best-known attack cost", formula: "T_BKZ(β)  ≈  2^(0.292·β)   classical,   2^(0.265·β)   quantum (sieving)" }
+      ],
+      keypoints: [
+        { title: "Regev STOC'05", text: "'On Lattices, Learning with Errors, Random Linear Codes, and Cryptography' — quantum worst-case to average-case reduction is the foundation of all LWE crypto." },
+        { title: "NIST PQC timeline", text: "Round 1 2017 → Round 3 2020 → ML-KEM standardised FIPS 203 (Aug 2024). ML-DSA (Dilithium) FIPS 204 and SLH-DSA (SPHINCS+) FIPS 205 same date." },
+        { title: "Harvest-now-decrypt-later", text: "Threat model: adversary records TLS today, decrypts in 2035 with a CRQC. Drives RFC 9420 hybrid TLS rollout (Chrome 124+, Cloudflare Edge 2023)." },
+        { title: "Failed candidates", text: "SIKE (isogeny) broken by Castryck-Decru (Aug 2022) in 1 hour on a laptop — cautionary tale for hedging via hybrids." }
+      ]
+    },
+    {
+      id: "dd-zkp", num: "Concept 6 of 9", title: "Zero-Knowledge Proofs (Σ-Protocols & SNARKs)",
+      desc: "Schnorr commit-challenge-response, Fiat-Shamir, zk-SNARKs.", color: "#f778ba", icon: "🕵️",
+      svg: function(w, h) {
+        return '<svg viewBox="0 0 ' + w + ' ' + h + '" xmlns="http://www.w3.org/2000/svg" style="background:#0d1117">'
+          + '<text x="20" y="22" fill="#f778ba" font-size="13" font-weight="600">Schnorr Σ-protocol (DLog)</text>'
+          + '<g font-family="monospace" font-size="11">'
+          + '<line x1="80" y1="42" x2="80" y2="200" stroke="#8b949e" stroke-dasharray="3 2"/>'
+          + '<line x1="380" y1="42" x2="380" y2="200" stroke="#8b949e" stroke-dasharray="3 2"/>'
+          + '<text x="80" y="40" text-anchor="middle" fill="#7ee787" font-size="12" font-weight="600">Prover</text>'
+          + '<text x="380" y="40" text-anchor="middle" fill="#58a6ff" font-size="12" font-weight="600">Verifier</text>'
+          + '<text x="80" y="58" text-anchor="middle" fill="#8b949e" font-size="9">knows x: y=g^x</text>'
+          + '<text x="380" y="58" text-anchor="middle" fill="#8b949e" font-size="9">knows y</text>'
+          + '<line x1="80" y1="78" x2="380" y2="78" stroke="#7ee787" marker-end="url(#zr)"/>'
+          + '<text x="230" y="74" text-anchor="middle" fill="#7ee787">a = g^r,   r ←$ Z_q  (commit)</text>'
+          + '<line x1="380" y1="108" x2="80" y2="108" stroke="#58a6ff" marker-end="url(#zr)"/>'
+          + '<text x="230" y="104" text-anchor="middle" fill="#58a6ff">e ←$ {0,1}^t  (challenge)</text>'
+          + '<line x1="80" y1="138" x2="380" y2="138" stroke="#7ee787" marker-end="url(#zr)"/>'
+          + '<text x="230" y="134" text-anchor="middle" fill="#7ee787">z = r + e·x mod q  (response)</text>'
+          + '<text x="380" y="170" text-anchor="middle" fill="#ffa657" font-size="11">accept iff  g^z = a · y^e</text>'
+          + '</g>'
+          + '<defs><marker id="zr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker></defs>'
+          + '<text x="20" y="195" fill="#d2a8ff" font-size="10" font-family="monospace">Fiat-Shamir: e := H(g, y, a)  → non-interactive (NIZK)</text>'
+          + '</svg>';
+      },
+      sections: [
+        { title: "Three Properties", text: "A ZKP for an NP relation R lets a prover P convince verifier V that ∃ w with (x, w) ∈ R, without revealing w. Three properties: (1) Completeness — honest P always convinces honest V; (2) Soundness — a cheating P* convinces V with probability ≤ negligible (statistical) or ≤ negl + advantage of breaking a hardness assumption (computational); (3) Zero-knowledge — there exists a PPT simulator S that, given only x, produces a transcript indistinguishable from a real P↔V interaction. Σ-protocols are 3-move (commit, challenge, response) and achieve special soundness + honest-verifier ZK; converting to full ZK uses the trick of having V commit to e first (Goldreich-Kahan)." },
+        { title: "Schnorr Worked Example", text: "Public: cyclic group G = ⟨g⟩ of prime order q, statement y = g^x. Prover knows x; wants to prove knowledge without revealing it. (1) P picks r ←$ Z_q, sends a = g^r. (2) V sends random e ∈ {0,1}^t. (3) P sends z = r + e·x mod q. V accepts iff g^z = a · y^e. Soundness via 'forking': any P* answering two challenges e₁ ≠ e₂ for the same a yields x = (z₁-z₂)·(e₁-e₂)^-1 mod q. ZK via simulator: pick z, e at random, set a = g^z · y^-e — same distribution as honest run. Fiat-Shamir replaces V with H(transcript) for a non-interactive signature: this is the basis of Schnorr signatures (BIP340, Bitcoin Taproot 2021) and Ed25519." },
+        { title: "From Σ to zk-SNARKs", text: "zk-SNARKs (Succinct Non-interactive ARguments of Knowledge) compress proofs of arbitrary NP statements to ~200 bytes verifiable in milliseconds. Groth16 (EUROCRYPT'16) builds on a Quadratic Arithmetic Program over a pairing-friendly curve (BN254, BLS12-381). Requires a trusted setup ceremony (Zcash Powers of Tau used 90+ participants). PLONK (2019) and Halo2 (2020) replaced per-circuit setup with a universal updatable setup. STARKs (Ben-Sasson et al.) are transparent (no trusted setup) and post-quantum, but proofs are ~100 kB. Used in Zcash shielded txs, zkRollups (zkSync, Starknet), and anonymous credentials (Semaphore, Sismo)." },
+        { title: "Verification equation", formula: "V accepts ⇔  g^z  ≡  a · y^e   (mod p)" }
+      ],
+      keypoints: [
+        { title: "GMR 1985", text: "Goldwasser, Micali, Rackoff 'The Knowledge Complexity of Interactive Proof Systems' — invented the ZK definition, won the 2012 Turing Award." },
+        { title: "Fiat-Shamir caveat", text: "Programmable random oracle in proof; broken if H is replaced with concrete hash AND the protocol depends on adaptive challenges from H — see 'Fiat-Shamir: From Practice to Theory' (Canetti et al., STOC'19)." },
+        { title: "BIP340 Schnorr", text: "Bitcoin Taproot (Nov 2021) replaced ECDSA with deterministic Schnorr over secp256k1 — enables key aggregation (MuSig2) and saves ~12% block weight." },
+        { title: "Trusted setup risk", text: "Zcash 'counterfeiting bug' (2018, undisclosed until 2019) was a soundness bug in the SNARK verifier — proofs are only as sound as the underlying cryptosystem and circuit." }
+      ]
+    },
+    {
+      id: "dd-mpc", num: "Concept 7 of 9", title: "Secure Multiparty Computation (Shamir & GMW)",
+      desc: "Secret sharing, threshold reconstruction, BGW/GMW protocols.", color: "#ffa657", icon: "🤝",
+      svg: function(w, h) {
+        return '<svg viewBox="0 0 ' + w + ' ' + h + '" xmlns="http://www.w3.org/2000/svg" style="background:#0d1117">'
+          + '<text x="20" y="22" fill="#ffa657" font-size="13" font-weight="600">Shamir (3,5) secret sharing</text>'
+          + '<g>'
+          + '<line x1="40" y1="180" x2="320" y2="180" stroke="#8b949e"/>'
+          + '<line x1="40" y1="40" x2="40" y2="180" stroke="#8b949e"/>'
+          + '<text x="35" y="195" text-anchor="end" fill="#8b949e" font-size="9">0</text>'
+          + '<text x="320" y="195" text-anchor="middle" fill="#8b949e" font-size="9">x</text>'
+          + '<text x="30" y="44" text-anchor="end" fill="#8b949e" font-size="9">f(x)</text>'
+          + '<path d="M 40 70 Q 100 220 180 110 Q 240 30 320 130" stroke="#ffa657" stroke-width="1.5" fill="none"/>'
+          + '<circle cx="40" cy="70" r="5" fill="#f85149"/><text x="48" y="65" fill="#f85149" font-size="10" font-family="monospace">s=f(0)</text>'
+          + '<circle cx="96" cy="178" r="4" fill="#7ee787"/><text x="92" y="172" fill="#7ee787" font-size="9">P1</text>'
+          + '<circle cx="152" cy="138" r="4" fill="#7ee787"/><text x="148" y="132" fill="#7ee787" font-size="9">P2</text>'
+          + '<circle cx="208" cy="86" r="4" fill="#7ee787"/><text x="204" y="80" fill="#7ee787" font-size="9">P3</text>'
+          + '<circle cx="264" cy="76" r="4" fill="#7ee787"/><text x="260" y="70" fill="#7ee787" font-size="9">P4</text>'
+          + '<circle cx="320" cy="130" r="4" fill="#7ee787"/><text x="316" y="124" fill="#7ee787" font-size="9">P5</text>'
+          + '</g>'
+          + '<g transform="translate(360,40)" font-family="monospace" font-size="10" fill="#c9d1d9">'
+          + '<text x="0" y="0" fill="#d2a8ff" font-weight="600">Setup</text>'
+          + '<text x="0" y="16">Pick f(x)=s+a₁x+a₂x²  mod p</text>'
+          + '<text x="0" y="30">share_i = f(i)  for i=1..5</text>'
+          + '<text x="0" y="50" fill="#d2a8ff" font-weight="600">Reconstruct (any 3)</text>'
+          + '<text x="0" y="66">s = Σ shareᵢ · ∏ⱼ≠ᵢ (-j)/(i-j)</text>'
+          + '<text x="0" y="80">  (Lagrange at x=0)</text>'
+          + '<text x="0" y="100" fill="#7ee787">≤2 shares ⇒ info-theoretic 0</text>'
+          + '<text x="0" y="120" fill="#ffa657">SPDZ extends to malicious</text>'
+          + '</g>'
+          + '</svg>';
+      },
+      sections: [
+        { title: "Shamir Secret Sharing (1979)", text: "To share secret s ∈ F_p among n parties so any t can reconstruct but t-1 learn nothing, the dealer picks a random degree-(t-1) polynomial f(x) = s + a_1·x + … + a_{t-1}·x^{t-1} over F_p, then gives party i the share f(i). Reconstruction is Lagrange interpolation at x=0. Information-theoretic security: any t-1 shares are uniformly random in F_p^{t-1}, independent of s. Used in HashiCorp Vault unseal, Microsoft DKG, and Bitcoin custody (e.g., Coinbase Custody splits cold-wallet keys 3-of-5 across geographically distributed HSMs). Cost: O(n) field elements per secret, O(t²) for reconstruction." },
+        { title: "From Sharing to Computation (BGW/GMW)", text: "MPC computes y = f(x_1,…,x_n) where each P_i provides x_i, and no party learns more than y. BGW (Ben-Or, Goldwasser, Wigderson, STOC'88) shares each input via Shamir, then evaluates an arithmetic circuit gate-by-gate: addition is local (shares add); multiplication uses Beaver triples or degree-reduction via a shared random degree-(t-1) polynomial. Tolerates t < n/3 malicious or t < n/2 semi-honest. GMW (Goldreich-Micali-Wigderson, STOC'87) operates on Boolean circuits using XOR-shares + 1-out-of-4 OT for AND gates. Yao's garbled circuits (FOCS'82) handle the 2-party case in O(|C|·κ) communication." },
+        { title: "Practical Frameworks & Pitfalls", text: "SPDZ (Damgård et al., CRYPTO'12) achieves malicious security with abort by adding MACs over a global key α; preprocessing produces Beaver triples in an offline phase using somewhat-homomorphic encryption (BGV/BFV). Replicated secret sharing (3-party, honest majority) gives sub-millisecond latency — used by Meta WhatsApp PSI and Google Privacy Sandbox FLEDGE. Pitfalls: (1) input certification — malicious P_i can poison f without detection unless inputs are committed; (2) fairness is impossible against dishonest majority (Cleve, STOC'86) — best you get is 'security with abort'; (3) side-channels on the local share processing leak more than the protocol assumes." },
+        { title: "Lagrange formula", formula: "s = f(0) = Σ_{i∈S} f(i) · Π_{j∈S, j≠i}  (0-j)/(i-j)   mod p,   |S| ≥ t" }
+      ],
+      keypoints: [
+        { title: "Shamir 1979", text: "'How to Share a Secret', CACM 22(11) — 2-page paper, foundational. Same Adi Shamir as RSA; both papers published the same year." },
+        { title: "Threshold ECDSA", text: "GG18 / GG20 / CGGMP21 enable n-of-n ECDSA without ever reconstructing the key — used by Fireblocks, ZenGo, Coinbase WaaS for institutional custody." },
+        { title: "PSI at scale", text: "Apple's CSAM design (2021, withdrawn) used Private Set Intersection over OPRFs to match against hashed photos without revealing the database — illustrates ZK/MPC tradeoffs in deployment." },
+        { title: "Cleve impossibility", text: "Cleve (STOC'86) proved fair coin-flip is impossible for n=2 with malicious majority — drives MPC's 'security with abort' design choice." }
+      ]
+    },
+    {
+      id: "dd-capabilities", num: "Concept 8 of 9", title: "Capability-Based Security (seL4)",
+      desc: "Unforgeable refs, no ambient authority, formally verified microkernel.", color: "#d2a8ff", icon: "🗝️",
+      svg: function(w, h) {
+        return '<svg viewBox="0 0 ' + w + ' ' + h + '" xmlns="http://www.w3.org/2000/svg" style="background:#0d1117">'
+          + '<text x="20" y="22" fill="#d2a8ff" font-size="13" font-weight="600">Capability table → kernel objects</text>'
+          + '<g font-family="monospace" font-size="10">'
+          + '<rect x="20" y="40" width="180" height="160" fill="#21262d" stroke="#d2a8ff"/>'
+          + '<text x="110" y="55" text-anchor="middle" fill="#d2a8ff" font-weight="600">Process A CSpace</text>'
+          + '<line x1="20" y1="65" x2="200" y2="65" stroke="#d2a8ff"/>'
+          + '<text x="30" y="82" fill="#7ee787">cap[3]: TCB_B   r--</text>'
+          + '<text x="30" y="100" fill="#7ee787">cap[7]: EP_log  -w-</text>'
+          + '<text x="30" y="118" fill="#7ee787">cap[12]: Frame  rw-</text>'
+          + '<text x="30" y="136" fill="#7ee787">cap[19]: CNode  r-x</text>'
+          + '<text x="30" y="154" fill="#ffa657">cap[22]: Untyped</text>'
+          + '<text x="30" y="172" fill="#8b949e">  (no /proc, no fopen)</text>'
+          + '<text x="30" y="190" fill="#8b949e">  no ambient authority</text>'
+          + '</g>'
+          + '<g font-family="monospace" font-size="10">'
+          + '<rect x="280" y="50" width="120" height="30" fill="#7ee78720" stroke="#7ee787"/><text x="340" y="69" text-anchor="middle" fill="#7ee787">TCB B</text>'
+          + '<rect x="280" y="90" width="120" height="30" fill="#7ee78720" stroke="#7ee787"/><text x="340" y="109" text-anchor="middle" fill="#7ee787">Endpoint (log)</text>'
+          + '<rect x="280" y="130" width="120" height="30" fill="#7ee78720" stroke="#7ee787"/><text x="340" y="149" text-anchor="middle" fill="#7ee787">Frame 0xCAFE000</text>'
+          + '<rect x="280" y="170" width="120" height="22" fill="#ffa65720" stroke="#ffa657"/><text x="340" y="186" text-anchor="middle" fill="#ffa657">Untyped 4 MiB</text>'
+          + '</g>'
+          + '<line x1="200" y1="80" x2="280" y2="65" stroke="#8b949e" marker-end="url(#cr)"/>'
+          + '<line x1="200" y1="98" x2="280" y2="105" stroke="#8b949e" marker-end="url(#cr)"/>'
+          + '<line x1="200" y1="116" x2="280" y2="145" stroke="#8b949e" marker-end="url(#cr)"/>'
+          + '<line x1="200" y1="170" x2="280" y2="181" stroke="#8b949e" marker-end="url(#cr)"/>'
+          + '<defs><marker id="cr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#8b949e"/></marker></defs>'
+          + '</svg>';
+      },
+      sections: [
+        { title: "Capabilities vs ACLs", text: "An ACL asks 'does subject S have right R on object O?' — the kernel looks O up, then checks a list. A capability is an unforgeable token that combines a reference to O with a set of rights; presenting the cap IS the authority. There is no ambient authority: a process has access to exactly the objects it holds caps for. This eliminates the 'confused deputy' problem (Hardy '88): a privileged proxy that 'opens any file the user names' can be tricked into opening files the requester couldn't open directly. Capabilities make delegation explicit — if A wants B to access X, A must give B a (possibly attenuated) cap, not a name. Originated in Dennis-Van Horn 1966 and EROS/KeyKOS." },
+        { title: "seL4: Mechanism & Verification", text: "seL4 (Klein et al., SOSP'09) is a microkernel where every kernel object (TCB, page table, endpoint, untyped memory, IRQ handler) is named only by capability. CSpaces are guarded page tables of caps; the syscall interface is just send/recv on endpoint caps. 'Untyped' caps let user-space carve out memory and retype it into kernel objects — the kernel never allocates implicitly, eliminating denial-of-service via resource exhaustion. seL4 has a machine-checked Isabelle/HOL proof of functional correctness against an abstract spec (~200 k lines of proof for ~10 k LoC of C), plus integrity, confidentiality (intransitive non-interference), and binary-translation correctness — the only OS kernel with all four." },
+        { title: "Confused Deputy & Real Use", text: "Classic confused-deputy: a Pascal compiler runs as setuid 'compiler', accepts an output filename, and gleefully overwrites /etc/billing. With caps, the user passes a write-cap to a fresh file; the compiler can't widen authority. Modern uses: WebAssembly's WASI uses capability-based file/network access (preopen dirs); Capsicum (FreeBSD/Linux) adds capability-mode to POSIX; seL4 ships in Qualcomm modems (~1B devices), DARPA HACMS unhackable helicopter, and Open Mobile Alliance's secure enclaves. Cap revocation is the hard part — seL4 uses a CDT (Capability Derivation Tree) so revoke(parent) atomically invalidates all children." },
+        { title: "Authority equation", formula: "authority(P) = { (O, rights) : ∃ slot ∈ CSpace(P) holding cap(O, rights) }" }
+      ],
+      keypoints: [
+        { title: "Klein et al. SOSP'09", text: "'seL4: Formal Verification of an OS Kernel' — first ever functional-correctness proof of a complete general-purpose OS kernel. Proof effort: ~25 person-years." },
+        { title: "Confused deputy", text: "Hardy 1988 'The Confused Deputy' — explains why ACLs+ambient-authority cannot be patched into safety; capabilities are a structural fix." },
+        { title: "WASI capabilities", text: "WebAssembly System Interface uses preopened directory caps so a wasm module can only touch FS subtrees the host explicitly grants — extends cap discipline to sandboxed plugins." },
+        { title: "Capsicum CVE-2014-3877", text: "Cap-mode chroot escape via shared-memory cap with too-broad rights — illustrates that caps still need 'principle of least authority' discipline at grant time." }
+      ]
+    },
+    {
+      id: "dd-rpki", num: "Concept 9 of 9", title: "BGP RPKI & Route Origin Validation",
+      desc: "Resource PKI, ROAs, prefix hijack defence, BGPsec.", color: "#79c0ff", icon: "🛰️",
+      svg: function(w, h) {
+        return '<svg viewBox="0 0 ' + w + ' ' + h + '" xmlns="http://www.w3.org/2000/svg" style="background:#0d1117">'
+          + '<text x="20" y="22" fill="#79c0ff" font-size="13" font-weight="600">RPKI trust chain</text>'
+          + '<g font-family="monospace" font-size="10">'
+          + '<rect x="180" y="36" width="160" height="32" fill="#79c0ff20" stroke="#79c0ff"/>'
+          + '<text x="260" y="50" text-anchor="middle" fill="#79c0ff" font-weight="600">IANA TAL</text>'
+          + '<text x="260" y="62" text-anchor="middle" fill="#8b949e">root trust anchor</text>'
+          + '<line x1="220" y1="68" x2="120" y2="92" stroke="#8b949e" marker-end="url(#rr)"/>'
+          + '<line x1="260" y1="68" x2="260" y2="92" stroke="#8b949e" marker-end="url(#rr)"/>'
+          + '<line x1="300" y1="68" x2="400" y2="92" stroke="#8b949e" marker-end="url(#rr)"/>'
+          + '<rect x="60" y="92" width="120" height="28" fill="#7ee78720" stroke="#7ee787"/><text x="120" y="111" text-anchor="middle" fill="#7ee787">RIPE</text>'
+          + '<rect x="200" y="92" width="120" height="28" fill="#7ee78720" stroke="#7ee787"/><text x="260" y="111" text-anchor="middle" fill="#7ee787">ARIN</text>'
+          + '<rect x="340" y="92" width="120" height="28" fill="#7ee78720" stroke="#7ee787"/><text x="400" y="111" text-anchor="middle" fill="#7ee787">APNIC / LACNIC / AFRINIC</text>'
+          + '<line x1="120" y1="120" x2="120" y2="140" stroke="#8b949e" marker-end="url(#rr)"/>'
+          + '<rect x="40" y="140" width="160" height="48" fill="#ffa65720" stroke="#ffa657"/>'
+          + '<text x="120" y="156" text-anchor="middle" fill="#ffa657" font-weight="600">ROA</text>'
+          + '<text x="120" y="170" text-anchor="middle" fill="#c9d1d9">prefix 192.0.2.0/24</text>'
+          + '<text x="120" y="182" text-anchor="middle" fill="#c9d1d9">origin AS65001  maxLen 24</text>'
+          + '<g transform="translate(240,140)">'
+          + '<text x="0" y="0" fill="#d2a8ff" font-weight="600">BGP UPDATE</text>'
+          + '<text x="0" y="14" fill="#c9d1d9">prefix=192.0.2.0/24</text>'
+          + '<text x="0" y="28" fill="#c9d1d9">AS_PATH=...65001</text>'
+          + '<text x="0" y="46" fill="#7ee787">RPKI: VALID  → install</text>'
+          + '<text x="0" y="60" fill="#f85149">if origin=66666 → INVALID</text>'
+          + '<text x="0" y="74" fill="#ffa657">if no ROA → NotFound</text>'
+          + '</g>'
+          + '</g>'
+          + '<defs><marker id="rr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#8b949e"/></marker></defs>'
+          + '</svg>';
+      },
+      sections: [
+        { title: "Why BGP Needs Help", text: "BGP-4 (RFC 4271) was designed in 1994 with implicit trust: any peer can announce any prefix and neighbours believe it. The result is a steady drumbeat of route hijacks: AS7007 leaking 70 k routes (1997), Pakistan Telecom hijacking YouTube (2008), the China Telecom 'mistakes' (2010, 2014), Amazon Route53 hijack stealing $150 k in ETH (2018), Klayswap (2022). RPKI (RFC 6480, IETF SIDR WG) adds an out-of-band PKI rooted at IANA where each RIR/LIR can sign Route Origin Authorisations binding (prefix, origin AS, maxLength) — so a routing decision can be cryptographically validated against allocation truth." },
+        { title: "ROAs & Validation States", text: "An ROA is a CMS-signed object listing one or more (prefix, maxLength, AS) tuples, signed by the resource holder's End-Entity certificate which chains up to a Trust Anchor. RPKI Relying Party software (Routinator, rpki-client, FORT) walks rsync/RRDP repositories, validates the chain, and feeds a validated cache to routers via the RTR protocol (RFC 8210). Each received BGP UPDATE is then classified: VALID (covered by a ROA whose origin matches), INVALID (covered by a ROA whose origin differs OR length > maxLen), or NotFound (no covering ROA). Cisco IOS-XR/Juniper Junos let operators 'invalid → drop, notfound → permit-with-low-pref'." },
+        { title: "Limits & BGPsec", text: "RPKI ROV only authenticates the ORIGIN AS, not the AS_PATH. A nation-state on-path can still announce '65001 ← 65002 ← me' with a valid origin and reroute traffic — see the 2017 Russian-AS hijack of MasterCard/Visa. BGPsec (RFC 8205) cryptographically signs each AS hop with the path-attribute, but adoption is ~0% because every router on every AS would need to verify ECDSA per UPDATE. Path-aware alternatives (ASPA, RFC 9234) let an AS declare its legitimate upstreams, blocking simple route leaks at low cost. As of 2024, ROV-validating ASes carry ~50% of internet traffic (NIST RPKI Monitor); MANRS encourages full-chain participation." },
+        { title: "Validation rule", formula: "state = { VALID  if ∃ROA: prefix⊆ROA.prefix ∧ len≤maxLen ∧ origin=ROA.AS;  INVALID if covered but mismatch;  else NotFound }" }
+      ],
+      keypoints: [
+        { title: "RFC 6480/6482/6810", text: "6480 architecture, 6482 ROA spec, 6810/8210 RTR router-to-cache protocol — mandatory reading for the SIDR ecosystem." },
+        { title: "Cloudflare 'isbgpsafeyet'", text: "Public test page (since 2020) that proves whether your ISP enforces ROV — drove a 4× jump in major-eyeball-network ROV deployment 2020-2022." },
+        { title: "ROA misconfiguration", text: "Cloudflare 2019 outage and KPN 2022 outage caused by overly-strict ROAs (maxLen too short) → legit /24 announcements became INVALID and were dropped network-wide. Always validate with rpki-client before publication." },
+        { title: "ASPA next step", text: "draft-ietf-sidrops-aspa adds Autonomous System Provider Authorisation — a lightweight path-validation layer that catches route leaks BGPsec was meant to catch, without per-hop signing cost." }
+      ]
+    }
+  ],
+
+  useCases: [
+    {
+      id: "uc-pqc-tls", title: "Post-Quantum Migration of a TLS 1.3 Service",
+      desc: "End-to-end plan for hybridising a fleet of HTTPS endpoints with ML-KEM-768 ahead of CRQC arrival.",
+      icon: "🔐", color: "#79c0ff",
+      summary: "Migrating a TLS fleet to post-quantum is a <strong>crypto-agility problem first, math problem second</strong>. You inventory every classical KEX, swap to a hybrid X25519+ML-KEM-768 group whose <strong>1,184-byte public key and 1,088-byte ciphertext</strong> fragment ClientHellos, then stage with feature flags so middlebox breakage stays bounded. Signatures (ML-DSA-65, ~3.3 KB) follow after KEMs because they bloat every handshake — not just key-establishment.",
+      pipeline: "[Crypto inventory]                                                     \n      │ CBOM (CycloneDX v1.6)                                          \n      ▼                                                                \n[TLS lib upgrade]  OpenSSL 3.4 + oqs-provider / BoringSSL / NSS 3.99   \n      │ negotiate X25519MLKEM768 (group 0x11ec, 2,272 B handshake add) \n      ▼                                                                \n[Edge LB feature flag]  1% → 10% → 50% → 100%                          \n      │ watch handshake_fail_rate, p99 RTT, MTU drops                  \n      ▼                                                                \n[PKI: dual-sig certs]  ECDSA P-256 + ML-DSA-65 (composite, RFC draft)  \n      │                                                                \n      ▼                                                                \n[Observability]  tls_pq_ratio gauge → alert < 99%                      ",
+      metrics: [
+        { label: "ML-KEM-768 pubkey", value: "1,184 bytes" },
+        { label: "ML-KEM-768 ciphertext", value: "1,088 bytes" },
+        { label: "ML-DSA-65 signature", value: "3,309 bytes" },
+        { label: "Cloudflare PQ traffic (2024)", value: ">35% of TLS" }
+      ],
+      extensions: "Read the Cloudflare/Google joint measurement on ClientHello fragmentation, then explore <strong>KEMTLS</strong> (replacing signatures with KEMs in the handshake) and stateful hash signatures (LMS/XMSS) for firmware signing.",
+      steps: [
+        { title: "Step 1 — Inventory & threat model", component: "Crypto inventory", proto: "NIST SP 800-208",
+          intuition: "You can't migrate what you can't see — every TLS endpoint and every long-lived signed blob is a future plaintext.",
+          complexity: "O(endpoints) scan; CBOM grows with service count",
+          detail: "Enumerate every TLS endpoint (LBs, internal mTLS, S2S calls) and every long-lived signed artefact (firmware, code-signing, doc archives). Classify by 'harvest-now-decrypt-later' exposure: anything carrying secrets that must remain confidential past 2035 is in scope. Output a CBOM (Cryptographic Bill of Materials) per CycloneDX v1.6.",
+          code: "# Scan TLS endpoints for current KEX\nnmap --script ssl-enum-ciphers -p443 fleet.example.com | grep 'key exchange'",
+          example: "A typical Fortune-500 inventory uncovers 4,000–12,000 TLS endpoints, of which ~15% still negotiate RSA key transport (no forward secrecy at all) and ~3% are TLS 1.0/1.1.",
+          pitfall: "Forgetting <strong>code-signing roots</strong> (Authenticode, kernel module signing): an attacker who later breaks RSA-2048 can forge updates retroactively unless you migrated to LMS/XMSS.",
+          refs: [{ label: "NIST SP 800-208 — Stateful Hash Sigs", url: "https://csrc.nist.gov/pubs/sp/800/208/final" }, { label: "CycloneDX CBOM", url: "https://cyclonedx.org/capabilities/cbom/" }] },
+        { title: "Step 2 — Pick a hybrid suite", component: "TLS stack", proto: "RFC 9420 / draft-ietf-tls-hybrid-design",
+          intuition: "Hybrid = belt + braces: if ML-KEM is later cryptanalysed, X25519 still protects you; if a quantum computer arrives, X25519 doesn't.",
+          complexity: "Handshake CPU: ML-KEM-768 keygen ~30 µs, encap ~40 µs on x86 AVX2",
+          detail: "Adopt the IETF hybrid X25519MLKEM768 KEM (group code 0x11ec) so failure of either primitive is non-fatal. Update OpenSSL ≥ 3.4 with the oqs-provider, or BoringSSL with PQ enabled, or NSS ≥ 3.99. Verify negotiation in Wireshark — server_supported_groups must list the hybrid first.",
+          code: "openssl s_client -connect host:443 -groups X25519MLKEM768",
+          example: "Concatenated shared secret is HKDF-Extract(X25519_ss ‖ MLKEM768_ss); total ClientHello grows from ~520 B to ~1,700 B — straddling the typical 1,500-byte Ethernet MTU.",
+          pitfall: "Some load balancers strip TLS extensions past offset 512; the PQ ClientHello then arrives as a malformed record and clients see <code>SSL_ERROR_RX_RECORD_TOO_LONG</code>.",
+          refs: [{ label: "Cloudflare PQ rollout", url: "https://blog.cloudflare.com/pq-2024/" }, { label: "draft-ietf-tls-hybrid-design", url: "https://datatracker.ietf.org/doc/draft-ietf-tls-hybrid-design/" }] },
+        { title: "Step 3 — Stage A/B with crypto agility flag", component: "Edge LB / config service", proto: "Feature flag",
+          intuition: "PQ rollout fails through middleboxes, not math — stage like a kernel deployment, not a config push.",
+          complexity: "Rollback latency target: <60 s end-to-end via flag flip",
+          detail: "Behind a per-tenant flag, route 1% → 10% → 50% → 100% of traffic to the PQ suite. Watch handshake-failure rate (PQ keys are 30× larger; some middleboxes drop > 1500 byte ClientHellos — the 'TLS 1.3 ossification' problem). Have a feature-flag rollback within 60 s.",
+          example: "Google's Chrome PQ experiment (2023) found ~0.5% of clients failed the handshake — almost entirely due to corporate middleboxes; rolling that into the 'compatibility long tail' bucket is unavoidable.",
+          pitfall: "Don't measure success purely by negotiation rate — a small fraction of clients silently <em>downgrade</em> to TLS 1.2 ECDHE; alert on protocol downgrades separately.",
+          refs: [{ label: "PQ TLS measurements (Sikeridis et al. 2023)", url: "https://eprint.iacr.org/2023/175" }] },
+        { title: "Step 4 — Migrate signatures (ML-DSA)", component: "PKI / cert issuance", proto: "FIPS 204",
+          intuition: "KEMs protect future confidentiality; signatures protect <em>present</em> identity — but signatures bloat every handshake, so they're stage-2.",
+          complexity: "ML-DSA-65 verify ~150 µs (vs ECDSA P-256 ~80 µs); cert chain grows by ~10 KB",
+          detail: "After KEM rollout, issue dual-stack certificates: classic ECDSA P-256 plus ML-DSA-65 (Dilithium) via X.509 'alternative signature' extension (draft-ietf-lamps-pq-composite-sigs). HSMs must support ML-DSA — Thales Luna 7 firmware 7.10+, AWS CloudHSM since 2024.",
+          example: "A Let's Encrypt-style chain (leaf + intermediate + root) with both ECDSA and ML-DSA balloons from ~3 KB to ~13 KB, pushing some CDN buffer sizes.",
+          pitfall: "OCSP stapling responses are also signed — forgetting to upgrade the OCSP responder to ML-DSA leaves a classical-signed liveness check in a 'PQ' chain.",
+          refs: [{ label: "FIPS 204 ML-DSA", url: "https://csrc.nist.gov/pubs/fips/204/final" }] },
+        { title: "Step 5 — Continuous PQ posture monitoring", component: "Observability", proto: "Prometheus metric",
+          intuition: "Migrations regress as new microservices spawn — only continuous measurement keeps the fleet PQ-clean.",
+          complexity: "O(1) per handshake; scrape interval 15 s",
+          detail: "Export a `tls_pq_ratio` gauge per service. Page if any production listener falls below 99% PQ negotiation. Re-scan quarterly with the CBOM tooling so newly-added micro-services don't regress.",
+          code: "tls_pq_ratio = pq_handshakes_total / handshakes_total",
+          pitfall: "Mobile clients on legacy OS versions (iOS < 17, Android < 14) will never negotiate PQ — segment the gauge by user-agent before paging." }
+      ]
+    },
+    {
+      id: "uc-threshold-custody", title: "Threshold-ECDSA Custody for a Crypto Exchange",
+      desc: "Replace single-key cold storage with t-of-n threshold signing across geo-distributed HSMs — no single point of compromise.",
+      icon: "🤝", color: "#ffa657",
+      summary: "An exchange wants <strong>no single HSM, no single jurisdiction, no single operator</strong> to be able to sign a withdrawal. Threshold ECDSA via GG20/CGGMP21 splits the private key into Shamir shares across 5 HSMs in 5 countries; signing requires 3 to cooperate, the full key never reconstitutes, and proactive resharing every 90 days defeats slow-burn attackers. Beaver-triple pre-signing pushes 99% of the MPC cost off the latency path.",
+      pipeline: "[DKG: Pedersen-VSS]                                                   \n   HSM₁ ⇄ HSM₂ ⇄ HSM₃ ⇄ HSM₄ ⇄ HSM₅   →   Q = xG (public)            \n   each holds x_i  (Shamir share, t=3 of 5)                            \n      │                                                                \n      ▼                                                                \n[Offline: Beaver triples]  generate k, k·x shares (Paillier MtA)       \n      │                                                                \n      ▼                                                                \n[Online sign request]  policy-check → 3 HSMs sign → coordinator (r,s)  \n      │                       (never reconstructs x)                   \n      ▼                                                                \n[Merkle audit log]  RFC 9162 STH → external auditor weekly             \n      │                                                                \n      ▼                                                                \n[Proactive reshare]  every 90 days → re-randomise x_i (Herzberg)      ",
+      metrics: [
+        { label: "Threshold config", value: "3-of-5 (5 jurisdictions)" },
+        { label: "Signing latency", value: "~200 ms online (vs ~2 s naïve)" },
+        { label: "Pre-sign throughput", value: "~1k triples/min/HSM" },
+        { label: "Compromise budget", value: "≤ 2 HSMs / 90 days" }
+      ],
+      extensions: "Study <strong>FROST</strong> (round-optimal threshold Schnorr, used by Bitcoin Taproot wallets), threshold BLS for validator aggregation in Ethereum, and the formal UC-security proofs of CGGMP21.",
+      steps: [
+        { title: "Step 1 — Distributed key generation (DKG)", component: "Signer cluster", proto: "GG20 / CGGMP21",
+          intuition: "If no party ever holds the full key, no party can ever leak it — DKG bakes that invariant in at birth.",
+          complexity: "O(n²) broadcasts, O(n³) zero-knowledge proofs; ~30 s for n=5",
+          detail: "Five HSMs in five jurisdictions (Zurich, Singapore, Toronto, Dublin, Sydney) jointly run a Pedersen-VSS based DKG. The full ECDSA private key never exists anywhere — each HSM holds a Shamir share x_i of x and a Paillier keypair for the multiplicative-to-additive conversion. Output: shared public key Q = xG, individual shares stored in HSM wrap-keys.",
+          example: "Fireblocks and Coinbase Custody both run CGGMP21 variants; published audits show ~25 seconds for a 3-of-5 DKG across continents (network-dominated).",
+          pitfall: "A malicious party can bias the joint randomness during DKG unless every commitment is opened in the verifiable-secret-sharing phase — early academic GG18 had a published 'key extraction' attack from skipping this.",
+          refs: [{ label: "Gennaro-Goldfeder GG20", url: "https://eprint.iacr.org/2020/540" }, { label: "CGGMP21", url: "https://eprint.iacr.org/2021/060" }] },
+        { title: "Step 2 — Pre-signing Beaver triples (offline)", component: "Coordinator", proto: "MtA via Paillier",
+          intuition: "Move the expensive Paillier-encrypted multiplications off the critical path — sign latency drops by ~10×.",
+          complexity: "~50–100 ms per triple per pair; runs in batches offline",
+          detail: "Off-line phase generates one-time multiplicative-shared k and k·x triples per anticipated transaction. This pushes 99% of MPC cost out of the latency-critical signing path; on-line signing then needs only one round of broadcast.",
+          code: "# pseudo: produce N triples\nfor _ in range(N):\n    triple = MPC.beaver_triple(parties=signers, t=3)",
+          example: "A 1,024-triple buffer covers ~10 minutes of withdrawal throughput at 100 tx/min, refilled continuously by a sidecar process.",
+          pitfall: "<strong>Nonce reuse is fatal</strong>: a single Beaver triple used for two signatures leaks the private key via standard ECDSA k-reuse algebra. Triples must be one-shot and atomically consumed." },
+        { title: "Step 3 — Threshold signing flow", component: "Signing API", proto: "ECDSA",
+          intuition: "Output is byte-for-byte indistinguishable from a single-key ECDSA signature — no chain or wallet needs to know it was threshold-signed.",
+          complexity: "1 broadcast round online; ~200 ms wall clock",
+          detail: "A withdrawal request is policy-checked (velocity, allow-list, dual approval). 3 of 5 HSMs each sign their share; the coordinator reconstructs the canonical (r, s) signature WITHOUT learning x. Failure of up to 2 HSMs (regional outage, compromise) is tolerated.",
+          example: "Coinbase Custody publicly reports a typical institutional withdrawal SLA of 1–2 hours, of which the MPC signing itself is <1 second — policy and approval workflows dominate.",
+          pitfall: "Coordinator software is in scope for compromise — even though it can't sign alone, a malicious coordinator can replay valid (r,s) pairs onto a different destination if upstream policy isn't bound into the signed digest.",
+          refs: [{ label: "Fireblocks MPC-CMP whitepaper", url: "https://www.fireblocks.com/what-is-mpc/" }] },
+        { title: "Step 4 — Proactive resharing", component: "Key-management ops", proto: "Proactive secret sharing",
+          intuition: "Old shares become useless after refresh — a patient attacker can't accumulate t shares across epochs.",
+          complexity: "O(n²) communication, similar to DKG; 90-day cadence is standard",
+          detail: "Every 90 days run a Herzberg-style proactive resharing: parties locally re-randomise their shares so a slow-burn adversary who compromises one HSM at a time can never accumulate t shares before they refresh.",
+          pitfall: "Resharing changes share values but <strong>not the public key Q</strong>; if your wallet software treats the share-set hash as a 'key version' and refuses to sign, you'll DoS yourself every 90 days.",
+          refs: [{ label: "Herzberg et al. CRYPTO'95", url: "https://link.springer.com/chapter/10.1007/3-540-44750-4_27" }] },
+        { title: "Step 5 — Audit & deniable logging", component: "SIEM", proto: "Merkle log",
+          intuition: "An external auditor can prove inclusion without seeing payloads — transparency without leaking customer data.",
+          complexity: "O(log n) Merkle proof per signed entry",
+          detail: "Every signing decision is appended to an append-only Merkle log (RFC 9162 CT-style). External auditor receives signed tree heads weekly and can verify inclusion of any historical request without seeing payload contents — meets SOC-2 + MiCA Art. 75 custody requirements.",
+          example: "Certificate Transparency itself processes ~10⁹ entries; an exchange custody log at ~10⁶ withdrawals/year fits in a single ~30 MB Merkle tree.",
+          refs: [{ label: "RFC 9162 — CT 2.0", url: "https://www.rfc-editor.org/rfc/rfc9162" }] }
+      ]
+    },
+    {
+      id: "uc-formal-verify", title: "Formally Verifying a Crypto Library (HACL* / Fiat)",
+      desc: "How a memory-safe, side-channel-resistant Curve25519 implementation reaches production with a machine-checked proof.",
+      icon: "📐", color: "#7ee787",
+      summary: "Crypto code can't be tested into correctness — one wrong limb-carry and Curve25519 silently leaks the secret scalar. HACL*/Fiat-Crypto write the math as a pure F* or Coq function, refine it through <strong>Low* into C while carrying refinement-type proofs</strong>, prove constant-time via an information-flow type system, and ship the result into NSS, WireGuard, and OpenSSL. Every CI run re-checks ~50,000 lines of proof for ~5,000 lines of C.",
+      pipeline: "[Math spec in F* / Coq]   pure functional: ladder, double, add        \n      │ ~500 LOC                                                       \n      ▼                                                                \n[Low* / Fiat impl]   5×51-bit limbs over GF(2²⁵⁵−19)                  \n      │ ~5,000 LOC C-shaped F* (refinement types)                      \n      ▼                                                                \n[Z3 SMT discharges side conditions]  ~3 LOC proof : 1 LOC code        \n      │                                                                \n      ▼                                                                \n[ct-verif / FaCT]   information-flow type system → no secret branches \n      │                                                                \n      ▼                                                                \n[KaRaMeL extracts C]   verified C drops into NSS / WireGuard / OpenSSL\n      │                                                                \n      ▼                                                                \n[CI re-checks proof on every commit]  regression = merge blocked      ",
+      metrics: [
+        { label: "Proof : code ratio", value: "~3 : 1 (LOC)" },
+        { label: "Curve25519 in HACL*", value: "~5k C LOC, ~15k proof LOC" },
+        { label: "Z3 verify time (full)", value: "~20 min CI" },
+        { label: "Shipped in", value: "NSS, Linux, OpenSSL, mitls" }
+      ],
+      extensions: "Move from functional correctness to <strong>full-stack verification</strong>: CompCert-verified compilation, seL4's refinement-proof methodology, and EverCrypt's combined functional + side-channel + memory-safety guarantees.",
+      steps: [
+        { title: "Step 1 — Specify the math", component: "F* / Coq spec",  proto: "Functional spec",
+          intuition: "If your spec is wrong, your proof is correct — and useless. The spec must be tiny enough to audit by eye.",
+          complexity: "~500 LOC for Curve25519 Montgomery ladder",
+          detail: "Write the curve operation as a pure mathematical function over GF(2²⁵⁵−19): point doubling, ladder step, scalar multinplication. This is the 'gold standard' that downstream code must observably equal.",
+          code: "// F*: pure spec\nlet rec ladder n p =\n  if n = 0 then p else\n    let p' = double p in ladder (n/2) p'",
+          example: "HACL*'s Curve25519 spec is ~120 lines of F*; auditable in an afternoon by anyone who knows the math.",
+          pitfall: "Specs sometimes accidentally hard-code optimisations (e.g. fixed scalar bit-length) — then the proof says nothing about the general case the C code purports to implement." },
+        { title: "Step 2 — Implementation in Low* / FIAT", component: "Verified C generator", proto: "Low* → C",
+          intuition: "Write C-shaped code in a dependently-typed language — you get C performance with a machine-checked proof.",
+          complexity: "Fiat-Crypto generates field arithmetic in seconds for any prime",
+          detail: "Write the field arithmetic in Low* (an F* DSL targeting C) using fixed-radix limb representation (5×51-bit). Fiat-Crypto (Erbsen et al., S&P'19) auto-generates verified field code for arbitrary primes; HACL* hand-writes higher-level code with proofs.",
+          example: "Fiat-Crypto's auto-generated P-256 field code is within 3% of hand-written OpenSSL assembly on x86-64, while every line is machine-verified.",
+          pitfall: "Limb representation pitfall: forgetting a <strong>carry propagation</strong> after the final multiplication leaves a non-canonical field element that breaks downstream equality checks (this happened in pre-2019 OpenSSL).",
+          refs: [{ label: "Fiat-Crypto S&P 2019", url: "https://github.com/mit-plv/fiat-crypto" }, { label: "HACL* CCS 2017", url: "https://hacl-star.github.io/" }] },
+        { title: "Step 3 — Prove functional correctness", component: "F* type-checker", proto: "Refinement types",
+          intuition: "Types encode 'output = spec(input)' — if it type-checks, it's correct.",
+          complexity: "~3 LOC proof per LOC code; Z3 SMT does the heavy lifting",
+          detail: "Each Low* function carries a pre/post-condition refinement type that says 'output equals applying the math spec to the input'. SMT (Z3) discharges side conditions; remaining lemmas are written by hand. ~3 lines of proof per line of C is typical.",
+          example: "Project Everest reports ~20 minutes of Z3 wall-clock to verify the full HACL* tree on a beefy CI box; flaky proofs (Z3 timing-out non-deterministically) are a real ops problem.",
+          pitfall: "Z3 is incomplete and non-deterministic — a proof that 'just barely' goes through can fail on the next Z3 version. Pin your solver version and ration <code>--smtencoding native_int_to_bv</code> hints.",
+          refs: [{ label: "Project Everest", url: "https://project-everest.github.io/" }] },
+        { title: "Step 4 — Prove constant-time", component: "ct-verif / FaCT", proto: "Information-flow type system",
+          intuition: "If 'secret' values can never influence branch targets or memory addresses, no timing side-channel exists by construction.",
+          complexity: "Type-checking is linear in code size; counter-examples come as labelled programs",
+          detail: "Annotate the secret inputs as 'high'; the type system rejects any branch on or memory-index of high data. Compiles only if no secret-dependent timing path exists. SLH and 'speculative load hardening' add Spectre-v1 robustness.",
+          example: "ct-verif found a constant-time bug in OpenSSL's RSA modular inverse (CVE-2018-0734) — the table-based GCD had a secret-dependent loop trip count.",
+          pitfall: "Compilers can <em>re-introduce</em> branches that the source code didn't have (e.g. LLVM's <code>SimplifyCFG</code> turning <code>select</code> into <code>br</code>). You must verify the compiler output too, or use CompCert + a verified backend.",
+          refs: [{ label: "ct-verif (Almeida et al., USENIX'16)", url: "https://www.usenix.org/conference/usenixsecurity16/technical-sessions/presentation/almeida" }] },
+        { title: "Step 5 — Ship & integrate", component: "OpenSSL / NSS / Linux kernel", proto: "Drop-in C",
+          intuition: "Verified code is only valuable if it's actually deployed — productionising means it must look like ordinary C to consumers.",
+          complexity: "KaRaMeL extraction: F* → C in seconds; produced C is ABI-compatible",
+          detail: "Verified Curve25519 code from HACL* ships in Mozilla NSS (since 2017), Linux kernel WireGuard (4.20+), and OpenSSL 3.x via the FIPS provider. Every release re-runs the proof in CI — a regression in proof failure blocks the merge.",
+          example: "WireGuard's <code>curve25519-hacl64.c</code> is auto-extracted from HACL*; the same proof artefact protects every Linux box from kernel 4.20 onward.",
+          pitfall: "Hand-patching the extracted C 'just a little' for performance silently invalidates the proof — every integration must round-trip through extraction, not direct edit.",
+          refs: [{ label: "Linux kernel WireGuard crypto", url: "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/lib/crypto" }] }
+      ]
+    },
+    {
+      id: "uc-separation-logic", title: "Prove Memory Safety of a Concurrent Allocator with Separation Logic",
+      desc: "Use Iris/RustBelt-style separation logic to machine-check that a lock-free allocator has no data races, use-after-frees, or double-frees.",
+      icon: "🧮", color: "#d2a8ff",
+      summary: "Concurrent memory allocators are notoriously bug-prone — <strong>ABA, double-free, use-after-free, and racy publication</strong> all coexist in code that runs millions of times per second. Modern separation logic (Iris in Coq, RustBelt for unsafe Rust) lets you carve the heap into ownership-typed regions, attach <strong>fractional permissions</strong> to each pointer, and discharge concurrency obligations as <strong>view-shifts under invariants</strong>. The result: a kernel-quality allocator with a machine-checked proof that no thread interleaving violates safety.",
+      pipeline: "[Allocator source]   C / Rust unsafe — free-list, CAS loops          \n      │                                                                \n      ▼                                                                \n[Model in Iris/HeapLang]   ghost state for free-list shape             \n      │ ownership predicate: free_list γ L                              \n      ▼                                                                \n[Specify Hoare triples]   { l ↦ v } free(l) { emp }                    \n      │                  { emp ∗ size=n } alloc(n) { l ↦ ⊥ⁿ }          \n      ▼                                                                \n[Atomic invariants]   inv N (∃L. free_list γ L ∗ list_inv L)           \n      │ CAS proven via fupd (fancy update modality)                    \n      ▼                                                                \n[Adequacy theorem]   safety transfers to the operational semantics     \n      │                                                                \n      ▼                                                                \n[Coq Qed.]   any client program type-checks ⇒ memory-safe forever      ",
+      metrics: [
+        { label: "Iris proof size (typical alloc)", value: "~3,000–8,000 LOC Coq" },
+        { label: "RustBelt: stdlib unsafe blocks verified", value: ">30 (Arc, Mutex, Vec, Cell…)" },
+        { label: "Coq check time", value: "~5–30 min per crate" },
+        { label: "Real bug found by RustBelt", value: "Issue #41622 (Rust Pin unsoundness)" }
+      ],
+      extensions: "Layer in <strong>relaxed-memory reasoning</strong> (iRC11, Iris for the C11/ARM model), then explore CompCert + VST for end-to-end <strong>source-to-assembly</strong> memory-safety proofs, and Cerise for capability-machine security.",
+      steps: [
+        { title: "Step 1 — Model the allocator in HeapLang", component: "Iris model", proto: "HeapLang / λRust",
+          intuition: "You can't reason about C directly; you reason about a small λ-calculus that's been proven to faithfully simulate C's memory model.",
+          complexity: "Model size: ~200–500 LOC for a Treiber-stack free-list",
+          detail: "Translate the allocator into HeapLang (Iris's reference language) or λRust (for unsafe Rust). Each <code>malloc</code> becomes <code>ref ⊥</code>, each <code>free</code> becomes a CAS-push onto a ghost free-list. Side conditions like 'pointer was returned by an earlier alloc' become preconditions on the Hoare triple.",
+          code: "// HeapLang free-list push (CAS-based)\nrec push p l :=\n  let h := !head in\n  l.next <- h;\n  if CAS head h l then () else push p l",
+          pitfall: "HeapLang has <strong>sequential consistency</strong> by default — if your real allocator relies on x86-TSO or ARM release-acquire, you need iRC11 or you'll prove safety of a stricter program than you ship." },
+        { title: "Step 2 — Define ownership predicates", component: "Separation-logic library", proto: "Iris BI",
+          intuition: "<code>l ↦ v</code> is not 'l points to v' — it's the <em>exclusive right to read/write l</em>. Splitting separation conjunction <code>P ∗ Q</code> means disjoint resources.",
+          complexity: "Fractional permissions form a PCM: q₁ + q₂ ≤ 1",
+          detail: "Define <code>free_list γ L</code> as a ghost-state predicate parameterised by a list L of free chunks. <code>alloc</code> consumes one element from L and returns full ownership; <code>free</code> returns ownership and prepends to L. Fractional permissions (<code>l ↦{q} v</code>) let multiple readers share read-only views.",
+          example: "RustBelt's <code>Arc</code> proof uses fractional permissions to model the reference count: each <code>clone</code> hands out a 1/2ⁿ share; <code>drop</code> recombines.",
+          pitfall: "Forgetting <strong>persistent vs ephemeral</strong> propositions: putting an exclusive <code>l ↦ v</code> inside an invariant makes it impossible to ever recover — you needed a fractional or duplicable variant." },
+        { title: "Step 3 — Prove Hoare triples for alloc / free", component: "Iris proof mode (Coq)", proto: "{P} e {Q}",
+          intuition: "Each operation is a contract: 'given these resources, after I run, you have those resources' — the typechecker mechanically chains contracts.",
+          complexity: "~5–10 LOC of Coq tactics per Hoare-triple step",
+          detail: "Prove e.g. <code>{ free_list γ (l::L) } alloc() { v. ⌜v = l⌝ ∗ l ↦ ⊥ ∗ free_list γ L }</code>. The CAS loop's proof opens the invariant, performs the atomic step under a <code>fupd</code> (fancy update), and re-establishes the invariant before closing.",
+          code: "Lemma alloc_spec : {{{ free_list γ L ∗ ⌜L ≠ []⌝ }}}\n  alloc #()\n{{{ l L', RET #l; l ↦ ⊥ ∗ free_list γ L' ∗ ⌜L = l::L'⌝ }}}.",
+          example: "RustBelt proved Rust's <code>Vec::push</code> safe in ~600 LOC of Coq — including the realloc path that moves elements via <code>memcpy</code>.",
+          pitfall: "Mixing up <strong>logical atomicity</strong> with physical atomicity: a CAS loop is physically non-atomic (it retries) but logically atomic (it linearises at the successful CAS) — Iris's <code>&lt;&lt;{ … }&gt;&gt;</code> notation distinguishes them." },
+        { title: "Step 4 — Discharge concurrency via invariants", component: "Iris invariants", proto: "inv N P",
+          intuition: "An invariant is a contract you maintain with every other thread: 'whenever you open it, this property holds — and you must restore it before closing.'",
+          complexity: "Opening an invariant burns one 'later' (▷) credit; nesting requires step-indexing",
+          detail: "Wrap the global free-list state in an Iris invariant <code>inv N (∃ L, free_list γ L ∗ list_inv L)</code>. Any thread's CAS proof opens this invariant in a single logical step, modifies the ghost L, and closes it. The <strong>adequacy theorem</strong> then transfers all these per-thread proofs to a single safety theorem on the operational semantics.",
+          pitfall: "Invariant <strong>masks</strong> (<code>N</code>) must be disjoint when nested — forgetting to specify <code>↑N₁ ⊆ E ∖ ↑N₂</code> gives a proof obligation that's silently unprovable.",
+          refs: [{ label: "Iris from the ground up (Jung et al., JFP'18)", url: "https://iris-project.org/pdfs/2018-jfp-iris-from-the-ground-up.pdf" }] },
+        { title: "Step 5 — Extract & link the proof to production", component: "CI / build", proto: "coqc + opam",
+          intuition: "A proof that doesn't run in CI is a comment — production safety requires that <em>every</em> commit re-checks.",
+          complexity: "Coq check: minutes; opam pinning ensures reproducibility",
+          detail: "Pin the Coq, Iris, and stdpp versions in opam; run <code>coqc</code> in CI on every PR that touches the allocator source <em>or</em> the proof. A failed Qed blocks merge. For Rust, RustBelt's <code>cargo-rustbelt</code> wrapper compiles each unsafe block's spec alongside the crate.",
+          example: "The seL4 project re-runs its ~500k LOC Isabelle/HOL refinement proof on every commit — ~6 hours of CPU, parallelised across a cluster.",
+          pitfall: "Proof-engineering debt: small refactors of the C/Rust source can require disproportionately large proof updates (the 'proof-fragility' tax). Budget proof maintenance like test maintenance — typically 30–50% of total dev time.",
+          refs: [{ label: "RustBelt (Jung et al., POPL'18)", url: "https://plv.mpi-sws.org/rustbelt/" }, { label: "Iris project", url: "https://iris-project.org/" }] }
+      ]
+    },
+    {
+      id: "uc-symbolic-exec", title: "Find a Heap Overflow with Symbolic Execution (KLEE / angr)",
+      desc: "Drive an off-the-shelf symbolic execution engine through a parser to discover an attacker-controlled out-of-bounds write — and triage the resulting state explosion.",
+      icon: "🔎", color: "#ff7b72",
+      summary: "Fuzzing finds shallow bugs; symbolic execution finds <strong>the bugs that require a specific 64-bit magic number</strong>. KLEE forks at every conditional on tainted input, accumulating path constraints solved by STP/Z3; angr does the same on stripped binaries via VEX IR. You'll see <strong>path explosion turn 30 minutes into 30 years</strong> unless you apply lazy initialisation, state merging, and concolic 'just go that way' hints. The output is a concrete crashing input plus the path constraint that triggered the bug.",
+      pipeline: "[Target source]   parse_packet(uint8_t *buf, size_t len) — C       \n      │ compile with `clang -emit-llvm -g`                              \n      ▼                                                                \n[KLEE]   replace buf bytes with klee_make_symbolic                     \n      │ explore all paths; STP/Z3 solves constraints                    \n      ▼                                                                \n[Symbolic state tree]  fork at each branch on tainted bytes            \n      │ (state explosion: ~2ⁿ for n branches)                          \n      ▼                                                                \n[State pruning]  merge equivalent states; bound loops; concolic hints  \n      │                                                                \n      ▼                                                                \n[Crash detection]   memcheck / ASan-style oracle in LLVM pass          \n      │                                                                \n      ▼                                                                \n[Concrete PoC]   .ktest file → replay outside KLEE → reproducible crash",
+      metrics: [
+        { label: "KLEE coreutils coverage (paper)", value: "84.5% (vs ~50% hand-tests)" },
+        { label: "Bugs in coreutils (2008 paper)", value: "10 previously-unknown" },
+        { label: "Path explosion ceiling", value: "~10⁴–10⁶ live states before OOM" },
+        { label: "Solver share of runtime", value: "60–90% (STP/Z3)" }
+      ],
+      extensions: "Pair with <strong>fuzzing</strong> for hybrid 'driller'-style attacks (AFL + angr), explore <strong>under-constrained symbolic execution</strong> (UC-KLEE) for kernel code, and learn how <strong>SymCC</strong> compiles symbolic execution into the binary itself for 10–100× speedups.",
+      steps: [
+        { title: "Step 1 — Compile to LLVM bitcode with symbolic harness", component: "clang + KLEE harness", proto: "klee_make_symbolic",
+          intuition: "KLEE doesn't analyse your binary — it interprets your LLVM IR, so the compilation pipeline must preserve semantics (no optimisation that elides 'dead' branches you actually want to explore).",
+          complexity: "Compile-time linear; harness LOC ~20–50 per entry point",
+          detail: "Compile the target with <code>clang -O0 -emit-llvm -g -c parse.c</code>. Write a small harness <code>main</code> that declares a buffer, marks it symbolic with <code>klee_make_symbolic(buf, len, \"input\")</code>, and calls the parser. Linking against <code>libkleeRuntest</code> lets you replay <code>.ktest</code> files later.",
+          code: "int main() {\n  uint8_t buf[256]; size_t n;\n  klee_make_symbolic(buf, sizeof buf, \"buf\");\n  klee_make_symbolic(&n,  sizeof n,   \"n\");\n  klee_assume(n <= sizeof buf);\n  return parse_packet(buf, n);\n}",
+          pitfall: "Compiling with <code>-O2</code> lets LLVM <strong>constant-fold</strong> entire branches before KLEE sees them — counterintuitively, you may need to disable optimisations to find optimisation-aware bugs." },
+        { title: "Step 2 — Path exploration & state forking", component: "KLEE executor", proto: "Symbolic interpreter",
+          intuition: "Each branch on a symbolic byte forks the execution state into two; the constraint set grows by one literal per fork.",
+          complexity: "Worst-case O(2ⁿ) states for n input-dependent branches; SAT-solver calls dominate",
+          detail: "At every <code>if (buf[i] == 0x41)</code>, KLEE forks: one state carries the constraint <code>buf[i] = 0x41</code>, the other its negation. The active scheduler (random-path, coverage-new) picks which state to step next. Each memory access on a symbolic index resolves to multiple concrete addresses, forking further.",
+          example: "On <code>md5sum</code>, KLEE explored ~3,000 states and hit 96% line coverage in ~5 minutes (Cadar et al., OSDI'08). On a non-trivial PDF parser it would OOM in ~30 minutes without pruning.",
+          pitfall: "<strong>Symbolic array indexing</strong> is the killer: <code>tbl[buf[0]]</code> forks 256 ways and each state may further branch — one such access can multiply state count by 1,000×." },
+        { title: "Step 3 — Constrain & prune to fight path explosion", component: "Strategy layer", proto: "klee_assume, merging",
+          intuition: "If you don't actively prune, the solver buries you — apply domain knowledge as <code>klee_assume</code>s to cut off boring sub-trees.",
+          complexity: "Each <code>klee_assume(P)</code> kills states violating P at constant cost",
+          detail: "Add <code>klee_assume</code>s to bound input length, fix protocol version bytes, or require checksums to be symbolic-but-correct. Enable state merging (<code>-use-merge</code>) so paths that re-converge collapse. Use <code>--max-instructions</code> and <code>--max-time</code> to bound runaway runs.",
+          code: "klee_assume(buf[0] == 'P' && buf[1] == 'D' && buf[2] == 'F');\nklee_assume(n >= 8 && n <= 64);",
+          example: "S2E (selective symbolic execution) reports 100–1000× speedups by switching to concrete mode for uninteresting library code and only forking inside the target.",
+          pitfall: "Over-constraining hides bugs: if you assume <code>checksum == correct</code>, you'll never explore the branch that the parser takes when the checksum is wrong — exactly where format-string and length-confusion bugs hide." },
+        { title: "Step 4 — Detect the bug (memory-safety oracle)", component: "KLEE memory model", proto: "Pointer + size check",
+          intuition: "Every symbolic load/store is bounds-checked against the allocator's metadata — an unsatisfiable bound is a witnessable bug.",
+          complexity: "O(1) per memory op given the SMT model",
+          detail: "KLEE's memory model tracks each allocation's base and size. A symbolic pointer that <em>could</em> escape its allocation produces an error state with the failing constraint. Compile with <code>-fsanitize=address</code>-equivalent passes for richer oracles (uninitialised reads, signed-overflow UB).",
+          example: "Heartbleed (CVE-2014-0160) is a textbook symbolic-execution target: the bug is a single bounds violation gated on a 16-bit length field; KLEE finds it in seconds once the harness symbolicises the heartbeat record header.",
+          pitfall: "KLEE models <code>malloc</code> with infinite memory — code that depends on <code>malloc</code> returning NULL on OOM (and bug-checks that path) becomes unreachable in the model." },
+        { title: "Step 5 — Replay PoC & triage", component: "Replay harness", proto: ".ktest replay",
+          intuition: "A symbolic crash is only as good as the concrete bytes that reproduce it outside KLEE — always validate against the unmodified binary.",
+          complexity: "O(1) per replay; reproducible bit-for-bit",
+          detail: "KLEE writes a <code>.ktest</code> per error state containing concrete values for every symbolic input. Replay with <code>libkleeRuntest</code> linked into the original binary, then minimise with <code>klee-replay</code> or feed into AFL's <code>afl-tmin</code> for a shrunken PoC suitable for the bug report.",
+          code: "$ ktest-tool klee-out-0/test000123.ktest\n$ KTEST_FILE=test000123.ktest ./parse_packet_replay",
+          example: "angr's <strong>driller</strong> integration on DARPA CGC produced reproducible 16-byte PoCs for binary-only services within hours — bugs that AFL alone took days to surface.",
+          pitfall: "Replay against the <strong>same compiler/optimisation level</strong> KLEE used — a different optimisation flag can re-order memory and make the PoC silently 'fix' the bug.",
+          refs: [{ label: "KLEE (Cadar et al., OSDI'08)", url: "https://klee.github.io/" }, { label: "angr", url: "https://angr.io/" }] }
+      ]
+    }
+  ],
+
+  // === BEGIN glossary v1 data placeholder ===
+  glossary: [
+    { id: 'buffer-overflow', term: 'Buffer Overflow', aka: 'stack smashing', category: 'systems',
+      short: 'Writing past a buffer\'s end, corrupting adjacent memory such as saved return addresses.',
+      long: 'Classic memory-safety bug in C/C++ where unchecked writes (strcpy, gets, memcpy with attacker-controlled length) overflow stack or heap buffers. On the stack, attackers overwrite the saved return address to hijack control flow; on the heap, they corrupt allocator metadata or function pointers. Modern mitigations stack canaries, ASLR, DEP/NX, and CFI raise the bar but do not eliminate the underlying lifetime/bounds violation.',
+      seeAlso: ['rop', 'aslr', 'dep-nx', 'symbolic-exec'] },
+
+    { id: 'rop', term: 'Return-Oriented Programming', aka: 'ROP', category: 'systems',
+      short: 'Chaining short instruction sequences ending in ret to execute attacker logic without injecting code.',
+      long: 'Bypass for DEP/NX: instead of injecting shellcode (now non-executable), the attacker overwrites the stack with a chain of addresses pointing to "gadgets" — existing code fragments ending in a ret. Each gadget performs a small operation, and ret pivots to the next. JOP/COP variants use jmp/call. Defended by ASLR (randomizes gadget addresses), CFI (validates indirect branches), and shadow stacks.',
+      seeAlso: ['buffer-overflow', 'aslr', 'dep-nx'] },
+
+    { id: 'aslr', term: 'ASLR', aka: 'Address Space Layout Randomization', category: 'systems',
+      short: 'Randomizes base addresses of code, stack, heap, and libraries to defeat hard-coded exploit offsets.',
+      long: 'On each process load, the OS picks fresh random offsets for the executable, shared libraries, stack, heap, and (on KASLR systems) the kernel. Exploits that rely on absolute addresses — e.g., ROP chains or jump-to-libc — must first leak an address. Strength depends on entropy bits; 32-bit ASLR is brute-forceable, while 64-bit gives ~28+ bits of entropy. Side channels (Spectre, prefetch timing) can leak the slide.',
+      seeAlso: ['rop', 'dep-nx', 'spectre'] },
+
+    { id: 'dep-nx', term: 'DEP / NX', aka: 'W^X, no-execute', category: 'systems',
+      short: 'CPU+OS feature that marks data pages non-executable so injected shellcode cannot run.',
+      long: 'Data Execution Prevention enforces W xor X: a page is either writable or executable, never both. Implemented via the NX bit (AMD) / XD bit (Intel) in page tables. Stops classical "inject shellcode into a buffer and jump to it" attacks, forcing attackers toward ROP/JOP code-reuse techniques. Effective only when combined with ASLR.',
+      seeAlso: ['rop', 'aslr', 'buffer-overflow'] },
+
+    { id: 'sandboxing', term: 'Sandboxing', aka: 'process isolation', category: 'systems',
+      short: 'Confining untrusted code to a restricted environment so a compromise cannot reach the rest of the system.',
+      long: 'Implementations span seccomp-bpf syscall filters, Linux namespaces + cgroups (containers), Chrome\'s renderer sandbox, FreeBSD Capsicum, macOS App Sandbox, and software fault isolation (NaCl). The goal is least authority: even a fully-owned process can only touch resources the sandbox policy allows. Often paired with privilege separation, where parsing/rendering runs sandboxed while a tiny trusted broker mediates system access.',
+      seeAlso: ['selinux', 'capabilities', 'least-privilege'] },
+
+    { id: 'selinux', term: 'SELinux', aka: 'Security-Enhanced Linux', category: 'systems',
+      short: 'Mandatory Access Control framework using type enforcement to constrain processes regardless of UID.',
+      long: 'Built on the LSM hook framework. Every process and object has a security label (user:role:type:level); rules say which type may perform which action on which type. Unlike DAC, a root process can be denied if policy says so. Used in Android (SEAndroid), RHEL, Fedora. Costs: complex policy authoring; benefits: contains zero-days even when the exploited process runs as root.',
+      seeAlso: ['sandboxing', 'capabilities', 'least-privilege'] },
+
+    { id: 'capabilities', term: 'Capability-Based Security', aka: 'caps', category: 'systems',
+      short: 'Unforgeable tokens that both name a resource and grant rights to it, replacing ambient authority.',
+      long: 'A capability is a reference (handle, file descriptor, sealed pointer) that can be passed but not forged or guessed. Possession alone authorizes use, so there is no global ACL lookup and no confused-deputy problem. Used in seL4, Capsicum, Fuchsia/Zircon, EROS/CapROS. Enables fine-grained delegation and least privilege by construction.',
+      seeAlso: ['sandboxing', 'least-privilege', 'formal-verify'] },
+
+    { id: 'least-privilege', term: 'Principle of Least Privilege', aka: 'PoLP', category: 'concepts',
+      short: 'Each component runs with the minimum rights needed for its task, and no more.',
+      long: 'Saltzer & Schroeder, 1975. Reduces blast radius: a compromised component can only do what its limited rights allow. Realized through privilege separation (split processes), dropping capabilities after init (setuid → setuid(nobody)), capability systems, and sandboxes. The hard part is identifying the true minimum without breaking functionality.',
+      seeAlso: ['sandboxing', 'capabilities', 'selinux'] },
+
+    { id: 'sop', term: 'Same-Origin Policy', aka: 'SOP', category: 'software',
+      short: 'Browser rule that scripts from one (scheme, host, port) origin cannot read responses from another.',
+      long: 'The cornerstone of web isolation. JavaScript on https://a.com may issue a request to https://b.com (sending cookies), but cannot read the response unless b.com opts in via CORS. Applies to DOM access, XHR/fetch, and storage. Holes — JSONP, postMessage misuse, DNS rebinding, cross-origin leaks — are recurring sources of bugs. Site Isolation extends SOP to OS processes to defend against Spectre.',
+      seeAlso: ['xss', 'csrf', 'spectre'] },
+
+    { id: 'xss', term: 'XSS', aka: 'Cross-Site Scripting', category: 'software',
+      short: 'Injecting attacker-controlled script into a victim page so it runs in that page\'s origin.',
+      long: 'Three flavors: reflected (payload in request echoed into response), stored (payload persisted server-side and served to others), and DOM-based (client-side JS reads attacker-controlled input and writes it to the DOM). Defeats SOP by running in the target origin, so it can read cookies, DOM, and act as the user. Defenses: contextual output encoding, Content Security Policy, Trusted Types, HttpOnly cookies.',
+      seeAlso: ['sop', 'csrf'] },
+
+    { id: 'csrf', term: 'CSRF', aka: 'Cross-Site Request Forgery, XSRF', category: 'software',
+      short: 'A malicious site causes the victim\'s browser to send an authenticated request to a target site.',
+      long: 'Exploits ambient cookie authority: the browser attaches cookies to any request to example.com, even one triggered by evil.com via a form POST or img tag. Defenses: SameSite=Lax/Strict cookies (now default), anti-CSRF tokens bound to the session, double-submit cookies, custom request headers verified server-side, and Origin/Referer checks. Unlike XSS, CSRF cannot read responses — only trigger state-changing actions.',
+      seeAlso: ['sop', 'xss'] },
+
+    { id: 'tls', term: 'TLS', aka: 'Transport Layer Security', category: 'software',
+      short: 'Cryptographic protocol providing confidentiality, integrity, and authentication for network sessions.',
+      long: 'Successor to SSL. TLS 1.3 (RFC 8446) does a 1-RTT handshake using (EC)DHE for forward secrecy, AEAD ciphers (AES-GCM, ChaCha20-Poly1305), and HKDF for key schedule; it removes RSA key transport, static DH, and CBC modes. Server identity is bound to a name via X.509 certificates anchored in a CA trust store and audited via Certificate Transparency logs.',
+      seeAlso: ['kerberos', 'certificate-transparency', 'diffie-hellman', 'tor'] },
+
+    { id: 'kerberos', term: 'Kerberos', aka: 'KRB5', category: 'software',
+      short: 'Ticket-based network authentication using a trusted KDC and symmetric keys.',
+      long: 'The client authenticates once to the Authentication Server, receiving a Ticket-Granting Ticket; it then trades the TGT at the Ticket-Granting Server for service tickets to specific servers. Each ticket is encrypted with the target service\'s long-term key, so the service can verify it without contacting the KDC. Used in Active Directory; vulnerable to weak passwords (AS-REP roasting, Kerberoasting) and Golden/Silver Ticket forgery if the KDC krbtgt key is stolen.',
+      seeAlso: ['tls', 'least-privilege'] },
+
+    { id: 'tor', term: 'Tor', aka: 'The Onion Router', category: 'software',
+      short: 'Anonymity network using layered encryption over volunteer relays to hide who is talking to whom.',
+      long: 'Client picks a 3-hop circuit (guard → middle → exit) and wraps the payload in three layers of symmetric encryption; each relay peels one layer and forwards. No single relay knows both source and destination. Threats: global passive adversaries doing traffic correlation, malicious exits, website fingerprinting, and side channels. Hidden services (.onion) keep both endpoints unlinkable using rendezvous points.',
+      seeAlso: ['tls', 'timing-attack'] },
+
+    { id: 'certificate-transparency', term: 'Certificate Transparency', aka: 'CT', category: 'software',
+      short: 'Public append-only logs of every issued TLS certificate, audited via Merkle proofs.',
+      long: 'CAs submit each certificate to multiple CT logs and embed a Signed Certificate Timestamp (SCT) in the cert or via TLS extension. Browsers require SCTs and may verify inclusion proofs. Misissuance — e.g., a rogue CA minting google.com — becomes detectable because the cert must appear in a public Merkle tree that domain owners and monitors watch.',
+      seeAlso: ['tls', 'rpki'] },
+
+    { id: 'spectre', term: 'Spectre', aka: 'transient-execution attack', category: 'hardware',
+      short: 'Exploits speculative execution to leak secrets via microarchitectural side channels.',
+      long: 'CPUs speculate past branches (v1), indirect calls (v2 / branch target injection), and store-to-load forwarding (v4). Mispredicted instructions leave footprints in the cache, TLB, or other shared state even after rollback. Attackers train the predictor, race a bounds-check, and recover the secret through Flush+Reload. Mitigations: retpolines/IBRS for v2, lfence and array_index_mask_nospec for v1, microcode updates, and process isolation.',
+      seeAlso: ['meltdown', 'cache-attack', 'timing-attack', 'aslr'] },
+
+    { id: 'meltdown', term: 'Meltdown', aka: 'rogue data cache load, CVE-2017-5754', category: 'hardware',
+      short: 'Out-of-order execution dereferences kernel memory from user mode, leaking it via cache timing.',
+      long: 'On affected Intel CPUs (and some ARM), a user-mode load of a kernel address is executed speculatively before the privilege check faults; the loaded byte is used to index a probe array, leaving a measurable cache footprint. Mitigated by KPTI/KAISER (kernel page-table isolation), which unmaps kernel pages from user page tables, plus newer silicon that enforces the permission check before forwarding.',
+      seeAlso: ['spectre', 'cache-attack', 'aslr'] },
+
+    { id: 'cache-attack', term: 'Cache Side-Channel Attack', aka: 'Flush+Reload, Prime+Probe', category: 'hardware',
+      short: 'Recovering secrets by observing which cache lines a victim accesses.',
+      long: 'Flush+Reload: attacker clflushes a shared line, waits, then times a reload — fast means the victim accessed it. Prime+Probe: fill a cache set, wait, time refills — slow refills indicate eviction by the victim. Used to extract AES, RSA, and ECDSA keys from co-resident VMs, and is the read-out primitive for Spectre/Meltdown. Defenses: constant-time crypto, cache partitioning (Intel CAT), avoiding shared memory across trust boundaries.',
+      seeAlso: ['spectre', 'meltdown', 'timing-attack'] },
+
+    { id: 'timing-attack', term: 'Timing Attack', aka: 'timing side channel', category: 'performance',
+      short: 'Recovering secrets by measuring how long secret-dependent operations take.',
+      long: 'Variable-time code — early-exit memcmp on HMACs, table-lookup AES, branchy modular exponentiation, secret-dependent memory access — leaks bits through wall-clock or cycle timing. Kocher 1996 broke RSA this way; Lucky-13 and CBC padding-oracle attacks exploited TLS timing. Defense is constant-time implementation: data-independent control flow and data-independent memory access patterns, validated with tools like ct-verif or dudect.',
+      seeAlso: ['cache-attack', 'spectre', 'formal-verify'] },
+
+    { id: 'lwe-kyber', term: 'LWE / Kyber', aka: 'Learning With Errors, ML-KEM', category: 'numerics',
+      short: 'Lattice-based hardness assumption underlying NIST\'s post-quantum KEM standard.',
+      long: 'LWE: given (A, b = A·s + e mod q) with small noise e, recovering s is conjectured hard even for quantum computers. Module-LWE works over polynomial rings for efficiency. Kyber (standardized as ML-KEM in FIPS 203) uses MLWE to build an IND-CCA2 key-encapsulation mechanism with ~1 KB public keys and ciphertexts. Security reduces to worst-case lattice problems (SIVP, GapSVP) via Regev\'s reduction.',
+      seeAlso: ['diffie-hellman', 'tls', 'zkp'] },
+
+    { id: 'zkp', term: 'Zero-Knowledge Proof', aka: 'ZKP, ZK-SNARK, ZK-STARK', category: 'numerics',
+      short: 'Proves a statement is true without revealing anything beyond its truth.',
+      long: 'Three properties: completeness (honest prover convinces verifier), soundness (cheating prover cannot, except with negligible probability), zero-knowledge (verifier learns nothing beyond validity, formalized by a simulator). Sigma-protocols handle simple discrete-log statements; Fiat-Shamir makes them non-interactive. zk-SNARKs (Groth16, PLONK) give succinct proofs for arbitrary NP statements, used in Zcash, rollups, and anonymous credentials.',
+      seeAlso: ['mpc', 'diffie-hellman', 'formal-verify'] },
+
+    { id: 'mpc', term: 'Secure Multiparty Computation', aka: 'MPC, SMC', category: 'numerics',
+      short: 'Multiple parties jointly compute f(x1,…,xn) revealing only the output, not their inputs.',
+      long: 'Shamir secret sharing splits a secret into t-of-n shares; the BGW/GMW protocols compute additions locally and multiplications via interaction. Yao\'s garbled circuits handle two-party boolean computation in constant rounds. Security models: semi-honest (parties follow the protocol) vs malicious (arbitrary deviation). Real deployments include threshold ECDSA custody, private set intersection, and the Boston wage-gap study.',
+      seeAlso: ['zkp', 'diffie-hellman'] },
+
+    { id: 'diffie-hellman', term: 'Diffie-Hellman', aka: 'DH, ECDH, (EC)DHE', category: 'numerics',
+      short: 'Public-key protocol where two parties derive a shared secret over an open channel.',
+      long: 'Each side picks a private exponent, exchanges g^a and g^b, and computes g^(ab). Security rests on the Computational/Decisional Diffie-Hellman assumption in a group where discrete log is hard — typically a prime-order subgroup of Z_p^* or an elliptic curve (X25519, P-256). Ephemeral DHE/ECDHE gives forward secrecy: compromise of long-term keys does not decrypt past sessions. Vulnerable to MitM without authentication, hence its use with signatures or PSKs in TLS.',
+      seeAlso: ['tls', 'lwe-kyber', 'kerberos'] },
+
+    { id: 'symbolic-exec', term: 'Symbolic Execution', aka: 'KLEE, angr', category: 'concepts',
+      short: 'Runs a program on symbolic inputs and uses an SMT solver to enumerate feasible paths.',
+      long: 'Instead of concrete values, variables hold symbolic expressions; at each branch the engine forks and adds a path constraint. An SMT solver (Z3, STP) checks feasibility and synthesizes inputs that drive execution to bug sites (overflows, asserts). Scales poorly with path explosion and complex environment models; mitigated by concolic execution, search heuristics, and fuzzing hybrids (Driller, QSYM).',
+      seeAlso: ['formal-verify', 'buffer-overflow'] },
+
+    { id: 'formal-verify', term: 'Formal Verification', aka: 'machine-checked proof', category: 'concepts',
+      short: 'Mathematically proving a program meets its specification, checked by a proof assistant.',
+      long: 'Uses Coq/Rocq, Isabelle/HOL, F*, Lean, or Dafny to discharge proof obligations. Notable systems: seL4 (functional correctness + integrity of an OS kernel), CompCert (verified C compiler), HACL* and Fiat-Crypto (verified cryptographic primitives shipped in Firefox, Linux kernel, Chromium). Strengths: rules out entire bug classes within the spec. Limits: spec correctness, model fidelity, and the trusted computing base of the proof assistant itself.',
+      seeAlso: ['symbolic-exec', 'capabilities', 'timing-attack'] },
+
+    { id: 'rpki', term: 'RPKI', aka: 'Resource Public Key Infrastructure', category: 'concepts',
+      short: 'PKI binding IP prefixes to ASNs so BGP routers can filter bogus route announcements.',
+      long: 'RIRs issue Route Origin Authorizations (ROAs) signed under a hierarchy rooted at the five RIRs. Routers (or RPKI validators feeding them via RTR) drop announcements whose origin ASN does not match a valid ROA — Route Origin Validation. Stops accidental and malicious origin hijacks (YouTube/Pakistan, MyEtherWallet). Does not yet stop path attacks; BGPsec and ASPA address that but are not widely deployed.',
+      seeAlso: ['tls', 'certificate-transparency', 'threat-model'] },
+
+    { id: 'threat-model', term: 'Threat Model', aka: 'adversary model', category: 'concepts',
+      short: 'Explicit statement of who the adversary is, what they can do, and what must be protected.',
+      long: 'Without a threat model, "secure" is meaningless. Common axes: capabilities (passive eavesdropper, active MitM, malicious co-tenant, physical access, quantum), goals (confidentiality, integrity, availability, anonymity, unlinkability), and trust boundaries. Methodologies: STRIDE, attack trees, LINDDUN for privacy. Drives which mitigations are in scope — e.g., side channels are out of scope for a network-only adversary but central for a co-resident-VM threat model.',
+      seeAlso: ['least-privilege', 'sandboxing', 'rpki'] }
+  ],
+  // === END glossary v1 data placeholder ===
+
+  problems: [
+    { week: "Weeks 1–2", title: "Memory Safety, Speculation & ROP",
+      items: [
+        { tag: "derive", text: "Given an x86-64 binary with PIE+ASLR (28-bit base entropy) and one stack canary per frame, derive the expected number of remote brute-force attempts to land a single-shot ROP that needs both base disclosure and canary value. Assume 1-byte canary leak via format string and 8-byte base leak via separate vuln. Bound the attack with and without canary entropy reset on fork.", hint: "Forking servers re-use parent canary; consider P[hit] = 1/(2^k) per attempt, then geometric mean." },
+        { tag: "code",   text: "Write a 30-line C function vulnerable to Spectre-v1 (bounds check + double-indirect array load), then write the corresponding Speculative Load Hardening (SLH) version that masks the index with a doomsday value derived from the bounds check predicate. Verify with `objdump -d` that no conditional branch precedes the secret-indexed load on the speculative path.", hint: "Use __builtin_speculation_safe_value or write the cmov by hand." },
+        { tag: "paper",  text: "Read Kocher et al. 'Spectre Attacks' (S&P 2019) §4 (variant 1) and Canella et al. 'A Systematic Evaluation of Transient Execution Attacks and Defenses' (USENIX'19). Produce a 1-page comparison: which variants does retpoline alone NOT mitigate, and which require microcode + KPTI + per-process page-table flush? Include a table mapping CVE → variant → required mitigation layer.", hint: "Build the table with rows = {v1, v2, Meltdown, MDS, LVI, Retbleed} and columns = {software, microcode, hardware redesign}." }
+      ]
+    },
+    { week: "Weeks 3–4", title: "Web Isolation & Cryptographic Protocols",
+      items: [
+        { tag: "design", text: "Design a multi-tenant SaaS where each customer gets a subdomain (acme.app.com). Customers can embed third-party widgets. Specify (a) the SOP boundaries between tenants, (b) the CSP policy that allows widget embedding without unsafe-inline, (c) the SameSite cookie strategy for SSO across the parent domain, and (d) one residual attack the design does NOT mitigate.", hint: "Consider iframe sandbox attribute + Cross-Origin-Embedder-Policy + COOP for cross-origin isolation." },
+        { tag: "derive", text: "Show that the Schnorr Σ-protocol over (G, q, g) is an honest-verifier zero-knowledge proof of knowledge of x = log_g(y). Provide the simulator construction explicitly and prove its output distribution is identical to a real transcript when V is honest. Then prove special soundness via the forking lemma: extract x from any two accepting transcripts (a, e₁, z₁), (a, e₂, z₂) with e₁ ≠ e₂.", hint: "Simulator picks z, e ←$ Z_q then sets a := g^z · y^{−e}." },
+        { tag: "debug",  text: "A team's ML-KEM-768 implementation is failing CCA tests in 1 of 10⁵ runs. The decryption routine returns the FO-rejection symbol when re-encryption mismatches. Diagnose: list four root causes (NTT bug, sampler bias, modular reduction, wrong η₂), and the experiment that distinguishes each.", hint: "Compare against the KAT vectors from FIPS 203 Annex B; bisect by toggling the rejection branch." }
+      ]
+    },
+    { week: "Weeks 5–6", title: "Side-Channels, Capabilities & Network Trust",
+      items: [
+        { tag: "paper",  text: "Read the seL4 paper (Klein et al., SOSP'09) and the seL4 integrity proof (Sewell et al., POPL'13). Explain in 400 words why functional correctness alone does NOT imply confidentiality, and what additional definitional layer (intransitive non-interference) the integrity proof adds. Cite at least one historical OS bug that functional correctness would have prevented and one it would not.", hint: "Consider covert channels via shared resources — these are functionally 'correct' but break confidentiality." },
+        { tag: "design", text: "Design a 5-of-9 threshold signing service for a cold-wallet using GG20. Specify (a) DKG ceremony participants and key-shard refresh cadence, (b) HSM attestation policy at signing time, (c) handling of one HSM permanently lost (re-share or rotate?), and (d) the IcM/SOC-2 audit trail for each signature. Justify the choice of t and n given 99.99% availability + ≤2-region simultaneous compromise tolerance.", hint: "n − t ≥ tolerated unavailability AND t > tolerated compromise; solve the inequalities first." },
+        { tag: "derive", text: "Compute the per-circuit deanonymisation probability for a Tor user under an adversary controlling fraction f of bandwidth, with and without guard pinning. Assume guards rotate every 90 days, average circuit lifetime 10 minutes, and the user makes 1000 circuits/day. Evaluate at f = 0.05 and f = 0.20 and discuss the crossover where guard pinning HURTS the unlucky user.", hint: "Without pinning: 1−(1−f²)^N. With pinning: f for the unlucky guard fraction, 0 otherwise." },
+        { tag: "code",   text: "Write a Python tool that takes a BGP RIB dump (MRT format) and a local RPKI validated cache (slurm.json from Routinator), and outputs every announcement classified as VALID / INVALID / NotFound. Bonus: detect maxLength misconfigurations where a legitimate sub-prefix is dropped because the parent ROA's maxLen is too short.", hint: "Use mrtparse for the RIB; build a longest-prefix-match trie on ROAs." },
+        { tag: "debug",  text: "An RSA-CRT signing oracle on a smartcard occasionally returns a malformed signature. Demonstrate Boneh-DeMillo-Lipton fault attack: show how a single faulty CRT half (s_p incorrect, s_q correct) lets the attacker compute gcd(s − s_correct, n) = q. State the countermeasure (verify the signature before output) and the residual fault model it does not cover.", hint: "Use s ≡ s_p mod p, s ≡ s_q mod q; if only s_q is correct then s − m^d (mod n) is divisible by q but not p." }
       ]
     }
   ],
@@ -889,7 +1967,9 @@ if (C.graph && C.graph.nodes && C.graph.nodes.length) tabs.push({ id: 'graph',  
 if (C.deepDives && C.deepDives.length)  tabs.push({ id: 'deepdive', label: '📚 Deep Dives' });
 if (C.useCases && C.useCases.length)    tabs.push({ id: 'usecase',  label: '🔬 Use Cases' });
 if (C.youtube && C.youtube.videos && C.youtube.videos.length) tabs.push({ id: 'appendix', label: '📹 Appendix' });
+if (C.glossary && C.glossary.length)    tabs.push({ id: 'glossary', label: '📖 Glossary' }); /* glossary v1 tab */
 tabs.push({ id: 'problems', label: '🧠 Practice' });
+tabs.push({ id: 'quiz',     label: '🎯 Quiz' });
 
 document.getElementById('toolbar-title').textContent = '🧠 ' + C.course.code;
 document.title = C.course.code + ' — Interactive Study Tool';
@@ -1205,6 +2285,7 @@ function initGraph() {
   // Nodes
   const node = gGraph.selectAll("g.graph-node").data(nodes).enter().append("g")
     .attr("class", "graph-node")
+    .attr("data-id", d => d.id) /* glossary v1 data-id */
     .call(d3.drag().on("start", (evt, d) => { if (!evt.active) simul.alphaTarget(0.3).restart(); d.fx = d.x; d.fy = d.y; })
       .on("drag", (evt, d) => { d.fx = evt.x; d.fy = evt.y; })
       .on("end", (evt, d) => { if (!evt.active) simul.alphaTarget(0); d.fx = null; d.fy = null; }))
@@ -1546,6 +2627,8 @@ if (C.deepDives && C.deepDives.length) {
     // Full view
     const full = document.createElement('div'); full.className = 'dd-full'; full.id = 'dd-full-' + dd.id;
     let fhtml = `<div class="dd-infographic"><h2 style="color:${dd.color}">${dd.icon || ''} ${dd.title}</h2><div class="dd-subtitle">${dd.num || ''}${dd.num && dd.desc ? ' · ' : ''}${dd.desc || ''}</div>`;
+    // Navigator at the top for quick prev/grid/next without scrolling
+    fhtml += `<div class="dd-nav dd-nav-top"><button class="btn" onclick="navDD(-1)">← Prev</button><button class="btn" onclick="showCardGrid()">Grid</button><button class="btn" onclick="navDD(1)">Next →</button></div>`;
     if (dd.svg) fhtml += dd.svg(800, 300);
     // Render top-level content fields (markdown/body/content) as a single section
     const topText = dd.markdown || dd.body || dd.content || dd.detail;
@@ -1567,7 +2650,7 @@ if (C.deepDives && C.deepDives.length) {
       dd.keypoints.forEach(kp => { fhtml += `<div class="dd-kp"><strong>${kp.title}</strong><span>${kp.text || kp.body || ''}</span></div>`; });
       fhtml += '</div>';
     }
-    fhtml += `<div class="dd-nav"><button class="btn" onclick="navDD(-1)">← Prev</button><button class="btn" onclick="showCardGrid()">Grid</button><button class="btn" onclick="navDD(1)">Next →</button></div></div>`;
+    fhtml += `</div>`; // dd-nav v1 top inserted
     full.innerHTML = fhtml;
     fullContainer.appendChild(full);
   });
@@ -1635,6 +2718,20 @@ function showUseCase(idx) {
   html += '<button class="uc-back-btn" onclick="showUseCaseGrid()">← Back to All Use Cases</button>';
   html += `<h2>${uc.icon} ${uc.title}</h2>`;
   html += `<div class="uc-subtitle">${uc.desc}</div>`;
+  if (uc.summary || uc.pipeline || uc.metrics || uc.extensions) {
+    html += '<div class="uc-overview">';
+    if (uc.summary)   html += `<div class="uc-summary">${uc.summary}</div>`;
+    if (uc.pipeline)  html += `<div class="uc-pipeline">${uc.pipeline}</div>`;
+    if (uc.metrics && uc.metrics.length) {
+      html += '<div class="uc-metrics">';
+      uc.metrics.forEach(m => {
+        html += `<div class="uc-metric"><div class="uc-metric-label">${m.label}</div><div class="uc-metric-value">${m.value}</div></div>`;
+      });
+      html += '</div>';
+    }
+    if (uc.extensions) html += `<div class="uc-extensions"><strong>Where to go next:</strong> ${uc.extensions}</div>`;
+    html += '</div>';
+  }
   html += '<div class="uc-flow-controls">';
   html += '<button onclick="ucPrev()">← Previous</button>';
   html += '<button class="primary" onclick="ucNext()">Next Step →</button>';
@@ -1655,8 +2752,14 @@ function showUseCase(idx) {
     html += '<div class="uc-body">';
     html += `<div class="uc-title">${step.title}</div>`;
     html += `<div class="uc-component">📍 ${step.component}</div>`;
-    let detailHtml = `<p>${step.detail}</p><span class="uc-proto">${step.proto}</span>`;
+    let detailHtml = '';
+    if (step.intuition) detailHtml += `<div class="uc-intuition"><strong>💡 Intuition:</strong> ${step.intuition}</div>`;
+    detailHtml += `<p>${step.detail}</p>`;
+    if (step.proto) detailHtml += `<span class="uc-proto">${step.proto}</span>`;
+    if (step.complexity) detailHtml += `<span class="uc-complexity">⏱ ${step.complexity}</span>`;
     if (step.code) detailHtml += `<pre class="uc-code">${step.code}</pre>`;
+    if (step.example) detailHtml += `<div class="uc-example"><strong>📊 In practice:</strong> ${step.example}</div>`;
+    if (step.pitfall) detailHtml += `<div class="uc-pitfall"><strong>⚠ Pitfall:</strong> ${step.pitfall}</div>`;
     if (step.refs && step.refs.length) {
       detailHtml += '<div class="uc-refs">' + step.refs.map(r => `<a href="${r.url}" target="_blank" rel="noopener">${r.label}</a>`).join('') + '</div>';
     }
@@ -1984,10 +3087,36 @@ function toggleUnit(headerRow) {
 
 
 
-window.PROBLEMS_DATA=[{week:'Memory Safety',title:'Buffer Overflows & ROP',items:[{tag:'code',text:'Given a C function with `strcpy(buf, argv[1])` and a 64-byte `buf` on the stack, craft a payload to redirect RIP. Now enable ASLR+NX — how does ROP bypass both?'},{tag:'derive',text:'Why does stack canary defeat classic overflows but not info-leak + overflow? Sketch a 2-step exploit against a canary.'}]},{week:'Microarchitecture',title:'Spectre, Meltdown, Side Channels',items:[{tag:'paper',text:'Before reading Spectre v1: predict why speculative execution leaks data through cache timing even when the speculation is rolled back.',hint:'Cache side-effect persists even if architectural state is reverted.'},{tag:'design',text:'Design a defense against Spectre v1 in a JIT compiler. Why is LFENCE expensive? When can you skip it (data not attacker-controlled)?'}]},{week:'Isolation',title:'Sandboxing, TEE, Formal Verification',items:[{tag:'design',text:'Design a sandbox for untrusted plugins. Process isolation? WebAssembly? seL4? Compare TCB size and performance.'},{tag:'debug',text:'A TEE (Intel SGX) leaks data via page-fault patterns. How? Propose a mitigation that does not require hardware changes.'}]}];
+window.PROBLEMS_DATA=[
+  {week:'Memory Safety',title:'Buffer Overflows & ROP',
+   hook:'Provable security vs heuristic: we have 30 years of mitigations (canary, NX, ASLR, CFI, CET) and we are still patching the same bug. Why does the heuristic arms-race never converge — and what would a *provably* memory-safe TCB cost?',
+   items:[
+    {tag:'code',star:true,text:'Given a C function with `strcpy(buf, argv[1])` and a 64-byte `buf` on the stack, craft a payload to redirect RIP. Now enable ASLR+NX — how does ROP bypass both?',hint:'NX blocks data-as-code; ASLR randomises base. ROP chains existing gadgets, so it needs a 1-byte/pointer info-leak (format-string, OOB read) to defeat ASLR — then RIP overwrite into the gadget chain.'},
+    {tag:'derive',star:true,text:'Why does stack canary defeat classic overflows but not info-leak + overflow? Sketch a 2-step exploit against a canary.',hint:'Canary checks linear overwrite contiguity. Step 1: leak the canary via a read primitive (format string, partial-overwrite + restart). Step 2: overflow including the leaked canary value verbatim, then onto saved RIP.'}
+   ]},
+  {week:'Microarchitecture',title:'Spectre, Meltdown, Side Channels',
+   hook:'Side-channel formalism: "constant-time" code is a property of *execution traces*, not source. When the µarch (predictor, prefetcher, TLB) is the leak, what does it mean for an algorithm to be *provably* leak-free — and on whose hardware model?',
+   items:[
+    {tag:'paper',star:true,text:'Before reading Spectre v1: predict why speculative execution leaks data through cache timing even when the speculation is rolled back.',hint:'Cache side-effect persists even if architectural state is reverted — rollback restores registers/flags but not the L1/L2/L3 lines that speculative loads pulled in. Timing then probes residency.'},
+    {tag:'design',star:true,text:'Design a defense against Spectre v1 in a JIT compiler. Why is LFENCE expensive? When can you skip it (data not attacker-controlled)?',hint:'LFENCE serialises all prior loads — kills the speculation window but stalls the pipeline. Skip when the bounds index is a compile-time constant, a checked-tag union, or already masked into a power-of-two range (index masking is cheaper than fence).'}
+   ]},
+  {week:'Isolation',title:'Sandboxing, TEE, Formal Verification',
+   hook:'Compute-without-knowing: TEEs promise "the cloud runs your code without seeing your data". MPC and FHE promise the same with *math* instead of *Intel firmware*. Why is the formally-verified seL4 microkernel still only ~10 kLOC — and what does that bound tell us about the upper limit of trustable code?',
+   items:[
+    {tag:'design',star:true,text:'Design a sandbox for untrusted plugins. Process isolation? WebAssembly? seL4? Compare TCB size and performance.',hint:'Process isolation: TCB = kernel (~30M LOC Linux), syscall cost ~100 ns. Wasm: TCB = runtime + verifier (~50k LOC), call cost ~10 ns but data marshalling. seL4: TCB ~10k LOC formally verified, IPC ~hundreds of cycles. Pick by attacker model × perf budget.'},
+    {tag:'debug',star:true,text:'A TEE (Intel SGX) leaks data via page-fault patterns. How? Propose a mitigation that does not require hardware changes.',hint:'Untrusted OS sees enclave page accesses (controlled-channel attack, Xu 2015). Mitigations: oblivious RAM inside the enclave, data-oblivious algorithms (constant access pattern), or batching all reads through a single sealed working-set. None are cheap.'}
+   ]}
+];
 // ═══════════════════════════════════════════════════════════════════════
 // PRACTICE PROBLEMS (Problem-First learning)
 // ═══════════════════════════════════════════════════════════════════════
+const PROB_STATE_KEY = STORAGE_KEY + '-probstate';
+function probLoadState() { try { return JSON.parse(localStorage.getItem(PROB_STATE_KEY) || '{}'); } catch(e) { return {}; } }
+function probSaveState(s) { try { localStorage.setItem(PROB_STATE_KEY, JSON.stringify(s)); } catch(e) {} }
+let _probState = probLoadState();
+let _probFilters = { tags: new Set(), search: '', status: 'all' };
+let _probFlat = []; // [{si, ii, p}]
+
 function renderProblems() {
   const container = document.getElementById('problems-container');
   if (!container || container.dataset.rendered) return;
@@ -1995,6 +3124,17 @@ function renderProblems() {
              : (C.problems && C.problems.length) ? C.problems : null;
   if (!data) { container.innerHTML = '<div class="prob-intro">No practice problems defined yet for this course.</div>'; container.dataset.rendered = '1'; return; }
   container.dataset.rendered = '1';
+
+  // Build flat index + per-tag counts
+  _probFlat = [];
+  const tagCounts = {};
+  data.forEach((sec, si) => (sec.items||[]).forEach((p, ii) => {
+    _probFlat.push({ si, ii, p, key: si+':'+ii });
+    const t = p.tag || 'design';
+    tagCounts[t] = (tagCounts[t]||0) + 1;
+  }));
+  const TAGS = ['design','derive','debug','code','paper'];
+
   let html = `<div class="prob-intro">
     <strong>🧠 Problem-First Learning.</strong> Try each problem for 10 minutes <em>before</em> watching the lecture — flail, sketch, be wrong. Then watch with specific questions in mind. Your attention spikes 3–5×.
     <br><br>
@@ -2004,24 +3144,653 @@ function renderProblems() {
     <span class="prob-tag debug">debug</span> find the failure mode &nbsp;
     <span class="prob-tag code">code</span> hands-on &nbsp;
     <span class="prob-tag paper">paper</span> predict before reading
-  </div>`;
-  data.forEach((sec, i) => {
-    html += `<details class="prob-section"${i < 2 ? ' open' : ''}>
-      <summary><span class="wk">${sec.week||''}</span> ${sec.title||''}</summary>
-      <div class="prob-body"><ol>`;
-    (sec.items||[]).forEach(p => {
-      html += `<li><span class="prob-tag ${p.tag||'design'}">${p.tag||'design'}</span>${p.text||''}`;
-      if (p.hint) html += `<span class="prob-hint">${p.hint}</span>`;
-      html += `</li>`;
+    <br><br>
+    <strong style="color:#ffa657">⭐ starred</strong> problems are curiosity-piquing — start there if you're new.
+    Reveals come in three layers: <strong style="color:#d2a8ff">💡 hint</strong> (nudge) · <strong style="color:#79c0ff">🔑 approach</strong> (how to attack) · <strong style="color:#7ee787">📐 answer</strong> (the result). Try the problem before peeking.
+  </div>
+  <div class="prob-toolbar">
+    <input id="prob-search" class="prob-search" type="text" placeholder="🔍 Search problems by keyword…" />
+    <div class="prob-filter-row" id="prob-tag-row">
+      ${TAGS.map(t => `<span class="prob-chip ${t}" data-tag="${t}">${t}<span class="count">${tagCounts[t]||0}</span></span>`).join('')}
+    </div>
+    <div class="prob-filter-row" id="prob-status-row">
+      <span class="prob-chip" data-status="all">All</span>
+      <span class="prob-chip" data-status="unattempted">○ New</span>
+      <span class="prob-chip" data-status="thinking">🤔 Thinking</span>
+      <span class="prob-chip" data-status="got">💡 Got it</span>
+      <span class="prob-chip" data-status="stuck">❓ Stuck</span>
+    </div>
+    <button id="prob-surprise" class="prob-actbtn primary" title="Open a random problem">🎲 Surprise me</button>
+    <button id="prob-reset" class="prob-actbtn" title="Clear all status">↺ Reset</button>
+    <div class="prob-progress" title="Problems attempted (thinking / got / stuck)">
+      <span id="prob-progress-text">0/${_probFlat.length}</span>
+      <div class="prob-progress-bar"><div id="prob-progress-fill" class="prob-progress-fill" style="width:0%"></div></div>
+    </div>
+  </div>
+  <div id="prob-sections">`;
+
+  data.forEach((sec, si) => {
+    const secTotal = (sec.items||[]).length;
+    html += `<details class="prob-section" data-si="${si}"${si < 2 ? ' open' : ''}>
+      <summary><span class="wk">${sec.week||''}</span> <span class="sec-title">${sec.title||''}</span>
+        <span class="sec-meta"><span class="done-count" data-sec-done="${si}">0</span>/<span>${secTotal}</span></span>
+      </summary>`;
+    if (sec.hook) html += `<div class="prob-hook">${sec.hook}</div>`;
+    html += `<div class="prob-body">`;
+    (sec.items||[]).forEach((p, ii) => {
+      const key = si+':'+ii;
+      const st = _probState[key] || {};
+      const tag = p.tag || 'design';
+      const statusCls = st.status ? ' status-'+st.status : '';
+      html += `<div class="prob-card${statusCls}" data-key="${key}" data-tag="${tag}" data-status="${st.status||''}">
+        <div class="pc-head">
+          <span class="pc-num">${(ii+1).toString().padStart(2,'0')}</span>
+          <span class="prob-tag ${tag}">${tag}</span>
+          ${p.star ? '<span class="pc-star" title="Curiosity pick">★</span>' : ''}
+          <div class="prob-status-btns">
+            <button class="prob-statbtn thinking${st.status==='thinking'?' active':''}" data-status="thinking" title="I'm working on this">🤔</button>
+            <button class="prob-statbtn got${st.status==='got'?' active':''}"           data-status="got"      title="Got it">💡</button>
+            <button class="prob-statbtn stuck${st.status==='stuck'?' active':''}"       data-status="stuck"    title="Stuck">❓</button>
+          </div>
+        </div>
+        <div class="pc-text">${p.text||''}</div>`;
+      const reveals = [];
+      if (p.hint)     reveals.push({ kind:'hint',     label:'💡 Reveal hint',   field:'hint',     btnCls:'',          panelCls:'prob-hint',     tag:'Hint' });
+      if (p.approach) reveals.push({ kind:'approach', label:'🔑 Show approach', field:'approach', btnCls:'approach',  panelCls:'prob-approach', tag:'Approach' });
+      if (p.answer)   reveals.push({ kind:'answer',   label:'📐 Show answer',   field:'answer',   btnCls:'answer',    panelCls:'prob-answer',   tag:'Answer' });
+      if (reveals.length) {
+        html += `<div class="pc-actions">`;
+        reveals.forEach(r => {
+          const shown = st[r.kind+'Shown'];
+          html += `<button class="prob-revealbtn ${r.btnCls}" data-action="${r.kind}" ${shown?'style="display:none"':''}>${r.label}</button>`;
+        });
+        html += `</div>`;
+        reveals.forEach(r => {
+          const shown = st[r.kind+'Shown'];
+          html += `<div class="prob-reveal-panel ${r.panelCls}${shown?' shown':''}" data-panel="${r.kind}"><span class="rh-label">${r.tag}</span>${p[r.field]}</div>`;
+        });
+      }
+      html += `</div>`;
     });
-    html += `</ol></div></details>`;
+    html += `</div></details>`;
   });
+  html += `</div>
+  <div class="prob-spotlight" id="prob-spotlight">
+    <div class="prob-spotlight-card">
+      <button class="sl-close" onclick="probCloseSpotlight()">×</button>
+      <h3>🎲 Surprise Problem</h3>
+      <div id="prob-spotlight-body"></div>
+    </div>
+  </div>`;
+
   container.innerHTML = html;
+
+  // Wire interactions
+  container.querySelectorAll('#prob-tag-row .prob-chip').forEach(c => c.addEventListener('click', () => {
+    const tag = c.dataset.tag;
+    if (_probFilters.tags.has(tag)) _probFilters.tags.delete(tag); else _probFilters.tags.add(tag);
+    c.classList.toggle('active');
+    probApplyFilters();
+  }));
+  container.querySelectorAll('#prob-status-row .prob-chip').forEach(c => c.addEventListener('click', () => {
+    container.querySelectorAll('#prob-status-row .prob-chip').forEach(x => x.classList.remove('active'));
+    c.classList.add('active');
+    _probFilters.status = c.dataset.status;
+    probApplyFilters();
+  }));
+  container.querySelector('#prob-status-row .prob-chip[data-status="all"]').classList.add('active');
+
+  const searchEl = container.querySelector('#prob-search');
+  searchEl.addEventListener('input', () => { _probFilters.search = searchEl.value.toLowerCase().trim(); probApplyFilters(); });
+
+  container.querySelector('#prob-surprise').addEventListener('click', probSurpriseMe);
+  container.querySelector('#prob-reset').addEventListener('click', () => {
+    if (!confirm('Clear status on all '+_probFlat.length+' problems?')) return;
+    _probState = {}; probSaveState(_probState);
+    container.dataset.rendered = ''; container.innerHTML = ''; renderProblems();
+  });
+
+  container.querySelectorAll('.prob-card').forEach(card => {
+    card.querySelectorAll('.prob-statbtn').forEach(btn => btn.addEventListener('click', e => {
+      e.stopPropagation();
+      const key = card.dataset.key;
+      const newStatus = btn.dataset.status;
+      const st = _probState[key] || {};
+      st.status = (st.status === newStatus) ? null : newStatus;
+      _probState[key] = st; probSaveState(_probState);
+      card.classList.remove('status-thinking','status-got','status-stuck');
+      if (st.status) card.classList.add('status-'+st.status);
+      card.dataset.status = st.status || '';
+      card.querySelectorAll('.prob-statbtn').forEach(b => b.classList.toggle('active', b.dataset.status === st.status));
+      probUpdateProgress();
+      if (_probFilters.status !== 'all') probApplyFilters();
+    }));
+    const revealBtns = card.querySelectorAll('[data-action="hint"],[data-action="approach"],[data-action="answer"]');
+    revealBtns.forEach(btn => btn.addEventListener('click', () => {
+      const kind = btn.dataset.action;
+      const panel = card.querySelector(`.prob-reveal-panel[data-panel="${kind}"]`);
+      if (panel) panel.classList.add('shown');
+      btn.style.display = 'none';
+      const key = card.dataset.key;
+      const st = _probState[key] || {};
+      st[kind+'Shown'] = true; _probState[key] = st; probSaveState(_probState);
+    }));
+  });
+
+  probUpdateProgress();
 }
+
+function probApplyFilters() {
+  const container = document.getElementById('problems-container');
+  const { tags, search, status } = _probFilters;
+  container.querySelectorAll('.prob-card').forEach(card => {
+    const tag = card.dataset.tag;
+    const cardStatus = card.dataset.status || '';
+    const text = card.querySelector('.pc-text').textContent.toLowerCase();
+    let show = true;
+    if (tags.size > 0 && !tags.has(tag)) show = false;
+    if (search && !text.includes(search)) show = false;
+    if (status !== 'all') {
+      if (status === 'unattempted') { if (cardStatus) show = false; }
+      else if (cardStatus !== status) show = false;
+    }
+    card.classList.toggle('hidden', !show);
+  });
+  // Auto-open sections with visible cards; hide empty sections
+  container.querySelectorAll('.prob-section').forEach(sec => {
+    const visible = sec.querySelectorAll('.prob-card:not(.hidden)').length;
+    sec.style.display = visible === 0 ? 'none' : '';
+    if (visible > 0 && (tags.size || search || status !== 'all')) sec.open = true;
+  });
+}
+
+function probUpdateProgress() {
+  const total = _probFlat.length;
+  let attempted = 0;
+  const perSec = {};
+  _probFlat.forEach(({si, key}) => {
+    const st = _probState[key];
+    if (st && st.status) { attempted++; perSec[si] = (perSec[si]||0) + 1; }
+  });
+  const txt = document.getElementById('prob-progress-text');
+  const fill = document.getElementById('prob-progress-fill');
+  if (txt) txt.textContent = attempted + '/' + total;
+  if (fill) fill.style.width = (total ? (attempted/total*100) : 0) + '%';
+  document.querySelectorAll('[data-sec-done]').forEach(el => {
+    const si = +el.dataset.secDone;
+    el.textContent = perSec[si] || 0;
+  });
+}
+
+function probSurpriseMe() {
+  if (!_probFlat.length) return;
+  // Prefer starred & unattempted; otherwise unattempted; otherwise any
+  const starredNew = _probFlat.filter(x => x.p.star && !(_probState[x.key]||{}).status);
+  const anyNew     = _probFlat.filter(x => !(_probState[x.key]||{}).status);
+  const pool = starredNew.length ? starredNew : (anyNew.length ? anyNew : _probFlat);
+  const pick = pool[Math.floor(Math.random()*pool.length)];
+  const { p, si, ii, key } = pick;
+  const sec = (window.PROBLEMS_DATA || (C.problems||[]))[si];
+  const tag = p.tag || 'design';
+  const body = document.getElementById('prob-spotlight-body');
+  body.innerHTML = `
+    <div style="display:flex;gap:8px;align-items:center;margin-bottom:6px;flex-wrap:wrap">
+      <span class="prob-tag ${tag}">${tag}</span>
+      ${p.star ? '<span style="color:#ffa657">★</span>' : ''}
+      <span style="color:#8b949e;font-size:12px">${sec.week||''} · ${sec.title||''} · #${ii+1}</span>
+    </div>
+    <div class="pc-text">${p.text||''}</div>
+    ${(()=>{const L=[];if(p.hint)L.push({s:'💡 Reveal hint',c:'prob-hint',t:'Hint',b:p.hint});if(p.approach)L.push({s:'🔑 Show approach',c:'prob-approach',t:'Approach',b:p.approach});if(p.answer)L.push({s:'📐 Show answer',c:'prob-answer',t:'Answer',b:p.answer});return L.map(l=>`<details style="margin-top:10px"><summary style="cursor:pointer;color:#8b949e;font-size:12px;padding:4px 0">${l.s}</summary><div class="prob-reveal-panel ${l.c} shown" style="margin-top:6px"><span class="rh-label">${l.t}</span>${l.b}</div></details>`).join('');})()}
+    <div style="margin-top:14px;display:flex;gap:6px;flex-wrap:wrap">
+      <button class="prob-actbtn" onclick="probJumpTo('${key}')">↗ Jump to it</button>
+      <button class="prob-actbtn" onclick="probSurpriseMe()">🎲 Another</button>
+    </div>`;
+  document.getElementById('prob-spotlight').classList.add('open');
+}
+function probCloseSpotlight() { const el = document.getElementById('prob-spotlight'); if (el) el.classList.remove('open'); }
+function probJumpTo(key) {
+  probCloseSpotlight();
+  const card = document.querySelector(`.prob-card[data-key="${key}"]`);
+  if (!card) return;
+  const sec = card.closest('.prob-section');
+  if (sec) sec.open = true;
+  card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  card.style.transition = 'box-shadow .3s'; card.style.boxShadow = '0 0 0 2px #58a6ff';
+  setTimeout(() => { card.style.boxShadow = ''; }, 1500);
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') probCloseSpotlight(); });
 if (typeof switchTab === 'function') {
   const _origSwitchTab_prob = switchTab;
   switchTab = function(tab) { _origSwitchTab_prob(tab); if (tab === 'problems') renderProblems(); };
 }
+
+// === BEGIN glossary v1 js ===
+// ═══════════════════════════════════════════════════════════════════════
+// GLOSSARY — definitions + cross-references with graph & mindmap
+// ═══════════════════════════════════════════════════════════════════════
+(function initGlossaryMaps() {
+  const gloss = (C && C.glossary) || [];
+  if (!gloss.length) return;
+
+  // 1. Build id → entry maps and "label/aka" → id reverse map.
+  const byId = {};
+  const byLabel = {}; // lowercased term/aka → id
+  gloss.forEach(g => {
+    byId[g.id] = g;
+    const keys = [g.term].concat(g.aka || []);
+    keys.forEach(k => { if (k) byLabel[k.toLowerCase().trim()] = g.id; });
+  });
+
+  // 2. Patch graph node tips for any node whose id matches a glossary entry.
+  let graphMatched = 0;
+  const glossByGraphNode = {};
+  if (C.graph && Array.isArray(C.graph.nodes)) {
+    C.graph.nodes.forEach(n => {
+      if (byId[n.id]) {
+        glossByGraphNode[n.id] = n.id;
+        graphMatched++;
+        if (n.tip && n.tip.indexOf('📖') < 0) n.tip = n.tip + ' · 📖 in glossary';
+      } else {
+        // Fallback: try label/aka match
+        const k = (n.label || '').toLowerCase().trim();
+        if (byLabel[k]) {
+          glossByGraphNode[n.id] = byLabel[k];
+          graphMatched++;
+          if (n.tip && n.tip.indexOf('📖') < 0) n.tip = n.tip + ' · 📖 in glossary';
+        }
+      }
+    });
+  }
+
+  // 3. Walk mindmap and build name → glossary-id map. Match relaxed:
+  //    full name (newlines → space) OR each line.
+  let mindmapMatched = 0;
+  const glossByMindmapName = {};
+  function walkMm(node) {
+    if (!node) return;
+    if (node.name) {
+      const full = node.name.replace(/\n/g, ' ').trim();
+      const candidates = [full].concat(node.name.split(/\n+/).map(s => s.trim()).filter(Boolean));
+      for (const c of candidates) {
+        const id = byLabel[c.toLowerCase()];
+        if (id) {
+          glossByMindmapName[full] = id;
+          mindmapMatched++;
+          break;
+        }
+      }
+    }
+    (node.children || []).forEach(walkMm);
+  }
+  if (C.mindmap) walkMm(C.mindmap);
+
+  window._glossaryById = byId;
+  window._glossaryByLabel = byLabel;
+  window._glossaryIdByGraphNode = glossByGraphNode;
+  window._glossaryIdByMindmapName = glossByMindmapName;
+  window._glossaryStats = { graphMatched: graphMatched, mindmapMatched: mindmapMatched };
+
+  // 4. Monkey-patch showTooltip so it appends a "📖 Defined in glossary →" link
+  //    whenever the hovered name corresponds to a glossary entry.
+  if (typeof window.showTooltip === 'function') {
+    const _origShowTooltip = window.showTooltip;
+    const ttRoot = document.getElementById('tooltip');
+    let glossFooter = ttRoot.querySelector('.tt-glossary');
+    if (!glossFooter) {
+      glossFooter = document.createElement('div');
+      glossFooter.className = 'tt-glossary';
+      ttRoot.appendChild(glossFooter);
+    }
+    window.showTooltip = function(evt, name, tip, slides) {
+      _origShowTooltip(evt, name, tip, slides);
+      glossFooter.innerHTML = '';
+      ttRoot.classList.remove('has-glossary');
+      if (!name) return;
+      const plain = String(name).replace(/\n/g, ' ').trim();
+      const key = plain.toLowerCase();
+      let id = byLabel[key] || glossByMindmapName[plain] || null;
+      if (!id) {
+        // strip parenthetical suffix e.g. "Optical Switch (OCS)" → "Optical Switch"
+        const stripped = plain.replace(/\s*\([^)]*\)\s*$/, '').toLowerCase();
+        if (stripped !== key) id = byLabel[stripped] || null;
+      }
+      if (id) {
+        const a = document.createElement('a');
+        a.textContent = '📖 Defined in glossary →';
+        a.onclick = (e) => {
+          e.stopPropagation();
+          if (typeof window.glossaryJumpToTerm === 'function') window.glossaryJumpToTerm(id);
+        };
+        glossFooter.appendChild(a);
+        ttRoot.classList.add('has-glossary');
+      }
+    };
+  }
+})();
+
+// ─── renderGlossary ───────────────────────────────────────────────────
+let _glossSelectedCat = 'all';
+let _glossSearch = '';
+let _glossSearchTimer = null;
+let _glossBuilt = false;
+
+const GLOSS_CAT_COLORS = {
+  hardware:    '#58a6ff',
+  software:    '#7ee787',
+  numerics:    '#79c0ff',
+  systems:     '#d2a8ff',
+  performance: '#f778ba',
+  concepts:    '#ffa657'
+};
+
+function renderGlossary() {
+  const data = (C.glossary || []).slice().sort((a, b) =>
+    a.term.toLowerCase().localeCompare(b.term.toLowerCase()));
+  const list = document.getElementById('glossary-list');
+  const pillBar = document.getElementById('glossary-cat-pills');
+  const countEl = document.getElementById('glossary-count');
+  const searchEl = document.getElementById('glossary-search');
+  if (!list || !pillBar || !countEl || !searchEl) return;
+
+  // Build category pills + search input wiring once.
+  if (!_glossBuilt) {
+    const cats = ['all'].concat(
+      Array.from(new Set(data.map(d => d.category))).sort());
+    pillBar.innerHTML = '';
+    cats.forEach(cat => {
+      const btn = document.createElement('button');
+      btn.textContent = cat === 'all' ? `All (${data.length})` :
+        `${cat} (${data.filter(d => d.category === cat).length})`;
+      btn.dataset.cat = cat;
+      const color = cat === 'all' ? '#58a6ff' : (GLOSS_CAT_COLORS[cat] || '#58a6ff');
+      btn.style.setProperty('--pill-color', color);
+      btn.style.setProperty('--pill-bg', color + '22');
+      if (cat === _glossSelectedCat) btn.classList.add('active');
+      btn.onclick = () => {
+        _glossSelectedCat = cat;
+        pillBar.querySelectorAll('button').forEach(b =>
+          b.classList.toggle('active', b.dataset.cat === cat));
+        renderGlossary();
+      };
+      pillBar.appendChild(btn);
+    });
+    searchEl.addEventListener('input', () => {
+      if (_glossSearchTimer) clearTimeout(_glossSearchTimer);
+      _glossSearchTimer = setTimeout(() => {
+        _glossSearch = searchEl.value.trim().toLowerCase();
+        renderGlossary();
+      }, 120);
+    });
+    _glossBuilt = true;
+  }
+
+  // Filter
+  const q = _glossSearch;
+  const visible = data.filter(d => {
+    if (_glossSelectedCat !== 'all' && d.category !== _glossSelectedCat) return false;
+    if (!q) return true;
+    const hay = [d.term, (Array.isArray(d.aka) ? d.aka.join(' ') : (d.aka || '')), d.short, d.long || ''].join(' ').toLowerCase();
+    return hay.indexOf(q) >= 0;
+  });
+
+  countEl.textContent = `${visible.length} of ${data.length} terms`;
+
+  const graphIds = new Set();
+  if (C.graph && C.graph.nodes) C.graph.nodes.forEach(n => graphIds.add(n.id));
+  const glossIds = new Set(data.map(d => d.id));
+  const mindmapNames = window._glossaryIdByMindmapName || {};
+  const reverseMindmap = {}; // glossary-id → mindmap label
+  Object.keys(mindmapNames).forEach(name => { reverseMindmap[mindmapNames[name]] = name; });
+
+  list.innerHTML = '';
+  visible.forEach(d => {
+    const color = GLOSS_CAT_COLORS[d.category] || '#58a6ff';
+    const card = document.createElement('div');
+    card.className = 'glossary-card';
+    card.dataset.id = d.id;
+    card.style.setProperty('--cat-color', color);
+
+    const head = document.createElement('div');
+    head.className = 'glossary-term-row';
+    const term = document.createElement('span');
+    term.className = 'glossary-term';
+    term.textContent = d.term;
+    head.appendChild(term);
+    const badge = document.createElement('span');
+    badge.className = 'glossary-cat-badge';
+    badge.textContent = d.category;
+    badge.style.setProperty('--cat-color', color);
+    head.appendChild(badge);
+    card.appendChild(head);
+
+    if (d.aka && d.aka.length) {
+      const aka = document.createElement('div');
+      aka.className = 'glossary-aka';
+      aka.textContent = 'aka ' + (Array.isArray(d.aka) ? d.aka.join(', ') : d.aka);
+      card.appendChild(aka);
+    }
+
+    const shortEl = document.createElement('div');
+    shortEl.className = 'glossary-short';
+    shortEl.textContent = d.short || '';
+    card.appendChild(shortEl);
+
+    if (d.long) {
+      const longEl = document.createElement('div');
+      longEl.className = 'glossary-long';
+      longEl.innerHTML = d.long;
+      card.appendChild(longEl);
+      const toggle = document.createElement('button');
+      toggle.className = 'glossary-toggle';
+      toggle.textContent = 'Show more ▾';
+      toggle.onclick = () => {
+        const expanded = card.classList.toggle('expanded');
+        toggle.textContent = expanded ? 'Show less ▴' : 'Show more ▾';
+      };
+      card.appendChild(toggle);
+    }
+
+    const links = document.createElement('div');
+    links.className = 'glossary-links';
+    if (graphIds.has(d.id)) {
+      const b = document.createElement('button');
+      b.textContent = '🔗 Topic Graph';
+      b.onclick = () => window.glossaryJumpToGraphNode(d.id);
+      links.appendChild(b);
+    }
+    if (reverseMindmap[d.id]) {
+      const b = document.createElement('button');
+      b.textContent = '📐 Mind Map';
+      b.onclick = () => window.glossaryJumpToMindmapNode(reverseMindmap[d.id]);
+      links.appendChild(b);
+    }
+    (d.seeAlso || []).forEach(otherId => {
+      if (!glossIds.has(otherId)) return;
+      const other = (C.glossary || []).find(x => x.id === otherId);
+      if (!other) return;
+      const b = document.createElement('button');
+      b.textContent = '→ ' + other.term;
+      b.onclick = () => window.glossaryJumpToTerm(otherId);
+      links.appendChild(b);
+    });
+    if (links.children.length) card.appendChild(links);
+
+    list.appendChild(card);
+  });
+}
+
+// ─── Cross-tab jump helpers ───────────────────────────────────────────
+window.glossaryJumpToTerm = function(id) {
+  if (typeof switchTab === 'function') switchTab('glossary');
+  setTimeout(() => {
+    const card = document.querySelector('.glossary-card[data-id="' + CSS.escape(id) + '"]');
+    if (!card) return;
+    card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    card.classList.remove('flash');
+    void card.offsetWidth; // restart animation
+    card.classList.add('flash');
+    // Pull the display term from the card itself so the toast matches what the user sees
+    const labelEl = card.querySelector('.glossary-term');
+    const label = labelEl ? labelEl.textContent.trim() : id;
+    if (typeof showGlossaryToast === 'function') showGlossaryToast('Glossary', label, 'glossary');
+    setTimeout(() => card.classList.remove('flash'), 2800);
+  }, 60);
+};
+
+window.glossaryJumpToGraphNode = function(id) {
+  if (typeof switchTab === 'function') switchTab('graph');
+  const tryFlash = (attempt) => {
+    const g = document.querySelector('g.graph-node[data-id="' + CSS.escape(id) + '"]');
+    if (!g) {
+      if (attempt < 12) return setTimeout(() => tryFlash(attempt + 1), 120);
+      return;
+    }
+    // Pull the node's force-simulation position from its bound datum
+    let d = null;
+    try { d = (typeof d3 !== 'undefined') ? d3.select(g).datum() : null; } catch(_) {}
+    const label = (d && (d.label || d.id)) || id;
+
+    // 1) Pan + zoom the SVG so the node is centered and reasonably zoomed in
+    try {
+      if (d && typeof d.x === 'number' && typeof d.y === 'number' && typeof d3 !== 'undefined' && typeof graphZoom !== 'undefined') {
+        const svgEl = document.getElementById('canvas-graph');
+        const W = (svgEl && svgEl.clientWidth)  || window.innerWidth;
+        const H = (svgEl && svgEl.clientHeight) || window.innerHeight;
+        const k = 1.6;
+        const tx = W / 2 - k * d.x;
+        const ty = H / 2 - k * d.y;
+        d3.select('#canvas-graph')
+          .transition().duration(650)
+          .call(graphZoom.transform, d3.zoomIdentity.translate(tx, ty).scale(k));
+      } else {
+        g.querySelector('circle') && g.querySelector('circle').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    } catch(_) {}
+
+    // 2) Big halo ring + bold class on the node group
+    g.classList.remove('glossary-highlight');
+    void g.getBoundingClientRect();
+    g.classList.add('glossary-highlight');
+    try {
+      // remove any previous halo
+      g.querySelectorAll('circle.glossary-halo').forEach(c => c.remove());
+      const halo = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+      halo.setAttribute('class', 'glossary-halo');
+      halo.setAttribute('cx', '0');
+      halo.setAttribute('cy', '0');
+      halo.setAttribute('r', '14');
+      g.insertBefore(halo, g.firstChild); // behind the node circle
+    } catch(_) {}
+
+    // 3) Top-of-screen toast
+    showGlossaryToast('Topic Graph', label, 'graph');
+
+    setTimeout(() => {
+      g.classList.remove('glossary-highlight');
+      g.querySelectorAll('circle.glossary-halo').forEach(c => c.remove());
+    }, 4200);
+  };
+  requestAnimationFrame(() => requestAnimationFrame(() => tryFlash(0)));
+};
+
+window.glossaryJumpToMindmapNode = function(label) {
+  if (typeof switchTab === 'function') switchTab('mindmap');
+  const target = (label || '').replace(/\n/g, ' ').trim().toLowerCase();
+  const tryFlash = (attempt) => {
+    const groups = document.querySelectorAll('#canvas g');
+    let hit = null;
+    groups.forEach(g => {
+      if (hit) return;
+      const txt = (g.textContent || '').replace(/\s+/g, ' ').trim().toLowerCase();
+      if (txt === target) hit = g;
+    });
+    if (!hit) {
+      if (attempt < 10) return setTimeout(() => tryFlash(attempt + 1), 150);
+      return;
+    }
+
+    // 1) Pan the mindmap so the hit node is roughly centered
+    try {
+      if (typeof d3 !== 'undefined' && typeof mmZoom !== 'undefined') {
+        const svgEl = document.getElementById('canvas');
+        const W = (svgEl && svgEl.clientWidth)  || window.innerWidth;
+        const H = (svgEl && svgEl.clientHeight) || window.innerHeight;
+        // Read the node's local SVG position from its existing transform attribute (form: translate(x,y))
+        const tr = hit.getAttribute('transform') || '';
+        const m = tr.match(/translate\(\s*([-0-9.]+)\s*[ ,]\s*([-0-9.]+)/);
+        if (m) {
+          const x = parseFloat(m[1]), y = parseFloat(m[2]);
+          const k = 1.3;
+          const tx = W / 2 - k * x;
+          const ty = H / 2 - k * y;
+          d3.select('#canvas')
+            .transition().duration(650)
+            .call(mmZoom.transform, d3.zoomIdentity.translate(tx, ty).scale(k));
+        } else {
+          hit.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      } else {
+        hit.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    } catch(_) {}
+
+    // 2) Halo ring on the mindmap node
+    try {
+      hit.querySelectorAll('circle.glossary-mm-halo').forEach(c => c.remove());
+      const halo = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+      halo.setAttribute('class', 'glossary-mm-halo');
+      halo.setAttribute('cx', '0');
+      halo.setAttribute('cy', '0');
+      halo.setAttribute('r', '14');
+      hit.insertBefore(halo, hit.firstChild);
+      setTimeout(() => halo.remove(), 4200);
+    } catch(_) {}
+
+    // 3) Stroke flash on the shape
+    const shape = hit.querySelector('circle, rect');
+    if (shape) {
+      const prev = shape.getAttribute('stroke');
+      const prevW = shape.getAttribute('stroke-width');
+      shape.setAttribute('stroke', '#f0c000');
+      shape.setAttribute('stroke-width', '5');
+      setTimeout(() => {
+        if (prev !== null) shape.setAttribute('stroke', prev); else shape.removeAttribute('stroke');
+        if (prevW !== null) shape.setAttribute('stroke-width', prevW); else shape.removeAttribute('stroke-width');
+      }, 3000);
+    }
+
+    // 4) Toast
+    showGlossaryToast('Mind Map', (label || '').replace(/\n/g, ' '), 'mindmap');
+  };
+  requestAnimationFrame(() => requestAnimationFrame(() => tryFlash(0)));
+};
+
+// Floating toast helper — visible regardless of where the target node ended up
+function showGlossaryToast(where, label, kind) {
+  let t = document.getElementById('glossary-toast');
+  if (!t) {
+    t = document.createElement('div');
+    t.id = 'glossary-toast';
+    document.body.appendChild(t);
+  }
+  const icon = kind === 'graph' ? '🔗' : (kind === 'mindmap' ? '📐' : '📖');
+  t.innerHTML = '<span class="gt-icon">' + icon + '</span>'
+              + '<span>Jumped to: <strong>' + (label || '').replace(/[<>&]/g, '') + '</strong></span>'
+              + '<span class="gt-sub">in ' + where + '</span>';
+  // restart animation
+  t.classList.remove('show');
+  void t.offsetWidth;
+  t.classList.add('show');
+  clearTimeout(t._hideTimer);
+  t._hideTimer = setTimeout(() => t.classList.remove('show'), 3200);
+}
+
+// Lazy-render hook
+if (typeof switchTab === 'function') {
+  const _origSwitchTab_gloss = switchTab;
+  switchTab = function(tab) { _origSwitchTab_gloss(tab); if (tab === 'glossary') renderGlossary(); };
+}
+// === END glossary v1 js ===
 </script>
 <!-- BEGIN tooltip-pin (click pins, click outside closes) -->
 <style>

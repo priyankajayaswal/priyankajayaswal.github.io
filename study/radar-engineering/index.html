@@ -254,6 +254,37 @@
     border-radius: 4px; font-size: 10px; color: #79c0ff; text-decoration: none; transition: all .2s;
   }
   .uc-refs a:hover { border-color: #58a6ff; color: #58a6ff; background: #0d1117; }
+
+  /* ── Use-case enrichment v2 ── */
+  .uc-overview { background: linear-gradient(135deg, #0d1117 0%, #161b22 100%); border: 1px solid #30363d;
+    border-left: 3px solid #58a6ff; border-radius: 10px; padding: 16px 18px; margin: 16px 0 20px; }
+  .uc-overview .uc-summary { font-size: 13px; color: #c9d1d9; line-height: 1.7; }
+  .uc-overview .uc-summary strong { color: #79c0ff; }
+  .uc-pipeline { margin-top: 14px; padding: 10px 12px; background: #0d1117; border: 1px solid #30363d;
+    border-radius: 6px; font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+    font-size: 11px; color: #7ee787; line-height: 1.6; white-space: pre-wrap; overflow-x: auto; }
+  .uc-metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 10px; margin-top: 14px; }
+  .uc-metric { background: #0d1117; border: 1px solid #30363d; border-radius: 8px; padding: 10px 12px; }
+  .uc-metric .uc-metric-label { font-size: 10px; color: #8b949e; text-transform: uppercase; letter-spacing: 0.5px; }
+  .uc-metric .uc-metric-value { font-size: 14px; color: #ffa657; font-weight: 600; margin-top: 4px; line-height: 1.4; }
+  .uc-extensions { margin-top: 14px; padding: 10px 12px; background: rgba(210, 168, 255, 0.06);
+    border: 1px solid rgba(210, 168, 255, 0.25); border-radius: 6px; font-size: 12px; color: #c9d1d9; line-height: 1.6; }
+  .uc-extensions strong { color: #d2a8ff; }
+  .uc-step .uc-intuition { margin-top: 8px; padding: 8px 10px; background: rgba(126, 231, 135, 0.08);
+    border-left: 2px solid #3fb950; border-radius: 4px; font-size: 12px; color: #c9d1d9; line-height: 1.55; display: none; }
+  .uc-step.active .uc-intuition { display: block; }
+  .uc-step .uc-intuition strong { color: #7ee787; }
+  .uc-step .uc-complexity { display: inline-block; margin-top: 8px; margin-right: 6px;
+    background: rgba(31, 111, 235, 0.15); border: 1px solid rgba(88, 166, 255, 0.35); border-radius: 4px;
+    padding: 2px 8px; font-size: 10px; color: #79c0ff; font-family: 'Cascadia Code', 'Consolas', monospace; }
+  .uc-step .uc-pitfall { margin-top: 8px; padding: 8px 10px; background: rgba(255, 123, 114, 0.08);
+    border-left: 2px solid #ff7b72; border-radius: 4px; font-size: 12px; color: #c9d1d9; line-height: 1.55; display: none; }
+  .uc-step.active .uc-pitfall { display: block; }
+  .uc-step .uc-pitfall strong { color: #ff7b72; }
+  .uc-step .uc-example { margin-top: 8px; padding: 8px 10px; background: rgba(255, 166, 87, 0.06);
+    border-left: 2px solid #ffa657; border-radius: 4px; font-size: 12px; color: #c9d1d9; line-height: 1.55; display: none; }
+  .uc-step.active .uc-example { display: block; }
+  .uc-step .uc-example strong { color: #ffa657; }
   .legend-close {
     position: absolute; top: 8px; right: 8px; background: none; border: none;
     color: #8b949e; font-size: 16px; cursor: pointer; line-height: 1; padding: 2px 6px;
@@ -321,27 +352,92 @@
   /* ── Practice Problems (Problem-First) ── */
   #problems-container { position: relative; top: 0; width: 100%; max-width: 1100px; margin: 0 auto; padding: 24px 16px 60px; }
   #view-problems { overflow-y: auto; height: calc(100vh - 50px); margin-top: 50px; }
-  .prob-intro { background: #161b22; border: 1px solid #30363d; border-left: 3px solid #7ee787; border-radius: 6px; padding: 14px 18px; margin-bottom: 22px; color: #c9d1d9; font-size: 14px; line-height: 1.6; }
+  .prob-intro { background: #161b22; border: 1px solid #30363d; border-left: 3px solid #7ee787; border-radius: 6px; padding: 14px 18px; margin-bottom: 18px; color: #c9d1d9; font-size: 14px; line-height: 1.6; }
   .prob-intro strong { color: #7ee787; }
-  .prob-section { margin-bottom: 22px; border: 1px solid #30363d; border-radius: 8px; background: #161b22; overflow: hidden; }
-  .prob-section > summary { padding: 14px 18px; font-size: 15px; font-weight: 600; color: #e6edf3; cursor: pointer; list-style: none; display: flex; align-items: center; gap: 10px; user-select: none; transition: background .15s; }
+  /* Toolbar */
+  .prob-toolbar { position: sticky; top: 0; z-index: 5; background: rgba(13,17,23,0.95); backdrop-filter: blur(6px); padding: 10px 0 12px; margin-bottom: 14px; border-bottom: 1px solid #21262d; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  .prob-search { flex: 1 1 200px; min-width: 180px; background: #0d1117; border: 1px solid #30363d; border-radius: 6px; padding: 7px 12px; color: #c9d1d9; font-size: 13px; outline: none; }
+  .prob-search:focus { border-color: #58a6ff; }
+  .prob-filter-row { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+  .prob-chip { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 12px; cursor: pointer; background: #161b22; border: 1px solid #30363d; color: #8b949e; text-transform: uppercase; letter-spacing: .4px; transition: all .15s; user-select: none; }
+  .prob-chip:hover { border-color: #58a6ff; color: #c9d1d9; }
+  .prob-chip.active { background: #1f6feb22; border-color: #58a6ff; color: #58a6ff; }
+  .prob-chip.design.active  { background: #58a6ff22; border-color: #58a6ff; color: #58a6ff; }
+  .prob-chip.derive.active  { background: #ffa65722; border-color: #ffa657; color: #ffa657; }
+  .prob-chip.debug.active   { background: #f8514922; border-color: #f85149; color: #f85149; }
+  .prob-chip.code.active    { background: #7ee78722; border-color: #7ee787; color: #7ee787; }
+  .prob-chip.paper.active   { background: #d2a8ff22; border-color: #d2a8ff; color: #d2a8ff; }
+  .prob-chip .count { font-size: 9px; opacity: .7; font-weight: 500; }
+  .prob-actbtn { background: #161b22; border: 1px solid #30363d; color: #c9d1d9; padding: 6px 12px; border-radius: 6px; font-size: 12px; cursor: pointer; transition: all .15s; }
+  .prob-actbtn:hover { border-color: #58a6ff; color: #58a6ff; }
+  .prob-actbtn.primary { background: #1f6feb; border-color: #58a6ff; color: #fff; }
+  .prob-actbtn.primary:hover { background: #388bfd; }
+  .prob-progress { display: flex; align-items: center; gap: 10px; flex: 0 0 auto; font-size: 11px; color: #8b949e; margin-left: auto; }
+  .prob-progress-bar { width: 100px; height: 6px; background: #21262d; border-radius: 3px; overflow: hidden; }
+  .prob-progress-fill { height: 100%; background: linear-gradient(90deg, #7ee787, #58a6ff); transition: width .3s; }
+  /* Sections */
+  .prob-section { margin-bottom: 16px; border: 1px solid #30363d; border-radius: 8px; background: #161b22; overflow: hidden; }
+  .prob-section > summary { padding: 13px 18px; font-size: 14px; font-weight: 600; color: #e6edf3; cursor: pointer; list-style: none; display: flex; align-items: center; gap: 10px; user-select: none; transition: background .15s; flex-wrap: wrap; }
   .prob-section > summary::-webkit-details-marker { display: none; }
   .prob-section > summary::before { content: '▸'; color: #8b949e; font-size: 11px; transition: transform .2s; }
   .prob-section[open] > summary::before { transform: rotate(90deg); }
   .prob-section > summary:hover { background: rgba(88,166,255,0.04); }
-  .prob-section .wk { color: #8b949e; font-size: 12px; font-weight: 500; background: #0d1117; padding: 2px 8px; border-radius: 10px; border: 1px solid #30363d; }
-  .prob-body { padding: 6px 20px 18px 40px; }
-  .prob-body > ol { padding-left: 22px; margin: 8px 0 4px; }
-  .prob-body > ol > li { margin: 12px 0; color: #c9d1d9; font-size: 14px; line-height: 1.55; }
-  .prob-body > ol > li::marker { color: #7ee787; font-weight: 600; }
-  .prob-hint { display: block; margin-top: 4px; color: #8b949e; font-size: 12.5px; font-style: italic; }
-  .prob-hint::before { content: '💡 '; font-style: normal; }
-  .prob-tag { display: inline-block; font-size: 10px; font-weight: 600; padding: 1px 7px; border-radius: 8px; margin-right: 6px; vertical-align: middle; text-transform: uppercase; letter-spacing: .4px; }
+  .prob-section .wk { color: #8b949e; font-size: 11px; font-weight: 500; background: #0d1117; padding: 2px 8px; border-radius: 10px; border: 1px solid #30363d; }
+  .prob-section .sec-meta { margin-left: auto; font-size: 11px; color: #6e7681; font-weight: 500; }
+  .prob-section .sec-meta .done-count { color: #7ee787; font-weight: 600; }
+  .prob-hook { background: #0d1117; border-bottom: 1px solid #21262d; padding: 12px 22px; font-size: 13px; color: #d2a8ff; font-style: italic; line-height: 1.6; display: flex; gap: 8px; align-items: flex-start; }
+  .prob-hook::before { content: '🪝'; font-style: normal; flex-shrink: 0; }
+  .prob-body { padding: 12px 18px 16px; display: flex; flex-direction: column; gap: 10px; }
+  /* Problem cards */
+  .prob-card { background: #0d1117; border: 1px solid #21262d; border-radius: 8px; padding: 12px 14px; transition: all .15s; position: relative; }
+  .prob-card:hover { border-color: #30363d; }
+  .prob-card.status-thinking { border-left: 3px solid #d2a8ff; }
+  .prob-card.status-got      { border-left: 3px solid #7ee787; opacity: .75; }
+  .prob-card.status-stuck    { border-left: 3px solid #f85149; }
+  .prob-card.hidden          { display: none; }
+  .prob-card .pc-head { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 4px; }
+  .prob-card .pc-num { color: #6e7681; font-size: 11px; font-weight: 600; font-family: 'Cascadia Code', monospace; }
+  .prob-card .pc-star { color: #ffa657; font-size: 13px; }
+  .prob-tag { display: inline-block; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 8px; text-transform: uppercase; letter-spacing: .4px; }
   .prob-tag.design { background: #58a6ff20; color: #58a6ff; }
   .prob-tag.debug  { background: #f8514920; color: #f85149; }
   .prob-tag.paper  { background: #d2a8ff20; color: #d2a8ff; }
   .prob-tag.code   { background: #7ee78720; color: #7ee787; }
   .prob-tag.derive { background: #ffa65720; color: #ffa657; }
+  .prob-card .pc-text { color: #c9d1d9; font-size: 13.5px; line-height: 1.6; margin: 2px 0 6px; }
+  .prob-card .pc-actions { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; margin-top: 6px; }
+  .prob-revealbtn { background: transparent; border: 1px dashed #30363d; color: #8b949e; padding: 3px 10px; border-radius: 12px; font-size: 11px; cursor: pointer; transition: all .15s; }
+  .prob-revealbtn:hover { border-color: #d2a8ff; color: #d2a8ff; border-style: solid; }
+  .prob-revealbtn.approach:hover { border-color: #79c0ff; color: #79c0ff; }
+  .prob-revealbtn.answer:hover   { border-color: #7ee787; color: #7ee787; }
+  .prob-reveal-panel { display: none; margin-top: 8px; padding: 10px 14px; background: #161b22; border-radius: 4px; color: #c9d1d9; font-size: 12.5px; line-height: 1.65; }
+  .prob-reveal-panel.shown { display: block; }
+  .prob-reveal-panel ul, .prob-reveal-panel ol { margin: 4px 0 4px 18px; padding: 0; }
+  .prob-reveal-panel li { margin: 3px 0; }
+  .prob-reveal-panel code { background: #0d1117; padding: 1px 5px; border-radius: 3px; font-size: 11.5px; color: #79c0ff; font-family: 'Cascadia Code', 'Consolas', monospace; }
+  .prob-reveal-panel strong { color: #e6edf3; }
+  .prob-reveal-panel .rh-label { display: inline-block; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .6px; margin-right: 8px; padding: 1px 6px; border-radius: 4px; vertical-align: middle; }
+  .prob-hint     { border-left: 2px solid #d2a8ff; }
+  .prob-hint     .rh-label { background: #d2a8ff22; color: #d2a8ff; }
+  .prob-approach { border-left: 2px solid #79c0ff; }
+  .prob-approach .rh-label { background: #79c0ff22; color: #79c0ff; }
+  .prob-answer   { border-left: 2px solid #7ee787; background: #0d1f17; }
+  .prob-answer   .rh-label { background: #7ee78722; color: #7ee787; }
+  .prob-status-btns { display: flex; gap: 4px; margin-left: auto; }
+  .prob-statbtn { background: transparent; border: 1px solid #30363d; color: #6e7681; padding: 3px 9px; border-radius: 12px; font-size: 11px; cursor: pointer; transition: all .15s; }
+  .prob-statbtn:hover { border-color: #58a6ff; color: #c9d1d9; }
+  .prob-statbtn.active.thinking { background: #d2a8ff22; border-color: #d2a8ff; color: #d2a8ff; }
+  .prob-statbtn.active.got      { background: #7ee78722; border-color: #7ee787; color: #7ee787; }
+  .prob-statbtn.active.stuck    { background: #f8514922; border-color: #f85149; color: #f85149; }
+  .prob-empty { text-align: center; padding: 40px 20px; color: #6e7681; font-size: 13px; }
+  /* Modal for surprise-me */
+  .prob-spotlight { position: fixed; inset: 0; background: rgba(13,17,23,0.85); backdrop-filter: blur(4px); display: none; align-items: center; justify-content: center; z-index: 100; padding: 20px; }
+  .prob-spotlight.open { display: flex; }
+  .prob-spotlight-card { background: #161b22; border: 1px solid #58a6ff; border-radius: 12px; max-width: 600px; width: 100%; padding: 24px 28px; box-shadow: 0 12px 60px rgba(88,166,255,0.3); }
+  .prob-spotlight-card h3 { color: #58a6ff; font-size: 14px; margin: 0 0 4px; text-transform: uppercase; letter-spacing: 1px; }
+  .prob-spotlight-card .pc-text { font-size: 16px; line-height: 1.55; color: #e6edf3; margin: 10px 0; }
+  .prob-spotlight-card .sl-close { background: transparent; border: none; color: #8b949e; font-size: 22px; cursor: pointer; float: right; line-height: 1; }
+  .prob-spotlight-card .sl-close:hover { color: #c9d1d9; }
   .appendix-table .watch-link:hover { color: #ff0000; text-decoration: underline; }
   /* ── Progress checkbox ── */
   .appendix-table .vid-check { width: 18px; height: 18px; cursor: pointer; accent-color: #7ee787; vertical-align: middle; }
@@ -399,6 +495,233 @@
     .dd-card-img { height: 120px; }
     .dd-keypoints { grid-template-columns: 1fr; }
   }
+
+/* === BEGIN glossary v1 css === */
+  /* dd-nav sticky top */
+  .dd-nav.dd-nav-top {
+    position: sticky; top: 0; z-index: 5;
+    margin: -4px -4px 14px; padding: 10px 8px;
+    background: linear-gradient(180deg, rgba(13,17,23,0.96) 75%, rgba(13,17,23,0));
+    backdrop-filter: blur(4px);
+    border-bottom: 1px solid #21262d;
+  }
+  /* ── Glossary ── */
+  .gloss-intro { background: #161b22; border: 1px solid #30363d; border-left: 3px solid #d2a8ff; border-radius: 6px; padding: 14px 18px; margin-bottom: 14px; color: #c9d1d9; font-size: 14px; line-height: 1.6; }
+  .gloss-intro strong { color: #d2a8ff; }
+  #view-glossary { overflow-y: auto; height: calc(100vh - 50px); margin-top: 50px; padding: 20px; box-sizing: border-box; }
+  @media (max-width: 768px) { #view-glossary { margin-top: 48px; padding: 12px; } }
+  .glossary-controls { position: sticky; top: 0; z-index: 5; background: rgba(13,17,23,0.95); backdrop-filter: blur(6px); padding: 10px 0 12px; margin: -8px 0 14px; border-bottom: 1px solid #21262d; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  #glossary-search { flex: 1 1 240px; min-width: 200px; background: #0d1117; border: 1px solid #30363d; border-radius: 6px; padding: 7px 12px; color: #c9d1d9; font-size: 13px; outline: none; }
+  #glossary-search:focus { border-color: #58a6ff; }
+  .glossary-cat-pills { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+  .glossary-cat-pills button { background: #161b22; border: 1px solid #30363d; color: #8b949e; padding: 4px 10px; border-radius: 12px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .4px; cursor: pointer; transition: all .15s; }
+  .glossary-cat-pills button:hover { border-color: #58a6ff; color: #c9d1d9; }
+  .glossary-cat-pills button.active { background: var(--pill-bg, #1f6feb22); border-color: var(--pill-color, #58a6ff); color: var(--pill-color, #58a6ff); }
+  .glossary-count { font-size: 11px; color: #8b949e; margin-left: auto; }
+  .glossary-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 14px; max-width: 1400px; margin: 0 auto; }
+  .glossary-card { background: #161b22; border: 1px solid #30363d; border-radius: 10px; padding: 14px; transition: border-color .15s, box-shadow .15s, transform .15s; }
+  .glossary-card:hover { border-color: var(--cat-color, #58a6ff); box-shadow: 0 4px 14px rgba(0,0,0,0.35); }
+  .glossary-card.flash {
+    animation: glossary-flash 2.6s cubic-bezier(.4,0,.2,1) 1 forwards;
+    position: relative;
+    z-index: 2;
+  }
+  @keyframes glossary-flash {
+    0% {
+      background: #161b22;
+      border-color: #30363d;
+      box-shadow: 0 0 0 rgba(0,0,0,0);
+      transform: scale(1);
+    }
+    8% {
+      background: color-mix(in srgb, var(--cat-color, #58a6ff) 55%, #161b22);
+      border-color: var(--cat-color, #58a6ff);
+      box-shadow:
+        0 0 0 4px var(--cat-color, #58a6ff),
+        0 0 28px 6px color-mix(in srgb, var(--cat-color, #58a6ff) 70%, transparent),
+        0 14px 36px rgba(0,0,0,0.55);
+      transform: scale(1.045);
+    }
+    22% {
+      background: color-mix(in srgb, var(--cat-color, #58a6ff) 30%, #161b22);
+      border-color: var(--cat-color, #58a6ff);
+      box-shadow:
+        0 0 0 3px var(--cat-color, #58a6ff),
+        0 0 22px 4px color-mix(in srgb, var(--cat-color, #58a6ff) 55%, transparent),
+        0 10px 28px rgba(0,0,0,0.5);
+      transform: scale(1.03);
+    }
+    45% {
+      background: color-mix(in srgb, var(--cat-color, #58a6ff) 45%, #161b22);
+      border-color: var(--cat-color, #58a6ff);
+      box-shadow:
+        0 0 0 3px var(--cat-color, #58a6ff),
+        0 0 26px 5px color-mix(in srgb, var(--cat-color, #58a6ff) 60%, transparent),
+        0 12px 32px rgba(0,0,0,0.5);
+      transform: scale(1.035);
+    }
+    70% {
+      background: color-mix(in srgb, var(--cat-color, #58a6ff) 22%, #161b22);
+      border-color: color-mix(in srgb, var(--cat-color, #58a6ff) 80%, #30363d);
+      box-shadow:
+        0 0 0 2px color-mix(in srgb, var(--cat-color, #58a6ff) 70%, transparent),
+        0 0 18px 3px color-mix(in srgb, var(--cat-color, #58a6ff) 40%, transparent);
+      transform: scale(1.015);
+    }
+    100% {
+      background: #161b22;
+      border-color: #30363d;
+      box-shadow: 0 0 0 rgba(0,0,0,0);
+      transform: scale(1);
+    }
+  }
+  /* Fallback for browsers without color-mix: solid tinted backgrounds */
+  @supports not (background: color-mix(in srgb, red, blue)) {
+    @keyframes glossary-flash {
+      0%,100% { background: #161b22; border-color: #30363d; box-shadow: none; transform: scale(1); }
+      8%, 45% {
+        background: rgba(88,166,255,0.32);
+        border-color: var(--cat-color, #58a6ff);
+        box-shadow: 0 0 0 4px var(--cat-color, #58a6ff), 0 0 28px var(--cat-color, #58a6ff);
+        transform: scale(1.04);
+      }
+    }
+  }
+  .glossary-term-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .glossary-term { font-size: 16px; font-weight: 700; color: #e6edf3; }
+  .glossary-cat-badge { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; padding: 2px 7px; border-radius: 10px; border: 1px solid var(--cat-color, #58a6ff); color: var(--cat-color, #58a6ff); background: rgba(0,0,0,0.2); }
+  .glossary-aka { font-size: 11px; color: #8b949e; font-style: italic; margin-top: 3px; }
+  .glossary-short { font-size: 13px; color: #c9d1d9; margin-top: 8px; line-height: 1.5; }
+  .glossary-long { font-size: 13px; color: #8b949e; margin-top: 8px; line-height: 1.55; display: none; }
+  .glossary-long code { background: #0d1117; border: 1px solid #21262d; border-radius: 4px; padding: 1px 5px; font-family: 'Cascadia Code', monospace; font-size: 12px; color: #d2a8ff; }
+  .glossary-card.expanded .glossary-long { display: block; }
+  .glossary-toggle { background: none; border: none; color: #58a6ff; font-size: 11px; cursor: pointer; padding: 6px 0 0; }
+  .glossary-toggle:hover { text-decoration: underline; }
+  .glossary-links { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+  .glossary-links button { background: #0d1117; border: 1px solid #30363d; color: #c9d1d9; padding: 3px 9px; border-radius: 10px; font-size: 11px; cursor: pointer; transition: all .15s; }
+  .glossary-links button:hover { border-color: #58a6ff; color: #58a6ff; }
+  /* graph-node pulse when jumped to from glossary */
+  @keyframes glossary-pulse {
+    0%   { stroke-opacity: 1; stroke-width: 14; }
+    100% { stroke-opacity: 0.55; stroke-width: 5; }
+  }
+  @keyframes glossary-halo-pulse {
+    0%   { r: 16;  stroke-opacity: 1;    stroke-width: 10; }
+    60%  { r: 90;  stroke-opacity: 0.55; stroke-width: 5; }
+    100% { r: 140; stroke-opacity: 0;    stroke-width: 2; }
+  }
+  @keyframes glossary-halo-pulse-2 {
+    0%   { r: 16;  stroke-opacity: 0.9; stroke-width: 6; }
+    60%  { r: 110; stroke-opacity: 0.4; stroke-width: 3; }
+    100% { r: 170; stroke-opacity: 0;   stroke-width: 1.5; }
+  }
+  @keyframes glossary-fill-pulse {
+    0%, 100% { fill-opacity: 0.85; }
+    50%      { fill-opacity: 1; }
+  }
+  @keyframes glossary-dim-others {
+    0%   { opacity: 1; }
+    20%  { opacity: 0.15; }
+    100% { opacity: 0.15; }
+  }
+  /* Dim everything in the graph except the highlighted node + its halos */
+  #canvas-graph.glossary-spotlight g.graph-node:not(.glossary-highlight),
+  #canvas-graph.glossary-spotlight line.graph-link,
+  #canvas-graph.glossary-spotlight text.graph-link-label {
+    animation: glossary-dim-others 0.4s ease-out forwards;
+  }
+  #canvas-graph.glossary-spotlight g.graph-node.glossary-highlight {
+    opacity: 1 !important;
+  }
+  g.graph-node.glossary-highlight circle:not(.glossary-halo):not(.glossary-halo-outer) {
+    animation:
+      glossary-pulse 0.45s ease-in-out 10 alternate,
+      glossary-fill-pulse 0.45s ease-in-out 10 alternate;
+    stroke: #ffd13b !important;
+    fill: #ffd13b !important;
+    filter:
+      drop-shadow(0 0 10px #ffd13b)
+      drop-shadow(0 0 24px #ffd13baa)
+      drop-shadow(0 0 40px #ffd13b66);
+  }
+  g.graph-node.glossary-highlight text {
+    fill: #fff !important;
+    font-weight: 900 !important;
+    font-size: 15px !important;
+    paint-order: stroke fill;
+    stroke: #5a3a00;
+    stroke-width: 4px;
+    stroke-linejoin: round;
+    filter:
+      drop-shadow(0 0 6px #000)
+      drop-shadow(0 0 12px #ffd13b)
+      drop-shadow(0 0 20px #ffd13bcc);
+  }
+  circle.glossary-halo {
+    fill: none;
+    stroke: #ffd13b;
+    pointer-events: none;
+    animation: glossary-halo-pulse 1.1s ease-out 5;
+    filter: drop-shadow(0 0 8px #ffd13baa);
+  }
+  circle.glossary-halo-outer {
+    fill: none;
+    stroke: #ffae00;
+    pointer-events: none;
+    animation: glossary-halo-pulse-2 1.4s ease-out 5;
+    animation-delay: 0.18s;
+    filter: drop-shadow(0 0 12px #ffae0099);
+  }
+  /* mindmap pulse (uses a <circle> appended) */
+  circle.glossary-mm-halo {
+    fill: none;
+    stroke: #ffd13b;
+    pointer-events: none;
+    animation: glossary-halo-pulse 1.1s ease-out 5;
+    filter: drop-shadow(0 0 8px #ffd13baa);
+  }
+  circle.glossary-mm-halo-outer {
+    fill: none;
+    stroke: #ffae00;
+    pointer-events: none;
+    animation: glossary-halo-pulse-2 1.4s ease-out 5;
+    animation-delay: 0.18s;
+    filter: drop-shadow(0 0 12px #ffae0099);
+  }
+  /* toast banner shown when jumping from glossary */
+  #glossary-toast {
+    position: fixed; top: 60px; left: 50%; transform: translateX(-50%) translateY(-30px) scale(0.92);
+    background: linear-gradient(180deg, #2a1f0a, #1a1308);
+    border: 2px solid #ffd13b; border-left: 6px solid #ffd13b;
+    color: #fff5d6; padding: 12px 22px; border-radius: 10px;
+    font-size: 15px; font-weight: 700;
+    box-shadow:
+      0 10px 32px rgba(0,0,0,0.6),
+      0 0 36px rgba(255,209,59,0.45),
+      0 0 64px rgba(255,209,59,0.25);
+    opacity: 0; pointer-events: none;
+    transition: opacity .22s ease, transform .28s cubic-bezier(.2,1.2,.4,1);
+    z-index: 10000;
+    display: flex; align-items: center; gap: 12px;
+    max-width: 90vw;
+    text-shadow: 0 0 8px rgba(255,209,59,0.5);
+  }
+  #glossary-toast.show { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+  #glossary-toast .gt-icon { font-size: 22px; filter: drop-shadow(0 0 6px #ffd13b); }
+  #glossary-toast .gt-sub { color: #c9b88c; font-weight: 500; font-size: 12.5px; margin-left: 4px; }
+  #glossary-toast strong { color: #ffd13b; text-shadow: 0 0 10px rgba(255,209,59,0.6); }
+  @media (max-width: 768px) { #glossary-toast { top: 56px; font-size: 13px; padding: 10px 16px; } }
+  /* tooltip glossary footer link */
+  #tooltip .tt-glossary { margin-top: 6px; padding-top: 5px; border-top: 1px solid #30363d; }
+  #tooltip .tt-glossary:empty { display: none; }
+  #tooltip .tt-glossary a {
+    display: inline-block; padding: 2px 8px; border-radius: 4px;
+    background: rgba(210,168,255,0.10); color: #d2a8ff; text-decoration: none;
+    font-size: 11px; font-weight: 500; cursor: pointer; border: 1px solid rgba(210,168,255,0.25);
+  }
+  #tooltip .tt-glossary a:hover { background: rgba(210,168,255,0.22); border-color: #d2a8ff; }
+  #tooltip.has-glossary { pointer-events: auto; }
+/* === END glossary v1 css === */
 </style>
 </head>
 <body>
@@ -459,6 +782,21 @@
 <div id="view-problems" class="view">
   <div id="problems-container"></div>
 </div>
+<!-- BEGIN glossary v1 view -->
+<div id="view-glossary" class="view">
+  <div class="gloss-intro">
+    <strong>📖 Glossary.</strong> Every acronym, jargon term, and unit-of-art used across <em>Use Cases</em> and <em>Deep Dives</em> — defined here, cross-linked to the <strong>Topic Graph</strong> and <strong>Mind Map</strong> so you can jump from definition → diagram in one click.
+    <br><br>
+    <span style="color:#8b949e">Tip: click a related term to flash-jump to it. Click the 🌐 graph or 🧭 mindmap links to spotlight that node on its tab.</span>
+  </div>
+  <div class="glossary-controls">
+    <input type="text" id="glossary-search" placeholder="🔍 Search terms, acronyms, or definitions…" />
+    <div class="glossary-cat-pills" id="glossary-cat-pills"></div>
+    <span class="glossary-count" id="glossary-count"></span>
+  </div>
+  <div id="glossary-list" class="glossary-list"></div>
+</div>
+<!-- END glossary v1 view -->
 
 <!-- ═══════════════ SHARED OVERLAYS ═══════════════ -->
 <div id="tooltip"><div class="tt-title"></div><div class="tt-body"></div><div class="tt-slides"></div></div>
@@ -553,57 +891,95 @@ const COURSE_CONFIG = {
 
   mindmap: {
     name: "Radar Systems",
-    tooltip: "MIT Lincoln Lab — Introduction to Radar Systems",
+    tooltip: "MIT Lincoln Lab — Introduction to Radar Systems: Transmitter → Antenna → Target → Receiver → Signal Processing → Detection → Tracking → Applications",
     children: [
-      { name: "Introduction", tooltip: "Radar history, basic principles, radar equation", children: [
-        { name: "Radar History", tooltip: "Evolution of radar from WWII to modern systems." },
-        { name: "Basic Principles", tooltip: "Electromagnetic wave propagation and reflection." },
-        { name: "Radar Equation", tooltip: "Fundamental relationship between power, gain, range, and RCS." }
+      { name: "Introduction", tooltip: "Radar history, basic principles, radar equation — the master constraints.", children: [
+        { name: "Radar History", tooltip: "Evolution of radar from WWII (Chain Home, magnetron) to modern AESA & cognitive radar." },
+        { name: "Basic Principles", tooltip: "Electromagnetic wave propagation, reflection, scattering; round-trip time gives range." },
+        { name: "Radar Equation", tooltip: "Pt·G²·λ²·σ / ((4π)³·R⁴·L) — links power, gain, RCS, range, losses. R⁴ law dominates." }
       ]},
-      { name: "Waveforms &\nSignals", tooltip: "Pulse radar, CW radar, chirp/LFM waveforms", children: [
-        { name: "Pulse Radar", tooltip: "Pulsed transmission and range gating." },
-        { name: "CW Radar", tooltip: "Continuous-wave radar for velocity measurement." },
-        { name: "Chirp / LFM", tooltip: "Linear frequency modulation and pulse compression." }
+      { name: "Transmitter", tooltip: "Generates the high-power RF pulse. Magnetron, klystron, TWT, or solid-state PA. Sets P_t, pulse width, PRF, phase noise.", children: [
+        { name: "Power Amplifier", tooltip: "Magnetron (legacy, non-coherent), klystron/TWT (coherent, high power), or GaN solid-state T/R modules (modern AESA)." },
+        { name: "Pulse / PRF", tooltip: "Pulse width τ sets range resolution (cτ/2); PRF sets unambiguous range R_ua = c/(2·PRF)." },
+        { name: "Phase Noise", tooltip: "LO phase noise raises effective noise figure and limits Doppler dynamic range — kills slow-target detection in clutter." }
       ]},
-      { name: "Antenna\nFundamentals", tooltip: "Gain, beamwidth, phased arrays, aperture", children: [
-        { name: "Gain & Beamwidth", tooltip: "Antenna gain, 3-dB beamwidth, and directivity." },
-        { name: "Phased Arrays", tooltip: "Electronic beam steering with element phase control." },
-        { name: "Aperture", tooltip: "Effective aperture area and its relation to gain." }
+      { name: "Antenna", tooltip: "Focuses the transmit beam, collects the return. Gain, beamwidth, sidelobes, polarization, scan agility.", children: [
+        { name: "Gain & Beamwidth", tooltip: "Antenna gain G ≈ 4π·A_eff/λ², 3-dB beamwidth θ ≈ λ/D; gain enters the radar equation squared." },
+        { name: "Phased Arrays", tooltip: "Electronic beam steering by element phase control — no moving parts, beam steers in nanoseconds." },
+        { name: "Aperture", tooltip: "Effective aperture A_eff = G·λ²/(4π); larger aperture buys range cheaper than more transmit power." },
+        { name: "Sidelobes", tooltip: "Off-axis lobes pick up clutter and jamming; Taylor/Hamming weighting suppresses at the cost of mainlobe width." }
       ]},
-      { name: "Radar Cross\nSection", tooltip: "Target RCS, Swerling models, stealth", children: [
-        { name: "Target RCS", tooltip: "Radar cross section definition and measurement." },
-        { name: "Swerling Models", tooltip: "Statistical RCS fluctuation models (I–IV)." },
-        { name: "Stealth", tooltip: "RCS reduction techniques and low-observable design." }
+      { name: "Receiver", tooltip: "Captures the weak echo, sets the noise floor. Low-noise amplifier, mixer, ADC, matched filter.", children: [
+        { name: "LNA & Noise Figure", tooltip: "Receiver noise floor = k·T₀·B·F. The LNA's noise figure F (1–3 dB) sets the entire system's noise temperature." },
+        { name: "Mixer & IF", tooltip: "Downconverts RF to intermediate frequency for digitization; image-reject mixers prevent spurious responses." },
+        { name: "ADC & Sampling", tooltip: "Nyquist demands fs ≥ 2B for IF bandwidth B; high-IF direct sampling at 12–14 bit/Gsps now standard." },
+        { name: "Matched Filter", tooltip: "Cross-correlation with the transmitted waveform — maximizes SNR for known signal in white noise." }
       ]},
-      { name: "Detection\nTheory", tooltip: "Noise, SNR, probability of detection, CFAR", children: [
-        { name: "Noise & SNR", tooltip: "Thermal noise, noise figure, and signal-to-noise ratio." },
-        { name: "Probability of Detection", tooltip: "Pd, Pfa, and receiver operating characteristics." },
-        { name: "CFAR", tooltip: "Constant false alarm rate detection algorithms." }
+      { name: "Waveforms &\nSignals", tooltip: "Pulse, CW, chirp/LFM, phase-coded — the waveform sets range/velocity resolution and ambiguity.", children: [
+        { name: "Pulse Radar", tooltip: "Short pulses + range gating; resolution cτ/2, but short τ = low energy = short range." },
+        { name: "CW Radar", tooltip: "Continuous-wave Doppler-only radar; no range info from a pure sinusoid (police radar)." },
+        { name: "Chirp / LFM", tooltip: "Linear frequency modulation — long pulse for energy, wide bandwidth for resolution, decoupled via pulse compression." },
+        { name: "FMCW", tooltip: "Frequency-modulated CW — beat frequency gives range; the trick behind 77 GHz automotive radar." }
       ]},
-      { name: "Doppler\nProcessing", tooltip: "Velocity measurement, MTI, pulse-Doppler", children: [
-        { name: "Velocity Measurement", tooltip: "Doppler frequency shift and radial velocity." },
-        { name: "MTI", tooltip: "Moving target indication and clutter cancellation." },
-        { name: "Pulse-Doppler", tooltip: "Ambiguity resolution and clutter filtering." }
+      { name: "Radar Cross\nSection", tooltip: "RCS σ — how strongly a target scatters back to the radar. Highly aspect- and frequency-dependent.", children: [
+        { name: "Target RCS", tooltip: "Definition σ = 4π·(scattered power per solid angle) / incident power density; B-52 ≈ 100 m², drone ≈ 0.01 m²." },
+        { name: "Swerling Models", tooltip: "Statistical fluctuation models I–IV — slow vs fast, one-dominant vs many-equal scatterers." },
+        { name: "Stealth", tooltip: "RCS reduction via shaping (deflect specular returns), radar-absorbent material (RAM), and edge alignment." }
       ]},
-      { name: "Tracking", tooltip: "Track-while-scan, Kalman filtering, data association", children: [
-        { name: "Track-While-Scan", tooltip: "Simultaneous search and track operations." },
-        { name: "Kalman Filtering", tooltip: "Optimal state estimation for target tracking." },
-        { name: "Data Association", tooltip: "Measurement-to-track assignment algorithms." }
+      { name: "Signal\nProcessing", tooltip: "Pulse compression, Doppler FFT, MTI/STAP, beamforming, CFAR — turns raw I/Q into detections.", children: [
+        { name: "Pulse Compression", tooltip: "Matched-filter a long chirp to recover cτ/(2·TB) range resolution while keeping pulse energy P_t·τ." },
+        { name: "Doppler FFT", tooltip: "FFT across slow-time (pulse-to-pulse) extracts target radial velocity from phase rate." },
+        { name: "Beamforming", tooltip: "Sum array elements with weights w_n — delay-sum, MVDR, adaptive null steering against jammers." },
+        { name: "STAP", tooltip: "Space-Time Adaptive Processing — joint angle-Doppler filter that cancels airborne ground clutter." }
       ]},
-      { name: "Synthetic\nAperture Radar", tooltip: "SAR imaging, resolution, autofocus", children: [
-        { name: "SAR Imaging", tooltip: "Forming images from coherent pulse returns." },
-        { name: "Resolution", tooltip: "Range and azimuth resolution in SAR." },
-        { name: "Autofocus", tooltip: "Phase error correction for SAR image sharpening." }
+      { name: "Clutter", tooltip: "Unwanted returns from ground, sea, rain, chaff — often 60+ dB stronger than the target you want.", children: [
+        { name: "Ground Clutter", tooltip: "Returns from terrain — dominates low-altitude detection; characterized by σ⁰ (RCS per unit area)." },
+        { name: "Sea Clutter", tooltip: "Returns from rough sea surface; non-Gaussian (K-distributed), depends on sea state and grazing angle." },
+        { name: "Weather Clutter", tooltip: "Rain, snow, hail — both target (weather radar) and clutter (air-traffic radar)." },
+        { name: "Clutter Cancellation", tooltip: "MTI filter rejects zero-Doppler returns; STAP rejects clutter Doppler that varies with angle." }
       ]},
-      { name: "Electronic\nWarfare", tooltip: "Jamming, ECCM, LPI radar", children: [
-        { name: "Jamming", tooltip: "Noise, deception, and repeater jamming techniques." },
-        { name: "ECCM", tooltip: "Electronic counter-countermeasures and jam resistance." },
-        { name: "LPI Radar", tooltip: "Low probability of intercept radar waveforms." }
+      { name: "Detection\nTheory", tooltip: "Decide signal-present vs noise-only — Neyman-Pearson, ROC curves, CFAR thresholds.", children: [
+        { name: "Noise & SNR", tooltip: "Thermal noise kT₀BF sets the floor; SNR = signal power / noise power, expressed in dB." },
+        { name: "Probability of Detection", tooltip: "Pd vs Pfa traded along the ROC curve; Marcum Q-function for non-fluctuating targets." },
+        { name: "CFAR", tooltip: "Constant-false-alarm-rate — adaptive threshold from cell-averaging or order-statistic of nearby range cells." }
       ]},
-      { name: "Modern\nSystems", tooltip: "AESA, cognitive radar, MIMO radar", children: [
-        { name: "AESA", tooltip: "Active electronically scanned arrays." },
-        { name: "Cognitive Radar", tooltip: "Adaptive, learning-based radar systems." },
-        { name: "MIMO Radar", tooltip: "Multiple-input multiple-output radar architectures." }
+      { name: "Doppler\nProcessing", tooltip: "Velocity measurement, MTI, pulse-Doppler — extracts motion from phase change across pulses.", children: [
+        { name: "Velocity Measurement", tooltip: "Doppler frequency f_d = 2·v_r/λ; resolves targets moving radially toward or away from radar." },
+        { name: "MTI", tooltip: "Moving target indication — 2- or 3-pulse canceller (1,-1) or (1,-2,1) notches out stationary clutter." },
+        { name: "Pulse-Doppler", tooltip: "Coherent FFT across slow-time; resolves range and Doppler simultaneously, with ambiguity at v·R = cλ/8." }
+      ]},
+      { name: "Detection", tooltip: "Declaration that a target exists in a given range/Doppler/angle cell — the output of CFAR thresholding.", children: [
+        { name: "Threshold Crossing", tooltip: "Magnitude-squared detector compared against CFAR threshold; declarations form 'plots'." },
+        { name: "Plot Extraction", tooltip: "Cluster adjacent threshold crossings into a single plot with centroid range, Doppler, angle." },
+        { name: "False Alarm Control", tooltip: "Pfa set by mission (1e-6 typical); CFAR keeps Pfa constant as clutter level changes across the scan." }
+      ]},
+      { name: "Tracking", tooltip: "Linking detections across scans into target trajectories — Kalman filtering, data association.", children: [
+        { name: "Track-While-Scan", tooltip: "Mechanically scanned radars track many targets while continuing the surveillance scan." },
+        { name: "Kalman Filtering", tooltip: "Optimal recursive state estimator under Gaussian noise; predicts next plot location, updates with measurement." },
+        { name: "Data Association", tooltip: "Match each new plot to existing tracks — nearest-neighbor, PDA (probabilistic), or JPDA in dense clutter." }
+      ]},
+      { name: "Synthetic\nAperture Radar", tooltip: "Side-looking imaging radar that uses platform motion to synthesize a kilometre-long aperture.", children: [
+        { name: "SAR Imaging", tooltip: "Coherent integration of pulses as platform moves — azimuth FFT compresses the synthetic chirp." },
+        { name: "Resolution", tooltip: "Range δ_r = c/(2B); azimuth δ_az = D/2 (antenna half-length) — independent of range!" },
+        { name: "Autofocus", tooltip: "Phase Gradient Algorithm (PGA) or map-drift estimates and corrects motion errors that blur the image." }
+      ]},
+      { name: "Electronic\nWarfare", tooltip: "Jamming, ECCM, LPI — the cat-and-mouse between radar and countermeasures.", children: [
+        { name: "Jamming", tooltip: "Noise jamming (raise noise floor), deception (false target), repeater (DRFM)." },
+        { name: "ECCM", tooltip: "Frequency agility, sidelobe cancellation, polarization diversity, PRF stagger — restore detection under jam." },
+        { name: "LPI Radar", tooltip: "Low probability of intercept — spread-spectrum, low peak power, frequency-hopping chirps." }
+      ]},
+      { name: "Modern\nSystems", tooltip: "AESA, MIMO, cognitive radar — software-defined apertures.", children: [
+        { name: "AESA", tooltip: "Active electronically scanned arrays — thousands of GaN T/R modules, multi-beam, graceful degradation." },
+        { name: "Cognitive Radar", tooltip: "Closed-loop adaptation — waveform and beam scheduling driven by what the radar has just learned." },
+        { name: "MIMO Radar", tooltip: "Orthogonal waveforms from multiple transmitters; virtual array of N_t·N_r elements from N_t+N_r physical." }
+      ]},
+      { name: "Applications", tooltip: "Where radar earns its keep: military, aviation, weather, automotive, space, science.", children: [
+        { name: "Air & Sea Defense", tooltip: "Air-search and fire-control radars (AN/SPY-6, S-400); long-range surveillance and target engagement." },
+        { name: "Air-Traffic Control", tooltip: "Primary (skin-paint) and secondary (transponder) radars; FAA ASR-9, ASR-11 networks." },
+        { name: "Weather Radar", tooltip: "Doppler weather radar (NEXRAD WSR-88D) measures precipitation reflectivity and wind shear." },
+        { name: "Automotive Radar", tooltip: "77 GHz FMCW chips for ACC, AEB, blind-spot — millions shipped per year." },
+        { name: "Space-Based SAR", tooltip: "Sentinel-1, Capella, ICEYE — all-weather Earth imaging from LEO; flood mapping, ice monitoring, change detection." },
+        { name: "Scientific Radar", tooltip: "Planetary radar (Goldstone, Arecibo legacy), ionospheric sounders, radio astronomy." }
       ]}
     ]
   },
@@ -612,70 +988,644 @@ const COURSE_CONFIG = {
     categories: { fundamentals: "#58a6ff", signal_processing: "#7ee787", systems: "#f778ba", applications: "#ffa657" },
     edgeColors: { depends: "#58a6ff", implements: "#f778ba", enables: "#7ee787", related: "#ffa657" },
     nodes: [
-      { id: "radar-eq",  label: "Radar Equation", cat: "fundamentals",      tip: "Pt\u00b7G\u00b2\u00b7\u03bb\u00b2\u00b7\u03c3 / (4\u03c0)\u00b3\u00b7R\u2074 \u2014 fundamental range-power relationship." },
-      { id: "waveforms", label: "Waveforms",      cat: "signal_processing", tip: "Pulse, CW, and chirp/LFM waveform design." },
-      { id: "antenna",   label: "Antenna",         cat: "fundamentals",      tip: "Gain, beamwidth, phased arrays, and aperture." },
-      { id: "rcs",       label: "RCS",             cat: "fundamentals",      tip: "Radar cross section and target scattering." },
-      { id: "detection", label: "Detection",       cat: "signal_processing", tip: "SNR, probability of detection, and CFAR." },
-      { id: "doppler",   label: "Doppler",         cat: "signal_processing", tip: "Velocity measurement, MTI, pulse-Doppler." },
-      { id: "tracking",  label: "Tracking",        cat: "systems",           tip: "Track-while-scan, Kalman filtering, data association." },
-      { id: "sar",       label: "SAR",             cat: "applications",      tip: "Synthetic aperture radar imaging and resolution." },
-      { id: "ew",        label: "EW",              cat: "applications",      tip: "Jamming, ECCM, and LPI radar." },
-      { id: "aesa",      label: "AESA",            cat: "systems",           tip: "Active electronically scanned array radar." }
+      { id: "radar-eq",  label: "Radar Equation",   cat: "fundamentals",      tip: "Pt\u00b7G\u00b2\u00b7\u03bb\u00b2\u00b7\u03c3 / (4\u03c0)\u00b3\u00b7R\u2074 \u2014 fundamental range-power relationship; the R\u2074 law dominates design." },
+      { id: "transmitter", label: "Transmitter",    cat: "systems",           tip: "Generates the high-power RF pulse \u2014 magnetron, klystron, TWT, or solid-state GaN T/R modules." },
+      { id: "antenna",   label: "Antenna",          cat: "fundamentals",      tip: "Focuses transmit beam, collects return; gain G enters the radar equation squared." },
+      { id: "receiver",  label: "Receiver",         cat: "systems",           tip: "LNA + mixer + ADC; noise figure F sets the system noise floor kT\u2080BF." },
+      { id: "waveforms", label: "Waveforms",        cat: "signal_processing", tip: "Pulse, CW, chirp/LFM, FMCW \u2014 sets range and Doppler resolution and ambiguity." },
+      { id: "rcs",       label: "RCS",              cat: "fundamentals",      tip: "Radar cross section \u03c3 \u2014 aspect- and frequency-dependent scattering strength." },
+      { id: "sigproc",   label: "Signal Processing", cat: "signal_processing", tip: "Pulse compression, Doppler FFT, beamforming, STAP \u2014 raw I/Q to detection-ready data cube." },
+      { id: "clutter",   label: "Clutter",          cat: "signal_processing", tip: "Unwanted returns from ground, sea, weather \u2014 often 60+ dB above target; rejected by MTI/STAP." },
+      { id: "doppler",   label: "Doppler",          cat: "signal_processing", tip: "Velocity from phase change pulse-to-pulse; f_d = 2v_r/\u03bb; MTI and pulse-Doppler filters." },
+      { id: "detection", label: "Detection",        cat: "signal_processing", tip: "Threshold crossing + CFAR \u2014 declares a target present at a range/Doppler/angle cell." },
+      { id: "tracking",  label: "Tracking",         cat: "systems",           tip: "Kalman filter + data association \u2014 links detections across scans into trajectories." },
+      { id: "sar",       label: "SAR",              cat: "applications",      tip: "Side-looking imaging radar; platform motion synthesizes a long aperture for D/2 azimuth resolution." },
+      { id: "ew",        label: "EW",               cat: "applications",      tip: "Jamming, ECCM, LPI \u2014 the cat-and-mouse with countermeasures." },
+      { id: "aesa",      label: "AESA",             cat: "systems",           tip: "Active electronically scanned array \u2014 thousands of GaN T/R modules, nanosecond beam steering." },
+      { id: "applications", label: "Applications",  cat: "applications",      tip: "Air defense, ATC, weather, automotive (77 GHz FMCW), space-based SAR \u2014 where radar earns its keep." }
     ],
     edges: [
-      { source: "radar-eq",  target: "detection", type: "enables", label: "enables" },
-      { source: "waveforms", target: "doppler",   type: "enables", label: "enables" },
-      { source: "antenna",   target: "radar-eq",  type: "depends", label: "depends" },
-      { source: "rcs",       target: "detection", type: "related", label: "affects" },
-      { source: "doppler",   target: "tracking",  type: "enables", label: "enables" },
-      { source: "antenna",   target: "sar",       type: "enables", label: "enables" },
-      { source: "detection", target: "tracking",  type: "depends", label: "depends" },
-      { source: "waveforms", target: "ew", type: "enables" },
-      { source: "ew", target: "detection", type: "related" },
-      { source: "antenna", target: "aesa", type: "implements" },
-      { source: "aesa", target: "tracking", type: "enables" }
+      { source: "transmitter", target: "radar-eq",  type: "depends", label: "Pt" },
+      { source: "antenna",     target: "radar-eq",  type: "depends", label: "G\u00b2" },
+      { source: "rcs",         target: "radar-eq",  type: "depends", label: "\u03c3" },
+      { source: "transmitter", target: "antenna",   type: "depends", label: "feeds" },
+      { source: "antenna",     target: "receiver",  type: "depends", label: "captures" },
+      { source: "receiver",    target: "sigproc",   type: "enables", label: "I/Q to" },
+      { source: "waveforms",   target: "transmitter", type: "implements", label: "shapes" },
+      { source: "waveforms",   target: "sigproc",   type: "depends", label: "matched-filter" },
+      { source: "waveforms",   target: "doppler",   type: "enables", label: "enables" },
+      { source: "sigproc",     target: "doppler",   type: "implements", label: "FFT" },
+      { source: "sigproc",     target: "detection", type: "enables", label: "feeds" },
+      { source: "clutter",     target: "detection", type: "related", label: "obscures" },
+      { source: "clutter",     target: "doppler",   type: "related", label: "MTI rejects" },
+      { source: "radar-eq",    target: "detection", type: "enables", label: "SNR sets Pd" },
+      { source: "rcs",         target: "detection", type: "related", label: "affects" },
+      { source: "detection",   target: "tracking",  type: "depends", label: "plots\u2192tracks" },
+      { source: "doppler",     target: "tracking",  type: "enables", label: "velocity" },
+      { source: "antenna",     target: "sar",       type: "enables", label: "synthesized" },
+      { source: "sigproc",     target: "sar",       type: "implements", label: "az. compress" },
+      { source: "antenna",     target: "aesa",      type: "implements", label: "phased" },
+      { source: "aesa",        target: "tracking",  type: "enables", label: "multi-beam" },
+      { source: "waveforms",   target: "ew",        type: "enables", label: "LPI" },
+      { source: "ew",          target: "detection", type: "related", label: "jam" },
+      { source: "tracking",    target: "applications", type: "enables", label: "powers" },
+      { source: "sar",         target: "applications", type: "enables", label: "imaging" },
+      { source: "aesa",        target: "applications", type: "enables", label: "modern" }
     ]
   },
 
   deepDives: [
     {
-      id: "dd-range-eq", num: "Concept 1 of 3", title: "Radar Range Equation",
-      desc: "Pt\u00b7G\u00b2\u00b7\u03bb\u00b2\u00b7\u03c3 / (4\u03c0)\u00b3\u00b7R\u2074.", color: "#58a6ff", icon: "\ud83d\udce1",
+      id: "dd-range-eq", num: "Concept 1 of 5", title: "Radar Range Equation",
+      desc: "Pt\u00b7G\u00b2\u00b7\u03bb\u00b2\u00b7\u03c3 / (4\u03c0)\u00b3\u00b7R\u2074 \u2014 the master equation.",
+      color: "#58a6ff", icon: "\ud83d\udce1",
+      svg: function(w, h) {
+        return '<svg viewBox="0 0 ' + w + ' ' + h + '" xmlns="http://www.w3.org/2000/svg" style="background:#0d1117">'
+          + '<defs><marker id="ar1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#58a6ff"/></marker></defs>'
+          + '<rect x="30" y="60" width="90" height="50" rx="4" fill="#58a6ff15" stroke="#58a6ff"/><text x="75" y="90" text-anchor="middle" fill="#c9d1d9" font-size="12">Tx (Pt)</text>'
+          + '<rect x="30" y="140" width="90" height="50" rx="4" fill="#7ee78715" stroke="#7ee787"/><text x="75" y="170" text-anchor="middle" fill="#c9d1d9" font-size="12">Rx + LNA</text>'
+          + '<polygon points="160,40 220,80 160,120 200,80" fill="#ffa65725" stroke="#ffa657"/><text x="180" y="135" text-anchor="middle" fill="#ffa657" font-size="11">Antenna G</text>'
+          + '<line x1="220" y1="80" x2="' + (w-90) + '" y2="80" stroke="#58a6ff" stroke-dasharray="4,3" marker-end="url(#ar1)"/>'
+          + '<text x="' + (w/2) + '" y="70" text-anchor="middle" fill="#8b949e" font-size="11">range R</text>'
+          + '<circle cx="' + (w-60) + '" cy="80" r="20" fill="#f778ba30" stroke="#f778ba"/><text x="' + (w-60) + '" y="84" text-anchor="middle" fill="#f778ba" font-size="11">\u03c3</text>'
+          + '<line x1="' + (w-80) + '" y1="95" x2="220" y2="160" stroke="#f778ba" stroke-dasharray="2,3" marker-end="url(#ar1)"/>'
+          + '<text x="' + (w/2) + '" y="195" text-anchor="middle" fill="#8b949e" font-size="11">echo \u221d 1/R\u2074</text>'
+          + '<text x="' + (w/2) + '" y="225" text-anchor="middle" fill="#c9d1d9" font-size="13" font-weight="600">P_r = P_t G\u00b2 \u03bb\u00b2 \u03c3 / (4\u03c0)\u00b3 R\u2074</text>'
+          + '</svg>';
+      },
       sections: [
-        { title: "Overview", text: "The radar range equation relates transmitted power, antenna gain, wavelength, target RCS, and range to the received signal power. It is the foundational equation governing radar system performance." },
-        { title: "Key Formula", formula: "P_r = \\frac{P_t G^2 \\lambda^2 \\sigma}{(4\\pi)^3 R^4}" },
-        { title: "Factors", text: "Increasing transmit power or antenna gain improves detection range. Range dependence is fourth-power, making long-range detection very costly in power. Atmospheric losses and system noise further reduce effective range." }
+        { title: "Overview", text: "The radar range equation links transmitted power, antenna gain, wavelength, target RCS and range to the power available at the receiver. Energy spreads as 1/R\u00b2 outbound (free-space loss) and again as 1/R\u00b2 on the return path, giving the famous fourth-power range dependence. A 16\u00d7 increase in detection range therefore demands 65\u2009536\u00d7 more power\u2013aperture product, which is why long-range radars are big, hot and expensive. Every receiver, antenna, waveform and signal-processing choice in the rest of the course is ultimately justified by what it does to one of the terms in this equation." },
+        { title: "Key Formula", formula: "P_r = \\frac{P_t\\,G^2\\,\\lambda^2\\,\\sigma}{(4\\pi)^3\\,R^4\\,L}" },
+        { title: "SNR \u2192 Maximum Range", text: "Detection requires P_r above kT\u2080\u00b7B\u00b7F\u00b7SNR_min, where F is the receiver noise figure and B the matched-filter bandwidth. Solving for R gives R_max = [P_t G\u00b2 \u03bb\u00b2 \u03c3 / ((4\u03c0)\u00b3 kT\u2080 B F L \u00b7 SNR_min)]^(1/4). The fourth-root softens the impact of any single term \u2014 doubling P_t buys only ~19% more range \u2014 so designers prefer to grow gain (which enters squared) or coherently integrate many pulses." },
+        { title: "Worked Example", text: "Take an X-band air-search radar: P_t = 1 MW, G = 36 dB (4000), \u03bb = 0.03 m, \u03c3 = 1 m\u00b2, B = 1 MHz, F = 3 dB, L = 6 dB, SNR_min = 13 dB. Numerator = 10\u2076 \u00b7 (4000)\u00b2 \u00b7 (0.03)\u00b2 \u00b7 1 \u2248 1.44\u00d710\u00b9\u00b9. Denominator = (4\u03c0)\u00b3 \u00b7 4\u00b710\u207b\u00b2\u00b9 \u00b7 10\u2076 \u00b7 2 \u00b7 4 \u00b7 20 \u2248 1.27\u00d710\u207b\u00b9\u00b3. Ratio \u2248 1.13\u00d710\u00b2\u2074, fourth root \u2248 1.03\u00d710\u2076 m \u2248 1030 km \u2014 reduce by atmospheric absorption and clutter and you are near the published horizon-limited range of an AN/FPS-117." },
+        { title: "Pitfalls", text: "(1) People drop the L term and over-predict range; real radomes, plumbing, beamshape and atmospheric losses easily total 6\u201310 dB. (2) RCS \u03c3 is highly aspect- and frequency-dependent \u2014 a B-52 head-on at 10 GHz is not the same target as broadside at 3 GHz. (3) The equation assumes a single pulse; coherent or non-coherent integration of N pulses adds an SNR factor that can dominate, so always state whether your R_max is per-pulse or post-integration." }
       ],
       keypoints: [
-        { title: "R\u2074 Dependence", text: "Received power falls as the fourth power of range, requiring large power-aperture products for long-range detection." },
-        { title: "Design Trade-offs", text: "Antenna size, transmit power, and waveform design are balanced to meet detection requirements within size, weight, and power constraints." }
+        { title: "Fourth-Power Range Law", text: "P_r \u221d 1/R\u2074: doubling range needs 16\u00d7 more transmit power-aperture, the central design pain of long-range radar." },
+        { title: "Gain Enters Squared", text: "Antenna gain G appears as G\u00b2 (transmit and receive), so growing aperture is far cheaper than growing transmitter power." },
+        { title: "Noise Floor Sets Detection", text: "R_max is bounded by SNR_min = P_r / (kT\u2080\u00b7B\u00b7F); cooling the LNA or narrowing B both directly buy range." },
+        { title: "Real-World Tie-In", text: "ATC primary radars, FAA ASR-9 and weather WSR-88D all publish power-aperture and noise figure precisely so users can plug numbers into this equation and verify coverage." }
       ]
     },
     {
-      id: "dd-pulse-comp", num: "Concept 2 of 3", title: "Pulse Compression",
-      desc: "Chirp waveforms, matched filter, time-bandwidth product.", color: "#7ee787", icon: "\ud83d\udcca",
+      id: "dd-pulse-comp", num: "Concept 2 of 5", title: "Pulse Compression & Chirp Waveforms",
+      desc: "Long pulses for energy, wide bandwidth for resolution \u2014 via matched filtering.",
+      color: "#7ee787", icon: "\ud83d\udcca",
+      svg: function(w, h) {
+        var cx = w/2;
+        var path = 'M30,150';
+        for (var i = 0; i <= 200; i++) {
+          var x = 30 + i * (cx - 50) / 200;
+          var f = 1 + i / 30;
+          var y = 150 + 35 * Math.sin(0.15 * i * f);
+          path += ' L' + x.toFixed(1) + ',' + y.toFixed(1);
+        }
+        return '<svg viewBox="0 0 ' + w + ' ' + h + '" xmlns="http://www.w3.org/2000/svg" style="background:#0d1117">'
+          + '<text x="' + (cx/2) + '" y="40" text-anchor="middle" fill="#7ee787" font-size="12" font-weight="600">Transmitted LFM chirp (T, B)</text>'
+          + '<line x1="20" y1="150" x2="' + (cx-30) + '" y2="150" stroke="#30363d"/>'
+          + '<path d="' + path + '" fill="none" stroke="#7ee787" stroke-width="1.5"/>'
+          + '<text x="' + (cx + (w-cx)/2) + '" y="40" text-anchor="middle" fill="#58a6ff" font-size="12" font-weight="600">After matched filter</text>'
+          + '<line x1="' + (cx+20) + '" y1="180" x2="' + (w-20) + '" y2="180" stroke="#30363d"/>'
+          + '<path d="M' + (cx+20) + ',180 L' + (cx+90) + ',178 L' + (cx+115) + ',175 L' + (cx+125) + ',95 L' + (cx+135) + ',175 L' + (cx+160) + ',178 L' + (w-20) + ',180" fill="none" stroke="#58a6ff" stroke-width="1.8"/>'
+          + '<text x="' + (cx+125) + '" y="85" text-anchor="middle" fill="#58a6ff" font-size="10">width \u2248 1/B</text>'
+          + '<line x1="' + (cx+85) + '" y1="200" x2="' + (cx+165) + '" y2="200" stroke="#8b949e" stroke-dasharray="3,2"/>'
+          + '<text x="' + (cx+125) + '" y="215" text-anchor="middle" fill="#8b949e" font-size="10">sidelobes</text>'
+          + '<text x="' + (w/2) + '" y="230" text-anchor="middle" fill="#c9d1d9" font-size="12">Compression ratio = T \u00b7 B</text>'
+          + '</svg>';
+      },
       sections: [
-        { title: "Overview", text: "Pulse compression allows a radar to achieve fine range resolution while transmitting long pulses with high energy. A wideband waveform (typically a linear FM chirp) is transmitted and compressed on receive using a matched filter." },
-        { title: "Key Formula", formula: "\\text{Compression Ratio} = T \\cdot B" },
-        { title: "Matched Filter", text: "The matched filter maximizes output SNR by correlating the received signal with a replica of the transmitted waveform. The compressed pulse width is approximately 1/B." }
+        { title: "Why Compress at All?", text: "A radar wants two things in tension: long pulses (lots of energy \u2192 detection) and short pulses (fine range resolution \u03b4r = c\u03c4/2). A 100 \u03bcs unmodulated pulse delivers great SNR but only 15 km range cells. Pulse compression transmits a long, wideband modulated pulse (typically a linear FM chirp sweeping bandwidth B over time T) and on receive applies a matched filter \u2014 a time-reversed conjugate replica \u2014 that collapses the echo to a peak of width \u22481/B while preserving the full transmitted energy." },
+        { title: "Key Formulas", formula: "\\text{TBP} = T\\cdot B,\\quad \\delta_r = \\frac{c}{2B},\\quad \\text{SNR gain} = T\\cdot B" },
+        { title: "Matched Filter Intuition", text: "The matched filter h(t) = s*(\u2212t) is the unique linear filter that maximises output SNR for a known signal in white noise. For an LFM chirp this is equivalent to a frequency-domain multiplication that aligns the dispersed spectrum, producing a sinc-like compressed pulse. Modern radars implement it digitally: sample the IF, take an FFT, multiply by the conjugate spectrum of the reference, IFFT, then scan for peaks." },
+        { title: "Worked Example", text: "Maritime surveillance radar: T = 50 \u03bcs, B = 5 MHz \u2192 TBP = 250. Uncompressed range cell = c\u00b750\u03bcs/2 = 7.5 km; after compression \u03b4r = c/(2\u00b75 MHz) = 30 m. SNR improvement vs. a 200 ns short pulse of the same peak power = 10\u00b7log\u2081\u2080(250) = 24 dB \u2014 the same as raising peak power 250\u00d7 without compression. This is why every modern surveillance radar uses some form of compression." },
+        { title: "Pitfalls", text: "Range sidelobes from rectangular weighting peak at \u221213 dB \u2014 a strong target will mask weaker ones in adjacent cells. Hamming or Taylor weighting cuts sidelobes to \u221240 dB but widens the mainlobe ~50% and costs ~1 dB SNR. Doppler shift on the return modulates the chirp slope and creates a range\u2013Doppler coupling: a fast inbound target appears closer than it really is by \u0394R \u2248 \u2212f_d\u00b7T\u00b7c/(2B). LFM is forgiving of this (small bias); phase-coded waveforms are not." }
       ],
       keypoints: [
-        { title: "Time-Bandwidth Product", text: "The product T\u00b7B determines the compression ratio \u2014 higher values yield finer range resolution without sacrificing pulse energy." },
-        { title: "Range Sidelobes", text: "Pulse compression introduces range sidelobes that can mask nearby weak targets. Window functions (e.g., Hamming) reduce sidelobes at the cost of slightly wider mainlobe." }
+        { title: "Time\u2013Bandwidth Product", text: "TBP = T\u00b7B is both the SNR gain and the compression ratio \u2014 the single number that defines waveform 'goodness'." },
+        { title: "Resolution Decoupled From Energy", text: "\u03b4r = c/(2B) depends only on bandwidth, not pulse length \u2014 so you can have 30 cm resolution with a 1 ms pulse." },
+        { title: "Sidelobes Mask Targets", text: "Rectangular chirps give \u221213 dB sidelobes; window the matched filter (Hamming/Taylor) for \u221240 dB at the cost of mainlobe width and ~1 dB SNR." },
+        { title: "Real-World Tie-In", text: "Automotive 77 GHz FMCW radars use exactly this principle (continuous chirp, beat-frequency demodulation) to give 10 cm range resolution at low transmit power." }
       ]
     },
     {
-      id: "dd-sar", num: "Concept 3 of 3", title: "SAR Imaging",
-      desc: "Synthetic aperture, azimuth resolution, range resolution.", color: "#ffa657", icon: "\ud83d\udef0\ufe0f",
+      id: "dd-doppler", num: "Concept 3 of 5", title: "Doppler Processing & Ambiguity",
+      desc: "Range\u2013Doppler maps, blind speeds, PRF unambiguous range.",
+      color: "#d2a8ff", icon: "\ud83c\udf00",
+      svg: function(w, h) {
+        var s = '<svg viewBox="0 0 ' + w + ' ' + h + '" xmlns="http://www.w3.org/2000/svg" style="background:#0d1117">';
+        s += '<rect x="40" y="30" width="' + (w-80) + '" height="' + (h-80) + '" fill="#161b22" stroke="#30363d"/>';
+        s += '<text x="' + (w/2) + '" y="20" text-anchor="middle" fill="#d2a8ff" font-size="12" font-weight="600">Range\u2013Doppler map</text>';
+        s += '<text x="20" y="' + (h/2) + '" fill="#8b949e" font-size="10" transform="rotate(-90 20,' + (h/2) + ')">range</text>';
+        s += '<text x="' + (w/2) + '" y="' + (h-10) + '" text-anchor="middle" fill="#8b949e" font-size="10">Doppler / radial velocity \u2192</text>';
+        var blobs = [[120,80,'#7ee787','aircraft'],[260,160,'#58a6ff','aircraft'],[200,200,'#ffa657','clutter']];
+        for (var i = 0; i < blobs.length; i++) {
+          s += '<ellipse cx="' + blobs[i][0] + '" cy="' + blobs[i][1] + '" rx="14" ry="9" fill="' + blobs[i][2] + '40" stroke="' + blobs[i][2] + '"/>';
+          s += '<text x="' + (blobs[i][0]+18) + '" y="' + (blobs[i][1]+3) + '" fill="' + blobs[i][2] + '" font-size="9">' + blobs[i][3] + '</text>';
+        }
+        s += '<line x1="' + (w/2) + '" y1="30" x2="' + (w/2) + '" y2="' + (h-50) + '" stroke="#f85149" stroke-dasharray="3,2"/>';
+        s += '<text x="' + (w/2 + 6) + '" y="45" fill="#f85149" font-size="9">v=0 (clutter notch)</text>';
+        s += '<text x="' + (w-160) + '" y="' + (h-30) + '" fill="#8b949e" font-size="9">PRF/2 \u2192 v_max = \u03bb\u00b7PRF/4</text>';
+        s += '</svg>';
+        return s;
+      },
       sections: [
-        { title: "Overview", text: "Synthetic Aperture Radar (SAR) creates high-resolution images by exploiting the motion of the radar platform. As the platform moves, it coherently combines returns from many pulse positions to synthesize a large effective antenna aperture." },
-        { title: "Azimuth Resolution", formula: "\\delta_{az} = \\frac{D}{2}" },
-        { title: "Range Resolution", text: "Range resolution is determined by the transmitted bandwidth: \u03b4r = c / (2B). Wider bandwidth yields finer range resolution." }
+        { title: "From Echo Phase to Velocity", text: "A target moving with radial velocity v shifts the carrier by f_d = 2v/\u03bb (factor of 2 because the path changes twice). At X-band (\u03bb = 3 cm) a 300 m/s aircraft produces 20 kHz of Doppler \u2014 easily measurable. Pulse-Doppler radars stack many returns from the same range cell, take an FFT across the slow-time pulse index, and read velocity directly off the spectrum. The result is the 2-D range\u2013Doppler map shown above." },
+        { title: "Key Formulas", formula: "f_d = \\frac{2v}{\\lambda},\\quad R_{ua} = \\frac{c}{2\\,\\text{PRF}},\\quad v_{ua} = \\frac{\\lambda\\,\\text{PRF}}{4}" },
+        { title: "PRF Trade-off", text: "PRF (pulse repetition frequency) controls two ambiguities at once. Low PRF gives long unambiguous range R_ua = c/(2\u00b7PRF) but tiny unambiguous velocity. High PRF reverses it. You cannot beat the product R_ua \u00b7 v_ua = c\u03bb/8 \u2014 a hard physical limit. Real radars choose Low-PRF (search), High-PRF (look-down/shoot-down) or staggered/Medium-PRF and then resolve ambiguities by the Chinese Remainder Theorem on returns from 3+ different PRFs." },
+        { title: "MTI and Blind Speeds", text: "Moving Target Indication (MTI) is the simplest Doppler filter: subtract consecutive pulses to cancel stationary clutter. Its frequency response has nulls at f_d = n\u00b7PRF (n = 0, 1, 2 \u2026), creating 'blind speeds' v_blind = n\u00b7\u03bb\u00b7PRF/2 where genuine moving targets are also cancelled. Staggered PRFs spread the nulls so no single velocity is blind on every dwell." },
+        { title: "Pitfalls", text: "(1) Range eclipsing: a target whose echo arrives during the next transmit pulse is invisible \u2014 PRF jitter or PRF diversity recovers it. (2) Doppler folding: a 600 m/s jet at PRF = 1 kHz, \u03bb = 0.03 m has v_ua = 7.5 m/s, so it folds 80 times and looks slow. (3) Tangential targets give f_d \u2248 0 and hide in the clutter notch \u2014 always cross-check with consecutive scans." }
       ],
       keypoints: [
-        { title: "Synthetic Aperture", text: "The azimuth resolution of a SAR is independent of range and depends only on the physical antenna length D \u2014 a smaller antenna actually gives better resolution." },
-        { title: "Autofocus", text: "Phase errors from platform motion or atmospheric effects degrade SAR images. Autofocus algorithms estimate and correct these errors to restore image sharpness." }
+        { title: "Doppler Equation", text: "f_d = 2v/\u03bb \u2014 the workhorse of every velocity measurement, from cop radar (10.5 GHz, mph readout) to weather Doppler." },
+        { title: "Range\u2013Velocity Ambiguity", text: "R_ua\u00b7v_ua = c\u03bb/8 is a hard product limit; designers must pick which ambiguity to suffer or use multi-PRF resolution." },
+        { title: "Clutter Notch", text: "Stationary and tangential targets sit at f_d = 0 and are removed with clutter \u2014 a fundamental detection blind spot." },
+        { title: "Real-World Tie-In", text: "WSR-88D NEXRAD weather radar uses dual-PRF (pulse pair) processing to unfold tornado mesocyclone velocities up to \u00b160 m/s while keeping 460 km range coverage." }
+      ]
+    },
+    {
+      id: "dd-phased-array", num: "Concept 4 of 5", title: "Phased-Array Beam Steering",
+      desc: "Electronic scan via element phase \u2014 the architecture behind AESA.",
+      color: "#ffa657", icon: "\ud83d\udce1",
+      svg: function(w, h) {
+        var s = '<svg viewBox="0 0 ' + w + ' ' + h + '" xmlns="http://www.w3.org/2000/svg" style="background:#0d1117">';
+        var n = 8, cx = w/2, baseY = h - 50, spacing = 26;
+        for (var i = 0; i < n; i++) {
+          var x = cx - (n-1)/2 * spacing + i * spacing;
+          s += '<rect x="' + (x-7) + '" y="' + (baseY-6) + '" width="14" height="12" fill="#ffa657" stroke="#ffa657"/>';
+          s += '<text x="' + x + '" y="' + (baseY+18) + '" text-anchor="middle" fill="#8b949e" font-size="8">\u03c6' + i + '</text>';
+        }
+        s += '<text x="' + cx + '" y="' + (baseY+34) + '" text-anchor="middle" fill="#8b949e" font-size="10">d \u2248 \u03bb/2 spacing  \u2014  progressive phase \u0394\u03c6 = (2\u03c0d/\u03bb) sin\u03b8</text>';
+        var theta = -25 * Math.PI / 180;
+        for (var k = -3; k <= 3; k++) {
+          var r = 110 + k * 6;
+          var ax = cx + r * Math.sin(theta);
+          var ay = baseY - 12 - r * Math.cos(theta);
+          s += '<line x1="' + cx + '" y1="' + (baseY-12) + '" x2="' + ax.toFixed(1) + '" y2="' + ay.toFixed(1) + '" stroke="#ffa657" stroke-opacity="' + (1 - Math.abs(k)*0.25) + '" stroke-width="' + (k===0?2.5:1) + '"/>';
+        }
+        s += '<text x="' + (cx + 110*Math.sin(theta)) + '" y="' + (baseY - 12 - 120*Math.cos(theta)) + '" text-anchor="middle" fill="#ffa657" font-size="11">main beam \u03b8</text>';
+        for (var k2 = 1; k2 <= 2; k2++) {
+          var th2 = (35 * k2) * Math.PI / 180;
+          var sx1 = cx + 70 * Math.sin(th2), sy1 = baseY - 12 - 70 * Math.cos(th2);
+          var sx2 = cx - 70 * Math.sin(th2), sy2 = baseY - 12 - 70 * Math.cos(th2);
+          s += '<line x1="' + cx + '" y1="' + (baseY-12) + '" x2="' + sx1.toFixed(1) + '" y2="' + sy1.toFixed(1) + '" stroke="#8b949e" stroke-dasharray="2,3"/>';
+          s += '<line x1="' + cx + '" y1="' + (baseY-12) + '" x2="' + sx2.toFixed(1) + '" y2="' + sy2.toFixed(1) + '" stroke="#8b949e" stroke-dasharray="2,3"/>';
+        }
+        s += '<text x="' + (cx-90) + '" y="60" fill="#8b949e" font-size="10">sidelobes</text>';
+        s += '<text x="' + cx + '" y="20" text-anchor="middle" fill="#ffa657" font-size="12" font-weight="600">N-element linear array, beam steered to \u03b8</text>';
+        return s + '</svg>';
+      },
+      sections: [
+        { title: "Beamforming Idea", text: "An array of N elements spaced d apart adds the signals from each element. If the wavefront arrives from angle \u03b8, neighbouring elements see a path-length difference d\u00b7sin\u03b8, equivalent to a phase \u0394\u03c6 = (2\u03c0d/\u03bb)\u00b7sin\u03b8. By electronically pre-applying that phase per element on transmit (or on receive) we steer the constructive-interference peak \u2014 the main beam \u2014 to any direction in microseconds, with no moving parts. This is the foundation of AESA fighter radars, AEGIS, Starlink user terminals and 5G mmWave panels." },
+        { title: "Key Formulas", formula: "\\Delta\\phi_n = \\frac{2\\pi n d}{\\lambda}\\sin\\theta,\\quad G_{array} \\approx N\\cdot G_{element},\\quad \\theta_{3dB} \\approx 0.886\\,\\frac{\\lambda}{Nd\\cos\\theta}" },
+        { title: "Aperture & Gain", text: "Coherent summation gives an array factor of N for amplitude (N\u00b2 for power) over a single element, so a 1000-element array beats a single dipole by 30 dB of gain. Beamwidth narrows roughly as \u03bb/(N\u00b7d), and gain on broadside is G = 4\u03c0\u00b7N\u00b7d_x\u00b7d_y/\u03bb\u00b2 for a planar array. Because gain enters squared in the radar equation, doubling the array doubles power-aperture-squared \u2014 a 16\u00d7 gain in detection-power budget." },
+        { title: "Worked Example", text: "An X-band (\u03bb = 3 cm) AESA with 1024 elements at \u03bb/2 spacing has an aperture of \u224832 \u00d7 32 elements = 0.48 m \u00d7 0.48 m. Broadside gain G = 4\u03c0(0.48)\u00b2/(0.03)\u00b2 \u2248 3200 (35 dB). 3-dB beamwidth \u22480.886\u00b73 cm/(32\u00b71.5 cm) = 1.66\u00b0. Steered to 60\u00b0 the cos\u03b8 factor halves the projected aperture: gain drops 3 dB, beamwidth widens to ~3.3\u00b0 \u2014 the well-known scan loss." },
+        { title: "Pitfalls", text: "(1) Grating lobes: if d > \u03bb/2 the array factor sprouts secondary peaks at sin\u03b8_g = sin\u03b8 \u00b1 \u03bb/d, putting full gain on the wrong direction \u2014 a serious EW vulnerability. (2) Phase-shifter quantization (typically 4\u20136 bits) creates RMS sidelobes ~\u22126\u00b7B dB below mainlobe \u2014 budget accordingly. (3) Element failures degrade gracefully: 10% random element loss \u2248 0.5 dB gain loss, but raises near-in sidelobes by several dB." }
+      ],
+      keypoints: [
+        { title: "Phase = Steering Angle", text: "Progressive phase \u0394\u03c6 across elements maps one-to-one to a beam direction \u2014 microsecond reconfiguration vs. seconds for mechanical scan." },
+        { title: "Element Spacing \u2264 \u03bb/2", text: "Violating the half-wavelength rule introduces grating lobes \u2014 full-gain false beams that confuse measurements and invite jamming." },
+        { title: "Scan Loss = cos\u03b8", text: "Projected aperture shrinks as cos\u03b8, so off-broadside gain falls and beamwidth widens \u2014 limiting useful field of view to \u00b160\u00b0." },
+        { title: "Real-World Tie-In", text: "The F-35 APG-81 AESA, AEGIS SPY-1/6, and SpaceX Starlink user terminals all rely on exactly this beam-steering math \u2014 only the element technology (T/R modules vs. patch + RFIC) differs." }
+      ]
+    },
+    {
+      id: "dd-sar", num: "Concept 5 of 5", title: "Synthetic Aperture Radar (SAR)",
+      desc: "Trade platform motion for antenna size \u2014 cm-class imaging from orbit.",
+      color: "#79c0ff", icon: "\ud83d\udef0\ufe0f",
+      svg: function(w, h) {
+        var s = '<svg viewBox="0 0 ' + w + ' ' + h + '" xmlns="http://www.w3.org/2000/svg" style="background:#0d1117">';
+        s += '<line x1="20" y1="' + (h-40) + '" x2="' + (w-20) + '" y2="' + (h-40) + '" stroke="#7ee787" stroke-width="1.5"/>';
+        s += '<text x="' + (w-50) + '" y="' + (h-25) + '" fill="#7ee787" font-size="10">ground</text>';
+        var positions = [70, 140, 210, 280, 350];
+        var py = 50, tx = w - 80, ty = h - 60;
+        for (var i = 0; i < positions.length && positions[i] < w-30; i++) {
+          var x = positions[i];
+          s += '<polygon points="' + x + ',' + (py-6) + ' ' + (x-10) + ',' + (py+8) + ' ' + (x+10) + ',' + (py+8) + '" fill="#58a6ff" stroke="#58a6ff"/>';
+          s += '<line x1="' + x + '" y1="' + (py+8) + '" x2="' + tx + '" y2="' + ty + '" stroke="#58a6ff" stroke-opacity="0.5" stroke-dasharray="2,3"/>';
+        }
+        s += '<text x="' + (positions[0]-10) + '" y="' + (py-12) + '" fill="#58a6ff" font-size="10">platform velocity v</text>';
+        s += '<line x1="' + positions[0] + '" y1="' + (py-18) + '" x2="' + (positions[positions.length-1]) + '" y2="' + (py-18) + '" stroke="#58a6ff" stroke-dasharray="3,2" marker-end="url(#sarA)"/>';
+        s += '<defs><marker id="sarA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#58a6ff"/></marker></defs>';
+        s += '<text x="' + ((positions[0]+positions[positions.length-1])/2) + '" y="' + (py-25) + '" text-anchor="middle" fill="#c9d1d9" font-size="10">synthetic aperture L_sa</text>';
+        s += '<circle cx="' + tx + '" cy="' + ty + '" r="6" fill="#f778ba"/>';
+        s += '<text x="' + (tx+10) + '" y="' + (ty+4) + '" fill="#f778ba" font-size="10">target</text>';
+        s += '<text x="' + (w/2) + '" y="' + (h-8) + '" text-anchor="middle" fill="#c9d1d9" font-size="11">azimuth resolution \u03b4_az = D/2  \u2014  independent of range</text>';
+        s += '<text x="' + (w/2) + '" y="22" text-anchor="middle" fill="#79c0ff" font-size="12" font-weight="600">SAR strip-map geometry</text>';
+        return s + '</svg>';
+      },
+      sections: [
+        { title: "Synthetic vs. Real Aperture", text: "A real-aperture radar's azimuth resolution is range\u00b7\u03bb/D \u2014 a 1 m antenna at 800 km / X-band gives 24 km cross-range, useless for imaging. SAR exploits platform motion: as the satellite or aircraft flies, every point on the ground is illuminated by many pulses from many positions. Coherently combining those pulses synthesises an effective aperture L_sa equal to the distance flown while the target is in the real beam. The beautiful result \u2014 \u03b4_az = D/2 \u2014 says azimuth resolution depends only on the *physical* antenna length, and is independent of range." },
+        { title: "Key Formulas", formula: "\\delta_{az} = \\frac{D}{2},\\quad \\delta_r = \\frac{c}{2B},\\quad L_{sa} = \\frac{\\lambda R}{D},\\quad T_{sa} = \\frac{L_{sa}}{v}" },
+        { title: "Range\u2013Doppler Algorithm", text: "The standard SAR processor first compresses each pulse in fast-time (range FFT \u00d7 reference \u00d7 IFFT), then 'range-cell migration corrects' the curved trajectory of each scatterer through the range bins, and finally compresses in slow-time (azimuth FFT against a chirp whose rate is set by geometry). The output is a focused complex image whose magnitude is the familiar speckled SAR scene." },
+        { title: "Worked Example", text: "Sentinel-1 C-band (\u03bb = 5.5 cm), real antenna D = 12 m, altitude 700 km, ground velocity v \u2248 7.5 km/s. \u03b4_az = D/2 = 6 m. Range bandwidth B = 75 MHz \u2192 \u03b4_r = c/(2B) \u2248 2 m slant. Synthetic aperture L_sa = \u03bbR/D \u2248 0.055\u00b7700 km/12 \u2248 3.2 km, taking T_sa \u2248 0.43 s of coherent processing per scene point \u2014 phase stability over those 0.43 s is the hard engineering problem." },
+        { title: "Pitfalls", text: "(1) Phase errors from atmospheric turbulence, ionospheric TEC, or platform jitter defocus the image; *autofocus* algorithms (PGA, map-drift) estimate and remove them. (2) Moving targets (cars, ships) shift in the azimuth direction by \u0394_az = R\u00b7v_target_radial/v_platform \u2014 the famous 'train off the tracks' artefact. (3) Layover and shadow in mountainous terrain make foreshortened slopes brighter and back-slopes invisible; interferometric SAR (InSAR) untangles them by combining two passes." }
+      ],
+      keypoints: [
+        { title: "\u03b4_az = D/2", text: "Counter-intuitive: a *smaller* antenna gives *better* azimuth resolution because the synthetic aperture can grow longer." },
+        { title: "Coherence Is Everything", text: "Phase must be stable across the entire dwell T_sa; oscillator drift, motion errors and atmosphere all defocus and demand autofocus." },
+        { title: "Range\u2013Azimuth Are Independent", text: "Range comes from bandwidth (\u03b4_r = c/2B), azimuth from antenna length \u2014 designers tune them separately." },
+        { title: "Real-World Tie-In", text: "Sentinel-1, ICEYE, Capella and TerraSAR-X deliver sub-metre imagery globally; the same math powers SAR modes in the F-35 APG-81 for ground mapping." }
+      ]
+    }
+  ],
+
+  useCases: [
+    {
+      id: "uc-fmcw-automotive", title: "FMCW Automotive Collision Avoidance",
+      desc: "How a 77 GHz automotive radar detects, ranges and tracks a cut-in vehicle in <50 ms.",
+      icon: "\ud83d\ude97", color: "#7ee787",
+      summary: "<strong>FMCW radar is dechirp-on-receive:</strong> transmit a long linear sweep, mix with the echo, and read range directly off the beat frequency \u2014 no high peak power, no nanosecond timing. A 4 GHz chirp gives <4 cm range resolution; 128 chirps per frame yield Doppler; a 12-element MIMO virtual array gives \u00b160\u00b0 azimuth. CFAR + IMM tracking on the resulting 4-D cube triggers AEB before a human could even react.",
+      pipeline: "VCO chirp (77\u201381GHz, 30\u03bcs)\n    \u2193  3 Tx TDM-MIMO\n  RF mix w/ Tx replica  \u2192  beat f_b = 2R\u00b7S/c\n    \u2193  ADC @ 10 MHz\n  Range FFT (256-pt)  \u2192  Doppler FFT (128-pt)  \u2192  Angle FFT (64-pt)\n    \u2193\n  CA-CFAR  \u2192  IMM tracker (CV + CA)  \u2192  AEB / CAN bus  \u2192  brake actuator",
+      metrics: [
+        { label: "Carrier / Bandwidth", value: "77 GHz / 4 GHz" },
+        { label: "Range resolution", value: "c/(2B) = 3.75 cm" },
+        { label: "Frame rate", value: "20 fps (50 ms cycle)" },
+        { label: "Detection range", value: "0.2 \u2013 250 m, \u00b160\u00b0 az" }
+      ],
+      extensions: "Cascade four AWR2243 chips for 16Tx\u00d716Rx (192 virtual channels) to get \u22641\u00b0 angular resolution; add 4D imaging radar elevation and learn point-cloud fusion with camera/LiDAR for L2+ ADAS.",
+      steps: [
+        { title: "1. Chirp Transmission", component: "MMIC Transmitter (TI AWR2243 / Infineon RXS)", proto: "FMCW @ 76\u201381 GHz",
+          detail: "A voltage-controlled oscillator sweeps 4 GHz of bandwidth in ~30 \u03bcs (slope ~133 MHz/\u03bcs). Three transmit antennas fire time-division-multiplexed chirps so the receiver can later separate them via MIMO virtual aperture.",
+          intuition: "A long, low-power chirp packs the same energy as a short high-power pulse, but its slope linearly encodes range as a beat tone \u2014 you trade peak power for time-bandwidth product.",
+          complexity: "DDS chirp gen: O(1) per sample at 100 Msps",
+          example: "TI AWR2243: 4 GHz BW, 133 MHz/\u03bcs slope, ~12 dBm Tx \u2014 vs a pulsed counterpart needing >10 kW peak for the same SNR.",
+          code: "// chirp profile (TI AWR-style)\nstartFreq = 77e9;\nslope     = 133e12;        // Hz/s\nidleTime  = 7e-6;\nrampEndTime = 30e-6;\nnumChirpsPerFrame = 128;",
+          refs: [{ label: "TI AWR2243 datasheet", url: "https://www.ti.com/product/AWR2243" }] },
+        { title: "2. Mixer Beat Frequency", component: "Receiver IF chain", proto: "Homodyne dechirp",
+          detail: "The received echo is mixed with a copy of the transmitted chirp; the difference frequency (beat) is f_b = 2R\u00b7slope/c. A 30 m target gives f_b \u2248 26.6 kHz \u2014 trivially digitised at 10 MHz ADC. Range resolution = c/(2B) = 3.75 cm.",
+          intuition: "Because Tx is still chirping when the echo arrives, mixing collapses 4 GHz of RF bandwidth into kHz of audio \u2014 you get GHz resolution at MHz ADC rates.",
+          example: "30 m target \u2192 200 ns round-trip \u2192 f_b = 26.6 kHz; 200 m target \u2192 177 kHz \u2014 both inside a 10 MHz IF band.",
+          pitfall: "Tx-Rx leakage produces a near-DC giant return; designers AC-couple the IF and high-pass-filter, but this raises the minimum detectable range to ~20 cm.",
+          refs: [{ label: "FMCW basics (Rohde & Schwarz)", url: "https://www.rohde-schwarz.com/us/applications/measurements-on-fmcw-radars-application-card_56279-1147277.html" }] },
+        { title: "3. Range\u2013Doppler\u2013Angle FFTs", component: "DSP / radar SoC", proto: "3-D FFT",
+          detail: "Per-chirp ADC samples \u2192 Range FFT (256-pt). Across 128 chirps in a frame \u2192 Doppler FFT (gives velocity, unambiguous to \u00b150 km/h at this PRF). Across the 12-element MIMO virtual array \u2192 Angle FFT (\u00b160\u00b0 azimuth). Output is a 4-D detection cube.",
+          intuition: "Three orthogonal phase progressions (fast-time = range, slow-time = Doppler, antenna index = angle) all decouple under FFT \u2014 the same algorithm runs on each axis.",
+          complexity: "O(N\u00b7M\u00b7K log(N\u00b7M\u00b7K)) \u2248 25 MFLOPS/frame",
+          example: "256\u00d7128\u00d712 cube = 393 k complex bins per frame; TI C66x DSP processes it in ~8 ms, leaving budget for detection.",
+          pitfall: "Skipping a Hann window leaks strong nearby returns into the target bin (sidelobes at \u221213 dB) \u2014 a guardrail truck masks a pedestrian one bin over.",
+          code: "% MATLAB sketch\nrangeFFT  = fft(adc, 256, 1);\nrdMap     = fftshift(fft(rangeFFT, 128, 2), 2);\nangleCube = fftshift(fft(rdMap, 64, 3), 3);" },
+        { title: "4. CFAR Detection + Tracking", component: "ECU perception stack", proto: "CA-CFAR + Kalman / IMM",
+          detail: "Cell-averaging CFAR sets an adaptive threshold per range bin to maintain Pfa \u2248 1e-6 in clutter. Detections feed an Interacting Multiple Model (IMM) tracker that runs constant-velocity and constant-acceleration filters in parallel; the cut-in vehicle is declared a TTC <2 s threat and an AEB command is issued to the brake controller over CAN.",
+          intuition: "A fixed threshold drowns in clutter; CFAR makes the threshold ride local noise so P_fa is constant. IMM keeps two motion models alive so a steady car can suddenly brake without losing track.",
+          complexity: "CA-CFAR: O(N) per cell; IMM Kalman: O(d\u00b3) per update (d=4-6)",
+          example: "ISO 22839 AEB requires reaction <200 ms; production radars close detect\u2192track\u2192brake loop in ~50 ms at 20 fps.",
+          pitfall: "Two close targets in the CFAR reference window inflate the threshold and hide each other (\u2018masking\u2019) \u2014 OS-CFAR with the 75th percentile fixes it but doubles compute.",
+          refs: [{ label: "ISO 22839 \u2014 Forward Vehicle Collision Mitigation", url: "https://www.iso.org/standard/45339.html" }] }
+      ]
+    },
+    {
+      id: "uc-weather-doppler", title: "Weather Doppler \u2014 Tornado Detection (NEXRAD)",
+      desc: "How a WSR-88D produces the rotating 'velocity couplet' signature that triggers a tornado warning.",
+      icon: "\ud83c\udf2a\ufe0f", color: "#58a6ff",
+      summary: "<strong>NEXRAD turns a 750 kW S-band pulse into life-saving lead time</strong> by autocorrelating echoes pulse-to-pulse for Doppler velocity, unwrapping aliases with a dual-PRF scheme, and pattern-matching adjacent inbound/outbound velocity pairs (the 'couplet') against a dual-pol debris signature. The end-to-end chain produces ~13 minutes average tornado warning lead time.",
+      pipeline: "28-ft dish, 9\u201314 elev tilts (~5 min volume)\n    \u2193  S-band 2.7\u20133.0 GHz, 750 kW peak\n  Dual-PRF pulse pairs (322 / 446 Hz)\n    \u2193  IQ to signal processor\n  Pulse-pair autocorrelation R(1)  \u2192  v\u0304 = \u03bb\u00b7arg(R(1))/(4\u03c0T)\n    \u2193\n  Region-growing dealiasing (\u00b18 \u2192 \u00b160 m/s)\n    \u2193\n  MDA shear scan + dual-pol \u03c1_HV debris check\n    \u2193\n  AWIPS \u2192 polygon warning \u2192 EAS / WEA",
+      metrics: [
+        { label: "Frequency / Peak power", value: "2.7\u20133.0 GHz / 750 kW" },
+        { label: "Max range / Resolution", value: "460 km / 250 m gates" },
+        { label: "Volume scan time", value: "4\u20136 min (VCP-12/212)" },
+        { label: "Avg tornado lead time", value: "~13 min (P_d \u2248 0.74)" }
+      ],
+      extensions: "Move on to phased-array MPAR replacement (1-minute volume scans), spectral moment estimation beyond pulse-pair, and machine-learning storm-scale convective allowing-area prediction (WoFS).",
+      steps: [
+        { title: "1. S-Band Volume Scan", component: "WSR-88D antenna", proto: "S-band 2.7\u20133.0 GHz, dual-pol",
+          detail: "A 28-foot dish rotates 360\u00b0 every ~12 s and steps through 9\u201314 elevation angles to build a 3-D volume of the storm in ~5 minutes. Dual horizontal/vertical polarization adds Z_DR and \u03c1_HV products that distinguish hail, rain and debris.",
+          intuition: "S-band wavelength (~10 cm) is large enough that rain doesn't attenuate it but small enough to scatter strongly \u2014 the sweet spot for storm interiors that C-band misses.",
+          example: "WSR-88D: 0.925\u00b0 beam, ~750 kW peak, 1.57 \u03bcs pulse \u2014 250 m range gates out to 460 km.",
+          pitfall: "Cone-of-silence above ~19.5\u00b0 elevation means a tornado directly over the radar can be invisible; that's why every county sits between several radars.",
+          refs: [{ label: "NWS WSR-88D Overview", url: "https://www.weather.gov/iwx/wsr_88d" }] },
+        { title: "2. Pulse-Pair Doppler Estimation", component: "Signal processor", proto: "Dual-PRF pulse-pair",
+          detail: "Two PRFs (~322 / 446 Hz) are interleaved. The autocorrelation lag-1 phase gives mean radial velocity v\u0304 = \u03bb\u00b7arg(R(1))/(4\u03c0\u00b7T). Combining both PRFs unfolds aliases via the Chinese remainder, raising v_unambiguous from \u00b18 m/s to \u00b160 m/s \u2014 enough for tornadic mesocyclones.",
+          intuition: "The phase rotation between two consecutive pulses on the same target IS the Doppler shift \u2014 you don't need a long FFT, just an inner product of length 2.",
+          complexity: "O(N) per range gate (N \u2248 16\u201364 pulses per radial)",
+          example: "At \u03bb=10 cm, PRF=446 Hz: v_ua = \u03bb\u00b7PRF/4 = 11.15 m/s; dual-PRF (322+446) extends to ~60 m/s via CRT unfolding.",
+          code: "// pulse-pair velocity estimator\nR1 = sum(IQ(:, 2:end) .* conj(IQ(:, 1:end-1)), 2);\nv  = lambda * angle(R1) / (4*pi*T);" },
+        { title: "3. Velocity Dealiasing & Couplet Detection", component: "ROC software (ORPG)", proto: "Region-growing dealiasing",
+          detail: "Adjacent radial bins are checked for jumps of \u00b12v_ua and unwrapped. The Mesocyclone Detection Algorithm (MDA) then scans for adjacent inbound/outbound velocity pairs whose shear exceeds a height-dependent threshold, producing the signature TVS (Tornado Vortex Signature) overlay.",
+          intuition: "A real tornado looks like a tiny dipole on the velocity image \u2014 air rushing toward the radar on one side and away on the other within ~1 km. That spatial pattern is the signature.",
+          pitfall: "Range folding (\u2018second-trip echoes\u2019) from beyond R_ua paints ghost storms; SZ-2 phase coding flags and suppresses them but loses ~10% of legitimate gates.",
+          refs: [{ label: "NEXRAD MDA paper", url: "https://journals.ametsoc.org/view/journals/wefo/13/2/1520-0434_1998_013_0304_tnswso_2_0_co_2.xml" }] },
+        { title: "4. Warning Issuance", component: "NWS forecaster + AWIPS", proto: "Polygon warning, EAS",
+          detail: "When MDA + dual-pol debris signature (\u03c1_HV drop) co-locate, the forecaster draws a warning polygon and issues a Tornado Warning over the Emergency Alert System and Wireless Emergency Alerts within 1\u20132 minutes of detection \u2014 the chain that produces ~13 minute average lead time today.",
+          intuition: "Dual-pol \u03c1_HV correlation drops below 0.8 only when scatterers are non-meteorological \u2014 lofted debris is essentially radar-confirmed ground contact.",
+          example: "2011 Joplin EF-5: TDS (Tornado Debris Signature) visible 30+ minutes; warning lead time was 24 min thanks to dual-pol upgrade.",
+          pitfall: "False-alarm rate (FAR \u2248 0.75) is the dominant metric the public actually feels \u2014 over-warning trains people to ignore alerts; lowering FAR without dropping P_d is an active research frontier." }
+      ]
+    },
+    {
+      id: "uc-sar-earth-obs", title: "Spaceborne SAR Earth Observation (Sentinel-1)",
+      desc: "From a 700 km orbit to a 5 m focused image of a flooded city \u2014 end-to-end pipeline.",
+      icon: "\ud83d\udef0\ufe0f", color: "#d2a8ff",
+      summary: "<strong>Synthetic Aperture Radar fakes a kilometre-long antenna</strong> by coherently summing pulses transmitted along the satellite's flight path. Sentinel-1 dwells ~0.43 s on each ground patch in TOPS mode, downlinks 5 TB/day of raw I/Q, focuses it with an Omega-K range-Doppler algorithm, and delivers calibrated \u03c3\u2070 to disaster responders within hours \u2014 day, night, through clouds and smoke.",
+      pipeline: "Sun-sync orbit @ 693 km, 7.5 km/s\n    \u2193  IW TOPS: 250 km swath, 3 sub-swaths\n  C-band chirp 5.405 GHz, 100 MHz BW\n    \u2193  pulse + receive (0.43 s synthetic dwell)\n  X-band downlink 520 Mb/s \u2192 Svalbard/Matera\n    \u2193  Level-0 (raw I/Q)\n  IPF: range compression \u2192 RCMC \u2192 azimuth compression\n    \u2193  Single-Look Complex (SLC)\n  Radiometric calibration \u2192 \u03c3\u2070 (dB) \u2192 Otsu threshold\n    \u2193  Flood polygon\n  Copernicus EMS \u2192 civil-protection GIS",
+      metrics: [
+        { label: "Orbit / Revisit", value: "693 km / 6\u201312 day" },
+        { label: "Resolution (IW)", value: "5 \u00d7 20 m, 250 km swath" },
+        { label: "Raw downlink", value: "520 Mbit/s, ~5 TB/day" },
+        { label: "EMS delivery", value: "6\u201312 h post-acquisition" }
+      ],
+      extensions: "Stack two passes for InSAR (millimetre ground deformation), use persistent-scatterer time series (PSI) for subsidence monitoring, or train a CNN on Sentinel-1 + Sentinel-2 fusion for crop-type classification.",
+      steps: [
+        { title: "1. Acquisition Planning", component: "ESA mission planning", proto: "TOPSAR / IW mode",
+          detail: "Sentinel-1 operates in Interferometric Wide (IW) TOPS mode \u2014 250 km swath, 5 \u00d7 20 m resolution. Operators task an acquisition over the area of interest; a 0.43 s synthetic-aperture dwell is scheduled at the next overpass (typically 6\u201312 day repeat).",
+          intuition: "TOPS (Terrain Observation by Progressive Scan) electronically steers the beam from back-to-front during each burst, giving uniform SNR across the swath \u2014 the trade is azimuth resolution (20 m vs 5 m in stripmap).",
+          example: "Sentinel-1A+B constellation: ~1.6 TB/day Level-0, every land mass covered every 6 days at the equator, 1\u20133 days at high latitudes.",
+          refs: [{ label: "Sentinel-1 IW Mode", url: "https://sentinel.esa.int/web/sentinel/user-guides/sentinel-1-sar/acquisition-modes/interferometric-wide-swath" }] },
+        { title: "2. Raw Data Downlink", component: "X-band downlink + ground station", proto: "CCSDS framing",
+          detail: "Compressed I/Q samples (~520 Mbit/s peak) are dumped to ground stations (Svalbard, Matera). Roughly 5 TB/day of Level-0 product flows into the PDGS (Payload Data Ground Segment).",
+          intuition: "Onboard FDBAQ (Flexible Dynamic Block Adaptive Quantization) compresses 10-bit I/Q to ~3 bits per sample by allocating bits where signal energy is \u2014 essential because no link can match raw chirp rates.",
+          pitfall: "FDBAQ is lossy; over very bright scenes (urban corners) it can saturate, baking calibration errors into every downstream product." },
+        { title: "3. Range\u2013Doppler Focusing", component: "IPF (Instrument Processing Facility)", proto: "Omega-K / RDA",
+          detail: "Per-burst processing: range FFT \u00d7 reference chirp conjugate \u00d7 IFFT (range compression); range-cell migration correction in the 2-D frequency domain; azimuth chirp compression. Output is a Single-Look Complex (SLC) image with sub-degree phase accuracy required for InSAR.",
+          intuition: "The satellite's straight-line motion past a fixed scatterer produces a quadratic phase history \u2014 exactly an LFM chirp in the azimuth direction \u2014 so the same matched-filter idea focuses the synthetic aperture.",
+          complexity: "O(N\u00b7M\u00b7log(NM)) per burst, dominated by 2-D FFTs",
+          example: "One IW burst \u2248 25k azimuth \u00d7 22k range samples \u2192 ~10\u00b9\u00b9 complex MACs; full scene focusing runs in ~minutes on a multi-GPU node.",
+          code: "# pyrosar / SNAP Graph Processing Tool\ngpt apply-orbit-file.xml -SsourceProduct=S1A_IW_SLC.zip\ngpt sar-deburst.xml | gpt terrain-correction.xml" },
+        { title: "4. Flood Mapping", component: "Copernicus EMS analyst", proto: "Otsu threshold on \u03c3\u2070",
+          detail: "Calibrated VV-polarised backscatter \u03c3\u2070 is co-registered against a pre-flood reference. Open water appears as a specular dark patch (\u03c3\u2070 < \u221220 dB). An Otsu-threshold + morphological clean-up produces a vector flood polygon delivered to civil-protection agencies within 6\u201312 hours of acquisition.",
+          intuition: "Smooth water is a mirror at C-band \u2014 it bounces the signal away from the radar, so it looks black. Roughness from wind or vegetation breaks the trick.",
+          example: "2021 Germany Ahr valley flood: Sentinel-1 detected inundation within hours; EMS-100 activation released polygons used by THW rescue teams.",
+          pitfall: "Wet sand, fresh asphalt and radar shadow on the lee side of mountains also produce \u03c3\u2070 < \u221220 dB \u2014 thresholding alone gives false positives; an SRTM-based shadow mask is mandatory.",
+          refs: [{ label: "Copernicus Emergency Mapping Service", url: "https://emergency.copernicus.eu/" }] }
+      ]
+    },
+    {
+      id: "uc-aesa-air-surveillance", title: "AESA Air Surveillance \u2014 Multi-Function Phased Array",
+      desc: "How an AESA fighter radar (APG-81-class) interleaves search, track and SAR in a single panel.",
+      icon: "\u2708\ufe0f", color: "#ffa657",
+      summary: "<strong>An AESA is 1500+ GaN T/R modules that steer the beam electronically in microseconds,</strong> turning one antenna into a time-multiplexed scheduler. The radar dynamically rebalances dwell time across volume search, track-while-scan, SAR mapping, and EW \u2014 all under the same aperture \u2014 while adaptive waveforms (LFM, NLFM, Barker) tailor each mission.",
+      pipeline: "Mission scheduler (search 60%, track 25%, SAR 10%, EW 5%)\n    \u2193  beam command (\u0394\u03c6 per T/R module)\n  ~1500 GaN T/R modules @ 10 W \u2192 15 kW EIRP\n    \u2193  electronic steer < 10 \u03bcs\n  Waveform per task: LFM-pulse / pulse-Doppler / SAR chirp\n    \u2193  digital beamform on receive\n  Pulse compression \u2192 Range\u2013Doppler map \u2192 STAP\n    \u2193\n  CFAR detection \u2192 plot extraction \u2192 IMM/MHT tracker\n    \u2193  Track file \u2192 sensor fusion \u2192 fire-control system",
+      metrics: [
+        { label: "T/R modules / EIRP", value: "~1500 GaN / ~15 kW EIRP" },
+        { label: "Beam steer time", value: "< 10 \u03bcs (vs 1 s mechanical)" },
+        { label: "Volume search rate", value: "120\u00b0 az \u00d7 60\u00b0 el in ~2 s" },
+        { label: "Simultaneous tracks", value: "20\u201360, dependent on RCS" }
+      ],
+      extensions: "Layer on cognitive radar (closed-loop waveform adaptation against jamming), MIMO mode for spotlight imaging, and STAP at the array level to reject sidelobe clutter from airborne jammers.",
+      steps: [
+        { title: "1. Resource Scheduling", component: "Radar Mission Computer", proto: "Time-budget scheduler",
+          detail: "Every 10 ms, a real-time scheduler allocates dwell slots across competing tasks: horizon search, sector search, track update, SAR map, ECCM. Each task has a priority and a re-look deadline; the scheduler is a hard-real-time variant of earliest-deadline-first.",
+          intuition: "An AESA is a CPU \u2014 microseconds are clock cycles, beam-points are threads, and the scheduler is the OS kernel deciding what runs next.",
+          complexity: "O(N log N) priority-queue per scheduling tick",
+          pitfall: "Greedy schedulers starve low-priority tracks; once a target slips past its re-look deadline the tracker decays and re-acquisition costs 5\u00d7 more dwell." },
+        { title: "2. Electronic Beam Steering", component: "T/R module phase shifters", proto: "Progressive phase taper",
+          detail: "Each T/R module gets a programmed phase \u0394\u03c6 = (2\u03c0/\u03bb)\u00b7d\u00b7sin(\u03b8). All modules transmit simultaneously; the constructive interference forms a pencil beam at angle \u03b8. Changing \u0394\u03c6 across modules is a microsecond memory write \u2014 no mechanical inertia.",
+          intuition: "Phase shifts are time delays in disguise; aligning them across the aperture builds a wavefront that lands wherever you point it.",
+          example: "X-band \u03bb=3 cm, d=\u03bb/2: 30\u00b0 scan needs \u0394\u03c6 = \u03c0\u00b7sin(30\u00b0) = 1.57 rad/module; for 1500 modules that's all set in 5\u201310 \u03bcs.",
+          pitfall: "Beyond ~60\u00b0 off boresight the projected aperture shrinks (cos(\u03b8) loss) AND grating lobes from d>\u03bb/2 spacing appear \u2014 effective coverage is a cone, not a hemisphere.",
+          code: "// per-module phase command (simplified)\nfor (m = 0; m < N; m++) {\n  phi[m] = 2*PI / lambda * d * m * sin(theta);\n  trm_set_phase(m, phi[m]);\n}\n// settle time ~ 5 us" },
+        { title: "3. Pulse Compression + Pulse-Doppler", component: "Digital signal processor", proto: "LFM + coherent FFT",
+          detail: "Each dwell transmits N coherent pulses (typically 16\u201364). Range compression via matched filter against the LFM replica; then an FFT across the pulse axis gives Doppler. The output is a 2-D range-Doppler map per beam position. STAP (Space-Time Adaptive Processing) jointly nulls clutter and jammers in angle-Doppler space.",
+          intuition: "Range and Doppler are orthogonal under coherent integration \u2014 the same N pulses simultaneously yield 1/B range resolution and 1/(N\u00b7PRI) velocity resolution \u2018for free.\u2019",
+          complexity: "Compression O(M log M) per pulse; STAP weight solve O(K\u00b3) per CPI, K = sub-aperture count",
+          example: "APG-77/81-class: 1 \u03bcs LFM pulse, B=10 MHz \u2192 15 m range resolution; 64-pulse CPI at PRF=20 kHz \u2192 \u22641 m/s velocity resolution." },
+        { title: "4. Tracking & Fusion", component: "Combat system / fusion engine", proto: "MHT + IMM Kalman",
+          detail: "Detection plots are associated with existing tracks via Multiple Hypothesis Tracking (MHT) over a sliding window; an IMM filter switches between constant-velocity, constant-turn and acceleration models. Confirmed tracks are fused with IRST, Link-16 and ESM contacts to build a single integrated air picture.",
+          intuition: "Tracking is bayesian bookkeeping: keep the top-K hypotheses alive long enough that ambiguous frames resolve themselves with later evidence.",
+          complexity: "MHT pruning kept polynomial via N-scan deferred decision (typically N=3\u20135)",
+          pitfall: "Maneuvering targets (8+ g) violate the CV assumption \u2014 IMM rescues this only if the CA / CT model is included; otherwise the track \u2018coasts\u2019 and misses an evading fighter.",
+          refs: [{ label: "AESA radar overview (NRL)", url: "https://www.nrl.navy.mil/Our-Work/Areas-of-Research/Radar/" }] }
+      ]
+    },
+    {
+      id: "uc-stap-airborne-mti", title: "STAP \u2014 Suppressing Clutter from a Moving Platform",
+      desc: "How airborne radars (E-3 Sentry, JSTARS, F-35) cancel ground clutter that smears across all Doppler bins.",
+      icon: "\ud83c\udfaf", color: "#79c0ff",
+      summary: "<strong>From a moving aircraft, ground clutter spans the full Doppler axis</strong> because every patch on the ground has its own line-of-sight velocity. A simple MTI notch fails. Space-Time Adaptive Processing estimates a joint angle-Doppler clutter covariance and computes a linear weight that places a 2-D null along the clutter ridge \u2014 letting a slow-moving truck on the ground survive while 200 m/s grass moves to the same f_d.",
+      pipeline: "K-element sub-array on moving platform (v_p)\n    \u2193  N pulses per CPI per element\n  Build space-time snapshot x \u2208 \u2102^(K\u00b7N)\n    \u2193\n  Estimate R = E[x x^H] from L training cells (L > 2KN)\n    \u2193\n  Steering vector s(\u03b8, f_d) per hypothesis\n    \u2193\n  Weights w = R\u207b\u00b9 s / (s^H R\u207b\u00b9 s)\n    \u2193  apply per range cell\n  Output |w^H x|\u00b2 \u2192 CFAR threshold \u2192 slow-mover detection",
+      metrics: [
+        { label: "Clutter improvement", value: "30\u201360 dB vs pulse-only MTI" },
+        { label: "Min detectable velocity", value: "~2\u20135 m/s (MTI gives ~30 m/s)" },
+        { label: "Training cells needed", value: "L \u2248 2\u00b7K\u00b7N (Reed-Mallett-Brennan)" },
+        { label: "Compute cost", value: "O((KN)\u00b3) covariance inverse" }
+      ],
+      extensions: "Study reduced-rank STAP (JDL, EFA, PRI-staggered), knowledge-aided STAP that biases R with terrain priors, and end-to-end deep learning for clutter suppression on cognitive radars.",
+      steps: [
+        { title: "1. The Clutter Ridge Problem", component: "Geometry / problem framing", proto: "Doppler = (2v_p/\u03bb)\u00b7cos(\u03c6)",
+          detail: "From a platform moving at v_p, a ground scatterer at azimuth \u03c6 produces an apparent Doppler f_d = (2v_p/\u03bb)\u00b7cos(\u03c6). Plotted on a Doppler-vs-angle plane, all clutter lies along a diagonal line \u2014 the \u2018clutter ridge.\u2019 A target moving relative to the ground sits off the ridge.",
+          intuition: "Clutter and target both have Doppler, but only the target's Doppler is inconsistent with its angle \u2014 you must filter in 2-D, not 1-D.",
+          example: "E-3 AWACS at 250 m/s, X-band: clutter at boresight has f_d=16.7 kHz; at 60\u00b0 off-boresight, f_d=8.3 kHz \u2014 across this full span a 1-D MTI cannot help." },
+        { title: "2. Space-Time Snapshot", component: "K-element array, N pulses", proto: "Vectorize array\u00d7slow-time",
+          detail: "Stack the IQ samples from K array elements across N pulses into a single column vector x of length K\u00b7N per range cell. This vector encodes both spatial phase (angle) and temporal phase (Doppler) so they can be filtered jointly.",
+          intuition: "Concatenating space and time lets one linear operation handle both \u2014 the math doesn't care that the dimensions are physically different.",
+          complexity: "O(KN) memory per range cell; full CPI is M ranges \u00d7 KN complex floats",
+          code: "% MATLAB sketch\n% data = K x N x M (channels, pulses, ranges)\nx = reshape(data(:,:,m), K*N, 1);   % snapshot at range m" },
+        { title: "3. Covariance Estimation", component: "Training data selector", proto: "Sample matrix inverse",
+          detail: "Pick L neighbouring range cells assumed target-free; estimate R\u0302 = (1/L)\u00b7\u03a3 x_\u2113 x_\u2113^H. Reed-Mallett-Brennan: need L > 2\u00b7K\u00b7N for SINR loss < 3 dB. Diagonal loading R\u0302 + \u03b1I regularises when training is sparse or non-stationary.",
+          intuition: "R is a fingerprint of \u2018what clutter looks like right here\u2019; STAP literally subtracts that fingerprint from each cell-under-test.",
+          complexity: "O(L\u00b7(KN)\u00b2) accumulation; O((KN)\u00b3) inversion",
+          pitfall: "Heterogeneous clutter (urban edges, coast lines) contaminates training \u2014 the estimated R no longer matches the cell-under-test and SINR collapses; use non-homogeneity detectors to drop bad training cells." },
+        { title: "4. Adaptive Weight & Test", component: "Detector", proto: "MVDR / GLRT",
+          detail: "For each (\u03b8, f_d) hypothesis form steering vector s; compute MVDR weights w = R\u0302\u207b\u00b9 s / (s^H R\u0302\u207b\u00b9 s); test statistic |w^H x|\u00b2 / (s^H R\u0302\u207b\u00b9 s) compared to a CFAR threshold. Detection cells off the clutter ridge enjoy 30\u201360 dB more SINR than a Doppler-only filter would deliver.",
+          intuition: "Minimum-variance distortionless response: pass the signal in direction s at unit gain, minimise output power in every other direction \u2014 the optimum spatial-temporal Wiener filter.",
+          complexity: "O((KN)\u00b2) per hypothesis after one O((KN)\u00b3) inverse per range",
+          example: "JSTARS GMTI mode: K=24, N=64 \u2192 KN=1536; full-rank STAP is intractable, so reduced-rank EFA/JDL methods cut compute by 100\u00d7 with <2 dB SINR loss.",
+          refs: [{ label: "Ward STAP technical report (MIT/LL)", url: "https://apps.dtic.mil/sti/citations/ADA293032" }] }
+      ]
+    }
+  ],
+
+  // === BEGIN glossary v1 data placeholder ===
+  glossary: [
+    { id: "radar-eq", term: "Radar Range Equation", aka: "Range equation", category: "concepts",
+      short: "P_r = P_t G² λ² σ / ((4π)³ R⁴ L) — master equation linking power, gain, RCS and range.",
+      long: "Energy spreads as 1/R² on transmit and again on receive, giving the fourth-power range law that dominates every radar design. Solving for R_max against the noise floor kT₀BF·SNR_min yields the maximum detection range. Because gain G enters squared while P_t enters linearly, growing aperture is almost always cheaper than growing transmit power.",
+      seeAlso: ["rcs", "antenna", "noise-figure", "detection"] },
+
+    { id: "rcs", term: "Radar Cross Section", aka: "σ, RCS", category: "concepts",
+      short: "Effective scattering area of a target in m² — strongly aspect- and frequency-dependent.",
+      long: "RCS quantifies how much incident power a target scatters back toward the radar. It varies wildly with viewing angle, polarization and frequency: a flat plate at normal incidence can exceed 1000 m² while the same plate edge-on may show 0.001 m². Stealth design (shaping + RAM coatings) targets RCS reduction in the operational band, while resonance effects matter when the target dimension is comparable to λ.",
+      seeAlso: ["radar-eq", "waveforms", "ew"] },
+
+    { id: "antenna", term: "Antenna Gain & Beamwidth", aka: "Aperture gain", category: "hardware",
+      short: "G ≈ 4πA_eff/λ², beamwidth θ_3dB ≈ λ/D — larger aperture means narrower beam and higher gain.",
+      long: "An antenna concentrates radiated power into a beam; gain is the directivity multiplied by efficiency. For a uniformly illuminated aperture of area A, G = 4πA/λ² and the 3-dB beamwidth scales as λ/D. Tapered illumination (Taylor, Chebyshev) trades a fraction of gain for much lower sidelobes — essential when nearby strong scatterers would otherwise mask weak targets.",
+      seeAlso: ["radar-eq", "phased-array", "aesa", "sidelobes"] },
+
+    { id: "transmitter", term: "Transmitter", aka: "Tx, power amplifier", category: "hardware",
+      short: "High-power RF source: magnetron, klystron, TWT or solid-state GaN T/R modules.",
+      long: "The transmitter produces the kilowatts-to-megawatts of pulsed RF that the radar equation demands. Legacy tube amplifiers (klystron, TWT) deliver high peak power and good phase coherence; modern AESAs replace them with thousands of GaN solid-state amplifiers at ~10 W each, summed in the air. Duty cycle, pulse-to-pulse phase stability and harmonic content all directly limit MTI improvement factor and Doppler dynamic range.",
+      seeAlso: ["aesa", "receiver", "waveforms"] },
+
+    { id: "receiver", term: "Receiver & Noise Figure", aka: "Rx, LNA chain", category: "hardware",
+      short: "LNA + mixer + ADC chain; noise figure F sets the kT₀BF noise floor.",
+      long: "The receiver amplifies and digitises echoes that may be 120+ dB below the transmitted pulse. The first-stage LNA dominates the cascaded noise figure (Friis); every dB shaved off F is a dB straight into the link budget. Modern designs use direct-sampling ADCs at IF, giving software-defined matched filtering and Doppler processing without analog drift.",
+      seeAlso: ["noise-figure", "radar-eq", "transmitter"] },
+
+    { id: "noise-figure", term: "Noise Figure", aka: "F, NF", category: "performance",
+      short: "Ratio of input SNR to output SNR — quantifies receiver-added noise above kT₀B.",
+      long: "F (in dB) tells you how much the receiver degrades the theoretical thermal-noise SNR. The cascaded NF is dominated by the first stage: F_total = F₁ + (F₂−1)/G₁ + … so the LNA gain and NF set the entire system. Lowering F by 3 dB doubles available SNR — equivalent in range terms to a 19% increase under the fourth-root law.",
+      seeAlso: ["receiver", "radar-eq", "detection"] },
+
+    { id: "waveforms", term: "Waveform Design", aka: "Pulse, CW, chirp", category: "concepts",
+      short: "Choice of transmit signal — sets range resolution, ambiguity and Doppler tolerance.",
+      long: "The transmit waveform determines what the matched filter can extract. Short pulses give fine range resolution but poor energy; long unmodulated pulses give SNR but coarse range. Modern radars almost universally use modulated pulses (LFM, NLFM, phase-coded) so resolution is decoupled from energy via the time-bandwidth product.",
+      seeAlso: ["chirp-lfm", "pulse-compression", "tbp", "fmcw"] },
+
+    { id: "chirp-lfm", term: "Linear FM Chirp", aka: "LFM, chirp", category: "concepts",
+      short: "Pulse whose frequency sweeps linearly across bandwidth B over duration T.",
+      long: "An LFM chirp s(t) = exp(jπ(B/T)t²) is the workhorse pulse-compression waveform: easy to generate with a DDS, robust to Doppler shifts (gives a small range bias rather than complete decorrelation), and matched-filter peak width is ~1/B. NLFM variants pre-shape the spectrum to reduce range sidelobes below −40 dB without amplitude weighting.",
+      seeAlso: ["pulse-compression", "matched-filter", "waveforms", "fmcw"] },
+
+    { id: "pulse-compression", term: "Pulse Compression", category: "software",
+      short: "Matched-filter a long modulated pulse to a narrow peak of width 1/B with full SNR gain T·B.",
+      long: "Pulse compression resolves the long-pulse-vs-short-pulse dilemma: transmit a long wideband pulse (e.g. 50 µs × 5 MHz), then on receive correlate against a stored replica. The output is a sinc-like peak of width c/(2B) with SNR boosted by the time-bandwidth product. Modern implementations FFT the IF samples, multiply by the conjugate spectrum and IFFT — pure digital signal processing.",
+      seeAlso: ["matched-filter", "chirp-lfm", "tbp", "sidelobes"] },
+
+    { id: "matched-filter", term: "Matched Filter", category: "software",
+      short: "h(t) = s*(−t) — the linear filter that maximises output SNR for known signal in white noise.",
+      long: "The matched filter is optimum (in SNR sense) for detecting a known waveform in additive white Gaussian noise. Its output SNR equals 2E/N₀, regardless of pulse shape — only the energy matters. For coloured clutter or coloured noise the filter generalises to the whitening matched filter; for unknown Doppler the receiver runs a bank of matched filters across hypothesised f_d.",
+      seeAlso: ["pulse-compression", "doppler", "stap"] },
+
+    { id: "tbp", term: "Time-Bandwidth Product", aka: "TBP, T·B", category: "numerics",
+      short: "Product of pulse duration T and bandwidth B — both the SNR gain and the compression ratio.",
+      long: "TBP is the single figure of merit for a pulse-compression waveform. TBP = 1 is an unmodulated CW-equivalent pulse; TBP ≥ 100 is typical for surveillance radar; spaceborne SAR routinely runs TBP > 10⁴. The compressed pulse width is T/TBP = 1/B, and matched-filter SNR gain in dB equals 10·log₁₀(TBP).",
+      seeAlso: ["pulse-compression", "chirp-lfm", "waveforms"] },
+
+    { id: "fmcw", term: "FMCW Radar", aka: "Frequency-Modulated CW", category: "systems",
+      short: "Continuous-wave radar with a chirped carrier — range from beat frequency on receive mixing.",
+      long: "FMCW transmits a continuous chirp and mixes the received echo with the current Tx signal; the resulting beat frequency f_b = (B/T)·(2R/c) directly gives range, while Doppler appears as a slow-time phase across many chirps. With no high-power pulse, FMCW is the technology of choice for automotive 77 GHz radar, altimeters, and short-range industrial sensors.",
+      seeAlso: ["chirp-lfm", "doppler", "range-doppler-map"] },
+
+    { id: "doppler", term: "Doppler Shift", aka: "f_d", category: "concepts",
+      short: "f_d = 2v_r/λ — frequency offset from radial motion; the factor 2 is for round-trip path.",
+      long: "A target moving with radial velocity v_r shifts the echo carrier by f_d = 2v_r/λ. Pulse-Doppler radars sample the same range cell across many pulses and FFT along slow time, reading velocity directly off the spectrum. At X-band a 300 m/s aircraft yields 20 kHz — easy to measure; at 77 GHz the same aircraft gives 154 kHz, which is why mmWave automotive radar has excellent velocity discrimination.",
+      seeAlso: ["range-doppler-map", "prf", "mti", "ambiguity"] },
+
+    { id: "range-doppler-map", term: "Range–Doppler Map", aka: "RD map, data cube slice", category: "software",
+      short: "2-D array indexed by range bin and Doppler bin — primary detection surface of pulse-Doppler radar.",
+      long: "Within a coherent processing interval (CPI), pulse compression provides range and an FFT across pulses provides Doppler. The resulting matrix has targets as bright cells and clutter concentrated near f_d = 0 (the clutter notch). CFAR detection sweeps this map for threshold crossings, after which centroiding gives sub-bin accuracy.",
+      seeAlso: ["doppler", "cfar", "clutter", "matched-filter"] },
+
+    { id: "prf", term: "Pulse Repetition Frequency", aka: "PRF, PRI = 1/PRF", category: "concepts",
+      short: "Pulses-per-second — controls unambiguous range R_ua = c/(2·PRF) and velocity v_ua = λ·PRF/4.",
+      long: "PRF trades two ambiguities. Low PRF (≤ 4 kHz) gives long unambiguous range, good for surveillance. High PRF (> 100 kHz) gives wide unambiguous velocity, used in look-down/shoot-down. Their product R_ua·v_ua = cλ/8 is a hard limit. Medium-PRF or staggered-PRF schemes resolve both ambiguities by combining returns at 3+ PRFs (Chinese Remainder Theorem).",
+      seeAlso: ["ambiguity", "doppler", "mti"] },
+
+    { id: "ambiguity", term: "Range–Velocity Ambiguity", aka: "Eclipsing, folding", category: "concepts",
+      short: "Hard product limit R_ua·v_ua = cλ/8 — you cannot have wide range and wide velocity at one PRF.",
+      long: "The ambiguity function χ(τ, f_d) describes how a waveform discriminates range delay τ from Doppler f_d. Repeating pulses at PRF folds both range and Doppler, producing aliased ghosts. Designers either pick a PRF regime (low/medium/high) suited to the mission or stagger PRFs and unfold algorithmically.",
+      seeAlso: ["prf", "doppler", "waveforms"] },
+
+    { id: "mti", term: "Moving Target Indication", aka: "MTI filter", category: "software",
+      short: "Clutter-suppression filter using pulse-to-pulse cancellation — nulls f_d = 0 and harmonics.",
+      long: "MTI subtracts consecutive pulses (or longer FIR taps) to cancel stationary returns. Its frequency response has nulls at f_d = n·PRF, producing 'blind speeds' v_blind = n·λ·PRF/2 where genuine moving targets are also rejected. Staggered PRFs and higher-order MTI cascades push the first blind speed beyond the expected target velocity range.",
+      seeAlso: ["clutter", "doppler", "prf", "stap"] },
+
+    { id: "clutter", term: "Clutter", category: "concepts",
+      short: "Unwanted echoes from ground, sea, weather or chaff — often 40–80 dB above target.",
+      long: "Clutter is everything the radar 'sees' that is not the target of interest. Surface clutter has a wide spatial extent and a narrow Doppler spread; weather clutter has a moderate Doppler spread (wind); chaff is essentially weather-like clutter deliberately dispensed. Suppression uses MTI, pulse-Doppler filtering, polarization discrimination and — for airborne look-down — STAP.",
+      seeAlso: ["mti", "stap", "ew", "range-doppler-map"] },
+
+    { id: "cfar", term: "CFAR Detection", aka: "Constant False Alarm Rate", category: "software",
+      short: "Adaptive threshold from local cell average — maintains P_fa as clutter level varies.",
+      long: "A fixed detection threshold floods with false alarms when clutter rises and misses targets when it falls. CFAR estimates the noise/clutter level from cells surrounding the cell-under-test (CA-CFAR averages them; OS-CFAR uses an order statistic robust to interferers) and scales a multiplier to maintain a designed P_fa, typically 10⁻⁶. Guard cells protect against the target leaking into the estimate.",
+      seeAlso: ["detection", "clutter", "range-doppler-map"] },
+
+    { id: "detection", term: "Detection & Threshold", aka: "P_d, P_fa", category: "concepts",
+      short: "Decide target-present when |y| > threshold — set by Neyman–Pearson on desired P_fa.",
+      long: "Detection is a hypothesis test on the matched-filter output. For a Swerling target model and Gaussian noise, Neyman–Pearson gives the optimum threshold for a chosen probability of false alarm P_fa, yielding a probability of detection P_d that depends on SNR and pulse count. Non-coherent integration of N pulses adds ~10·log₁₀(N)/2 dB of SNR (square-law detector).",
+      seeAlso: ["cfar", "radar-eq", "matched-filter", "noise-figure"] },
+
+    { id: "sigproc", term: "Radar Signal Processing Chain", aka: "Datacube processing", category: "software",
+      short: "I/Q → pulse compression → Doppler FFT → beamforming → CFAR → tracker handoff.",
+      long: "The radar back-end transforms a 3-D I/Q datacube (fast-time × slow-time × element) into detections. Pulse compression along fast time, FFT along slow time, beamforming across elements (often interchangeable order), then CFAR thresholding produces (range, Doppler, angle, amplitude) tuples for the tracker. Modern radars do almost all of this on GPU/FPGA in real time.",
+      seeAlso: ["pulse-compression", "doppler", "beamforming", "cfar", "tracking"] },
+
+    { id: "phased-array", term: "Phased Array", aka: "Electronically scanned array", category: "systems",
+      short: "Array of N elements steered by per-element phase shift Δφ = (2πd/λ)·sinθ — no moving parts.",
+      long: "A phased array forms a beam by coherent summation of N elements; applying a progressive phase across the aperture steers the constructive peak to angle θ. Beamwidth narrows as λ/(Nd) and gain rises as N over a single element. Element spacing must stay ≤ λ/2 to avoid grating lobes — extra full-gain beams at the wrong angles.",
+      seeAlso: ["aesa", "beamforming", "antenna", "mimo-radar"] },
+
+    { id: "aesa", term: "AESA", aka: "Active Electronically Scanned Array", category: "hardware",
+      short: "Phased array with a T/R module behind every element — graceful degradation and ultra-fast steering.",
+      long: "AESAs replace one big tube transmitter with thousands of GaN T/R modules, one per radiating element. Beam steering is digital and instantaneous; failure of a few percent of modules degrades gain by tenths of a dB instead of taking the radar offline. AESAs enable simultaneous multi-beam operation, low-probability-of-intercept (LPI) waveforms and electronic-attack adjacency.",
+      seeAlso: ["phased-array", "transmitter", "beamforming", "ew"] },
+
+    { id: "beamforming", term: "Beamforming", aka: "Digital beamforming, DBF", category: "software",
+      short: "Weighted combination of element signals to steer beams and place nulls on interferers.",
+      long: "Beamforming is a spatial matched filter: complex weights w applied to element signals x form y = wᴴx, steering a beam by phase progression and shaping sidelobes by amplitude taper. Adaptive variants (MVDR, LCMV) compute weights from the data covariance to place nulls on jammers. With per-element ADCs, all of this happens in the digital domain after RF.",
+      seeAlso: ["phased-array", "aesa", "stap", "sigproc"] },
+
+    { id: "mimo-radar", term: "MIMO Radar", aka: "Multi-Input Multi-Output radar", category: "systems",
+      short: "M transmit + N receive elements with orthogonal waveforms — synthesises an M·N virtual array.",
+      long: "MIMO radar transmits mutually orthogonal waveforms (time-, frequency-, or code-division) from M antennas; the N-element receive array can separate them, producing M·N virtual elements with the convolved spatial response. Automotive 77 GHz radars exploit this to get ~12 virtual channels from 3 Tx × 4 Rx hardware, drastically improving angular resolution at low cost.",
+      seeAlso: ["phased-array", "beamforming", "waveforms"] },
+
+    { id: "sar", term: "Synthetic Aperture Radar", aka: "SAR", category: "systems",
+      short: "Side-looking imaging radar — platform motion synthesises a long aperture for D/2 azimuth resolution.",
+      long: "SAR turns a moving radar's flight path into a synthetic antenna kilometres long. Coherent integration of returns across the flight (range migration corrected) produces azimuth resolution equal to half the physical antenna length D/2 — independent of range or wavelength. Algorithms (range-Doppler, chirp scaling, omega-K) handle the geometry; spaceborne SAR like Sentinel-1 routinely images 250 km swaths at 5–20 m resolution.",
+      seeAlso: ["chirp-lfm", "pulse-compression", "applications"] },
+
+    { id: "stap", term: "STAP", aka: "Space-Time Adaptive Processing", category: "software",
+      short: "Joint 2-D adaptive filter over array elements and pulses — cancels airborne clutter ridges.",
+      long: "Airborne radar clutter has a range-dependent Doppler that depends on look angle (the clutter ridge in angle–Doppler space). A separable beamformer + MTI cannot null this; STAP jointly adapts weights across space (elements) and slow time (pulses), placing a deep null along the entire ridge. Computationally heavy but standard on modern airborne early-warning radars (E-2D, E-3 AWACS).",
+      seeAlso: ["clutter", "beamforming", "mti", "sigproc"] },
+
+    { id: "tracking", term: "Tracking", aka: "Kalman tracker, data association", category: "software",
+      short: "Link detections across scans into trajectories — Kalman/IMM filter + assignment algorithm.",
+      long: "The tracker turns per-scan detections into smooth trajectories. A Kalman filter (or IMM bank for manoeuvring targets) predicts the next state, gates plausible detections, and updates the estimate; data association (GNN, JPDA, MHT) decides which detection feeds which track in clutter. Track initiation, confirmation and deletion logic governs M-of-N rules.",
+      seeAlso: ["detection", "sigproc", "applications"] },
+
+    { id: "sidelobes", term: "Sidelobes & Tapering", aka: "Window function, Taylor weighting", category: "performance",
+      short: "Off-mainlobe responses — uniform aperture peaks at −13 dB; tapering trades gain for −40 dB lobes.",
+      long: "Sidelobes are the secondary lobes of any finite aperture's pattern (spatial or temporal). A uniformly weighted aperture has first sidelobes at −13.3 dB — a strong neighbour can mask a weak target. Amplitude tapering (Hamming, Taylor, Chebyshev) suppresses sidelobes to −30 to −60 dB at the cost of ~1 dB peak gain and a 25–50% wider mainlobe.",
+      seeAlso: ["antenna", "pulse-compression", "beamforming"] },
+
+    { id: "ew", term: "Electronic Warfare", aka: "ECM/ECCM, LPI", category: "applications",
+      short: "Jamming, deception and counter-counter-measures — radar's adversarial layer.",
+      long: "Electronic Attack (EA) tries to deny the radar via noise jamming (raises the noise floor) or deception jamming (false targets, range-gate pull-off, velocity-gate pull-off). Electronic Protection (EP/ECCM) responds with frequency agility, sidelobe blanking, LPI waveforms (low duty cycle, wide bandwidth chirps) and adaptive nulling on AESAs. Detection is fundamentally an SNR race.",
+      seeAlso: ["aesa", "clutter", "stap", "applications"] },
+
+    { id: "applications", term: "Radar Applications", category: "applications",
+      short: "Air defense, ATC, weather, automotive, spaceborne SAR — where the equation pays off.",
+      long: "Real radars: long-range air-defense (S-band, MW-class, AESA), air-traffic primary surveillance (ASR-9), weather (NEXRAD, dual-pol Doppler), automotive collision avoidance (77 GHz FMCW MIMO), spaceborne SAR (Sentinel-1, TerraSAR-X), ground-penetrating, automotive lidar-radar fusion. Each picks a unique slice of the (P_t, G, B, λ, PRF, waveform) trade space.",
+      seeAlso: ["sar", "fmcw", "ew", "tracking"] }
+  ],
+  // === END glossary v1 data placeholder ===
+
+  problems: [
+    {
+      week: "Week 1\u20132 \u2014 Range Equation & Antennas",
+      title: "Power, Gain and the Fourth Power",
+      hook: "Double the detection range \u2014 and you need <strong>16\u00d7</strong> the transmit power. The R\u2074 law is the master constraint that explains why long-range radars are big, hot, expensive, and why doubling antenna gain is always a better investment than doubling P_t.",
+      items: [
+        { tag: "design", star: true, text: "Design an X-band (10 GHz) air-search radar to detect a 1 m\u00b2 RCS target at 200 km with SNR \u2265 13 dB after single-pulse processing. Assume noise figure 3 dB, IF bandwidth 1 MHz, total losses 6 dB. Choose P_t and antenna gain G; justify the trade between a 1 MW / 30 dB gain solution and a 100 kW / 40 dB gain solution in terms of cost, sidelobes and packaging.",
+          hint: "Plug into R\u2074 = P_t G\u00b2 \u03bb\u00b2 \u03c3 / ((4\u03c0)\u00b3 kT\u2080BF\u00b7L\u00b7SNR_min); remember G enters squared so each 3 dB of gain trades 6 dB of P_t." },
+        { tag: "derive", star: true, text: "Starting from spherical-spreading 1/(4\u03c0R\u00b2) outbound and 1/(4\u03c0R\u00b2) inbound, derive the monostatic radar equation. Then re-derive it for a *bistatic* geometry where transmitter and receiver are separated, and identify the term that becomes R_t\u00b7R_r instead of R\u2074.",
+          hint: "Bistatic factor is the product of two separate slant ranges \u2014 used in passive radar that listens to FM/DVB-T illuminators." },
+        { tag: "debug", text: "An engineer measures only 60 km detection range on a radar predicted at 120 km. Walk through 4 candidate root causes (radome loss, antenna VSWR, LO phase noise raising effective F, integration loss) and the bench measurement that isolates each.",
+          hint: "A 6 dB shortfall is a factor of 4 in P_r \u2014 only \u221a\u221a4 \u2248 1.4\u00d7 in range; 120/60 = 2\u00d7 is 12 dB \u2014 a *big* loss to find." }
+      ]
+    },
+    {
+      week: "Week 3\u20134 \u2014 Waveforms, Doppler & Ambiguity",
+      title: "Resolving Range and Velocity",
+      hook: "Range and Doppler are <em>both</em> ambiguous in a pulse radar \u2014 and their product is locked at c\u03bb/8. Worse, a long chirp gives great range resolution by destroying instantaneous range info: matched filtering rebuilds it from <strong>phase</strong>. Why pulse compression is the trick that makes modern radar possible.",
+      items: [
+        { tag: "design", star: true, text: "Pick a PRF for an airborne pulse-Doppler radar that must see fighter targets up to 150 km at closing speeds up to Mach 2 (\u22480.7 km/s) at X-band (\u03bb = 3 cm). Show that no single PRF works and propose a 3-PRF medium-PRF schedule that resolves both ambiguities via the Chinese Remainder Theorem.",
+          hint: "R_ua = c/(2 PRF), v_ua = \u03bb PRF/4. Their product is fixed at c\u03bb/8 \u2248 1.1\u00b710\u2076 m\u00b7m/s \u2014 you must accept ambiguity in one and resolve via PRF diversity." },
+        { tag: "derive", star: true, text: "Derive the matched-filter output for a linear FM chirp s(t) = rect(t/T)\u00b7exp(j\u03c0\u00b7(B/T)\u00b7t\u00b2). Show that the compressed pulse has \u22123 dB width \u22480.886/B and peak sidelobe \u221213.2 dB, and explain how Hamming weighting trades 1.34\u00d7 mainlobe widening for \u221242 dB sidelobes.",
+          hint: "The matched-filter output of a chirp is sin(\u03c0Bt)/(\u03c0Bt) \u2014 the classic sinc \u2014 in the small-signal limit." },
+        { tag: "code", text: "In Python (numpy), simulate 64 pulses from a moving target at v = 80 m/s, R = 5 km, \u03bb = 3 cm, PRF = 2 kHz, then perform a 64-point Doppler FFT across slow-time. Verify the peak appears at the bin corresponding to f_d = 5.33 kHz / unfolded velocity.",
+          hint: "f_d wraps mod PRF \u2014 your peak will land in bin round(64\u00b7mod(f_d, PRF)/PRF). Alias unfolding requires a second PRF." },
+        { tag: "debug", text: "A pulse-Doppler radar reports zero detections on a head-on 200 m/s aircraft at \u03bb = 3 cm, PRF = 1 kHz. Show numerically that the target is at a *blind speed* and propose two fixes: (a) PRF stagger, (b) carrier hop. Which preserves coherent integration?",
+          hint: "v_blind = n\u00b7\u03bb\u00b7PRF/2 = n\u00b715 m/s. 200 m/s \u2248 13.3\u00d7 \u2014 not a blind speed; check if it lands in the clutter notch instead via PRF folding." }
+      ]
+    },
+    {
+      week: "Week 5\u20137 \u2014 Arrays, SAR & Applications",
+      title: "Imaging, Tracking, EW",
+      hook: "A phased array steers its beam in nanoseconds by tweaking element <em>phases</em> \u2014 no moving parts. The same idea, applied across a moving aircraft\u2019s flight path, synthesizes a kilometre-long aperture that resolves a car from orbit. And a 77 GHz FMCW chip in your car reads range and velocity from a single beat frequency. Same physics, three revolutions.",
+      items: [
+        { tag: "design", star: true, text: "Specify a 16 \u00d7 16 element X-band AESA panel for a UAV nose. Choose element spacing, T/R module power, beamwidth and scan loss budget for \u00b160\u00b0 azimuth coverage. Compute the resulting EIRP and broadside R_max against a 0.1 m\u00b2 RCS drone with SNR \u2265 10 dB.",
+          hint: "G \u2248 4\u03c0\u00b7N_x\u00b7N_y\u00b7d\u00b2/\u03bb\u00b2 at broadside; cos\u03b8 scan loss = 3 dB at 60\u00b0. EIRP = N\u00b7P_TR + G_array." },
+        { tag: "derive", text: "Show that for a side-looking SAR the azimuth chirp rate is K_a = \u22122 v\u00b2/(\u03bb R\u2080), and that compressing this chirp gives \u03b4_az = D/2 independent of range. Where does the factor of 2 come from physically?",
+          hint: "The factor of 2 is the same one as in Doppler \u2014 the round-trip path length changes twice as fast as the platform-to-target distance." },
+        { tag: "paper", text: "Read Skolnik, *Introduction to Radar Systems* Ch. 11 (or Stimson Ch. 13) on synthetic aperture radar. In one page, contrast strip-map, spotlight and ScanSAR modes by their resolution\u2013swath\u2013revisit trade-offs, and give one operational mission for each (e.g. Sentinel-1 IW for flood mapping, Capella spotlight for change detection, RADARSAT ScanSAR for ice monitoring)." },
+        { tag: "code", text: "Implement a 2-pulse MTI canceller in Python: y[n] = x[n] \u2212 x[n\u22121]. Plot |H(f)|\u00b2 vs. normalized Doppler f/PRF, mark the blind speeds at f = n\u00b7PRF, and overlay a 3-pulse canceller (1, \u22122, 1) showing the deeper notch at the cost of a wider stopband.",
+          hint: "For binomial weights the response is |2\u00b7sin(\u03c0f/PRF)|^(N-1) \u2014 N=2 gives the basic canceller, N=3 the three-pulse." },
+        { tag: "debug", star: true, text: "An automotive 77 GHz FMCW radar consistently reports a stationary highway sign as a 30 m/s receding target. Identify the most likely cause (range\u2013Doppler coupling in long sawtooth chirps) and propose two waveform fixes: triangular chirp, or interleaved up/down chirps with frequency-domain pairing.",
+          hint: "An LFM chirp couples \u0394R = \u2212f_d\u00b7T\u00b7c/(2B) into the beat frequency \u2014 a stationary target plus a frequency offset (e.g. local-oscillator drift) looks like motion." }
       ]
     }
   ],
@@ -858,7 +1808,9 @@ if (C.graph && C.graph.nodes && C.graph.nodes.length) tabs.push({ id: 'graph',  
 if (C.deepDives && C.deepDives.length)  tabs.push({ id: 'deepdive', label: '📚 Deep Dives' });
 if (C.useCases && C.useCases.length)    tabs.push({ id: 'usecase',  label: '🔬 Use Cases' });
 if (C.youtube && C.youtube.videos && C.youtube.videos.length) tabs.push({ id: 'appendix', label: '📹 Appendix' });
+if (C.glossary && C.glossary.length)    tabs.push({ id: 'glossary', label: '📖 Glossary' }); /* glossary v1 tab */
 tabs.push({ id: 'problems', label: '🧠 Practice' });
+tabs.push({ id: 'quiz',     label: '🎯 Quiz' });
 
 document.getElementById('toolbar-title').textContent = '🧠 ' + C.course.code;
 document.title = C.course.code + ' — Interactive Study Tool';
@@ -1174,6 +2126,7 @@ function initGraph() {
   // Nodes
   const node = gGraph.selectAll("g.graph-node").data(nodes).enter().append("g")
     .attr("class", "graph-node")
+    .attr("data-id", d => d.id) /* glossary v1 data-id */
     .call(d3.drag().on("start", (evt, d) => { if (!evt.active) simul.alphaTarget(0.3).restart(); d.fx = d.x; d.fy = d.y; })
       .on("drag", (evt, d) => { d.fx = evt.x; d.fy = evt.y; })
       .on("end", (evt, d) => { if (!evt.active) simul.alphaTarget(0); d.fx = null; d.fy = null; }))
@@ -1515,6 +2468,8 @@ if (C.deepDives && C.deepDives.length) {
     // Full view
     const full = document.createElement('div'); full.className = 'dd-full'; full.id = 'dd-full-' + dd.id;
     let fhtml = `<div class="dd-infographic"><h2 style="color:${dd.color}">${dd.icon || ''} ${dd.title}</h2><div class="dd-subtitle">${dd.num || ''}${dd.num && dd.desc ? ' · ' : ''}${dd.desc || ''}</div>`;
+    // Navigator at the top for quick prev/grid/next without scrolling
+    fhtml += `<div class="dd-nav dd-nav-top"><button class="btn" onclick="navDD(-1)">← Prev</button><button class="btn" onclick="showCardGrid()">Grid</button><button class="btn" onclick="navDD(1)">Next →</button></div>`;
     if (dd.svg) fhtml += dd.svg(800, 300);
     // Render top-level content fields (markdown/body/content) as a single section
     const topText = dd.markdown || dd.body || dd.content || dd.detail;
@@ -1536,7 +2491,7 @@ if (C.deepDives && C.deepDives.length) {
       dd.keypoints.forEach(kp => { fhtml += `<div class="dd-kp"><strong>${kp.title}</strong><span>${kp.text || kp.body || ''}</span></div>`; });
       fhtml += '</div>';
     }
-    fhtml += `<div class="dd-nav"><button class="btn" onclick="navDD(-1)">← Prev</button><button class="btn" onclick="showCardGrid()">Grid</button><button class="btn" onclick="navDD(1)">Next →</button></div></div>`;
+    fhtml += `</div>`; // dd-nav v1 top inserted
     full.innerHTML = fhtml;
     fullContainer.appendChild(full);
   });
@@ -1604,6 +2559,20 @@ function showUseCase(idx) {
   html += '<button class="uc-back-btn" onclick="showUseCaseGrid()">← Back to All Use Cases</button>';
   html += `<h2>${uc.icon} ${uc.title}</h2>`;
   html += `<div class="uc-subtitle">${uc.desc}</div>`;
+  if (uc.summary || uc.pipeline || uc.metrics || uc.extensions) {
+    html += '<div class="uc-overview">';
+    if (uc.summary)   html += `<div class="uc-summary">${uc.summary}</div>`;
+    if (uc.pipeline)  html += `<div class="uc-pipeline">${uc.pipeline}</div>`;
+    if (uc.metrics && uc.metrics.length) {
+      html += '<div class="uc-metrics">';
+      uc.metrics.forEach(m => {
+        html += `<div class="uc-metric"><div class="uc-metric-label">${m.label}</div><div class="uc-metric-value">${m.value}</div></div>`;
+      });
+      html += '</div>';
+    }
+    if (uc.extensions) html += `<div class="uc-extensions"><strong>Where to go next:</strong> ${uc.extensions}</div>`;
+    html += '</div>';
+  }
   html += '<div class="uc-flow-controls">';
   html += '<button onclick="ucPrev()">← Previous</button>';
   html += '<button class="primary" onclick="ucNext()">Next Step →</button>';
@@ -1624,8 +2593,14 @@ function showUseCase(idx) {
     html += '<div class="uc-body">';
     html += `<div class="uc-title">${step.title}</div>`;
     html += `<div class="uc-component">📍 ${step.component}</div>`;
-    let detailHtml = `<p>${step.detail}</p><span class="uc-proto">${step.proto}</span>`;
+    let detailHtml = '';
+    if (step.intuition) detailHtml += `<div class="uc-intuition"><strong>💡 Intuition:</strong> ${step.intuition}</div>`;
+    detailHtml += `<p>${step.detail}</p>`;
+    if (step.proto) detailHtml += `<span class="uc-proto">${step.proto}</span>`;
+    if (step.complexity) detailHtml += `<span class="uc-complexity">⏱ ${step.complexity}</span>`;
     if (step.code) detailHtml += `<pre class="uc-code">${step.code}</pre>`;
+    if (step.example) detailHtml += `<div class="uc-example"><strong>📊 In practice:</strong> ${step.example}</div>`;
+    if (step.pitfall) detailHtml += `<div class="uc-pitfall"><strong>⚠ Pitfall:</strong> ${step.pitfall}</div>`;
     if (step.refs && step.refs.length) {
       detailHtml += '<div class="uc-refs">' + step.refs.map(r => `<a href="${r.url}" target="_blank" rel="noopener">${r.label}</a>`).join('') + '</div>';
     }
@@ -1953,10 +2928,16 @@ function toggleUnit(headerRow) {
 
 
 
-window.PROBLEMS_DATA=[{week:'Fundamentals',title:'Radar Equation',items:[{tag:'derive',text:'Derive Pr = Pt * G^2 * lambda^2 * sigma / ((4*pi)^3 * R^4). Why R^4 and not R^2? If you double range, how much more transmit power needed?',hint:'R^2 out + R^2 back = R^4. Doubling range needs 16x power.'},{tag:'design',text:'Design a radar to detect a 1 m^2 drone at 5 km. Choose frequency, antenna size, Pt, PRF. Show how each choice trades off.'}]},{week:'Waveforms',title:'Pulse, Doppler, Chirp',items:[{tag:'derive',text:'Why does pulse compression use chirp? Show that a T-long chirp of bandwidth B gives range resolution c/(2B) while preserving energy T*Pt.'},{tag:'debug',text:'Two targets are 3 m apart, radial velocity 200 m/s. Pulse width 1 us — can you resolve them in range? In Doppler? What PRF is needed to avoid aliasing?'}]},{week:'Advanced',title:'SAR, Detection, Tracking',items:[{tag:'design',text:'Design a SAR imaging pass over a 10x10 km area at 600 km altitude, 7 km/s. What synthetic aperture length for 1 m azimuth resolution at X-band (10 GHz)?',hint:'L_sar ~ lambda*R/(2*delta_az) ~ 9 km.'},{tag:'derive',text:'Neyman-Pearson: given noise sigma and signal amplitude A, derive the detection threshold for Pfa=1e-6 and compute Pd.'}]}];
 // ═══════════════════════════════════════════════════════════════════════
 // PRACTICE PROBLEMS (Problem-First learning)
 // ═══════════════════════════════════════════════════════════════════════
+const PROB_STATE_KEY = STORAGE_KEY + '-probstate';
+function probLoadState() { try { return JSON.parse(localStorage.getItem(PROB_STATE_KEY) || '{}'); } catch(e) { return {}; } }
+function probSaveState(s) { try { localStorage.setItem(PROB_STATE_KEY, JSON.stringify(s)); } catch(e) {} }
+let _probState = probLoadState();
+let _probFilters = { tags: new Set(), search: '', status: 'all' };
+let _probFlat = []; // [{si, ii, p}]
+
 function renderProblems() {
   const container = document.getElementById('problems-container');
   if (!container || container.dataset.rendered) return;
@@ -1964,6 +2945,17 @@ function renderProblems() {
              : (C.problems && C.problems.length) ? C.problems : null;
   if (!data) { container.innerHTML = '<div class="prob-intro">No practice problems defined yet for this course.</div>'; container.dataset.rendered = '1'; return; }
   container.dataset.rendered = '1';
+
+  // Build flat index + per-tag counts
+  _probFlat = [];
+  const tagCounts = {};
+  data.forEach((sec, si) => (sec.items||[]).forEach((p, ii) => {
+    _probFlat.push({ si, ii, p, key: si+':'+ii });
+    const t = p.tag || 'design';
+    tagCounts[t] = (tagCounts[t]||0) + 1;
+  }));
+  const TAGS = ['design','derive','debug','code','paper'];
+
   let html = `<div class="prob-intro">
     <strong>🧠 Problem-First Learning.</strong> Try each problem for 10 minutes <em>before</em> watching the lecture — flail, sketch, be wrong. Then watch with specific questions in mind. Your attention spikes 3–5×.
     <br><br>
@@ -1973,24 +2965,653 @@ function renderProblems() {
     <span class="prob-tag debug">debug</span> find the failure mode &nbsp;
     <span class="prob-tag code">code</span> hands-on &nbsp;
     <span class="prob-tag paper">paper</span> predict before reading
-  </div>`;
-  data.forEach((sec, i) => {
-    html += `<details class="prob-section"${i < 2 ? ' open' : ''}>
-      <summary><span class="wk">${sec.week||''}</span> ${sec.title||''}</summary>
-      <div class="prob-body"><ol>`;
-    (sec.items||[]).forEach(p => {
-      html += `<li><span class="prob-tag ${p.tag||'design'}">${p.tag||'design'}</span>${p.text||''}`;
-      if (p.hint) html += `<span class="prob-hint">${p.hint}</span>`;
-      html += `</li>`;
+    <br><br>
+    <strong style="color:#ffa657">⭐ starred</strong> problems are curiosity-piquing — start there if you're new.
+    Reveals come in three layers: <strong style="color:#d2a8ff">💡 hint</strong> (nudge) · <strong style="color:#79c0ff">🔑 approach</strong> (how to attack) · <strong style="color:#7ee787">📐 answer</strong> (the result). Try the problem before peeking.
+  </div>
+  <div class="prob-toolbar">
+    <input id="prob-search" class="prob-search" type="text" placeholder="🔍 Search problems by keyword…" />
+    <div class="prob-filter-row" id="prob-tag-row">
+      ${TAGS.map(t => `<span class="prob-chip ${t}" data-tag="${t}">${t}<span class="count">${tagCounts[t]||0}</span></span>`).join('')}
+    </div>
+    <div class="prob-filter-row" id="prob-status-row">
+      <span class="prob-chip" data-status="all">All</span>
+      <span class="prob-chip" data-status="unattempted">○ New</span>
+      <span class="prob-chip" data-status="thinking">🤔 Thinking</span>
+      <span class="prob-chip" data-status="got">💡 Got it</span>
+      <span class="prob-chip" data-status="stuck">❓ Stuck</span>
+    </div>
+    <button id="prob-surprise" class="prob-actbtn primary" title="Open a random problem">🎲 Surprise me</button>
+    <button id="prob-reset" class="prob-actbtn" title="Clear all status">↺ Reset</button>
+    <div class="prob-progress" title="Problems attempted (thinking / got / stuck)">
+      <span id="prob-progress-text">0/${_probFlat.length}</span>
+      <div class="prob-progress-bar"><div id="prob-progress-fill" class="prob-progress-fill" style="width:0%"></div></div>
+    </div>
+  </div>
+  <div id="prob-sections">`;
+
+  data.forEach((sec, si) => {
+    const secTotal = (sec.items||[]).length;
+    html += `<details class="prob-section" data-si="${si}"${si < 2 ? ' open' : ''}>
+      <summary><span class="wk">${sec.week||''}</span> <span class="sec-title">${sec.title||''}</span>
+        <span class="sec-meta"><span class="done-count" data-sec-done="${si}">0</span>/<span>${secTotal}</span></span>
+      </summary>`;
+    if (sec.hook) html += `<div class="prob-hook">${sec.hook}</div>`;
+    html += `<div class="prob-body">`;
+    (sec.items||[]).forEach((p, ii) => {
+      const key = si+':'+ii;
+      const st = _probState[key] || {};
+      const tag = p.tag || 'design';
+      const statusCls = st.status ? ' status-'+st.status : '';
+      html += `<div class="prob-card${statusCls}" data-key="${key}" data-tag="${tag}" data-status="${st.status||''}">
+        <div class="pc-head">
+          <span class="pc-num">${(ii+1).toString().padStart(2,'0')}</span>
+          <span class="prob-tag ${tag}">${tag}</span>
+          ${p.star ? '<span class="pc-star" title="Curiosity pick">★</span>' : ''}
+          <div class="prob-status-btns">
+            <button class="prob-statbtn thinking${st.status==='thinking'?' active':''}" data-status="thinking" title="I'm working on this">🤔</button>
+            <button class="prob-statbtn got${st.status==='got'?' active':''}"           data-status="got"      title="Got it">💡</button>
+            <button class="prob-statbtn stuck${st.status==='stuck'?' active':''}"       data-status="stuck"    title="Stuck">❓</button>
+          </div>
+        </div>
+        <div class="pc-text">${p.text||''}</div>`;
+      const reveals = [];
+      if (p.hint)     reveals.push({ kind:'hint',     label:'💡 Reveal hint',   field:'hint',     btnCls:'',          panelCls:'prob-hint',     tag:'Hint' });
+      if (p.approach) reveals.push({ kind:'approach', label:'🔑 Show approach', field:'approach', btnCls:'approach',  panelCls:'prob-approach', tag:'Approach' });
+      if (p.answer)   reveals.push({ kind:'answer',   label:'📐 Show answer',   field:'answer',   btnCls:'answer',    panelCls:'prob-answer',   tag:'Answer' });
+      if (reveals.length) {
+        html += `<div class="pc-actions">`;
+        reveals.forEach(r => {
+          const shown = st[r.kind+'Shown'];
+          html += `<button class="prob-revealbtn ${r.btnCls}" data-action="${r.kind}" ${shown?'style="display:none"':''}>${r.label}</button>`;
+        });
+        html += `</div>`;
+        reveals.forEach(r => {
+          const shown = st[r.kind+'Shown'];
+          html += `<div class="prob-reveal-panel ${r.panelCls}${shown?' shown':''}" data-panel="${r.kind}"><span class="rh-label">${r.tag}</span>${p[r.field]}</div>`;
+        });
+      }
+      html += `</div>`;
     });
-    html += `</ol></div></details>`;
+    html += `</div></details>`;
   });
+  html += `</div>
+  <div class="prob-spotlight" id="prob-spotlight">
+    <div class="prob-spotlight-card">
+      <button class="sl-close" onclick="probCloseSpotlight()">×</button>
+      <h3>🎲 Surprise Problem</h3>
+      <div id="prob-spotlight-body"></div>
+    </div>
+  </div>`;
+
   container.innerHTML = html;
+
+  // Wire interactions
+  container.querySelectorAll('#prob-tag-row .prob-chip').forEach(c => c.addEventListener('click', () => {
+    const tag = c.dataset.tag;
+    if (_probFilters.tags.has(tag)) _probFilters.tags.delete(tag); else _probFilters.tags.add(tag);
+    c.classList.toggle('active');
+    probApplyFilters();
+  }));
+  container.querySelectorAll('#prob-status-row .prob-chip').forEach(c => c.addEventListener('click', () => {
+    container.querySelectorAll('#prob-status-row .prob-chip').forEach(x => x.classList.remove('active'));
+    c.classList.add('active');
+    _probFilters.status = c.dataset.status;
+    probApplyFilters();
+  }));
+  container.querySelector('#prob-status-row .prob-chip[data-status="all"]').classList.add('active');
+
+  const searchEl = container.querySelector('#prob-search');
+  searchEl.addEventListener('input', () => { _probFilters.search = searchEl.value.toLowerCase().trim(); probApplyFilters(); });
+
+  container.querySelector('#prob-surprise').addEventListener('click', probSurpriseMe);
+  container.querySelector('#prob-reset').addEventListener('click', () => {
+    if (!confirm('Clear status on all '+_probFlat.length+' problems?')) return;
+    _probState = {}; probSaveState(_probState);
+    container.dataset.rendered = ''; container.innerHTML = ''; renderProblems();
+  });
+
+  container.querySelectorAll('.prob-card').forEach(card => {
+    card.querySelectorAll('.prob-statbtn').forEach(btn => btn.addEventListener('click', e => {
+      e.stopPropagation();
+      const key = card.dataset.key;
+      const newStatus = btn.dataset.status;
+      const st = _probState[key] || {};
+      st.status = (st.status === newStatus) ? null : newStatus;
+      _probState[key] = st; probSaveState(_probState);
+      card.classList.remove('status-thinking','status-got','status-stuck');
+      if (st.status) card.classList.add('status-'+st.status);
+      card.dataset.status = st.status || '';
+      card.querySelectorAll('.prob-statbtn').forEach(b => b.classList.toggle('active', b.dataset.status === st.status));
+      probUpdateProgress();
+      if (_probFilters.status !== 'all') probApplyFilters();
+    }));
+    const revealBtns = card.querySelectorAll('[data-action="hint"],[data-action="approach"],[data-action="answer"]');
+    revealBtns.forEach(btn => btn.addEventListener('click', () => {
+      const kind = btn.dataset.action;
+      const panel = card.querySelector(`.prob-reveal-panel[data-panel="${kind}"]`);
+      if (panel) panel.classList.add('shown');
+      btn.style.display = 'none';
+      const key = card.dataset.key;
+      const st = _probState[key] || {};
+      st[kind+'Shown'] = true; _probState[key] = st; probSaveState(_probState);
+    }));
+  });
+
+  probUpdateProgress();
 }
+
+function probApplyFilters() {
+  const container = document.getElementById('problems-container');
+  const { tags, search, status } = _probFilters;
+  container.querySelectorAll('.prob-card').forEach(card => {
+    const tag = card.dataset.tag;
+    const cardStatus = card.dataset.status || '';
+    const text = card.querySelector('.pc-text').textContent.toLowerCase();
+    let show = true;
+    if (tags.size > 0 && !tags.has(tag)) show = false;
+    if (search && !text.includes(search)) show = false;
+    if (status !== 'all') {
+      if (status === 'unattempted') { if (cardStatus) show = false; }
+      else if (cardStatus !== status) show = false;
+    }
+    card.classList.toggle('hidden', !show);
+  });
+  // Auto-open sections with visible cards; hide empty sections
+  container.querySelectorAll('.prob-section').forEach(sec => {
+    const visible = sec.querySelectorAll('.prob-card:not(.hidden)').length;
+    sec.style.display = visible === 0 ? 'none' : '';
+    if (visible > 0 && (tags.size || search || status !== 'all')) sec.open = true;
+  });
+}
+
+function probUpdateProgress() {
+  const total = _probFlat.length;
+  let attempted = 0;
+  const perSec = {};
+  _probFlat.forEach(({si, key}) => {
+    const st = _probState[key];
+    if (st && st.status) { attempted++; perSec[si] = (perSec[si]||0) + 1; }
+  });
+  const txt = document.getElementById('prob-progress-text');
+  const fill = document.getElementById('prob-progress-fill');
+  if (txt) txt.textContent = attempted + '/' + total;
+  if (fill) fill.style.width = (total ? (attempted/total*100) : 0) + '%';
+  document.querySelectorAll('[data-sec-done]').forEach(el => {
+    const si = +el.dataset.secDone;
+    el.textContent = perSec[si] || 0;
+  });
+}
+
+function probSurpriseMe() {
+  if (!_probFlat.length) return;
+  // Prefer starred & unattempted; otherwise unattempted; otherwise any
+  const starredNew = _probFlat.filter(x => x.p.star && !(_probState[x.key]||{}).status);
+  const anyNew     = _probFlat.filter(x => !(_probState[x.key]||{}).status);
+  const pool = starredNew.length ? starredNew : (anyNew.length ? anyNew : _probFlat);
+  const pick = pool[Math.floor(Math.random()*pool.length)];
+  const { p, si, ii, key } = pick;
+  const sec = (window.PROBLEMS_DATA || (C.problems||[]))[si];
+  const tag = p.tag || 'design';
+  const body = document.getElementById('prob-spotlight-body');
+  body.innerHTML = `
+    <div style="display:flex;gap:8px;align-items:center;margin-bottom:6px;flex-wrap:wrap">
+      <span class="prob-tag ${tag}">${tag}</span>
+      ${p.star ? '<span style="color:#ffa657">★</span>' : ''}
+      <span style="color:#8b949e;font-size:12px">${sec.week||''} · ${sec.title||''} · #${ii+1}</span>
+    </div>
+    <div class="pc-text">${p.text||''}</div>
+    ${(()=>{const L=[];if(p.hint)L.push({s:'💡 Reveal hint',c:'prob-hint',t:'Hint',b:p.hint});if(p.approach)L.push({s:'🔑 Show approach',c:'prob-approach',t:'Approach',b:p.approach});if(p.answer)L.push({s:'📐 Show answer',c:'prob-answer',t:'Answer',b:p.answer});return L.map(l=>`<details style="margin-top:10px"><summary style="cursor:pointer;color:#8b949e;font-size:12px;padding:4px 0">${l.s}</summary><div class="prob-reveal-panel ${l.c} shown" style="margin-top:6px"><span class="rh-label">${l.t}</span>${l.b}</div></details>`).join('');})()}
+    <div style="margin-top:14px;display:flex;gap:6px;flex-wrap:wrap">
+      <button class="prob-actbtn" onclick="probJumpTo('${key}')">↗ Jump to it</button>
+      <button class="prob-actbtn" onclick="probSurpriseMe()">🎲 Another</button>
+    </div>`;
+  document.getElementById('prob-spotlight').classList.add('open');
+}
+function probCloseSpotlight() { const el = document.getElementById('prob-spotlight'); if (el) el.classList.remove('open'); }
+function probJumpTo(key) {
+  probCloseSpotlight();
+  const card = document.querySelector(`.prob-card[data-key="${key}"]`);
+  if (!card) return;
+  const sec = card.closest('.prob-section');
+  if (sec) sec.open = true;
+  card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  card.style.transition = 'box-shadow .3s'; card.style.boxShadow = '0 0 0 2px #58a6ff';
+  setTimeout(() => { card.style.boxShadow = ''; }, 1500);
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') probCloseSpotlight(); });
 if (typeof switchTab === 'function') {
   const _origSwitchTab_prob = switchTab;
   switchTab = function(tab) { _origSwitchTab_prob(tab); if (tab === 'problems') renderProblems(); };
 }
+
+// === BEGIN glossary v1 js ===
+// ═══════════════════════════════════════════════════════════════════════
+// GLOSSARY — definitions + cross-references with graph & mindmap
+// ═══════════════════════════════════════════════════════════════════════
+(function initGlossaryMaps() {
+  const gloss = (C && C.glossary) || [];
+  if (!gloss.length) return;
+
+  // 1. Build id → entry maps and "label/aka" → id reverse map.
+  const byId = {};
+  const byLabel = {}; // lowercased term/aka → id
+  gloss.forEach(g => {
+    byId[g.id] = g;
+    const keys = [g.term].concat(g.aka || []);
+    keys.forEach(k => { if (k) byLabel[k.toLowerCase().trim()] = g.id; });
+  });
+
+  // 2. Patch graph node tips for any node whose id matches a glossary entry.
+  let graphMatched = 0;
+  const glossByGraphNode = {};
+  if (C.graph && Array.isArray(C.graph.nodes)) {
+    C.graph.nodes.forEach(n => {
+      if (byId[n.id]) {
+        glossByGraphNode[n.id] = n.id;
+        graphMatched++;
+        if (n.tip && n.tip.indexOf('📖') < 0) n.tip = n.tip + ' · 📖 in glossary';
+      } else {
+        // Fallback: try label/aka match
+        const k = (n.label || '').toLowerCase().trim();
+        if (byLabel[k]) {
+          glossByGraphNode[n.id] = byLabel[k];
+          graphMatched++;
+          if (n.tip && n.tip.indexOf('📖') < 0) n.tip = n.tip + ' · 📖 in glossary';
+        }
+      }
+    });
+  }
+
+  // 3. Walk mindmap and build name → glossary-id map. Match relaxed:
+  //    full name (newlines → space) OR each line.
+  let mindmapMatched = 0;
+  const glossByMindmapName = {};
+  function walkMm(node) {
+    if (!node) return;
+    if (node.name) {
+      const full = node.name.replace(/\n/g, ' ').trim();
+      const candidates = [full].concat(node.name.split(/\n+/).map(s => s.trim()).filter(Boolean));
+      for (const c of candidates) {
+        const id = byLabel[c.toLowerCase()];
+        if (id) {
+          glossByMindmapName[full] = id;
+          mindmapMatched++;
+          break;
+        }
+      }
+    }
+    (node.children || []).forEach(walkMm);
+  }
+  if (C.mindmap) walkMm(C.mindmap);
+
+  window._glossaryById = byId;
+  window._glossaryByLabel = byLabel;
+  window._glossaryIdByGraphNode = glossByGraphNode;
+  window._glossaryIdByMindmapName = glossByMindmapName;
+  window._glossaryStats = { graphMatched: graphMatched, mindmapMatched: mindmapMatched };
+
+  // 4. Monkey-patch showTooltip so it appends a "📖 Defined in glossary →" link
+  //    whenever the hovered name corresponds to a glossary entry.
+  if (typeof window.showTooltip === 'function') {
+    const _origShowTooltip = window.showTooltip;
+    const ttRoot = document.getElementById('tooltip');
+    let glossFooter = ttRoot.querySelector('.tt-glossary');
+    if (!glossFooter) {
+      glossFooter = document.createElement('div');
+      glossFooter.className = 'tt-glossary';
+      ttRoot.appendChild(glossFooter);
+    }
+    window.showTooltip = function(evt, name, tip, slides) {
+      _origShowTooltip(evt, name, tip, slides);
+      glossFooter.innerHTML = '';
+      ttRoot.classList.remove('has-glossary');
+      if (!name) return;
+      const plain = String(name).replace(/\n/g, ' ').trim();
+      const key = plain.toLowerCase();
+      let id = byLabel[key] || glossByMindmapName[plain] || null;
+      if (!id) {
+        // strip parenthetical suffix e.g. "Optical Switch (OCS)" → "Optical Switch"
+        const stripped = plain.replace(/\s*\([^)]*\)\s*$/, '').toLowerCase();
+        if (stripped !== key) id = byLabel[stripped] || null;
+      }
+      if (id) {
+        const a = document.createElement('a');
+        a.textContent = '📖 Defined in glossary →';
+        a.onclick = (e) => {
+          e.stopPropagation();
+          if (typeof window.glossaryJumpToTerm === 'function') window.glossaryJumpToTerm(id);
+        };
+        glossFooter.appendChild(a);
+        ttRoot.classList.add('has-glossary');
+      }
+    };
+  }
+})();
+
+// ─── renderGlossary ───────────────────────────────────────────────────
+let _glossSelectedCat = 'all';
+let _glossSearch = '';
+let _glossSearchTimer = null;
+let _glossBuilt = false;
+
+const GLOSS_CAT_COLORS = {
+  hardware:    '#58a6ff',
+  software:    '#7ee787',
+  numerics:    '#79c0ff',
+  systems:     '#d2a8ff',
+  performance: '#f778ba',
+  concepts:    '#ffa657'
+};
+
+function renderGlossary() {
+  const data = (C.glossary || []).slice().sort((a, b) =>
+    a.term.toLowerCase().localeCompare(b.term.toLowerCase()));
+  const list = document.getElementById('glossary-list');
+  const pillBar = document.getElementById('glossary-cat-pills');
+  const countEl = document.getElementById('glossary-count');
+  const searchEl = document.getElementById('glossary-search');
+  if (!list || !pillBar || !countEl || !searchEl) return;
+
+  // Build category pills + search input wiring once.
+  if (!_glossBuilt) {
+    const cats = ['all'].concat(
+      Array.from(new Set(data.map(d => d.category))).sort());
+    pillBar.innerHTML = '';
+    cats.forEach(cat => {
+      const btn = document.createElement('button');
+      btn.textContent = cat === 'all' ? `All (${data.length})` :
+        `${cat} (${data.filter(d => d.category === cat).length})`;
+      btn.dataset.cat = cat;
+      const color = cat === 'all' ? '#58a6ff' : (GLOSS_CAT_COLORS[cat] || '#58a6ff');
+      btn.style.setProperty('--pill-color', color);
+      btn.style.setProperty('--pill-bg', color + '22');
+      if (cat === _glossSelectedCat) btn.classList.add('active');
+      btn.onclick = () => {
+        _glossSelectedCat = cat;
+        pillBar.querySelectorAll('button').forEach(b =>
+          b.classList.toggle('active', b.dataset.cat === cat));
+        renderGlossary();
+      };
+      pillBar.appendChild(btn);
+    });
+    searchEl.addEventListener('input', () => {
+      if (_glossSearchTimer) clearTimeout(_glossSearchTimer);
+      _glossSearchTimer = setTimeout(() => {
+        _glossSearch = searchEl.value.trim().toLowerCase();
+        renderGlossary();
+      }, 120);
+    });
+    _glossBuilt = true;
+  }
+
+  // Filter
+  const q = _glossSearch;
+  const visible = data.filter(d => {
+    if (_glossSelectedCat !== 'all' && d.category !== _glossSelectedCat) return false;
+    if (!q) return true;
+    const hay = [d.term, (Array.isArray(d.aka) ? d.aka.join(' ') : (d.aka || '')), d.short, d.long || ''].join(' ').toLowerCase();
+    return hay.indexOf(q) >= 0;
+  });
+
+  countEl.textContent = `${visible.length} of ${data.length} terms`;
+
+  const graphIds = new Set();
+  if (C.graph && C.graph.nodes) C.graph.nodes.forEach(n => graphIds.add(n.id));
+  const glossIds = new Set(data.map(d => d.id));
+  const mindmapNames = window._glossaryIdByMindmapName || {};
+  const reverseMindmap = {}; // glossary-id → mindmap label
+  Object.keys(mindmapNames).forEach(name => { reverseMindmap[mindmapNames[name]] = name; });
+
+  list.innerHTML = '';
+  visible.forEach(d => {
+    const color = GLOSS_CAT_COLORS[d.category] || '#58a6ff';
+    const card = document.createElement('div');
+    card.className = 'glossary-card';
+    card.dataset.id = d.id;
+    card.style.setProperty('--cat-color', color);
+
+    const head = document.createElement('div');
+    head.className = 'glossary-term-row';
+    const term = document.createElement('span');
+    term.className = 'glossary-term';
+    term.textContent = d.term;
+    head.appendChild(term);
+    const badge = document.createElement('span');
+    badge.className = 'glossary-cat-badge';
+    badge.textContent = d.category;
+    badge.style.setProperty('--cat-color', color);
+    head.appendChild(badge);
+    card.appendChild(head);
+
+    if (d.aka && d.aka.length) {
+      const aka = document.createElement('div');
+      aka.className = 'glossary-aka';
+      aka.textContent = 'aka ' + (Array.isArray(d.aka) ? d.aka.join(', ') : d.aka);
+      card.appendChild(aka);
+    }
+
+    const shortEl = document.createElement('div');
+    shortEl.className = 'glossary-short';
+    shortEl.textContent = d.short || '';
+    card.appendChild(shortEl);
+
+    if (d.long) {
+      const longEl = document.createElement('div');
+      longEl.className = 'glossary-long';
+      longEl.innerHTML = d.long;
+      card.appendChild(longEl);
+      const toggle = document.createElement('button');
+      toggle.className = 'glossary-toggle';
+      toggle.textContent = 'Show more ▾';
+      toggle.onclick = () => {
+        const expanded = card.classList.toggle('expanded');
+        toggle.textContent = expanded ? 'Show less ▴' : 'Show more ▾';
+      };
+      card.appendChild(toggle);
+    }
+
+    const links = document.createElement('div');
+    links.className = 'glossary-links';
+    if (graphIds.has(d.id)) {
+      const b = document.createElement('button');
+      b.textContent = '🔗 Topic Graph';
+      b.onclick = () => window.glossaryJumpToGraphNode(d.id);
+      links.appendChild(b);
+    }
+    if (reverseMindmap[d.id]) {
+      const b = document.createElement('button');
+      b.textContent = '📐 Mind Map';
+      b.onclick = () => window.glossaryJumpToMindmapNode(reverseMindmap[d.id]);
+      links.appendChild(b);
+    }
+    (d.seeAlso || []).forEach(otherId => {
+      if (!glossIds.has(otherId)) return;
+      const other = (C.glossary || []).find(x => x.id === otherId);
+      if (!other) return;
+      const b = document.createElement('button');
+      b.textContent = '→ ' + other.term;
+      b.onclick = () => window.glossaryJumpToTerm(otherId);
+      links.appendChild(b);
+    });
+    if (links.children.length) card.appendChild(links);
+
+    list.appendChild(card);
+  });
+}
+
+// ─── Cross-tab jump helpers ───────────────────────────────────────────
+window.glossaryJumpToTerm = function(id) {
+  if (typeof switchTab === 'function') switchTab('glossary');
+  setTimeout(() => {
+    const card = document.querySelector('.glossary-card[data-id="' + CSS.escape(id) + '"]');
+    if (!card) return;
+    card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    card.classList.remove('flash');
+    void card.offsetWidth; // restart animation
+    card.classList.add('flash');
+    // Pull the display term from the card itself so the toast matches what the user sees
+    const labelEl = card.querySelector('.glossary-term');
+    const label = labelEl ? labelEl.textContent.trim() : id;
+    if (typeof showGlossaryToast === 'function') showGlossaryToast('Glossary', label, 'glossary');
+    setTimeout(() => card.classList.remove('flash'), 2800);
+  }, 60);
+};
+
+window.glossaryJumpToGraphNode = function(id) {
+  if (typeof switchTab === 'function') switchTab('graph');
+  const tryFlash = (attempt) => {
+    const g = document.querySelector('g.graph-node[data-id="' + CSS.escape(id) + '"]');
+    if (!g) {
+      if (attempt < 12) return setTimeout(() => tryFlash(attempt + 1), 120);
+      return;
+    }
+    // Pull the node's force-simulation position from its bound datum
+    let d = null;
+    try { d = (typeof d3 !== 'undefined') ? d3.select(g).datum() : null; } catch(_) {}
+    const label = (d && (d.label || d.id)) || id;
+
+    // 1) Pan + zoom the SVG so the node is centered and reasonably zoomed in
+    try {
+      if (d && typeof d.x === 'number' && typeof d.y === 'number' && typeof d3 !== 'undefined' && typeof graphZoom !== 'undefined') {
+        const svgEl = document.getElementById('canvas-graph');
+        const W = (svgEl && svgEl.clientWidth)  || window.innerWidth;
+        const H = (svgEl && svgEl.clientHeight) || window.innerHeight;
+        const k = 1.6;
+        const tx = W / 2 - k * d.x;
+        const ty = H / 2 - k * d.y;
+        d3.select('#canvas-graph')
+          .transition().duration(650)
+          .call(graphZoom.transform, d3.zoomIdentity.translate(tx, ty).scale(k));
+      } else {
+        g.querySelector('circle') && g.querySelector('circle').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    } catch(_) {}
+
+    // 2) Big halo ring + bold class on the node group
+    g.classList.remove('glossary-highlight');
+    void g.getBoundingClientRect();
+    g.classList.add('glossary-highlight');
+    try {
+      // remove any previous halo
+      g.querySelectorAll('circle.glossary-halo').forEach(c => c.remove());
+      const halo = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+      halo.setAttribute('class', 'glossary-halo');
+      halo.setAttribute('cx', '0');
+      halo.setAttribute('cy', '0');
+      halo.setAttribute('r', '14');
+      g.insertBefore(halo, g.firstChild); // behind the node circle
+    } catch(_) {}
+
+    // 3) Top-of-screen toast
+    showGlossaryToast('Topic Graph', label, 'graph');
+
+    setTimeout(() => {
+      g.classList.remove('glossary-highlight');
+      g.querySelectorAll('circle.glossary-halo').forEach(c => c.remove());
+    }, 4200);
+  };
+  requestAnimationFrame(() => requestAnimationFrame(() => tryFlash(0)));
+};
+
+window.glossaryJumpToMindmapNode = function(label) {
+  if (typeof switchTab === 'function') switchTab('mindmap');
+  const target = (label || '').replace(/\n/g, ' ').trim().toLowerCase();
+  const tryFlash = (attempt) => {
+    const groups = document.querySelectorAll('#canvas g');
+    let hit = null;
+    groups.forEach(g => {
+      if (hit) return;
+      const txt = (g.textContent || '').replace(/\s+/g, ' ').trim().toLowerCase();
+      if (txt === target) hit = g;
+    });
+    if (!hit) {
+      if (attempt < 10) return setTimeout(() => tryFlash(attempt + 1), 150);
+      return;
+    }
+
+    // 1) Pan the mindmap so the hit node is roughly centered
+    try {
+      if (typeof d3 !== 'undefined' && typeof mmZoom !== 'undefined') {
+        const svgEl = document.getElementById('canvas');
+        const W = (svgEl && svgEl.clientWidth)  || window.innerWidth;
+        const H = (svgEl && svgEl.clientHeight) || window.innerHeight;
+        // Read the node's local SVG position from its existing transform attribute (form: translate(x,y))
+        const tr = hit.getAttribute('transform') || '';
+        const m = tr.match(/translate\(\s*([-0-9.]+)\s*[ ,]\s*([-0-9.]+)/);
+        if (m) {
+          const x = parseFloat(m[1]), y = parseFloat(m[2]);
+          const k = 1.3;
+          const tx = W / 2 - k * x;
+          const ty = H / 2 - k * y;
+          d3.select('#canvas')
+            .transition().duration(650)
+            .call(mmZoom.transform, d3.zoomIdentity.translate(tx, ty).scale(k));
+        } else {
+          hit.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      } else {
+        hit.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    } catch(_) {}
+
+    // 2) Halo ring on the mindmap node
+    try {
+      hit.querySelectorAll('circle.glossary-mm-halo').forEach(c => c.remove());
+      const halo = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+      halo.setAttribute('class', 'glossary-mm-halo');
+      halo.setAttribute('cx', '0');
+      halo.setAttribute('cy', '0');
+      halo.setAttribute('r', '14');
+      hit.insertBefore(halo, hit.firstChild);
+      setTimeout(() => halo.remove(), 4200);
+    } catch(_) {}
+
+    // 3) Stroke flash on the shape
+    const shape = hit.querySelector('circle, rect');
+    if (shape) {
+      const prev = shape.getAttribute('stroke');
+      const prevW = shape.getAttribute('stroke-width');
+      shape.setAttribute('stroke', '#f0c000');
+      shape.setAttribute('stroke-width', '5');
+      setTimeout(() => {
+        if (prev !== null) shape.setAttribute('stroke', prev); else shape.removeAttribute('stroke');
+        if (prevW !== null) shape.setAttribute('stroke-width', prevW); else shape.removeAttribute('stroke-width');
+      }, 3000);
+    }
+
+    // 4) Toast
+    showGlossaryToast('Mind Map', (label || '').replace(/\n/g, ' '), 'mindmap');
+  };
+  requestAnimationFrame(() => requestAnimationFrame(() => tryFlash(0)));
+};
+
+// Floating toast helper — visible regardless of where the target node ended up
+function showGlossaryToast(where, label, kind) {
+  let t = document.getElementById('glossary-toast');
+  if (!t) {
+    t = document.createElement('div');
+    t.id = 'glossary-toast';
+    document.body.appendChild(t);
+  }
+  const icon = kind === 'graph' ? '🔗' : (kind === 'mindmap' ? '📐' : '📖');
+  t.innerHTML = '<span class="gt-icon">' + icon + '</span>'
+              + '<span>Jumped to: <strong>' + (label || '').replace(/[<>&]/g, '') + '</strong></span>'
+              + '<span class="gt-sub">in ' + where + '</span>';
+  // restart animation
+  t.classList.remove('show');
+  void t.offsetWidth;
+  t.classList.add('show');
+  clearTimeout(t._hideTimer);
+  t._hideTimer = setTimeout(() => t.classList.remove('show'), 3200);
+}
+
+// Lazy-render hook
+if (typeof switchTab === 'function') {
+  const _origSwitchTab_gloss = switchTab;
+  switchTab = function(tab) { _origSwitchTab_gloss(tab); if (tab === 'glossary') renderGlossary(); };
+}
+// === END glossary v1 js ===
 </script>
 <!-- BEGIN tooltip-pin (click pins, click outside closes) -->
 <style>
@@ -2574,7 +4195,7 @@ if (typeof switchTab === 'function') {
     "explain": "Detection threshold sets Receiver Operating Characteristic (ROC): raising threshold reduces false alarms but also reduces Pd; lowering threshold increases Pd but increases false alarms. Optimal threshold depends on mission: air traffic control tolerates high Pfa (multiple tracking); weapons systems require very low Pfa (minimize false engagements). CFAR maintains constant Pfa despite clutter variability. No-signal detection probability (Pfa) follows noise statistics; threshold is typically 4–7 standard deviations above mean noise. Threshold selection involves Neyman-Pearson criteria optimizing cost of missed detections vs. false alarms."
   }
 ]
-</script></script>
+</script>
 <script>
 (function() {
   const dataEl = document.getElementById('quiz-data');

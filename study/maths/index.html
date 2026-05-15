@@ -170,6 +170,82 @@
 
   /* ── Deep Dives ── */
   #view-deepdive { overflow-y: auto; margin-top: 50px; height: calc(100vh - 50px); }
+  #view-usecase { overflow-y: auto; margin-top: 50px; height: calc(100vh - 50px); }
+  .uc-flow { max-width: 960px; margin: 0 auto; padding: 32px; }
+  .uc-flow h2 { font-size: 22px; color: #58a6ff; margin-bottom: 4px; }
+  .uc-flow .uc-subtitle { font-size: 13px; color: #8b949e; margin-bottom: 20px; }
+  .uc-step {
+    display: flex; gap: 14px; padding: 16px; border-radius: 10px; border: 1px solid #30363d;
+    background: #161b22; cursor: pointer; transition: all .3s; opacity: 0.3;
+  }
+  .uc-step.active { opacity: 1; border-color: #58a6ff; box-shadow: 0 0 20px rgba(88,166,255,0.15); }
+  .uc-step.done { opacity: 0.8; border-color: #3fb950; }
+  .uc-step .uc-badge {
+    width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 700; background: #30363d; color: #8b949e; flex-shrink: 0;
+  }
+  .uc-step.active .uc-badge { background: #58a6ff; color: #fff; }
+  .uc-step.done .uc-badge { background: #3fb950; color: #fff; }
+  .uc-step .uc-body { flex: 1; min-width: 0; overflow: hidden; }
+  .uc-step .uc-title { font-weight: 600; color: #c9d1d9; font-size: 14px; }
+  .uc-step .uc-component { font-size: 11px; color: #8b949e; margin-top: 2px; }
+  .uc-step .uc-detail { display: none; margin-top: 10px; font-size: 12px; color: #c9d1d9; line-height: 1.6; }
+  .uc-step.active .uc-detail { display: block; }
+  .uc-step .uc-proto { display: inline-block; background: #0d1117; border: 1px solid #30363d; border-radius: 4px; padding: 2px 8px; font-size: 10px; color: #79c0ff; margin-top: 8px; }
+  .uc-connector { width: 2px; height: 24px; background: #30363d; margin-left: 31px; transition: background .3s; }
+  .uc-connector.done { background: #3fb950; }
+  .uc-flow-controls { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
+  .uc-flow-controls button {
+    padding: 8px 18px; border-radius: 8px; border: 1px solid #30363d; background: #161b22;
+    color: #c9d1d9; cursor: pointer; font-size: 13px; transition: all .2s;
+  }
+  .uc-flow-controls button:hover { border-color: #58a6ff; color: #58a6ff; }
+  .uc-flow-controls button.primary { background: #1f6feb; border-color: #58a6ff; color: #fff; }
+  .uc-legend { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 16px; padding: 12px 16px;
+    background: #0d1117; border: 1px solid #30363d; border-radius: 8px; font-size: 11px; }
+  .uc-legend span { display: flex; align-items: center; gap: 6px; color: #8b949e; }
+  .uc-legend .dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+  .uc-back-btn { background: none; border: 1px solid #30363d; color: #58a6ff; padding: 8px 16px;
+    border-radius: 8px; cursor: pointer; font-size: 13px; margin-bottom: 16px; transition: all 0.2s; }
+  .uc-back-btn:hover { background: #161b22; border-color: #58a6ff; }
+  .uc-code { margin-top: 10px; padding: 10px 14px; background: #0d1117; border: 1px solid #30363d;
+    border-radius: 6px; font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+    font-size: 11px; color: #7ee787; line-height: 1.5; overflow-x: auto; white-space: pre;
+    max-width: 100%; box-sizing: border-box; }
+  .uc-refs { margin-top: 8px; display: flex; flex-wrap: wrap; gap: 6px; }
+  .uc-refs a { display: inline-block; padding: 3px 10px; background: #161b22; border: 1px solid #30363d;
+    border-radius: 4px; font-size: 10px; color: #79c0ff; text-decoration: none; transition: all .2s; }
+  .uc-refs a:hover { border-color: #58a6ff; color: #58a6ff; background: #0d1117; }
+  /* ── Use-case enrichment v2 ── */
+  .uc-overview { background: linear-gradient(135deg, #0d1117 0%, #161b22 100%); border: 1px solid #30363d;
+    border-left: 3px solid #58a6ff; border-radius: 10px; padding: 16px 18px; margin: 16px 0 20px; }
+  .uc-overview .uc-summary { font-size: 13px; color: #c9d1d9; line-height: 1.7; }
+  .uc-overview .uc-summary strong { color: #79c0ff; }
+  .uc-pipeline { margin-top: 14px; padding: 10px 12px; background: #0d1117; border: 1px solid #30363d;
+    border-radius: 6px; font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+    font-size: 11px; color: #7ee787; line-height: 1.6; white-space: pre-wrap; overflow-x: auto; }
+  .uc-metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 10px; margin-top: 14px; }
+  .uc-metric { background: #0d1117; border: 1px solid #30363d; border-radius: 8px; padding: 10px 12px; }
+  .uc-metric .uc-metric-label { font-size: 10px; color: #8b949e; text-transform: uppercase; letter-spacing: 0.5px; }
+  .uc-metric .uc-metric-value { font-size: 14px; color: #ffa657; font-weight: 600; margin-top: 4px; line-height: 1.4; }
+  .uc-extensions { margin-top: 14px; padding: 10px 12px; background: rgba(210, 168, 255, 0.06);
+    border: 1px solid rgba(210, 168, 255, 0.25); border-radius: 6px; font-size: 12px; color: #c9d1d9; line-height: 1.6; }
+  .uc-extensions strong { color: #d2a8ff; }
+  .uc-step .uc-intuition { margin-top: 8px; padding: 8px 10px; background: rgba(126, 231, 135, 0.08);
+    border-left: 2px solid #3fb950; border-radius: 4px; font-size: 12px; color: #c9d1d9; line-height: 1.55; display: none; }
+  .uc-step.active .uc-intuition { display: block; }
+  .uc-step .uc-intuition strong { color: #7ee787; }
+  .uc-step .uc-complexity { display: inline-block; margin-top: 8px; margin-right: 6px;
+    background: rgba(31, 111, 235, 0.15); border: 1px solid rgba(88, 166, 255, 0.35); border-radius: 4px;
+    padding: 2px 8px; font-size: 10px; color: #79c0ff; font-family: 'Cascadia Code', 'Consolas', monospace; }
+  .uc-step .uc-pitfall { margin-top: 8px; padding: 8px 10px; background: rgba(255, 123, 114, 0.08);
+    border-left: 2px solid #ff7b72; border-radius: 4px; font-size: 12px; color: #c9d1d9; line-height: 1.55; display: none; }
+  .uc-step.active .uc-pitfall { display: block; }
+  .uc-step .uc-pitfall strong { color: #ff7b72; }
+  .uc-step .uc-example { margin-top: 8px; padding: 8px 10px; background: rgba(255, 166, 87, 0.06);
+    border-left: 2px solid #ffa657; border-radius: 4px; font-size: 12px; color: #c9d1d9; line-height: 1.55; display: none; }
+  .uc-step.active .uc-example { display: block; }
+  .uc-step .uc-example strong { color: #ffa657; }
   .dd-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 20px; padding: 24px 32px; max-width: 1400px; margin: 0 auto; }
   .dd-card { background: #161b22; border: 1px solid #30363d; border-radius: 12px; cursor: pointer; overflow: hidden; transition: all .25s; }
   .dd-card:hover { border-color: #58a6ff; transform: translateY(-3px); box-shadow: 0 8px 30px rgba(0,0,0,.4); }
@@ -256,27 +332,92 @@
   /* ── Practice Problems (Problem-First) ── */
   #problems-container { position: relative; top: 0; width: 100%; max-width: 1100px; margin: 0 auto; padding: 24px 16px 60px; }
   #view-problems { overflow-y: auto; height: calc(100vh - 50px); margin-top: 50px; }
-  .prob-intro { background: #161b22; border: 1px solid #30363d; border-left: 3px solid #7ee787; border-radius: 6px; padding: 14px 18px; margin-bottom: 22px; color: #c9d1d9; font-size: 14px; line-height: 1.6; }
+  .prob-intro { background: #161b22; border: 1px solid #30363d; border-left: 3px solid #7ee787; border-radius: 6px; padding: 14px 18px; margin-bottom: 18px; color: #c9d1d9; font-size: 14px; line-height: 1.6; }
   .prob-intro strong { color: #7ee787; }
-  .prob-section { margin-bottom: 22px; border: 1px solid #30363d; border-radius: 8px; background: #161b22; overflow: hidden; }
-  .prob-section > summary { padding: 14px 18px; font-size: 15px; font-weight: 600; color: #e6edf3; cursor: pointer; list-style: none; display: flex; align-items: center; gap: 10px; user-select: none; transition: background .15s; }
+  /* Toolbar */
+  .prob-toolbar { position: sticky; top: 0; z-index: 5; background: rgba(13,17,23,0.95); backdrop-filter: blur(6px); padding: 10px 0 12px; margin-bottom: 14px; border-bottom: 1px solid #21262d; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  .prob-search { flex: 1 1 200px; min-width: 180px; background: #0d1117; border: 1px solid #30363d; border-radius: 6px; padding: 7px 12px; color: #c9d1d9; font-size: 13px; outline: none; }
+  .prob-search:focus { border-color: #58a6ff; }
+  .prob-filter-row { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+  .prob-chip { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 12px; cursor: pointer; background: #161b22; border: 1px solid #30363d; color: #8b949e; text-transform: uppercase; letter-spacing: .4px; transition: all .15s; user-select: none; }
+  .prob-chip:hover { border-color: #58a6ff; color: #c9d1d9; }
+  .prob-chip.active { background: #1f6feb22; border-color: #58a6ff; color: #58a6ff; }
+  .prob-chip.design.active  { background: #58a6ff22; border-color: #58a6ff; color: #58a6ff; }
+  .prob-chip.derive.active  { background: #ffa65722; border-color: #ffa657; color: #ffa657; }
+  .prob-chip.debug.active   { background: #f8514922; border-color: #f85149; color: #f85149; }
+  .prob-chip.code.active    { background: #7ee78722; border-color: #7ee787; color: #7ee787; }
+  .prob-chip.paper.active   { background: #d2a8ff22; border-color: #d2a8ff; color: #d2a8ff; }
+  .prob-chip .count { font-size: 9px; opacity: .7; font-weight: 500; }
+  .prob-actbtn { background: #161b22; border: 1px solid #30363d; color: #c9d1d9; padding: 6px 12px; border-radius: 6px; font-size: 12px; cursor: pointer; transition: all .15s; }
+  .prob-actbtn:hover { border-color: #58a6ff; color: #58a6ff; }
+  .prob-actbtn.primary { background: #1f6feb; border-color: #58a6ff; color: #fff; }
+  .prob-actbtn.primary:hover { background: #388bfd; }
+  .prob-progress { display: flex; align-items: center; gap: 10px; flex: 0 0 auto; font-size: 11px; color: #8b949e; margin-left: auto; }
+  .prob-progress-bar { width: 100px; height: 6px; background: #21262d; border-radius: 3px; overflow: hidden; }
+  .prob-progress-fill { height: 100%; background: linear-gradient(90deg, #7ee787, #58a6ff); transition: width .3s; }
+  /* Sections */
+  .prob-section { margin-bottom: 16px; border: 1px solid #30363d; border-radius: 8px; background: #161b22; overflow: hidden; }
+  .prob-section > summary { padding: 13px 18px; font-size: 14px; font-weight: 600; color: #e6edf3; cursor: pointer; list-style: none; display: flex; align-items: center; gap: 10px; user-select: none; transition: background .15s; flex-wrap: wrap; }
   .prob-section > summary::-webkit-details-marker { display: none; }
   .prob-section > summary::before { content: '▸'; color: #8b949e; font-size: 11px; transition: transform .2s; }
   .prob-section[open] > summary::before { transform: rotate(90deg); }
   .prob-section > summary:hover { background: rgba(88,166,255,0.04); }
-  .prob-section .wk { color: #8b949e; font-size: 12px; font-weight: 500; background: #0d1117; padding: 2px 8px; border-radius: 10px; border: 1px solid #30363d; }
-  .prob-body { padding: 6px 20px 18px 40px; }
-  .prob-body > ol { padding-left: 22px; margin: 8px 0 4px; }
-  .prob-body > ol > li { margin: 12px 0; color: #c9d1d9; font-size: 14px; line-height: 1.55; }
-  .prob-body > ol > li::marker { color: #7ee787; font-weight: 600; }
-  .prob-hint { display: block; margin-top: 4px; color: #8b949e; font-size: 12.5px; font-style: italic; }
-  .prob-hint::before { content: '💡 '; font-style: normal; }
-  .prob-tag { display: inline-block; font-size: 10px; font-weight: 600; padding: 1px 7px; border-radius: 8px; margin-right: 6px; vertical-align: middle; text-transform: uppercase; letter-spacing: .4px; }
+  .prob-section .wk { color: #8b949e; font-size: 11px; font-weight: 500; background: #0d1117; padding: 2px 8px; border-radius: 10px; border: 1px solid #30363d; }
+  .prob-section .sec-meta { margin-left: auto; font-size: 11px; color: #6e7681; font-weight: 500; }
+  .prob-section .sec-meta .done-count { color: #7ee787; font-weight: 600; }
+  .prob-hook { background: #0d1117; border-bottom: 1px solid #21262d; padding: 12px 22px; font-size: 13px; color: #d2a8ff; font-style: italic; line-height: 1.6; display: flex; gap: 8px; align-items: flex-start; }
+  .prob-hook::before { content: '🪝'; font-style: normal; flex-shrink: 0; }
+  .prob-body { padding: 12px 18px 16px; display: flex; flex-direction: column; gap: 10px; }
+  /* Problem cards */
+  .prob-card { background: #0d1117; border: 1px solid #21262d; border-radius: 8px; padding: 12px 14px; transition: all .15s; position: relative; }
+  .prob-card:hover { border-color: #30363d; }
+  .prob-card.status-thinking { border-left: 3px solid #d2a8ff; }
+  .prob-card.status-got      { border-left: 3px solid #7ee787; opacity: .75; }
+  .prob-card.status-stuck    { border-left: 3px solid #f85149; }
+  .prob-card.hidden          { display: none; }
+  .prob-card .pc-head { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 4px; }
+  .prob-card .pc-num { color: #6e7681; font-size: 11px; font-weight: 600; font-family: 'Cascadia Code', monospace; }
+  .prob-card .pc-star { color: #ffa657; font-size: 13px; }
+  .prob-tag { display: inline-block; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 8px; text-transform: uppercase; letter-spacing: .4px; }
   .prob-tag.design { background: #58a6ff20; color: #58a6ff; }
   .prob-tag.debug  { background: #f8514920; color: #f85149; }
   .prob-tag.paper  { background: #d2a8ff20; color: #d2a8ff; }
   .prob-tag.code   { background: #7ee78720; color: #7ee787; }
   .prob-tag.derive { background: #ffa65720; color: #ffa657; }
+  .prob-card .pc-text { color: #c9d1d9; font-size: 13.5px; line-height: 1.6; margin: 2px 0 6px; }
+  .prob-card .pc-actions { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; margin-top: 6px; }
+  .prob-revealbtn { background: transparent; border: 1px dashed #30363d; color: #8b949e; padding: 3px 10px; border-radius: 12px; font-size: 11px; cursor: pointer; transition: all .15s; }
+  .prob-revealbtn:hover { border-color: #d2a8ff; color: #d2a8ff; border-style: solid; }
+  .prob-revealbtn.approach:hover { border-color: #79c0ff; color: #79c0ff; }
+  .prob-revealbtn.answer:hover   { border-color: #7ee787; color: #7ee787; }
+  .prob-reveal-panel { display: none; margin-top: 8px; padding: 10px 14px; background: #161b22; border-radius: 4px; color: #c9d1d9; font-size: 12.5px; line-height: 1.65; }
+  .prob-reveal-panel.shown { display: block; }
+  .prob-reveal-panel ul, .prob-reveal-panel ol { margin: 4px 0 4px 18px; padding: 0; }
+  .prob-reveal-panel li { margin: 3px 0; }
+  .prob-reveal-panel code { background: #0d1117; padding: 1px 5px; border-radius: 3px; font-size: 11.5px; color: #79c0ff; font-family: 'Cascadia Code', 'Consolas', monospace; }
+  .prob-reveal-panel strong { color: #e6edf3; }
+  .prob-reveal-panel .rh-label { display: inline-block; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .6px; margin-right: 8px; padding: 1px 6px; border-radius: 4px; vertical-align: middle; }
+  .prob-hint     { border-left: 2px solid #d2a8ff; }
+  .prob-hint     .rh-label { background: #d2a8ff22; color: #d2a8ff; }
+  .prob-approach { border-left: 2px solid #79c0ff; }
+  .prob-approach .rh-label { background: #79c0ff22; color: #79c0ff; }
+  .prob-answer   { border-left: 2px solid #7ee787; background: #0d1f17; }
+  .prob-answer   .rh-label { background: #7ee78722; color: #7ee787; }
+  .prob-status-btns { display: flex; gap: 4px; margin-left: auto; }
+  .prob-statbtn { background: transparent; border: 1px solid #30363d; color: #6e7681; padding: 3px 9px; border-radius: 12px; font-size: 11px; cursor: pointer; transition: all .15s; }
+  .prob-statbtn:hover { border-color: #58a6ff; color: #c9d1d9; }
+  .prob-statbtn.active.thinking { background: #d2a8ff22; border-color: #d2a8ff; color: #d2a8ff; }
+  .prob-statbtn.active.got      { background: #7ee78722; border-color: #7ee787; color: #7ee787; }
+  .prob-statbtn.active.stuck    { background: #f8514922; border-color: #f85149; color: #f85149; }
+  .prob-empty { text-align: center; padding: 40px 20px; color: #6e7681; font-size: 13px; }
+  /* Modal for surprise-me */
+  .prob-spotlight { position: fixed; inset: 0; background: rgba(13,17,23,0.85); backdrop-filter: blur(4px); display: none; align-items: center; justify-content: center; z-index: 100; padding: 20px; }
+  .prob-spotlight.open { display: flex; }
+  .prob-spotlight-card { background: #161b22; border: 1px solid #58a6ff; border-radius: 12px; max-width: 600px; width: 100%; padding: 24px 28px; box-shadow: 0 12px 60px rgba(88,166,255,0.3); }
+  .prob-spotlight-card h3 { color: #58a6ff; font-size: 14px; margin: 0 0 4px; text-transform: uppercase; letter-spacing: 1px; }
+  .prob-spotlight-card .pc-text { font-size: 16px; line-height: 1.55; color: #e6edf3; margin: 10px 0; }
+  .prob-spotlight-card .sl-close { background: transparent; border: none; color: #8b949e; font-size: 22px; cursor: pointer; float: right; line-height: 1; }
+  .prob-spotlight-card .sl-close:hover { color: #c9d1d9; }
   .appendix-table .watch-link:hover { color: #ff0000; text-decoration: underline; }
 
   /* ── Mobile ── */
@@ -291,6 +432,19 @@
     .toolbar-sep { display: none; }
     .canvas-controls { top: auto; bottom: 56px; right: 12px; }
     #view-deepdive { margin-top: 48px; height: calc(100vh - 48px); }
+    #view-usecase { margin-top: 48px; height: calc(100vh - 48px); }
+    .uc-flow { padding: 16px; }
+    .uc-flow h2 { font-size: 18px; }
+    .uc-step { padding: 12px; gap: 10px; }
+    .uc-step .uc-badge { width: 28px; height: 28px; font-size: 12px; }
+    .uc-connector { margin-left: 25px; }
+    .uc-flow-controls { flex-wrap: wrap; }
+    .uc-flow-controls button { font-size: 12px; padding: 6px 14px; }
+    .uc-legend { font-size: 10px; gap: 10px; }
+    .uc-code { font-size: 10px; white-space: pre-wrap; word-break: break-all; padding: 8px 10px; }
+    .uc-refs { gap: 4px; }
+    .uc-refs a { font-size: 9px; padding: 2px 8px; }
+    .uc-step .uc-detail { max-width: 100%; overflow-x: hidden; }
     .dd-grid { grid-template-columns: 1fr; padding: 12px 10px; }
     #view-appendix { margin-top: 48px; height: calc(100vh - 48px); }
     #tracker-panel { width: 100%; top: 48px; }
@@ -305,6 +459,233 @@
     .dd-card-img { height: 120px; }
     .dd-keypoints { grid-template-columns: 1fr; }
   }
+
+/* === BEGIN glossary v1 css === */
+  /* dd-nav sticky top */
+  .dd-nav.dd-nav-top {
+    position: sticky; top: 0; z-index: 5;
+    margin: -4px -4px 14px; padding: 10px 8px;
+    background: linear-gradient(180deg, rgba(13,17,23,0.96) 75%, rgba(13,17,23,0));
+    backdrop-filter: blur(4px);
+    border-bottom: 1px solid #21262d;
+  }
+  /* ── Glossary ── */
+  .gloss-intro { background: #161b22; border: 1px solid #30363d; border-left: 3px solid #d2a8ff; border-radius: 6px; padding: 14px 18px; margin-bottom: 14px; color: #c9d1d9; font-size: 14px; line-height: 1.6; }
+  .gloss-intro strong { color: #d2a8ff; }
+  #view-glossary { overflow-y: auto; height: calc(100vh - 50px); margin-top: 50px; padding: 20px; box-sizing: border-box; }
+  @media (max-width: 768px) { #view-glossary { margin-top: 48px; padding: 12px; } }
+  .glossary-controls { position: sticky; top: 0; z-index: 5; background: rgba(13,17,23,0.95); backdrop-filter: blur(6px); padding: 10px 0 12px; margin: -8px 0 14px; border-bottom: 1px solid #21262d; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  #glossary-search { flex: 1 1 240px; min-width: 200px; background: #0d1117; border: 1px solid #30363d; border-radius: 6px; padding: 7px 12px; color: #c9d1d9; font-size: 13px; outline: none; }
+  #glossary-search:focus { border-color: #58a6ff; }
+  .glossary-cat-pills { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+  .glossary-cat-pills button { background: #161b22; border: 1px solid #30363d; color: #8b949e; padding: 4px 10px; border-radius: 12px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .4px; cursor: pointer; transition: all .15s; }
+  .glossary-cat-pills button:hover { border-color: #58a6ff; color: #c9d1d9; }
+  .glossary-cat-pills button.active { background: var(--pill-bg, #1f6feb22); border-color: var(--pill-color, #58a6ff); color: var(--pill-color, #58a6ff); }
+  .glossary-count { font-size: 11px; color: #8b949e; margin-left: auto; }
+  .glossary-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 14px; max-width: 1400px; margin: 0 auto; }
+  .glossary-card { background: #161b22; border: 1px solid #30363d; border-radius: 10px; padding: 14px; transition: border-color .15s, box-shadow .15s, transform .15s; }
+  .glossary-card:hover { border-color: var(--cat-color, #58a6ff); box-shadow: 0 4px 14px rgba(0,0,0,0.35); }
+  .glossary-card.flash {
+    animation: glossary-flash 2.6s cubic-bezier(.4,0,.2,1) 1 forwards;
+    position: relative;
+    z-index: 2;
+  }
+  @keyframes glossary-flash {
+    0% {
+      background: #161b22;
+      border-color: #30363d;
+      box-shadow: 0 0 0 rgba(0,0,0,0);
+      transform: scale(1);
+    }
+    8% {
+      background: color-mix(in srgb, var(--cat-color, #58a6ff) 55%, #161b22);
+      border-color: var(--cat-color, #58a6ff);
+      box-shadow:
+        0 0 0 4px var(--cat-color, #58a6ff),
+        0 0 28px 6px color-mix(in srgb, var(--cat-color, #58a6ff) 70%, transparent),
+        0 14px 36px rgba(0,0,0,0.55);
+      transform: scale(1.045);
+    }
+    22% {
+      background: color-mix(in srgb, var(--cat-color, #58a6ff) 30%, #161b22);
+      border-color: var(--cat-color, #58a6ff);
+      box-shadow:
+        0 0 0 3px var(--cat-color, #58a6ff),
+        0 0 22px 4px color-mix(in srgb, var(--cat-color, #58a6ff) 55%, transparent),
+        0 10px 28px rgba(0,0,0,0.5);
+      transform: scale(1.03);
+    }
+    45% {
+      background: color-mix(in srgb, var(--cat-color, #58a6ff) 45%, #161b22);
+      border-color: var(--cat-color, #58a6ff);
+      box-shadow:
+        0 0 0 3px var(--cat-color, #58a6ff),
+        0 0 26px 5px color-mix(in srgb, var(--cat-color, #58a6ff) 60%, transparent),
+        0 12px 32px rgba(0,0,0,0.5);
+      transform: scale(1.035);
+    }
+    70% {
+      background: color-mix(in srgb, var(--cat-color, #58a6ff) 22%, #161b22);
+      border-color: color-mix(in srgb, var(--cat-color, #58a6ff) 80%, #30363d);
+      box-shadow:
+        0 0 0 2px color-mix(in srgb, var(--cat-color, #58a6ff) 70%, transparent),
+        0 0 18px 3px color-mix(in srgb, var(--cat-color, #58a6ff) 40%, transparent);
+      transform: scale(1.015);
+    }
+    100% {
+      background: #161b22;
+      border-color: #30363d;
+      box-shadow: 0 0 0 rgba(0,0,0,0);
+      transform: scale(1);
+    }
+  }
+  /* Fallback for browsers without color-mix: solid tinted backgrounds */
+  @supports not (background: color-mix(in srgb, red, blue)) {
+    @keyframes glossary-flash {
+      0%,100% { background: #161b22; border-color: #30363d; box-shadow: none; transform: scale(1); }
+      8%, 45% {
+        background: rgba(88,166,255,0.32);
+        border-color: var(--cat-color, #58a6ff);
+        box-shadow: 0 0 0 4px var(--cat-color, #58a6ff), 0 0 28px var(--cat-color, #58a6ff);
+        transform: scale(1.04);
+      }
+    }
+  }
+  .glossary-term-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .glossary-term { font-size: 16px; font-weight: 700; color: #e6edf3; }
+  .glossary-cat-badge { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; padding: 2px 7px; border-radius: 10px; border: 1px solid var(--cat-color, #58a6ff); color: var(--cat-color, #58a6ff); background: rgba(0,0,0,0.2); }
+  .glossary-aka { font-size: 11px; color: #8b949e; font-style: italic; margin-top: 3px; }
+  .glossary-short { font-size: 13px; color: #c9d1d9; margin-top: 8px; line-height: 1.5; }
+  .glossary-long { font-size: 13px; color: #8b949e; margin-top: 8px; line-height: 1.55; display: none; }
+  .glossary-long code { background: #0d1117; border: 1px solid #21262d; border-radius: 4px; padding: 1px 5px; font-family: 'Cascadia Code', monospace; font-size: 12px; color: #d2a8ff; }
+  .glossary-card.expanded .glossary-long { display: block; }
+  .glossary-toggle { background: none; border: none; color: #58a6ff; font-size: 11px; cursor: pointer; padding: 6px 0 0; }
+  .glossary-toggle:hover { text-decoration: underline; }
+  .glossary-links { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+  .glossary-links button { background: #0d1117; border: 1px solid #30363d; color: #c9d1d9; padding: 3px 9px; border-radius: 10px; font-size: 11px; cursor: pointer; transition: all .15s; }
+  .glossary-links button:hover { border-color: #58a6ff; color: #58a6ff; }
+  /* graph-node pulse when jumped to from glossary */
+  @keyframes glossary-pulse {
+    0%   { stroke-opacity: 1; stroke-width: 14; }
+    100% { stroke-opacity: 0.55; stroke-width: 5; }
+  }
+  @keyframes glossary-halo-pulse {
+    0%   { r: 16;  stroke-opacity: 1;    stroke-width: 10; }
+    60%  { r: 90;  stroke-opacity: 0.55; stroke-width: 5; }
+    100% { r: 140; stroke-opacity: 0;    stroke-width: 2; }
+  }
+  @keyframes glossary-halo-pulse-2 {
+    0%   { r: 16;  stroke-opacity: 0.9; stroke-width: 6; }
+    60%  { r: 110; stroke-opacity: 0.4; stroke-width: 3; }
+    100% { r: 170; stroke-opacity: 0;   stroke-width: 1.5; }
+  }
+  @keyframes glossary-fill-pulse {
+    0%, 100% { fill-opacity: 0.85; }
+    50%      { fill-opacity: 1; }
+  }
+  @keyframes glossary-dim-others {
+    0%   { opacity: 1; }
+    20%  { opacity: 0.15; }
+    100% { opacity: 0.15; }
+  }
+  /* Dim everything in the graph except the highlighted node + its halos */
+  #canvas-graph.glossary-spotlight g.graph-node:not(.glossary-highlight),
+  #canvas-graph.glossary-spotlight line.graph-link,
+  #canvas-graph.glossary-spotlight text.graph-link-label {
+    animation: glossary-dim-others 0.4s ease-out forwards;
+  }
+  #canvas-graph.glossary-spotlight g.graph-node.glossary-highlight {
+    opacity: 1 !important;
+  }
+  g.graph-node.glossary-highlight circle:not(.glossary-halo):not(.glossary-halo-outer) {
+    animation:
+      glossary-pulse 0.45s ease-in-out 10 alternate,
+      glossary-fill-pulse 0.45s ease-in-out 10 alternate;
+    stroke: #ffd13b !important;
+    fill: #ffd13b !important;
+    filter:
+      drop-shadow(0 0 10px #ffd13b)
+      drop-shadow(0 0 24px #ffd13baa)
+      drop-shadow(0 0 40px #ffd13b66);
+  }
+  g.graph-node.glossary-highlight text {
+    fill: #fff !important;
+    font-weight: 900 !important;
+    font-size: 15px !important;
+    paint-order: stroke fill;
+    stroke: #5a3a00;
+    stroke-width: 4px;
+    stroke-linejoin: round;
+    filter:
+      drop-shadow(0 0 6px #000)
+      drop-shadow(0 0 12px #ffd13b)
+      drop-shadow(0 0 20px #ffd13bcc);
+  }
+  circle.glossary-halo {
+    fill: none;
+    stroke: #ffd13b;
+    pointer-events: none;
+    animation: glossary-halo-pulse 1.1s ease-out 5;
+    filter: drop-shadow(0 0 8px #ffd13baa);
+  }
+  circle.glossary-halo-outer {
+    fill: none;
+    stroke: #ffae00;
+    pointer-events: none;
+    animation: glossary-halo-pulse-2 1.4s ease-out 5;
+    animation-delay: 0.18s;
+    filter: drop-shadow(0 0 12px #ffae0099);
+  }
+  /* mindmap pulse (uses a <circle> appended) */
+  circle.glossary-mm-halo {
+    fill: none;
+    stroke: #ffd13b;
+    pointer-events: none;
+    animation: glossary-halo-pulse 1.1s ease-out 5;
+    filter: drop-shadow(0 0 8px #ffd13baa);
+  }
+  circle.glossary-mm-halo-outer {
+    fill: none;
+    stroke: #ffae00;
+    pointer-events: none;
+    animation: glossary-halo-pulse-2 1.4s ease-out 5;
+    animation-delay: 0.18s;
+    filter: drop-shadow(0 0 12px #ffae0099);
+  }
+  /* toast banner shown when jumping from glossary */
+  #glossary-toast {
+    position: fixed; top: 60px; left: 50%; transform: translateX(-50%) translateY(-30px) scale(0.92);
+    background: linear-gradient(180deg, #2a1f0a, #1a1308);
+    border: 2px solid #ffd13b; border-left: 6px solid #ffd13b;
+    color: #fff5d6; padding: 12px 22px; border-radius: 10px;
+    font-size: 15px; font-weight: 700;
+    box-shadow:
+      0 10px 32px rgba(0,0,0,0.6),
+      0 0 36px rgba(255,209,59,0.45),
+      0 0 64px rgba(255,209,59,0.25);
+    opacity: 0; pointer-events: none;
+    transition: opacity .22s ease, transform .28s cubic-bezier(.2,1.2,.4,1);
+    z-index: 10000;
+    display: flex; align-items: center; gap: 12px;
+    max-width: 90vw;
+    text-shadow: 0 0 8px rgba(255,209,59,0.5);
+  }
+  #glossary-toast.show { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+  #glossary-toast .gt-icon { font-size: 22px; filter: drop-shadow(0 0 6px #ffd13b); }
+  #glossary-toast .gt-sub { color: #c9b88c; font-weight: 500; font-size: 12.5px; margin-left: 4px; }
+  #glossary-toast strong { color: #ffd13b; text-shadow: 0 0 10px rgba(255,209,59,0.6); }
+  @media (max-width: 768px) { #glossary-toast { top: 56px; font-size: 13px; padding: 10px 16px; } }
+  /* tooltip glossary footer link */
+  #tooltip .tt-glossary { margin-top: 6px; padding-top: 5px; border-top: 1px solid #30363d; }
+  #tooltip .tt-glossary:empty { display: none; }
+  #tooltip .tt-glossary a {
+    display: inline-block; padding: 2px 8px; border-radius: 4px;
+    background: rgba(210,168,255,0.10); color: #d2a8ff; text-decoration: none;
+    font-size: 11px; font-weight: 500; cursor: pointer; border: 1px solid rgba(210,168,255,0.25);
+  }
+  #tooltip .tt-glossary a:hover { background: rgba(210,168,255,0.22); border-color: #d2a8ff; }
+  #tooltip.has-glossary { pointer-events: auto; }
+/* === END glossary v1 css === */
 </style>
 </head>
 <body>
@@ -349,12 +730,35 @@
   </div>
 </div>
 
+
+<div id="view-usecase" class="view">
+  <div id="uc-card-grid" class="dd-grid"></div>
+  <div id="uc-detail-container" style="display:none"></div>
+  <div class="canvas-controls" id="usecase-controls" style="display:none">
+    <button class="cbtn" id="btn-back-uc" onclick="showUseCaseGrid()">← Back to All</button>
+  </div>
+</div>
 <div id="view-appendix" class="view">
   <div id="appendix-container"></div>
 </div>
 <div id="view-problems" class="view">
   <div id="problems-container"></div>
 </div>
+<!-- BEGIN glossary v1 view -->
+<div id="view-glossary" class="view">
+  <div class="gloss-intro">
+    <strong>📖 Glossary.</strong> Every acronym, jargon term, and unit-of-art used across <em>Use Cases</em> and <em>Deep Dives</em> — defined here, cross-linked to the <strong>Topic Graph</strong> and <strong>Mind Map</strong> so you can jump from definition → diagram in one click.
+    <br><br>
+    <span style="color:#8b949e">Tip: click a related term to flash-jump to it. Click the 🌐 graph or 🧭 mindmap links to spotlight that node on its tab.</span>
+  </div>
+  <div class="glossary-controls">
+    <input type="text" id="glossary-search" placeholder="🔍 Search terms, acronyms, or definitions…" />
+    <div class="glossary-cat-pills" id="glossary-cat-pills"></div>
+    <span class="glossary-count" id="glossary-count"></span>
+  </div>
+  <div id="glossary-list" class="glossary-list"></div>
+</div>
+<!-- END glossary v1 view -->
 
 <!-- ═══════════════ SHARED OVERLAYS ═══════════════ -->
 <div id="tooltip"><div class="tt-title"></div><div class="tt-body"></div><div class="tt-slides"></div></div>
@@ -706,19 +1110,30 @@ const COURSE_CONFIG = {
       desc: "Converting real integrals to residue sums in the complex plane.",
       color: "#58a6ff", icon: "\u222E",
       svg: function(w, h) {
+        var cx=w/2, cy=h*0.5, r=Math.min(w,h)*0.32;
         return '<svg viewBox="0 0 '+w+' '+h+'" xmlns="http://www.w3.org/2000/svg">'
-          +'<circle cx="'+w/2+'" cy="'+h/2+'" r="'+h*0.35+'" fill="none" stroke="#58a6ff" stroke-width="2"/>'
-          +'<circle cx="'+w*0.4+'" cy="'+h*0.45+'" r="4" fill="#f85149"/><circle cx="'+w*0.6+'" cy="'+h*0.55+'" r="4" fill="#f85149"/>'
-          +'<text x="'+w*0.25+'" y="'+h*0.88+'" fill="#c9d1d9" font-size="13">2\u03C0i \u00B7 \u03A3 Res(f, z\u2096)</text></svg>';
+          +'<line x1="20" y1="'+cy+'" x2="'+(w-20)+'" y2="'+cy+'" stroke="#30363d"/>'
+          +'<line x1="'+cx+'" y1="20" x2="'+cx+'" y2="'+(h-20)+'" stroke="#30363d"/>'
+          +'<text x="'+(w-30)+'" y="'+(cy-6)+'" fill="#6e7681" font-size="10">Re</text>'
+          +'<text x="'+(cx+6)+'" y="30" fill="#6e7681" font-size="10">Im</text>'
+          +'<circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="rgba(88,166,255,0.08)" stroke="#58a6ff" stroke-width="2"/>'
+          +'<polygon points="'+(cx+r)+','+cy+' '+(cx+r-6)+','+(cy-5)+' '+(cx+r-6)+','+(cy+5)+'" fill="#58a6ff"/>'
+          +'<circle cx="'+(cx-r*0.45)+'" cy="'+(cy-r*0.2)+'" r="4" fill="#f85149"/><text x="'+(cx-r*0.45+6)+'" y="'+(cy-r*0.2-6)+'" fill="#f85149" font-size="10">z\u2081</text>'
+          +'<circle cx="'+(cx+r*0.3)+'" cy="'+(cy+r*0.35)+'" r="4" fill="#f85149"/><text x="'+(cx+r*0.3+6)+'" y="'+(cy+r*0.35+12)+'" fill="#f85149" font-size="10">z\u2082</text>'
+          +'<text x="'+(cx-r-10)+'" y="'+(cy-r-8)+'" fill="#58a6ff" font-size="11">C</text>'
+          +'<text x="20" y="'+(h-12)+'" fill="#c9d1d9" font-size="12">\u222E_C f(z) dz = 2\u03C0i \u00B7 \u03A3 Res(f, z\u2096)</text></svg>';
       },
       sections: [
-        { title: "Core Idea", text: "The integral of a meromorphic function around a closed contour equals 2\u03C0i times the sum of residues at enclosed singularities." },
-        { title: "Computing Residues", text: "Simple pole: Res = lim (z-z0)f(z). Higher order: use Laurent expansion." },
-        { title: "Applications", text: "Evaluate real integrals (rational, trigonometric, branch-cut types), sum series." }
+        { title: "Core Idea", text: "If f(z) is analytic on and inside a positively oriented simple closed contour C except at finitely many isolated singularities z_k, then \u222E_C f(z) dz = 2\u03C0i \u00B7 \u03A3 Res(f, z_k). The contour integral collapses to a finite sum because every term in the Laurent series integrates to zero except the 1/(z\u2212z_k) term, whose integral is 2\u03C0i. Geometrically, residues are coefficients that detect how badly analyticity fails at each pole." },
+        { title: "Computing Residues", text: "For a simple pole at z_0: Res = lim_{z\u2192z_0} (z\u2212z_0) f(z). For an order-m pole: Res = (1/(m\u22121)!) lim_{z\u2192z_0} d^{m\u22121}/dz^{m\u22121} [(z\u2212z_0)^m f(z)]. For ratios p(z)/q(z) with q(z_0)=0, q'(z_0)\u22600, the residue equals p(z_0)/q'(z_0). Essential singularities require Laurent expansion directly \u2014 no shortcut." },
+        { title: "Worked Example", text: "Evaluate \u222B_{\u2212\u221E}^{\u221E} 1/(1+x\u00B2) dx by closing in the upper half-plane. Inside lies the simple pole z=i with residue 1/(2i). The semicircular arc vanishes as R\u2192\u221E because |f|=O(1/R\u00B2). So \u222B = 2\u03C0i\u00B7(1/(2i)) = \u03C0, matching arctan(\u221E)\u2212arctan(\u2212\u221E)." },
+        { title: "Tie-In", text: "Used in signal processing to invert Laplace and Z-transforms, in physics for Green's functions and propagators, and in number theory via the Riemann zeta function and analytic continuation." }
       ],
       keypoints: [
-        { title: "Singularity Types", text: "Poles (simple, order n) vs essential singularities." },
-        { title: "Contour Choice", text: "Semicircle, keyhole, or rectangular based on integral type." }
+        { title: "Pole Order", text: "Simple (m=1), order m, essential, removable. Laurent series classifies them via the principal part." },
+        { title: "Jordan's Lemma", text: "For \u222B e^{iax} R(x) dx with a>0, the upper semicircle vanishes if R(z)\u21920 \u2014 lets you handle oscillatory integrals." },
+        { title: "Contour Choice", text: "Semicircle for rationals; rectangular for periodic e^x; keyhole for log/branch cuts; indented for poles on the real axis." },
+        { title: "Pitfall", text: "Always verify the arc contribution actually vanishes; forgetting orientation flips the sign by \u22122\u03C0i." }
       ]
     },
     {
@@ -726,19 +1141,30 @@ const COURSE_CONFIG = {
       desc: "The fundamental equations governing viscous fluid flow.",
       color: "#3fb950", icon: "\uD83C\uDF0A",
       svg: function(w, h) {
+        var wallY=h*0.78, s='';
+        for(var i=0;i<10;i++){var y=wallY-(i+1)*(wallY*0.08); var len=(i+1)*(w*0.07);
+          s+='<line x1="'+(w*0.15)+'" y1="'+y+'" x2="'+(w*0.15+len)+'" y2="'+y+'" stroke="#3fb950" stroke-width="1.5"/>';
+          s+='<polygon points="'+(w*0.15+len)+','+y+' '+(w*0.15+len-5)+','+(y-3)+' '+(w*0.15+len-5)+','+(y+3)+'" fill="#3fb950"/>';
+        }
         return '<svg viewBox="0 0 '+w+' '+h+'" xmlns="http://www.w3.org/2000/svg">'
-          +'<rect x="0" y="'+h*0.75+'" width="'+w+'" height="'+h*0.25+'" fill="#21262d"/>'
-          +'<path d="M0,'+h*0.75+' Q'+w*0.5+','+h*0.4+' '+w+','+h*0.35+'" fill="none" stroke="#3fb950" stroke-width="2"/>'
-          +'<text x="'+w*0.1+'" y="'+h*0.92+'" fill="#c9d1d9" font-size="12">Boundary Layer \u2192</text></svg>';
+          +'<rect x="0" y="'+wallY+'" width="'+w+'" height="'+(h-wallY)+'" fill="#21262d"/>'
+          +'<path d="M'+(w*0.15)+','+wallY+' Q'+(w*0.5)+','+(h*0.15)+' '+(w*0.95)+','+(h*0.1)+'" fill="none" stroke="#58a6ff" stroke-width="2" stroke-dasharray="4,3"/>'
+          +s
+          +'<text x="'+(w*0.55)+'" y="'+(h*0.2)+'" fill="#58a6ff" font-size="11">u(y) profile</text>'
+          +'<text x="10" y="'+(h-8)+'" fill="#c9d1d9" font-size="11">no-slip wall: u=0</text></svg>';
       },
       sections: [
-        { title: "The Equations", text: "For incompressible flow: \u03C1(\u2202v/\u2202t + v\u00B7\u2207v) = -\u2207p + \u03BC\u2207\u00B2v" },
-        { title: "Exact Solutions", text: "Couette flow, Poiseuille flow, Stokes creeping flow." },
-        { title: "Boundary Layers", text: "Prandtl splits flow into inviscid outer region and thin viscous layer near walls." }
+        { title: "The Equations", text: "For an incompressible Newtonian fluid: \u03C1 (\u2202v/\u2202t + (v\u00B7\u2207)v) = \u2212\u2207p + \u03BC \u2207\u00B2 v + f, together with \u2207\u00B7v = 0. The four terms encode inertia, pressure gradient, viscous diffusion of momentum, and body forces. Coupling between v and p makes them notoriously hard: incompressibility is a constraint, not a time evolution, so pressure adjusts instantaneously to enforce divergence-free flow." },
+        { title: "Exact Solutions", text: "Closed-form solutions exist only in highly symmetric settings. Couette flow (linear profile between two plates moving relative to each other) and Hagen\u2013Poiseuille flow (parabolic profile in a pipe driven by \u2207p) drop the nonlinear (v\u00B7\u2207)v term. Stokes creeping flow takes Re\u21920 so inertia vanishes; flow past a sphere then gives drag F = 6\u03C0\u03BCRU, the basis for terminal-velocity calculations." },
+        { title: "Boundary Layers & Turbulence", text: "Prandtl (1904) noticed that for high Re, viscosity matters only in a thin layer of thickness \u03B4 \u223C \u221A(\u03BD x/U) near walls; outside, Euler's equations suffice. Above critical Re, laminar layers transition to turbulence and the Kolmogorov cascade transports energy from large eddies down to dissipation scale \u03B7 = (\u03BD\u00B3/\u03B5)^{1/4}." },
+        { title: "Tie-In", text: "Same equations underlie weather forecasting, blood flow modeling, aircraft design (CFD), and ocean circulation. Reynolds-Averaged Navier\u2013Stokes (RANS) and Large-Eddy Simulation are the workhorses of industrial CFD." }
       ],
       keypoints: [
-        { title: "Reynolds Number", text: "Re = \u03C1UL/\u03BC determines laminar vs turbulent." },
-        { title: "Millennium Problem", text: "3D existence and smoothness remains unsolved." }
+        { title: "Reynolds Number", text: "Re = \u03C1UL/\u03BC compares inertia to viscosity. Re \u2272 2300 in pipes is laminar; above ~4000, turbulent." },
+        { title: "Pressure-Velocity Coupling", text: "Taking \u2207\u00B7 of NS gives a Poisson equation for p \u2014 the source of stiffness in CFD solvers." },
+        { title: "Energy Equation", text: "Dissipation rate \u03B5 = 2\u03BD S_{ij} S_{ij} where S is the strain-rate tensor; explains why turbulent flows heat up." },
+        { title: "Millennium Problem", text: "The Clay Institute offers $1M for proving (or disproving) global existence and smoothness of 3D solutions." },
+        { title: "Pitfall", text: "Re alone doesn't classify flow \u2014 geometry, surface roughness, and free-stream turbulence all shift the transition point." }
       ]
     },
     {
@@ -746,22 +1172,32 @@ const COURSE_CONFIG = {
       desc: "The unifying concept across linear algebra, PDEs, and computation.",
       color: "#f0883e", icon: "\u03BB",
       svg: function(w, h) {
+        var cx=w/2, cy=h*0.55, ux=70, uy=0, vx=30, vy=-50;
         return '<svg viewBox="0 0 '+w+' '+h+'" xmlns="http://www.w3.org/2000/svg">'
-          +'<text x="'+w*0.1+'" y="'+h*0.2+'" fill="#f0883e" font-size="16" font-weight="bold">Ax = \u03BBx</text>'
-          +'<line x1="'+w*0.15+'" y1="'+h*0.3+'" x2="'+w*0.15+'" y2="'+h*0.85+'" stroke="#30363d"/>'
-          +'<line x1="'+w*0.15+'" y1="'+h*0.85+'" x2="'+w*0.9+'" y2="'+h*0.85+'" stroke="#30363d"/>'
-          +'<circle cx="'+w*0.3+'" cy="'+h*0.65+'" r="5" fill="#58a6ff"/><circle cx="'+w*0.5+'" cy="'+h*0.45+'" r="5" fill="#f0883e"/>'
-          +'<circle cx="'+w*0.7+'" cy="'+h*0.55+'" r="5" fill="#bc8cff"/>'
-          +'<text x="'+w*0.25+'" y="'+h*0.98+'" fill="#c9d1d9" font-size="11">Spectrum of A</text></svg>';
+          +'<text x="20" y="25" fill="#f0883e" font-size="14" font-weight="bold">A x = \u03BB x</text>'
+          +'<line x1="20" y1="'+cy+'" x2="'+(w-20)+'" y2="'+cy+'" stroke="#30363d"/>'
+          +'<line x1="'+cx+'" y1="40" x2="'+cx+'" y2="'+(h-15)+'" stroke="#30363d"/>'
+          +'<line x1="'+cx+'" y1="'+cy+'" x2="'+(cx+ux)+'" y2="'+(cy+uy)+'" stroke="#58a6ff" stroke-width="2"/>'
+          +'<polygon points="'+(cx+ux)+','+(cy+uy)+' '+(cx+ux-7)+','+(cy+uy-4)+' '+(cx+ux-7)+','+(cy+uy+4)+'" fill="#58a6ff"/>'
+          +'<text x="'+(cx+ux+4)+'" y="'+(cy+uy+4)+'" fill="#58a6ff" font-size="11">x</text>'
+          +'<line x1="'+cx+'" y1="'+cy+'" x2="'+(cx+1.6*ux)+'" y2="'+(cy+1.6*uy)+'" stroke="#f0883e" stroke-width="2" stroke-dasharray="3,2"/>'
+          +'<polygon points="'+(cx+1.6*ux)+','+(cy+1.6*uy)+' '+(cx+1.6*ux-7)+','+(cy+1.6*uy-4)+' '+(cx+1.6*ux-7)+','+(cy+1.6*uy+4)+'" fill="#f0883e"/>'
+          +'<text x="'+(cx+1.6*ux+4)+'" y="'+(cy+1.6*uy+18)+'" fill="#f0883e" font-size="11">\u03BB x (\u03BB=1.6)</text>'
+          +'<line x1="'+cx+'" y1="'+cy+'" x2="'+(cx+vx)+'" y2="'+(cy+vy)+'" stroke="#7ee787" stroke-width="2"/>'
+          +'<line x1="'+cx+'" y1="'+cy+'" x2="'+(cx-vy*0.8)+'" y2="'+(cy+vx*0.8)+'" stroke="#7ee787" stroke-width="2" stroke-dasharray="3,2"/>'
+          +'<text x="'+(cx+vx-30)+'" y="'+(cy+vy-4)+'" fill="#7ee787" font-size="10">non-eigenvector rotates</text></svg>';
       },
       sections: [
-        { title: "Matrix Eigenvalues", text: "Spectral theorem for symmetric matrices, Cayley-Hamilton theorem." },
-        { title: "Sturm-Liouville", text: "Eigenfunction expansions generalize Fourier series to arbitrary BVP." },
-        { title: "Numerical Methods", text: "QR iteration, Jacobi/Givens, Householder, SVD." }
+        { title: "What Eigenvalues Mean", text: "A scalar \u03BB and nonzero vector x satisfy A x = \u03BB x when A acts on x by pure scaling \u2014 no rotation, no shear. The set of such \u03BB is the spectrum \u03C3(A); they are the roots of the characteristic polynomial det(A \u2212 \u03BBI) = 0. Multiplicity comes in two flavors: algebraic (root multiplicity) and geometric (dim of eigenspace), and when they differ A is defective and not diagonalisable." },
+        { title: "Spectral Theorem & Decompositions", text: "Symmetric (Hermitian) matrices have real eigenvalues and an orthonormal eigenbasis: A = Q \u039B Q^T. Normal matrices (AA*=A*A) have a unitary eigenbasis. General matrices admit Schur (A = U T U*) and Jordan forms. The Singular Value Decomposition A = U \u03A3 V^T extends spectral ideas to rectangular A and is the workhorse of dimensionality reduction and pseudoinverses." },
+        { title: "Power Iteration Worked Example", text: "Start from random x\u2080; iterate x_{k+1} = A x_k / \u2016A x_k\u2016. The iterates align with the dominant eigenvector at rate |\u03BB\u2082/\u03BB\u2081|. Inverse iteration (apply (A\u2212\u03BCI)^{-1}) converges to the eigenvalue nearest \u03BC. Industrial codes (LAPACK, ARPACK) use shifted QR or Lanczos for the full spectrum." },
+        { title: "Tie-In", text: "PageRank is the dominant eigenvector of the Google matrix. Principal Component Analysis uses eigenvectors of the covariance. Quantum mechanics models observables as Hermitian operators whose eigenvalues are measurement outcomes. In ODEs \\dot x = A x, eigenvalues of A determine stability (negative real parts \u21D2 stable)." }
       ],
       keypoints: [
-        { title: "Everywhere", text: "Vibrating strings, quantum mechanics, PageRank, PCA, stability analysis." },
-        { title: "Spectral Theory", text: "In infinite dimensions, spectrum generalizes eigenvalues." }
+        { title: "Determinant & Trace", text: "det(A) = \u220F \u03BB_i and tr(A) = \u03A3 \u03BB_i \u2014 quick sanity checks for any computed spectrum." },
+        { title: "Cayley\u2013Hamilton", text: "Every matrix satisfies its own characteristic polynomial p(A) = 0, giving a recursion for A^k and inverses." },
+        { title: "Sturm\u2013Liouville", text: "BVP \u2212(p y')' + q y = \u03BB w y has discrete real eigenvalues \u03BB_n\u2192\u221E with orthogonal eigenfunctions \u2014 generalises Fourier series." },
+        { title: "Condition & Pitfall", text: "Eigenvalues of non-normal matrices can be hyper-sensitive to perturbations (pseudospectra). Diagonalising defective matrices with floating point gives garbage \u2014 use Schur form instead." }
       ]
     },
     {
@@ -769,19 +1205,33 @@ const COURSE_CONFIG = {
       desc: "The foundational algorithm for linear programming.",
       color: "#f778ba", icon: "\u25B3",
       svg: function(w, h) {
+        var pts=[[w*0.18,h*0.85],[w*0.78,h*0.85],[w*0.88,h*0.55],[w*0.62,h*0.22],[w*0.28,h*0.4]];
+        var poly=pts.map(function(p){return p[0]+','+p[1];}).join(' ');
+        var path='M'+pts[0][0]+','+pts[0][1]+' L'+pts[1][0]+','+pts[1][1]+' L'+pts[2][0]+','+pts[2][1]+' L'+pts[3][0]+','+pts[3][1];
         return '<svg viewBox="0 0 '+w+' '+h+'" xmlns="http://www.w3.org/2000/svg">'
-          +'<polygon points="'+w*0.15+','+h*0.85+' '+w*0.85+','+h*0.85+' '+w*0.65+','+h*0.25+' '+w*0.25+','+h*0.4+'" fill="rgba(88,166,255,0.15)" stroke="#58a6ff" stroke-width="2"/>'
-          +'<circle cx="'+w*0.65+'" cy="'+h*0.25+'" r="6" fill="#3fb950"/>'
-          +'<text x="'+w*0.7+'" y="'+h*0.23+'" fill="#3fb950" font-size="10">Optimal</text></svg>';
+          +'<line x1="20" y1="'+(h-20)+'" x2="'+(w-15)+'" y2="'+(h-20)+'" stroke="#30363d"/>'
+          +'<line x1="20" y1="'+(h-20)+'" x2="20" y2="15" stroke="#30363d"/>'
+          +'<text x="'+(w-30)+'" y="'+(h-6)+'" fill="#6e7681" font-size="10">x\u2081</text>'
+          +'<text x="6" y="20" fill="#6e7681" font-size="10">x\u2082</text>'
+          +'<polygon points="'+poly+'" fill="rgba(247,120,186,0.12)" stroke="#f778ba" stroke-width="2"/>'
+          +'<line x1="'+(w*0.05)+'" y1="'+(h*0.55)+'" x2="'+(w*0.95)+'" y2="'+(h*0.15)+'" stroke="#7ee787" stroke-dasharray="4,3"/>'
+          +'<text x="'+(w*0.7)+'" y="'+(h*0.18)+'" fill="#7ee787" font-size="10">c\u1d40 x = z*</text>'
+          +'<path d="'+path+'" fill="none" stroke="#ffa657" stroke-width="2"/>'
+          +pts.map(function(p,i){return '<circle cx="'+p[0]+'" cy="'+p[1]+'" r="4" fill="'+(i===3?'#3fb950':'#ffa657')+'"/>';}).join('')
+          +'<text x="'+(pts[3][0]+8)+'" y="'+(pts[3][1]-6)+'" fill="#3fb950" font-size="10">optimal vertex</text></svg>';
       },
       sections: [
-        { title: "Algorithm", text: "Traverse vertices of the feasible polytope, pivoting to improve the objective." },
-        { title: "Duality", text: "Every LP min cTx has dual max bTy. Strong duality: optimal values equal." },
-        { title: "Extensions", text: "Big M method, sensitivity analysis, integer/non-linear programming." }
+        { title: "The Standard LP", text: "Minimise c\u1D40 x subject to A x = b, x \u2265 0. The feasible region is a convex polytope and (Fundamental Theorem of LP) if an optimum exists, it is attained at a vertex \u2014 a basic feasible solution (BFS) where n linearly independent constraints are active. So an LP with millions of feasible points reduces to a search over a finite vertex set." },
+        { title: "Simplex Algorithm", text: "Start at a BFS. Compute reduced costs c\u0304_j = c_j \u2212 c_B\u1D40 B^{-1} A_j. If all c\u0304_j \u2265 0, current BFS is optimal. Otherwise pick j with c\u0304_j < 0 (entering variable), do a min-ratio test min_i b\u0304_i / a\u0304_{ij} (a\u0304_{ij}>0) to pick the leaving variable, and pivot \u2014 algebraically swapping one column of B. Each iteration walks along an edge of the polytope to an adjacent vertex with lower cost." },
+        { title: "Duality", text: "Every primal min c\u1D40 x | A x \u2265 b, x \u2265 0 has a dual max b\u1D40 y | A\u1D40 y \u2264 c, y \u2265 0. Weak duality: any feasible y gives a lower bound on the primal optimum. Strong duality: if either has a finite optimum, both do and the values match. Complementary slackness gives a certificate: x_j (c \u2212 A\u1D40 y)_j = 0 and y_i (A x \u2212 b)_i = 0. Dual variables y_i are shadow prices: \u2202z*/\u2202b_i." },
+        { title: "Tie-In & Pitfall", text: "Used in airline crew scheduling, ad auctions (LP relaxation of matching), portfolio rebalancing, and as relaxations inside integer-programming branch-and-bound. Pitfall: Klee\u2013Minty cube shows simplex can visit 2^n vertices in the worst case; degenerate BFS can cycle, so use Bland's rule or lexicographic pivot to guarantee termination." }
       ],
       keypoints: [
-        { title: "Efficiency", text: "Exponential worst-case but fast in practice. Interior point is polynomial." },
-        { title: "Applications", text: "Resource allocation, transportation, scheduling, portfolio optimization." }
+        { title: "BFS = Vertex", text: "A BFS has at most m nonzero variables (m = #constraints) and corresponds to a polytope vertex." },
+        { title: "Shadow Prices", text: "Dual y_i tells you how much the optimum improves per unit relaxation of constraint i \u2014 marginal value of resource i." },
+        { title: "Two-Phase / Big-M", text: "Find an initial BFS by minimising auxiliary variables first (Phase I) or penalising them with M in the objective." },
+        { title: "Interior Point Methods", text: "Karmarkar (1984) and Mehrotra predictor-corrector run in polynomial time, dominate for LPs with millions of variables." },
+        { title: "LP Relaxation", text: "Drop integrality \u2014 solve LP \u2014 round/branch. Foundational for IP, MIP, and combinatorial optimisation." }
       ]
     },
     {
@@ -789,19 +1239,28 @@ const COURSE_CONFIG = {
       desc: "From discrete random walks to continuous stochastic processes.",
       color: "#bc8cff", icon: "\uD83C\uDFB2",
       svg: function(w, h) {
+        // 3 random-walk paths
+        function path(seed,color){var x=0.05,y=0.5,d='M'+(w*x)+','+(h*y);for(var i=0;i<40;i++){x+=0.0225;var r=Math.sin(seed*i*1.7+seed)+Math.cos(seed*i*0.9);y+=r*0.018;d+=' L'+(w*x)+','+(h*Math.max(0.08,Math.min(0.92,y)));}return '<path d="'+d+'" fill="none" stroke="'+color+'" stroke-width="1.5" opacity="0.8"/>';}
         return '<svg viewBox="0 0 '+w+' '+h+'" xmlns="http://www.w3.org/2000/svg">'
-          +'<path d="M'+w*0.05+','+h*0.5+' L'+w*0.15+','+h*0.4+' L'+w*0.25+','+h*0.45+' L'+w*0.35+','+h*0.3+' L'+w*0.45+','+h*0.38+' L'+w*0.55+','+h*0.25+' L'+w*0.65+','+h*0.35+' L'+w*0.75+','+h*0.2+' L'+w*0.85+','+h*0.3+' L'+w*0.95+','+h*0.22+'" fill="none" stroke="#bc8cff" stroke-width="2"/>'
-          +'<line x1="'+w*0.05+'" y1="'+h*0.5+'" x2="'+w*0.95+'" y2="'+h*0.5+'" stroke="#30363d" stroke-dasharray="2,4"/>'
-          +'<text x="'+w*0.2+'" y="'+h*0.92+'" fill="#c9d1d9" font-size="11">Brownian motion sample path</text></svg>';
+          +'<line x1="'+(w*0.05)+'" y1="'+(h*0.5)+'" x2="'+(w*0.95)+'" y2="'+(h*0.5)+'" stroke="#30363d" stroke-dasharray="2,4"/>'
+          +'<line x1="'+(w*0.05)+'" y1="20" x2="'+(w*0.05)+'" y2="'+(h-15)+'" stroke="#30363d"/>'
+          +path(1.3,'#bc8cff')+path(2.1,'#58a6ff')+path(3.7,'#7ee787')
+          +'<text x="'+(w*0.05+4)+'" y="18" fill="#6e7681" font-size="10">B(t)</text>'
+          +'<text x="'+(w*0.85)+'" y="'+(h*0.52+12)+'" fill="#6e7681" font-size="10">t</text>'
+          +'<text x="'+(w*0.15)+'" y="'+(h*0.96)+'" fill="#c9d1d9" font-size="11">3 sample paths of Brownian motion</text></svg>';
       },
       sections: [
-        { title: "Markov Property", text: "The future depends only on the present state, not the history." },
-        { title: "Key Models", text: "Random walk, gambler's ruin, Poisson process, birth-death chains." },
-        { title: "Brownian Motion", text: "Continuous limit of random walks. Foundation of stochastic calculus and finance." }
+        { title: "Markov Property", text: "A process {X_t} is Markov if P(X_{t+1} \u2208 A | X_0,\u2026,X_t) = P(X_{t+1} \u2208 A | X_t) \u2014 the future is conditionally independent of the past given the present. Discrete state, discrete time gives a chain with transition matrix P_{ij} = P(X_{n+1}=j | X_n=i). Powers P^n give n-step transitions; under irreducibility and aperiodicity, P^n converges to a rank-one matrix whose rows are the unique stationary distribution \u03C0 (\u03C0 P = \u03C0)." },
+        { title: "Classification & Stationarity", text: "States are recurrent (return with probability 1) or transient. Positive recurrent + aperiodic + irreducible \u21D2 ergodic, with time average = ensemble average. Detailed balance \u03C0_i P_{ij} = \u03C0_j P_{ji} characterises reversible chains and is the trick behind Metropolis\u2013Hastings MCMC, where you design P to have a target \u03C0." },
+        { title: "Brownian Motion (Wiener Process)", text: "B(t) is the continuous-time limit of \u221A(\u0394t)\u00B7random-walk steps. Defining properties: B(0)=0; independent increments; B(t)\u2212B(s) ~ N(0, t\u2212s); paths continuous but nowhere differentiable. Quadratic variation [B,B]_t = t \u2014 unlike smooth functions whose quadratic variation is zero \u2014 which forces It\u00F4 calculus to add the (1/2) f''(B) dt term in the chain rule." },
+        { title: "Tie-In", text: "Black\u2013Scholes models log-prices as Brownian motion + drift, giving the option-pricing PDE. Diffusion in physics (Einstein 1905) is heat equation \u2202u/\u2202t = (\u03C3\u00B2/2) \u2202\u00B2u/\u2202x\u00B2 \u2014 the Kolmogorov forward equation for B(t). Google's PageRank is the stationary distribution of a random walk on the web graph." }
       ],
       keypoints: [
-        { title: "Martingales", text: "Fair game abstraction with powerful convergence theorems." },
-        { title: "Applications", text: "Queuing theory, Black-Scholes, diffusion physics." }
+        { title: "Stationary Distribution", text: "Solve \u03C0 P = \u03C0, \u03A3\u03C0_i = 1. For ergodic chains, P^n \u2192 \\mathbf{1}\u03C0\u1D40 geometrically with rate equal to the second eigenvalue." },
+        { title: "Hitting Times", text: "Expected time to reach state j from i: solve linear system h_i = 1 + \u03A3_{k\u2260j} P_{ik} h_k, h_j = 0. Powers gambler's ruin and queueing analyses." },
+        { title: "Martingales", text: "E[X_{n+1}|F_n] = X_n. Optional Stopping Theorem and Doob's convergence give clean proofs of gambler's ruin, random-walk recurrence, and option pricing." },
+        { title: "It\u00F4's Lemma", text: "df(B_t) = f'(B_t) dB_t + (1/2) f''(B_t) dt \u2014 the extra dt term arises from quadratic variation; underlies all stochastic calculus." },
+        { title: "Pitfall", text: "Confusing stationary distribution with limiting distribution: a periodic chain (e.g., bipartite) has stationary \u03C0 but P^n oscillates and does not converge." }
       ]
     },
     {
@@ -810,21 +1269,401 @@ const COURSE_CONFIG = {
       color: "#79c0ff", icon: "\u267E",
       svg: function(w, h) {
         return '<svg viewBox="0 0 '+w+' '+h+'" xmlns="http://www.w3.org/2000/svg">'
-          +'<ellipse cx="'+w/2+'" cy="'+h*0.55+'" rx="'+w*0.43+'" ry="'+h*0.4+'" fill="rgba(121,192,255,0.1)" stroke="#79c0ff" stroke-width="2"/>'
-          +'<ellipse cx="'+w*0.43+'" cy="'+h*0.6+'" rx="'+w*0.25+'" ry="'+h*0.25+'" fill="rgba(63,185,80,0.15)" stroke="#3fb950" stroke-width="2"/>'
-          +'<circle cx="'+w*0.43+'" cy="'+h*0.6+'" r="'+w*0.08+'" fill="rgba(88,166,255,0.2)" stroke="#58a6ff" stroke-width="2"/>'
-          +'<text x="'+w*0.4+'" y="'+h*0.63+'" fill="#58a6ff" font-size="11" font-weight="bold">P</text>'
-          +'<text x="'+w*0.56+'" y="'+h*0.52+'" fill="#3fb950" font-size="10">NP-C</text>'
-          +'<text x="'+w*0.75+'" y="'+h*0.4+'" fill="#79c0ff" font-size="10">NP</text></svg>';
+          +'<ellipse cx="'+(w*0.5)+'" cy="'+(h*0.55)+'" rx="'+(w*0.45)+'" ry="'+(h*0.4)+'" fill="rgba(121,192,255,0.08)" stroke="#79c0ff" stroke-width="2"/>'
+          +'<ellipse cx="'+(w*0.5)+'" cy="'+(h*0.6)+'" rx="'+(w*0.32)+'" ry="'+(h*0.28)+'" fill="rgba(247,120,186,0.08)" stroke="#f778ba" stroke-width="2" stroke-dasharray="5,3"/>'
+          +'<ellipse cx="'+(w*0.36)+'" cy="'+(h*0.62)+'" rx="'+(w*0.2)+'" ry="'+(h*0.22)+'" fill="rgba(63,185,80,0.12)" stroke="#3fb950" stroke-width="2"/>'
+          +'<ellipse cx="'+(w*0.66)+'" cy="'+(h*0.5)+'" rx="'+(w*0.18)+'" ry="'+(h*0.14)+'" fill="rgba(240,136,62,0.12)" stroke="#f0883e" stroke-width="2"/>'
+          +'<text x="'+(w*0.32)+'" y="'+(h*0.65)+'" fill="#3fb950" font-size="13" font-weight="bold">P</text>'
+          +'<text x="'+(w*0.6)+'" y="'+(h*0.5)+'" fill="#f0883e" font-size="11" font-weight="bold">NP-C</text>'
+          +'<text x="'+(w*0.45)+'" y="'+(h*0.85)+'" fill="#f778ba" font-size="11">NP</text>'
+          +'<text x="'+(w*0.78)+'" y="'+(h*0.22)+'" fill="#79c0ff" font-size="11">PSPACE</text>'
+          +'<text x="10" y="20" fill="#c9d1d9" font-size="11">If P=NP, all four collapse onto P</text>'
+          +'<text x="10" y="'+(h-8)+'" fill="#6e7681" font-size="10">SAT, 3-COL, TSP, CLIQUE \u2208 NP-C</text></svg>';
       },
       sections: [
-        { title: "P vs NP", text: "P = polynomial-time solvable. NP = polynomial-time verifiable. P=NP is open." },
-        { title: "NP-Completeness", text: "Cook-Levin: SAT is NP-complete. Reductions prove 3-coloring, TSP, knapsack." },
-        { title: "Practical Solutions", text: "Branch & bound, backtracking, approximation algorithms, heuristics." }
+        { title: "P vs NP", text: "P is the class of decision problems solvable in polynomial time on a deterministic Turing machine. NP is the class for which a YES-certificate can be verified in polynomial time. Trivially P \u2286 NP, but whether P = NP is the central open question of theoretical CS \u2014 a $1M Clay Millennium Prize. Most computer scientists conjecture P \u2260 NP because decades of effort have produced no polynomial algorithm for any of \u223C3000 known NP-complete problems." },
+        { title: "Cook\u2013Levin & Reductions", text: "A problem L is NP-hard if every L' in NP polynomial-time-reduces to L (L' \u2264_P L); NP-complete if it is also in NP. Cook\u2013Levin (1971) proved SAT is NP-complete by simulating any NP machine with a Boolean formula. Karp (1972) then reduced SAT to 21 classic problems (3-COL, CLIQUE, VERTEX-COVER, HAM-CYCLE, TSP, KNAPSACK\u2026), establishing the NP-complete club. To show a new problem X is NP-complete: (1) show X \u2208 NP, (2) reduce a known NP-complete problem to X." },
+        { title: "Coping When P\u2260NP", text: "Exact methods: branch-and-bound, branch-and-cut, SAT/SMT solvers (modern CDCL solvers handle millions of variables). Approximation algorithms: vertex cover has a 2-approximation; metric TSP has Christofides' 3/2; some problems (Set-Cover) are tight at \u0398(log n). Parameterised complexity: many NP-hard problems are FPT \u2014 solvable in f(k)\u00B7poly(n) for parameter k. Heuristics: simulated annealing, local search, LP relaxation rounding." },
+        { title: "Tie-In", text: "Public-key cryptography hinges on the conjectured hardness of factoring and discrete log (in NP \u2229 co-NP, not believed NP-complete). If P = NP, RSA falls and most modern crypto crumbles. Conversely, P = NP would solve protein folding, theorem proving, and most ML training in polynomial time. Hardness of approximation (PCP theorem) explains why some optimisation problems are not just NP-hard but resist any constant-factor approximation." }
       ],
       keypoints: [
-        { title: "Reductions", text: "Polynomial-time reductions are the proof technique for NP-completeness." },
-        { title: "Beyond NP", text: "PSPACE, EXPTIME, undecidable — a hierarchy of difficulty." }
+        { title: "Reductions Are Directional", text: "L' \u2264_P L means \u201CL is at least as hard as L'\u201D \u2014 students often invert the direction and prove the trivial implication." },
+        { title: "Beyond NP", text: "co-NP (NO-certificates), PSPACE (any polynomial space, e.g., QBF), EXPTIME, and the undecidable Halting Problem form a strict hierarchy by the Time/Space Hierarchy Theorems." },
+        { title: "Pseudo-Polynomial", text: "Knapsack has an O(nW) DP \u2014 polynomial in numeric value W but exponential in the binary input size, hence still NP-hard (weakly NP-complete)." },
+        { title: "Pitfall", text: "Heuristics that work \u201Cusually\u201D do not contradict NP-hardness; worst-case is what matters. Also: NP-hard \u2260 \u201Ccannot be solved in practice\u201D \u2014 ILP solvers routinely handle real instances." },
+        { title: "Quantum Twist", text: "BQP (poly-time on quantum machine) is believed to be strictly between P and PSPACE; whether NP \u2286 BQP is open \u2014 Grover gives only \u221AN speedup for SAT." }
+      ]
+    }
+  ],
+
+  useCases: [
+    {
+      id: "uc-regression", title: "Linear Regression as Least Squares",
+      desc: "Fitting a hyperplane to data by minimising squared residuals \u2014 the normal equations and their geometric meaning.",
+      icon: "\uD83D\uDCC8", color: "#7ee787",
+      summary: "<strong>Least squares</strong> turns a noisy, over-determined system y \u2248 X\u03B2 into a clean linear-algebra problem: find the orthogonal projection of y onto the column space of X. Solving it stably with QR or SVD \u2014 not the textbook normal equations \u2014 is the workhorse behind A/B testing, econometrics, sensor calibration, and every classical-ML baseline.",
+      pipeline: "data (n\u00D7p)\n   \u2193  stack as design matrix X, response y\nover-determined system y \u2248 X\u03B2\n   \u2193  minimise \u2016y \u2212 X\u03B2\u2016\u00B2\nnormal equations X\u1D40X \u03B2 = X\u1D40y\n   \u2193  factor X = QR  or  X = U\u03A3V\u1D40\n\u03B2\u0302 = R\u207B\u00B9 Q\u1D40 y     (or V \u03A3\u207A U\u1D40 y)\n   \u2193  add \u03BB-penalty if ill-conditioned\nridge / LASSO \u2192 cross-validate \u03BB",
+      metrics: [
+        { label: "Scikit-learn calls/yr", value: "100M+ fits" },
+        { label: "Typical n, p", value: "10\u2074\u201310\u2079 rows, 10\u201310\u2074 cols" },
+        { label: "QR cost", value: "2np\u00B2 flops" },
+        { label: "Cond(X\u1D40X) vs cond(X)", value: "squared \u2014 lose half the digits" }
+      ],
+      extensions: "Generalised linear models (logistic, Poisson via IRLS), kernel ridge regression, Bayesian linear regression with conjugate priors, and the connection to Gaussian processes.",
+      steps: [
+        { title: "Frame the Problem", component: "Design Matrix",
+          intuition: "Each row is one observation, each column one feature \u2014 turning a modelling question into a single matrix equation.",
+          detail: "Stack n observations as rows of X \u2208 \u211D^{n\u00D7p} (with a column of 1s for the intercept) and the response in y \u2208 \u211D^n. The model y \u2248 X\u03B2 has more equations than unknowns, so an exact solution rarely exists.",
+          proto: "Linear Algebra",
+          example: "Predicting house prices from 50 000 listings with 12 features (sqft, beds, zip, \u2026): X is 50000\u00D713, y is 50000\u00D71, \u03B2 has 13 unknowns.",
+          pitfall: "Forgetting the intercept column collapses the hyperplane through the origin and biases every coefficient." },
+        { title: "Minimise SSR", component: "Loss \u2016y \u2212 X\u03B2\u2016\u00B2",
+          intuition: "The optimal \u03B2 makes the residual r = y \u2212 X\u03B2 orthogonal to every column of X \u2014 you have squeezed out every drop of linear signal.",
+          detail: "Choose \u03B2 to minimise residual sum of squares. Setting the gradient to zero gives the normal equations X\u1D40 X \u03B2 = X\u1D40 y. Geometrically this projects y onto the column space of X.",
+          proto: "Calculus + Linear Algebra",
+          complexity: "O(np\u00B2 + p\u00B3)",
+          code: "beta = (X.T @ X) ** -1 @ X.T @ y   # textbook form (don't actually use!)",
+          pitfall: "Inverting X\u1D40X explicitly squares the condition number \u2014 8 good digits become 4. Always factorise, never invert." },
+        { title: "Solve Stably", component: "QR or SVD",
+          intuition: "QR keeps the geometry of X intact: instead of squaring the matrix, you orthogonalise its columns and back-substitute.",
+          detail: "Forming X\u1D40 X squares the condition number. Production code uses QR factorisation X = QR (so \u03B2 = R^{-1} Q\u1D40 y) or the SVD-based pseudoinverse \u03B2 = V \u03A3\u207A U\u1D40 y \u2014 robust to rank deficiency and multicollinearity.",
+          proto: "Numerical Linear Algebra",
+          complexity: "QR: 2np\u00B2; SVD: ~14np\u00B2",
+          code: "import numpy as np\nbeta, *_ = np.linalg.lstsq(X, y, rcond=None)",
+          example: "numpy.linalg.lstsq drives statsmodels, scikit-learn LinearRegression, R\u2019s lm() \u2014 all dispatch to LAPACK\u2019s dgelsd (SVD with divide-and-conquer)." },
+        { title: "Diagnose & Regularise", component: "Ridge / LASSO",
+          intuition: "When features are correlated, the loss surface is a long thin valley \u2014 a tiny penalty tilts it and gives a unique, well-conditioned answer.",
+          detail: "For ill-conditioned X add a penalty: ridge solves (X\u1D40 X + \u03BB I) \u03B2 = X\u1D40 y and shrinks coefficients; LASSO uses an \u2113\u2081 penalty inducing sparsity. Cross-validation chooses \u03BB. R\u00B2 = 1 \u2212 SSR/SST measures fit.",
+          proto: "Statistical Learning",
+          complexity: "Ridge: closed form; LASSO: O(np) per coord. descent iter",
+          example: "Genomics studies with p = 20 000 SNPs and n = 1 000 patients: LASSO selects ~50 active variants; ridge keeps all but shrinks them toward zero.",
+          pitfall: "Forgetting to standardise features before LASSO lets the penalty disproportionately punish high-variance columns.",
+          refs: [{ label: "ESL Ch. 3 \u2014 Linear Regression", url: "https://hastie.su.domains/ElemStatLearn/" }] }
+      ]
+    },
+    {
+      id: "uc-bayes", title: "Bayesian Update for a Medical Test",
+      desc: "Why a 99%-accurate test for a rare disease is mostly false positives \u2014 base rates and posterior odds.",
+      icon: "\uD83E\uDDEA", color: "#bc8cff",
+      summary: "<strong>Bayes' rule</strong> combines a prior P(D), a likelihood P(+|D), and a normaliser P(+) into a posterior P(D|+). When the disease is rare, even an excellent test produces mostly false positives \u2014 a paradox that vanishes once you write out the four cells of the 2\u00D72 contingency table.",
+      pipeline: "prior P(D)=0.001        likelihood P(+|D)=0.99\n          \u2193                              \u2193\n          \u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500 Bayes' rule \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518\n                       \u2193\n        P(D|+) = sens\u00B7P(D) / P(+)\n                       \u2193\n        posterior \u2248 0.090   (still mostly false +)\n                       \u2193  retest using new prior\n        P(D|++) \u2248 0.907    (now diagnostic)",
+      metrics: [
+        { label: "Disease prevalence", value: "1 / 1 000" },
+        { label: "Test sensitivity", value: "99%" },
+        { label: "Posterior after one +", value: "9%" },
+        { label: "Posterior after two +", value: "91%" }
+      ],
+      extensions: "Naive Bayes classifiers, hierarchical models with PyMC/Stan, Kalman filters as Gaussian Bayes updates, and MCMC for posteriors without a closed form.",
+      steps: [
+        { title: "Set the Priors", component: "Disease prevalence",
+          intuition: "Before any evidence, your best guess is the population rate \u2014 ignoring it is the base-rate fallacy.",
+          detail: "Suppose 1 in 1000 people has the disease: P(D) = 0.001, P(\u00ACD) = 0.999. This base rate is the most commonly ignored number in clinical reasoning.",
+          proto: "Probability",
+          example: "Mammography screening for women aged 40\u201349 has a prevalence near 0.4% \u2014 the same maths makes most positives false alarms, which is why guidelines pair it with biopsy.",
+          pitfall: "Using the disease's lifetime prevalence (5%) instead of the screened group's rate (0.1%) overstates posteriors by 50\u00D7." },
+        { title: "Specify Likelihoods", component: "Sensitivity & specificity",
+          intuition: "Sensitivity and specificity describe the test in isolation; neither depends on how rare the disease is.",
+          detail: "True-positive rate (sensitivity) P(+|D) = 0.99. False-positive rate P(+|\u00ACD) = 0.01 (so specificity = 99%). These describe the test, not the population.",
+          proto: "Conditional Probability",
+          pitfall: "Confusing P(+|D) with P(D|+) is the canonical 'prosecutor's fallacy' \u2014 they differ by the prior ratio." },
+        { title: "Apply Bayes' Rule", component: "Posterior",
+          intuition: "Imagine 100 000 people: 100 sick (99 test +) and 99 900 healthy (999 test +) \u2014 only 99/1098 \u2248 9% of positives are real.",
+          detail: "P(D|+) = P(+|D) P(D) / P(+) = (0.99\u00B70.001) / (0.99\u00B70.001 + 0.01\u00B70.999) \u2248 0.090. So a positive test on a random screening only raises disease probability from 0.1% to about 9% \u2014 fewer than 1 in 10 positives have the disease.",
+          proto: "Bayes' Theorem",
+          complexity: "O(1) \u2014 just one multiply, one divide",
+          code: "P_D, sens, fpr = 0.001, 0.99, 0.01\npost = sens*P_D / (sens*P_D + fpr*(1-P_D))  # 0.0902",
+          example: "Early COVID screening had sensitivity \u224870%, FPR \u22481%, and prevalence \u22480.5% \u2014 single-test posterior \u224826%, justifying mandatory PCR confirmation." },
+        { title: "Iterate with a Confirmatory Test", component: "Posterior \u2192 Prior",
+          intuition: "Each independent test multiplies the prior odds by the likelihood ratio LR = sens/FPR \u2014 sequential evidence accumulates exponentially.",
+          detail: "A second independent positive uses the new posterior 0.09 as prior: P(D|++) \u2248 0.99\u00B70.09 / (0.99\u00B70.09 + 0.01\u00B70.91) \u2248 0.907. Sequential testing transforms a screening tool into a diagnostic one.",
+          proto: "Sequential Bayes",
+          example: "HIV diagnosis: ELISA (high sens, mid spec) followed by Western blot (high spec) pushes posterior from \u224850% to >99.9%.",
+          pitfall: "Tests are rarely fully independent \u2014 a person who is hard to swab fails both PCRs. Treating correlated errors as independent overstates confidence.",
+          refs: [{ label: "Kahneman \u2014 Thinking, Fast and Slow", url: "https://en.wikipedia.org/wiki/Base_rate_fallacy" }] }
+      ]
+    },
+    {
+      id: "uc-graddesc", title: "Gradient Descent on a Quadratic",
+      desc: "How an iterative first-order method finds the minimum of f(x) = (1/2) x\u1D40 A x \u2212 b\u1D40 x \u2014 step size, condition number, and convergence rate.",
+      icon: "\u26F0\uFE0F", color: "#f0883e",
+      summary: "<strong>Gradient descent</strong> is the simplest non-trivial optimiser: walk downhill by \u03B7\u00B7\u2207f at every step. On a convex quadratic, the iteration becomes a linear recurrence whose convergence is governed entirely by A's eigenvalues \u2014 the same spectral analysis explains why deep nets need momentum, learning-rate schedules, and skip connections.",
+      pipeline: "f(x) = \u00BD x\u1D40Ax \u2212 b\u1D40x        (A SPD)\n     \u2193   \u2207f(x) = Ax \u2212 b\nupdate  x_{k+1} = x_k \u2212 \u03B7 (Ax_k \u2212 b)\n     \u2193   error  e_{k+1} = (I \u2212 \u03B7A) e_k\nspectral bound  \u03C1(I \u2212 \u03B7A) < 1  \u21D4  0 < \u03B7 < 2/\u03BB_max\n     \u2193   optimal  \u03B7* = 2/(\u03BB_min + \u03BB_max)\nrate  (\u03BA\u22121)/(\u03BA+1)   \u03BA = \u03BB_max/\u03BB_min\n     \u2193   accelerate\nmomentum / Nesterov  \u2192  O(\u221A\u03BA) rate",
+      metrics: [
+        { label: "GPT-3 SGD updates", value: "\u2248 740 000 steps" },
+        { label: "Per-step cost", value: "O(np) on n samples, p params" },
+        { label: "Typical \u03BA in deep nets", value: "10\u2074\u201310\u2076" },
+        { label: "Speedup from momentum", value: "\u221A\u03BA \u2248 100\u00D7 fewer iters" }
+      ],
+      extensions: "Stochastic & mini-batch SGD, Adam/RMSProp adaptive rates, natural gradient via Fisher information, proximal methods for non-smooth losses, and second-order Newton/L-BFGS.",
+      steps: [
+        { title: "Compute the Gradient", component: "Symbolic differentiation",
+          intuition: "\u2207f points uphill; \u2212\u2207f is the local direction of steepest descent in the Euclidean metric.",
+          detail: "For f(x) = (1/2) x\u1D40 A x \u2212 b\u1D40 x with symmetric positive-definite A, \u2207f(x) = A x \u2212 b. The unique minimum is at x* = A^{-1} b where the gradient vanishes.",
+          proto: "Multivariable Calculus",
+          example: "Linear regression loss \u2016X\u03B2\u2212y\u2016\u00B2/2 has A = X\u1D40X, b = X\u1D40y \u2014 GD on this is exactly the LMS algorithm used in adaptive filters and online learning.",
+          pitfall: "Forgetting the \u00BD coefficient or transposing A halves or doubles every step \u2014 a silent bug that just slows convergence." },
+        { title: "One Update Step", component: "x_{k+1} = x_k \u2212 \u03B7 \u2207f(x_k)",
+          intuition: "The error becomes a linear map: e_{k+1} = (I \u2212 \u03B7A) e_k \u2014 each eigen-component decays independently at rate |1 \u2212 \u03B7\u03BB_i|.",
+          detail: "Move opposite the gradient by step size \u03B7. With learning rate \u03B7, the error e_k = x_k \u2212 x* evolves as e_{k+1} = (I \u2212 \u03B7 A) e_k. Convergence depends on the spectral radius of (I \u2212 \u03B7 A).",
+          proto: "Iterative Method",
+          complexity: "O(p\u00B2) per step for dense A, O(nnz) sparse",
+          code: "x = np.zeros_like(b)\nfor _ in range(200):\n    x = x - eta * (A @ x - b)" },
+        { title: "Pick the Step Size", component: "Stability bound",
+          intuition: "Too small \u2192 crawls; too big \u2192 oscillates and diverges; the sweet spot is exactly the harmonic mean of the extreme eigenvalues.",
+          detail: "If \u03BB_min, \u03BB_max are the smallest/largest eigenvalues of A, the iteration converges iff 0 < \u03B7 < 2/\u03BB_max. The optimal constant step is \u03B7* = 2/(\u03BB_min + \u03BB_max), giving error reduction per step (\u03BA\u22121)/(\u03BA+1) where \u03BA = \u03BB_max/\u03BB_min is the condition number.",
+          proto: "Spectral Analysis",
+          complexity: "rate (\u03BA\u22121)/(\u03BA+1) per iter",
+          example: "Ridge regression with \u03BB = 0.01 on a 1000\u00D71000 design: \u03BB_max\u22481000, \u03BB_min\u22480.01 \u2192 \u03BA = 10\u2075 \u2192 needs \u224810\u2075 GD steps to halve the error.",
+          pitfall: "Reporting 'loss is decreasing' is not enough \u2014 with \u03B7 > 2/\u03BB_max each iterate explodes geometrically while the loss may still drop for a few steps." },
+        { title: "Accelerate", component: "Momentum / Nesterov",
+          intuition: "A velocity term builds up speed in consistent directions and damps oscillations across the narrow valley \u2014 like a heavy ball rolling through friction.",
+          detail: "Heavy-ball update v_{k+1} = \u03B2 v_k \u2212 \u03B7 \u2207f(x_k); x_{k+1} = x_k + v_{k+1}. Nesterov's accelerated gradient improves the rate from O(\u03BA) to O(\u221A\u03BA) for convex quadratics \u2014 the same trick used by Adam, RMSProp, and SGD-with-momentum in deep learning.",
+          proto: "Optimisation",
+          complexity: "rate (\u221A\u03BA\u22121)/(\u221A\u03BA+1) \u2014 O(\u221A\u03BA) iters",
+          example: "ResNet training uses SGD + momentum 0.9 with cosine learning-rate decay; the momentum term is responsible for roughly an order-of-magnitude reduction in epochs.",
+          refs: [{ label: "Boyd & Vandenberghe \u2014 Convex Optimization", url: "https://web.stanford.edu/~boyd/cvxbook/" }] }
+      ]
+    },
+    {
+      id: "uc-pagerank", title: "PageRank as a Dominant Eigenvector",
+      desc: "Ranking the web by finding the stationary distribution of a random surfer \u2014 power iteration on a sparse stochastic matrix of trillions of edges.",
+      icon: "\uD83D\uDD17", color: "#79c0ff",
+      summary: "<strong>PageRank</strong> models a random surfer who follows links with probability d and teleports with probability 1\u2212d. Its ranks are the unique stationary distribution \u03C0 = M\u03C0 of a column-stochastic matrix M \u2014 i.e. the dominant eigenvector of M, found by power iteration on a sparse graph of billions of nodes.",
+      pipeline: "web graph (V, E)\n     \u2193  build column-stochastic A: A_ij = 1/outdeg(j)\nteleport: M = d\u00B7A + (1\u2212d)/N \u00B7 \u03B5\u03B5\u1D40       d \u2248 0.85\n     \u2193  power iteration\n\u03C0_{k+1} = M \u03C0_k\n     \u2193  converges \u221D (\u03BB\u2082/\u03BB\u2081)^k = d^k\nstop when \u2016\u03C0_{k+1} \u2212 \u03C0_k\u2016\u2081 < 10\u207B\u2076\n     \u2193  scores \u2192 query-time ranking",
+      metrics: [
+        { label: "Original Google graph (2003)", value: "3\u00B710\u2079 nodes, 10\u00B9\u00B9 edges" },
+        { label: "Damping factor d", value: "0.85" },
+        { label: "Power-iteration count", value: "\u224850\u201380 iters to 10\u207B\u2076" },
+        { label: "Per-iter cost", value: "O(|E|) sparse mat-vec" }
+      ],
+      extensions: "Personalised PageRank, topic-sensitive PageRank, the closely related HITS algorithm, spectral clustering, and Markov-chain Monte Carlo on huge graphs.",
+      steps: [
+        { title: "Model the Surfer", component: "Markov chain on links",
+          intuition: "A page is important if important pages link to it \u2014 a recursive definition that resolves into a fixed-point equation.",
+          detail: "Build a directed graph G = (V, E) of pages and hyperlinks. A random surfer at page j picks a uniform outgoing link, giving transition probability A_ij = 1/out-degree(j) if j\u2192i, else 0. The matrix A is column-stochastic but possibly reducible (dangling pages, sinks).",
+          proto: "Graph + Probability",
+          example: "Common Crawl 2023 has \u22483.4\u00B710\u00B9\u2070 pages and \u22483.6\u00B710\u00B9\u00B9 hyperlinks \u2014 the graph fits in tens of TB once compressed (WebGraph BVGraph format).",
+          pitfall: "Dangling nodes (pages with no outgoing links) leak probability mass; you must either redistribute uniformly or treat them as teleporting." },
+        { title: "Add Teleportation", component: "Damping factor d",
+          intuition: "Teleport ensures the chain is irreducible and aperiodic \u2014 the conditions for a unique stationary distribution to exist.",
+          detail: "Define M = d\u00B7A + (1\u2212d)/N \u00B7 \u03B5\u03B5\u1D40 where \u03B5 is the all-ones vector and d \u2248 0.85. With probability 1\u2212d the surfer jumps to a uniformly random page. M is now primitive (Perron\u2013Frobenius) and admits a unique positive stationary distribution \u03C0.",
+          proto: "Stochastic Matrices",
+          example: "Setting d = 0.85 is empirical: it balances 'follow real link structure' against 'don\u2019t get stuck in spider traps'. Brin & Page reported it gave the best ranking quality on their original 24M-page crawl.",
+          pitfall: "Choosing d too close to 1 dramatically slows convergence (rate is d^k); too close to 0 erases the link signal entirely." },
+        { title: "Power Iterate", component: "\u03C0_{k+1} = M \u03C0_k",
+          intuition: "Repeated multiplication by M projects any starting vector onto the leading eigenvector \u2014 components in other eigendirections shrink geometrically.",
+          detail: "Start \u03C0\u2080 = (1/N)\u03B5. Iterate \u03C0_{k+1} = M \u03C0_k. By Perron\u2013Frobenius, \u03C0_k \u2192 \u03C0 with error \u221D (\u03BB\u2082/\u03BB\u2081)^k = d^k, so ~50 iterations give 6 digits when d = 0.85.",
+          proto: "Power Method",
+          complexity: "O(|E|) per iter, O(N) storage for \u03C0",
+          code: "# sparse CSR adjacency; row j has 1/out_deg(j)\npi = np.ones(N) / N\nfor _ in range(60):\n    pi = d * (A @ pi) + (1 - d) / N",
+          pitfall: "Forming M densely is O(N\u00B2) \u2014 catastrophic for N=10\u2079. Always keep the teleport rank-1 correction implicit." },
+        { title: "Scale & Serve", component: "MapReduce / Pregel",
+          intuition: "PageRank is the canonical 'graph algorithm that doesn\u2019t fit on one machine' \u2014 a single sparse mat-vec, parallelised by edge partitioning.",
+          detail: "On real-world graphs each iteration is a distributed sparse matrix\u2013vector multiply. Google\u2019s Pregel (and open-source Apache Giraph, Spark GraphX) shards vertices, exchanges \u03C0-messages along edges, then aggregates locally. Convergence checked by global L\u00B9 residual.",
+          proto: "Distributed Computing",
+          example: "Twitter\u2019s WTF (\u2018Who To Follow\u2019) ran personalised PageRank on \u224810\u2078 users; one full pass took ~10 min on a few hundred machines circa 2014.",
+          refs: [{ label: "Brin & Page 1998 \u2014 The Anatomy of a Search Engine", url: "http://infolab.stanford.edu/~backrub/google.html" }] }
+      ]
+    },
+    {
+      id: "uc-heatpde", title: "Solve the Heat Equation by Finite Differences",
+      desc: "Discretise \u2202u/\u2202t = \u03B1 \u2202\u00B2u/\u2202x\u00B2 on a grid \u2014 explicit Euler, the CFL stability limit, and the implicit Crank\u2013Nicolson scheme.",
+      icon: "\uD83D\uDD25", color: "#ff7b72",
+      summary: "<strong>Finite differences</strong> turn a continuous PDE into a sparse linear system on a grid. The heat equation is the prototype: replace derivatives by symmetric quotients, march forward in time, and watch information diffuse. Stability hinges on a single dimensionless number r = \u03B1\u0394t/\u0394x\u00B2 \u2014 the CFL condition that haunts every explicit time-stepper.",
+      pipeline: "domain [0,L]\u00D7[0,T], BC u(0,t)=u(L,t)=0\n     \u2193  grid  x_i = i\u0394x,  t^n = n\u0394t\nreplace derivatives:\n  \u2202u/\u2202t \u2248 (u_i^{n+1} \u2212 u_i^n)/\u0394t\n  \u2202\u00B2u/\u2202x\u00B2 \u2248 (u_{i-1}^n \u2212 2u_i^n + u_{i+1}^n)/\u0394x\u00B2\n     \u2193  explicit Euler\nu_i^{n+1} = u_i^n + r (u_{i-1}^n \u2212 2u_i^n + u_{i+1}^n)\n     \u2193  stable iff  r = \u03B1\u0394t/\u0394x\u00B2 \u2264 \u00BD\n     \u2193  implicit / Crank\u2013Nicolson\ntridiagonal solve at each step  \u2192  unconditional stability",
+      metrics: [
+        { label: "Explicit CFL limit", value: "r \u2264 0.5  (1D)" },
+        { label: "Implicit cost / step", value: "O(N) tridiagonal" },
+        { label: "Crank\u2013Nicolson order", value: "O(\u0394t\u00B2 + \u0394x\u00B2)" },
+        { label: "Typical CFD grid", value: "10\u2076\u201310\u2079 cells" }
+      ],
+      extensions: "Finite-element & finite-volume methods, ADI splitting in 2D/3D, multigrid solvers for elliptic PDEs, and spectral methods for periodic domains.",
+      steps: [
+        { title: "Discretise the Domain", component: "Mesh + BCs",
+          intuition: "A PDE on a continuum becomes an enormous but sparse system of ODEs \u2014 one unknown per grid point.",
+          detail: "Pick a spatial grid x_i = i\u0394x for i = 0..N and time levels t^n = n\u0394t. The unknown u(x,t) becomes a 2D array u_i^n. Impose boundary conditions (Dirichlet u_0 = u_N = 0, Neumann \u2202u/\u2202n = 0, or periodic).",
+          proto: "Numerical Analysis",
+          example: "Cooling a 1m steel rod (\u03B1 \u2248 1.2\u00B710\u207B\u2075 m\u00B2/s) with N = 200 grid points gives \u0394x = 5 mm \u2014 enough resolution to track temperature gradients within engineering tolerance.",
+          pitfall: "Forgetting to enforce BCs every step lets ghost values diffuse in from outside the domain, slowly corrupting the solution." },
+        { title: "Replace Derivatives", component: "Central differences",
+          intuition: "Taylor expansion shows (f(x+h) \u2212 2f(x) + f(x\u2212h))/h\u00B2 = f''(x) + O(h\u00B2) \u2014 second-order accurate and symmetric.",
+          detail: "Approximate the Laplacian: \u2202\u00B2u/\u2202x\u00B2|_i \u2248 (u_{i-1} \u2212 2u_i + u_{i+1})/\u0394x\u00B2. Time derivative by forward Euler: \u2202u/\u2202t|_i^n \u2248 (u_i^{n+1} \u2212 u_i^n)/\u0394t. Substituting gives the explicit update u_i^{n+1} = u_i^n + r(u_{i-1}^n \u2212 2u_i^n + u_{i+1}^n) with r = \u03B1\u0394t/\u0394x\u00B2.",
+          proto: "Taylor Expansion",
+          complexity: "O(N) per step, vectorisable",
+          code: "r = alpha * dt / dx**2\nfor n in range(Nt):\n    u[1:-1] += r * (u[:-2] - 2*u[1:-1] + u[2:])\n    u[0] = u[-1] = 0   # Dirichlet" },
+        { title: "Check Stability (CFL)", component: "r = \u03B1\u0394t/\u0394x\u00B2 \u2264 \u00BD",
+          intuition: "Von Neumann analysis: plug in u_i^n = g^n e^{ik\u00B7i\u0394x}; the amplification factor must satisfy |g| \u2264 1 for every wave number.",
+          detail: "Explicit Euler is conditionally stable: r \u2264 1/2 in 1D, r \u2264 1/4 in 2D. Violate it and high-frequency modes blow up exponentially \u2014 a checkerboard noise pattern grows on the very first few steps.",
+          proto: "Von Neumann Analysis",
+          example: "Refining the mesh by 10\u00D7 (\u0394x \u2192 \u0394x/10) forces \u0394t \u2192 \u0394t/100 \u2014 a 1000\u00D7 increase in total work. This quadratic cost in \u0394x is why production codes go implicit.",
+          pitfall: "A tiny CFL violation (r = 0.501) often runs 'fine' for thousands of steps before suddenly diverging \u2014 always verify analytically, not just empirically." },
+        { title: "Go Implicit", component: "Crank\u2013Nicolson",
+          intuition: "Averaging the spatial operator at t^n and t^{n+1} cancels the leading O(\u0394t) error and removes the stability constraint entirely.",
+          detail: "Crank\u2013Nicolson: (u_i^{n+1} \u2212 u_i^n)/\u0394t = \u00BD\u03B1 [(\u03B4\u00B2u)^{n+1} + (\u03B4\u00B2u)^n]/\u0394x\u00B2. This is unconditionally stable, second-order in both time and space, and reduces to a tridiagonal system solvable in O(N) by the Thomas algorithm.",
+          proto: "Implicit Time-Stepping",
+          complexity: "O(N) per step (tridiagonal Thomas)",
+          example: "Black\u2013Scholes pricing of American options uses Crank\u2013Nicolson on a non-uniform grid \u2014 a few hundred time steps suffice for cent-accurate option prices on equities.",
+          pitfall: "Crank\u2013Nicolson can produce non-physical oscillations near sharp initial discontinuities; remedies include a few backward-Euler 'startup' steps (Rannacher smoothing).",
+          refs: [{ label: "LeVeque \u2014 Finite Difference Methods for ODEs and PDEs", url: "https://faculty.washington.edu/rjl/fdmbook/" }] }
+      ]
+    }
+  ],
+
+  // === BEGIN glossary v1 data placeholder ===
+  glossary: [
+    { id: "real", term: "Real Analysis", category: "concepts",
+      short: "Rigorous study of limits, continuity, differentiation, and integration on ℝ.",
+      long: "Builds the real line from Cauchy sequences or Dedekind cuts, then develops ε–δ continuity, uniform convergence, the Riemann integral, and series. Theorems like Bolzano–Weierstrass, Heine–Borel, and the mean value theorem are its core machinery. It is the rigorous foundation under calculus and the bridge to measure theory and functional analysis.",
+      seeAlso: ["measure", "functional", "convergence"] },
+
+    { id: "linalg", term: "Linear Algebra", category: "concepts",
+      short: "Theory of vector spaces and linear maps, encoded by matrices.",
+      long: "Studies vector spaces over a field, linear independence, bases, and linear transformations represented as matrices. Central operations are row reduction, determinants, rank, and inner products. It is the universal language of geometry, quantum mechanics, statistics, and numerical computing — almost every applied problem reduces locally to a linear system.",
+      seeAlso: ["eigenvalue", "svd", "complinalg"] },
+
+    { id: "eigenvalue", term: "Eigenvalue & Eigenvector", aka: "spectrum", category: "concepts",
+      short: "Scalars λ and nonzero vectors v with A v = λ v — invariant directions of a linear map.",
+      long: "An eigenvector of A is a direction the map only stretches (by factor λ), never rotates. The set of eigenvalues forms the spectrum and is found from det(A − λI) = 0. Diagonalizable matrices decompose as A = P D P⁻¹, making powers and exponentials trivial; symmetric/Hermitian matrices always admit an orthonormal eigenbasis (spectral theorem).",
+      seeAlso: ["linalg", "svd", "dd-eigen"] },
+
+    { id: "svd", term: "Singular Value Decomposition", aka: "SVD", category: "numerics",
+      short: "Factorization A = U Σ Vᵀ with orthogonal U,V and non-negative diagonal Σ.",
+      long: "Generalizes eigendecomposition to any (even rectangular) matrix. Columns of V are right singular vectors, U holds left singular vectors, and Σ’s entries σ₁ ≥ σ₂ ≥ … ≥ 0 are singular values. Truncating to the top k terms gives the best rank-k approximation in Frobenius/spectral norm — the basis for PCA, image compression, latent semantic analysis, and pseudo-inverses.",
+      seeAlso: ["eigenvalue", "complinalg", "regression"] },
+
+    { id: "dd-residue", term: "Residue Theorem", category: "concepts",
+      short: "∮_C f(z) dz = 2πi · Σ Res(f, z_k) for an analytic f with isolated singularities inside C.",
+      long: "If f is holomorphic on and inside a positively oriented simple closed contour C except at finitely many poles z_k, the contour integral equals 2πi times the sum of residues. The residue at a simple pole z₀ is lim_{z→z₀}(z−z₀)f(z); for ratios p/q with q(z₀)=0, q′(z₀)≠0 it equals p(z₀)/q′(z₀). Powers real-axis integrals via Jordan’s lemma and is the engine behind Laplace/Z-transform inversion.",
+      seeAlso: ["transforms", "convergence"] },
+
+    { id: "transforms", term: "Integral Transforms", aka: "Laplace / Fourier / Z", category: "concepts",
+      short: "Maps that turn differential operators into algebra by integrating against a kernel.",
+      long: "The Laplace transform F(s)=∫₀^∞ e^{−st}f(t)dt converts linear ODEs with constant coefficients into algebraic equations in s. The Fourier transform decomposes a signal into complex exponentials e^{−iωt}, diagonalizing translations. The Z-transform is its discrete analogue. Each pair (transform, inversion) sits on top of a contour integral analyzed by residues.",
+      seeAlso: ["dd-residue", "pde", "regression"] },
+
+    { id: "pde", term: "Partial Differential Equation", aka: "PDE", category: "concepts",
+      short: "Equation relating an unknown multivariable function to its partial derivatives.",
+      long: "Second-order linear PDEs split into elliptic (Laplace, Poisson), parabolic (heat), and hyperbolic (wave) types by the sign of B²−4AC. Solution methods include separation of variables, Green’s functions, Fourier/Laplace transforms, and characteristics. Special functions (Bessel, Legendre) arise from separation in cylindrical and spherical coordinates.",
+      seeAlso: ["transforms", "numode", "dd-navier"] },
+
+    { id: "dd-navier", term: "Navier–Stokes Equations", category: "concepts",
+      short: "ρ(∂v/∂t + (v·∇)v) = −∇p + μ∇²v + f with ∇·v = 0 — momentum balance for a viscous fluid.",
+      long: "Couples velocity v and pressure p for an incompressible Newtonian fluid. The four terms encode inertia, pressure gradient, viscous diffusion, and body forces. Exact solutions exist only in highly symmetric cases (Couette, Poiseuille, Stokes flow); generally one resorts to CFD via finite volumes or spectral methods. Existence and smoothness of 3D solutions remain a Millennium Prize problem.",
+      seeAlso: ["pde", "fluids", "numode"] },
+
+    { id: "dd-markov", term: "Markov Chain", category: "concepts",
+      short: "Stochastic process where the next state depends only on the current one.",
+      long: "Defined by a transition matrix P with P_ij = Pr(X_{n+1}=j | X_n=i). Finite irreducible aperiodic chains converge to a unique stationary distribution π satisfying πP = π. Continuous-time analogues use a generator matrix Q; the Brownian motion limit (scaled random walk) is the prototype of a diffusion process and underlies the heat equation and Itô calculus.",
+      seeAlso: ["stochastic", "queuing", "regression"] },
+
+    { id: "measure", term: "Measure Theory", aka: "Lebesgue measure", category: "concepts",
+      short: "Framework assigning a generalized ‘size’ to sets, enabling the Lebesgue integral.",
+      long: "A measure μ on a σ-algebra is countably additive and assigns μ(∅)=0. Lebesgue measure extends length/area/volume to a vast class of sets and makes the integral commute with limits via dominated/monotone convergence. It is the rigorous foundation for probability (with μ(Ω)=1), Lᵖ spaces, and Fourier analysis.",
+      seeAlso: ["real", "functional", "probstats"] },
+
+    { id: "functional", term: "Functional Analysis", category: "concepts",
+      short: "Study of infinite-dimensional vector spaces of functions and the operators between them.",
+      long: "Banach spaces are complete normed spaces; Hilbert spaces add an inner product. Cornerstone results — Hahn–Banach (extension of linear functionals), Banach–Steinhaus (uniform boundedness), open mapping, closed graph, and Riesz representation — extend finite-dimensional linear algebra to infinite dimensions and underwrite quantum mechanics, PDE theory, and signal processing.",
+      seeAlso: ["measure", "real", "linalg"] },
+
+    { id: "topology", term: "Topology", category: "concepts",
+      short: "Study of continuity, open sets, compactness, and connectedness without using distance.",
+      long: "A topology on X is a family of ‘open’ sets closed under arbitrary unions and finite intersections. Continuity becomes ‘preimage of open is open’, generalizing the ε–δ definition. Key invariants — compactness, connectedness, Hausdorff separation, fundamental group, homology — classify spaces up to homeomorphism and feed into analysis, geometry, and data analysis (TDA).",
+      seeAlso: ["real", "functional"] },
+
+    { id: "dd-simplex", term: "Simplex Method", aka: "linear programming", category: "numerics",
+      short: "Pivot algorithm that walks vertices of a polytope to optimize a linear objective.",
+      long: "Solves max cᵀx subject to Ax ≤ b, x ≥ 0 by moving from one basic feasible vertex to a neighbor with better objective until optimality. Worst-case exponential (Klee–Minty cube) yet famously efficient in practice. Interior-point methods give provable polynomial-time alternatives. LP duality pairs every primal with a dual whose optimal values agree (strong duality).",
+      seeAlso: ["lp-duality", "nlpopt", "or"] },
+
+    { id: "lp-duality", term: "LP Duality", category: "concepts",
+      short: "Every linear program has a dual whose optimal value equals the primal’s (strong duality).",
+      long: "For primal max cᵀx s.t. Ax ≤ b, x ≥ 0 the dual is min bᵀy s.t. Aᵀy ≥ c, y ≥ 0. Weak duality always gives cᵀx ≤ bᵀy; strong duality holds when either side is feasible and bounded. Complementary slackness links optimal primal/dual coordinates and underpins sensitivity analysis, shadow prices, and KKT conditions in nonlinear programming.",
+      seeAlso: ["dd-simplex", "nlpopt"] },
+
+    { id: "dd-npc", term: "NP-Completeness", category: "concepts",
+      short: "Hardest problems in NP — every NP problem reduces to them in polynomial time.",
+      long: "A decision problem is in NP if a candidate solution can be verified in polynomial time. NP-hard problems are at least as hard as every NP problem under polynomial-time reductions; NP-complete = NP ∩ NP-hard. SAT was the first (Cook–Levin); 3-SAT, TSP, vertex cover, and integer programming followed via Karp’s reductions. P vs NP asks whether verification implies efficient solution.",
+      seeAlso: ["algo", "discrete"] },
+
+    { id: "uc-graddesc", term: "Gradient Descent", category: "numerics",
+      short: "Iterative optimizer: x_{k+1} = x_k − η ∇f(x_k), moving against the gradient.",
+      long: "Converges linearly on smooth strongly convex f with step η < 2/L where L is the Lipschitz constant of ∇f. Variants include momentum (Polyak/Nesterov), stochastic gradient (SGD) for finite sums, and adaptive methods (Adam, RMSProp). On non-convex landscapes (deep nets) it tracks descent directions and typically finds good local minima but offers no global guarantees.",
+      seeAlso: ["nlpopt", "uc-regression", "eigenvalue"] },
+
+    { id: "uc-bayes", term: "Bayes’ Theorem", category: "concepts",
+      short: "P(H | E) = P(E | H) P(H) / P(E) — updates a prior belief with new evidence.",
+      long: "Bayes’ rule mechanically converts a prior P(H) and a likelihood P(E|H) into a posterior P(H|E). It is the basis of Bayesian inference, naïve Bayes classifiers, Kalman filters (Gaussian case), and probabilistic graphical models. A small base rate can make even a 99% accurate test produce mostly false positives — the famous base-rate fallacy.",
+      seeAlso: ["probstats", "uc-regression"] },
+
+    { id: "uc-regression", term: "Linear Regression", aka: "OLS / least squares", category: "numerics",
+      short: "Fit y ≈ Xβ by minimizing ‖y − Xβ‖²; closed form β̂ = (XᵀX)⁻¹Xᵀy.",
+      long: "Ordinary least squares is the maximum-likelihood estimator under Gaussian noise. The Gauss–Markov theorem makes β̂ the best linear unbiased estimator. Numerically one solves the normal equations via QR or SVD to avoid the ill-conditioned XᵀX. Ridge (L²) and lasso (L¹) regularization control over-fitting and induce sparsity respectively.",
+      seeAlso: ["regression", "svd", "uc-graddesc"] },
+
+    { id: "numode", term: "Numerical ODE/PDE", category: "numerics",
+      short: "Discretization schemes that approximate solutions to differential equations.",
+      long: "For ODEs, explicit/implicit Runge–Kutta and multistep (Adams, BDF) methods balance accuracy, stability, and cost. For PDEs, finite differences (FTCS, Crank–Nicolson, ADI), finite elements, finite volumes, and spectral methods discretize space; stability follows the CFL condition for hyperbolic problems. Stiff systems demand implicit time-stepping.",
+      seeAlso: ["pde", "complinalg"] },
+
+    { id: "complinalg", term: "Computational Linear Algebra", category: "numerics",
+      short: "Numerical algorithms — LU, QR, Cholesky, SVD, iterative Krylov — for matrix problems.",
+      long: "Dense direct methods (LU with pivoting, QR via Householder, Cholesky for SPD) cost O(n³). Sparse and large problems use iterative Krylov methods (CG for SPD, GMRES for general) plus preconditioning. Numerical stability is governed by the condition number κ(A) = σ_max/σ_min; small κ means tiny perturbations stay tiny.",
+      seeAlso: ["svd", "condition-number", "linalg"] },
+
+    { id: "condition-number", term: "Condition Number", category: "numerics",
+      short: "κ(A) = ‖A‖·‖A⁻¹‖ — sensitivity of A x = b to perturbations in A or b.",
+      long: "Quantifies how much error can be amplified when solving a linear system or evaluating a function. For matrices in the 2-norm κ₂(A) = σ_max(A)/σ_min(A). A problem with κ ≈ 10ᵏ may lose roughly k digits of accuracy in floating-point. Preconditioning and reformulation (e.g., QR instead of normal equations) are the standard remedies.",
+      seeAlso: ["complinalg", "svd", "uc-regression"] },
+
+    { id: "taylor-series", term: "Taylor Series", category: "concepts",
+      short: "f(x) ≈ Σ f⁽ⁿ⁾(a)(x−a)ⁿ / n! — local polynomial approximation of a smooth function.",
+      long: "Generated by matching all derivatives at an expansion point a. Convergence is governed by the distance to the nearest singularity in the complex plane (radius of convergence). The Lagrange/integral remainder bounds the truncation error and underlies finite-difference stencils, Newton’s method, and asymptotic expansions.",
+      seeAlso: ["real", "dd-residue"] },
+
+    { id: "algebra", term: "Group / Ring / Field", category: "concepts",
+      short: "Algebraic structures axiomatizing symmetry, arithmetic, and division.",
+      long: "A group is a set with one associative operation having identity and inverses; rings add a compatible second operation (think ℤ); fields are commutative rings where every nonzero element is invertible (think ℚ, ℝ, ℂ, 𝔽_p). Homomorphisms preserve structure; quotients and the isomorphism theorems classify objects up to relabeling, powering Galois theory and modern cryptography.",
+      seeAlso: ["numtheory", "discrete"] },
+
+    { id: "numtheory", term: "Number Theory", category: "concepts",
+      short: "Properties of integers — primes, divisibility, congruences, Diophantine equations.",
+      long: "Built on unique factorization in ℤ, modular arithmetic ℤ/nℤ, and the Euclidean algorithm. Fermat’s little theorem and Euler’s theorem power RSA; quadratic reciprocity classifies squares mod p; analytic number theory uses the Riemann ζ-function and Dirichlet L-series to study prime distribution.",
+      seeAlso: ["algebra", "discrete"] },
+
+    { id: "convergence", term: "Convergence", category: "concepts",
+      short: "When a sequence or series gets arbitrarily close to a limit — pointwise, uniform, in mean, in measure.",
+      long: "Pointwise convergence preserves nothing; uniform convergence preserves continuity and lets you swap limits with integrals. In probability one also encounters convergence in distribution, in probability, and almost surely (the strong law). Rate of convergence (linear, quadratic, …) is the key practical concern for iterative numerical methods.",
+      seeAlso: ["real", "uc-graddesc", "numode"] },
+
+    { id: "queuing", term: "Queuing Theory", aka: "M/M/1, M/G/1", category: "concepts",
+      short: "Stochastic models of waiting lines parameterized by arrival and service distributions.",
+      long: "Kendall notation A/S/c describes arrival process A, service distribution S, and c servers. M/M/1 (Poisson arrivals, exponential service, single server) has utilization ρ = λ/μ and mean queue length ρ/(1−ρ) by Little’s law L = λW. Networks of queues (Jackson, BCMP) compose product-form solutions used in performance modeling of computer systems and call centers.",
+      seeAlso: ["dd-markov", "stochastic"] }
+  ],
+  // === END glossary v1 data placeholder ===
+
+  problems: [
+    {
+      week: "Calculus & Linear Algebra", title: "Foundations Practice",
+      hook: "Linearity is everywhere — matrices, derivatives, expectation, integrals all share a single law: f(ax+by) = a·f(x) + b·f(y). And eigenvalues are the principal directions along which a transformation acts as pure scaling — they tell you what the matrix really does.",
+      items: [
+        { tag: "derive", star: true, text: "Prove that a real symmetric matrix has real eigenvalues and an orthogonal eigenbasis. Use Hermitian inner products and the spectral theorem.", hint: "Show \u27E8Ax,x\u27E9 is real for Hermitian A; for distinct eigenvalues use \u27E8Ax,y\u27E9 = \u27E8x,Ay\u27E9 to derive orthogonality." },
+        { tag: "design", text: "Design a numerical scheme to compute SVD of a 10000\u00D7100 matrix without forming X\u1D40 X. Discuss memory, stability, and the role of bidiagonalisation.", hint: "Look up Golub\u2013Kahan bidiagonalisation followed by implicit QR on the bidiagonal." },
+        { tag: "debug", star: true, text: "A student computes \u222B_0^\u221E sin(x)/x dx by closing in the upper half plane and gets 0. What did they miss? Recompute correctly.", hint: "There is a pole on the real axis; you must indent the contour and Jordan's lemma applies to e^{iz}/z, not sin(z)/z directly." },
+        { tag: "code", star: true, text: "Implement power iteration with deflation to find the top-3 eigenpairs of a 100\u00D7100 symmetric matrix. Compare against numpy.linalg.eigh.", hint: "After finding (\u03BB\u2081, v\u2081), iterate on A \u2212 \u03BB\u2081 v\u2081 v\u2081\u1D40 to suppress the dominant mode." },
+        { tag: "paper", text: "Read Karmarkar (1984) \u2018A New Polynomial-Time Algorithm for Linear Programming\u2019 and summarise in one page how the projective transformation avoids vertices.", hint: "Focus on the potential function and the affine\u2013scaling step; contrast with simplex's vertex-walking." }
+      ]
+    },
+    {
+      week: "Probability, PDEs & Optimisation", title: "Applied Practice",
+      hook: "The central limit theorem is mysterious: averages of almost any distribution converge to the bell curve. And limits are why calculus works at all — they let us reason about instantaneous rates and infinite sums without paradox. The same e that grows your bank account is the eigenvalue of d/dx.",
+      items: [
+        { tag: "derive", star: true, text: "Derive the Black\u2013Scholes PDE from a delta-hedged portfolio under geometric Brownian motion dS = \u03BC S dt + \u03C3 S dB. Identify which terms cancel and why \u03BC disappears.", hint: "Apply It\u00F4's lemma to V(S,t), construct \u03A0 = V \u2212 (\u2202V/\u2202S) S, and demand it earns the risk-free rate." },
+        { tag: "design", text: "Design a Markov-chain Monte Carlo sampler for the posterior of a Bayesian logistic regression. Choose proposal, justify acceptance ratio, and explain detailed balance.", hint: "Random-walk Metropolis with multivariate normal proposal centred at current \u03B2; tune step covariance to ~23% acceptance." },
+        { tag: "debug", star: true, text: "Gradient descent on f(x,y) = x\u00B2 + 100 y\u00B2 with \u03B7 = 0.02 oscillates wildly. Diagnose, fix the step size, and quote the optimal \u03B7 in terms of the eigenvalues.", hint: "Condition number is 100; \u03B7 must satisfy \u03B7 < 2/\u03BB_max = 0.01. Optimal is \u03B7 = 2/(\u03BB_min+\u03BB_max) \u2248 0.0198." },
+        { tag: "code", text: "Implement a finite-difference solver for the 1-D heat equation \u2202u/\u2202t = \u03B1 \u2202\u00B2u/\u2202x\u00B2 on [0,1] with u(0)=u(1)=0 and Gaussian initial data. Compare explicit (FTCS) vs Crank\u2013Nicolson stability for \u03B1\u0394t/\u0394x\u00B2 = 0.6.", hint: "FTCS blows up because r > 1/2; CN is unconditionally stable but requires solving a tridiagonal system each step." },
+        { tag: "paper", text: "Compare three formulations of PageRank: (i) dominant eigenvector of the Google matrix, (ii) stationary distribution of a random walk, (iii) solution of (I \u2212 \u03B1 P\u1D40) r = (1\u2212\u03B1) v. Show all three are equivalent.", hint: "The damping factor \u03B1 and teleport vector v turn the chain into an ergodic Markov chain; write the linear system from \u03C0 P_G = \u03C0." }
       ]
     }
   ]
@@ -960,8 +1799,11 @@ const tabs = [];
 if (C.mindmap)                          tabs.push({ id: 'mindmap',  label: '📐 Mind Map' });
 if (C.graph && C.graph.nodes && C.graph.nodes.length) tabs.push({ id: 'graph',    label: '🔗 Topic Graph' });
 if (C.deepDives && C.deepDives.length)  tabs.push({ id: 'deepdive', label: '📚 Deep Dives' });
+if (C.useCases && C.useCases.length)    tabs.push({ id: 'usecase',  label: '🔬 Use Cases' });
 if (C.youtube && C.youtube.videos && C.youtube.videos.length) tabs.push({ id: 'appendix', label: '📹 Appendix' });
+if (C.glossary && C.glossary.length)    tabs.push({ id: 'glossary', label: '📖 Glossary' }); /* glossary v1 tab */
 tabs.push({ id: 'problems', label: '🧠 Practice' });
+tabs.push({ id: 'quiz',     label: '🎯 Quiz' });
 
 document.getElementById('toolbar-title').textContent = '🧠 ' + C.course.code;
 document.title = C.course.code + ' — Interactive Study Tool';
@@ -1008,7 +1850,8 @@ function switchTab(tab) {
   document.getElementById('mindmap-controls').style.display  = tab === 'mindmap'  ? 'flex' : 'none';
   document.getElementById('graph-controls').style.display    = tab === 'graph'    ? 'flex' : 'none';
   document.getElementById('deepdive-controls').style.display = 'none';
-  document.getElementById('btn-path').style.display = (tab === 'graph' && C.learningPath && C.learningPath.length) ? '' : 'none';
+  document.getElementById('usecase-controls').style.display  = 'none';
+  document.getElementById('btn-path').style.display= (tab === 'graph' && C.learningPath && C.learningPath.length) ? '' : 'none';
   document.querySelector('.legend-mindmap').style.display = tab === 'mindmap' ? '' : 'none';
   document.getElementById('legend-graph').style.display   = tab === 'graph'   ? '' : 'none';
 
@@ -1085,6 +1928,14 @@ if (C.mindmap) {
   root = d3.hierarchy(C.mindmap);
   root.x0 = 0; root.y0 = 0;
 
+  // Assign a unique path-based id to every node so D3's data join can
+  // distinguish nodes that happen to share a name (e.g. "Advanced Topics"
+  // appearing under multiple parents). Without this, clicking one
+  // duplicate also toggles the other.
+  root.descendants().forEach(d => {
+    d.data._uid = d.ancestors().map(a => a.data.name).reverse().join("\u203a");
+  });
+
   // Collapse children beyond depth 1
   root.descendants().forEach(d => { if (d.depth > 1 && d.children) { d._children = d.children; d.children = null; } });
 
@@ -1102,7 +1953,7 @@ function updateMindmap(source) {
   const links = root.links();
 
   // Links
-  const link = g.selectAll("path.link").data(links, d => d.target.data.name);
+  const link = g.selectAll("path.link").data(links, d => d.target.data._uid);
   link.enter().insert("path", "g")
     .attr("class", "link")
     .attr("fill", "none")
@@ -1125,7 +1976,7 @@ function updateMindmap(source) {
     .remove();
 
   // Nodes
-  const node = g.selectAll("g.node").data(nodes, d => d.data.name);
+  const node = g.selectAll("g.node").data(nodes, d => d.data._uid);
   const nodeEnter = node.enter().append("g")
     .attr("class", "node")
     .attr("transform", `translate(${source.y0},${source.x0})`)
@@ -1254,6 +2105,7 @@ function initGraph() {
   // Nodes
   const node = gGraph.selectAll("g.graph-node").data(nodes).enter().append("g")
     .attr("class", "graph-node")
+    .attr("data-id", d => d.id) /* glossary v1 data-id */
     .call(d3.drag().on("start", (evt, d) => { if (!evt.active) simul.alphaTarget(0.3).restart(); d.fx = d.x; d.fy = d.y; })
       .on("drag", (evt, d) => { d.fx = evt.x; d.fy = evt.y; })
       .on("end", (evt, d) => { if (!evt.active) simul.alphaTarget(0); d.fx = null; d.fy = null; }))
@@ -1585,6 +2437,8 @@ if (C.deepDives && C.deepDives.length) {
     // Full view
     const full = document.createElement('div'); full.className = 'dd-full'; full.id = 'dd-full-' + dd.id;
     let fhtml = `<div class="dd-infographic"><h2 style="color:${dd.color}">${dd.icon || ''} ${dd.title}</h2><div class="dd-subtitle">${dd.num} · ${dd.desc}</div>`;
+    // Navigator at the top for quick prev/grid/next without scrolling
+    fhtml += `<div class="dd-nav dd-nav-top"><button class="btn" onclick="navDD(-1)">← Prev</button><button class="btn" onclick="showCardGrid()">Grid</button><button class="btn" onclick="navDD(1)">Next →</button></div>`;
     if (dd.svg) fhtml += dd.svg(800, 300);
     (dd.sections || []).forEach(s => {
       fhtml += `<div class="dd-section"><h3>${s.title}</h3>`;
@@ -1597,7 +2451,7 @@ if (C.deepDives && C.deepDives.length) {
       dd.keypoints.forEach(kp => { fhtml += `<div class="dd-kp"><strong>${kp.title}</strong><span>${kp.text}</span></div>`; });
       fhtml += '</div>';
     }
-    fhtml += `<div class="dd-nav"><button class="btn" onclick="navDD(-1)">← Prev</button><button class="btn" onclick="showCardGrid()">Grid</button><button class="btn" onclick="navDD(1)">Next →</button></div></div>`;
+    fhtml += `</div>`; // dd-nav v1 top inserted
     full.innerHTML = fhtml;
     fullContainer.appendChild(full);
   });
@@ -1628,6 +2482,160 @@ function navDD(dir) {
 // ═══════════════════════════════════════════════════════════════════════
 // TRACKER
 // ═══════════════════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════════════════════
+// USE CASES
+// ═══════════════════════════════════════════════════════════════════════
+let ucCurrentIndex = -1;
+let ucCurrentStep = -1;
+let ucAutoPlayTimer = null;
+
+if (C.useCases && C.useCases.length) {
+  const ucGrid = document.getElementById('uc-card-grid');
+  C.useCases.forEach((uc, idx) => {
+    const card = document.createElement('div');
+    card.className = 'dd-card';
+    card.onclick = () => showUseCase(idx);
+    card.innerHTML = `
+      <div class="dd-card-img" style="background:${uc.color}11">
+        <span style="font-size:64px">${uc.icon}</span>
+      </div>
+      <div class="dd-card-body">
+        <div class="dd-card-num" style="color:${uc.color}">USE CASE ${idx + 1}</div>
+        <div class="dd-card-title">${uc.title}</div>
+        <div class="dd-card-desc">${uc.desc}</div>
+      </div>
+    `;
+    ucGrid.appendChild(card);
+  });
+}
+
+function showUseCase(idx) {
+  ucCurrentIndex = idx;
+  ucCurrentStep = 0;
+  if (ucAutoPlayTimer) { clearInterval(ucAutoPlayTimer); ucAutoPlayTimer = null; }
+  const uc = C.useCases[idx];
+  document.getElementById('uc-card-grid').style.display = 'none';
+  document.getElementById('usecase-controls').style.display = 'flex';
+  const container = document.getElementById('uc-detail-container');
+
+  let html = '<div class="uc-flow">';
+  html += '<button class="uc-back-btn" onclick="showUseCaseGrid()">← Back to All Use Cases</button>';
+  html += `<h2>${uc.icon} ${uc.title}</h2>`;
+  html += `<div class="uc-subtitle">${uc.desc}</div>`;
+  if (uc.summary || uc.pipeline || uc.metrics || uc.extensions) {
+    html += '<div class="uc-overview">';
+    if (uc.summary)   html += `<div class="uc-summary">${uc.summary}</div>`;
+    if (uc.pipeline)  html += `<div class="uc-pipeline">${uc.pipeline}</div>`;
+    if (uc.metrics && uc.metrics.length) {
+      html += '<div class="uc-metrics">';
+      uc.metrics.forEach(m => {
+        html += `<div class="uc-metric"><div class="uc-metric-label">${m.label}</div><div class="uc-metric-value">${m.value}</div></div>`;
+      });
+      html += '</div>';
+    }
+    if (uc.extensions) html += `<div class="uc-extensions"><strong>Where to go next:</strong> ${uc.extensions}</div>`;
+    html += '</div>';
+  }
+  html += '<div class="uc-flow-controls">';
+  html += '<button onclick="ucPrev()">← Previous</button>';
+  html += '<button class="primary" onclick="ucNext()">Next Step →</button>';
+  html += '<button onclick="ucAutoPlay()" id="uc-autoplay-btn">▶ Auto-Play</button>';
+  html += '<button onclick="ucReset()">↺ Reset</button>';
+  html += '</div>';
+  html += '<div class="uc-legend">';
+  html += '<span><span class="dot" style="background:#58a6ff"></span> Current step</span>';
+  html += '<span><span class="dot" style="background:#3fb950"></span> Completed</span>';
+  html += '<span><span class="dot" style="background:#30363d"></span> Upcoming</span>';
+  html += '</div>';
+  html += '<div class="uc-step-container" id="uc-steps">';
+
+  uc.steps.forEach((step, i) => {
+    if (i > 0) html += `<div class="uc-connector" id="uc-conn-${i}"></div>`;
+    html += `<div class="uc-step${i === 0 ? ' active' : ''}" id="uc-step-${i}" onclick="ucGoTo(${i})">`;
+    html += `<div class="uc-badge">${i + 1}</div>`;
+    html += '<div class="uc-body">';
+    html += `<div class="uc-title">${step.title}</div>`;
+    html += `<div class="uc-component">📍 ${step.component}</div>`;
+    let detailHtml = '';
+    if (step.intuition) detailHtml += `<div class="uc-intuition"><strong>💡 Intuition:</strong> ${step.intuition}</div>`;
+    detailHtml += `<p>${step.detail}</p>`;
+    if (step.proto) detailHtml += `<span class="uc-proto">${step.proto}</span>`;
+    if (step.complexity) detailHtml += `<span class="uc-complexity">⏱ ${step.complexity}</span>`;
+    if (step.code) detailHtml += `<pre class="uc-code">${step.code}</pre>`;
+    if (step.example) detailHtml += `<div class="uc-example"><strong>📊 In practice:</strong> ${step.example}</div>`;
+    if (step.pitfall) detailHtml += `<div class="uc-pitfall"><strong>⚠ Pitfall:</strong> ${step.pitfall}</div>`;
+    if (step.refs && step.refs.length) {
+      detailHtml += '<div class="uc-refs">' + step.refs.map(r => `<a href="${r.url}" target="_blank" rel="noopener">${r.label}</a>`).join('') + '</div>';
+    }
+    html += `<div class="uc-detail">${detailHtml}</div>`;
+    html += '</div></div>';
+  });
+
+  html += '</div></div>';
+  container.innerHTML = html;
+  container.style.display = '';
+  document.getElementById('view-usecase').scrollTop = 0;
+}
+
+function ucGoTo(step) {
+  const uc = C.useCases[ucCurrentIndex];
+  if (step < 0 || step >= uc.steps.length) return;
+  ucCurrentStep = step;
+  uc.steps.forEach((_, i) => {
+    const el = document.getElementById('uc-step-' + i);
+    el.classList.remove('active', 'done');
+    if (i < step) el.classList.add('done');
+    else if (i === step) el.classList.add('active');
+    if (i > 0) {
+      const conn = document.getElementById('uc-conn-' + i);
+      if (conn) conn.classList.toggle('done', i <= step);
+    }
+  });
+  const activeEl = document.getElementById('uc-step-' + step);
+  if (activeEl) activeEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function ucNext() {
+  const uc = C.useCases[ucCurrentIndex];
+  if (ucCurrentStep < uc.steps.length - 1) ucGoTo(ucCurrentStep + 1);
+}
+
+function ucPrev() {
+  if (ucCurrentStep > 0) ucGoTo(ucCurrentStep - 1);
+}
+
+function ucAutoPlay() {
+  const btn = document.getElementById('uc-autoplay-btn');
+  if (ucAutoPlayTimer) {
+    clearInterval(ucAutoPlayTimer);
+    ucAutoPlayTimer = null;
+    btn.textContent = '▶ Auto-Play';
+    return;
+  }
+  btn.textContent = '⏸ Pause';
+  ucAutoPlayTimer = setInterval(() => {
+    const uc = C.useCases[ucCurrentIndex];
+    if (ucCurrentStep < uc.steps.length - 1) ucNext();
+    else { clearInterval(ucAutoPlayTimer); ucAutoPlayTimer = null; btn.textContent = '▶ Auto-Play'; }
+  }, 2500);
+}
+
+function ucReset() {
+  if (ucAutoPlayTimer) { clearInterval(ucAutoPlayTimer); ucAutoPlayTimer = null; }
+  const btn = document.getElementById('uc-autoplay-btn');
+  if (btn) btn.textContent = '▶ Auto-Play';
+  ucGoTo(0);
+}
+
+function showUseCaseGrid() {
+  ucCurrentIndex = -1;
+  if (ucAutoPlayTimer) { clearInterval(ucAutoPlayTimer); ucAutoPlayTimer = null; }
+  document.getElementById('uc-detail-container').style.display = 'none';
+  document.getElementById('uc-card-grid').style.display = '';
+  document.getElementById('usecase-controls').style.display = 'none';
+}
+
+
 let trackerOpen = false;
 
 function toggleTracker() {
@@ -1820,10 +2828,17 @@ function toggleUnit(headerRow) {
 
 // PWA service worker removed (sw.js excluded from move)
 
-window.PROBLEMS_DATA=[{week:'Linear Algebra',title:'Vectors, Matrices, Spans',items:[{tag:'derive',text:'Prove that the column space and row space of any matrix have the same dimension. Why is this "four-subspaces" fact surprising?',hint:'Rank = dim(col) = dim(row). Use rank-nullity.'},{tag:'design',text:'Given 3 vectors in R^4, how do you decide if they span a plane, a 3-space, or are linearly dependent — using only row operations? Walk through with your own example.'},{tag:'debug',text:'A student claims `det(A+B) = det(A)+det(B)`. Find a 2x2 counterexample in 30 seconds.'}]},{week:'Calculus',title:'Limits, Derivatives, Integrals',items:[{tag:'derive',text:'Derive `d/dx(sin x) = cos x` from first principles using the squeeze theorem on `sin(h)/h`.'},{tag:'design',text:'You are optimizing the shape of a tin can (fixed volume, minimize surface area). Set up the Lagrangian — do not solve — and identify all constraints and variables.'}]},{week:'Probability & Statistics',title:'Distributions and Estimators',items:[{tag:'derive',text:'Prove `Var(X+Y) = Var(X)+Var(Y)` iff X,Y independent. Show a correlated example where it fails.'},{tag:'debug',text:'A coin flipped 10 times gives 8 heads. Is it biased? Compute p-value mentally at the 5% level.',hint:'Binomial tail: P(X>=8 | p=.5) ~ 5.5%.'}]}];
+window.PROBLEMS_DATA=[{week:'Linear Algebra',title:'Vectors, Matrices, Spans',hook:'Linearity is everywhere — if you can split a problem into a sum of independent pieces, you can solve it with matrices. Eigenvalues are the "principal directions" along which a transformation acts as pure scaling.',items:[{tag:'derive',star:true,text:'Prove that the column space and row space of any matrix have the same dimension. Why is this "four-subspaces" fact surprising?',hint:'Rank = dim(col) = dim(row). Use rank-nullity.'},{tag:'design',text:'Given 3 vectors in R^4, how do you decide if they span a plane, a 3-space, or are linearly dependent — using only row operations? Walk through with your own example.',hint:'Stack them as rows; reduce to RREF. The number of nonzero rows is the dimension of the span.'},{tag:'debug',star:true,text:'A student claims `det(A+B) = det(A)+det(B)`. Find a 2x2 counterexample in 30 seconds.',hint:'Take A = I, B = I. det(2I) = 4, but det(I)+det(I) = 2.'}]},{week:'Calculus',title:'Limits, Derivatives, Integrals',hook:'Limits exist because we want to talk about instantaneous rates and infinite sums without paradox. And e shows up everywhere — it is the unique base where d/dx(b^x) = b^x, the natural unit for any process whose rate is proportional to itself.',items:[{tag:'derive',star:true,text:'Derive `d/dx(sin x) = cos x` from first principles using the squeeze theorem on `sin(h)/h`.',hint:'sin(x+h)-sin(x) = sin(x)(cos(h)-1) + cos(x)sin(h). Divide by h, use lim sin(h)/h = 1 and lim (cos(h)-1)/h = 0.'},{tag:'design',text:'You are optimizing the shape of a tin can (fixed volume, minimize surface area). Set up the Lagrangian — do not solve — and identify all constraints and variables.',hint:'Variables r, h. Constraint: πr²h = V. Lagrangian L = 2πr² + 2πrh − λ(πr²h − V).'}]},{week:'Probability & Statistics',title:'Distributions and Estimators',hook:'The central limit theorem is mysterious: averages of almost any distribution — uniform, exponential, skewed — converge to the bell curve. Why does this universal shape emerge from chaos?',items:[{tag:'derive',star:true,text:'Prove `Var(X+Y) = Var(X)+Var(Y)` iff X,Y independent. Show a correlated example where it fails.',hint:'Var(X+Y) = Var(X)+Var(Y)+2·Cov(X,Y). Independence ⇒ Cov = 0. Counter: Y = X gives Var(2X) = 4Var(X), not 2Var(X).'},{tag:'debug',text:'A coin flipped 10 times gives 8 heads. Is it biased? Compute p-value mentally at the 5% level.',hint:'Binomial tail: P(X>=8 | p=.5) ~ 5.5%.'}]}];
 // ═══════════════════════════════════════════════════════════════════════
 // PRACTICE PROBLEMS (Problem-First learning)
 // ═══════════════════════════════════════════════════════════════════════
+const PROB_STATE_KEY = STORAGE_KEY + '-probstate';
+function probLoadState() { try { return JSON.parse(localStorage.getItem(PROB_STATE_KEY) || '{}'); } catch(e) { return {}; } }
+function probSaveState(s) { try { localStorage.setItem(PROB_STATE_KEY, JSON.stringify(s)); } catch(e) {} }
+let _probState = probLoadState();
+let _probFilters = { tags: new Set(), search: '', status: 'all' };
+let _probFlat = []; // [{si, ii, p}]
+
 function renderProblems() {
   const container = document.getElementById('problems-container');
   if (!container || container.dataset.rendered) return;
@@ -1831,6 +2846,17 @@ function renderProblems() {
              : (C.problems && C.problems.length) ? C.problems : null;
   if (!data) { container.innerHTML = '<div class="prob-intro">No practice problems defined yet for this course.</div>'; container.dataset.rendered = '1'; return; }
   container.dataset.rendered = '1';
+
+  // Build flat index + per-tag counts
+  _probFlat = [];
+  const tagCounts = {};
+  data.forEach((sec, si) => (sec.items||[]).forEach((p, ii) => {
+    _probFlat.push({ si, ii, p, key: si+':'+ii });
+    const t = p.tag || 'design';
+    tagCounts[t] = (tagCounts[t]||0) + 1;
+  }));
+  const TAGS = ['design','derive','debug','code','paper'];
+
   let html = `<div class="prob-intro">
     <strong>🧠 Problem-First Learning.</strong> Try each problem for 10 minutes <em>before</em> watching the lecture — flail, sketch, be wrong. Then watch with specific questions in mind. Your attention spikes 3–5×.
     <br><br>
@@ -1840,24 +2866,653 @@ function renderProblems() {
     <span class="prob-tag debug">debug</span> find the failure mode &nbsp;
     <span class="prob-tag code">code</span> hands-on &nbsp;
     <span class="prob-tag paper">paper</span> predict before reading
-  </div>`;
-  data.forEach((sec, i) => {
-    html += `<details class="prob-section"${i < 2 ? ' open' : ''}>
-      <summary><span class="wk">${sec.week||''}</span> ${sec.title||''}</summary>
-      <div class="prob-body"><ol>`;
-    (sec.items||[]).forEach(p => {
-      html += `<li><span class="prob-tag ${p.tag||'design'}">${p.tag||'design'}</span>${p.text||''}`;
-      if (p.hint) html += `<span class="prob-hint">${p.hint}</span>`;
-      html += `</li>`;
+    <br><br>
+    <strong style="color:#ffa657">⭐ starred</strong> problems are curiosity-piquing — start there if you're new.
+    Reveals come in three layers: <strong style="color:#d2a8ff">💡 hint</strong> (nudge) · <strong style="color:#79c0ff">🔑 approach</strong> (how to attack) · <strong style="color:#7ee787">📐 answer</strong> (the result). Try the problem before peeking.
+  </div>
+  <div class="prob-toolbar">
+    <input id="prob-search" class="prob-search" type="text" placeholder="🔍 Search problems by keyword…" />
+    <div class="prob-filter-row" id="prob-tag-row">
+      ${TAGS.map(t => `<span class="prob-chip ${t}" data-tag="${t}">${t}<span class="count">${tagCounts[t]||0}</span></span>`).join('')}
+    </div>
+    <div class="prob-filter-row" id="prob-status-row">
+      <span class="prob-chip" data-status="all">All</span>
+      <span class="prob-chip" data-status="unattempted">○ New</span>
+      <span class="prob-chip" data-status="thinking">🤔 Thinking</span>
+      <span class="prob-chip" data-status="got">💡 Got it</span>
+      <span class="prob-chip" data-status="stuck">❓ Stuck</span>
+    </div>
+    <button id="prob-surprise" class="prob-actbtn primary" title="Open a random problem">🎲 Surprise me</button>
+    <button id="prob-reset" class="prob-actbtn" title="Clear all status">↺ Reset</button>
+    <div class="prob-progress" title="Problems attempted (thinking / got / stuck)">
+      <span id="prob-progress-text">0/${_probFlat.length}</span>
+      <div class="prob-progress-bar"><div id="prob-progress-fill" class="prob-progress-fill" style="width:0%"></div></div>
+    </div>
+  </div>
+  <div id="prob-sections">`;
+
+  data.forEach((sec, si) => {
+    const secTotal = (sec.items||[]).length;
+    html += `<details class="prob-section" data-si="${si}"${si < 2 ? ' open' : ''}>
+      <summary><span class="wk">${sec.week||''}</span> <span class="sec-title">${sec.title||''}</span>
+        <span class="sec-meta"><span class="done-count" data-sec-done="${si}">0</span>/<span>${secTotal}</span></span>
+      </summary>`;
+    if (sec.hook) html += `<div class="prob-hook">${sec.hook}</div>`;
+    html += `<div class="prob-body">`;
+    (sec.items||[]).forEach((p, ii) => {
+      const key = si+':'+ii;
+      const st = _probState[key] || {};
+      const tag = p.tag || 'design';
+      const statusCls = st.status ? ' status-'+st.status : '';
+      html += `<div class="prob-card${statusCls}" data-key="${key}" data-tag="${tag}" data-status="${st.status||''}">
+        <div class="pc-head">
+          <span class="pc-num">${(ii+1).toString().padStart(2,'0')}</span>
+          <span class="prob-tag ${tag}">${tag}</span>
+          ${p.star ? '<span class="pc-star" title="Curiosity pick">★</span>' : ''}
+          <div class="prob-status-btns">
+            <button class="prob-statbtn thinking${st.status==='thinking'?' active':''}" data-status="thinking" title="I'm working on this">🤔</button>
+            <button class="prob-statbtn got${st.status==='got'?' active':''}"           data-status="got"      title="Got it">💡</button>
+            <button class="prob-statbtn stuck${st.status==='stuck'?' active':''}"       data-status="stuck"    title="Stuck">❓</button>
+          </div>
+        </div>
+        <div class="pc-text">${p.text||''}</div>`;
+      const reveals = [];
+      if (p.hint)     reveals.push({ kind:'hint',     label:'💡 Reveal hint',   field:'hint',     btnCls:'',          panelCls:'prob-hint',     tag:'Hint' });
+      if (p.approach) reveals.push({ kind:'approach', label:'🔑 Show approach', field:'approach', btnCls:'approach',  panelCls:'prob-approach', tag:'Approach' });
+      if (p.answer)   reveals.push({ kind:'answer',   label:'📐 Show answer',   field:'answer',   btnCls:'answer',    panelCls:'prob-answer',   tag:'Answer' });
+      if (reveals.length) {
+        html += `<div class="pc-actions">`;
+        reveals.forEach(r => {
+          const shown = st[r.kind+'Shown'];
+          html += `<button class="prob-revealbtn ${r.btnCls}" data-action="${r.kind}" ${shown?'style="display:none"':''}>${r.label}</button>`;
+        });
+        html += `</div>`;
+        reveals.forEach(r => {
+          const shown = st[r.kind+'Shown'];
+          html += `<div class="prob-reveal-panel ${r.panelCls}${shown?' shown':''}" data-panel="${r.kind}"><span class="rh-label">${r.tag}</span>${p[r.field]}</div>`;
+        });
+      }
+      html += `</div>`;
     });
-    html += `</ol></div></details>`;
+    html += `</div></details>`;
   });
+  html += `</div>
+  <div class="prob-spotlight" id="prob-spotlight">
+    <div class="prob-spotlight-card">
+      <button class="sl-close" onclick="probCloseSpotlight()">×</button>
+      <h3>🎲 Surprise Problem</h3>
+      <div id="prob-spotlight-body"></div>
+    </div>
+  </div>`;
+
   container.innerHTML = html;
+
+  // Wire interactions
+  container.querySelectorAll('#prob-tag-row .prob-chip').forEach(c => c.addEventListener('click', () => {
+    const tag = c.dataset.tag;
+    if (_probFilters.tags.has(tag)) _probFilters.tags.delete(tag); else _probFilters.tags.add(tag);
+    c.classList.toggle('active');
+    probApplyFilters();
+  }));
+  container.querySelectorAll('#prob-status-row .prob-chip').forEach(c => c.addEventListener('click', () => {
+    container.querySelectorAll('#prob-status-row .prob-chip').forEach(x => x.classList.remove('active'));
+    c.classList.add('active');
+    _probFilters.status = c.dataset.status;
+    probApplyFilters();
+  }));
+  container.querySelector('#prob-status-row .prob-chip[data-status="all"]').classList.add('active');
+
+  const searchEl = container.querySelector('#prob-search');
+  searchEl.addEventListener('input', () => { _probFilters.search = searchEl.value.toLowerCase().trim(); probApplyFilters(); });
+
+  container.querySelector('#prob-surprise').addEventListener('click', probSurpriseMe);
+  container.querySelector('#prob-reset').addEventListener('click', () => {
+    if (!confirm('Clear status on all '+_probFlat.length+' problems?')) return;
+    _probState = {}; probSaveState(_probState);
+    container.dataset.rendered = ''; container.innerHTML = ''; renderProblems();
+  });
+
+  container.querySelectorAll('.prob-card').forEach(card => {
+    card.querySelectorAll('.prob-statbtn').forEach(btn => btn.addEventListener('click', e => {
+      e.stopPropagation();
+      const key = card.dataset.key;
+      const newStatus = btn.dataset.status;
+      const st = _probState[key] || {};
+      st.status = (st.status === newStatus) ? null : newStatus;
+      _probState[key] = st; probSaveState(_probState);
+      card.classList.remove('status-thinking','status-got','status-stuck');
+      if (st.status) card.classList.add('status-'+st.status);
+      card.dataset.status = st.status || '';
+      card.querySelectorAll('.prob-statbtn').forEach(b => b.classList.toggle('active', b.dataset.status === st.status));
+      probUpdateProgress();
+      if (_probFilters.status !== 'all') probApplyFilters();
+    }));
+    const revealBtns = card.querySelectorAll('[data-action="hint"],[data-action="approach"],[data-action="answer"]');
+    revealBtns.forEach(btn => btn.addEventListener('click', () => {
+      const kind = btn.dataset.action;
+      const panel = card.querySelector(`.prob-reveal-panel[data-panel="${kind}"]`);
+      if (panel) panel.classList.add('shown');
+      btn.style.display = 'none';
+      const key = card.dataset.key;
+      const st = _probState[key] || {};
+      st[kind+'Shown'] = true; _probState[key] = st; probSaveState(_probState);
+    }));
+  });
+
+  probUpdateProgress();
 }
+
+function probApplyFilters() {
+  const container = document.getElementById('problems-container');
+  const { tags, search, status } = _probFilters;
+  container.querySelectorAll('.prob-card').forEach(card => {
+    const tag = card.dataset.tag;
+    const cardStatus = card.dataset.status || '';
+    const text = card.querySelector('.pc-text').textContent.toLowerCase();
+    let show = true;
+    if (tags.size > 0 && !tags.has(tag)) show = false;
+    if (search && !text.includes(search)) show = false;
+    if (status !== 'all') {
+      if (status === 'unattempted') { if (cardStatus) show = false; }
+      else if (cardStatus !== status) show = false;
+    }
+    card.classList.toggle('hidden', !show);
+  });
+  // Auto-open sections with visible cards; hide empty sections
+  container.querySelectorAll('.prob-section').forEach(sec => {
+    const visible = sec.querySelectorAll('.prob-card:not(.hidden)').length;
+    sec.style.display = visible === 0 ? 'none' : '';
+    if (visible > 0 && (tags.size || search || status !== 'all')) sec.open = true;
+  });
+}
+
+function probUpdateProgress() {
+  const total = _probFlat.length;
+  let attempted = 0;
+  const perSec = {};
+  _probFlat.forEach(({si, key}) => {
+    const st = _probState[key];
+    if (st && st.status) { attempted++; perSec[si] = (perSec[si]||0) + 1; }
+  });
+  const txt = document.getElementById('prob-progress-text');
+  const fill = document.getElementById('prob-progress-fill');
+  if (txt) txt.textContent = attempted + '/' + total;
+  if (fill) fill.style.width = (total ? (attempted/total*100) : 0) + '%';
+  document.querySelectorAll('[data-sec-done]').forEach(el => {
+    const si = +el.dataset.secDone;
+    el.textContent = perSec[si] || 0;
+  });
+}
+
+function probSurpriseMe() {
+  if (!_probFlat.length) return;
+  // Prefer starred & unattempted; otherwise unattempted; otherwise any
+  const starredNew = _probFlat.filter(x => x.p.star && !(_probState[x.key]||{}).status);
+  const anyNew     = _probFlat.filter(x => !(_probState[x.key]||{}).status);
+  const pool = starredNew.length ? starredNew : (anyNew.length ? anyNew : _probFlat);
+  const pick = pool[Math.floor(Math.random()*pool.length)];
+  const { p, si, ii, key } = pick;
+  const sec = (window.PROBLEMS_DATA || (C.problems||[]))[si];
+  const tag = p.tag || 'design';
+  const body = document.getElementById('prob-spotlight-body');
+  body.innerHTML = `
+    <div style="display:flex;gap:8px;align-items:center;margin-bottom:6px;flex-wrap:wrap">
+      <span class="prob-tag ${tag}">${tag}</span>
+      ${p.star ? '<span style="color:#ffa657">★</span>' : ''}
+      <span style="color:#8b949e;font-size:12px">${sec.week||''} · ${sec.title||''} · #${ii+1}</span>
+    </div>
+    <div class="pc-text">${p.text||''}</div>
+    ${(()=>{const L=[];if(p.hint)L.push({s:'💡 Reveal hint',c:'prob-hint',t:'Hint',b:p.hint});if(p.approach)L.push({s:'🔑 Show approach',c:'prob-approach',t:'Approach',b:p.approach});if(p.answer)L.push({s:'📐 Show answer',c:'prob-answer',t:'Answer',b:p.answer});return L.map(l=>`<details style="margin-top:10px"><summary style="cursor:pointer;color:#8b949e;font-size:12px;padding:4px 0">${l.s}</summary><div class="prob-reveal-panel ${l.c} shown" style="margin-top:6px"><span class="rh-label">${l.t}</span>${l.b}</div></details>`).join('');})()}
+    <div style="margin-top:14px;display:flex;gap:6px;flex-wrap:wrap">
+      <button class="prob-actbtn" onclick="probJumpTo('${key}')">↗ Jump to it</button>
+      <button class="prob-actbtn" onclick="probSurpriseMe()">🎲 Another</button>
+    </div>`;
+  document.getElementById('prob-spotlight').classList.add('open');
+}
+function probCloseSpotlight() { const el = document.getElementById('prob-spotlight'); if (el) el.classList.remove('open'); }
+function probJumpTo(key) {
+  probCloseSpotlight();
+  const card = document.querySelector(`.prob-card[data-key="${key}"]`);
+  if (!card) return;
+  const sec = card.closest('.prob-section');
+  if (sec) sec.open = true;
+  card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  card.style.transition = 'box-shadow .3s'; card.style.boxShadow = '0 0 0 2px #58a6ff';
+  setTimeout(() => { card.style.boxShadow = ''; }, 1500);
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') probCloseSpotlight(); });
 if (typeof switchTab === 'function') {
   const _origSwitchTab_prob = switchTab;
   switchTab = function(tab) { _origSwitchTab_prob(tab); if (tab === 'problems') renderProblems(); };
 }
+
+// === BEGIN glossary v1 js ===
+// ═══════════════════════════════════════════════════════════════════════
+// GLOSSARY — definitions + cross-references with graph & mindmap
+// ═══════════════════════════════════════════════════════════════════════
+(function initGlossaryMaps() {
+  const gloss = (C && C.glossary) || [];
+  if (!gloss.length) return;
+
+  // 1. Build id → entry maps and "label/aka" → id reverse map.
+  const byId = {};
+  const byLabel = {}; // lowercased term/aka → id
+  gloss.forEach(g => {
+    byId[g.id] = g;
+    const keys = [g.term].concat(g.aka || []);
+    keys.forEach(k => { if (k) byLabel[k.toLowerCase().trim()] = g.id; });
+  });
+
+  // 2. Patch graph node tips for any node whose id matches a glossary entry.
+  let graphMatched = 0;
+  const glossByGraphNode = {};
+  if (C.graph && Array.isArray(C.graph.nodes)) {
+    C.graph.nodes.forEach(n => {
+      if (byId[n.id]) {
+        glossByGraphNode[n.id] = n.id;
+        graphMatched++;
+        if (n.tip && n.tip.indexOf('📖') < 0) n.tip = n.tip + ' · 📖 in glossary';
+      } else {
+        // Fallback: try label/aka match
+        const k = (n.label || '').toLowerCase().trim();
+        if (byLabel[k]) {
+          glossByGraphNode[n.id] = byLabel[k];
+          graphMatched++;
+          if (n.tip && n.tip.indexOf('📖') < 0) n.tip = n.tip + ' · 📖 in glossary';
+        }
+      }
+    });
+  }
+
+  // 3. Walk mindmap and build name → glossary-id map. Match relaxed:
+  //    full name (newlines → space) OR each line.
+  let mindmapMatched = 0;
+  const glossByMindmapName = {};
+  function walkMm(node) {
+    if (!node) return;
+    if (node.name) {
+      const full = node.name.replace(/\n/g, ' ').trim();
+      const candidates = [full].concat(node.name.split(/\n+/).map(s => s.trim()).filter(Boolean));
+      for (const c of candidates) {
+        const id = byLabel[c.toLowerCase()];
+        if (id) {
+          glossByMindmapName[full] = id;
+          mindmapMatched++;
+          break;
+        }
+      }
+    }
+    (node.children || []).forEach(walkMm);
+  }
+  if (C.mindmap) walkMm(C.mindmap);
+
+  window._glossaryById = byId;
+  window._glossaryByLabel = byLabel;
+  window._glossaryIdByGraphNode = glossByGraphNode;
+  window._glossaryIdByMindmapName = glossByMindmapName;
+  window._glossaryStats = { graphMatched: graphMatched, mindmapMatched: mindmapMatched };
+
+  // 4. Monkey-patch showTooltip so it appends a "📖 Defined in glossary →" link
+  //    whenever the hovered name corresponds to a glossary entry.
+  if (typeof window.showTooltip === 'function') {
+    const _origShowTooltip = window.showTooltip;
+    const ttRoot = document.getElementById('tooltip');
+    let glossFooter = ttRoot.querySelector('.tt-glossary');
+    if (!glossFooter) {
+      glossFooter = document.createElement('div');
+      glossFooter.className = 'tt-glossary';
+      ttRoot.appendChild(glossFooter);
+    }
+    window.showTooltip = function(evt, name, tip, slides) {
+      _origShowTooltip(evt, name, tip, slides);
+      glossFooter.innerHTML = '';
+      ttRoot.classList.remove('has-glossary');
+      if (!name) return;
+      const plain = String(name).replace(/\n/g, ' ').trim();
+      const key = plain.toLowerCase();
+      let id = byLabel[key] || glossByMindmapName[plain] || null;
+      if (!id) {
+        // strip parenthetical suffix e.g. "Optical Switch (OCS)" → "Optical Switch"
+        const stripped = plain.replace(/\s*\([^)]*\)\s*$/, '').toLowerCase();
+        if (stripped !== key) id = byLabel[stripped] || null;
+      }
+      if (id) {
+        const a = document.createElement('a');
+        a.textContent = '📖 Defined in glossary →';
+        a.onclick = (e) => {
+          e.stopPropagation();
+          if (typeof window.glossaryJumpToTerm === 'function') window.glossaryJumpToTerm(id);
+        };
+        glossFooter.appendChild(a);
+        ttRoot.classList.add('has-glossary');
+      }
+    };
+  }
+})();
+
+// ─── renderGlossary ───────────────────────────────────────────────────
+let _glossSelectedCat = 'all';
+let _glossSearch = '';
+let _glossSearchTimer = null;
+let _glossBuilt = false;
+
+const GLOSS_CAT_COLORS = {
+  hardware:    '#58a6ff',
+  software:    '#7ee787',
+  numerics:    '#79c0ff',
+  systems:     '#d2a8ff',
+  performance: '#f778ba',
+  concepts:    '#ffa657'
+};
+
+function renderGlossary() {
+  const data = (C.glossary || []).slice().sort((a, b) =>
+    a.term.toLowerCase().localeCompare(b.term.toLowerCase()));
+  const list = document.getElementById('glossary-list');
+  const pillBar = document.getElementById('glossary-cat-pills');
+  const countEl = document.getElementById('glossary-count');
+  const searchEl = document.getElementById('glossary-search');
+  if (!list || !pillBar || !countEl || !searchEl) return;
+
+  // Build category pills + search input wiring once.
+  if (!_glossBuilt) {
+    const cats = ['all'].concat(
+      Array.from(new Set(data.map(d => d.category))).sort());
+    pillBar.innerHTML = '';
+    cats.forEach(cat => {
+      const btn = document.createElement('button');
+      btn.textContent = cat === 'all' ? `All (${data.length})` :
+        `${cat} (${data.filter(d => d.category === cat).length})`;
+      btn.dataset.cat = cat;
+      const color = cat === 'all' ? '#58a6ff' : (GLOSS_CAT_COLORS[cat] || '#58a6ff');
+      btn.style.setProperty('--pill-color', color);
+      btn.style.setProperty('--pill-bg', color + '22');
+      if (cat === _glossSelectedCat) btn.classList.add('active');
+      btn.onclick = () => {
+        _glossSelectedCat = cat;
+        pillBar.querySelectorAll('button').forEach(b =>
+          b.classList.toggle('active', b.dataset.cat === cat));
+        renderGlossary();
+      };
+      pillBar.appendChild(btn);
+    });
+    searchEl.addEventListener('input', () => {
+      if (_glossSearchTimer) clearTimeout(_glossSearchTimer);
+      _glossSearchTimer = setTimeout(() => {
+        _glossSearch = searchEl.value.trim().toLowerCase();
+        renderGlossary();
+      }, 120);
+    });
+    _glossBuilt = true;
+  }
+
+  // Filter
+  const q = _glossSearch;
+  const visible = data.filter(d => {
+    if (_glossSelectedCat !== 'all' && d.category !== _glossSelectedCat) return false;
+    if (!q) return true;
+    const hay = [d.term, (Array.isArray(d.aka) ? d.aka.join(' ') : (d.aka || '')), d.short, d.long || ''].join(' ').toLowerCase();
+    return hay.indexOf(q) >= 0;
+  });
+
+  countEl.textContent = `${visible.length} of ${data.length} terms`;
+
+  const graphIds = new Set();
+  if (C.graph && C.graph.nodes) C.graph.nodes.forEach(n => graphIds.add(n.id));
+  const glossIds = new Set(data.map(d => d.id));
+  const mindmapNames = window._glossaryIdByMindmapName || {};
+  const reverseMindmap = {}; // glossary-id → mindmap label
+  Object.keys(mindmapNames).forEach(name => { reverseMindmap[mindmapNames[name]] = name; });
+
+  list.innerHTML = '';
+  visible.forEach(d => {
+    const color = GLOSS_CAT_COLORS[d.category] || '#58a6ff';
+    const card = document.createElement('div');
+    card.className = 'glossary-card';
+    card.dataset.id = d.id;
+    card.style.setProperty('--cat-color', color);
+
+    const head = document.createElement('div');
+    head.className = 'glossary-term-row';
+    const term = document.createElement('span');
+    term.className = 'glossary-term';
+    term.textContent = d.term;
+    head.appendChild(term);
+    const badge = document.createElement('span');
+    badge.className = 'glossary-cat-badge';
+    badge.textContent = d.category;
+    badge.style.setProperty('--cat-color', color);
+    head.appendChild(badge);
+    card.appendChild(head);
+
+    if (d.aka && d.aka.length) {
+      const aka = document.createElement('div');
+      aka.className = 'glossary-aka';
+      aka.textContent = 'aka ' + (Array.isArray(d.aka) ? d.aka.join(', ') : d.aka);
+      card.appendChild(aka);
+    }
+
+    const shortEl = document.createElement('div');
+    shortEl.className = 'glossary-short';
+    shortEl.textContent = d.short || '';
+    card.appendChild(shortEl);
+
+    if (d.long) {
+      const longEl = document.createElement('div');
+      longEl.className = 'glossary-long';
+      longEl.innerHTML = d.long;
+      card.appendChild(longEl);
+      const toggle = document.createElement('button');
+      toggle.className = 'glossary-toggle';
+      toggle.textContent = 'Show more ▾';
+      toggle.onclick = () => {
+        const expanded = card.classList.toggle('expanded');
+        toggle.textContent = expanded ? 'Show less ▴' : 'Show more ▾';
+      };
+      card.appendChild(toggle);
+    }
+
+    const links = document.createElement('div');
+    links.className = 'glossary-links';
+    if (graphIds.has(d.id)) {
+      const b = document.createElement('button');
+      b.textContent = '🔗 Topic Graph';
+      b.onclick = () => window.glossaryJumpToGraphNode(d.id);
+      links.appendChild(b);
+    }
+    if (reverseMindmap[d.id]) {
+      const b = document.createElement('button');
+      b.textContent = '📐 Mind Map';
+      b.onclick = () => window.glossaryJumpToMindmapNode(reverseMindmap[d.id]);
+      links.appendChild(b);
+    }
+    (d.seeAlso || []).forEach(otherId => {
+      if (!glossIds.has(otherId)) return;
+      const other = (C.glossary || []).find(x => x.id === otherId);
+      if (!other) return;
+      const b = document.createElement('button');
+      b.textContent = '→ ' + other.term;
+      b.onclick = () => window.glossaryJumpToTerm(otherId);
+      links.appendChild(b);
+    });
+    if (links.children.length) card.appendChild(links);
+
+    list.appendChild(card);
+  });
+}
+
+// ─── Cross-tab jump helpers ───────────────────────────────────────────
+window.glossaryJumpToTerm = function(id) {
+  if (typeof switchTab === 'function') switchTab('glossary');
+  setTimeout(() => {
+    const card = document.querySelector('.glossary-card[data-id="' + CSS.escape(id) + '"]');
+    if (!card) return;
+    card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    card.classList.remove('flash');
+    void card.offsetWidth; // restart animation
+    card.classList.add('flash');
+    // Pull the display term from the card itself so the toast matches what the user sees
+    const labelEl = card.querySelector('.glossary-term');
+    const label = labelEl ? labelEl.textContent.trim() : id;
+    if (typeof showGlossaryToast === 'function') showGlossaryToast('Glossary', label, 'glossary');
+    setTimeout(() => card.classList.remove('flash'), 2800);
+  }, 60);
+};
+
+window.glossaryJumpToGraphNode = function(id) {
+  if (typeof switchTab === 'function') switchTab('graph');
+  const tryFlash = (attempt) => {
+    const g = document.querySelector('g.graph-node[data-id="' + CSS.escape(id) + '"]');
+    if (!g) {
+      if (attempt < 12) return setTimeout(() => tryFlash(attempt + 1), 120);
+      return;
+    }
+    // Pull the node's force-simulation position from its bound datum
+    let d = null;
+    try { d = (typeof d3 !== 'undefined') ? d3.select(g).datum() : null; } catch(_) {}
+    const label = (d && (d.label || d.id)) || id;
+
+    // 1) Pan + zoom the SVG so the node is centered and reasonably zoomed in
+    try {
+      if (d && typeof d.x === 'number' && typeof d.y === 'number' && typeof d3 !== 'undefined' && typeof graphZoom !== 'undefined') {
+        const svgEl = document.getElementById('canvas-graph');
+        const W = (svgEl && svgEl.clientWidth)  || window.innerWidth;
+        const H = (svgEl && svgEl.clientHeight) || window.innerHeight;
+        const k = 1.6;
+        const tx = W / 2 - k * d.x;
+        const ty = H / 2 - k * d.y;
+        d3.select('#canvas-graph')
+          .transition().duration(650)
+          .call(graphZoom.transform, d3.zoomIdentity.translate(tx, ty).scale(k));
+      } else {
+        g.querySelector('circle') && g.querySelector('circle').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    } catch(_) {}
+
+    // 2) Big halo ring + bold class on the node group
+    g.classList.remove('glossary-highlight');
+    void g.getBoundingClientRect();
+    g.classList.add('glossary-highlight');
+    try {
+      // remove any previous halo
+      g.querySelectorAll('circle.glossary-halo').forEach(c => c.remove());
+      const halo = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+      halo.setAttribute('class', 'glossary-halo');
+      halo.setAttribute('cx', '0');
+      halo.setAttribute('cy', '0');
+      halo.setAttribute('r', '14');
+      g.insertBefore(halo, g.firstChild); // behind the node circle
+    } catch(_) {}
+
+    // 3) Top-of-screen toast
+    showGlossaryToast('Topic Graph', label, 'graph');
+
+    setTimeout(() => {
+      g.classList.remove('glossary-highlight');
+      g.querySelectorAll('circle.glossary-halo').forEach(c => c.remove());
+    }, 4200);
+  };
+  requestAnimationFrame(() => requestAnimationFrame(() => tryFlash(0)));
+};
+
+window.glossaryJumpToMindmapNode = function(label) {
+  if (typeof switchTab === 'function') switchTab('mindmap');
+  const target = (label || '').replace(/\n/g, ' ').trim().toLowerCase();
+  const tryFlash = (attempt) => {
+    const groups = document.querySelectorAll('#canvas g');
+    let hit = null;
+    groups.forEach(g => {
+      if (hit) return;
+      const txt = (g.textContent || '').replace(/\s+/g, ' ').trim().toLowerCase();
+      if (txt === target) hit = g;
+    });
+    if (!hit) {
+      if (attempt < 10) return setTimeout(() => tryFlash(attempt + 1), 150);
+      return;
+    }
+
+    // 1) Pan the mindmap so the hit node is roughly centered
+    try {
+      if (typeof d3 !== 'undefined' && typeof mmZoom !== 'undefined') {
+        const svgEl = document.getElementById('canvas');
+        const W = (svgEl && svgEl.clientWidth)  || window.innerWidth;
+        const H = (svgEl && svgEl.clientHeight) || window.innerHeight;
+        // Read the node's local SVG position from its existing transform attribute (form: translate(x,y))
+        const tr = hit.getAttribute('transform') || '';
+        const m = tr.match(/translate\(\s*([-0-9.]+)\s*[ ,]\s*([-0-9.]+)/);
+        if (m) {
+          const x = parseFloat(m[1]), y = parseFloat(m[2]);
+          const k = 1.3;
+          const tx = W / 2 - k * x;
+          const ty = H / 2 - k * y;
+          d3.select('#canvas')
+            .transition().duration(650)
+            .call(mmZoom.transform, d3.zoomIdentity.translate(tx, ty).scale(k));
+        } else {
+          hit.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      } else {
+        hit.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    } catch(_) {}
+
+    // 2) Halo ring on the mindmap node
+    try {
+      hit.querySelectorAll('circle.glossary-mm-halo').forEach(c => c.remove());
+      const halo = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+      halo.setAttribute('class', 'glossary-mm-halo');
+      halo.setAttribute('cx', '0');
+      halo.setAttribute('cy', '0');
+      halo.setAttribute('r', '14');
+      hit.insertBefore(halo, hit.firstChild);
+      setTimeout(() => halo.remove(), 4200);
+    } catch(_) {}
+
+    // 3) Stroke flash on the shape
+    const shape = hit.querySelector('circle, rect');
+    if (shape) {
+      const prev = shape.getAttribute('stroke');
+      const prevW = shape.getAttribute('stroke-width');
+      shape.setAttribute('stroke', '#f0c000');
+      shape.setAttribute('stroke-width', '5');
+      setTimeout(() => {
+        if (prev !== null) shape.setAttribute('stroke', prev); else shape.removeAttribute('stroke');
+        if (prevW !== null) shape.setAttribute('stroke-width', prevW); else shape.removeAttribute('stroke-width');
+      }, 3000);
+    }
+
+    // 4) Toast
+    showGlossaryToast('Mind Map', (label || '').replace(/\n/g, ' '), 'mindmap');
+  };
+  requestAnimationFrame(() => requestAnimationFrame(() => tryFlash(0)));
+};
+
+// Floating toast helper — visible regardless of where the target node ended up
+function showGlossaryToast(where, label, kind) {
+  let t = document.getElementById('glossary-toast');
+  if (!t) {
+    t = document.createElement('div');
+    t.id = 'glossary-toast';
+    document.body.appendChild(t);
+  }
+  const icon = kind === 'graph' ? '🔗' : (kind === 'mindmap' ? '📐' : '📖');
+  t.innerHTML = '<span class="gt-icon">' + icon + '</span>'
+              + '<span>Jumped to: <strong>' + (label || '').replace(/[<>&]/g, '') + '</strong></span>'
+              + '<span class="gt-sub">in ' + where + '</span>';
+  // restart animation
+  t.classList.remove('show');
+  void t.offsetWidth;
+  t.classList.add('show');
+  clearTimeout(t._hideTimer);
+  t._hideTimer = setTimeout(() => t.classList.remove('show'), 3200);
+}
+
+// Lazy-render hook
+if (typeof switchTab === 'function') {
+  const _origSwitchTab_gloss = switchTab;
+  switchTab = function(tab) { _origSwitchTab_gloss(tab); if (tab === 'glossary') renderGlossary(); };
+}
+// === END glossary v1 js ===
 </script>
 <!-- BEGIN tooltip-pin (click pins, click outside closes) -->
 <style>

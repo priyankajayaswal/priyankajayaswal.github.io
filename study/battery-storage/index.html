@@ -253,6 +253,36 @@
     border-radius: 4px; font-size: 10px; color: #79c0ff; text-decoration: none; transition: all .2s;
   }
   .uc-refs a:hover { border-color: #58a6ff; color: #58a6ff; background: #0d1117; }
+  /* ── Use-case enrichment v2 ── */
+  .uc-overview { background: linear-gradient(135deg, #0d1117 0%, #161b22 100%); border: 1px solid #30363d;
+    border-left: 3px solid #58a6ff; border-radius: 10px; padding: 16px 18px; margin: 16px 0 20px; }
+  .uc-overview .uc-summary { font-size: 13px; color: #c9d1d9; line-height: 1.7; }
+  .uc-overview .uc-summary strong { color: #79c0ff; }
+  .uc-pipeline { margin-top: 14px; padding: 10px 12px; background: #0d1117; border: 1px solid #30363d;
+    border-radius: 6px; font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+    font-size: 11px; color: #7ee787; line-height: 1.6; white-space: pre-wrap; overflow-x: auto; }
+  .uc-metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 10px; margin-top: 14px; }
+  .uc-metric { background: #0d1117; border: 1px solid #30363d; border-radius: 8px; padding: 10px 12px; }
+  .uc-metric .uc-metric-label { font-size: 10px; color: #8b949e; text-transform: uppercase; letter-spacing: 0.5px; }
+  .uc-metric .uc-metric-value { font-size: 14px; color: #ffa657; font-weight: 600; margin-top: 4px; line-height: 1.4; }
+  .uc-extensions { margin-top: 14px; padding: 10px 12px; background: rgba(210, 168, 255, 0.06);
+    border: 1px solid rgba(210, 168, 255, 0.25); border-radius: 6px; font-size: 12px; color: #c9d1d9; line-height: 1.6; }
+  .uc-extensions strong { color: #d2a8ff; }
+  .uc-step .uc-intuition { margin-top: 8px; padding: 8px 10px; background: rgba(126, 231, 135, 0.08);
+    border-left: 2px solid #3fb950; border-radius: 4px; font-size: 12px; color: #c9d1d9; line-height: 1.55; display: none; }
+  .uc-step.active .uc-intuition { display: block; }
+  .uc-step .uc-intuition strong { color: #7ee787; }
+  .uc-step .uc-complexity { display: inline-block; margin-top: 8px; margin-right: 6px;
+    background: rgba(31, 111, 235, 0.15); border: 1px solid rgba(88, 166, 255, 0.35); border-radius: 4px;
+    padding: 2px 8px; font-size: 10px; color: #79c0ff; font-family: 'Cascadia Code', 'Consolas', monospace; }
+  .uc-step .uc-pitfall { margin-top: 8px; padding: 8px 10px; background: rgba(255, 123, 114, 0.08);
+    border-left: 2px solid #ff7b72; border-radius: 4px; font-size: 12px; color: #c9d1d9; line-height: 1.55; display: none; }
+  .uc-step.active .uc-pitfall { display: block; }
+  .uc-step .uc-pitfall strong { color: #ff7b72; }
+  .uc-step .uc-example { margin-top: 8px; padding: 8px 10px; background: rgba(255, 166, 87, 0.06);
+    border-left: 2px solid #ffa657; border-radius: 4px; font-size: 12px; color: #c9d1d9; line-height: 1.55; display: none; }
+  .uc-step.active .uc-example { display: block; }
+  .uc-step .uc-example strong { color: #ffa657; }
   .legend-close {
     position: absolute; top: 8px; right: 8px; background: none; border: none;
     color: #8b949e; font-size: 16px; cursor: pointer; line-height: 1; padding: 2px 6px;
@@ -320,27 +350,92 @@
   /* ── Practice Problems (Problem-First) ── */
   #problems-container { position: relative; top: 0; width: 100%; max-width: 1100px; margin: 0 auto; padding: 24px 16px 60px; }
   #view-problems { overflow-y: auto; height: calc(100vh - 50px); margin-top: 50px; }
-  .prob-intro { background: #161b22; border: 1px solid #30363d; border-left: 3px solid #7ee787; border-radius: 6px; padding: 14px 18px; margin-bottom: 22px; color: #c9d1d9; font-size: 14px; line-height: 1.6; }
+  .prob-intro { background: #161b22; border: 1px solid #30363d; border-left: 3px solid #7ee787; border-radius: 6px; padding: 14px 18px; margin-bottom: 18px; color: #c9d1d9; font-size: 14px; line-height: 1.6; }
   .prob-intro strong { color: #7ee787; }
-  .prob-section { margin-bottom: 22px; border: 1px solid #30363d; border-radius: 8px; background: #161b22; overflow: hidden; }
-  .prob-section > summary { padding: 14px 18px; font-size: 15px; font-weight: 600; color: #e6edf3; cursor: pointer; list-style: none; display: flex; align-items: center; gap: 10px; user-select: none; transition: background .15s; }
+  /* Toolbar */
+  .prob-toolbar { position: sticky; top: 0; z-index: 5; background: rgba(13,17,23,0.95); backdrop-filter: blur(6px); padding: 10px 0 12px; margin-bottom: 14px; border-bottom: 1px solid #21262d; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  .prob-search { flex: 1 1 200px; min-width: 180px; background: #0d1117; border: 1px solid #30363d; border-radius: 6px; padding: 7px 12px; color: #c9d1d9; font-size: 13px; outline: none; }
+  .prob-search:focus { border-color: #58a6ff; }
+  .prob-filter-row { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+  .prob-chip { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 12px; cursor: pointer; background: #161b22; border: 1px solid #30363d; color: #8b949e; text-transform: uppercase; letter-spacing: .4px; transition: all .15s; user-select: none; }
+  .prob-chip:hover { border-color: #58a6ff; color: #c9d1d9; }
+  .prob-chip.active { background: #1f6feb22; border-color: #58a6ff; color: #58a6ff; }
+  .prob-chip.design.active  { background: #58a6ff22; border-color: #58a6ff; color: #58a6ff; }
+  .prob-chip.derive.active  { background: #ffa65722; border-color: #ffa657; color: #ffa657; }
+  .prob-chip.debug.active   { background: #f8514922; border-color: #f85149; color: #f85149; }
+  .prob-chip.code.active    { background: #7ee78722; border-color: #7ee787; color: #7ee787; }
+  .prob-chip.paper.active   { background: #d2a8ff22; border-color: #d2a8ff; color: #d2a8ff; }
+  .prob-chip .count { font-size: 9px; opacity: .7; font-weight: 500; }
+  .prob-actbtn { background: #161b22; border: 1px solid #30363d; color: #c9d1d9; padding: 6px 12px; border-radius: 6px; font-size: 12px; cursor: pointer; transition: all .15s; }
+  .prob-actbtn:hover { border-color: #58a6ff; color: #58a6ff; }
+  .prob-actbtn.primary { background: #1f6feb; border-color: #58a6ff; color: #fff; }
+  .prob-actbtn.primary:hover { background: #388bfd; }
+  .prob-progress { display: flex; align-items: center; gap: 10px; flex: 0 0 auto; font-size: 11px; color: #8b949e; margin-left: auto; }
+  .prob-progress-bar { width: 100px; height: 6px; background: #21262d; border-radius: 3px; overflow: hidden; }
+  .prob-progress-fill { height: 100%; background: linear-gradient(90deg, #7ee787, #58a6ff); transition: width .3s; }
+  /* Sections */
+  .prob-section { margin-bottom: 16px; border: 1px solid #30363d; border-radius: 8px; background: #161b22; overflow: hidden; }
+  .prob-section > summary { padding: 13px 18px; font-size: 14px; font-weight: 600; color: #e6edf3; cursor: pointer; list-style: none; display: flex; align-items: center; gap: 10px; user-select: none; transition: background .15s; flex-wrap: wrap; }
   .prob-section > summary::-webkit-details-marker { display: none; }
   .prob-section > summary::before { content: '▸'; color: #8b949e; font-size: 11px; transition: transform .2s; }
   .prob-section[open] > summary::before { transform: rotate(90deg); }
   .prob-section > summary:hover { background: rgba(88,166,255,0.04); }
-  .prob-section .wk { color: #8b949e; font-size: 12px; font-weight: 500; background: #0d1117; padding: 2px 8px; border-radius: 10px; border: 1px solid #30363d; }
-  .prob-body { padding: 6px 20px 18px 40px; }
-  .prob-body > ol { padding-left: 22px; margin: 8px 0 4px; }
-  .prob-body > ol > li { margin: 12px 0; color: #c9d1d9; font-size: 14px; line-height: 1.55; }
-  .prob-body > ol > li::marker { color: #7ee787; font-weight: 600; }
-  .prob-hint { display: block; margin-top: 4px; color: #8b949e; font-size: 12.5px; font-style: italic; }
-  .prob-hint::before { content: '💡 '; font-style: normal; }
-  .prob-tag { display: inline-block; font-size: 10px; font-weight: 600; padding: 1px 7px; border-radius: 8px; margin-right: 6px; vertical-align: middle; text-transform: uppercase; letter-spacing: .4px; }
+  .prob-section .wk { color: #8b949e; font-size: 11px; font-weight: 500; background: #0d1117; padding: 2px 8px; border-radius: 10px; border: 1px solid #30363d; }
+  .prob-section .sec-meta { margin-left: auto; font-size: 11px; color: #6e7681; font-weight: 500; }
+  .prob-section .sec-meta .done-count { color: #7ee787; font-weight: 600; }
+  .prob-hook { background: #0d1117; border-bottom: 1px solid #21262d; padding: 12px 22px; font-size: 13px; color: #d2a8ff; font-style: italic; line-height: 1.6; display: flex; gap: 8px; align-items: flex-start; }
+  .prob-hook::before { content: '🪝'; font-style: normal; flex-shrink: 0; }
+  .prob-body { padding: 12px 18px 16px; display: flex; flex-direction: column; gap: 10px; }
+  /* Problem cards */
+  .prob-card { background: #0d1117; border: 1px solid #21262d; border-radius: 8px; padding: 12px 14px; transition: all .15s; position: relative; }
+  .prob-card:hover { border-color: #30363d; }
+  .prob-card.status-thinking { border-left: 3px solid #d2a8ff; }
+  .prob-card.status-got      { border-left: 3px solid #7ee787; opacity: .75; }
+  .prob-card.status-stuck    { border-left: 3px solid #f85149; }
+  .prob-card.hidden          { display: none; }
+  .prob-card .pc-head { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 4px; }
+  .prob-card .pc-num { color: #6e7681; font-size: 11px; font-weight: 600; font-family: 'Cascadia Code', monospace; }
+  .prob-card .pc-star { color: #ffa657; font-size: 13px; }
+  .prob-tag { display: inline-block; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 8px; text-transform: uppercase; letter-spacing: .4px; }
   .prob-tag.design { background: #58a6ff20; color: #58a6ff; }
   .prob-tag.debug  { background: #f8514920; color: #f85149; }
   .prob-tag.paper  { background: #d2a8ff20; color: #d2a8ff; }
   .prob-tag.code   { background: #7ee78720; color: #7ee787; }
   .prob-tag.derive { background: #ffa65720; color: #ffa657; }
+  .prob-card .pc-text { color: #c9d1d9; font-size: 13.5px; line-height: 1.6; margin: 2px 0 6px; }
+  .prob-card .pc-actions { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; margin-top: 6px; }
+  .prob-revealbtn { background: transparent; border: 1px dashed #30363d; color: #8b949e; padding: 3px 10px; border-radius: 12px; font-size: 11px; cursor: pointer; transition: all .15s; }
+  .prob-revealbtn:hover { border-color: #d2a8ff; color: #d2a8ff; border-style: solid; }
+  .prob-revealbtn.approach:hover { border-color: #79c0ff; color: #79c0ff; }
+  .prob-revealbtn.answer:hover   { border-color: #7ee787; color: #7ee787; }
+  .prob-reveal-panel { display: none; margin-top: 8px; padding: 10px 14px; background: #161b22; border-radius: 4px; color: #c9d1d9; font-size: 12.5px; line-height: 1.65; }
+  .prob-reveal-panel.shown { display: block; }
+  .prob-reveal-panel ul, .prob-reveal-panel ol { margin: 4px 0 4px 18px; padding: 0; }
+  .prob-reveal-panel li { margin: 3px 0; }
+  .prob-reveal-panel code { background: #0d1117; padding: 1px 5px; border-radius: 3px; font-size: 11.5px; color: #79c0ff; font-family: 'Cascadia Code', 'Consolas', monospace; }
+  .prob-reveal-panel strong { color: #e6edf3; }
+  .prob-reveal-panel .rh-label { display: inline-block; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .6px; margin-right: 8px; padding: 1px 6px; border-radius: 4px; vertical-align: middle; }
+  .prob-hint     { border-left: 2px solid #d2a8ff; }
+  .prob-hint     .rh-label { background: #d2a8ff22; color: #d2a8ff; }
+  .prob-approach { border-left: 2px solid #79c0ff; }
+  .prob-approach .rh-label { background: #79c0ff22; color: #79c0ff; }
+  .prob-answer   { border-left: 2px solid #7ee787; background: #0d1f17; }
+  .prob-answer   .rh-label { background: #7ee78722; color: #7ee787; }
+  .prob-status-btns { display: flex; gap: 4px; margin-left: auto; }
+  .prob-statbtn { background: transparent; border: 1px solid #30363d; color: #6e7681; padding: 3px 9px; border-radius: 12px; font-size: 11px; cursor: pointer; transition: all .15s; }
+  .prob-statbtn:hover { border-color: #58a6ff; color: #c9d1d9; }
+  .prob-statbtn.active.thinking { background: #d2a8ff22; border-color: #d2a8ff; color: #d2a8ff; }
+  .prob-statbtn.active.got      { background: #7ee78722; border-color: #7ee787; color: #7ee787; }
+  .prob-statbtn.active.stuck    { background: #f8514922; border-color: #f85149; color: #f85149; }
+  .prob-empty { text-align: center; padding: 40px 20px; color: #6e7681; font-size: 13px; }
+  /* Modal for surprise-me */
+  .prob-spotlight { position: fixed; inset: 0; background: rgba(13,17,23,0.85); backdrop-filter: blur(4px); display: none; align-items: center; justify-content: center; z-index: 100; padding: 20px; }
+  .prob-spotlight.open { display: flex; }
+  .prob-spotlight-card { background: #161b22; border: 1px solid #58a6ff; border-radius: 12px; max-width: 600px; width: 100%; padding: 24px 28px; box-shadow: 0 12px 60px rgba(88,166,255,0.3); }
+  .prob-spotlight-card h3 { color: #58a6ff; font-size: 14px; margin: 0 0 4px; text-transform: uppercase; letter-spacing: 1px; }
+  .prob-spotlight-card .pc-text { font-size: 16px; line-height: 1.55; color: #e6edf3; margin: 10px 0; }
+  .prob-spotlight-card .sl-close { background: transparent; border: none; color: #8b949e; font-size: 22px; cursor: pointer; float: right; line-height: 1; }
+  .prob-spotlight-card .sl-close:hover { color: #c9d1d9; }
   .appendix-table .watch-link:hover { color: #ff0000; text-decoration: underline; }
   /* ── Progress checkbox ── */
   .appendix-table .vid-check { width: 18px; height: 18px; cursor: pointer; accent-color: #7ee787; vertical-align: middle; }
@@ -398,6 +493,233 @@
     .dd-card-img { height: 120px; }
     .dd-keypoints { grid-template-columns: 1fr; }
   }
+
+/* === BEGIN glossary v1 css === */
+  /* dd-nav sticky top */
+  .dd-nav.dd-nav-top {
+    position: sticky; top: 0; z-index: 5;
+    margin: -4px -4px 14px; padding: 10px 8px;
+    background: linear-gradient(180deg, rgba(13,17,23,0.96) 75%, rgba(13,17,23,0));
+    backdrop-filter: blur(4px);
+    border-bottom: 1px solid #21262d;
+  }
+  /* ── Glossary ── */
+  .gloss-intro { background: #161b22; border: 1px solid #30363d; border-left: 3px solid #d2a8ff; border-radius: 6px; padding: 14px 18px; margin-bottom: 14px; color: #c9d1d9; font-size: 14px; line-height: 1.6; }
+  .gloss-intro strong { color: #d2a8ff; }
+  #view-glossary { overflow-y: auto; height: calc(100vh - 50px); margin-top: 50px; padding: 20px; box-sizing: border-box; }
+  @media (max-width: 768px) { #view-glossary { margin-top: 48px; padding: 12px; } }
+  .glossary-controls { position: sticky; top: 0; z-index: 5; background: rgba(13,17,23,0.95); backdrop-filter: blur(6px); padding: 10px 0 12px; margin: -8px 0 14px; border-bottom: 1px solid #21262d; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  #glossary-search { flex: 1 1 240px; min-width: 200px; background: #0d1117; border: 1px solid #30363d; border-radius: 6px; padding: 7px 12px; color: #c9d1d9; font-size: 13px; outline: none; }
+  #glossary-search:focus { border-color: #58a6ff; }
+  .glossary-cat-pills { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+  .glossary-cat-pills button { background: #161b22; border: 1px solid #30363d; color: #8b949e; padding: 4px 10px; border-radius: 12px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .4px; cursor: pointer; transition: all .15s; }
+  .glossary-cat-pills button:hover { border-color: #58a6ff; color: #c9d1d9; }
+  .glossary-cat-pills button.active { background: var(--pill-bg, #1f6feb22); border-color: var(--pill-color, #58a6ff); color: var(--pill-color, #58a6ff); }
+  .glossary-count { font-size: 11px; color: #8b949e; margin-left: auto; }
+  .glossary-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 14px; max-width: 1400px; margin: 0 auto; }
+  .glossary-card { background: #161b22; border: 1px solid #30363d; border-radius: 10px; padding: 14px; transition: border-color .15s, box-shadow .15s, transform .15s; }
+  .glossary-card:hover { border-color: var(--cat-color, #58a6ff); box-shadow: 0 4px 14px rgba(0,0,0,0.35); }
+  .glossary-card.flash {
+    animation: glossary-flash 2.6s cubic-bezier(.4,0,.2,1) 1 forwards;
+    position: relative;
+    z-index: 2;
+  }
+  @keyframes glossary-flash {
+    0% {
+      background: #161b22;
+      border-color: #30363d;
+      box-shadow: 0 0 0 rgba(0,0,0,0);
+      transform: scale(1);
+    }
+    8% {
+      background: color-mix(in srgb, var(--cat-color, #58a6ff) 55%, #161b22);
+      border-color: var(--cat-color, #58a6ff);
+      box-shadow:
+        0 0 0 4px var(--cat-color, #58a6ff),
+        0 0 28px 6px color-mix(in srgb, var(--cat-color, #58a6ff) 70%, transparent),
+        0 14px 36px rgba(0,0,0,0.55);
+      transform: scale(1.045);
+    }
+    22% {
+      background: color-mix(in srgb, var(--cat-color, #58a6ff) 30%, #161b22);
+      border-color: var(--cat-color, #58a6ff);
+      box-shadow:
+        0 0 0 3px var(--cat-color, #58a6ff),
+        0 0 22px 4px color-mix(in srgb, var(--cat-color, #58a6ff) 55%, transparent),
+        0 10px 28px rgba(0,0,0,0.5);
+      transform: scale(1.03);
+    }
+    45% {
+      background: color-mix(in srgb, var(--cat-color, #58a6ff) 45%, #161b22);
+      border-color: var(--cat-color, #58a6ff);
+      box-shadow:
+        0 0 0 3px var(--cat-color, #58a6ff),
+        0 0 26px 5px color-mix(in srgb, var(--cat-color, #58a6ff) 60%, transparent),
+        0 12px 32px rgba(0,0,0,0.5);
+      transform: scale(1.035);
+    }
+    70% {
+      background: color-mix(in srgb, var(--cat-color, #58a6ff) 22%, #161b22);
+      border-color: color-mix(in srgb, var(--cat-color, #58a6ff) 80%, #30363d);
+      box-shadow:
+        0 0 0 2px color-mix(in srgb, var(--cat-color, #58a6ff) 70%, transparent),
+        0 0 18px 3px color-mix(in srgb, var(--cat-color, #58a6ff) 40%, transparent);
+      transform: scale(1.015);
+    }
+    100% {
+      background: #161b22;
+      border-color: #30363d;
+      box-shadow: 0 0 0 rgba(0,0,0,0);
+      transform: scale(1);
+    }
+  }
+  /* Fallback for browsers without color-mix: solid tinted backgrounds */
+  @supports not (background: color-mix(in srgb, red, blue)) {
+    @keyframes glossary-flash {
+      0%,100% { background: #161b22; border-color: #30363d; box-shadow: none; transform: scale(1); }
+      8%, 45% {
+        background: rgba(88,166,255,0.32);
+        border-color: var(--cat-color, #58a6ff);
+        box-shadow: 0 0 0 4px var(--cat-color, #58a6ff), 0 0 28px var(--cat-color, #58a6ff);
+        transform: scale(1.04);
+      }
+    }
+  }
+  .glossary-term-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .glossary-term { font-size: 16px; font-weight: 700; color: #e6edf3; }
+  .glossary-cat-badge { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; padding: 2px 7px; border-radius: 10px; border: 1px solid var(--cat-color, #58a6ff); color: var(--cat-color, #58a6ff); background: rgba(0,0,0,0.2); }
+  .glossary-aka { font-size: 11px; color: #8b949e; font-style: italic; margin-top: 3px; }
+  .glossary-short { font-size: 13px; color: #c9d1d9; margin-top: 8px; line-height: 1.5; }
+  .glossary-long { font-size: 13px; color: #8b949e; margin-top: 8px; line-height: 1.55; display: none; }
+  .glossary-long code { background: #0d1117; border: 1px solid #21262d; border-radius: 4px; padding: 1px 5px; font-family: 'Cascadia Code', monospace; font-size: 12px; color: #d2a8ff; }
+  .glossary-card.expanded .glossary-long { display: block; }
+  .glossary-toggle { background: none; border: none; color: #58a6ff; font-size: 11px; cursor: pointer; padding: 6px 0 0; }
+  .glossary-toggle:hover { text-decoration: underline; }
+  .glossary-links { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+  .glossary-links button { background: #0d1117; border: 1px solid #30363d; color: #c9d1d9; padding: 3px 9px; border-radius: 10px; font-size: 11px; cursor: pointer; transition: all .15s; }
+  .glossary-links button:hover { border-color: #58a6ff; color: #58a6ff; }
+  /* graph-node pulse when jumped to from glossary */
+  @keyframes glossary-pulse {
+    0%   { stroke-opacity: 1; stroke-width: 14; }
+    100% { stroke-opacity: 0.55; stroke-width: 5; }
+  }
+  @keyframes glossary-halo-pulse {
+    0%   { r: 16;  stroke-opacity: 1;    stroke-width: 10; }
+    60%  { r: 90;  stroke-opacity: 0.55; stroke-width: 5; }
+    100% { r: 140; stroke-opacity: 0;    stroke-width: 2; }
+  }
+  @keyframes glossary-halo-pulse-2 {
+    0%   { r: 16;  stroke-opacity: 0.9; stroke-width: 6; }
+    60%  { r: 110; stroke-opacity: 0.4; stroke-width: 3; }
+    100% { r: 170; stroke-opacity: 0;   stroke-width: 1.5; }
+  }
+  @keyframes glossary-fill-pulse {
+    0%, 100% { fill-opacity: 0.85; }
+    50%      { fill-opacity: 1; }
+  }
+  @keyframes glossary-dim-others {
+    0%   { opacity: 1; }
+    20%  { opacity: 0.15; }
+    100% { opacity: 0.15; }
+  }
+  /* Dim everything in the graph except the highlighted node + its halos */
+  #canvas-graph.glossary-spotlight g.graph-node:not(.glossary-highlight),
+  #canvas-graph.glossary-spotlight line.graph-link,
+  #canvas-graph.glossary-spotlight text.graph-link-label {
+    animation: glossary-dim-others 0.4s ease-out forwards;
+  }
+  #canvas-graph.glossary-spotlight g.graph-node.glossary-highlight {
+    opacity: 1 !important;
+  }
+  g.graph-node.glossary-highlight circle:not(.glossary-halo):not(.glossary-halo-outer) {
+    animation:
+      glossary-pulse 0.45s ease-in-out 10 alternate,
+      glossary-fill-pulse 0.45s ease-in-out 10 alternate;
+    stroke: #ffd13b !important;
+    fill: #ffd13b !important;
+    filter:
+      drop-shadow(0 0 10px #ffd13b)
+      drop-shadow(0 0 24px #ffd13baa)
+      drop-shadow(0 0 40px #ffd13b66);
+  }
+  g.graph-node.glossary-highlight text {
+    fill: #fff !important;
+    font-weight: 900 !important;
+    font-size: 15px !important;
+    paint-order: stroke fill;
+    stroke: #5a3a00;
+    stroke-width: 4px;
+    stroke-linejoin: round;
+    filter:
+      drop-shadow(0 0 6px #000)
+      drop-shadow(0 0 12px #ffd13b)
+      drop-shadow(0 0 20px #ffd13bcc);
+  }
+  circle.glossary-halo {
+    fill: none;
+    stroke: #ffd13b;
+    pointer-events: none;
+    animation: glossary-halo-pulse 1.1s ease-out 5;
+    filter: drop-shadow(0 0 8px #ffd13baa);
+  }
+  circle.glossary-halo-outer {
+    fill: none;
+    stroke: #ffae00;
+    pointer-events: none;
+    animation: glossary-halo-pulse-2 1.4s ease-out 5;
+    animation-delay: 0.18s;
+    filter: drop-shadow(0 0 12px #ffae0099);
+  }
+  /* mindmap pulse (uses a <circle> appended) */
+  circle.glossary-mm-halo {
+    fill: none;
+    stroke: #ffd13b;
+    pointer-events: none;
+    animation: glossary-halo-pulse 1.1s ease-out 5;
+    filter: drop-shadow(0 0 8px #ffd13baa);
+  }
+  circle.glossary-mm-halo-outer {
+    fill: none;
+    stroke: #ffae00;
+    pointer-events: none;
+    animation: glossary-halo-pulse-2 1.4s ease-out 5;
+    animation-delay: 0.18s;
+    filter: drop-shadow(0 0 12px #ffae0099);
+  }
+  /* toast banner shown when jumping from glossary */
+  #glossary-toast {
+    position: fixed; top: 60px; left: 50%; transform: translateX(-50%) translateY(-30px) scale(0.92);
+    background: linear-gradient(180deg, #2a1f0a, #1a1308);
+    border: 2px solid #ffd13b; border-left: 6px solid #ffd13b;
+    color: #fff5d6; padding: 12px 22px; border-radius: 10px;
+    font-size: 15px; font-weight: 700;
+    box-shadow:
+      0 10px 32px rgba(0,0,0,0.6),
+      0 0 36px rgba(255,209,59,0.45),
+      0 0 64px rgba(255,209,59,0.25);
+    opacity: 0; pointer-events: none;
+    transition: opacity .22s ease, transform .28s cubic-bezier(.2,1.2,.4,1);
+    z-index: 10000;
+    display: flex; align-items: center; gap: 12px;
+    max-width: 90vw;
+    text-shadow: 0 0 8px rgba(255,209,59,0.5);
+  }
+  #glossary-toast.show { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+  #glossary-toast .gt-icon { font-size: 22px; filter: drop-shadow(0 0 6px #ffd13b); }
+  #glossary-toast .gt-sub { color: #c9b88c; font-weight: 500; font-size: 12.5px; margin-left: 4px; }
+  #glossary-toast strong { color: #ffd13b; text-shadow: 0 0 10px rgba(255,209,59,0.6); }
+  @media (max-width: 768px) { #glossary-toast { top: 56px; font-size: 13px; padding: 10px 16px; } }
+  /* tooltip glossary footer link */
+  #tooltip .tt-glossary { margin-top: 6px; padding-top: 5px; border-top: 1px solid #30363d; }
+  #tooltip .tt-glossary:empty { display: none; }
+  #tooltip .tt-glossary a {
+    display: inline-block; padding: 2px 8px; border-radius: 4px;
+    background: rgba(210,168,255,0.10); color: #d2a8ff; text-decoration: none;
+    font-size: 11px; font-weight: 500; cursor: pointer; border: 1px solid rgba(210,168,255,0.25);
+  }
+  #tooltip .tt-glossary a:hover { background: rgba(210,168,255,0.22); border-color: #d2a8ff; }
+  #tooltip.has-glossary { pointer-events: auto; }
+/* === END glossary v1 css === */
 </style>
 </head>
 <body>
@@ -458,6 +780,21 @@
 <div id="view-problems" class="view">
   <div id="problems-container"></div>
 </div>
+<!-- BEGIN glossary v1 view -->
+<div id="view-glossary" class="view">
+  <div class="gloss-intro">
+    <strong>📖 Glossary.</strong> Every acronym, jargon term, and unit-of-art used across <em>Use Cases</em> and <em>Deep Dives</em> — defined here, cross-linked to the <strong>Topic Graph</strong> and <strong>Mind Map</strong> so you can jump from definition → diagram in one click.
+    <br><br>
+    <span style="color:#8b949e">Tip: click a related term to flash-jump to it. Click the 🌐 graph or 🧭 mindmap links to spotlight that node on its tab.</span>
+  </div>
+  <div class="glossary-controls">
+    <input type="text" id="glossary-search" placeholder="🔍 Search terms, acronyms, or definitions…" />
+    <div class="glossary-cat-pills" id="glossary-cat-pills"></div>
+    <span class="glossary-count" id="glossary-count"></span>
+  </div>
+  <div id="glossary-list" class="glossary-list"></div>
+</div>
+<!-- END glossary v1 view -->
 
 <!-- ═══════════════ SHARED OVERLAYS ═══════════════ -->
 <div id="tooltip"><div class="tt-title"></div><div class="tt-body"></div><div class="tt-slides"></div></div>
@@ -640,45 +977,606 @@ const COURSE_CONFIG = {
 
   deepDives: [
     {
-      id: "dd-liion", num: "Concept 1 of 3", title: "Lithium-Ion Chemistry",
-      desc: "LiCoO₂ cathode, graphite anode, intercalation mechanism.", color: "#7ee787", icon: "🔋",
+      id: "dd-liion", num: "Concept 1 of 5", title: "Lithium-Ion Cell Anatomy",
+      desc: "LiCoO₂/NMC/LFP cathodes, graphite anode, intercalation mechanism.", color: "#7ee787", icon: "🔋",
+      svg: function(w, h) {
+        return '<svg viewBox="0 0 520 260" width="100%" style="max-width:'+w+'px">'
+          + '<rect x="60" y="40" width="100" height="180" fill="#1f6feb22" stroke="#7ee787" stroke-width="2"/>'
+          + '<text x="110" y="30" fill="#7ee787" text-anchor="middle" font-size="14" font-weight="bold">Anode (−)</text>'
+          + '<text x="110" y="240" fill="#8b949e" text-anchor="middle" font-size="11">Graphite · LiC₆</text>'
+          + '<g stroke="#58a6ff" stroke-width="1.2" fill="none">'
+          +   '<line x1="70" y1="60" x2="150" y2="60"/><line x1="70" y1="80" x2="150" y2="80"/>'
+          +   '<line x1="70" y1="100" x2="150" y2="100"/><line x1="70" y1="120" x2="150" y2="120"/>'
+          +   '<line x1="70" y1="140" x2="150" y2="140"/><line x1="70" y1="160" x2="150" y2="160"/>'
+          +   '<line x1="70" y1="180" x2="150" y2="180"/><line x1="70" y1="200" x2="150" y2="200"/>'
+          + '</g>'
+          + '<rect x="220" y="40" width="80" height="180" fill="#30363d" stroke="#8b949e" stroke-dasharray="4,3"/>'
+          + '<text x="260" y="30" fill="#d2a8ff" text-anchor="middle" font-size="12">Separator</text>'
+          + '<text x="260" y="135" fill="#d2a8ff" text-anchor="middle" font-size="11">LiPF₆ in</text>'
+          + '<text x="260" y="150" fill="#d2a8ff" text-anchor="middle" font-size="11">EC/DMC</text>'
+          + '<rect x="360" y="40" width="100" height="180" fill="#f7826622" stroke="#ffa657" stroke-width="2"/>'
+          + '<text x="410" y="30" fill="#ffa657" text-anchor="middle" font-size="14" font-weight="bold">Cathode (+)</text>'
+          + '<text x="410" y="240" fill="#8b949e" text-anchor="middle" font-size="11">LiCoO₂ / NMC / LFP</text>'
+          + '<g stroke="#ffa657" stroke-width="1.2" fill="none">'
+          +   '<line x1="370" y1="60" x2="450" y2="60"/><line x1="370" y1="90" x2="450" y2="90"/>'
+          +   '<line x1="370" y1="120" x2="450" y2="120"/><line x1="370" y1="150" x2="450" y2="150"/>'
+          +   '<line x1="370" y1="180" x2="450" y2="180"/><line x1="370" y1="200" x2="450" y2="200"/>'
+          + '</g>'
+          + '<g fill="#7ee787">'
+          +   '<circle cx="170" cy="100" r="4"/><circle cx="200" cy="130" r="4"/>'
+          +   '<circle cx="230" cy="115" r="4"/><circle cx="270" cy="100" r="4"/>'
+          +   '<circle cx="320" cy="130" r="4"/><circle cx="350" cy="115" r="4"/>'
+          + '</g>'
+          + '<text x="260" y="180" fill="#7ee787" text-anchor="middle" font-size="11">Li⁺ →  (discharge)</text>'
+          + '<path d="M180 105 L340 105" stroke="#7ee787" stroke-width="1.5" marker-end="url(#a1)" fill="none"/>'
+          + '<defs><marker id="a1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#7ee787"/></marker></defs>'
+          + '</svg>';
+      },
       sections: [
-        { title: "Overview", text: "Lithium-ion cells store energy by shuttling Li⁺ ions between a layered oxide cathode (e.g. LiCoO₂) and a graphite anode through an organic electrolyte. During discharge, lithium deintercalates from graphite, migrates through the electrolyte, and intercalates into the cathode lattice, releasing electrical energy." },
-        { title: "Cathode Materials", text: "Common cathodes include LiCoO₂ (high energy density), LiNiMnCoO₂ (NMC, balanced performance), and LiFePO₄ (LFP, long cycle life and safety). Each offers different trade-offs in voltage, capacity, thermal stability and cost." },
-        { title: "Anode & Intercalation", text: "Graphite is the dominant anode material. Li⁺ intercalates between graphene layers forming LiC₆ at full charge. Silicon anodes promise higher capacity (~3,500 mAh/g vs 372 mAh/g for graphite) but suffer from volume expansion." }
+        { title: "Overview", text: "Lithium-ion cells store energy by shuttling Li⁺ ions between a layered-oxide cathode and a graphite anode through an organic electrolyte. During discharge Li⁺ deintercalates from LiC₆ in the anode, drifts across the separator, and inserts into vacant sites in the cathode lattice. Electrons travel the external circuit, doing useful work. Modern cells reach 250–300 Wh/kg at the cell level — roughly 3× lead-acid — which is why they dominate consumer electronics, EVs, and grid storage today." },
+        { title: "Cathode Materials", text: "Three families dominate. LiCoO₂ delivers ~3.9 V and ~150 mAh/g but is expensive and thermally fragile. NMC (LiNi_xMn_yCo_zO₂) trades a bit of voltage for higher capacity (~200 mAh/g) and is the EV workhorse — Tesla's 4680 cell uses NMC variants. LFP (LiFePO₄) sits at 3.2 V with only ~160 mAh/g but offers >4,000 cycles and an olivine structure that tolerates abuse without releasing oxygen, making it the default for utility BESS like the Tesla Megapack." },
+        { title: "Anode & Intercalation", text: "Graphite (372 mAh/g, fully lithiated as LiC₆) is the universal anode because Li⁺ slides between graphene planes with <10% volume change. Silicon promises ~3,500 mAh/g — almost 10× more — but expands ~300% on lithiation, pulverising itself within tens of cycles unless engineered as Si–C composites or nanowires. LTO (Li₄Ti₅O₁₂) anodes give up energy density (~170 mAh/g) for 20,000-cycle life and zero-strain operation used in fast-charging buses." },
+        { title: "Worked Example: Cell Capacity", text: "A typical 21700 cell holds ~5 Ah at a nominal 3.7 V, giving 18.5 Wh. To assemble a 100 kWh EV pack you need 100,000 / 18.5 ≈ 5,400 cells, wired in a series-parallel matrix that hits the inverter's bus voltage (e.g. 96s × 56p for ~355 V nominal). Pack-level energy density drops to ~160 Wh/kg after adding casing, BMS, cooling plates, and current collectors — a ~35% mass overhead compared with the bare cells." },
+        { title: "Pitfall: Lithium Plating", text: "Below 0 °C or at C-rates above ~1C, Li⁺ arrives at the graphite faster than it can intercalate and plates as metallic lithium on the anode surface. Plated lithium is irreversible (capacity loss) and forms dendrites that can pierce the separator and short the cell. This is why fast-charge protocols on EVs taper current sharply when the pack is cold or when SOC is above ~80%." }
       ],
       keypoints: [
-        { title: "Intercalation", text: "Reversible insertion of Li⁺ into layered host structures enables rechargeability." },
-        { title: "SEI Layer", text: "The solid-electrolyte interphase forms on the anode during first charge and critically affects cycle life." },
-        { title: "Voltage Range", text: "Typical Li-ion cells operate between 2.5 V and 4.2 V depending on cathode chemistry." }
+        { title: "Energy Density", text: "Cell-level 250–300 Wh/kg for NMC, ~160 Wh/kg for LFP; pack-level ~160 Wh/kg and ~125 Wh/kg respectively." },
+        { title: "Intercalation", text: "Reversible Li⁺ insertion into layered hosts is the mechanism — no metal is plated or dissolved during normal cycling." },
+        { title: "SEI Layer", text: "A 5–50 nm solid-electrolyte interphase forms on graphite during the first charge; consuming ~5–10% of the initial Li inventory but enabling >1,000-cycle life." },
+        { title: "Voltage Window", text: "Operate between 2.5–4.2 V (LCO/NMC) or 2.0–3.65 V (LFP); excursions outside this window cause copper dissolution or oxygen release." },
+        { title: "C-Rate", text: "1C = full discharge in 1 h. EV cells comfortably do 1–3C; utility BESS cells run 0.25–0.5C to maximise cycle life beyond 6,000 cycles." }
       ]
     },
     {
-      id: "dd-nernst", num: "Concept 2 of 3", title: "Nernst Equation",
-      desc: "E = E° − (RT/nF)ln(Q) — relating cell voltage to concentration.", color: "#58a6ff", icon: "⚡",
+      id: "dd-nernst", num: "Concept 2 of 5", title: "Nernst Equation & Cell Voltage",
+      desc: "E = E° − (RT/nF)ln(Q) — voltage as a function of state of charge.", color: "#58a6ff", icon: "⚡",
+      svg: function(w, h) {
+        return '<svg viewBox="0 0 520 260" width="100%" style="max-width:'+w+'px">'
+          + '<line x1="60" y1="220" x2="480" y2="220" stroke="#8b949e" stroke-width="1.5"/>'
+          + '<line x1="60" y1="40" x2="60" y2="220" stroke="#8b949e" stroke-width="1.5"/>'
+          + '<text x="270" y="248" fill="#8b949e" text-anchor="middle" font-size="12">State of Charge (%)</text>'
+          + '<text x="20" y="130" fill="#8b949e" text-anchor="middle" font-size="12" transform="rotate(-90 20 130)">Cell Voltage (V)</text>'
+          + '<g fill="#8b949e" font-size="10" text-anchor="middle">'
+          +   '<text x="60" y="235">0</text><text x="165" y="235">25</text>'
+          +   '<text x="270" y="235">50</text><text x="375" y="235">75</text><text x="480" y="235">100</text>'
+          + '</g>'
+          + '<g fill="#8b949e" font-size="10" text-anchor="end">'
+          +   '<text x="55" y="60">4.2</text><text x="55" y="115">3.7</text>'
+          +   '<text x="55" y="170">3.2</text><text x="55" y="223">2.5</text>'
+          + '</g>'
+          + '<path d="M60 195 Q120 165 165 145 T270 120 T375 90 T480 55" stroke="#7ee787" stroke-width="2.5" fill="none"/>'
+          + '<text x="430" y="50" fill="#7ee787" font-size="11">NMC</text>'
+          + '<path d="M60 180 L120 165 L200 162 L320 160 L420 158 L460 100 L480 70" stroke="#ffa657" stroke-width="2.5" fill="none"/>'
+          + '<text x="430" y="155" fill="#ffa657" font-size="11">LFP plateau</text>'
+          + '<line x1="270" y1="220" x2="270" y2="120" stroke="#d2a8ff" stroke-dasharray="3,3"/>'
+          + '<text x="278" y="115" fill="#d2a8ff" font-size="10">E ≈ E°</text>'
+          + '<text x="278" y="128" fill="#d2a8ff" font-size="10">at 50% SOC</text>'
+          + '<text x="200" y="60" fill="#58a6ff" font-size="11">E = E° − (RT/nF)·ln(Q)</text>'
+          + '</svg>';
+      },
       sections: [
-        { title: "Overview", text: "The Nernst equation describes how the electromotive force (EMF) of an electrochemical cell varies with the activities (concentrations) of the reactants and products. It bridges thermodynamics and electrochemistry." },
-        { title: "Key Formula", formula: "E = E° − (RT / nF) ln(Q)" },
-        { title: "Variables", text: "E° is the standard cell potential, R is the gas constant (8.314 J/mol·K), T is temperature in Kelvin, n is the number of electrons transferred, F is Faraday's constant (96,485 C/mol), and Q is the reaction quotient." }
+        { title: "Overview", text: "The Nernst equation links a cell's open-circuit voltage to the activities (effectively concentrations) of the reactants and products. For a battery, those activities change continuously as ions shuttle between electrodes — so the Nernst equation is the bridge between thermodynamics and the discharge curve you measure on a multimeter. It explains why a fully charged cell sits above its nameplate voltage and why the last 10% of capacity falls off a cliff." },
+        { title: "Key Formula", formula: "E = E° − (RT / nF) · ln(Q)" },
+        { title: "Variables", text: "E° is the standard cell potential (e.g. 3.7 V for graphite/NMC), R = 8.314 J/mol·K, T in kelvin (room temp ≈ 298 K), n is electrons per formula unit (1 for Li⁺), F = 96,485 C/mol, and Q is the reaction quotient — for an intercalation cell, roughly the ratio of vacant to filled lattice sites in each electrode. At 25 °C the prefactor RT/F is ~25.7 mV." },
+        { title: "Worked Example: Voltage at 90% SOC", text: "Take a graphite/NMC cell with E° = 3.70 V at 50% SOC. Approximate Q ≈ (1−SOC)/SOC for the cathode and the reciprocal for the anode. At 90% SOC, Q_cell ≈ ((0.1/0.9)/(0.9/0.1)) = 0.0123, so E ≈ 3.70 − 0.0257·ln(0.0123) = 3.70 + 0.113 = 3.81 V. Real cells deviate because of phase transitions and non-ideal activity coefficients, which is why manufacturers ship empirical SOC–OCV lookup tables instead of relying on raw Nernst." },
+        { title: "Pitfall: LFP's Flat Plateau", text: "LFP undergoes a two-phase reaction (FePO₄ ↔ LiFePO₄) so the chemical potential — and thus voltage — barely moves between 20% and 90% SOC, sitting at ~3.30 V. This makes voltage-based SOC estimation unreliable for LFP packs; BMS designers must lean on coulomb counting plus Kalman filtering, and force occasional full charges to recalibrate." }
       ],
       keypoints: [
-        { title: "At Equilibrium", text: "When Q = K (equilibrium constant), E = 0 and the cell can do no work." },
-        { title: "Temperature Effect", text: "Higher temperature increases the magnitude of the correction term, shifting the voltage." },
-        { title: "Practical Use", text: "Used to predict open-circuit voltage, pH sensor calibration, and corrosion potentials." }
+        { title: "Equilibrium ⇒ E = 0", text: "When Q equals the equilibrium constant K, the cell is fully discharged and can do no further work." },
+        { title: "Temperature Slope", text: "RT/F ≈ 25.7 mV at 25 °C; per °C the OCV shifts by ~−0.3 mV/°C for typical Li-ion, so cold packs read low and warm packs read high." },
+        { title: "Practical Use", text: "Underlies SOC estimation, pH sensors, reference electrodes (Ag/AgCl, calomel) and corrosion potential prediction." },
+        { title: "Hysteresis", text: "Charge OCV sits 10–30 mV above discharge OCV at the same SOC — the BMS must average or model this gap to avoid systematic SOC bias." },
+        { title: "LFP Caveat", text: "Two-phase chemistries violate the smooth Nernst curve; their plateau is what makes them safe but also hard to gauge." }
       ]
     },
     {
-      id: "dd-bms", num: "Concept 3 of 3", title: "Battery Management System",
-      desc: "Cell balancing, SOC estimation, safety cutoffs.", color: "#f778ba", icon: "🖥️",
+      id: "dd-bms", num: "Concept 3 of 5", title: "Battery Management System",
+      desc: "Cell balancing, SOC/SOH estimation, contactor control and safety cutoffs.", color: "#f778ba", icon: "🖥️",
+      svg: function(w, h) {
+        return '<svg viewBox="0 0 520 280" width="100%" style="max-width:'+w+'px">'
+          + '<g font-size="11" fill="#c9d1d9" text-anchor="middle">'
+          +   '<rect x="40" y="30" width="120" height="60" rx="6" fill="#1f6feb22" stroke="#58a6ff"/>'
+          +   '<text x="100" y="55">Cell Sense</text><text x="100" y="72">V · I · T</text>'
+          +   '<rect x="40" y="120" width="120" height="60" rx="6" fill="#1f6feb22" stroke="#58a6ff"/>'
+          +   '<text x="100" y="145">Balancer</text><text x="100" y="162">passive / active</text>'
+          +   '<rect x="40" y="210" width="120" height="50" rx="6" fill="#1f6feb22" stroke="#58a6ff"/>'
+          +   '<text x="100" y="232">Contactors</text><text x="100" y="248">+ pre-charge</text>'
+          +   '<rect x="200" y="100" width="140" height="100" rx="8" fill="#f7826622" stroke="#ffa657" stroke-width="2"/>'
+          +   '<text x="270" y="125" font-weight="bold" fill="#ffa657">BMS MCU</text>'
+          +   '<text x="270" y="145">SOC · SOH</text><text x="270" y="162">Kalman / OCV</text>'
+          +   '<text x="270" y="180">Fault FSM</text>'
+          +   '<rect x="380" y="30" width="120" height="60" rx="6" fill="#7ee78722" stroke="#7ee787"/>'
+          +   '<text x="440" y="55">Thermal</text><text x="440" y="72">heater / fan</text>'
+          +   '<rect x="380" y="120" width="120" height="60" rx="6" fill="#7ee78722" stroke="#7ee787"/>'
+          +   '<text x="440" y="145">CAN / RS-485</text><text x="440" y="162">→ inverter / EMS</text>'
+          +   '<rect x="380" y="210" width="120" height="50" rx="6" fill="#d2a8ff22" stroke="#d2a8ff"/>'
+          +   '<text x="440" y="232">Log / Cloud</text><text x="440" y="248">warranty / OTA</text>'
+          + '</g>'
+          + '<g stroke="#8b949e" stroke-width="1.2" fill="none" marker-end="url(#bmsArr)">'
+          +   '<line x1="160" y1="60" x2="200" y2="130"/>'
+          +   '<line x1="160" y1="150" x2="200" y2="155"/>'
+          +   '<line x1="160" y1="235" x2="200" y2="190"/>'
+          +   '<line x1="340" y1="130" x2="380" y2="60"/>'
+          +   '<line x1="340" y1="150" x2="380" y2="150"/>'
+          +   '<line x1="340" y1="170" x2="380" y2="235"/>'
+          + '</g>'
+          + '<defs><marker id="bmsArr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#8b949e"/></marker></defs>'
+          + '</svg>';
+      },
       sections: [
-        { title: "Overview", text: "A Battery Management System (BMS) monitors voltage, current, and temperature of each cell in a pack. It ensures safe operation, maximises usable capacity, and extends battery lifetime." },
-        { title: "Cell Balancing", text: "Passive balancing dissipates excess energy from higher-voltage cells as heat. Active balancing redistributes charge between cells using inductors or capacitors, improving pack efficiency." },
-        { title: "SOC & SOH", text: "State-of-Charge (SOC) estimation uses coulomb counting, voltage lookup, or Kalman filters. State-of-Health (SOH) tracks capacity fade and internal resistance growth over the battery's lifetime." }
+        { title: "Overview", text: "A Battery Management System is the embedded brain of every multi-cell pack. It samples cell voltages (typically every 100 ms), pack current, and dozens of temperature points, runs SOC/SOH estimators, balances drift between cells, controls contactors and pre-charge resistors, and reports state to a host EMS or vehicle controller. Without a BMS, even a perfect chemistry would self-destruct within months — overcharging a single cell by 100 mV can trigger thermal runaway." },
+        { title: "Cell Balancing", text: "In a 100s × 50p pack, manufacturing tolerance gives each series string a ±2% capacity spread. Without balancing, the weakest cell defines the pack's usable capacity. Passive balancing burns excess charge from high cells through 100 Ω resistors (~50 mA, simple but wasteful — limited to 1–2% per night). Active balancing moves charge from high to low cells via flyback transformers or switched capacitors at >90% efficiency, essential for large stationary packs that can't afford the heat." },
+        { title: "SOC & SOH Estimation", text: "Coulomb counting (∫I dt) is accurate short-term but drifts because of integration error and unknown initial state. Voltage lookup is reliable only at OCV plateaus. Production BMS use an Extended Kalman Filter that fuses both, plus a temperature-compensated equivalent-circuit model, achieving ±2% SOC accuracy. SOH tracks capacity fade (Q_now / Q_BOL) and resistance growth (R_now / R_BOL); when either passes 80% / 200% the pack is flagged for second-life or recycling." },
+        { title: "Worked Example: Pre-Charge", text: "Closing the main contactor on a 400 V pack into an inverter's 1 mF DC-link capacitor produces an inrush of V/R = 400/0.001 = 400 kA peak if R is just contact resistance — instantly welding the contactor. The fix is a pre-charge resistor (e.g. 50 Ω) placed across a smaller pre-charge contactor; closing it first limits inrush to 8 A and charges the cap with τ = RC = 50 ms. After ~5τ the main contactor closes onto an already-charged bus and the resistor contactor opens." },
+        { title: "Pitfall: Sleep-Mode Drain", text: "A BMS that idles at 5 mA continuously will drain a 100 Ah cell in ~2 years — unacceptable for stationary backup. Modern designs use a watchdog wake-up cycle (sample once an hour at <1 mA average) and a hardware-isolation MOSFET that fully disconnects the BMS itself when the pack is in deep storage." }
       ],
       keypoints: [
-        { title: "Safety Cutoffs", text: "BMS enforces over-voltage, under-voltage, over-current, and over-temperature protection to prevent damage and thermal runaway." },
-        { title: "Communication", text: "Modern BMS units communicate via CAN bus or SMBus to report pack status to the host system." },
-        { title: "Fault Logging", text: "Event logs help diagnose field failures and warranty claims." }
+        { title: "Safety Cutoffs", text: "Hard limits on over-voltage (>4.25 V Li-ion), under-voltage (<2.5 V), over-current (>2× rated), and over-temperature (>60 °C cell, >85 °C bus-bar)." },
+        { title: "Communication", text: "CAN 2.0B at 250–500 kbps for automotive, Modbus/RS-485 or Ethernet for stationary; both expose SOC, SOH, fault flags and per-cell voltages." },
+        { title: "Balancing Current", text: "Passive: 30–150 mA; active: 1–5 A — choose based on pack size and acceptable balancing time (overnight vs continuous)." },
+        { title: "Estimator Accuracy", text: "EKF-based SOC: ±2% in steady state, ±5% during fast transients; SOH: ±5% over the pack lifetime." },
+        { title: "Functional Safety", text: "Automotive packs require ISO 26262 ASIL-C/D for the BMS — dual-redundant cell monitoring ICs and cross-checked MCU pairs." }
+      ]
+    },
+    {
+      id: "dd-pq", num: "Concept 4 of 5", title: "Grid-Connected BESS: P-Q Operation",
+      desc: "Four-quadrant inverter operation, real and reactive power for grid services.", color: "#d2a8ff", icon: "🔌",
+      svg: function(w, h) {
+        return '<svg viewBox="0 0 320 320" width="100%" style="max-width:'+w+'px">'
+          + '<line x1="20" y1="160" x2="300" y2="160" stroke="#8b949e" stroke-width="1.5" marker-end="url(#pqArr)"/>'
+          + '<line x1="160" y1="300" x2="160" y2="20" stroke="#8b949e" stroke-width="1.5" marker-end="url(#pqArr)"/>'
+          + '<defs><marker id="pqArr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#8b949e"/></marker></defs>'
+          + '<text x="295" y="178" fill="#8b949e" font-size="11">+P (discharge)</text>'
+          + '<text x="25" y="178" fill="#8b949e" font-size="11">−P (charge)</text>'
+          + '<text x="170" y="25" fill="#8b949e" font-size="11">+Q (capacitive)</text>'
+          + '<text x="170" y="312" fill="#8b949e" font-size="11">−Q (inductive)</text>'
+          + '<g font-size="10" text-anchor="middle">'
+          +   '<rect x="170" y="55" width="120" height="90" fill="#7ee78722" stroke="#7ee787" stroke-dasharray="3,3"/>'
+          +   '<text x="230" y="80" fill="#7ee787" font-weight="bold">Q1</text>'
+          +   '<text x="230" y="100" fill="#c9d1d9">Discharge +</text>'
+          +   '<text x="230" y="115" fill="#c9d1d9">Volt support</text>'
+          +   '<text x="230" y="132" fill="#8b949e">peak shaving</text>'
+          +   '<rect x="30" y="55" width="120" height="90" fill="#58a6ff22" stroke="#58a6ff" stroke-dasharray="3,3"/>'
+          +   '<text x="90" y="80" fill="#58a6ff" font-weight="bold">Q2</text>'
+          +   '<text x="90" y="100" fill="#c9d1d9">Charge +</text>'
+          +   '<text x="90" y="115" fill="#c9d1d9">Volt support</text>'
+          +   '<text x="90" y="132" fill="#8b949e">PV soak</text>'
+          +   '<rect x="30" y="175" width="120" height="90" fill="#f778ba22" stroke="#f778ba" stroke-dasharray="3,3"/>'
+          +   '<text x="90" y="200" fill="#f778ba" font-weight="bold">Q3</text>'
+          +   '<text x="90" y="220" fill="#c9d1d9">Charge +</text>'
+          +   '<text x="90" y="235" fill="#c9d1d9">Volt sink</text>'
+          +   '<text x="90" y="252" fill="#8b949e">load smoothing</text>'
+          +   '<rect x="170" y="175" width="120" height="90" fill="#ffa65722" stroke="#ffa657" stroke-dasharray="3,3"/>'
+          +   '<text x="230" y="200" fill="#ffa657" font-weight="bold">Q4</text>'
+          +   '<text x="230" y="220" fill="#c9d1d9">Discharge +</text>'
+          +   '<text x="230" y="235" fill="#c9d1d9">Volt sink</text>'
+          +   '<text x="230" y="252" fill="#8b949e">freq response</text>'
+          + '</g>'
+          + '<circle cx="160" cy="160" r="100" fill="none" stroke="#d2a8ff" stroke-dasharray="2,4"/>'
+          + '<text x="262" y="270" fill="#d2a8ff" font-size="10">|S| = √(P²+Q²) ≤ S_rated</text>'
+          + '</svg>';
+      },
+      sections: [
+        { title: "Overview", text: "A grid-tied BESS is really two devices: an electrochemical store (DC) and a four-quadrant inverter that couples it to the AC grid. The inverter can independently control real power P (kW, energy flow) and reactive power Q (kVAr, voltage support) within an apparent-power circle |S| = √(P²+Q²) ≤ S_rated. This decoupling is what lets one Megapack simultaneously discharge energy for arbitrage AND inject reactive power to hold the local feeder voltage — two revenue streams from one asset." },
+        { title: "The Four Quadrants", text: "Q1 (P>0, Q>0): discharging while supplying capacitive Q — typical evening peak with a sagging feeder. Q2 (P<0, Q>0): charging from midday solar while still propping voltage up. Q3 (P<0, Q<0): charging and absorbing Q to damp an over-voltage on a lightly loaded line. Q4 (P>0, Q<0): discharging plus inductive Q — used to ride through a downstream capacitor-bank trip. Modern grid-forming inverters can swap quadrants in <20 ms, faster than a synchronous machine's inertia could ever respond." },
+        { title: "Apparent Power Constraint", formula: "|S| = √(P² + Q²) ≤ S_rated  ;  P = V·I·cos φ ;  Q = V·I·sin φ" },
+        { title: "Worked Example: Volt-VAr Trade-off", text: "A 2 MW / 4 MWh BESS with a 2.5 MVA inverter is asked to discharge 2 MW for arbitrage. Available headroom for reactive power is √(2.5² − 2.0²) = 1.5 MVAr — enough to satisfy IEEE 1547 Cat-B Volt-VAr support without curtailing P. If the operator instead overloads the inverter to 2.5 MW pure real, all reactive capability vanishes and the local utility can issue a non-compliance notice. This is why owners often spec inverters at 1.25× the rated MW." },
+        { title: "Pitfall: Grid-Following vs Grid-Forming", text: "Grid-following inverters use a phase-locked loop to track grid voltage; if the grid disappears, they shut down within 2 cycles (anti-islanding). Grid-forming inverters self-establish voltage and frequency, can black-start a microgrid, and provide synthetic inertia — but require sophisticated droop control and are ~20% more expensive. The 2016 South Australia blackout pushed regulators to mandate grid-forming capability on new utility BESS." }
+      ],
+      keypoints: [
+        { title: "Round-Trip Efficiency", text: "Modern Li-ion BESS achieve 85–92% AC-to-AC RTE; inverter losses ~2%, transformer ~1%, battery ~6–10%." },
+        { title: "Response Time", text: "Inverter can change P or Q from 0 to rated in <20 ms — beating gas peakers (10 min) and hydro (30 s) for fast frequency response." },
+        { title: "Apparent vs Real", text: "Sizing in MVA (apparent) not MW; the 100 MW / 129 MWh Hornsdale battery has a ~150 MVA inverter for headroom." },
+        { title: "Power Factor", text: "cos φ = P/|S|; utilities typically require BESS to operate between 0.85 leading and 0.85 lagging." },
+        { title: "Standards", text: "IEEE 1547-2018, UL 1741 SB, IEC 62933 govern interconnection, anti-islanding and Volt-VAr profiles." }
+      ]
+    },
+    {
+      id: "dd-freq", num: "Concept 5 of 5", title: "Frequency Regulation & Droop",
+      desc: "Primary/secondary response, droop curves, and inertia from BESS.", color: "#ffa657", icon: "📈",
+      svg: function(w, h) {
+        return '<svg viewBox="0 0 520 260" width="100%" style="max-width:'+w+'px">'
+          + '<line x1="60" y1="220" x2="500" y2="220" stroke="#8b949e" stroke-width="1.5"/>'
+          + '<line x1="60" y1="40" x2="60" y2="220" stroke="#8b949e" stroke-width="1.5"/>'
+          + '<text x="280" y="248" fill="#8b949e" text-anchor="middle" font-size="12">Time after disturbance (s)</text>'
+          + '<text x="20" y="130" fill="#8b949e" text-anchor="middle" font-size="12" transform="rotate(-90 20 130)">Frequency (Hz)</text>'
+          + '<g fill="#8b949e" font-size="10" text-anchor="end">'
+          +   '<text x="55" y="65">50.2</text><text x="55" y="120">50.0</text>'
+          +   '<text x="55" y="175">49.8</text><text x="55" y="220">49.5</text>'
+          + '</g>'
+          + '<g fill="#8b949e" font-size="10" text-anchor="middle">'
+          +   '<text x="60" y="235">0</text><text x="170" y="235">5</text>'
+          +   '<text x="280" y="235">15</text><text x="390" y="235">60</text><text x="500" y="235">300</text>'
+          + '</g>'
+          + '<line x1="60" y1="120" x2="500" y2="120" stroke="#7ee787" stroke-dasharray="3,3"/>'
+          + '<text x="495" y="115" fill="#7ee787" font-size="10" text-anchor="end">50 Hz nominal</text>'
+          + '<line x1="100" y1="120" x2="100" y2="220" stroke="#f778ba" stroke-dasharray="2,2"/>'
+          + '<text x="105" y="60" fill="#f778ba" font-size="10">Generator trip</text>'
+          + '<path d="M100 120 L130 200 L160 195 L200 175 L260 150 L340 135 L420 128 L500 122" stroke="#58a6ff" stroke-width="2.5" fill="none"/>'
+          + '<text x="240" y="195" fill="#58a6ff" font-size="11">No BESS — slow recovery</text>'
+          + '<path d="M100 120 L120 175 L150 160 L200 135 L260 125 L340 122 L420 121 L500 120" stroke="#ffa657" stroke-width="2.5" fill="none"/>'
+          + '<text x="320" y="160" fill="#ffa657" font-size="11">With BESS FFR — bounce arrested</text>'
+          + '<text x="80" y="200" fill="#d2a8ff" font-size="10">nadir</text>'
+          + '<text x="200" y="58" fill="#d2a8ff" font-size="10">Droop slope = ΔP/Δf  (e.g. 4%)</text>'
+          + '</svg>';
+      },
+      sections: [
+        { title: "Overview", text: "Grid frequency is a real-time scoreboard for the supply-demand balance — when generation outpaces load, frequency rises; when load wins, it sags. Each grid sets a tight nominal (50 Hz in Europe/India, 60 Hz in the Americas) and a narrow operating band (±0.2 Hz typical). Three nested control loops keep the frequency stable: synthetic inertia (sub-second), primary droop response (1–30 s), and secondary AGC (30 s–15 min). BESS is uniquely good at the first two because it can swing full power in a single AC cycle." },
+        { title: "Droop Control", text: "Droop is a proportional controller: ΔP = −(1/R)·Δf/f₀, where R is the droop setting (typically 4–5%). A 5% droop means a 5% frequency drop (2.5 Hz on 50 Hz) commands 100% rated power. For a 100 MW BESS with R = 4%, a 0.1 Hz under-frequency event (Δf = −0.1 Hz, Δf/f₀ = −0.002) commands ΔP = −(1/0.04)·(−0.002)·100 = +5 MW of discharge — automatic, decentralised, and identical to how a synchronous generator's governor responds." },
+        { title: "Worked Example: Hornsdale FFR", text: "Tesla's 100 MW Hornsdale Power Reserve in South Australia famously responded to the 2017 Loy Yang generator trip in 140 ms with 100 MW of injection — three orders of magnitude faster than the gas turbines that traditionally provided this service. AEMO data showed the frequency nadir was raised from 49.5 Hz to 49.8 Hz, avoiding cascading load-shedding. The asset paid back its A$90 M cost in under three years primarily through FCAS (Frequency Control Ancillary Services) revenue, not energy arbitrage." },
+        { title: "Synthetic Inertia", text: "Real spinning machines deliver inertial response automatically: a frequency drop pulls kinetic energy out of the rotor (P_inertia = 2H·df/dt). As fossil generators retire, system inertia (H) shrinks and df/dt rises, threatening stability. A grid-forming inverter can mimic this with a virtual-synchronous-machine algorithm that injects power proportional to df/dt — 'synthetic inertia.' BESS is the most natural host because it has no minimum dwell or warm-up time." },
+        { title: "Pitfall: Throughput Wear", text: "An FCR/FFR contract that demands ±10 MW continuously can put 4,000+ shallow cycles per year on the pack. Even at <10% depth-of-discharge each, the cumulative throughput shortens calendar life and costs ~$5–10/MWh in capacity degradation. Smart bidding strategies cap participation when SOC drifts outside 30–70%, and operators model NPV with an explicit cycle-life cost rather than treating capacity as free." }
+      ],
+      keypoints: [
+        { title: "Response Tiers", text: "FFR (<1 s) → FCR/Primary (1–30 s) → aFRR/Secondary (30 s–15 min) → mFRR/Tertiary (>15 min). BESS dominates the first two." },
+        { title: "Droop Setting", text: "Typical R = 4–5%; smaller R = stiffer response but risk of oscillation; larger R = sluggish but stable." },
+        { title: "Frequency Bands", text: "Dead-band ±20 mHz (no action), regulation band ±200 mHz, emergency >±500 mHz triggers under-frequency load shedding." },
+        { title: "Revenue", text: "FCAS markets pay $5–50/MW/h for availability plus $/MWh for energy delivered — often higher $/kWh than energy arbitrage." },
+        { title: "Inertia Constant", text: "H = stored KE / rated MVA; thermal plants H ≈ 4–6 s, BESS-emulated H = 0 physically but 2–10 s synthetically." }
+      ]
+    }
+  ],
+
+  useCases: [
+    {
+      id: "uc-peak-shaving", title: "Industrial Peak Shaving",
+      desc: "Trim demand-charge spikes at a manufacturing plant using a behind-the-meter BESS.",
+      icon: "📉", color: "#7ee787",
+      summary: "Industrial customers pay both for <strong>energy (kWh)</strong> and for their <strong>peak demand (kW)</strong> in any 15-minute window — and the demand charge often dominates the bill. A behind-the-meter BESS profiles load, sizes capacity for the worst peaks, dispatches against a rolling threshold, and recharges off-peak. <strong>Payback is driven entirely by the $/kW-month tariff</strong>, not by energy arbitrage.",
+      pipeline: "Submeter (1-min) → 12-mo load profile → Top-5% peak analysis\n        ↓\n   Sizing: P_shave (MW) × t_peak (h) → kWh + 20% headroom\n        ↓\n   Local controller (rolling 15-min avg) → discharge cmd\n        ↓\n   Off-peak recharge (≤0.3 C) → next-day ready\n        ↓\n   Demand-charge $ saved → ROI / IRR",
+      metrics: [
+        { label: "Typical demand charge", value: "$12–25 /kW-month" },
+        { label: "Shave depth (1 MW BESS)", value: "0.8–1.0 MW firm" },
+        { label: "Recharge C-rate", value: "0.2–0.3 C overnight" },
+        { label: "Payback (post-ITC)", value: "3–5 years" }
+      ],
+      extensions: "Stack peak shaving with <strong>solar self-consumption</strong>, <strong>backup-power resilience</strong>, and <strong>wholesale energy arbitrage</strong> on the same asset (value-stacking). Then explore tariff-aware MPC dispatch that co-optimizes all revenue streams against degradation cost.",
+      steps: [
+        { title: "Profile the load", component: "Submeter + EMS", proto: "Modbus TCP",
+          intuition: "Demand charges are set by your <em>worst</em> 15-minute window each month, not your average — so a tiny fraction of intervals drives most of the bill.",
+          complexity: "O(n) scan over 525,600 minute-samples/yr",
+          detail: "Log 1-minute interval data for 12 months. Identify the top 5% of intervals — these usually drive 80% of the demand charge. A typical plant peaks 2.5 MW at midday but averages only 1.6 MW, leaving a clear 900 kW shaving target.",
+          example: "A 1.6 MW-avg plastics plant billed at $20/kW-month sees $50K/yr in demand charges from just ~40 peak intervals (≈10 hours total) — every other minute is irrelevant to the bill.",
+          pitfall: "Sub-15-minute spikes can hide inside utility 15-min rolling averages — sample at 1 min and re-aggregate the way the utility tariff does, or you'll under-size by 10–20%." },
+        { title: "Size the battery", component: "1 MW / 2 MWh Li-ion BESS", proto: "DC-coupled inverter",
+          intuition: "Power rating (MW) sets the <em>shave depth</em>; energy rating (MWh) sets the <em>shave duration</em>. Industrial peaks usually need ~2 h, so a 2-hour battery (1C) is the sweet spot.",
+          complexity: "Sizing problem: minimize CAPEX s.t. P95 unmet-peak ≤ ε",
+          detail: "Energy = peak duration × shave depth. For a 2-hour midday peak shaved 1 MW deep, you need 2 MWh of usable energy. Add 20% headroom for SOC limits and degradation, so spec a 2.4 MWh nameplate pack.",
+          example: "Tesla Megapack 2 XL: 3.9 MWh nameplate, ~3.4 MWh usable @ 10–90% SOC window, 1.9 MW continuous — a single unit shaves 1.9 MW for ~1.8 h.",
+          pitfall: "Forgetting end-of-life (EOL) derating: LFP holds ~80% capacity at 6,000 cycles, so a Year-10 BESS shaves <em>0.8×</em> its day-1 depth unless oversized up front." },
+        { title: "Deploy peak-shave dispatch", component: "Local controller", proto: "IEC 61850 GOOSE",
+          intuition: "Don't try to be clever — a hard threshold on the rolling 15-min meter reading captures &gt;95% of the value with zero forecasting risk.",
+          complexity: "Control loop: O(1) per 1-s tick",
+          detail: "Controller watches rolling 15-min average demand. When forecast demand crosses a threshold (e.g. 1.7 MW), it dispatches discharge to clamp the meter at the threshold. Recharges overnight at <0.3 C from cheap off-peak energy.",
+          code: "if rolling_15min_kW > 1700:\n    dispatch_kW = rolling_15min_kW - 1700\n    bess.discharge(dispatch_kW)",
+          example: "A Stem Athena controller in a California cold-storage facility holds the 15-min meter at 1.70 MW ±20 kW even as compressor cycling swings instantaneous load 400 kW.",
+          pitfall: "<em>Threshold creep</em>: if you set the threshold too low and exhaust SOC mid-peak, the utility resets your billing peak to the un-shaved value — one bad day undoes the month." },
+        { title: "Measure ROI", component: "Utility bill",
+          intuition: "Demand-charge savings are deterministic and recurring monthly — that makes peak shaving one of the few BESS revenues that lenders will finance at low rates.",
+          detail: "If the demand charge is $18/kW-month and the BESS shaves 800 kW reliably, savings are 800 × 18 × 12 = $172,800/year. A $1.2 M project pays back in ~7 years before tax credits, ~4 years with the U.S. ITC.",
+          example: "A 2 MW / 4 MWh project at $400/kWh installed = $1.6 M; with 30% ITC and $25/kW-mo demand savings on 1.6 MW firm = $480K/yr → simple payback ≈ 2.3 years.",
+          pitfall: "Cycle counting is the silent killer — peak shaving at 250+ equivalent full cycles/yr can hit EOL before the financial payback if you cheap out on cell chemistry (avoid NMC for daily-cycling assets; use LFP).",
+          refs: [{ label: "NREL: Behind-the-Meter Storage Economics", url: "https://www.nrel.gov/docs/fy19osti/71387.pdf" }] }
+      ]
+    },
+    {
+      id: "uc-fcr", title: "Frequency Containment Reserve (FCR)",
+      desc: "Sell sub-second frequency response into a system-operator ancillary market.",
+      icon: "🌊", color: "#ffa657",
+      summary: "Grid frequency is the heartbeat of an AC power system — when generation and load drift apart, frequency drifts off 50/60 Hz and must be corrected within seconds. <strong>BESS dominates FCR markets</strong> because inverters can swing from full charge to full discharge in &lt;100 ms, vs. tens of seconds for thermal plants. The asset earns <strong>availability payments</strong> for being ready, and a small amount of energy throughput per event.",
+      pipeline: "TSO pre-qualification test (±step injection @ 100 Hz)\n        ↓\n   Day-ahead auction → cleared MW @ £/MW/h\n        ↓\n   Real-time: freq sensor (PMU) → droop controller (<20 ms)\n        ↓\n   Inverter P_cmd = −(1/droop) × Δf/f_nom × P_rated\n        ↓\n   SOC manager rebalances to 50% between events\n        ↓\n   Daily settlement (availability + activation)",
+      metrics: [
+        { label: "Response time", value: "<1 s full power" },
+        { label: "Droop setting", value: "2–5% (EU FCR-N)" },
+        { label: "FCR clearing price (UK DC)", value: "£8–25 /MW/h" },
+        { label: "Hornsdale (AU) FCAS rev.", value: "~A$24M in first 18 mo" }
+      ],
+      extensions: "Move up the stack to <strong>FFR (Fast Frequency Response)</strong> and <strong>synthetic inertia</strong> using grid-forming inverters that emulate the swing equation. Then look at <strong>RoCoF (rate-of-change-of-frequency) limits</strong> on islanded grids like Ireland's EirGrid (max 1 Hz/s).",
+      steps: [
+        { title: "Qualify the asset", component: "100 MW / 100 MWh BESS", proto: "Grid-forming inverter",
+          intuition: "TSOs trust the <em>step-response curve</em>, not the datasheet — pre-qualification is essentially a controlled stress test that proves the inverter + battery + control loop behave as one system.",
+          complexity: "Test: 15-min sustained @ rated MW, sampled @ 100 Hz",
+          detail: "TSO (e.g. National Grid ESO, AEMO) requires proof of full-power response within 1 s and sustained for 15 min. A pre-qualification test injects ±10 MW step changes while logging at 100 Hz.",
+          example: "Hornsdale Power Reserve (150 MW / 193.5 MWh, SA) responded to the Loy Yang trip in 2017 in 140 ms — a half-second before the contracted thermal reserve even began ramping.",
+          pitfall: "Inverter limits are not the only constraint — the <em>battery</em> may hit a SOC, temperature, or cell-voltage limit mid-test and curtail. Pre-qualify at the worst-case SOC corner, not at 50%." },
+        { title: "Bid into the market", component: "Bidding platform", proto: "REST API to TSO portal",
+          intuition: "FCR is a <em>capacity</em> market — you get paid mostly for <strong>being ready</strong>, not for energy delivered, so the BESS spends 99% of its time idle at ~50% SOC.",
+          detail: "Daily auction for next-day FCR-N (normal) and FCR-D (disturbance) bands. Bid is in £/MW/h availability plus an activation energy price. A 100 MW asset committing 50 MW symmetric reserve typically clears at £8–25/MW/h.",
+          example: "GB Dynamic Containment (DC) cleared at ~£17/MW/h on average in 2022 → a 50 MW commit = £50×17×24×365 ≈ £7.4 M/yr in availability revenue alone.",
+          pitfall: "Bidding <em>asymmetric</em> (e.g. 50 MW up, 30 MW down) leaves you stranded after a long under-frequency event with too much SOC and no down-reserve to monetize — symmetric bids are usually safer." },
+        { title: "Real-time droop response", component: "Local frequency relay", proto: "IEC 60870-5-104",
+          intuition: "Droop is just a <strong>proportional controller</strong>: ΔP / ΔF is a fixed gain, set by the 'droop %'. 4% droop means a 4% frequency deviation commands 100% of rated power.",
+          complexity: "Latency budget: <20 ms sense → control → inverter cmd",
+          detail: "Inverter senses local frequency at <20 ms latency. With 4% droop and 100 MW capability, a 0.1 Hz under-frequency event commands +5 MW discharge automatically. SOC management algorithm biases the operating point to 50% so the asset can swing both directions.",
+          code: "delta_f = f_meas - 50.0  # Hz\nP_cmd = -(1/0.04) * (delta_f/50.0) * P_rated\nP_cmd = clamp(P_cmd, -P_rated, +P_rated)",
+          example: "At a 0.2 Hz drop on a 50 Hz system with 4% droop and 100 MW rating: P_cmd = −(1/0.04)×(−0.2/50)×100 = +10 MW discharge, sustained until frequency recovers.",
+          pitfall: "Naive frequency estimation from a single AC cycle picks up harmonic noise and triggers spurious activations — always use a PLL-based PMU with 100–200 ms moving filter, or you'll cycle the battery to death." },
+        { title: "Settle and degradation accounting", component: "Settlement + asset model",
+          intuition: "FCR throughput is tiny compared to arbitrage — most events are ±2% of rated power for &lt;30 s — so cycle aging is dominated by the SOC rebalancing trades, not the response itself.",
+          detail: "TSO settles availability daily; energy delivered settled in imbalance market. Asset model debits ~0.001% SOH per equivalent full cycle; FCR duty typically adds 200–400 EFC/year — far less than arbitrage.",
+          example: "An LFP cell rated 6,000 EFC to 80% SOH; at 300 EFC/yr of FCR duty the calendar-life floor (~15 yr) dominates, not cycle life — so warranty negotiation focuses on calendar aging.",
+          pitfall: "Forgetting the <em>SOC-restoration trades</em>: every activation pulls SOC off the 50% setpoint, and the restoration cycle (often during expensive intraday) can cost more than the FCR revenue earned during the event.",
+          refs: [{ label: "ENTSO-E LFCR Operational Handbook", url: "https://www.entsoe.eu/network_codes/" }] }
+      ]
+    },
+    {
+      id: "uc-solar-storage", title: "Behind-the-Meter Solar + Storage",
+      desc: "Couple a residential PV array with a Li-ion home battery for self-consumption and outage backup.",
+      icon: "🏠", color: "#58a6ff",
+      summary: "Residential solar without storage exports cheap midday kWh and re-imports expensive evening kWh — a losing trade under modern tariffs. <strong>Adding a battery converts every PV kWh into a self-consumed kWh worth the full retail rate</strong>, and bolts on backup-power resilience for outages. <strong>LFP chemistry</strong> dominates the home market for safety, calendar life, and thermal tolerance in unconditioned garages.",
+      pipeline: "Roof PV (8 kW DC) → MPPT → DC bus\n        ↓\n   Hybrid inverter ── grid (export/import meter)\n        │      ↘\n        │       LFP battery (13.5 kWh, 5 kW)\n        ↓\n   EMS: weather forecast → next-day SOC target\n        ↓\n   Outage detect → islanded mode (<20 ms transfer)",
+      metrics: [
+        { label: "PV array", value: "8 kW DC, 32 kWh/clear day" },
+        { label: "Battery (LFP)", value: "13.5 kWh, 5 kW, ~6,000 cyc" },
+        { label: "Self-consumption uplift", value: "30% → 75–85%" },
+        { label: "Round-trip efficiency", value: "AC-AC 88–92%" }
+      ],
+      extensions: "Add <strong>EV charging arbitration</strong> (V1G or V2H), <strong>virtual power plant (VPP) enrolment</strong> for grid-services revenue, and <strong>dynamic-tariff optimization</strong> for time-of-use plans like Octopus Agile or PG&E EV2-A.",
+      steps: [
+        { title: "PV oversizing", component: "8 kW DC PV array", proto: "MPPT → DC bus",
+          intuition: "Sizing PV for <em>summer surplus</em> rather than annual average makes the battery economics work — winter underproduction is cheap to top up from the grid.",
+          detail: "House consumes ~25 kWh/day. PV produces ~32 kWh on a clear summer day, of which only 12 kWh aligns with daytime load. Excess 20 kWh would otherwise be exported at low feed-in tariff (~5 ¢/kWh).",
+          example: "California NEM-3.0 (2023+) cut the export rate from ~25¢ to ~5¢/kWh — overnight, every solar-only home became 'battery-eligible' on a payback basis.",
+          pitfall: "Oversizing PV beyond inverter capacity causes <strong>clipping</strong> at midday — fine if you immediately divert clipped energy to the battery via DC coupling, costly if you only have an AC-coupled retrofit." },
+        { title: "Battery sizing", component: "13.5 kWh LFP wall battery", proto: "DC-DC coupled to PV inverter",
+          intuition: "Match the battery to the <em>evening + early morning</em> load (~10 kWh for a typical home), not to total daily consumption — the rest is covered by direct PV.",
+          detail: "Sized to absorb the daily PV surplus and cover evening load (~10 kWh from 6 pm to midnight). LFP chosen over NMC for its 6,000-cycle life and cooler thermal behaviour in a garage install.",
+          example: "Tesla Powerwall 3: 13.5 kWh LFP, 11.5 kW peak / 5 kW continuous, ~89% RTE, 10-year warranty to 70% SOH at unlimited cycles for self-consumption.",
+          pitfall: "<em>Backup-only sizing</em>: people buy a 13.5 kWh battery for resilience and use only 5% of it daily — economics never close. Right-size to <em>daily cycling depth</em> first, treat backup as a bonus." },
+        { title: "Smart dispatch logic", component: "Hybrid inverter EMS", proto: "Wi-Fi → cloud weather API",
+          intuition: "A perfect 1-day weather forecast is worth ~15% extra savings vs. a fixed schedule — beyond that, the marginal value drops fast (the long tail isn't worth chasing).",
+          complexity: "MILP / rule-based: O(24×N_states) per day",
+          detail: "EMS forecasts next-day PV from cloud-cover API. If tomorrow is sunny, it discharges the battery aggressively tonight to free capacity; if cloudy, it preserves SOC for the morning. Switches to islanded mode automatically on grid loss, holding critical loads (fridge, lights, modem) for 12+ hours.",
+          code: "if forecast.tomorrow_kWh > 25 and SOC > 0.5:\n    target_SOC_morning = 0.20\nelse:\n    target_SOC_morning = 0.80",
+          example: "Tesla's 'Storm Watch' integrates NOAA severe-weather alerts and pre-charges to 100% SOC 6–12 h before a forecast outage — earned its keep during Hurricane Ida in 2021.",
+          pitfall: "Cloud-API outages silently disable forecast-aware logic — always fall back to a deterministic time-of-use schedule if the API call times out, or you'll wake up to a flat battery on a sunny day." },
+        { title: "Economic check", component: "Tariff calculator",
+          intuition: "The real return on a home battery is the <em>arbitrage spread</em> between import and export rates — not the absolute import price. A 25¢ spread pays back; a 5¢ spread does not.",
+          detail: "At a 30 ¢/kWh import tariff and 5 ¢/kWh export, every kWh self-consumed is worth 25 ¢. 10 kWh/day × 365 = $912/year saved. A $13,000 installed system (post-ITC ~$9,100) pays back in ~10 years — and provides resilience that has no price.",
+          example: "UK Octopus Flux tariff (2024): import peaks at 35p/kWh, exports midday at 20p — a 13.5 kWh battery cycling daily nets ~£600–800/yr depending on PV size.",
+          pitfall: "Forgetting <em>round-trip efficiency</em>: 90% RTE means you lose ~1 kWh per 10 kWh cycled — at 30¢/kWh that's $0.30/day or ~$110/yr off the headline savings.",
+          refs: [{ label: "NREL ResStock Battery Tool", url: "https://resstock.nrel.gov/" }] }
+      ]
+    },
+    {
+      id: "uc-bess-sizing", title: "Size a Grid-Scale BESS for Energy Arbitrage",
+      desc: "Choose MW, MWh, chemistry, and topology for a utility-scale arbitrage + capacity project.",
+      icon: "📐", color: "#d2a8ff",
+      summary: "Grid-scale BESS sizing is a <strong>multi-objective optimization</strong>: power rating (MW) drives ancillary revenue and capacity payments; energy rating (MWh) drives arbitrage revenue. Chemistry (LFP vs. NMC), duration (2h, 4h, 8h), and AC vs. DC coupling each have order-of-magnitude effects on lifetime $/MWh delivered. <strong>The 4-hour LFP block has become the U.S. utility standard</strong> because it qualifies for full ELCC capacity credit in CAISO/ERCOT.",
+      pipeline: "Market analysis (LMP, AS prices) → revenue model\n        ↓\n   Duration sweep: 1h / 2h / 4h / 8h → NPV per kW\n        ↓\n   Chemistry: NMC (250 Wh/kg, 4K cyc) vs LFP (160 Wh/kg, 6K cyc)\n        ↓\n   Topology: AC-coupled (modular) vs DC-coupled (with PV)\n        ↓\n   Aug schedule (capacity adds @ Y5, Y10) → 20-yr LCOS\n        ↓\n   Final: MW × MWh × $/kWh CAPEX → IRR",
+      metrics: [
+        { label: "U.S. utility CAPEX (4h LFP)", value: "$280–360 /kWh installed (2024)" },
+        { label: "LCOS (20-yr, 4h)", value: "$120–160 /MWh" },
+        { label: "Energy density NMC vs LFP", value: "250 vs 160 Wh/kg" },
+        { label: "Round-trip efficiency", value: "85–92% AC-AC" }
+      ],
+      extensions: "Layer in <strong>co-located solar+storage</strong> for ITC stacking, <strong>long-duration storage (LDES)</strong> alternatives (flow batteries, iron-air, CAES) for 10+ h duration, and <strong>capacity accreditation rules</strong> (ELCC, NQC) that drive 4h vs 8h decisions.",
+      steps: [
+        { title: "Build the revenue stack", component: "Market model (Python + ISO data)", proto: "yearly LMP + AS clearing CSVs",
+          intuition: "Arbitrage alone rarely pencils — utility-scale BESS earns 40–70% of revenue from capacity payments and ancillary services, with energy arbitrage as the swing factor.",
+          complexity: "Hourly sim: 8760 × N_years × N_scenarios",
+          detail: "Pull 3+ years of nodal LMP data and ancillary-service clearing prices from the relevant ISO (CAISO OASIS, ERCOT MIS, PJM Data Miner). Build a perfect-foresight dispatch model first as an upper bound, then a realistic forecast-error model.",
+          example: "CAISO 2023: average top-2-hour vs. bottom-2-hour intraday spread = $84/MWh; ERCOT West Hub same year = $112/MWh thanks to wind variability.",
+          pitfall: "Using <em>perfect foresight</em> revenue numbers to size the project — real forecast-aware dispatch typically captures only 70–85% of perfect-foresight arbitrage, and lenders haircut it further." },
+        { title: "Sweep duration & chemistry", component: "Sensitivity analyzer",
+          intuition: "Duration is the single biggest design lever — 2h batteries dominate FCR/FFR, 4h dominate U.S. capacity, 8h+ open seasonal arbitrage but need step-change cost reduction.",
+          complexity: "Grid search: 4 durations × 2 chemistries × 3 cost scenarios",
+          detail: "Run the dispatch sim across (1h, 2h, 4h, 8h) × (NMC, LFP). NMC wins on weight/footprint; LFP wins on calendar life, thermal safety, and capacity-payment eligibility. Plot $/kW-yr revenue and degradation cost for each combination.",
+          example: "Moss Landing (CA): originally 300 MW / 1.2 GWh (4h) NMC, expanded to 750 MW / 3 GWh — but two thermal incidents (2021, 2022) accelerated industry shift to LFP for stationary storage.",
+          pitfall: "Comparing chemistries on <em>$/kWh CAPEX</em> alone misses the real number, which is <em>$/kWh delivered over lifetime</em>. LFP's 1.5× cycle life often beats NMC's lower initial cost." },
+        { title: "Pick topology and PCS sizing", component: "Single-line diagram",
+          intuition: "<strong>AC-coupled</strong> is modular and vendor-agnostic but adds an extra conversion (~2% loss); <strong>DC-coupled</strong> with co-located PV shares the inverter and gains ~3–5% RTE.",
+          detail: "Choose between AC-coupled (battery → its own PCS → AC bus → solar PCS) and DC-coupled (battery + PV share a DC bus into one bidirectional PCS). DC coupling is favored for new-build solar+storage; AC for retrofits and standalone.",
+          example: "Vistra's DeCordova BESS (260 MW / 260 MWh, TX): AC-coupled, 4× 65 MW Power Electronics PCS units, 34.5 kV collection, then transformer to 138 kV grid tie.",
+          pitfall: "Undersizing the medium-voltage transformer kills your charge rate at high SOC — the battery wants constant current but the PCS hits the transformer's thermal limit first." },
+        { title: "Plan augmentation & EOL", component: "20-year asset model",
+          intuition: "BESS capacity fades to ~80% by year 8–10 even at moderate cycling — you either <em>oversize day 1</em>, <em>add capacity at year 5/10 (augment)</em>, or sign a fixed-output warranty wrap with the OEM.",
+          detail: "Model capacity fade with a Wöhler-style cycle + calendar aging curve (e.g. 0.02% per EFC + 1.5% per year). Plan augmentation cells at year 5 and year 10 to keep nameplate firm. Negotiate the warranty around firm capacity, not initial nameplate.",
+          example: "Tesla / Fluence / Wärtsilä typical warranty wrap: '70% of nameplate energy guaranteed for 20 years' — vendor handles augmentation; owner pays a fixed annual service fee (~1–2% of CAPEX).",
+          pitfall: "Forgetting that <strong>augmentation cells age in calendar time on the shelf</strong> too — a Year-10 augment installs at ~85% of its day-1 capacity if it's been warehoused without thermal control.",
+          refs: [
+            { label: "NREL Annual Tech Baseline — Storage", url: "https://atb.nrel.gov/electricity/2024/utility-scale_battery_storage" },
+            { label: "PNNL Grid Energy Storage Cost Report", url: "https://www.pnnl.gov/projects/esgc-cost-performance" }
+          ] }
+      ]
+    },
+    {
+      id: "uc-thermal-mgmt", title: "Design a BESS Thermal Management System",
+      desc: "Keep a 3 MWh container within ±2 °C across the pack under 1C cycling in desert ambient.",
+      icon: "🌡️", color: "#ff7b72",
+      summary: "Li-ion lives or dies by temperature: <strong>every 10 °C above 25 °C roughly doubles the calendar aging rate</strong>, and any cell &gt;60 °C is one short-circuit away from thermal runaway. Pack-level thermal design balances <strong>airflow vs. liquid cooling</strong>, <strong>cell-to-cell ΔT</strong>, and <strong>worst-case ambient</strong> against CAPEX and parasitic load (HVAC eats 2–5% of RTE).",
+      pipeline: "Heat model: I²R + entropic + abuse → W per cell × N\n        ↓\n   Cooling option: forced air vs liquid cold-plate vs immersion\n        ↓\n   CFD / 1-D thermal sim → predicted ΔT pack, hottest cell\n        ↓\n   Loop: pump + chiller sizing (kW_th rejected @ peak)\n        ↓\n   BMS thermal limits: derate above 45 °C, trip @ 60 °C\n        ↓\n   Runaway protection: vent paths, fire suppression (Stat-X / NAF)",
+      metrics: [
+        { label: "Optimal Li-ion temp", value: "15–30 °C (1.0× aging)" },
+        { label: "Liquid cooling ΔT (pack)", value: "<3 °C typical" },
+        { label: "Heat at 1C cycling", value: "2–4% of throughput → kW_th" },
+        { label: "HVAC parasitic load", value: "1–3% of rated MW" }
+      ],
+      extensions: "Explore <strong>immersion cooling</strong> (dielectric fluid like 3M Novec or hydrocarbon) for 0.5 °C ΔT and natural fire suppression, <strong>phase-change materials (PCM)</strong> for peak-shaving thermal events, and <strong>physics-informed digital twins</strong> that predict per-cell ΔT in real time for predictive maintenance.",
+      steps: [
+        { title: "Model the heat generation", component: "Electro-thermal cell model",
+          intuition: "Most heat is <strong>I²R Joule</strong> losses in cell internal resistance, plus a smaller <em>entropic</em> term that flips sign with SOC — net effect is ~2–4% of energy throughput rejected as heat.",
+          complexity: "Q̇_cell = I² × R_int(SOC, T) + I × T × dV_oc/dT",
+          detail: "For a 280 Ah LFP cell at 1C (280 A) with R_int = 0.4 mΩ, Joule heat ≈ 31 W per cell. A 3.2 MWh pack has ~3,600 cells in 1P configuration → ~110 kW thermal load to reject continuously at 1C.",
+          example: "CATL's 280 Ah prismatic LFP: ~31 W/cell @ 1C charge, ~25 W/cell @ 1C discharge — discharge slightly lower because the entropic term goes exothermic to endothermic across SOC.",
+          pitfall: "Using a single R_int value at 25 °C — <strong>R_int doubles below 0 °C</strong>, so a winter cold-start at 1C generates ~2× the design heat load and trips overtemp on the first few cycles." },
+        { title: "Choose cooling architecture", component: "Liquid cold-plate or HVAC",
+          intuition: "Air cooling tops out around 100 kW/rack and 5–8 °C pack ΔT; <strong>liquid cooling</strong> scales to MW-class with &lt;3 °C ΔT but adds a glycol loop and chiller.",
+          detail: "Below ~100 kW thermal load: forced air with rack-mounted HVAC and ducted return is sufficient. Above ~100 kW or for densely-packed MW-scale containers: glycol-water cold plates clamped to module bases, with a 30 °C set-point chiller.",
+          example: "Tesla Megapack 2 XL: integrated liquid cooling with the inverter and battery sharing a single glycol loop; the entire 3.9 MWh + 1.9 MW PCS sits in a footprint smaller than a 40-ft container.",
+          pitfall: "Cold-plate <em>contact resistance</em> dominates real-world performance — a poorly applied thermal pad can raise cell-to-coolant resistance by 3× and silently halve your design margin." },
+        { title: "Size the chiller and pumps", component: "BOP (balance of plant)",
+          intuition: "Chiller capacity must handle the <em>worst-case</em>: peak cycling at peak ambient. Sizing for the average leaves you derating on the hottest, most valuable trading days.",
+          complexity: "Q̇_chiller ≥ Q̇_cell × N + parasitic + solar gain",
+          detail: "Take peak thermal load (e.g. 110 kW for a 1C-rated 3 MWh pack), add a 30% margin for solar gain on the container roof and BOP losses, and pick a chiller — typically a 2-stage scroll compressor running R-410A or R-32. Pumps sized for ~5 m head, ~30 GPM per 100 kW rejected.",
+          example: "A Wärtsilä GridSolv Quantum 5 MWh unit uses a 200 kW chiller capable of holding +40 °C ambient → +28 °C coolant supply with 25% margin headroom.",
+          pitfall: "Single-chiller designs become a <em>single point of failure</em> on the hottest day of the year — N+1 redundancy or staged chillers prevent forced derate during peak revenue hours." },
+        { title: "BMS thermal limits & runaway protection", component: "BMS + fire suppression",
+          intuition: "The BMS is the <em>last line of defense</em>: it derates current above 45 °C, opens contactors above 55 °C, and triggers suppression above 60 °C — well below the ~150 °C onset of thermal runaway in LFP.",
+          detail: "Per-module thermistors (typically 2–4 per module) feed the BMS. Soft derate slope 45–55 °C, hard cutoff at 60 °C. NFPA 855 / UL 9540A compliance requires a fire-suppression layer (aerosol like Stat-X, or clean agent like NAF-S125) plus directed venting away from neighboring containers.",
+          example: "The 2021 Moss Landing thermal event: bearing dust triggered sprinklers, which sprayed water onto live battery modules, causing arc faults — modern designs use clean agents and dry-pipe sensing, never wet pipes near cells.",
+          pitfall: "Putting all thermistors on the cold-plate side gives you a falsely low reading — <em>place at least one per module on the cell tab</em>, where runaway initiates 20–40 °C hotter than the cooling surface.",
+          refs: [
+            { label: "EPRI BESS Failure Incident Database", url: "https://storagewiki.epri.com/index.php/BESS_Failure_Incident_Database" },
+            { label: "NFPA 855 Standard for ESS", url: "https://www.nfpa.org/codes-and-standards/all-codes-and-standards/list-of-codes-and-standards/detail?code=855" }
+          ] }
+      ]
+    }
+  ],
+
+  // === BEGIN glossary v1 data placeholder ===
+  glossary: [
+    { id: "li-ion", term: "Lithium-Ion Cell", aka: "Li-ion", category: "hardware",
+      short: "Rechargeable cell that shuttles Li⁺ between a graphite anode and a layered-oxide cathode through an organic electrolyte.",
+      long: "Li-ion cells deliver 250–300 Wh/kg at the cell level with >1,000-cycle life and are the dominant chemistry for EVs, consumer electronics and grid BESS. During discharge Li⁺ deintercalates from the anode, drifts across a porous separator soaked in LiPF₆/carbonate electrolyte, and inserts into the cathode lattice; electrons travel the external circuit. Operating voltage is 2.5–4.2 V for NMC/LCO and 2.0–3.65 V for LFP.",
+      seeAlso: ["intercalation", "nmc", "lfp", "electrolyte", "sei"] },
+
+    { id: "intercalation", term: "Intercalation", category: "concepts",
+      short: "Reversible insertion of Li⁺ (or Na⁺) into vacant lattice sites of a host electrode without breaking its framework.",
+      long: "Intercalation is the storage mechanism that makes Li-ion uniquely long-lived: graphite (LiC₆ fully lithiated, 372 mAh/g) and layered oxides like LiCoO₂ accept Li⁺ between their planes with <10% volume change. Because no metal is plated or dissolved during normal cycling, cells survive thousands of charge–discharge cycles. Departures from pure intercalation — e.g. silicon alloying or lithium plating — are the main wear mechanisms.",
+      seeAlso: ["li-ion", "lithium-plating", "sei"] },
+
+    { id: "nmc", term: "NMC Cathode", aka: "LiNiMnCoO₂", category: "hardware",
+      short: "Layered nickel–manganese–cobalt oxide cathode delivering ~200 mAh/g at 3.7 V — the workhorse of EV packs.",
+      long: "NMC trades a small voltage drop versus LiCoO₂ for higher capacity and better thermal stability, especially in nickel-rich variants (NMC811, NMC9.5.5). Energy density at the cell level reaches 250–300 Wh/kg, but cobalt cost and oxygen release above ~210 °C drive ongoing chemistry tweaks. Used in Tesla 4680 cells and most non-Chinese EVs.",
+      seeAlso: ["li-ion", "lfp", "thermal-runaway"] },
+
+    { id: "lfp", term: "LFP Cathode", aka: "LiFePO₄", category: "hardware",
+      short: "Iron-phosphate cathode at 3.2 V / ~160 mAh/g — cobalt-free, abuse-tolerant, and dominant in utility BESS.",
+      long: "LFP uses an olivine crystal that locks oxygen tightly, so thermal runaway onset is ~270 °C versus ~150 °C for NMC. Lower energy density is offset by >4,000-cycle life, cheap iron chemistry, and a wide safe operating window. Its flat OCV plateau (3.30 V across 20–90% SOC) is great for safety but complicates SOC estimation, forcing BMS designers to lean on coulomb counting plus periodic full-charge recalibration.",
+      seeAlso: ["nmc", "ocv", "soc", "thermal-runaway", "grid-storage"] },
+
+    { id: "electrolyte", term: "Electrolyte", category: "hardware",
+      short: "Ion-conducting, electron-insulating medium that lets Li⁺ move between electrodes — typically LiPF₆ dissolved in EC/DMC carbonates.",
+      long: "A Li-ion electrolyte is ~1 M LiPF₆ in ethylene carbonate / dimethyl carbonate with additives like VC and FEC that build a stable SEI. It must be electrochemically stable across the cell's voltage window (0–4.5 V vs Li), have ionic conductivity >5 mS/cm, and a wide liquid range. Decomposition at high voltage or temperature generates HF and gases — the root of many failure modes. Solid-state electrolytes (sulfide or oxide ceramics) promise wider stability and dendrite suppression.",
+      seeAlso: ["li-ion", "sei", "separator"] },
+
+    { id: "separator", term: "Separator", category: "hardware",
+      short: "Thin porous polymer film (PE/PP) that prevents anode–cathode contact while letting Li⁺ pass through electrolyte-filled pores.",
+      long: "Typical separators are 16–25 µm tri-layer PP/PE/PP with 40% porosity. Ceramic-coated variants shrink less at high temperature and resist dendrite puncture. Separator shutdown — pores melting closed near 130 °C — is a passive safety feature that throttles ion flow before runaway, but if temperature keeps climbing the film tears and an internal short results.",
+      seeAlso: ["electrolyte", "thermal-runaway", "lithium-plating"] },
+
+    { id: "sei", term: "Solid Electrolyte Interphase", aka: "SEI", category: "concepts",
+      short: "Passivating 5–50 nm film that forms on the graphite anode during the first charge, protecting it from further electrolyte reduction.",
+      long: "The SEI is a mosaic of Li₂CO₃, LiF, ROCO₂Li and oligomeric species created when electrolyte reduces below ~1 V vs Li/Li⁺. It consumes 5–10% of the cell's initial lithium inventory (the irreversible first-cycle loss) but then enables >1,000-cycle life by stopping further parasitic reactions. SEI growth at elevated temperature is the dominant calendar-aging mechanism.",
+      seeAlso: ["electrolyte", "intercalation", "soh"] },
+
+    { id: "lithium-plating", term: "Lithium Plating", category: "concepts",
+      short: "Metallic Li deposited on the graphite surface when Li⁺ arrives faster than it can intercalate — irreversible capacity loss and a dendrite hazard.",
+      long: "Plating happens during cold fast-charging (<0 °C), at high C-rates (>1C above 80% SOC), or as the anode ages and loses active sites. Plated lithium is mostly inert (dead Li) but a fraction grows as needle-like dendrites that can pierce the separator and short the cell. EV charge protocols taper current aggressively at cold or high SOC to avoid plating.",
+      seeAlso: ["intercalation", "c-rate", "sei", "thermal-runaway"] },
+
+    { id: "bms", term: "Battery Management System", aka: "BMS", category: "systems",
+      short: "Embedded controller that monitors every cell's V/I/T, estimates SOC/SOH, balances drift, and operates contactors and safety cutoffs.",
+      long: "A BMS samples cell voltages every 50–200 ms via daisy-chained AFE ICs (LTC68xx, BQ76xxx), runs an Extended Kalman Filter for SOC, passive or active balancing, and a fault FSM that opens contactors on over-voltage, under-voltage, over-current or over-temperature. Automotive BMS must meet ISO 26262 ASIL-C/D with dual-redundant cell monitoring.",
+      seeAlso: ["soc", "soh", "cell-balancing", "pre-charge", "ekf"] },
+
+    { id: "soc", term: "State of Charge", aka: "SOC", category: "performance",
+      short: "Fraction of usable capacity currently stored, 0–100%. Reported by the BMS, never measured directly.",
+      long: "SOC is estimated by combining coulomb counting (∫I dt, accurate short-term but drifts) with OCV lookup (reliable only at rest on non-plateau chemistries) inside an Extended Kalman Filter. Production EV BMSs hit ±2% steady-state accuracy. LFP's flat OCV plateau makes voltage-based SOC nearly useless, forcing periodic full charges for recalibration.",
+      seeAlso: ["soh", "ocv", "lfp", "ekf", "bms"] },
+
+    { id: "soh", term: "State of Health", aka: "SOH", category: "performance",
+      short: "Fraction of original capacity (or inverse resistance) remaining — measures how much the cell has degraded since new.",
+      long: "SOH is usually defined as Q_now / Q_BOL (capacity SOH) and R_now / R_BOL (power SOH). End-of-life is typically called at 80% capacity SOH for automotive packs; below that the cell is sent for second-life stationary use or recycling. Loss mechanisms include SEI growth, lithium plating, particle cracking, and electrolyte depletion.",
+      seeAlso: ["soc", "sei", "lithium-plating", "bms"] },
+
+    { id: "c-rate", term: "C-rate", category: "performance",
+      short: "Charge or discharge current normalised to nominal capacity: 1C empties a cell in 1 h, 0.5C in 2 h, 2C in 30 min.",
+      long: "C-rate is the universal way to compare currents across cell sizes. EV cells discharge at 1–3C and fast-charge near 4C with active cooling; utility BESS cells run 0.25–0.5C to stretch cycle life beyond 6,000 cycles. High C-rates raise IR losses (heat) and accelerate plating, SEI growth and particle fracture.",
+      seeAlso: ["lithium-plating", "rte", "dod"] },
+
+    { id: "dod", term: "Depth of Discharge", aka: "DoD", category: "performance",
+      short: "Inverse of SOC — fraction of capacity withdrawn in a cycle. Cycle life is highly nonlinear in DoD.",
+      long: "Restricting DoD dramatically extends life: an LFP cell rated 4,000 cycles at 100% DoD often survives >20,000 cycles at 20% DoD. BMS firmware therefore caps usable SOC (e.g. 10–90%) and the marketing 'usable capacity' is smaller than the nameplate. Frequency-regulation duty (shallow ±5% cycles) is gentle on calendar life despite high cycle counts.",
+      seeAlso: ["soc", "soh", "c-rate"] },
+
+    { id: "ocv", term: "Open-Circuit Voltage", aka: "OCV", category: "performance",
+      short: "Cell voltage with zero current after relaxation — a direct readout of the electrodes' chemical potential difference.",
+      long: "OCV is what the Nernst equation predicts. Manufacturers ship empirical SOC–OCV lookup tables because phase transitions and activity coefficients break the ideal log relation. Charge-OCV sits 10–30 mV above discharge-OCV at the same SOC (hysteresis), and the BMS must model that gap to avoid SOC bias.",
+      seeAlso: ["nernst", "soc", "lfp"] },
+
+    { id: "nernst", term: "Nernst Equation", category: "numerics",
+      short: "E = E° − (RT/nF) ln Q — links a cell's open-circuit voltage to the activities of reactants and products.",
+      long: "For Li-ion at 25 °C, RT/F ≈ 25.7 mV per decade per electron. The equation explains why fully charged cells sit above nameplate and why the last 10% of capacity falls off a cliff. It breaks down for two-phase reactions like LFP, where the chemical potential is pinned and the voltage curve is flat — that plateau is what makes LFP safe but hard to gauge.",
+      seeAlso: ["ocv", "electrochem", "lfp"] },
+
+    { id: "electrochem", term: "Electrochemistry", category: "concepts",
+      short: "Branch of chemistry dealing with electron-transfer (redox) reactions that interconvert chemical and electrical energy.",
+      long: "Every battery, fuel cell, electrolyser and corrosion process is electrochemistry in action. Core ideas: half-reactions and standard electrode potentials (the electrochemical series), Faraday's laws (Q = nF moles), the Nernst equation for non-standard conditions, and overpotential as the price of finite current. Modern Li-ion is just careful electrochemistry plus packaging.",
+      seeAlso: ["nernst", "li-ion", "fuel-cells"] },
+
+    { id: "cell-balancing", term: "Cell Balancing", category: "systems",
+      short: "BMS technique that equalises SOC across series-connected cells so pack capacity isn't capped by the weakest cell.",
+      long: "Passive balancing burns excess charge from high cells through ~100 Ω bleed resistors (30–150 mA, simple but wasteful). Active balancing shuttles charge from high to low cells via flyback transformers or switched capacitors at >90% efficiency — essential for large stationary packs where wasted balancing energy becomes a thermal problem. Without balancing, manufacturing tolerance (±2% capacity spread) progressively shrinks usable capacity.",
+      seeAlso: ["bms", "soc", "soh"] },
+
+    { id: "thermal-runaway", term: "Thermal Runaway", category: "concepts",
+      short: "Self-accelerating exothermic failure cascade where one hot cell ignites neighbours — the central safety hazard of Li-ion.",
+      long: "Trigger events include internal shorts (dendrite, debris), overcharge, mechanical crush, or external fire. Above ~80 °C SEI decomposes; ~130 °C the separator melts; ~150 °C NMC releases oxygen and the electrolyte ignites — the cell vents flaming gases at >700 °C. Mitigations: LFP chemistry, ceramic separators, vent paths, fire-resistant module walls, and immersion or coldplate cooling that keeps neighbouring cells below propagation threshold.",
+      seeAlso: ["thermal", "lfp", "separator", "lithium-plating"] },
+
+    { id: "thermal", term: "Thermal Management", category: "systems",
+      short: "Heat-rejection subsystem (air, liquid coldplate, refrigerant, immersion) that keeps every cell in its 15–35 °C sweet spot.",
+      long: "Cells generate I²R heat plus a smaller reversible entropic term. Cool packs lose power; hot packs age fast (SEI growth doubles every ~10 °C). Tesla's Model S uses a glycol coldplate snaking between cylindrical cells; CATL uses bottom coldplates on prismatic cells; some racing packs use dielectric-fluid immersion. ΔT across the pack should stay <5 °C to keep SOC drift manageable.",
+      seeAlso: ["thermal-runaway", "bms", "soh"] },
+
+    { id: "grid-storage", term: "Grid-Scale BESS", aka: "BESS", category: "systems",
+      short: "Battery Energy Storage System sized in MW/MWh that provides arbitrage, frequency response, capacity firming and black-start to the grid.",
+      long: "A modern utility BESS is built from LFP racks (1,500 V DC) feeding a four-quadrant inverter that decouples real and reactive power within |S|² = P²+Q² ≤ S_rated². Round-trip efficiency is 85–92% AC-to-AC. Flagship installations: Hornsdale (100 MW/129 MWh, AU), Moss Landing (>1.6 GWh, US), Tesla Megapack and CATL EnerC are the dominant product platforms.",
+      seeAlso: ["lfp", "rte", "droop", "grid-forming", "ffr"] },
+
+    { id: "rte", term: "Round-Trip Efficiency", aka: "RTE", category: "performance",
+      short: "Energy out ÷ energy in across one charge–discharge cycle, including inverter and auxiliary losses — typically 85–92% for Li-ion BESS.",
+      long: "RTE breaks down roughly as 2% inverter, 1% transformer, 6–10% battery (IR, coulombic <99.9%, parasitic). Auxiliary loads (HVAC, BMS, controls) add 1–3% over a year of operation. RTE drops at extreme C-rates and at low temperature, both of which raise internal resistance.",
+      seeAlso: ["grid-storage", "c-rate", "soh"] },
+
+    { id: "pre-charge", term: "Pre-Charge Circuit", category: "hardware",
+      short: "Resistor-and-contactor pair that gently charges the inverter's DC-link capacitor before the main contactor closes, avoiding a welding inrush.",
+      long: "Closing 400 V directly into a 1 mF capacitor causes a V/R inrush of hundreds of kA that welds contactor tips shut. A 50 Ω pre-charge resistor in series with a smaller contactor limits inrush to ~8 A and charges the bus with τ = RC ≈ 50 ms; after ~5τ the main contactor closes onto an already-charged bus and the resistor branch opens. Every EV and grid BESS has one.",
+      seeAlso: ["bms", "grid-storage"] },
+
+    { id: "droop", term: "Droop Control", category: "numerics",
+      short: "Proportional governor law ΔP = −(1/R)·Δf/f₀ that lets a generator or BESS share frequency response decentrally.",
+      long: "Typical droop setting R = 4–5%: a 5% frequency drop commands 100% rated power. A 100 MW BESS at R = 4% answers a 0.1 Hz under-frequency event with +5 MW of discharge — automatic and identical to a synchronous machine's governor. Smaller R is stiffer (risk of oscillation); larger R is sluggish but stable.",
+      seeAlso: ["ffr", "grid-forming", "grid-storage"] },
+
+    { id: "ffr", term: "Fast Frequency Response", aka: "FFR", category: "systems",
+      short: "Grid ancillary service that injects full power within ~1 s of a frequency excursion — BESS dominates this market.",
+      long: "FFR sits above primary FCR (1–30 s) and secondary aFRR (30 s–15 min). Tesla's Hornsdale famously hit full 100 MW in 140 ms during the 2017 Loy Yang trip, raising the nadir from 49.5 to 49.8 Hz and earning back its A$90 M cost in under three years on FCAS revenue alone. Modern grid-forming inverters can also synthesise inertia by injecting power proportional to df/dt.",
+      seeAlso: ["droop", "grid-forming", "grid-storage"] },
+
+    { id: "grid-forming", term: "Grid-Forming Inverter", category: "hardware",
+      short: "Inverter that self-establishes voltage and frequency on the AC side, can black-start a microgrid, and provides synthetic inertia.",
+      long: "Contrast with grid-following inverters, which use a PLL to track an existing grid and shut down within 2 cycles when it disappears (anti-islanding). Grid-forming uses virtual-synchronous-machine or droop-based control; it is ~20% more expensive but mandatory on new utility BESS in jurisdictions like AEMO after the 2016 South Australia blackout.",
+      seeAlso: ["droop", "ffr", "grid-storage"] },
+
+    { id: "ekf", term: "Extended Kalman Filter", aka: "EKF", category: "numerics",
+      short: "Recursive nonlinear state estimator used by BMS firmware to fuse coulomb counting with OCV measurements into a ±2% SOC estimate.",
+      long: "The EKF linearises an equivalent-circuit cell model around the current operating point and propagates a covariance matrix that captures uncertainty in both the integrated current and the noisy voltage. It self-corrects coulomb-counting drift whenever the cell sits long enough to read a clean OCV. Unscented (UKF) and Particle filters are used when nonlinearity is severe (LFP, low temperature).",
+      seeAlso: ["soc", "soh", "ocv", "bms"] }
+  ],
+  // === END glossary v1 data placeholder ===
+
+  problems: [
+    {
+      week: "Module — Batteries & Grid Storage", title: "Design, Derivation & Debugging",
+      items: [
+        { tag: "design", text: "Design a 4-hour 100 MW utility BESS for a wind-heavy grid. Specify cell chemistry, DC bus voltage, inverter MVA, container count, cooling strategy and target round-trip efficiency. Justify each choice in one sentence.",
+          hint: "Start with energy (400 MWh) → cell count assuming 280 Ah / 3.2 V LFP cells → series/parallel topology that hits the inverter's DC range (e.g. 1,000–1,500 V)." },
+        { tag: "derive", text: "Starting from ΔG = −nFE and ΔG = ΔG° + RT ln Q, derive the Nernst equation. Then show that for a Daniell cell at 25 °C with [Cu²⁺] = 0.01 M and [Zn²⁺] = 1 M, the EMF differs from E° by 59 mV." },
+        { tag: "derive", text: "An LFP cell shows a flat OCV plateau at 3.30 V between 20% and 90% SOC. Explain thermodynamically why a two-phase reaction produces a voltage plateau, and why LiCoO₂ (a single-phase solid solution) does not." },
+        { tag: "debug", text: "A 200 kWh stationary pack reports 5% capacity fade after only 300 cycles — far worse than the 6,000-cycle datasheet. Outline a 4-step diagnostic plan covering BMS log review, single-cell teardown, thermal imaging during cycling, and electrochemical impedance spectroscopy.",
+          hint: "Common culprits: one weak cell dragging the string, high ambient temperature, charging above 90% SOC routinely, or a balancing circuit that has failed open." },
+        { tag: "code", text: "Implement an Extended Kalman Filter in Python that estimates SOC from noisy current and voltage measurements using a 1RC equivalent-circuit model. Validate against a synthetic discharge trace and report RMS SOC error.",
+          hint: "State vector x = [SOC, V_RC]; measurement is terminal voltage; process noise dominated by current sensor bias." },
+        { tag: "design", text: "Specify the four-quadrant operating envelope for a 50 MW / 200 MWh BESS with a 60 MVA inverter. Sketch the P-Q diagram and list two services it can perform simultaneously in Q1, Q2, and Q4 respectively.",
+          hint: "Apparent-power circle |S| ≤ 60 MVA. Pick two services per quadrant that don't conflict in SOC direction." },
+        { tag: "paper", text: "Read Hornsdale Power Reserve's first-year operating report (Aurecon, 2018). Summarise the FCAS revenue split, frequency-nadir improvements, and quantify the system-wide cost savings to South Australian consumers in 1–2 pages." },
+        { tag: "debug", text: "After a software update, a grid-tied 1 MW inverter trips on anti-islanding every time a nearby capacitor bank switches in, even though the grid is healthy. Identify the most likely root cause and propose two mitigation strategies.",
+          hint: "Look at the active anti-islanding scheme (frequency-shift or impedance-injection) and how transient reactive events look like an island." },
+        { tag: "design", text: "Compare LFP, NMC, and a vanadium-redox flow battery for a 4-hour 50 MW project on the basis of $/kWh CAPEX, cycle life, depth-of-discharge tolerance, footprint and fire risk. Recommend one chemistry and defend the choice." },
+        { tag: "derive", text: "Show that a BESS with round-trip efficiency η performing daily energy arbitrage between a buy price p_b and sell price p_s breaks even when p_s = p_b/η. Compute the required spread for η = 0.88." }
       ]
     }
   ],
@@ -862,7 +1760,9 @@ if (C.graph && C.graph.nodes && C.graph.nodes.length) tabs.push({ id: 'graph',  
 if (C.deepDives && C.deepDives.length)  tabs.push({ id: 'deepdive', label: '📚 Deep Dives' });
 if (C.useCases && C.useCases.length)    tabs.push({ id: 'usecase',  label: '🔬 Use Cases' });
 if (C.youtube && C.youtube.videos && C.youtube.videos.length) tabs.push({ id: 'appendix', label: '📹 Appendix' });
+if (C.glossary && C.glossary.length)    tabs.push({ id: 'glossary', label: '📖 Glossary' }); /* glossary v1 tab */
 tabs.push({ id: 'problems', label: '🧠 Practice' });
+tabs.push({ id: 'quiz',     label: '🎯 Quiz' });
 
 document.getElementById('toolbar-title').textContent = '🧠 ' + C.course.code;
 document.title = C.course.code + ' — Interactive Study Tool';
@@ -1178,6 +2078,7 @@ function initGraph() {
   // Nodes
   const node = gGraph.selectAll("g.graph-node").data(nodes).enter().append("g")
     .attr("class", "graph-node")
+    .attr("data-id", d => d.id) /* glossary v1 data-id */
     .call(d3.drag().on("start", (evt, d) => { if (!evt.active) simul.alphaTarget(0.3).restart(); d.fx = d.x; d.fy = d.y; })
       .on("drag", (evt, d) => { d.fx = evt.x; d.fy = evt.y; })
       .on("end", (evt, d) => { if (!evt.active) simul.alphaTarget(0); d.fx = null; d.fy = null; }))
@@ -1519,6 +2420,8 @@ if (C.deepDives && C.deepDives.length) {
     // Full view
     const full = document.createElement('div'); full.className = 'dd-full'; full.id = 'dd-full-' + dd.id;
     let fhtml = `<div class="dd-infographic"><h2 style="color:${dd.color}">${dd.icon || ''} ${dd.title}</h2><div class="dd-subtitle">${dd.num || ''}${dd.num && dd.desc ? ' · ' : ''}${dd.desc || ''}</div>`;
+    // Navigator at the top for quick prev/grid/next without scrolling
+    fhtml += `<div class="dd-nav dd-nav-top"><button class="btn" onclick="navDD(-1)">← Prev</button><button class="btn" onclick="showCardGrid()">Grid</button><button class="btn" onclick="navDD(1)">Next →</button></div>`;
     if (dd.svg) fhtml += dd.svg(800, 300);
     // Render top-level content fields (markdown/body/content) as a single section
     const topText = dd.markdown || dd.body || dd.content || dd.detail;
@@ -1540,7 +2443,7 @@ if (C.deepDives && C.deepDives.length) {
       dd.keypoints.forEach(kp => { fhtml += `<div class="dd-kp"><strong>${kp.title}</strong><span>${kp.text || kp.body || ''}</span></div>`; });
       fhtml += '</div>';
     }
-    fhtml += `<div class="dd-nav"><button class="btn" onclick="navDD(-1)">← Prev</button><button class="btn" onclick="showCardGrid()">Grid</button><button class="btn" onclick="navDD(1)">Next →</button></div></div>`;
+    fhtml += `</div>`; // dd-nav v1 top inserted
     full.innerHTML = fhtml;
     fullContainer.appendChild(full);
   });
@@ -1608,6 +2511,20 @@ function showUseCase(idx) {
   html += '<button class="uc-back-btn" onclick="showUseCaseGrid()">← Back to All Use Cases</button>';
   html += `<h2>${uc.icon} ${uc.title}</h2>`;
   html += `<div class="uc-subtitle">${uc.desc}</div>`;
+  if (uc.summary || uc.pipeline || uc.metrics || uc.extensions) {
+    html += '<div class="uc-overview">';
+    if (uc.summary)   html += `<div class="uc-summary">${uc.summary}</div>`;
+    if (uc.pipeline)  html += `<div class="uc-pipeline">${uc.pipeline}</div>`;
+    if (uc.metrics && uc.metrics.length) {
+      html += '<div class="uc-metrics">';
+      uc.metrics.forEach(m => {
+        html += `<div class="uc-metric"><div class="uc-metric-label">${m.label}</div><div class="uc-metric-value">${m.value}</div></div>`;
+      });
+      html += '</div>';
+    }
+    if (uc.extensions) html += `<div class="uc-extensions"><strong>Where to go next:</strong> ${uc.extensions}</div>`;
+    html += '</div>';
+  }
   html += '<div class="uc-flow-controls">';
   html += '<button onclick="ucPrev()">← Previous</button>';
   html += '<button class="primary" onclick="ucNext()">Next Step →</button>';
@@ -1628,8 +2545,14 @@ function showUseCase(idx) {
     html += '<div class="uc-body">';
     html += `<div class="uc-title">${step.title}</div>`;
     html += `<div class="uc-component">📍 ${step.component}</div>`;
-    let detailHtml = `<p>${step.detail}</p><span class="uc-proto">${step.proto}</span>`;
+    let detailHtml = '';
+    if (step.intuition) detailHtml += `<div class="uc-intuition"><strong>💡 Intuition:</strong> ${step.intuition}</div>`;
+    detailHtml += `<p>${step.detail}</p>`;
+    if (step.proto) detailHtml += `<span class="uc-proto">${step.proto}</span>`;
+    if (step.complexity) detailHtml += `<span class="uc-complexity">⏱ ${step.complexity}</span>`;
     if (step.code) detailHtml += `<pre class="uc-code">${step.code}</pre>`;
+    if (step.example) detailHtml += `<div class="uc-example"><strong>📊 In practice:</strong> ${step.example}</div>`;
+    if (step.pitfall) detailHtml += `<div class="uc-pitfall"><strong>⚠ Pitfall:</strong> ${step.pitfall}</div>`;
     if (step.refs && step.refs.length) {
       detailHtml += '<div class="uc-refs">' + step.refs.map(r => `<a href="${r.url}" target="_blank" rel="noopener">${r.label}</a>`).join('') + '</div>';
     }
@@ -1957,10 +2880,44 @@ function toggleUnit(headerRow) {
 
 
 
-window.PROBLEMS_DATA=[{week:'Electrochemistry',title:'Cell Basics & Li-ion',items:[{tag:'derive',text:'Nernst equation: E = E0 - (RT/nF) ln(Q). For a LiCoO2 / graphite cell at 50% SOC, predict open-circuit voltage shift from E0 at 25°C vs 0°C.'},{tag:'design',text:'Design a BMS for a 12S4P 18650 pack (48V, ~14 Ah). Specify: balancing, overcurrent, thermal cutoff. What happens if cell 7 develops 20 mOhm higher internal resistance?'}]},{week:'Chemistries',title:'Na-ion, Solid-State, Flow',items:[{tag:'debug',text:'Na-ion batteries are ~10% lower voltage than Li-ion but much cheaper. When does this tradeoff win? (Grid storage? EV? Drones?) Why?'},{tag:'derive',text:'Solid-state vs liquid electrolyte: what advantages? Why has mass production failed for 10 years despite lab success? (Interface impedance, dendrites, manufacturing.)'}]},{week:'Grid Storage',title:'Scale & Economics',items:[{tag:'design',text:'Design a 100 MWh battery to shift 4 hours of solar output. Compare Li-ion vs vanadium redox flow vs pumped hydro. LCOE per kWh?'}]}];
+window.PROBLEMS_DATA=[
+  {
+    week:'Electrochemistry', title:'Cell Basics & Li-ion',
+    hook:'A 21700 Li-ion cell stores ~50× the energy of a TNT stick of equal mass. Why doesn\'t it just explode like one?',
+    items:[
+      {tag:'derive', star:true, text:'Nernst equation: E = E0 - (RT/nF) ln(Q). For a LiCoO2 / graphite cell at 50% SOC, predict open-circuit voltage shift from E0 at 25°C vs 0°C.', hint:'RT/F ≈ 25.7 mV at 298 K. Δ(RT/F) over a 25 K drop is small (~2 mV); the bigger effect at cold is kinetic (impedance), not Nernstian.'},
+      {tag:'design', star:true, text:'Design a BMS for a 12S4P 18650 pack (48V, ~14 Ah). Specify: balancing, overcurrent, thermal cutoff. What happens if cell 7 develops 20 mOhm higher internal resistance?', hint:'A weak cell heats faster and hits voltage cutoffs first — limits pack capacity. Passive balance during top-of-charge bleeds the strong cells via resistors; active balance shuttles charge.'},
+      {tag:'paper', text:'Predict before reading: which limits Li-ion cycle life more — calendar aging or cycle aging — for a stationary BESS that does 1 cycle/day at 25 °C?', hint:'At <0.5C and moderate temps, calendar aging (SEI growth, side reactions) often dominates over cycle-induced mechanical fatigue.'}
+    ]
+  },
+  {
+    week:'Chemistries', title:'Na-ion, Solid-State, Flow',
+    hook:'If solid-state batteries have been "5 years away" for 15 years, what is the *real* bottleneck — chemistry, physics, or manufacturing?',
+    items:[
+      {tag:'debug', star:true, text:'Na-ion batteries are ~10% lower voltage than Li-ion but much cheaper. When does this tradeoff win? (Grid storage? EV? Drones?) Why?', hint:'Energy-density-insensitive applications win: stationary storage, low-end e-bikes. Drones lose hard (every gram of pack costs flight time).'},
+      {tag:'derive', star:true, text:'Solid-state vs liquid electrolyte: what advantages? Why has mass production failed for 10 years despite lab success? (Interface impedance, dendrites, manufacturing.)', hint:'Solid electrolytes have higher bulk conductivity than liquids at certain temperatures, but the cathode/SE interface impedance and Li-metal dendrite suppression at high current density remain unsolved at GWh scale.'},
+      {tag:'design', text:'Sketch a vanadium redox flow battery (VRFB) for a 4-hour 10 MW / 40 MWh site. How do you decouple power (stack area) from energy (tank size)? What is the round-trip efficiency loss vs Li-ion?', hint:'Power = membrane area × current density; energy = electrolyte volume × concentration × ΔV. RTE ~70–75% vs ~90% for Li-ion (pumping + shunt currents + crossover).'}
+    ]
+  },
+  {
+    week:'Grid Storage', title:'Scale & Economics',
+    hook:'Why is a $50/MWh "duck-curve arbitrage" play in California now eating the lunch of natural-gas peaker plants — and what kills it?',
+    items:[
+      {tag:'design', star:true, text:'Design a 100 MWh battery to shift 4 hours of solar output. Compare Li-ion vs vanadium redox flow vs pumped hydro. LCOE per kWh?', hint:'Li-ion BESS: ~$200–300/kWh installed, 10–15 yr life. VRFB: ~$400–600/kWh but 20+ yr & deep cycling. Pumped hydro: $100–200/kWh but geography-locked and 5+ yr permitting.'},
+      {tag:'debug', text:'A 200 MWh utility BESS shows capacity fade of 12% after 2 years — 2× the warranty curve. What 3 diagnostics do you run first?', hint:'(1) Pack-level dQ/dV vs commissioning — finds active material loss vs lithium inventory loss. (2) Thermal logs (hot string?). (3) Cell-level impedance scan to find outliers.'}
+    ]
+  }
+];
 // ═══════════════════════════════════════════════════════════════════════
 // PRACTICE PROBLEMS (Problem-First learning)
 // ═══════════════════════════════════════════════════════════════════════
+const PROB_STATE_KEY = STORAGE_KEY + '-probstate';
+function probLoadState() { try { return JSON.parse(localStorage.getItem(PROB_STATE_KEY) || '{}'); } catch(e) { return {}; } }
+function probSaveState(s) { try { localStorage.setItem(PROB_STATE_KEY, JSON.stringify(s)); } catch(e) {} }
+let _probState = probLoadState();
+let _probFilters = { tags: new Set(), search: '', status: 'all' };
+let _probFlat = []; // [{si, ii, p}]
+
 function renderProblems() {
   const container = document.getElementById('problems-container');
   if (!container || container.dataset.rendered) return;
@@ -1968,6 +2925,17 @@ function renderProblems() {
              : (C.problems && C.problems.length) ? C.problems : null;
   if (!data) { container.innerHTML = '<div class="prob-intro">No practice problems defined yet for this course.</div>'; container.dataset.rendered = '1'; return; }
   container.dataset.rendered = '1';
+
+  // Build flat index + per-tag counts
+  _probFlat = [];
+  const tagCounts = {};
+  data.forEach((sec, si) => (sec.items||[]).forEach((p, ii) => {
+    _probFlat.push({ si, ii, p, key: si+':'+ii });
+    const t = p.tag || 'design';
+    tagCounts[t] = (tagCounts[t]||0) + 1;
+  }));
+  const TAGS = ['design','derive','debug','code','paper'];
+
   let html = `<div class="prob-intro">
     <strong>🧠 Problem-First Learning.</strong> Try each problem for 10 minutes <em>before</em> watching the lecture — flail, sketch, be wrong. Then watch with specific questions in mind. Your attention spikes 3–5×.
     <br><br>
@@ -1977,24 +2945,653 @@ function renderProblems() {
     <span class="prob-tag debug">debug</span> find the failure mode &nbsp;
     <span class="prob-tag code">code</span> hands-on &nbsp;
     <span class="prob-tag paper">paper</span> predict before reading
-  </div>`;
-  data.forEach((sec, i) => {
-    html += `<details class="prob-section"${i < 2 ? ' open' : ''}>
-      <summary><span class="wk">${sec.week||''}</span> ${sec.title||''}</summary>
-      <div class="prob-body"><ol>`;
-    (sec.items||[]).forEach(p => {
-      html += `<li><span class="prob-tag ${p.tag||'design'}">${p.tag||'design'}</span>${p.text||''}`;
-      if (p.hint) html += `<span class="prob-hint">${p.hint}</span>`;
-      html += `</li>`;
+    <br><br>
+    <strong style="color:#ffa657">⭐ starred</strong> problems are curiosity-piquing — start there if you're new.
+    Reveals come in three layers: <strong style="color:#d2a8ff">💡 hint</strong> (nudge) · <strong style="color:#79c0ff">🔑 approach</strong> (how to attack) · <strong style="color:#7ee787">📐 answer</strong> (the result). Try the problem before peeking.
+  </div>
+  <div class="prob-toolbar">
+    <input id="prob-search" class="prob-search" type="text" placeholder="🔍 Search problems by keyword…" />
+    <div class="prob-filter-row" id="prob-tag-row">
+      ${TAGS.map(t => `<span class="prob-chip ${t}" data-tag="${t}">${t}<span class="count">${tagCounts[t]||0}</span></span>`).join('')}
+    </div>
+    <div class="prob-filter-row" id="prob-status-row">
+      <span class="prob-chip" data-status="all">All</span>
+      <span class="prob-chip" data-status="unattempted">○ New</span>
+      <span class="prob-chip" data-status="thinking">🤔 Thinking</span>
+      <span class="prob-chip" data-status="got">💡 Got it</span>
+      <span class="prob-chip" data-status="stuck">❓ Stuck</span>
+    </div>
+    <button id="prob-surprise" class="prob-actbtn primary" title="Open a random problem">🎲 Surprise me</button>
+    <button id="prob-reset" class="prob-actbtn" title="Clear all status">↺ Reset</button>
+    <div class="prob-progress" title="Problems attempted (thinking / got / stuck)">
+      <span id="prob-progress-text">0/${_probFlat.length}</span>
+      <div class="prob-progress-bar"><div id="prob-progress-fill" class="prob-progress-fill" style="width:0%"></div></div>
+    </div>
+  </div>
+  <div id="prob-sections">`;
+
+  data.forEach((sec, si) => {
+    const secTotal = (sec.items||[]).length;
+    html += `<details class="prob-section" data-si="${si}"${si < 2 ? ' open' : ''}>
+      <summary><span class="wk">${sec.week||''}</span> <span class="sec-title">${sec.title||''}</span>
+        <span class="sec-meta"><span class="done-count" data-sec-done="${si}">0</span>/<span>${secTotal}</span></span>
+      </summary>`;
+    if (sec.hook) html += `<div class="prob-hook">${sec.hook}</div>`;
+    html += `<div class="prob-body">`;
+    (sec.items||[]).forEach((p, ii) => {
+      const key = si+':'+ii;
+      const st = _probState[key] || {};
+      const tag = p.tag || 'design';
+      const statusCls = st.status ? ' status-'+st.status : '';
+      html += `<div class="prob-card${statusCls}" data-key="${key}" data-tag="${tag}" data-status="${st.status||''}">
+        <div class="pc-head">
+          <span class="pc-num">${(ii+1).toString().padStart(2,'0')}</span>
+          <span class="prob-tag ${tag}">${tag}</span>
+          ${p.star ? '<span class="pc-star" title="Curiosity pick">★</span>' : ''}
+          <div class="prob-status-btns">
+            <button class="prob-statbtn thinking${st.status==='thinking'?' active':''}" data-status="thinking" title="I'm working on this">🤔</button>
+            <button class="prob-statbtn got${st.status==='got'?' active':''}"           data-status="got"      title="Got it">💡</button>
+            <button class="prob-statbtn stuck${st.status==='stuck'?' active':''}"       data-status="stuck"    title="Stuck">❓</button>
+          </div>
+        </div>
+        <div class="pc-text">${p.text||''}</div>`;
+      const reveals = [];
+      if (p.hint)     reveals.push({ kind:'hint',     label:'💡 Reveal hint',   field:'hint',     btnCls:'',          panelCls:'prob-hint',     tag:'Hint' });
+      if (p.approach) reveals.push({ kind:'approach', label:'🔑 Show approach', field:'approach', btnCls:'approach',  panelCls:'prob-approach', tag:'Approach' });
+      if (p.answer)   reveals.push({ kind:'answer',   label:'📐 Show answer',   field:'answer',   btnCls:'answer',    panelCls:'prob-answer',   tag:'Answer' });
+      if (reveals.length) {
+        html += `<div class="pc-actions">`;
+        reveals.forEach(r => {
+          const shown = st[r.kind+'Shown'];
+          html += `<button class="prob-revealbtn ${r.btnCls}" data-action="${r.kind}" ${shown?'style="display:none"':''}>${r.label}</button>`;
+        });
+        html += `</div>`;
+        reveals.forEach(r => {
+          const shown = st[r.kind+'Shown'];
+          html += `<div class="prob-reveal-panel ${r.panelCls}${shown?' shown':''}" data-panel="${r.kind}"><span class="rh-label">${r.tag}</span>${p[r.field]}</div>`;
+        });
+      }
+      html += `</div>`;
     });
-    html += `</ol></div></details>`;
+    html += `</div></details>`;
   });
+  html += `</div>
+  <div class="prob-spotlight" id="prob-spotlight">
+    <div class="prob-spotlight-card">
+      <button class="sl-close" onclick="probCloseSpotlight()">×</button>
+      <h3>🎲 Surprise Problem</h3>
+      <div id="prob-spotlight-body"></div>
+    </div>
+  </div>`;
+
   container.innerHTML = html;
+
+  // Wire interactions
+  container.querySelectorAll('#prob-tag-row .prob-chip').forEach(c => c.addEventListener('click', () => {
+    const tag = c.dataset.tag;
+    if (_probFilters.tags.has(tag)) _probFilters.tags.delete(tag); else _probFilters.tags.add(tag);
+    c.classList.toggle('active');
+    probApplyFilters();
+  }));
+  container.querySelectorAll('#prob-status-row .prob-chip').forEach(c => c.addEventListener('click', () => {
+    container.querySelectorAll('#prob-status-row .prob-chip').forEach(x => x.classList.remove('active'));
+    c.classList.add('active');
+    _probFilters.status = c.dataset.status;
+    probApplyFilters();
+  }));
+  container.querySelector('#prob-status-row .prob-chip[data-status="all"]').classList.add('active');
+
+  const searchEl = container.querySelector('#prob-search');
+  searchEl.addEventListener('input', () => { _probFilters.search = searchEl.value.toLowerCase().trim(); probApplyFilters(); });
+
+  container.querySelector('#prob-surprise').addEventListener('click', probSurpriseMe);
+  container.querySelector('#prob-reset').addEventListener('click', () => {
+    if (!confirm('Clear status on all '+_probFlat.length+' problems?')) return;
+    _probState = {}; probSaveState(_probState);
+    container.dataset.rendered = ''; container.innerHTML = ''; renderProblems();
+  });
+
+  container.querySelectorAll('.prob-card').forEach(card => {
+    card.querySelectorAll('.prob-statbtn').forEach(btn => btn.addEventListener('click', e => {
+      e.stopPropagation();
+      const key = card.dataset.key;
+      const newStatus = btn.dataset.status;
+      const st = _probState[key] || {};
+      st.status = (st.status === newStatus) ? null : newStatus;
+      _probState[key] = st; probSaveState(_probState);
+      card.classList.remove('status-thinking','status-got','status-stuck');
+      if (st.status) card.classList.add('status-'+st.status);
+      card.dataset.status = st.status || '';
+      card.querySelectorAll('.prob-statbtn').forEach(b => b.classList.toggle('active', b.dataset.status === st.status));
+      probUpdateProgress();
+      if (_probFilters.status !== 'all') probApplyFilters();
+    }));
+    const revealBtns = card.querySelectorAll('[data-action="hint"],[data-action="approach"],[data-action="answer"]');
+    revealBtns.forEach(btn => btn.addEventListener('click', () => {
+      const kind = btn.dataset.action;
+      const panel = card.querySelector(`.prob-reveal-panel[data-panel="${kind}"]`);
+      if (panel) panel.classList.add('shown');
+      btn.style.display = 'none';
+      const key = card.dataset.key;
+      const st = _probState[key] || {};
+      st[kind+'Shown'] = true; _probState[key] = st; probSaveState(_probState);
+    }));
+  });
+
+  probUpdateProgress();
 }
+
+function probApplyFilters() {
+  const container = document.getElementById('problems-container');
+  const { tags, search, status } = _probFilters;
+  container.querySelectorAll('.prob-card').forEach(card => {
+    const tag = card.dataset.tag;
+    const cardStatus = card.dataset.status || '';
+    const text = card.querySelector('.pc-text').textContent.toLowerCase();
+    let show = true;
+    if (tags.size > 0 && !tags.has(tag)) show = false;
+    if (search && !text.includes(search)) show = false;
+    if (status !== 'all') {
+      if (status === 'unattempted') { if (cardStatus) show = false; }
+      else if (cardStatus !== status) show = false;
+    }
+    card.classList.toggle('hidden', !show);
+  });
+  // Auto-open sections with visible cards; hide empty sections
+  container.querySelectorAll('.prob-section').forEach(sec => {
+    const visible = sec.querySelectorAll('.prob-card:not(.hidden)').length;
+    sec.style.display = visible === 0 ? 'none' : '';
+    if (visible > 0 && (tags.size || search || status !== 'all')) sec.open = true;
+  });
+}
+
+function probUpdateProgress() {
+  const total = _probFlat.length;
+  let attempted = 0;
+  const perSec = {};
+  _probFlat.forEach(({si, key}) => {
+    const st = _probState[key];
+    if (st && st.status) { attempted++; perSec[si] = (perSec[si]||0) + 1; }
+  });
+  const txt = document.getElementById('prob-progress-text');
+  const fill = document.getElementById('prob-progress-fill');
+  if (txt) txt.textContent = attempted + '/' + total;
+  if (fill) fill.style.width = (total ? (attempted/total*100) : 0) + '%';
+  document.querySelectorAll('[data-sec-done]').forEach(el => {
+    const si = +el.dataset.secDone;
+    el.textContent = perSec[si] || 0;
+  });
+}
+
+function probSurpriseMe() {
+  if (!_probFlat.length) return;
+  // Prefer starred & unattempted; otherwise unattempted; otherwise any
+  const starredNew = _probFlat.filter(x => x.p.star && !(_probState[x.key]||{}).status);
+  const anyNew     = _probFlat.filter(x => !(_probState[x.key]||{}).status);
+  const pool = starredNew.length ? starredNew : (anyNew.length ? anyNew : _probFlat);
+  const pick = pool[Math.floor(Math.random()*pool.length)];
+  const { p, si, ii, key } = pick;
+  const sec = (window.PROBLEMS_DATA || (C.problems||[]))[si];
+  const tag = p.tag || 'design';
+  const body = document.getElementById('prob-spotlight-body');
+  body.innerHTML = `
+    <div style="display:flex;gap:8px;align-items:center;margin-bottom:6px;flex-wrap:wrap">
+      <span class="prob-tag ${tag}">${tag}</span>
+      ${p.star ? '<span style="color:#ffa657">★</span>' : ''}
+      <span style="color:#8b949e;font-size:12px">${sec.week||''} · ${sec.title||''} · #${ii+1}</span>
+    </div>
+    <div class="pc-text">${p.text||''}</div>
+    ${(()=>{const L=[];if(p.hint)L.push({s:'💡 Reveal hint',c:'prob-hint',t:'Hint',b:p.hint});if(p.approach)L.push({s:'🔑 Show approach',c:'prob-approach',t:'Approach',b:p.approach});if(p.answer)L.push({s:'📐 Show answer',c:'prob-answer',t:'Answer',b:p.answer});return L.map(l=>`<details style="margin-top:10px"><summary style="cursor:pointer;color:#8b949e;font-size:12px;padding:4px 0">${l.s}</summary><div class="prob-reveal-panel ${l.c} shown" style="margin-top:6px"><span class="rh-label">${l.t}</span>${l.b}</div></details>`).join('');})()}
+    <div style="margin-top:14px;display:flex;gap:6px;flex-wrap:wrap">
+      <button class="prob-actbtn" onclick="probJumpTo('${key}')">↗ Jump to it</button>
+      <button class="prob-actbtn" onclick="probSurpriseMe()">🎲 Another</button>
+    </div>`;
+  document.getElementById('prob-spotlight').classList.add('open');
+}
+function probCloseSpotlight() { const el = document.getElementById('prob-spotlight'); if (el) el.classList.remove('open'); }
+function probJumpTo(key) {
+  probCloseSpotlight();
+  const card = document.querySelector(`.prob-card[data-key="${key}"]`);
+  if (!card) return;
+  const sec = card.closest('.prob-section');
+  if (sec) sec.open = true;
+  card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  card.style.transition = 'box-shadow .3s'; card.style.boxShadow = '0 0 0 2px #58a6ff';
+  setTimeout(() => { card.style.boxShadow = ''; }, 1500);
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') probCloseSpotlight(); });
 if (typeof switchTab === 'function') {
   const _origSwitchTab_prob = switchTab;
   switchTab = function(tab) { _origSwitchTab_prob(tab); if (tab === 'problems') renderProblems(); };
 }
+
+// === BEGIN glossary v1 js ===
+// ═══════════════════════════════════════════════════════════════════════
+// GLOSSARY — definitions + cross-references with graph & mindmap
+// ═══════════════════════════════════════════════════════════════════════
+(function initGlossaryMaps() {
+  const gloss = (C && C.glossary) || [];
+  if (!gloss.length) return;
+
+  // 1. Build id → entry maps and "label/aka" → id reverse map.
+  const byId = {};
+  const byLabel = {}; // lowercased term/aka → id
+  gloss.forEach(g => {
+    byId[g.id] = g;
+    const keys = [g.term].concat(g.aka || []);
+    keys.forEach(k => { if (k) byLabel[k.toLowerCase().trim()] = g.id; });
+  });
+
+  // 2. Patch graph node tips for any node whose id matches a glossary entry.
+  let graphMatched = 0;
+  const glossByGraphNode = {};
+  if (C.graph && Array.isArray(C.graph.nodes)) {
+    C.graph.nodes.forEach(n => {
+      if (byId[n.id]) {
+        glossByGraphNode[n.id] = n.id;
+        graphMatched++;
+        if (n.tip && n.tip.indexOf('📖') < 0) n.tip = n.tip + ' · 📖 in glossary';
+      } else {
+        // Fallback: try label/aka match
+        const k = (n.label || '').toLowerCase().trim();
+        if (byLabel[k]) {
+          glossByGraphNode[n.id] = byLabel[k];
+          graphMatched++;
+          if (n.tip && n.tip.indexOf('📖') < 0) n.tip = n.tip + ' · 📖 in glossary';
+        }
+      }
+    });
+  }
+
+  // 3. Walk mindmap and build name → glossary-id map. Match relaxed:
+  //    full name (newlines → space) OR each line.
+  let mindmapMatched = 0;
+  const glossByMindmapName = {};
+  function walkMm(node) {
+    if (!node) return;
+    if (node.name) {
+      const full = node.name.replace(/\n/g, ' ').trim();
+      const candidates = [full].concat(node.name.split(/\n+/).map(s => s.trim()).filter(Boolean));
+      for (const c of candidates) {
+        const id = byLabel[c.toLowerCase()];
+        if (id) {
+          glossByMindmapName[full] = id;
+          mindmapMatched++;
+          break;
+        }
+      }
+    }
+    (node.children || []).forEach(walkMm);
+  }
+  if (C.mindmap) walkMm(C.mindmap);
+
+  window._glossaryById = byId;
+  window._glossaryByLabel = byLabel;
+  window._glossaryIdByGraphNode = glossByGraphNode;
+  window._glossaryIdByMindmapName = glossByMindmapName;
+  window._glossaryStats = { graphMatched: graphMatched, mindmapMatched: mindmapMatched };
+
+  // 4. Monkey-patch showTooltip so it appends a "📖 Defined in glossary →" link
+  //    whenever the hovered name corresponds to a glossary entry.
+  if (typeof window.showTooltip === 'function') {
+    const _origShowTooltip = window.showTooltip;
+    const ttRoot = document.getElementById('tooltip');
+    let glossFooter = ttRoot.querySelector('.tt-glossary');
+    if (!glossFooter) {
+      glossFooter = document.createElement('div');
+      glossFooter.className = 'tt-glossary';
+      ttRoot.appendChild(glossFooter);
+    }
+    window.showTooltip = function(evt, name, tip, slides) {
+      _origShowTooltip(evt, name, tip, slides);
+      glossFooter.innerHTML = '';
+      ttRoot.classList.remove('has-glossary');
+      if (!name) return;
+      const plain = String(name).replace(/\n/g, ' ').trim();
+      const key = plain.toLowerCase();
+      let id = byLabel[key] || glossByMindmapName[plain] || null;
+      if (!id) {
+        // strip parenthetical suffix e.g. "Optical Switch (OCS)" → "Optical Switch"
+        const stripped = plain.replace(/\s*\([^)]*\)\s*$/, '').toLowerCase();
+        if (stripped !== key) id = byLabel[stripped] || null;
+      }
+      if (id) {
+        const a = document.createElement('a');
+        a.textContent = '📖 Defined in glossary →';
+        a.onclick = (e) => {
+          e.stopPropagation();
+          if (typeof window.glossaryJumpToTerm === 'function') window.glossaryJumpToTerm(id);
+        };
+        glossFooter.appendChild(a);
+        ttRoot.classList.add('has-glossary');
+      }
+    };
+  }
+})();
+
+// ─── renderGlossary ───────────────────────────────────────────────────
+let _glossSelectedCat = 'all';
+let _glossSearch = '';
+let _glossSearchTimer = null;
+let _glossBuilt = false;
+
+const GLOSS_CAT_COLORS = {
+  hardware:    '#58a6ff',
+  software:    '#7ee787',
+  numerics:    '#79c0ff',
+  systems:     '#d2a8ff',
+  performance: '#f778ba',
+  concepts:    '#ffa657'
+};
+
+function renderGlossary() {
+  const data = (C.glossary || []).slice().sort((a, b) =>
+    a.term.toLowerCase().localeCompare(b.term.toLowerCase()));
+  const list = document.getElementById('glossary-list');
+  const pillBar = document.getElementById('glossary-cat-pills');
+  const countEl = document.getElementById('glossary-count');
+  const searchEl = document.getElementById('glossary-search');
+  if (!list || !pillBar || !countEl || !searchEl) return;
+
+  // Build category pills + search input wiring once.
+  if (!_glossBuilt) {
+    const cats = ['all'].concat(
+      Array.from(new Set(data.map(d => d.category))).sort());
+    pillBar.innerHTML = '';
+    cats.forEach(cat => {
+      const btn = document.createElement('button');
+      btn.textContent = cat === 'all' ? `All (${data.length})` :
+        `${cat} (${data.filter(d => d.category === cat).length})`;
+      btn.dataset.cat = cat;
+      const color = cat === 'all' ? '#58a6ff' : (GLOSS_CAT_COLORS[cat] || '#58a6ff');
+      btn.style.setProperty('--pill-color', color);
+      btn.style.setProperty('--pill-bg', color + '22');
+      if (cat === _glossSelectedCat) btn.classList.add('active');
+      btn.onclick = () => {
+        _glossSelectedCat = cat;
+        pillBar.querySelectorAll('button').forEach(b =>
+          b.classList.toggle('active', b.dataset.cat === cat));
+        renderGlossary();
+      };
+      pillBar.appendChild(btn);
+    });
+    searchEl.addEventListener('input', () => {
+      if (_glossSearchTimer) clearTimeout(_glossSearchTimer);
+      _glossSearchTimer = setTimeout(() => {
+        _glossSearch = searchEl.value.trim().toLowerCase();
+        renderGlossary();
+      }, 120);
+    });
+    _glossBuilt = true;
+  }
+
+  // Filter
+  const q = _glossSearch;
+  const visible = data.filter(d => {
+    if (_glossSelectedCat !== 'all' && d.category !== _glossSelectedCat) return false;
+    if (!q) return true;
+    const hay = [d.term, (Array.isArray(d.aka) ? d.aka.join(' ') : (d.aka || '')), d.short, d.long || ''].join(' ').toLowerCase();
+    return hay.indexOf(q) >= 0;
+  });
+
+  countEl.textContent = `${visible.length} of ${data.length} terms`;
+
+  const graphIds = new Set();
+  if (C.graph && C.graph.nodes) C.graph.nodes.forEach(n => graphIds.add(n.id));
+  const glossIds = new Set(data.map(d => d.id));
+  const mindmapNames = window._glossaryIdByMindmapName || {};
+  const reverseMindmap = {}; // glossary-id → mindmap label
+  Object.keys(mindmapNames).forEach(name => { reverseMindmap[mindmapNames[name]] = name; });
+
+  list.innerHTML = '';
+  visible.forEach(d => {
+    const color = GLOSS_CAT_COLORS[d.category] || '#58a6ff';
+    const card = document.createElement('div');
+    card.className = 'glossary-card';
+    card.dataset.id = d.id;
+    card.style.setProperty('--cat-color', color);
+
+    const head = document.createElement('div');
+    head.className = 'glossary-term-row';
+    const term = document.createElement('span');
+    term.className = 'glossary-term';
+    term.textContent = d.term;
+    head.appendChild(term);
+    const badge = document.createElement('span');
+    badge.className = 'glossary-cat-badge';
+    badge.textContent = d.category;
+    badge.style.setProperty('--cat-color', color);
+    head.appendChild(badge);
+    card.appendChild(head);
+
+    if (d.aka && d.aka.length) {
+      const aka = document.createElement('div');
+      aka.className = 'glossary-aka';
+      aka.textContent = 'aka ' + (Array.isArray(d.aka) ? d.aka.join(', ') : d.aka);
+      card.appendChild(aka);
+    }
+
+    const shortEl = document.createElement('div');
+    shortEl.className = 'glossary-short';
+    shortEl.textContent = d.short || '';
+    card.appendChild(shortEl);
+
+    if (d.long) {
+      const longEl = document.createElement('div');
+      longEl.className = 'glossary-long';
+      longEl.innerHTML = d.long;
+      card.appendChild(longEl);
+      const toggle = document.createElement('button');
+      toggle.className = 'glossary-toggle';
+      toggle.textContent = 'Show more ▾';
+      toggle.onclick = () => {
+        const expanded = card.classList.toggle('expanded');
+        toggle.textContent = expanded ? 'Show less ▴' : 'Show more ▾';
+      };
+      card.appendChild(toggle);
+    }
+
+    const links = document.createElement('div');
+    links.className = 'glossary-links';
+    if (graphIds.has(d.id)) {
+      const b = document.createElement('button');
+      b.textContent = '🔗 Topic Graph';
+      b.onclick = () => window.glossaryJumpToGraphNode(d.id);
+      links.appendChild(b);
+    }
+    if (reverseMindmap[d.id]) {
+      const b = document.createElement('button');
+      b.textContent = '📐 Mind Map';
+      b.onclick = () => window.glossaryJumpToMindmapNode(reverseMindmap[d.id]);
+      links.appendChild(b);
+    }
+    (d.seeAlso || []).forEach(otherId => {
+      if (!glossIds.has(otherId)) return;
+      const other = (C.glossary || []).find(x => x.id === otherId);
+      if (!other) return;
+      const b = document.createElement('button');
+      b.textContent = '→ ' + other.term;
+      b.onclick = () => window.glossaryJumpToTerm(otherId);
+      links.appendChild(b);
+    });
+    if (links.children.length) card.appendChild(links);
+
+    list.appendChild(card);
+  });
+}
+
+// ─── Cross-tab jump helpers ───────────────────────────────────────────
+window.glossaryJumpToTerm = function(id) {
+  if (typeof switchTab === 'function') switchTab('glossary');
+  setTimeout(() => {
+    const card = document.querySelector('.glossary-card[data-id="' + CSS.escape(id) + '"]');
+    if (!card) return;
+    card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    card.classList.remove('flash');
+    void card.offsetWidth; // restart animation
+    card.classList.add('flash');
+    // Pull the display term from the card itself so the toast matches what the user sees
+    const labelEl = card.querySelector('.glossary-term');
+    const label = labelEl ? labelEl.textContent.trim() : id;
+    if (typeof showGlossaryToast === 'function') showGlossaryToast('Glossary', label, 'glossary');
+    setTimeout(() => card.classList.remove('flash'), 2800);
+  }, 60);
+};
+
+window.glossaryJumpToGraphNode = function(id) {
+  if (typeof switchTab === 'function') switchTab('graph');
+  const tryFlash = (attempt) => {
+    const g = document.querySelector('g.graph-node[data-id="' + CSS.escape(id) + '"]');
+    if (!g) {
+      if (attempt < 12) return setTimeout(() => tryFlash(attempt + 1), 120);
+      return;
+    }
+    // Pull the node's force-simulation position from its bound datum
+    let d = null;
+    try { d = (typeof d3 !== 'undefined') ? d3.select(g).datum() : null; } catch(_) {}
+    const label = (d && (d.label || d.id)) || id;
+
+    // 1) Pan + zoom the SVG so the node is centered and reasonably zoomed in
+    try {
+      if (d && typeof d.x === 'number' && typeof d.y === 'number' && typeof d3 !== 'undefined' && typeof graphZoom !== 'undefined') {
+        const svgEl = document.getElementById('canvas-graph');
+        const W = (svgEl && svgEl.clientWidth)  || window.innerWidth;
+        const H = (svgEl && svgEl.clientHeight) || window.innerHeight;
+        const k = 1.6;
+        const tx = W / 2 - k * d.x;
+        const ty = H / 2 - k * d.y;
+        d3.select('#canvas-graph')
+          .transition().duration(650)
+          .call(graphZoom.transform, d3.zoomIdentity.translate(tx, ty).scale(k));
+      } else {
+        g.querySelector('circle') && g.querySelector('circle').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    } catch(_) {}
+
+    // 2) Big halo ring + bold class on the node group
+    g.classList.remove('glossary-highlight');
+    void g.getBoundingClientRect();
+    g.classList.add('glossary-highlight');
+    try {
+      // remove any previous halo
+      g.querySelectorAll('circle.glossary-halo').forEach(c => c.remove());
+      const halo = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+      halo.setAttribute('class', 'glossary-halo');
+      halo.setAttribute('cx', '0');
+      halo.setAttribute('cy', '0');
+      halo.setAttribute('r', '14');
+      g.insertBefore(halo, g.firstChild); // behind the node circle
+    } catch(_) {}
+
+    // 3) Top-of-screen toast
+    showGlossaryToast('Topic Graph', label, 'graph');
+
+    setTimeout(() => {
+      g.classList.remove('glossary-highlight');
+      g.querySelectorAll('circle.glossary-halo').forEach(c => c.remove());
+    }, 4200);
+  };
+  requestAnimationFrame(() => requestAnimationFrame(() => tryFlash(0)));
+};
+
+window.glossaryJumpToMindmapNode = function(label) {
+  if (typeof switchTab === 'function') switchTab('mindmap');
+  const target = (label || '').replace(/\n/g, ' ').trim().toLowerCase();
+  const tryFlash = (attempt) => {
+    const groups = document.querySelectorAll('#canvas g');
+    let hit = null;
+    groups.forEach(g => {
+      if (hit) return;
+      const txt = (g.textContent || '').replace(/\s+/g, ' ').trim().toLowerCase();
+      if (txt === target) hit = g;
+    });
+    if (!hit) {
+      if (attempt < 10) return setTimeout(() => tryFlash(attempt + 1), 150);
+      return;
+    }
+
+    // 1) Pan the mindmap so the hit node is roughly centered
+    try {
+      if (typeof d3 !== 'undefined' && typeof mmZoom !== 'undefined') {
+        const svgEl = document.getElementById('canvas');
+        const W = (svgEl && svgEl.clientWidth)  || window.innerWidth;
+        const H = (svgEl && svgEl.clientHeight) || window.innerHeight;
+        // Read the node's local SVG position from its existing transform attribute (form: translate(x,y))
+        const tr = hit.getAttribute('transform') || '';
+        const m = tr.match(/translate\(\s*([-0-9.]+)\s*[ ,]\s*([-0-9.]+)/);
+        if (m) {
+          const x = parseFloat(m[1]), y = parseFloat(m[2]);
+          const k = 1.3;
+          const tx = W / 2 - k * x;
+          const ty = H / 2 - k * y;
+          d3.select('#canvas')
+            .transition().duration(650)
+            .call(mmZoom.transform, d3.zoomIdentity.translate(tx, ty).scale(k));
+        } else {
+          hit.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      } else {
+        hit.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    } catch(_) {}
+
+    // 2) Halo ring on the mindmap node
+    try {
+      hit.querySelectorAll('circle.glossary-mm-halo').forEach(c => c.remove());
+      const halo = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+      halo.setAttribute('class', 'glossary-mm-halo');
+      halo.setAttribute('cx', '0');
+      halo.setAttribute('cy', '0');
+      halo.setAttribute('r', '14');
+      hit.insertBefore(halo, hit.firstChild);
+      setTimeout(() => halo.remove(), 4200);
+    } catch(_) {}
+
+    // 3) Stroke flash on the shape
+    const shape = hit.querySelector('circle, rect');
+    if (shape) {
+      const prev = shape.getAttribute('stroke');
+      const prevW = shape.getAttribute('stroke-width');
+      shape.setAttribute('stroke', '#f0c000');
+      shape.setAttribute('stroke-width', '5');
+      setTimeout(() => {
+        if (prev !== null) shape.setAttribute('stroke', prev); else shape.removeAttribute('stroke');
+        if (prevW !== null) shape.setAttribute('stroke-width', prevW); else shape.removeAttribute('stroke-width');
+      }, 3000);
+    }
+
+    // 4) Toast
+    showGlossaryToast('Mind Map', (label || '').replace(/\n/g, ' '), 'mindmap');
+  };
+  requestAnimationFrame(() => requestAnimationFrame(() => tryFlash(0)));
+};
+
+// Floating toast helper — visible regardless of where the target node ended up
+function showGlossaryToast(where, label, kind) {
+  let t = document.getElementById('glossary-toast');
+  if (!t) {
+    t = document.createElement('div');
+    t.id = 'glossary-toast';
+    document.body.appendChild(t);
+  }
+  const icon = kind === 'graph' ? '🔗' : (kind === 'mindmap' ? '📐' : '📖');
+  t.innerHTML = '<span class="gt-icon">' + icon + '</span>'
+              + '<span>Jumped to: <strong>' + (label || '').replace(/[<>&]/g, '') + '</strong></span>'
+              + '<span class="gt-sub">in ' + where + '</span>';
+  // restart animation
+  t.classList.remove('show');
+  void t.offsetWidth;
+  t.classList.add('show');
+  clearTimeout(t._hideTimer);
+  t._hideTimer = setTimeout(() => t.classList.remove('show'), 3200);
+}
+
+// Lazy-render hook
+if (typeof switchTab === 'function') {
+  const _origSwitchTab_gloss = switchTab;
+  switchTab = function(tab) { _origSwitchTab_gloss(tab); if (tab === 'glossary') renderGlossary(); };
+}
+// === END glossary v1 js ===
 </script>
 <!-- BEGIN tooltip-pin (click pins, click outside closes) -->
 <style>

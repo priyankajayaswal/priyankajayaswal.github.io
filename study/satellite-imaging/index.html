@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -254,6 +254,37 @@
     border-radius: 4px; font-size: 10px; color: #79c0ff; text-decoration: none; transition: all .2s;
   }
   .uc-refs a:hover { border-color: #58a6ff; color: #58a6ff; background: #0d1117; }
+
+  /* ── Use-case enrichment v2 ── */
+  .uc-overview { background: linear-gradient(135deg, #0d1117 0%, #161b22 100%); border: 1px solid #30363d;
+    border-left: 3px solid #58a6ff; border-radius: 10px; padding: 16px 18px; margin: 16px 0 20px; }
+  .uc-overview .uc-summary { font-size: 13px; color: #c9d1d9; line-height: 1.7; }
+  .uc-overview .uc-summary strong { color: #79c0ff; }
+  .uc-pipeline { margin-top: 14px; padding: 10px 12px; background: #0d1117; border: 1px solid #30363d;
+    border-radius: 6px; font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+    font-size: 11px; color: #7ee787; line-height: 1.6; white-space: pre-wrap; overflow-x: auto; }
+  .uc-metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 10px; margin-top: 14px; }
+  .uc-metric { background: #0d1117; border: 1px solid #30363d; border-radius: 8px; padding: 10px 12px; }
+  .uc-metric .uc-metric-label { font-size: 10px; color: #8b949e; text-transform: uppercase; letter-spacing: 0.5px; }
+  .uc-metric .uc-metric-value { font-size: 14px; color: #ffa657; font-weight: 600; margin-top: 4px; line-height: 1.4; }
+  .uc-extensions { margin-top: 14px; padding: 10px 12px; background: rgba(210, 168, 255, 0.06);
+    border: 1px solid rgba(210, 168, 255, 0.25); border-radius: 6px; font-size: 12px; color: #c9d1d9; line-height: 1.6; }
+  .uc-extensions strong { color: #d2a8ff; }
+  .uc-step .uc-intuition { margin-top: 8px; padding: 8px 10px; background: rgba(126, 231, 135, 0.08);
+    border-left: 2px solid #3fb950; border-radius: 4px; font-size: 12px; color: #c9d1d9; line-height: 1.55; display: none; }
+  .uc-step.active .uc-intuition { display: block; }
+  .uc-step .uc-intuition strong { color: #7ee787; }
+  .uc-step .uc-complexity { display: inline-block; margin-top: 8px; margin-right: 6px;
+    background: rgba(31, 111, 235, 0.15); border: 1px solid rgba(88, 166, 255, 0.35); border-radius: 4px;
+    padding: 2px 8px; font-size: 10px; color: #79c0ff; font-family: 'Cascadia Code', 'Consolas', monospace; }
+  .uc-step .uc-pitfall { margin-top: 8px; padding: 8px 10px; background: rgba(255, 123, 114, 0.08);
+    border-left: 2px solid #ff7b72; border-radius: 4px; font-size: 12px; color: #c9d1d9; line-height: 1.55; display: none; }
+  .uc-step.active .uc-pitfall { display: block; }
+  .uc-step .uc-pitfall strong { color: #ff7b72; }
+  .uc-step .uc-example { margin-top: 8px; padding: 8px 10px; background: rgba(255, 166, 87, 0.06);
+    border-left: 2px solid #ffa657; border-radius: 4px; font-size: 12px; color: #c9d1d9; line-height: 1.55; display: none; }
+  .uc-step.active .uc-example { display: block; }
+  .uc-step .uc-example strong { color: #ffa657; }
   .legend-close {
     position: absolute; top: 8px; right: 8px; background: none; border: none;
     color: #8b949e; font-size: 16px; cursor: pointer; line-height: 1; padding: 2px 6px;
@@ -321,27 +352,92 @@
   /* ── Practice Problems (Problem-First) ── */
   #problems-container { position: relative; top: 0; width: 100%; max-width: 1100px; margin: 0 auto; padding: 24px 16px 60px; }
   #view-problems { overflow-y: auto; height: calc(100vh - 50px); margin-top: 50px; }
-  .prob-intro { background: #161b22; border: 1px solid #30363d; border-left: 3px solid #7ee787; border-radius: 6px; padding: 14px 18px; margin-bottom: 22px; color: #c9d1d9; font-size: 14px; line-height: 1.6; }
+  .prob-intro { background: #161b22; border: 1px solid #30363d; border-left: 3px solid #7ee787; border-radius: 6px; padding: 14px 18px; margin-bottom: 18px; color: #c9d1d9; font-size: 14px; line-height: 1.6; }
   .prob-intro strong { color: #7ee787; }
-  .prob-section { margin-bottom: 22px; border: 1px solid #30363d; border-radius: 8px; background: #161b22; overflow: hidden; }
-  .prob-section > summary { padding: 14px 18px; font-size: 15px; font-weight: 600; color: #e6edf3; cursor: pointer; list-style: none; display: flex; align-items: center; gap: 10px; user-select: none; transition: background .15s; }
+  /* Toolbar */
+  .prob-toolbar { position: sticky; top: 0; z-index: 5; background: rgba(13,17,23,0.95); backdrop-filter: blur(6px); padding: 10px 0 12px; margin-bottom: 14px; border-bottom: 1px solid #21262d; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  .prob-search { flex: 1 1 200px; min-width: 180px; background: #0d1117; border: 1px solid #30363d; border-radius: 6px; padding: 7px 12px; color: #c9d1d9; font-size: 13px; outline: none; }
+  .prob-search:focus { border-color: #58a6ff; }
+  .prob-filter-row { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+  .prob-chip { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 12px; cursor: pointer; background: #161b22; border: 1px solid #30363d; color: #8b949e; text-transform: uppercase; letter-spacing: .4px; transition: all .15s; user-select: none; }
+  .prob-chip:hover { border-color: #58a6ff; color: #c9d1d9; }
+  .prob-chip.active { background: #1f6feb22; border-color: #58a6ff; color: #58a6ff; }
+  .prob-chip.design.active  { background: #58a6ff22; border-color: #58a6ff; color: #58a6ff; }
+  .prob-chip.derive.active  { background: #ffa65722; border-color: #ffa657; color: #ffa657; }
+  .prob-chip.debug.active   { background: #f8514922; border-color: #f85149; color: #f85149; }
+  .prob-chip.code.active    { background: #7ee78722; border-color: #7ee787; color: #7ee787; }
+  .prob-chip.paper.active   { background: #d2a8ff22; border-color: #d2a8ff; color: #d2a8ff; }
+  .prob-chip .count { font-size: 9px; opacity: .7; font-weight: 500; }
+  .prob-actbtn { background: #161b22; border: 1px solid #30363d; color: #c9d1d9; padding: 6px 12px; border-radius: 6px; font-size: 12px; cursor: pointer; transition: all .15s; }
+  .prob-actbtn:hover { border-color: #58a6ff; color: #58a6ff; }
+  .prob-actbtn.primary { background: #1f6feb; border-color: #58a6ff; color: #fff; }
+  .prob-actbtn.primary:hover { background: #388bfd; }
+  .prob-progress { display: flex; align-items: center; gap: 10px; flex: 0 0 auto; font-size: 11px; color: #8b949e; margin-left: auto; }
+  .prob-progress-bar { width: 100px; height: 6px; background: #21262d; border-radius: 3px; overflow: hidden; }
+  .prob-progress-fill { height: 100%; background: linear-gradient(90deg, #7ee787, #58a6ff); transition: width .3s; }
+  /* Sections */
+  .prob-section { margin-bottom: 16px; border: 1px solid #30363d; border-radius: 8px; background: #161b22; overflow: hidden; }
+  .prob-section > summary { padding: 13px 18px; font-size: 14px; font-weight: 600; color: #e6edf3; cursor: pointer; list-style: none; display: flex; align-items: center; gap: 10px; user-select: none; transition: background .15s; flex-wrap: wrap; }
   .prob-section > summary::-webkit-details-marker { display: none; }
   .prob-section > summary::before { content: '▸'; color: #8b949e; font-size: 11px; transition: transform .2s; }
   .prob-section[open] > summary::before { transform: rotate(90deg); }
   .prob-section > summary:hover { background: rgba(88,166,255,0.04); }
-  .prob-section .wk { color: #8b949e; font-size: 12px; font-weight: 500; background: #0d1117; padding: 2px 8px; border-radius: 10px; border: 1px solid #30363d; }
-  .prob-body { padding: 6px 20px 18px 40px; }
-  .prob-body > ol { padding-left: 22px; margin: 8px 0 4px; }
-  .prob-body > ol > li { margin: 12px 0; color: #c9d1d9; font-size: 14px; line-height: 1.55; }
-  .prob-body > ol > li::marker { color: #7ee787; font-weight: 600; }
-  .prob-hint { display: block; margin-top: 4px; color: #8b949e; font-size: 12.5px; font-style: italic; }
-  .prob-hint::before { content: '💡 '; font-style: normal; }
-  .prob-tag { display: inline-block; font-size: 10px; font-weight: 600; padding: 1px 7px; border-radius: 8px; margin-right: 6px; vertical-align: middle; text-transform: uppercase; letter-spacing: .4px; }
+  .prob-section .wk { color: #8b949e; font-size: 11px; font-weight: 500; background: #0d1117; padding: 2px 8px; border-radius: 10px; border: 1px solid #30363d; }
+  .prob-section .sec-meta { margin-left: auto; font-size: 11px; color: #6e7681; font-weight: 500; }
+  .prob-section .sec-meta .done-count { color: #7ee787; font-weight: 600; }
+  .prob-hook { background: #0d1117; border-bottom: 1px solid #21262d; padding: 12px 22px; font-size: 13px; color: #d2a8ff; font-style: italic; line-height: 1.6; display: flex; gap: 8px; align-items: flex-start; }
+  .prob-hook::before { content: '🪝'; font-style: normal; flex-shrink: 0; }
+  .prob-body { padding: 12px 18px 16px; display: flex; flex-direction: column; gap: 10px; }
+  /* Problem cards */
+  .prob-card { background: #0d1117; border: 1px solid #21262d; border-radius: 8px; padding: 12px 14px; transition: all .15s; position: relative; }
+  .prob-card:hover { border-color: #30363d; }
+  .prob-card.status-thinking { border-left: 3px solid #d2a8ff; }
+  .prob-card.status-got      { border-left: 3px solid #7ee787; opacity: .75; }
+  .prob-card.status-stuck    { border-left: 3px solid #f85149; }
+  .prob-card.hidden          { display: none; }
+  .prob-card .pc-head { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 4px; }
+  .prob-card .pc-num { color: #6e7681; font-size: 11px; font-weight: 600; font-family: 'Cascadia Code', monospace; }
+  .prob-card .pc-star { color: #ffa657; font-size: 13px; }
+  .prob-tag { display: inline-block; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 8px; text-transform: uppercase; letter-spacing: .4px; }
   .prob-tag.design { background: #58a6ff20; color: #58a6ff; }
   .prob-tag.debug  { background: #f8514920; color: #f85149; }
   .prob-tag.paper  { background: #d2a8ff20; color: #d2a8ff; }
   .prob-tag.code   { background: #7ee78720; color: #7ee787; }
   .prob-tag.derive { background: #ffa65720; color: #ffa657; }
+  .prob-card .pc-text { color: #c9d1d9; font-size: 13.5px; line-height: 1.6; margin: 2px 0 6px; }
+  .prob-card .pc-actions { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; margin-top: 6px; }
+  .prob-revealbtn { background: transparent; border: 1px dashed #30363d; color: #8b949e; padding: 3px 10px; border-radius: 12px; font-size: 11px; cursor: pointer; transition: all .15s; }
+  .prob-revealbtn:hover { border-color: #d2a8ff; color: #d2a8ff; border-style: solid; }
+  .prob-revealbtn.approach:hover { border-color: #79c0ff; color: #79c0ff; }
+  .prob-revealbtn.answer:hover   { border-color: #7ee787; color: #7ee787; }
+  .prob-reveal-panel { display: none; margin-top: 8px; padding: 10px 14px; background: #161b22; border-radius: 4px; color: #c9d1d9; font-size: 12.5px; line-height: 1.65; }
+  .prob-reveal-panel.shown { display: block; }
+  .prob-reveal-panel ul, .prob-reveal-panel ol { margin: 4px 0 4px 18px; padding: 0; }
+  .prob-reveal-panel li { margin: 3px 0; }
+  .prob-reveal-panel code { background: #0d1117; padding: 1px 5px; border-radius: 3px; font-size: 11.5px; color: #79c0ff; font-family: 'Cascadia Code', 'Consolas', monospace; }
+  .prob-reveal-panel strong { color: #e6edf3; }
+  .prob-reveal-panel .rh-label { display: inline-block; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .6px; margin-right: 8px; padding: 1px 6px; border-radius: 4px; vertical-align: middle; }
+  .prob-hint     { border-left: 2px solid #d2a8ff; }
+  .prob-hint     .rh-label { background: #d2a8ff22; color: #d2a8ff; }
+  .prob-approach { border-left: 2px solid #79c0ff; }
+  .prob-approach .rh-label { background: #79c0ff22; color: #79c0ff; }
+  .prob-answer   { border-left: 2px solid #7ee787; background: #0d1f17; }
+  .prob-answer   .rh-label { background: #7ee78722; color: #7ee787; }
+  .prob-status-btns { display: flex; gap: 4px; margin-left: auto; }
+  .prob-statbtn { background: transparent; border: 1px solid #30363d; color: #6e7681; padding: 3px 9px; border-radius: 12px; font-size: 11px; cursor: pointer; transition: all .15s; }
+  .prob-statbtn:hover { border-color: #58a6ff; color: #c9d1d9; }
+  .prob-statbtn.active.thinking { background: #d2a8ff22; border-color: #d2a8ff; color: #d2a8ff; }
+  .prob-statbtn.active.got      { background: #7ee78722; border-color: #7ee787; color: #7ee787; }
+  .prob-statbtn.active.stuck    { background: #f8514922; border-color: #f85149; color: #f85149; }
+  .prob-empty { text-align: center; padding: 40px 20px; color: #6e7681; font-size: 13px; }
+  /* Modal for surprise-me */
+  .prob-spotlight { position: fixed; inset: 0; background: rgba(13,17,23,0.85); backdrop-filter: blur(4px); display: none; align-items: center; justify-content: center; z-index: 100; padding: 20px; }
+  .prob-spotlight.open { display: flex; }
+  .prob-spotlight-card { background: #161b22; border: 1px solid #58a6ff; border-radius: 12px; max-width: 600px; width: 100%; padding: 24px 28px; box-shadow: 0 12px 60px rgba(88,166,255,0.3); }
+  .prob-spotlight-card h3 { color: #58a6ff; font-size: 14px; margin: 0 0 4px; text-transform: uppercase; letter-spacing: 1px; }
+  .prob-spotlight-card .pc-text { font-size: 16px; line-height: 1.55; color: #e6edf3; margin: 10px 0; }
+  .prob-spotlight-card .sl-close { background: transparent; border: none; color: #8b949e; font-size: 22px; cursor: pointer; float: right; line-height: 1; }
+  .prob-spotlight-card .sl-close:hover { color: #c9d1d9; }
   .appendix-table .watch-link:hover { color: #ff0000; text-decoration: underline; }
   /* ── Progress checkbox ── */
   .appendix-table .vid-check { width: 18px; height: 18px; cursor: pointer; accent-color: #7ee787; vertical-align: middle; }
@@ -399,6 +495,233 @@
     .dd-card-img { height: 120px; }
     .dd-keypoints { grid-template-columns: 1fr; }
   }
+
+/* === BEGIN glossary v1 css === */
+  /* dd-nav sticky top */
+  .dd-nav.dd-nav-top {
+    position: sticky; top: 0; z-index: 5;
+    margin: -4px -4px 14px; padding: 10px 8px;
+    background: linear-gradient(180deg, rgba(13,17,23,0.96) 75%, rgba(13,17,23,0));
+    backdrop-filter: blur(4px);
+    border-bottom: 1px solid #21262d;
+  }
+  /* ── Glossary ── */
+  .gloss-intro { background: #161b22; border: 1px solid #30363d; border-left: 3px solid #d2a8ff; border-radius: 6px; padding: 14px 18px; margin-bottom: 14px; color: #c9d1d9; font-size: 14px; line-height: 1.6; }
+  .gloss-intro strong { color: #d2a8ff; }
+  #view-glossary { overflow-y: auto; height: calc(100vh - 50px); margin-top: 50px; padding: 20px; box-sizing: border-box; }
+  @media (max-width: 768px) { #view-glossary { margin-top: 48px; padding: 12px; } }
+  .glossary-controls { position: sticky; top: 0; z-index: 5; background: rgba(13,17,23,0.95); backdrop-filter: blur(6px); padding: 10px 0 12px; margin: -8px 0 14px; border-bottom: 1px solid #21262d; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  #glossary-search { flex: 1 1 240px; min-width: 200px; background: #0d1117; border: 1px solid #30363d; border-radius: 6px; padding: 7px 12px; color: #c9d1d9; font-size: 13px; outline: none; }
+  #glossary-search:focus { border-color: #58a6ff; }
+  .glossary-cat-pills { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+  .glossary-cat-pills button { background: #161b22; border: 1px solid #30363d; color: #8b949e; padding: 4px 10px; border-radius: 12px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .4px; cursor: pointer; transition: all .15s; }
+  .glossary-cat-pills button:hover { border-color: #58a6ff; color: #c9d1d9; }
+  .glossary-cat-pills button.active { background: var(--pill-bg, #1f6feb22); border-color: var(--pill-color, #58a6ff); color: var(--pill-color, #58a6ff); }
+  .glossary-count { font-size: 11px; color: #8b949e; margin-left: auto; }
+  .glossary-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 14px; max-width: 1400px; margin: 0 auto; }
+  .glossary-card { background: #161b22; border: 1px solid #30363d; border-radius: 10px; padding: 14px; transition: border-color .15s, box-shadow .15s, transform .15s; }
+  .glossary-card:hover { border-color: var(--cat-color, #58a6ff); box-shadow: 0 4px 14px rgba(0,0,0,0.35); }
+  .glossary-card.flash {
+    animation: glossary-flash 2.6s cubic-bezier(.4,0,.2,1) 1 forwards;
+    position: relative;
+    z-index: 2;
+  }
+  @keyframes glossary-flash {
+    0% {
+      background: #161b22;
+      border-color: #30363d;
+      box-shadow: 0 0 0 rgba(0,0,0,0);
+      transform: scale(1);
+    }
+    8% {
+      background: color-mix(in srgb, var(--cat-color, #58a6ff) 55%, #161b22);
+      border-color: var(--cat-color, #58a6ff);
+      box-shadow:
+        0 0 0 4px var(--cat-color, #58a6ff),
+        0 0 28px 6px color-mix(in srgb, var(--cat-color, #58a6ff) 70%, transparent),
+        0 14px 36px rgba(0,0,0,0.55);
+      transform: scale(1.045);
+    }
+    22% {
+      background: color-mix(in srgb, var(--cat-color, #58a6ff) 30%, #161b22);
+      border-color: var(--cat-color, #58a6ff);
+      box-shadow:
+        0 0 0 3px var(--cat-color, #58a6ff),
+        0 0 22px 4px color-mix(in srgb, var(--cat-color, #58a6ff) 55%, transparent),
+        0 10px 28px rgba(0,0,0,0.5);
+      transform: scale(1.03);
+    }
+    45% {
+      background: color-mix(in srgb, var(--cat-color, #58a6ff) 45%, #161b22);
+      border-color: var(--cat-color, #58a6ff);
+      box-shadow:
+        0 0 0 3px var(--cat-color, #58a6ff),
+        0 0 26px 5px color-mix(in srgb, var(--cat-color, #58a6ff) 60%, transparent),
+        0 12px 32px rgba(0,0,0,0.5);
+      transform: scale(1.035);
+    }
+    70% {
+      background: color-mix(in srgb, var(--cat-color, #58a6ff) 22%, #161b22);
+      border-color: color-mix(in srgb, var(--cat-color, #58a6ff) 80%, #30363d);
+      box-shadow:
+        0 0 0 2px color-mix(in srgb, var(--cat-color, #58a6ff) 70%, transparent),
+        0 0 18px 3px color-mix(in srgb, var(--cat-color, #58a6ff) 40%, transparent);
+      transform: scale(1.015);
+    }
+    100% {
+      background: #161b22;
+      border-color: #30363d;
+      box-shadow: 0 0 0 rgba(0,0,0,0);
+      transform: scale(1);
+    }
+  }
+  /* Fallback for browsers without color-mix: solid tinted backgrounds */
+  @supports not (background: color-mix(in srgb, red, blue)) {
+    @keyframes glossary-flash {
+      0%,100% { background: #161b22; border-color: #30363d; box-shadow: none; transform: scale(1); }
+      8%, 45% {
+        background: rgba(88,166,255,0.32);
+        border-color: var(--cat-color, #58a6ff);
+        box-shadow: 0 0 0 4px var(--cat-color, #58a6ff), 0 0 28px var(--cat-color, #58a6ff);
+        transform: scale(1.04);
+      }
+    }
+  }
+  .glossary-term-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .glossary-term { font-size: 16px; font-weight: 700; color: #e6edf3; }
+  .glossary-cat-badge { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; padding: 2px 7px; border-radius: 10px; border: 1px solid var(--cat-color, #58a6ff); color: var(--cat-color, #58a6ff); background: rgba(0,0,0,0.2); }
+  .glossary-aka { font-size: 11px; color: #8b949e; font-style: italic; margin-top: 3px; }
+  .glossary-short { font-size: 13px; color: #c9d1d9; margin-top: 8px; line-height: 1.5; }
+  .glossary-long { font-size: 13px; color: #8b949e; margin-top: 8px; line-height: 1.55; display: none; }
+  .glossary-long code { background: #0d1117; border: 1px solid #21262d; border-radius: 4px; padding: 1px 5px; font-family: 'Cascadia Code', monospace; font-size: 12px; color: #d2a8ff; }
+  .glossary-card.expanded .glossary-long { display: block; }
+  .glossary-toggle { background: none; border: none; color: #58a6ff; font-size: 11px; cursor: pointer; padding: 6px 0 0; }
+  .glossary-toggle:hover { text-decoration: underline; }
+  .glossary-links { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+  .glossary-links button { background: #0d1117; border: 1px solid #30363d; color: #c9d1d9; padding: 3px 9px; border-radius: 10px; font-size: 11px; cursor: pointer; transition: all .15s; }
+  .glossary-links button:hover { border-color: #58a6ff; color: #58a6ff; }
+  /* graph-node pulse when jumped to from glossary */
+  @keyframes glossary-pulse {
+    0%   { stroke-opacity: 1; stroke-width: 14; }
+    100% { stroke-opacity: 0.55; stroke-width: 5; }
+  }
+  @keyframes glossary-halo-pulse {
+    0%   { r: 16;  stroke-opacity: 1;    stroke-width: 10; }
+    60%  { r: 90;  stroke-opacity: 0.55; stroke-width: 5; }
+    100% { r: 140; stroke-opacity: 0;    stroke-width: 2; }
+  }
+  @keyframes glossary-halo-pulse-2 {
+    0%   { r: 16;  stroke-opacity: 0.9; stroke-width: 6; }
+    60%  { r: 110; stroke-opacity: 0.4; stroke-width: 3; }
+    100% { r: 170; stroke-opacity: 0;   stroke-width: 1.5; }
+  }
+  @keyframes glossary-fill-pulse {
+    0%, 100% { fill-opacity: 0.85; }
+    50%      { fill-opacity: 1; }
+  }
+  @keyframes glossary-dim-others {
+    0%   { opacity: 1; }
+    20%  { opacity: 0.15; }
+    100% { opacity: 0.15; }
+  }
+  /* Dim everything in the graph except the highlighted node + its halos */
+  #canvas-graph.glossary-spotlight g.graph-node:not(.glossary-highlight),
+  #canvas-graph.glossary-spotlight line.graph-link,
+  #canvas-graph.glossary-spotlight text.graph-link-label {
+    animation: glossary-dim-others 0.4s ease-out forwards;
+  }
+  #canvas-graph.glossary-spotlight g.graph-node.glossary-highlight {
+    opacity: 1 !important;
+  }
+  g.graph-node.glossary-highlight circle:not(.glossary-halo):not(.glossary-halo-outer) {
+    animation:
+      glossary-pulse 0.45s ease-in-out 10 alternate,
+      glossary-fill-pulse 0.45s ease-in-out 10 alternate;
+    stroke: #ffd13b !important;
+    fill: #ffd13b !important;
+    filter:
+      drop-shadow(0 0 10px #ffd13b)
+      drop-shadow(0 0 24px #ffd13baa)
+      drop-shadow(0 0 40px #ffd13b66);
+  }
+  g.graph-node.glossary-highlight text {
+    fill: #fff !important;
+    font-weight: 900 !important;
+    font-size: 15px !important;
+    paint-order: stroke fill;
+    stroke: #5a3a00;
+    stroke-width: 4px;
+    stroke-linejoin: round;
+    filter:
+      drop-shadow(0 0 6px #000)
+      drop-shadow(0 0 12px #ffd13b)
+      drop-shadow(0 0 20px #ffd13bcc);
+  }
+  circle.glossary-halo {
+    fill: none;
+    stroke: #ffd13b;
+    pointer-events: none;
+    animation: glossary-halo-pulse 1.1s ease-out 5;
+    filter: drop-shadow(0 0 8px #ffd13baa);
+  }
+  circle.glossary-halo-outer {
+    fill: none;
+    stroke: #ffae00;
+    pointer-events: none;
+    animation: glossary-halo-pulse-2 1.4s ease-out 5;
+    animation-delay: 0.18s;
+    filter: drop-shadow(0 0 12px #ffae0099);
+  }
+  /* mindmap pulse (uses a <circle> appended) */
+  circle.glossary-mm-halo {
+    fill: none;
+    stroke: #ffd13b;
+    pointer-events: none;
+    animation: glossary-halo-pulse 1.1s ease-out 5;
+    filter: drop-shadow(0 0 8px #ffd13baa);
+  }
+  circle.glossary-mm-halo-outer {
+    fill: none;
+    stroke: #ffae00;
+    pointer-events: none;
+    animation: glossary-halo-pulse-2 1.4s ease-out 5;
+    animation-delay: 0.18s;
+    filter: drop-shadow(0 0 12px #ffae0099);
+  }
+  /* toast banner shown when jumping from glossary */
+  #glossary-toast {
+    position: fixed; top: 60px; left: 50%; transform: translateX(-50%) translateY(-30px) scale(0.92);
+    background: linear-gradient(180deg, #2a1f0a, #1a1308);
+    border: 2px solid #ffd13b; border-left: 6px solid #ffd13b;
+    color: #fff5d6; padding: 12px 22px; border-radius: 10px;
+    font-size: 15px; font-weight: 700;
+    box-shadow:
+      0 10px 32px rgba(0,0,0,0.6),
+      0 0 36px rgba(255,209,59,0.45),
+      0 0 64px rgba(255,209,59,0.25);
+    opacity: 0; pointer-events: none;
+    transition: opacity .22s ease, transform .28s cubic-bezier(.2,1.2,.4,1);
+    z-index: 10000;
+    display: flex; align-items: center; gap: 12px;
+    max-width: 90vw;
+    text-shadow: 0 0 8px rgba(255,209,59,0.5);
+  }
+  #glossary-toast.show { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+  #glossary-toast .gt-icon { font-size: 22px; filter: drop-shadow(0 0 6px #ffd13b); }
+  #glossary-toast .gt-sub { color: #c9b88c; font-weight: 500; font-size: 12.5px; margin-left: 4px; }
+  #glossary-toast strong { color: #ffd13b; text-shadow: 0 0 10px rgba(255,209,59,0.6); }
+  @media (max-width: 768px) { #glossary-toast { top: 56px; font-size: 13px; padding: 10px 16px; } }
+  /* tooltip glossary footer link */
+  #tooltip .tt-glossary { margin-top: 6px; padding-top: 5px; border-top: 1px solid #30363d; }
+  #tooltip .tt-glossary:empty { display: none; }
+  #tooltip .tt-glossary a {
+    display: inline-block; padding: 2px 8px; border-radius: 4px;
+    background: rgba(210,168,255,0.10); color: #d2a8ff; text-decoration: none;
+    font-size: 11px; font-weight: 500; cursor: pointer; border: 1px solid rgba(210,168,255,0.25);
+  }
+  #tooltip .tt-glossary a:hover { background: rgba(210,168,255,0.22); border-color: #d2a8ff; }
+  #tooltip.has-glossary { pointer-events: auto; }
+/* === END glossary v1 css === */
 </style>
 </head>
 <body>
@@ -459,6 +782,21 @@
 <div id="view-problems" class="view">
   <div id="problems-container"></div>
 </div>
+<!-- BEGIN glossary v1 view -->
+<div id="view-glossary" class="view">
+  <div class="gloss-intro">
+    <strong>📖 Glossary.</strong> Every acronym, jargon term, and unit-of-art used across <em>Use Cases</em> and <em>Deep Dives</em> — defined here, cross-linked to the <strong>Topic Graph</strong> and <strong>Mind Map</strong> so you can jump from definition → diagram in one click.
+    <br><br>
+    <span style="color:#8b949e">Tip: click a related term to flash-jump to it. Click the 🌐 graph or 🧭 mindmap links to spotlight that node on its tab.</span>
+  </div>
+  <div class="glossary-controls">
+    <input type="text" id="glossary-search" placeholder="🔍 Search terms, acronyms, or definitions…" />
+    <div class="glossary-cat-pills" id="glossary-cat-pills"></div>
+    <span class="glossary-count" id="glossary-count"></span>
+  </div>
+  <div id="glossary-list" class="glossary-list"></div>
+</div>
+<!-- END glossary v1 view -->
 
 <!-- ═══════════════ SHARED OVERLAYS ═══════════════ -->
 <div id="tooltip"><div class="tt-title"></div><div class="tt-body"></div><div class="tt-slides"></div></div>
@@ -560,27 +898,33 @@ const COURSE_CONFIG = {
         { name: "Atmospheric\nInteraction", tooltip: "Scattering, absorption, and transmission of EMR through the atmosphere." },
         { name: "Spectral\nSignatures", tooltip: "Unique reflectance patterns of materials across wavelengths." }
       ]},
-      { name: "Sensor\nSystems", tooltip: "Passive vs active, multispectral, hyperspectral, thermal.", children: [
-        { name: "Passive vs Active", tooltip: "Passive sensors detect reflected/emitted energy; active sensors emit and receive signals." },
-        { name: "Multispectral", tooltip: "Sensors capturing data in several broad wavelength bands." },
-        { name: "Hyperspectral", tooltip: "Sensors capturing hundreds of narrow contiguous spectral bands." },
-        { name: "Thermal", tooltip: "Sensors detecting emitted thermal infrared radiation." }
+      { name: "Sensor\nSystems", tooltip: "Passive vs active, multispectral, hyperspectral, thermal, SAR.", children: [
+        { name: "Passive vs Active", tooltip: "Passive sensors detect reflected/emitted energy; active sensors (radar, lidar) emit and receive their own signal." },
+        { name: "Electro-Optical\n(EO)", tooltip: "Passive optical sensors covering visible, NIR, SWIR — the most common Earth-observation modality (Landsat, Sentinel-2, Planet)." },
+        { name: "Multispectral", tooltip: "Sensors capturing data in several broad wavelength bands (typically 3–15)." },
+        { name: "Hyperspectral", tooltip: "Sensors capturing hundreds of narrow contiguous spectral bands — enables material identification by full spectral signature." },
+        { name: "Thermal", tooltip: "Sensors detecting emitted thermal infrared radiation (8–14 µm) — surface temperature, urban heat, fire." },
+        { name: "SAR", tooltip: "Synthetic Aperture Radar — active microwave imaging that sees through clouds and at night by coherently combining returns along the flight path." },
+        { name: "LiDAR", tooltip: "Active laser ranging — measures 3D structure (canopy height, terrain) by timing reflected pulses." }
       ]},
-      { name: "Satellite\nOrbits", tooltip: "LEO, GEO, sun-synchronous, revisit time.", children: [
-        { name: "LEO", tooltip: "Low Earth Orbit — high spatial resolution, limited coverage per pass." },
-        { name: "GEO", tooltip: "Geostationary orbit — continuous coverage of a fixed region." },
-        { name: "Sun-synchronous", tooltip: "Orbit maintaining consistent solar illumination for repeat imaging." },
-        { name: "Revisit Time", tooltip: "Time interval between successive observations of the same area." }
+      { name: "Satellite\nOrbits", tooltip: "LEO, GEO, sun-synchronous, revisit time, constellations.", children: [
+        { name: "LEO", tooltip: "Low Earth Orbit (~400–800 km) — high spatial resolution, narrow swath, limited coverage per pass." },
+        { name: "GEO", tooltip: "Geostationary orbit (~35 786 km) — continuous coverage of a fixed region but coarse resolution (km-scale)." },
+        { name: "Sun-synchronous", tooltip: "Near-polar LEO orbit maintaining consistent solar illumination at each latitude for repeat imaging." },
+        { name: "Revisit Time", tooltip: "Time interval between successive observations of the same area; trade-off vs swath and resolution." },
+        { name: "Constellations", tooltip: "Multiple satellites (Sentinel-1 A+B, Planet Dove fleet) flown together to shrink revisit time without sacrificing resolution." }
       ]},
-      { name: "Image\nAcquisition", tooltip: "Scanning systems, pushbroom, whiskbroom, resolution types.", children: [
-        { name: "Pushbroom", tooltip: "Linear array sensor scanning along the flight direction." },
-        { name: "Whiskbroom", tooltip: "Mechanical scanning across the track using a single detector." },
-        { name: "Resolution Types", tooltip: "Spatial, spectral, radiometric, and temporal resolution." }
+      { name: "Image\nAcquisition", tooltip: "Scanning systems, pushbroom, whiskbroom, resolution types, geolocation.", children: [
+        { name: "Pushbroom", tooltip: "Linear array sensor that captures one image line per platform motion step (Sentinel-2, SPOT)." },
+        { name: "Whiskbroom", tooltip: "Mechanical mirror scans across-track using a small detector array (Landsat-7 ETM+)." },
+        { name: "Resolution Types", tooltip: "Spatial (GSD), spectral (band width), radiometric (bit depth), and temporal (revisit) resolution — usually traded against each other." },
+        { name: "Geolocation", tooltip: "Tying each pixel to lat/lon using orbit ephemeris, attitude (roll/pitch/yaw), Earth model, and GCPs; sub-pixel accuracy is hard." }
       ]},
-      { name: "Digital Image\nProcessing", tooltip: "Preprocessing, geometric correction, radiometric calibration.", children: [
-        { name: "Preprocessing", tooltip: "Initial corrections applied to raw satellite imagery." },
-        { name: "Geometric\nCorrection", tooltip: "Correcting distortions due to sensor, platform, and Earth geometry." },
-        { name: "Radiometric\nCalibration", tooltip: "Converting digital numbers to physical radiance or reflectance values." }
+      { name: "Digital Image\nProcessing", tooltip: "Preprocessing, geometric correction, radiometric calibration, atmospheric correction.", children: [
+        { name: "Preprocessing", tooltip: "Initial corrections applied to raw satellite imagery before analysis." },
+        { name: "Geometric\nCorrection", tooltip: "Correcting distortions due to sensor pose, platform motion, terrain relief, and Earth curvature." },
+        { name: "Radiometric\nCalibration", tooltip: "Converting raw digital numbers (DN) to physical radiance or top-of-atmosphere reflectance using sensor gain/offset and solar geometry." },
+        { name: "Atmospheric\nCorrection", tooltip: "Removing the atmosphere's scattering/absorption signal (Rayleigh, aerosols, water vapor) to recover surface reflectance — needs AOD and column water vapor." }
       ]},
       { name: "Image\nEnhancement", tooltip: "Contrast stretching, filtering, PCA, band ratios.", children: [
         { name: "Contrast\nStretching", tooltip: "Expanding the range of pixel values for better visualization." },
@@ -605,10 +949,11 @@ const COURSE_CONFIG = {
         { name: "Water Resources", tooltip: "Water body mapping, flood monitoring, watershed analysis." },
         { name: "Disaster\nManagement", tooltip: "Rapid damage assessment, wildfire detection, earthquake response." }
       ]},
-      { name: "Next-Gen\nSystems", tooltip: "GOES-R, Sentinel, AI/DL for satellite imagery.", children: [
-        { name: "GOES-R", tooltip: "Advanced geostationary weather satellite series." },
-        { name: "Sentinel", tooltip: "ESA Copernicus program satellite constellation." },
-        { name: "AI / Deep Learning", tooltip: "Applying CNNs, transformers, and other DL models to satellite imagery." }
+      { name: "Next-Gen\nSystems", tooltip: "GOES-R, Sentinel, CubeSats, AI/DL for satellite imagery.", children: [
+        { name: "GOES-R", tooltip: "Advanced geostationary weather satellite series providing 0.5–2 km imagery every 5–10 minutes over the Americas." },
+        { name: "Sentinel", tooltip: "ESA Copernicus program constellation: S-1 (SAR), S-2 (optical), S-3 (ocean/land), S-5P (atmosphere) — open data." },
+        { name: "CubeSats", tooltip: "Standardized 10 cm-unit nanosatellites (Planet Doves, Spire) that democratized EO — daily global coverage from a startup budget, trading aperture/calibration for cost." },
+        { name: "AI / Deep Learning", tooltip: "CNNs, transformers, and Siamese change-detection networks applied to multispectral/SAR imagery for classification, detection, and forecasting." }
       ]}
     ]
   },
@@ -618,112 +963,803 @@ const COURSE_CONFIG = {
     edgeColors: { depends: "#58a6ff", implements: "#f778ba", enables: "#7ee787", related: "#ffa657" },
     nodes: [
       { id: "emr",              label: "EMR",              cat: "physics",      tip: "Electromagnetic radiation — the foundation of all remote sensing." },
-      { id: "sensors",          label: "Sensors",          cat: "sensors",      tip: "Instruments that detect and record EMR from Earth's surface." },
-      { id: "orbits",           label: "Orbits",           cat: "sensors",      tip: "Satellite orbit types determining coverage and revisit patterns." },
-      { id: "resolution",       label: "Resolution",       cat: "sensors",      tip: "Spatial, spectral, radiometric, and temporal resolution." },
-      { id: "preprocessing",    label: "Preprocessing",    cat: "processing",   tip: "Geometric and radiometric corrections on raw imagery." },
-      { id: "enhancement",      label: "Enhancement",      cat: "processing",   tip: "Techniques to improve visual interpretability of images." },
-      { id: "classification",   label: "Classification",   cat: "processing",   tip: "Assigning land-cover classes to image pixels." },
-      { id: "change-detection", label: "Change Detection", cat: "applications", tip: "Identifying differences in surface conditions over time." },
-      { id: "ndvi",             label: "NDVI",             cat: "applications", tip: "Vegetation index computed from NIR and Red bands." },
-      { id: "deep-learning",    label: "Deep Learning",    cat: "applications", tip: "AI/DL techniques applied to satellite image analysis." }
+      { id: "atmosphere",       label: "Atmosphere",       cat: "physics",      tip: "Scatters and absorbs EMR between sensor and surface; must be corrected to recover surface reflectance." },
+      { id: "sensors",          label: "Sensors (EO)",     cat: "sensors",      tip: "Passive electro-optical instruments (visible/NIR/SWIR/TIR) that detect reflected and emitted EMR." },
+      { id: "sar",              label: "SAR",              cat: "sensors",      tip: "Synthetic Aperture Radar — active microwave imaging that works through clouds and at night." },
+      { id: "orbits",           label: "Orbits",           cat: "sensors",      tip: "LEO / GEO / sun-synchronous — sets revisit cadence, GSD and coverage." },
+      { id: "cubesats",         label: "CubeSats",         cat: "sensors",      tip: "Standardized nanosatellites flown in large constellations (Planet, Spire) — daily global coverage on a startup budget." },
+      { id: "resolution",       label: "Resolution",       cat: "sensors",      tip: "Spatial (GSD), spectral, radiometric, temporal — orbital and aperture choices trade these against each other." },
+      { id: "geolocation",      label: "Geolocation",      cat: "processing",   tip: "Tying each pixel to lat/lon using orbit ephemeris, attitude, Earth model and ground control points." },
+      { id: "preprocessing",    label: "Preprocessing",    cat: "processing",   tip: "Geometric correction + radiometric calibration on raw imagery." },
+      { id: "atm-correction",   label: "Atm. Correction",  cat: "processing",   tip: "Removes Rayleigh, aerosol and water-vapor effects to recover surface reflectance (6S, Sen2Cor, LaSRC)." },
+      { id: "enhancement",      label: "Enhancement",      cat: "processing",   tip: "Stretching, filtering, PCA, band ratios — improves interpretability for analysis." },
+      { id: "classification",   label: "Classification",   cat: "processing",   tip: "Assigning land-cover or material classes to pixels (supervised, unsupervised, ML/DL)." },
+      { id: "change-detection", label: "Change Detection", cat: "applications", tip: "Identifying differences in surface conditions over time (deforestation, urban growth, disaster damage)." },
+      { id: "ndvi",             label: "NDVI",             cat: "applications", tip: "Normalized Difference Vegetation Index = (NIR-Red)/(NIR+Red) — the workhorse vegetation index." },
+      { id: "deep-learning",    label: "Deep Learning",    cat: "applications", tip: "CNNs, Siamese networks and transformers applied to multispectral/SAR for detection, segmentation, forecasting." }
     ],
     edges: [
+      { source: "emr",            target: "atmosphere",       type: "related",    label: "interacts with" },
       { source: "emr",            target: "sensors",          type: "enables",    label: "enables" },
-      { source: "sensors",        target: "resolution",       type: "depends", label: "determines" },
+      { source: "emr",            target: "sar",              type: "enables",    label: "enables" },
+      { source: "atmosphere",     target: "atm-correction",   type: "depends",    label: "motivates" },
+      { source: "sensors",        target: "resolution",       type: "depends",    label: "determines" },
+      { source: "sar",            target: "resolution",       type: "depends",    label: "determines" },
       { source: "orbits",         target: "resolution",       type: "related",    label: "affects" },
-      { source: "preprocessing",  target: "enhancement",      type: "depends",    label: "depends" },
+      { source: "orbits",         target: "geolocation",      type: "enables",    label: "enables" },
+      { source: "cubesats",       target: "orbits",           type: "implements", label: "fly in" },
+      { source: "cubesats",       target: "sensors",          type: "implements", label: "miniaturize" },
+      { source: "geolocation",    target: "preprocessing",    type: "enables",    label: "feeds" },
+      { source: "atm-correction", target: "preprocessing",    type: "implements", label: "part of" },
+      { source: "preprocessing",  target: "enhancement",      type: "depends",    label: "feeds" },
       { source: "enhancement",    target: "classification",   type: "enables",    label: "enables" },
       { source: "classification", target: "change-detection", type: "enables",    label: "enables" },
       { source: "ndvi",           target: "change-detection", type: "implements", label: "implements" },
-      { source: "classification", target: "deep-learning", type: "enables" },
-      { source: "deep-learning", target: "change-detection", type: "implements" }
+      { source: "sensors",        target: "ndvi",             type: "enables",    label: "supplies bands" },
+      { source: "sar",            target: "change-detection", type: "enables",    label: "all-weather" },
+      { source: "classification", target: "deep-learning",    type: "enables",    label: "modernizes" },
+      { source: "deep-learning",  target: "change-detection", type: "implements", label: "implements" }
     ]
   },
 
   deepDives: [
     {
-      id: "dd-spectral", num: "Concept 1 of 3", title: "Spectral Signatures",
-      desc: "Reflectance curves for vegetation, water, and soil — the fingerprints of Earth's surface.", color: "#58a6ff", icon: "🌈",
+      id: "dd-emspectrum", num: "Concept 1 of 8", title: "EM Spectrum & Sensor Bands",
+      desc: "Where Landsat-8 OLI, Sentinel-2 MSI, and MODIS sit on the electromagnetic spectrum.", color: "#58a6ff", icon: "🌈",
       svg: function(w, h) {
-        var cx = w/2, cy = h/2;
-        return '<svg viewBox="0 0 '+w+' '+h+'" xmlns="http://www.w3.org/2000/svg" style="background:#0d1117">'
-          + '<rect x="40" y="30" width="'+(w-80)+'" height="'+(h-70)+'" rx="6" fill="#58a6ff10" stroke="#58a6ff" stroke-width="0.5"/>'
-          + '<text x="'+cx+'" y="25" text-anchor="middle" fill="#58a6ff" font-size="11" font-weight="600">Reflectance vs Wavelength</text>'
-          + '<polyline points="60,'+(h-60)+' 120,'+(h-120)+' 180,'+(h-80)+' 240,'+(h-140)+' 300,'+(h-90)+'" fill="none" stroke="#7ee787" stroke-width="2"/>'
-          + '<text x="310" y="'+(h-85)+'" fill="#7ee787" font-size="9">Vegetation</text>'
-          + '<polyline points="60,'+(h-50)+' 120,'+(h-55)+' 180,'+(h-45)+' 240,'+(h-40)+' 300,'+(h-35)+'" fill="none" stroke="#58a6ff" stroke-width="2"/>'
-          + '<text x="310" y="'+(h-30)+'" fill="#58a6ff" font-size="9">Water</text>'
-          + '<polyline points="60,'+(h-70)+' 120,'+(h-85)+' 180,'+(h-95)+' 240,'+(h-100)+' 300,'+(h-105)+'" fill="none" stroke="#ffa657" stroke-width="2"/>'
-          + '<text x="310" y="'+(h-100)+'" fill="#ffa657" font-size="9">Soil</text>'
-          + '</svg>';
+        var bands = [
+          {x:60,  W:55, c:'#a371f7', l:'UV',   r:'0.3'},
+          {x:115, W:60, c:'#58a6ff', l:'Blue', r:'0.45'},
+          {x:175, W:50, c:'#7ee787', l:'Green',r:'0.55'},
+          {x:225, W:55, c:'#f778ba', l:'Red',  r:'0.66'},
+          {x:280, W:90, c:'#ffa657', l:'NIR',  r:'0.85'},
+          {x:370, W:90, c:'#d2a8ff', l:'SWIR', r:'1.6/2.2'},
+          {x:460, W:80, c:'#ff7b72', l:'TIR',  r:'10–12'}
+        ];
+        var s = '<svg viewBox="0 0 '+w+' '+h+'" xmlns="http://www.w3.org/2000/svg" style="background:#0d1117">';
+        s += '<text x="'+(w/2)+'" y="20" text-anchor="middle" fill="#58a6ff" font-size="12" font-weight="600">EM Spectrum (µm) · Landsat-8 vs Sentinel-2</text>';
+        for (var i=0;i<bands.length;i++){var b=bands[i];
+          s += '<rect x="'+b.x+'" y="40" width="'+b.W+'" height="30" fill="'+b.c+'40" stroke="'+b.c+'" stroke-width="1"/>';
+          s += '<text x="'+(b.x+b.W/2)+'" y="60" text-anchor="middle" fill="'+b.c+'" font-size="10" font-weight="600">'+b.l+'</text>';
+          s += '<text x="'+(b.x+b.W/2)+'" y="84" text-anchor="middle" fill="#8b949e" font-size="8">'+b.r+'</text>';
+        }
+        s += '<text x="60" y="115" fill="#7ee787" font-size="10">Landsat-8 OLI · 30 m · 9 bands</text>';
+        s += '<line x1="60" y1="120" x2="540" y2="120" stroke="#7ee787" stroke-width="1" stroke-dasharray="3,2"/>';
+        s += '<g fill="#7ee787">';
+        var lsat=[120,160,200,250,310,400,490];
+        for(i=0;i<lsat.length;i++) s += '<circle cx="'+lsat[i]+'" cy="120" r="3"/>';
+        s += '</g>';
+        s += '<text x="60" y="145" fill="#d2a8ff" font-size="10">Sentinel-2 MSI · 10 m vis/NIR · 13 bands</text>';
+        s += '<line x1="60" y1="150" x2="540" y2="150" stroke="#d2a8ff" stroke-width="1" stroke-dasharray="3,2"/>';
+        s += '<g fill="#d2a8ff">';
+        var sen=[120,145,175,210,235,260,295,330,360,420,470,500,530];
+        for(i=0;i<sen.length;i++) s += '<circle cx="'+sen[i]+'" cy="150" r="3"/>';
+        s += '</g>';
+        s += '<text x="'+(w/2)+'" y="'+(h-8)+'" text-anchor="middle" fill="#8b949e" font-size="9">Wavelength increases →</text>';
+        return s + '</svg>';
       },
       sections: [
-        { title: "Overview", text: "Every material on Earth reflects, absorbs, and transmits electromagnetic radiation differently across wavelengths. These unique patterns — spectral signatures — allow remote sensing scientists to identify and distinguish surface materials from satellite data." },
-        { title: "Vegetation", text: "Healthy vegetation has low reflectance in visible bands (absorbed by chlorophyll), a sharp rise in NIR (cell structure scattering), and absorption features in SWIR (water content). Stressed vegetation shows reduced NIR reflectance." },
-        { title: "Water & Soil", text: "Clear water absorbs most NIR and SWIR energy, reflecting primarily in blue-green wavelengths. Soil reflectance generally increases with wavelength and varies with moisture content, texture, and mineral composition." }
+        { title: "Why bands matter", text: "Sensors do not capture continuous spectra; they sample discrete bands chosen to exploit known absorption/reflection features. Visible bands (0.4–0.7 µm) reveal colour and chlorophyll absorption; NIR (0.7–1.3 µm) lights up vegetation cell structure; SWIR (1.4–2.5 µm) reveals leaf water and clay/carbonate minerals; TIR (8–14 µm) measures emitted heat. Choosing the right band is choosing the right physics — false-colour composites that swap NIR into the red channel make healthy plants glow red because that is where they reflect most strongly." },
+        { title: "Landsat vs Sentinel-2", text: "Landsat-8/9 OLI carries 9 reflective bands at 30 m (15 m pan) plus TIRS at 100 m, with a 16-day revisit and a heritage stretching back to 1972. Sentinel-2 MSI carries 13 bands — including 4 narrow Red-Edge bands at 705/740/783/865 nm — at 10/20/60 m, with a 5-day revisit when both A and B platforms are combined. Sentinel-2 deliberately mimics Landsat's blue/green/red/NIR bands so the two records cross-calibrate, while adding red-edge bands tailored to vegetation biophysics." },
+        { title: "Worked example", text: "To distinguish wheat senescence from drought stress on a Sentinel-2 scene you would compute NDRE = (B8A − B5)/(B8A + B5) using the narrow NIR (865 nm) and Red-Edge-1 (705 nm) bands. NDRE saturates later than NDVI in mature canopies and responds to chlorophyll concentration, separating yellowing-from-ripeness (NDRE drops slowly) from yellowing-from-water-stress (NDRE drops fast)." },
+        { title: "Pitfall", text: "Bands with similar names are not always interchangeable: Landsat-8 Band 5 NIR is centred at 865 nm with 28 nm width, while Sentinel-2 Band 8 NIR is centred at 833 nm with 106 nm width. Their NDVI values differ by 0.02–0.05, enough to break a multi-sensor time series unless harmonised (e.g. NASA HLS product)." }
       ],
       keypoints: [
-        { title: "Diagnostic Wavelengths", text: "Chlorophyll absorbs at ~0.45 µm (blue) and ~0.67 µm (red); NIR plateau at 0.7–1.3 µm is key for vegetation." },
-        { title: "Red Edge", text: "The sharp reflectance increase between 0.68–0.75 µm is a sensitive indicator of vegetation health." }
+        { title: "Atmospheric windows", text: "Useful Earth-observation bands cluster in 0.4–2.5 µm (reflective), 3–5 µm and 8–14 µm (thermal), and microwave (1 mm–1 m). Other wavelengths are absorbed by H₂O, CO₂, O₃." },
+        { title: "Pan-sharpening", text: "Landsat's 15 m panchromatic band (0.50–0.68 µm) can be fused with 30 m multispectral bands to produce a 15 m colour image — the ratio of resolutions sets the achievable sharpening." },
+        { title: "Red Edge", text: "Sentinel-2's 705/740/783 nm bands sample the steep 'red-edge' reflectance jump diagnostic of chlorophyll content; absent on Landsat." },
+        { title: "MODIS context", text: "MODIS Terra/Aqua have 36 bands but coarse 250–1000 m GSD, traded for daily global coverage — complementary, not competitive, to Landsat/Sentinel." }
       ]
     },
     {
-      id: "dd-classification", num: "Concept 2 of 3", title: "Image Classification",
-      desc: "Training data, ML algorithms, and confusion matrix — assigning meaning to pixels.", color: "#f778ba", icon: "🗂️",
+      id: "dd-pushwhisk", num: "Concept 2 of 8", title: "Push-Broom vs Whisk-Broom Scanners",
+      desc: "Two ways to build a 2-D image from a 1-D detector array moving with the platform.", color: "#f778ba", icon: "🛰️",
       svg: function(w, h) {
-        var cx = w/2, cy = h/2;
-        return '<svg viewBox="0 0 '+w+' '+h+'" xmlns="http://www.w3.org/2000/svg" style="background:#0d1117">'
-          + '<rect x="40" y="40" width="120" height="60" rx="8" fill="#f778ba15" stroke="#f778ba" stroke-width="1"/>'
-          + '<text x="100" y="75" text-anchor="middle" fill="#f778ba" font-size="11">Training Data</text>'
-          + '<line x1="160" y1="70" x2="220" y2="70" stroke="#f778ba" stroke-width="1" marker-end="url(#arr)"/>'
-          + '<rect x="220" y="40" width="120" height="60" rx="8" fill="#7ee78715" stroke="#7ee787" stroke-width="1"/>'
-          + '<text x="280" y="75" text-anchor="middle" fill="#7ee787" font-size="11">Classifier</text>'
-          + '<line x1="340" y1="70" x2="400" y2="70" stroke="#7ee787" stroke-width="1"/>'
-          + '<rect x="400" y="40" width="120" height="60" rx="8" fill="#ffa65715" stroke="#ffa657" stroke-width="1"/>'
-          + '<text x="460" y="75" text-anchor="middle" fill="#ffa657" font-size="11">Thematic Map</text>'
-          + '<defs><marker id="arr" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#f778ba"/></marker></defs>'
-          + '</svg>';
+        var s = '<svg viewBox="0 0 '+w+' '+h+'" xmlns="http://www.w3.org/2000/svg" style="background:#0d1117">';
+        s += '<text x="'+(w/2)+'" y="18" text-anchor="middle" fill="#f778ba" font-size="12" font-weight="600">Push-Broom (left) vs Whisk-Broom (right)</text>';
+        s += '<rect x="50" y="40" width="90" height="20" rx="4" fill="#f778ba30" stroke="#f778ba"/>';
+        s += '<text x="95" y="55" text-anchor="middle" fill="#f778ba" font-size="10">Linear array</text>';
+        s += '<line x1="55" y1="60" x2="35" y2="170" stroke="#f778ba" stroke-width="0.5"/>';
+        s += '<line x1="135" y1="60" x2="155" y2="170" stroke="#f778ba" stroke-width="0.5"/>';
+        s += '<rect x="35" y="170" width="120" height="14" fill="#f778ba50"/>';
+        s += '<rect x="35" y="184" width="120" height="14" fill="#f778ba30"/>';
+        s += '<rect x="35" y="198" width="120" height="14" fill="#f778ba15"/>';
+        s += '<text x="95" y="225" text-anchor="middle" fill="#8b949e" font-size="9">whole row at once</text>';
+        s += '<text x="95" y="238" text-anchor="middle" fill="#7ee787" font-size="9">Sentinel-2, SPOT</text>';
+        s += '<rect x="380" y="40" width="20" height="20" rx="3" fill="#7ee78730" stroke="#7ee787"/>';
+        s += '<text x="390" y="55" text-anchor="middle" fill="#7ee787" font-size="10">·</text>';
+        s += '<path d="M390 60 Q 320 120 320 170" fill="none" stroke="#7ee787" stroke-width="0.6"/>';
+        s += '<path d="M390 60 Q 460 120 460 170" fill="none" stroke="#7ee787" stroke-width="0.6"/>';
+        s += '<path d="M390 60 L 390 170" stroke="#7ee787" stroke-width="0.4" stroke-dasharray="2,2"/>';
+        for(var i=0;i<6;i++){
+          s += '<circle cx="'+(325+i*22)+'" cy="180" r="3" fill="#7ee787"/>';
+        }
+        s += '<text x="390" y="205" text-anchor="middle" fill="#8b949e" font-size="9">mirror sweeps cross-track</text>';
+        s += '<text x="390" y="220" text-anchor="middle" fill="#8b949e" font-size="9">one pixel at a time</text>';
+        s += '<text x="390" y="238" text-anchor="middle" fill="#7ee787" font-size="9">Landsat 1–7 MSS/TM</text>';
+        s += '<text x="50" y="'+(h-10)+'" fill="#8b949e" font-size="9">↓ flight direction</text>';
+        return s + '</svg>';
       },
       sections: [
-        { title: "Overview", text: "Image classification assigns each pixel (or object) to a thematic class such as water, urban, forest, or cropland. It is the core step in converting raw imagery into actionable land-cover maps." },
-        { title: "Supervised Methods", text: "The analyst selects representative training samples for each class. Algorithms like Maximum Likelihood, SVM, and Random Forest learn decision boundaries from these samples and classify the remaining pixels." },
-        { title: "Accuracy Assessment", text: "A confusion matrix compares classified results against ground truth. Metrics include overall accuracy, producer's accuracy, user's accuracy, and the Kappa coefficient." }
+        { title: "Whisk-broom (across-track)", text: "A rotating or oscillating mirror sweeps a single (or small) detector across the swath, building one image row per sweep, while orbital motion advances the next row. Landsat MSS, TM, and ETM+ all use this design. Mechanical scanning gives every pixel an identical detector — eliminating between-detector calibration drift — but limits dwell time per pixel and demands a fast, vibration-prone moving mirror that can fail (Landsat-7's SLC-off in 2003)." },
+        { title: "Push-broom (along-track)", text: "A long linear CCD with one detector per cross-track pixel images the entire row simultaneously while the platform's motion 'pushes' the array forward. Sentinel-2, SPOT, IKONOS, Planet Doves, and Landsat-8/9 OLI all use push-broom designs. The longer dwell time per pixel (~3.6 ms vs ~10 µs for whisk-broom) yields ~10× better SNR or finer spectral resolution at the same noise floor." },
+        { title: "Worked example", text: "OLI's swath is 185 km at 30 m GSD, so each row needs 185 000/30 ≈ 6166 pixels. A push-broom design uses 6166 detectors arranged as 14 staggered focal-plane modules; a whisk-broom would need a mirror that completes 6166 samples per row in the 4.4 ms of along-track motion (≈1.4 MHz sample rate). Mechanically infeasible at 30 m — which is why Landsat-8 abandoned the whisk-broom." },
+        { title: "Pitfall", text: "Push-broom requires per-detector radiometric calibration: every column has its own gain/offset, so any miscalibration shows as vertical 'striping' in the image. The standard fix is histogram matching across detector groups, applied during Level-1 processing." }
       ],
       keypoints: [
-        { title: "Training Quality", text: "Classification accuracy depends heavily on the quality, quantity, and representativeness of training samples." },
-        { title: "Kappa Coefficient", text: "Kappa measures agreement beyond chance — values above 0.8 indicate strong classification performance." }
+        { title: "Dwell time advantage", text: "Push-broom dwell ≈ pixel size / ground-track velocity; for OLI at 6.7 km/s and 30 m pixels that's ~4.5 ms per pixel, hundreds of times longer than whisk-broom." },
+        { title: "No moving parts", text: "Push-broom optical path is rigid — no oscillating mirror means lower power, less vibration, and longer mission life (a key reason CubeSats use it)." },
+        { title: "Detector count", text: "Whisk-broom: 1–32 detectors per band. Push-broom OLI: 6916 detectors per band. Calibration burden grows linearly with detector count." }
       ]
     },
     {
-      id: "dd-ndvi", num: "Concept 3 of 3", title: "NDVI",
-      desc: "(NIR − Red) / (NIR + Red) — quantifying vegetation health from space.", color: "#7ee787", icon: "🌿",
+      id: "dd-orbits", num: "Concept 3 of 8", title: "Sun-Synchronous vs Geostationary Orbits",
+      desc: "Why imaging satellites fly polar at 700 km and weather satellites hover over the equator.", color: "#7ee787", icon: "🌍",
       svg: function(w, h) {
-        var cx = w/2, cy = h/2;
-        return '<svg viewBox="0 0 '+w+' '+h+'" xmlns="http://www.w3.org/2000/svg" style="background:#0d1117">'
-          + '<rect x="30" y="20" width="'+(w-60)+'" height="'+(h-50)+'" rx="8" fill="#7ee78710" stroke="#7ee787" stroke-width="0.5"/>'
-          + '<text x="'+cx+'" y="50" text-anchor="middle" fill="#7ee787" font-size="13" font-weight="600">NDVI = (NIR − Red) / (NIR + Red)</text>'
-          + '<text x="'+cx+'" y="80" text-anchor="middle" fill="#8b949e" font-size="10">Range: −1.0 to +1.0</text>'
-          + '<rect x="60" y="100" width="80" height="30" rx="4" fill="#58a6ff20" stroke="#58a6ff" stroke-width="1"/>'
-          + '<text x="100" y="120" text-anchor="middle" fill="#58a6ff" font-size="10">Water (< 0)</text>'
-          + '<rect x="180" y="100" width="100" height="30" rx="4" fill="#ffa65720" stroke="#ffa657" stroke-width="1"/>'
-          + '<text x="230" y="120" text-anchor="middle" fill="#ffa657" font-size="10">Bare Soil (~0.1)</text>'
-          + '<rect x="320" y="100" width="120" height="30" rx="4" fill="#7ee78720" stroke="#7ee787" stroke-width="1"/>'
-          + '<text x="380" y="120" text-anchor="middle" fill="#7ee787" font-size="10">Dense Veg (0.6+)</text>'
-          + '</svg>';
+        var cx = w/2, cy = h/2 + 10;
+        var s = '<svg viewBox="0 0 '+w+' '+h+'" xmlns="http://www.w3.org/2000/svg" style="background:#0d1117">';
+        s += '<text x="'+cx+'" y="18" text-anchor="middle" fill="#7ee787" font-size="12" font-weight="600">Sun-Sync (LEO ~700 km) vs Geostationary (GEO 35 786 km)</text>';
+        s += '<circle cx="'+cx+'" cy="'+cy+'" r="55" fill="#1f6feb40" stroke="#58a6ff" stroke-width="1"/>';
+        s += '<text x="'+cx+'" y="'+(cy+4)+'" text-anchor="middle" fill="#58a6ff" font-size="11">Earth</text>';
+        s += '<ellipse cx="'+cx+'" cy="'+cy+'" rx="80" ry="80" fill="none" stroke="#7ee787" stroke-width="1" stroke-dasharray="4,3" transform="rotate(82 '+cx+' '+cy+')"/>';
+        s += '<circle cx="'+(cx-79)+'" cy="'+(cy+12)+'" r="3" fill="#7ee787"/>';
+        s += '<text x="'+(cx-130)+'" y="'+(cy+15)+'" fill="#7ee787" font-size="9">Sun-sync</text>';
+        s += '<text x="'+(cx-130)+'" y="'+(cy+27)+'" fill="#8b949e" font-size="8">i ≈ 98°, T ≈ 99 min</text>';
+        s += '<circle cx="'+cx+'" cy="'+cy+'" r="160" fill="none" stroke="#ffa657" stroke-width="1"/>';
+        s += '<circle cx="'+(cx+160)+'" cy="'+cy+'" r="4" fill="#ffa657"/>';
+        s += '<text x="'+(cx+165)+'" y="'+(cy+5)+'" fill="#ffa657" font-size="9">GEO</text>';
+        s += '<text x="'+(cx+165)+'" y="'+(cy+18)+'" fill="#8b949e" font-size="8">T = 24 h</text>';
+        s += '<g stroke="#ffeb3b" stroke-width="0.6">';
+        for(var i=0;i<6;i++){var a=-Math.PI/2 + i*0.3 - 0.6; var x1=20+Math.cos(a)*4, y1=cy-100+Math.sin(a)*4;
+          s += '<line x1="'+x1+'" y1="'+y1+'" x2="'+(x1+15)+'" y2="'+(y1+10)+'"/>';
+        }
+        s += '</g>';
+        s += '<circle cx="20" cy="'+(cy-100)+'" r="8" fill="#ffeb3b"/>';
+        s += '<text x="35" y="'+(cy-95)+'" fill="#ffeb3b" font-size="9">Sun</text>';
+        s += '<text x="20" y="'+(h-25)+'" fill="#8b949e" font-size="9">Sun-sync: crosses equator at fixed local solar time (e.g. 10:30 AM)</text>';
+        s += '<text x="20" y="'+(h-12)+'" fill="#8b949e" font-size="9">GEO: stays above one longitude → constant view, coarse resolution</text>';
+        return s + '</svg>';
       },
       sections: [
-        { title: "Overview", text: "The Normalized Difference Vegetation Index (NDVI) is the most widely used spectral index in remote sensing. It exploits the contrast between strong NIR reflectance and red absorption by chlorophyll to quantify vegetation greenness." },
-        { title: "Formula", formula: "NDVI = (NIR − Red) / (NIR + Red)" },
-        { title: "Interpretation", text: "NDVI ranges from −1 to +1. Values near 0 indicate bare soil or rock; negative values suggest water. Values above 0.3 indicate vegetation, with dense healthy canopies reaching 0.8–0.9." },
-        { title: "Applications", text: "NDVI time series are used for drought monitoring, crop yield prediction, phenology studies, and detecting deforestation or land degradation." }
+        { title: "Sun-synchronous (SSO)", text: "An SSO is a near-polar low-Earth orbit at ~700–900 km altitude with inclination ~98° (slightly retrograde). Earth's J2 oblateness perturbation precesses the orbit plane eastward by exactly 360°/365.25 days, locking it to the Sun. The satellite therefore crosses every latitude at the same local solar time on every pass — Landsat-8 has a 10:00 AM ± 15 min descending node — guaranteeing comparable illumination geometry across years. Period is ~99 min, giving 14-15 orbits per day and a 16-day repeat cycle for Landsat, 5-day for Sentinel-2 A+B." },
+        { title: "Geostationary (GEO)", text: "A GEO satellite sits at 35 786 km on the equator with a 24-hour period, so it hovers over a fixed longitude. GOES-R, Meteosat, and Himawari use this for continuous (15-minute or faster) hemispheric weather imaging. The huge altitude trades resolution for temporal coverage: GOES-R ABI achieves only 0.5 km visible / 2 km IR pixels, vs Landsat's 30 m, and cannot see the polar caps at all (zenith angle > 81°)." },
+        { title: "Worked example", text: "How fast does a sun-sync satellite move on the ground? Orbital velocity v = √(GM/r) ≈ 7.5 km/s at 700 km. Ground-track speed = v × R_E/(R_E+h) ≈ 7.5 × 6371/7071 ≈ 6.76 km/s. So Landsat sweeps a 185 km swath every 27 s. Combined with a 14.57-orbit/day pattern, Earth rotates 24.7° per orbit at the equator — building up adjacent swaths over the 16-day repeat cycle." },
+        { title: "Pitfall", text: "'Sun-synchronous' does not mean shadow-free. Solar illumination angle still varies with season — a winter Landsat pass at 60°N has solar elevation < 15°, producing extreme cast shadows and poor SNR over snow. This is why high-latitude time-series analysts restrict to a summer window." }
       ],
       keypoints: [
-        { title: "Simplicity", text: "NDVI requires only two bands (NIR and Red), making it computable from virtually any multispectral sensor." },
-        { title: "Saturation", text: "NDVI saturates in dense canopies — EVI (Enhanced Vegetation Index) is an alternative for high-biomass regions." }
+        { title: "Altitude vs revisit", text: "Lower orbits give finer GSD but smaller swaths and longer revisit. Planet's Doves at 475 km image at 3 m but rely on 200+ satellites for daily revisit." },
+        { title: "Inclination math", text: "Sun-sync inclination is set by altitude: i = arccos(−(2π/86 164 × (R_E+h)^(7/2))/(3π × J2 × R_E²)). At 700 km this gives ~98.2°." },
+        { title: "GEO swath", text: "A GEO sensor sees ⅓ of Earth's disk; three GEO satellites at 0°, 140°W, 140°E provide global mid-latitude coverage but never the poles." }
+      ]
+    },
+    {
+      id: "dd-atmosphere", num: "Concept 4 of 8", title: "Atmospheric Windows & Correction",
+      desc: "Where the atmosphere is transparent, where it absorbs, and how to convert TOA to surface reflectance.", color: "#ffa657", icon: "☁️",
+      svg: function(w, h) {
+        var s = '<svg viewBox="0 0 '+w+' '+h+'" xmlns="http://www.w3.org/2000/svg" style="background:#0d1117">';
+        s += '<text x="'+(w/2)+'" y="18" text-anchor="middle" fill="#ffa657" font-size="12" font-weight="600">Atmospheric Transmittance vs Wavelength</text>';
+        s += '<line x1="40" y1="190" x2="'+(w-30)+'" y2="190" stroke="#8b949e" stroke-width="0.5"/>';
+        s += '<line x1="40" y1="40" x2="40" y2="190" stroke="#8b949e" stroke-width="0.5"/>';
+        s += '<text x="20" y="45" fill="#8b949e" font-size="9">100%</text>';
+        s += '<text x="25" y="190" fill="#8b949e" font-size="9">0%</text>';
+        var pts = [[50,180],[80,55],[110,60],[140,50],[170,55],[200,60],[230,180],[260,70],[290,80],[320,180],[350,180],[380,90],[410,75],[440,180],[470,180],[500,100],[530,180]];
+        var d = 'M';
+        for (var i=0;i<pts.length;i++) d += pts[i][0]+','+pts[i][1]+' '+(i===0?'L':'');
+        s += '<path d="'+d+'" fill="none" stroke="#7ee787" stroke-width="1.5"/>';
+        var labels = [{x:90,y:35,t:'VIS/NIR window',c:'#58a6ff'},{x:230,y:175,t:'H₂O',c:'#f778ba'},{x:325,y:175,t:'H₂O/CO₂',c:'#f778ba'},{x:455,y:175,t:'H₂O',c:'#f778ba'},{x:495,y:35,t:'TIR window',c:'#ffa657'}];
+        for(i=0;i<labels.length;i++){s += '<text x="'+labels[i].x+'" y="'+labels[i].y+'" fill="'+labels[i].c+'" font-size="9" text-anchor="middle">'+labels[i].t+'</text>';}
+        s += '<text x="50" y="'+(h-22)+'" fill="#8b949e" font-size="9">0.4 µm</text>';
+        s += '<text x="'+(w-50)+'" y="'+(h-22)+'" fill="#8b949e" font-size="9">14 µm</text>';
+        s += '<text x="'+(w/2)+'" y="'+(h-8)+'" text-anchor="middle" fill="#8b949e" font-size="9">DN → Radiance L = gain·DN + bias  →  TOA ρ → Surface ρ (6S, DOS, MAJA)</text>';
+        return s + '</svg>';
+      },
+      sections: [
+        { title: "Why correction matters", text: "A satellite measures top-of-atmosphere (TOA) radiance: the photons arriving at the sensor after solar irradiance has passed twice through the atmosphere (Sun→ground→sensor). Aerosols scatter blue light strongly (Rayleigh), water vapour absorbs in distinct bands, and cirrus reflects in the SWIR. Two pixels with identical surface reflectance can differ by 10–20% in TOA reflectance simply because of haze. Surface-reflectance products remove this contamination so a forest pixel today is comparable to the same pixel last year." },
+        { title: "DN → Radiance → Reflectance pipeline", text: "Step 1: convert raw 12- or 16-bit DN to spectral radiance using the metadata gain/bias: L_λ = M_L · DN + A_L (W·m⁻²·sr⁻¹·µm⁻¹). Step 2: convert to TOA reflectance using solar zenith θ and exo-atmospheric irradiance ESUN: ρ_TOA = π·L_λ·d² / (ESUN_λ · cos θ). Step 3: subtract atmospheric path radiance and divide by atmospheric transmittance — done by codes like 6SV, MODTRAN, MAJA (Sentinel-2), or LaSRC (Landsat-8) — producing surface reflectance ρ_SR." },
+        { title: "Worked example", text: "A Landsat-8 Band 4 (Red) pixel reads DN = 9876. Metadata: M_L=9.93e-3, A_L=-49.65. Then L_λ = 9.93e-3·9876 − 49.65 ≈ 48.4 W·m⁻²·sr⁻¹·µm⁻¹. With θ=35°, d²=1.0167, ESUN=1535: ρ_TOA = π·48.4·1.0167/(1535·0.819) ≈ 0.123. Dark-object subtraction with a path-radiance estimate of L_p=12 reduces L_surf to 36.4, giving ρ_SR ≈ 0.092 — about 25% lower than the uncorrected value." },
+        { title: "Pitfall", text: "Dark Object Subtraction (DOS) assumes deep clear water has zero reflectance — true for NIR but false for blue/green where chlorophyll and CDOM contribute. Using DOS over coastal scenes will systematically over-correct visible bands. For ocean colour, use atmospheric correction codes that solve for the aerosol model from the NIR (where water IS dark) and extrapolate to visible." }
+      ],
+      keypoints: [
+        { title: "Three main windows", text: "Reflective (0.4–2.5 µm), MWIR (3–5 µm), TIR (8–14 µm), and microwave (>1 mm). Everything else is absorbed by H₂O, CO₂, O₃, CH₄." },
+        { title: "Sentinel-2 L2A", text: "Sen2Cor produces surface reflectance with per-band aerosol optical depth and water vapour estimates; default scene-classification mask flags clouds, shadows, snow, water at 20 m." },
+        { title: "Cirrus band", text: "Landsat-8 Band 9 and Sentinel-2 Band 10 at 1.38 µm sit inside a strong water-vapour absorption: surface signal is invisible, but high cirrus clouds shine — making it a dedicated cirrus mask." }
+      ]
+    },
+    {
+      id: "dd-radiometric", num: "Concept 5 of 8", title: "DN → Radiance → Reflectance",
+      desc: "The radiometric calibration chain that turns 16-bit integers into physically meaningful units.", color: "#d2a8ff", icon: "📊",
+      svg: function(w, h) {
+        var s = '<svg viewBox="0 0 '+w+' '+h+'" xmlns="http://www.w3.org/2000/svg" style="background:#0d1117">';
+        var boxes = [
+          {x:30, c:'#58a6ff', t:'DN',         u:'0–65 535',          eq:'raw 16-bit'},
+          {x:170,c:'#7ee787', t:'Radiance L', u:'W·m⁻²·sr⁻¹·µm⁻¹',  eq:'L = M·DN + A'},
+          {x:310,c:'#ffa657', t:'TOA ρ',      u:'unitless 0–1',      eq:'ρ = πL·d² / (E·cosθ)'},
+          {x:450,c:'#d2a8ff', t:'Surface ρ',  u:'unitless 0–1',      eq:'6S, MAJA, LaSRC'}
+        ];
+        s += '<text x="'+(w/2)+'" y="20" text-anchor="middle" fill="#d2a8ff" font-size="12" font-weight="600">Radiometric Calibration Pipeline</text>';
+        for (var i=0;i<boxes.length;i++){var b=boxes[i];
+          s += '<rect x="'+b.x+'" y="60" width="110" height="90" rx="8" fill="'+b.c+'15" stroke="'+b.c+'" stroke-width="1.2"/>';
+          s += '<text x="'+(b.x+55)+'" y="82" text-anchor="middle" fill="'+b.c+'" font-size="12" font-weight="600">'+b.t+'</text>';
+          s += '<text x="'+(b.x+55)+'" y="105" text-anchor="middle" fill="#8b949e" font-size="9">'+b.u+'</text>';
+          s += '<text x="'+(b.x+55)+'" y="135" text-anchor="middle" fill="#c9d1d9" font-size="10">'+b.eq+'</text>';
+          if (i<3){s += '<path d="M'+(b.x+115)+' 105 L'+(b.x+135)+' 105" stroke="#8b949e" stroke-width="1" marker-end="url(#arr2)"/>';}
+        }
+        s += '<defs><marker id="arr2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#8b949e"/></marker></defs>';
+        s += '<text x="'+(w/2)+'" y="180" text-anchor="middle" fill="#8b949e" font-size="9">Each step requires per-band metadata: gain M, bias A, ESUN, sun-Earth distance d, solar zenith θ.</text>';
+        s += '<text x="'+(w/2)+'" y="200" text-anchor="middle" fill="#7ee787" font-size="9">Reverse direction: surface ρ → BRDF normalization (MCD43A) → comparable across view angles.</text>';
+        return s + '</svg>';
+      },
+      sections: [
+        { title: "Why DN is not enough", text: "Digital Numbers are sensor-specific: a DN of 10 000 on Landsat-7 ETM+ Band 3 is a different amount of light than DN 10 000 on Landsat-8 OLI Band 4, because each instrument has different gain settings, bit depth (8 vs 12 bits before scaling), and saturation thresholds. Without converting to physical units you cannot compare scenes from different sensors, different acquisition dates (sun-Earth distance varies ±3.4%), or even the same sensor before and after a gain update." },
+        { title: "TOA reflectance step", text: "ρ_TOA = π · L_λ · d² / (ESUN_λ · cos θ_s) is dimensionless and bounded 0–1, removing dependence on solar irradiance and Sun-Earth distance. It still includes atmospheric effects (Rayleigh, aerosol, gas absorption) and is what you get from Landsat Collection-2 Level-1 'TOA reflectance' product. For broad-scale studies over short time spans, TOA ρ is often 'good enough' and avoids the failure modes of atmospheric correction." },
+        { title: "Surface reflectance step", text: "Codes such as 6SV (vector 6S radiative transfer), LaSRC (Landsat-8/9), Sen2Cor / MAJA (Sentinel-2), and ACOLITE (water) model the atmospheric path explicitly: they estimate aerosol optical depth from dark targets, water vapour from the 940 nm absorption, and ozone from climatology, then invert the radiative transfer equation per pixel. The output ρ_SR is what you would measure standing on the ground with a calibrated spectroradiometer." },
+        { title: "Worked example", text: "Consider crop monitoring across two Landsat dates 6 months apart. Without conversion, a wheat field's red-band DN drops from 12 000 (June, sun high) to 8 000 (December, sun low) — and a naive analyst reports a 33% reflectance loss. After ρ_TOA correction with cosθ_s=0.85 in June and 0.45 in December, both come out near 0.18 — the field is unchanged, the apparent change was geometry. This is why all NDVI time-series products start from at least TOA reflectance." }
+      ],
+      keypoints: [
+        { title: "Sentinel-2 quantization", text: "MSI uses 12-bit ADC, scaled to 16-bit DN with a 10 000× factor: surface reflectance = DN/10 000. Means a clear lake (ρ≈0.03) gives DN≈300; bright sand (ρ≈0.5) gives DN≈5000." },
+        { title: "Sun-Earth distance", text: "d² varies from 0.967 (perihelion, January) to 1.034 (aphelion, July) AU². Ignoring it biases TOA reflectance by up to 3.4%." },
+        { title: "BRDF correction", text: "Surface reflectance still depends on view/sun geometry; nadir-normalized BRDF-adjusted reflectance (NBAR, MODIS MCD43A) further removes this for true cross-sensor work." }
+      ]
+    },
+    {
+      id: "dd-ndvi", num: "Concept 6 of 8", title: "NDVI — Vegetation from Two Bands",
+      desc: "(NIR − Red) / (NIR + Red) — the most cited remote-sensing index, with caveats.", color: "#7ee787", icon: "🌿",
+      svg: function(w, h) {
+        var cx = w/2;
+        var s = '<svg viewBox="0 0 '+w+' '+h+'" xmlns="http://www.w3.org/2000/svg" style="background:#0d1117">';
+        s += '<text x="'+cx+'" y="22" text-anchor="middle" fill="#7ee787" font-size="14" font-weight="600">NDVI = (NIR − Red) / (NIR + Red)</text>';
+        s += '<rect x="40" y="50" width="220" height="100" rx="6" fill="#161b22" stroke="#30363d"/>';
+        s += '<text x="150" y="68" text-anchor="middle" fill="#c9d1d9" font-size="10" font-weight="600">Healthy leaf</text>';
+        s += '<text x="60" y="88" fill="#f778ba" font-size="9">Red ρ = 0.05</text>';
+        s += '<rect x="125" y="80" width="10" height="10" fill="#f778ba"/>';
+        s += '<text x="60" y="108" fill="#ffa657" font-size="9">NIR ρ = 0.50</text>';
+        s += '<rect x="125" y="100" width="100" height="10" fill="#ffa657"/>';
+        s += '<text x="60" y="135" fill="#7ee787" font-size="11" font-weight="600">NDVI = 0.45/0.55 = 0.82</text>';
+        s += '<rect x="290" y="50" width="220" height="100" rx="6" fill="#161b22" stroke="#30363d"/>';
+        s += '<text x="400" y="68" text-anchor="middle" fill="#c9d1d9" font-size="10" font-weight="600">Bare soil</text>';
+        s += '<text x="310" y="88" fill="#f778ba" font-size="9">Red ρ = 0.20</text>';
+        s += '<rect x="375" y="80" width="40" height="10" fill="#f778ba"/>';
+        s += '<text x="310" y="108" fill="#ffa657" font-size="9">NIR ρ = 0.25</text>';
+        s += '<rect x="375" y="100" width="50" height="10" fill="#ffa657"/>';
+        s += '<text x="310" y="135" fill="#ffa657" font-size="11" font-weight="600">NDVI = 0.05/0.45 = 0.11</text>';
+        var bar = [{l:'Water',v:-0.3,c:'#58a6ff'},{l:'Bare soil',v:0.1,c:'#ffa657'},{l:'Sparse veg',v:0.4,c:'#d2a8ff'},{l:'Dense veg',v:0.8,c:'#7ee787'}];
+        s += '<line x1="40" y1="200" x2="540" y2="200" stroke="#8b949e" stroke-width="1"/>';
+        s += '<text x="40" y="218" fill="#8b949e" font-size="9">−1</text>';
+        s += '<text x="290" y="218" fill="#8b949e" font-size="9">0</text>';
+        s += '<text x="535" y="218" fill="#8b949e" font-size="9">+1</text>';
+        for (var i=0;i<bar.length;i++){var b=bar[i]; var x = 290 + b.v*250;
+          s += '<circle cx="'+x+'" cy="200" r="4" fill="'+b.c+'"/>';
+          s += '<text x="'+x+'" y="190" text-anchor="middle" fill="'+b.c+'" font-size="9">'+b.l+'</text>';
+        }
+        return s + '</svg>';
+      },
+      sections: [
+        { title: "Why this ratio works", text: "Healthy chlorophyll absorbs ~90% of incident red light (0.66 µm) for photosynthesis but reflects ~50% of NIR (0.86 µm) due to scattering inside the leaf's spongy mesophyll. The (NIR − Red)/(NIR + Red) form normalizes out brightness variations from sun angle, slope, and shadow — an east-facing slope and a flat surface with the same vegetation will give nearly identical NDVI even though their absolute radiances differ by 30%. The ratio bounds the result to [−1, +1], making it directly comparable across sensors and dates." },
+        { title: "Formula", formula: "NDVI = (ρ_NIR − ρ_Red) / (ρ_NIR + ρ_Red)" },
+        { title: "Worked example", text: "On a Landsat-8 surface-reflectance scene, a maize field gives ρ_4=0.06 (red) and ρ_5=0.48 (NIR), so NDVI = (0.48−0.06)/(0.48+0.06) = 0.778. A nearby fallow plot gives ρ_4=0.18 and ρ_5=0.27, NDVI = 0.09/0.45 = 0.20. The 0.58 difference reliably separates crop from fallow despite both being on identical soil, because the ratio cancels the ~3× brightness difference. Stacking 23 such NDVI values per year (one per Landsat acquisition) yields a phenology curve whose peak height correlates ~0.7 with measured maize yield." },
+        { title: "Pitfall — saturation", text: "NDVI saturates near 0.85–0.95 in dense canopies (LAI > 3): once the canopy is fully closed, adding more leaves no longer reduces red reflectance. Tropical rainforest pixels in MODIS NDVI are essentially flat year-round, masking real biomass changes. Use EVI = 2.5·(NIR−R)/(NIR + 6R − 7.5B + 1) or LAI-based indices for high-biomass studies; or NDRE for crops nearing maturity." }
+      ],
+      keypoints: [
+        { title: "Two bands only", text: "NDVI works on any sensor with red (~660 nm) and NIR (~860 nm) bands — Landsat MSS (1972), AVHRR, MODIS, Sentinel-2, Planet, drone multispec — making it the only index with a 50-year continuous record." },
+        { title: "Soil line problem", text: "On bare soil with high moisture, both red and NIR rise together → NDVI stays low but non-zero. Indices like SAVI = (1+L)·(NIR−R)/(NIR+R+L), L=0.5, correct for soil background in sparse vegetation." },
+        { title: "Time-series compositing", text: "MODIS MOD13Q1 16-day NDVI uses Maximum Value Compositing — the highest NDVI in each window suppresses cloud and aerosol contamination (which always lower NDVI)." }
+      ]
+    },
+    {
+      id: "dd-sar", num: "Concept 7 of 8", title: "SAR — Side-Looking Radar Geometry",
+      desc: "Why radar looks sideways, and the layover, foreshortening, and shadow that result.", color: "#a371f7", icon: "📡",
+      svg: function(w, h) {
+        var s = '<svg viewBox="0 0 '+w+' '+h+'" xmlns="http://www.w3.org/2000/svg" style="background:#0d1117">';
+        s += '<text x="'+(w/2)+'" y="20" text-anchor="middle" fill="#a371f7" font-size="12" font-weight="600">Side-Looking SAR — Layover · Foreshortening · Shadow</text>';
+        s += '<rect x="60" y="50" width="40" height="20" rx="3" fill="#a371f7" stroke="#a371f7"/>';
+        s += '<text x="80" y="64" text-anchor="middle" fill="#0d1117" font-size="9">SAR</text>';
+        s += '<line x1="100" y1="65" x2="200" y2="200" stroke="#a371f7" stroke-width="0.6" stroke-dasharray="3,2"/>';
+        s += '<line x1="100" y1="65" x2="540" y2="200" stroke="#a371f7" stroke-width="0.6" stroke-dasharray="3,2"/>';
+        s += '<path d="M100 65 L260 200 L290 200 L100 65 Z" fill="#a371f725"/>';
+        s += '<line x1="60" y1="200" x2="540" y2="200" stroke="#7ee787" stroke-width="1.5"/>';
+        s += '<polygon points="220,200 250,160 280,200" fill="#ffa65750" stroke="#ffa657"/>';
+        s += '<text x="252" y="180" text-anchor="middle" fill="#ffa657" font-size="9">mtn</text>';
+        s += '<line x1="250" y1="160" x2="190" y2="200" stroke="#ff7b72" stroke-width="1.5"/>';
+        s += '<text x="160" y="225" fill="#ff7b72" font-size="9">layover (top falls toward sensor)</text>';
+        s += '<rect x="280" y="200" width="60" height="14" fill="#21262d" stroke="#8b949e" stroke-dasharray="2,2"/>';
+        s += '<text x="310" y="230" text-anchor="middle" fill="#8b949e" font-size="9">radar shadow</text>';
+        s += '<text x="120" y="115" fill="#a371f7" font-size="9">θ_i (incidence)</text>';
+        s += '<path d="M150 115 A 25 25 0 0 1 175 130" fill="none" stroke="#a371f7" stroke-width="0.6"/>';
+        s += '<text x="60" y="'+(h-20)+'" fill="#8b949e" font-size="9">Range = slant distance · Across-track resolution = c·τ/(2 sin θ_i)</text>';
+        s += '<text x="60" y="'+(h-7)+'" fill="#8b949e" font-size="9">Sentinel-1 IW: λ=5.6 cm (C-band), 250 km swath, 5×20 m, dual-pol VV+VH, 6-day repeat</text>';
+        return s + '</svg>';
+      },
+      sections: [
+        { title: "Why side-looking?", text: "A radar looking straight down (nadir) cannot resolve range — every echo from the same slant distance arrives at the same time, so two points equidistant from the sensor are indistinguishable. Looking sideways at incidence angles 20°–50° converts elevation differences into measurable time-of-flight differences: across-track resolution = c·τ/(2·sin θ_i) where τ is pulse length. The 'synthetic aperture' part comes from coherently combining echoes along-track to synthesise a virtual antenna kilometres long, achieving 5–20 m azimuth resolution from a 12 m physical antenna." },
+        { title: "Layover, foreshortening, shadow", text: "Because range = slant distance, a tall mountain top closer to the sensor than its base appears to 'fall over' onto the near-range side — layover. Slopes facing the sensor compress in range (foreshortening). Slopes facing away may receive no signal at all because the back side is hidden behind the mountain — radar shadow, which appears as a deterministic black region (vs noise-like dark areas elsewhere). All three are pure geometry, not signal loss, and reverse with look direction — which is why ascending and descending Sentinel-1 passes look so different in mountains." },
+        { title: "Worked example", text: "Sentinel-1 IW mode: incidence θ_i ≈ 39°, altitude ≈ 693 km, swath 250 km. A 1000-m peak with a 30° lee slope produces a shadow of length h/tan(θ_i − α) where α is the slope angle on the back side. If α = 30°, shadow length = 1000/tan(9°) ≈ 6300 m on the ground — 6.3 km of unusable terrain per ridge. Choosing the opposite-pass orbit (descending vs ascending) swaps the shadow to the other side, which is why InSAR DEM products mosaic both passes." },
+        { title: "Pitfall — speckle", text: "SAR images show pixel-to-pixel multiplicative noise ('speckle') from coherent interference of sub-pixel scatterers. Standard deviation equals the mean for single-look data — a 'salt and pepper' texture. Multi-looking (averaging 4–5 adjacent pixels) reduces speckle by √N at the cost of resolution; Lee, Frost, or refined-Lee filters preserve edges. Never apply linear/Gaussian smoothing to SAR — it biases the mean." }
+      ],
+      keypoints: [
+        { title: "Day/night, all-weather", text: "SAR provides its own illumination at λ=3–24 cm (X/C/L-band) where clouds and rain are nearly transparent. Critical for tropical forest mapping (Sentinel-1 over Amazon) and disaster response when optical satellites see only clouds." },
+        { title: "Polarization", text: "VV + VH dual-pol Sentinel-1 separates surface scattering (VV bright on water) from volume scattering (VH bright on forests) — used by GFW for deforestation alerts." },
+        { title: "InSAR", text: "Phase difference between two SAR acquisitions over the same area gives mm-level displacement maps: subsidence, glacier flow, earthquake fault slip. Sentinel-1 6-day repeat enables operational InSAR globally." },
+        { title: "Wavelength choice", text: "X-band (3 cm) → fine detail, hits canopy top. L-band (24 cm, ALOS-2/NISAR) → penetrates canopy, sees ground & biomass. C-band (5.6 cm) is the workhorse compromise." }
+      ]
+    },
+    {
+      id: "dd-classification", num: "Concept 8 of 8", title: "Image Classification & Accuracy",
+      desc: "From training samples to thematic map to confusion matrix and Kappa.", color: "#79c0ff", icon: "🗂️",
+      svg: function(w, h) {
+        var s = '<svg viewBox="0 0 '+w+' '+h+'" xmlns="http://www.w3.org/2000/svg" style="background:#0d1117">';
+        s += '<text x="'+(w/2)+'" y="20" text-anchor="middle" fill="#79c0ff" font-size="12" font-weight="600">Supervised Classification Pipeline + Confusion Matrix</text>';
+        var stages = [{x:30,c:'#79c0ff',t:'Training\nsamples'},{x:160,c:'#7ee787',t:'Classifier\n(RF / SVM / CNN)'},{x:300,c:'#ffa657',t:'Thematic\nmap'}];
+        for (var i=0;i<stages.length;i++){var st=stages[i];
+          s += '<rect x="'+st.x+'" y="40" width="110" height="60" rx="6" fill="'+st.c+'15" stroke="'+st.c+'"/>';
+          var lines = st.t.split('\n');
+          for(var j=0;j<lines.length;j++) s += '<text x="'+(st.x+55)+'" y="'+(65+j*14)+'" text-anchor="middle" fill="'+st.c+'" font-size="10">'+lines[j]+'</text>';
+          if (i<2){s += '<path d="M'+(st.x+115)+' 70 L'+(st.x+155)+' 70" stroke="#8b949e" stroke-width="1" marker-end="url(#arr3)"/>';}
+        }
+        s += '<defs><marker id="arr3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#8b949e"/></marker></defs>';
+        s += '<text x="450" y="38" text-anchor="middle" fill="#c9d1d9" font-size="10" font-weight="600">Confusion matrix</text>';
+        var cls = ['F','U','W'];
+        var cm = [[42,3,1],[2,38,2],[0,1,45]];
+        var ox=420, oy=50, cs=28;
+        for(i=0;i<3;i++){
+          s += '<text x="'+(ox+i*cs+cs/2)+'" y="'+oy+'" text-anchor="middle" fill="#79c0ff" font-size="9">'+cls[i]+'</text>';
+          s += '<text x="'+(ox-12)+'" y="'+(oy+15+i*cs)+'" text-anchor="middle" fill="#79c0ff" font-size="9">'+cls[i]+'</text>';
+          for(j=0;j<3;j++){
+            var v=cm[i][j]; var fill = i===j?'#7ee78740':'#f778ba30';
+            s += '<rect x="'+(ox+j*cs)+'" y="'+(oy+5+i*cs)+'" width="'+cs+'" height="'+cs+'" fill="'+fill+'" stroke="#30363d"/>';
+            s += '<text x="'+(ox+j*cs+cs/2)+'" y="'+(oy+22+i*cs)+'" text-anchor="middle" fill="#c9d1d9" font-size="9">'+v+'</text>';
+          }
+        }
+        s += '<text x="'+(ox+cs*1.5)+'" y="'+(oy+5+3*cs+15)+'" text-anchor="middle" fill="#7ee787" font-size="10">OA = 125/134 = 93%  κ = 0.89</text>';
+        s += '<text x="30" y="'+(h-12)+'" fill="#8b949e" font-size="9">F = Forest · U = Urban · W = Water · Diagonal = correct · Off-diagonal = errors of commission/omission</text>';
+        return s + '</svg>';
+      },
+      sections: [
+        { title: "Supervised vs unsupervised", text: "Supervised classification needs labelled training pixels: the analyst draws ROIs over known forest/urban/water/crop, the algorithm (Random Forest, SVM, gradient boosting, U-Net) learns the spectral signature of each class, then labels every pixel. Unsupervised methods (k-means, ISODATA) cluster pixels by similarity first; the analyst assigns labels to clusters afterwards. Supervised gives higher accuracy when labels are reliable; unsupervised reveals natural classes you might not have anticipated and is the default starting point for unknown landscapes." },
+        { title: "Random Forest workflow", text: "Random Forest is the modern default: train ~500 decision trees on bootstrap samples and √n random feature subsets, predict by majority vote. It handles non-linear class boundaries, returns out-of-bag accuracy for free, and ranks feature importance — telling you whether SWIR1 or NDVI mattered most. On a Landsat-8 land-cover problem with 6 reflective bands + 5 spectral indices, RF typically reaches 85–92% overall accuracy with ≥30 training pixels per class. Train/validate using a stratified 70/30 split, never on adjacent pixels (spatial autocorrelation inflates accuracy)." },
+        { title: "Confusion matrix & Kappa", text: "Lay out predicted class (rows) vs reference class (columns). Diagonal = correct, off-diagonal = errors. Overall Accuracy = trace/total. Producer's accuracy = column-wise (1 − omission error: 'of all real forest, what % did I find?'); User's accuracy = row-wise (1 − commission error: 'of pixels I called forest, what % really are?'). Kappa κ = (OA − P_chance)/(1 − P_chance) corrects for random agreement; >0.80 = strong, >0.60 = moderate, <0.40 = poor. Always report all three plus per-class metrics, not just OA." },
+        { title: "Worked example", text: "On 134 validation pixels (45 forest, 41 urban, 48 water): the diagonal sums to 42+38+45 = 125, so OA = 93.3%. P_chance = (Σ row-total · col-total)/N² ≈ 0.34 (since classes are balanced); κ = (0.933−0.34)/(1−0.34) ≈ 0.90. User's accuracy for 'forest' = 42/(42+3+1) = 91% — 4 pixels labelled forest were actually urban or water. Producer's accuracy for 'forest' = 42/(42+2+0) = 95% — 2 real forest pixels were missed (called urban). The class with highest commission error needs more or better training data." }
+      ],
+      keypoints: [
+        { title: "Object-based vs per-pixel", text: "OBIA segments the image into objects (eCognition, GEOBIA) before classifying — captures shape, texture, context. Better for high-resolution data (Planet, drone) where per-pixel classification is salt-and-peppery." },
+        { title: "Deep learning", text: "U-Net and Vision Transformers now dominate the SpaceNet/DeepGlobe benchmarks for building footprints and road extraction; they need 1000× more labels than RF but generalize across cities." },
+        { title: "Sample design", text: "Stratified random sampling proportional to class area gives unbiased OA. Minimum 50 pixels per class (Congalton), or 'rule of 30·n' where n = bands, for parametric classifiers." }
       ]
     }
   ],
+
+  useCases: [
+    {
+      id: "uc-deforestation", title: "Amazon Deforestation Detection (NDVI Time Series)",
+      desc: "Detecting forest clearings within days using a stack of Sentinel-2 / Landsat NDVI observations.",
+      icon: "🌳", color: "#7ee787",
+      summary: "Operational deforestation alerts (<strong>GLAD-S2, RADD, DETER</strong>) work by maintaining a per-pixel <strong>NDVI baseline</strong> from past observations, then flagging any new clear-sky pixel that drops far below it. Combining Sentinel-2 (10 m, 5-day) with Landsat-8/9 (30 m, 16-day) via NASA's harmonized HLS product gives ~60 cloud-free looks per year in the tropics, and Sentinel-1 SAR fills the gaps under cloud cover.",
+      pipeline: "STAC search ──▶ HLS stack (B04, B08, SCL)\n     │\n     ▼\n  SCL cloud/shadow mask  ──▶  NDVI = (NIR − Red) / (NIR + Red)\n     │\n     ▼\n  Per-pixel baseline (μ, σ over 12 mo)\n     │\n     ▼\n  Anomaly rule: NDVI < μ − 3σ for ≥2 obs ──▶ Alert polygons\n                                                │\n                                                ▼\n                                       Vectorize → WMS / KML → IBAMA",
+      metrics: [
+        { label: "Sentinel-2 GSD / revisit", value: "10 m / 5 days (A+B)" },
+        { label: "Landsat-8/9 GSD / revisit", value: "30 m / 16 days (8-day combined)" },
+        { label: "Forest NDVI (Amazon)", value: "≈ 0.85, σ ≈ 0.05" },
+        { label: "RADD median alert latency", value: "≈ 7 days post-acquisition" }
+      ],
+      extensions: "Pair NDVI with Sentinel-1 SAR backscatter (cloud-proof) for sub-weekly latency; explore BFAST/CCDC for principled multi-seasonal break detection; or move to deep models (U-Net on multitemporal stacks) for instance-level clearing polygons.",
+      steps: [
+        { title: "Acquire imagery stack", component: "Sentinel-2 L2A + Landsat-8/9 SR", proto: "Cloud-Optimized GeoTIFF on AWS / GCS",
+          intuition: "Two sensors with offset revisits act like one virtual 2-day sensor — denser time series beats higher per-scene resolution for change detection.",
+          complexity: "I/O dominates: ~50 GB/year per 100×100 km tile at 10 m",
+          detail: "Pull all surface-reflectance scenes for the AOI from 2018–present. Sentinel-2 (5-day) + Landsat-8/9 (16-day) combined gives ~60 cloud-screened observations per year per pixel in the tropics. Use the harmonized HLS product (NASA) so the two sensors are radiometrically intercomparable.",
+          example: "For a 1° × 1° Amazon tile (~12 000 km²) from 2020–2024, expect ~720 Sentinel-2 scenes and ~360 Landsat scenes at 30 m — about 1.1 TB raw, ~120 GB after COG-subsetting to bands B04/B08/SCL.",
+          pitfall: "Mixing top-of-atmosphere (L1C) and surface reflectance (L2A) silently shifts NDVI by 0.05–0.10 across the time series — always confirm collection level before stacking.",
+          code: "import stackstac, pystac_client\nitems = pystac_client.Client.open('https://earth-search.aws.element84.com/v1').search(\n  collections=['sentinel-2-l2a'], bbox=[-60,-3,-59,-2], datetime='2020/2024').item_collection()\nstack = stackstac.stack(items, assets=['B04','B08','SCL'], resolution=10)" },
+        { title: "Compute NDVI & cloud mask", component: "Per-scene", proto: "xarray / NumPy",
+          intuition: "Chlorophyll absorbs red but mesophyll scatters NIR — the contrast (NIR−Red)/(NIR+Red) normalizes out illumination so the same pixel is comparable across dates.",
+          complexity: "O(H·W) per scene, vectorizable on GPU/Dask",
+          detail: "NDVI = (B08 − B04)/(B08 + B04). Apply Sentinel-2 SCL mask values 4 (vegetation), 5 (bare), 6 (water) — drop 3 (cloud shadow), 8/9 (clouds), 10 (cirrus). Sentinel-2 cloud cover in Amazon often exceeds 80%, so masked pixels are gappy.",
+          pitfall: "SCL's cloud-shadow class (3) is recall-limited — supplement with s2cloudless probability or a dilated cloud mask to avoid shadow pixels masquerading as low-NDVI 'clearings'.",
+          code: "ndvi = (s2.sel(band='B08') - s2.sel(band='B04')) / (s2.sel(band='B08') + s2.sel(band='B04'))\nclear = s2.sel(band='SCL').isin([4,5,6])\nndvi = ndvi.where(clear)" },
+        { title: "Build pixel-wise baseline", component: "Per-pixel statistics", proto: "scipy / numpy",
+          intuition: "Robust forest pixels have a tight NDVI distribution year-round; modeling each pixel separately absorbs phenology, soil, and atmosphere that would defeat a global threshold.",
+          complexity: "O(N·T) where N = pixels, T = obs in trailing window",
+          detail: "For each pixel, compute mean NDVI and standard deviation across the prior 12 months of clear observations (typically 8–15 obs). Forest pixels have μ_NDVI ≈ 0.85 and σ ≈ 0.05. Cleared pixels drop to μ < 0.4 within one observation.",
+          example: "On Pará State pixels (2022), the median forest baseline is μ=0.86 with σ=0.04; pasture pixels sit at μ=0.55 with σ=0.12 — wider σ makes false alarms cluster in pasture, not primary forest.",
+          refs: [{ label: "Hansen et al. — Global Forest Change", url: "https://glad.umd.edu/dataset/global-2010-tree-cover-30-m" }] },
+        { title: "Detect anomaly", component: "Change flag", proto: "Threshold / BFAST",
+          intuition: "A single sub-baseline observation can be cloud shadow; requiring two consecutive drops trades a few days of latency for a huge drop in false positives.",
+          complexity: "O(N) per new acquisition (constant-time per pixel)",
+          detail: "Flag pixel as 'cleared' when current NDVI drops below μ − 3σ AND stays below for ≥2 consecutive clear observations (≥10 days). This rule alone gives ~85% producer's accuracy on PRODES validation. Production systems (RADD, GLAD-S2) combine NDVI with SAR backscatter (Sentinel-1) to confirm through clouds, achieving 7-day median latency.",
+          pitfall: "Seasonal dry-forest leaf drop (cerrado, transitional Amazon) routinely crosses μ−3σ — exclude or down-weight known deciduous biomes or alerts will spike every August–September.",
+          refs: [{ label: "RADD Forest Disturbance Alert", url: "https://www.wur.nl/en/research-results/chair-groups/environmental-sciences/laboratory-of-geo-information-science-and-remote-sensing/research/sensing-measuring/radd-forest-disturbance-alert.htm" }] },
+        { title: "Aggregate & report", component: "Tile mosaic", proto: "GeoServer / WMS",
+          intuition: "Pixel-level alerts are noisy; aggregating to polygons and intersecting with jurisdictional layers turns geophysics into an enforcement-actionable record.",
+          example: "Global Forest Watch publishes weekly GLAD-S2 alerts globally at 10 m within ~8 days of acquisition; IBAMA uses DETER 250 m alerts to dispatch helicopter teams within 72 h of confirmation.",
+          pitfall: "Vectorizing single-pixel alerts produces millions of fragments — apply a minimum-mapping-unit (≥0.1 ha ≈ 10 Sentinel-2 pixels) before publishing.",
+          detail: "Vectorize alert pixels, intersect with protected-area boundaries, produce weekly KML for enforcement (IBAMA in Brazil). Global Forest Watch publishes 30 m alerts globally within 8 days of acquisition." }
+      ]
+    },
+    {
+      id: "uc-oilspill", title: "Oil-Spill Detection in Sentinel-1 SAR",
+      desc: "Why oil films appear as dark slicks on radar — and how operational services use them.",
+      icon: "🛢️", color: "#a371f7",
+      summary: "Sentinel-1's <strong>C-band VV SAR</strong> images the sea by exciting cm-scale Bragg waves; oil films damp those waves, producing dark <strong>σ⁰ anomalies</strong> at 10 m resolution day-or-night, through clouds. Services like <strong>EMSA CleanSeaNet</strong> chain calibration, adaptive thresholding, look-alike discrimination, and AIS vessel correlation to alert coastal states within ~30 minutes of acquisition.",
+      pipeline: "S1 IW GRDH (VV, 10 m) ──▶ Orbit + thermal-noise + radiometric cal ──▶ Lee speckle filter\n     │\n     ▼\n  Adaptive dark-target detector  ──▶  σ⁰ < (local μ − 8 dB)\n     │\n     ▼\n  Feature extraction (shape, gradient, context)\n     │\n     ▼\n  RF / CNN classifier  ──▶  AIS ship-track correlation  ──▶  Alert to coastal state",
+      metrics: [
+        { label: "Sentinel-1 GSD / swath", value: "10 m / 250 km (IW mode)" },
+        { label: "Revisit (A+B → A only)", value: "6 days, now 12 days" },
+        { label: "Oil σ⁰ vs clean sea", value: "≈ −22 dB vs ≈ −10 dB (VV)" },
+        { label: "EMSA alert latency", value: "≈ 30 min from downlink" }
+      ],
+      extensions: "Replace hand-tuned thresholds with CNN/U-Net segmentation (XView3, OilNet); add Sentinel-1 dual-pol VH features for biogenic vs mineral oil; or fuse optical Sentinel-2/Landsat-9 SWIR for daytime confirmation of sheen color.",
+      steps: [
+        { title: "Why SAR sees oil", component: "C-band backscatter physics", proto: "Sentinel-1 IW VV",
+          intuition: "Radar 'sees' roughness, not color: a calm or oil-damped sea is mirror-smooth at 5.6 cm wavelength and reflects energy away from the satellite, while a wind-roughened sea Bragg-scatters strongly back.",
+          example: "At 30° incidence, the resonant water wavelength is λ_w ≈ λ_radar/(2·sin θ) = 5.6/(2·0.5) ≈ 5.6 cm — exactly the capillary waves wind builds up at 3–10 m/s.",
+          detail: "Wind-roughened sea surface (Bragg waves with λ_water ≈ λ_radar/(2 sinθ) ≈ 4 cm) backscatters strongly toward the SAR. Oil films damp these capillary waves; the smoothed surface acts as a near-specular reflector and almost no energy returns to the satellite. Oil therefore appears as a dark patch (σ⁰ ~ −22 dB vs −10 dB clean sea) in VV polarization." },
+        { title: "Acquire & calibrate", component: "Sentinel-1 GRD", proto: "SNAP / pyroSAR",
+          intuition: "DN-to-σ⁰ calibration removes incidence-angle and antenna-pattern bias so the same dB threshold works across the swath.",
+          complexity: "≈ 60–90 s per GRDH scene on 8-core (Lee filter dominates)",
+          detail: "Download Sentinel-1 IW GRDH product (~1 GB, 250 km swath, 10 m pixel). Apply orbit file, thermal-noise removal, radiometric calibration to σ⁰ in dB, and Lee-sigma speckle filter (5×5).",
+          pitfall: "Skipping thermal-noise removal leaves a strong VH bias near the swath edges that masquerades as low-backscatter slicks — always denoise before thresholding cross-pol.",
+          code: "snap gpt Cal+ML+Tnr.xml -Pinput=S1A_IW_GRDH_*.zip -Poutput=sigma0.dim" },
+        { title: "Threshold & segment", component: "Adaptive dark-target detector", proto: "scikit-image",
+          intuition: "Sea brightness varies with wind and incidence angle, so a global threshold fails; a local-window contrast threshold flags only pixels that are anomalously dark relative to their neighborhood.",
+          complexity: "O(H·W) with separable 1-km moving window (FFT or summed-area table)",
+          detail: "Compute local σ⁰ mean over a 1-km moving window. Flag pixels where σ⁰ < (local_mean − 8 dB) AND wind speed (from CMOD5 inversion of σ⁰) is between 3–10 m/s. Below 3 m/s the whole sea is dark (no Bragg waves) → false-alarm prone; above 10 m/s wind disperses the slick.",
+          pitfall: "Not gating on wind speed leads to massive false-alarm rates in the doldrums; always co-register an ECMWF wind field or CMOD5-inverted wind before alerting." },
+        { title: "Discriminate look-alikes", component: "Shape & context features", proto: "Random Forest classifier",
+          intuition: "Oil-spill geometry encodes physics: spills are elongated by surface currents, have sharp damped edges, and recur over hours — natural look-alikes lack all three.",
+          example: "EMSA CleanSeaNet's operational RF uses ~30 features per dark candidate (area, eccentricity, perimeter/area, gradient, distance to nearest AIS track) and reaches ~85% precision on validated 2018–2022 European waters.",
+          detail: "True spills are elongated (high aspect ratio), have sharp edges (oil dampens uniformly), and persist between consecutive acquisitions. Look-alikes: low-wind areas, biogenic films from algal blooms, ship wakes (linear), grease ice, rain cells. CleanSeaNet (EMSA) uses a trained RF on ~30 features: area, perimeter, eccentricity, gradient, distance to nearest ship AIS track.",
+          refs: [{ label: "EMSA CleanSeaNet", url: "https://www.emsa.europa.eu/cleanseanet.html" }] },
+        { title: "Confirm & dispatch", component: "AIS correlation", proto: "Web alert + vessel ID",
+          intuition: "A dark slick downstream of a moving vessel with no logged discharge is far stronger evidence than any single-image classifier output — multi-source fusion turns detection into attribution.",
+          example: "Sentinel-1 imaged a ~4 000 km² Deepwater Horizon slick (2010) and the 2021 Wakashio grounding (Mauritius); CleanSeaNet now delivers >2 000 confirmed alerts/year to EU coastal states.",
+          pitfall: "AIS can be spoofed or turned off (\"dark fleet\"); never close the loop on AIS alone — require optical or repeat-SAR confirmation before legal proceedings.",
+          detail: "Cross-reference detected slick with AIS ship tracks within ±2 hours and ±5 km. Persistent slick downstream of a vessel with no logged discharge → high-confidence pollution event. EMSA delivers alerts within 30 min of acquisition to coastal-state authorities. Confirmed cases: Deepwater Horizon 2010 (Sentinel-1 captured 4000 km² slick), 2021 Mauritius MV Wakashio." }
+      ]
+    },
+    {
+      id: "uc-cropyield", title: "Crop Yield Prediction (Landsat + Sentinel-2 + Weather)",
+      desc: "Stacking biweekly NDVI/EVI peaks with rainfall and GDD to forecast county-level corn yield.",
+      icon: "🌽", color: "#ffa657",
+      summary: "County-level yield forecasts ride on two signals: <strong>vegetation-index trajectories</strong> through the growing season and <strong>weather covariates</strong> (GDD, precipitation, VPD) during silking. Masking the AOI to the <strong>USDA CDL</strong> isolates corn pixels, harmonized Landsat–Sentinel-2 (HLS) gives ~biweekly EVI peaks, and an XGBoost or LSTM regressor predicts bushels/acre weeks before the official USDA estimate.",
+      pipeline: "USDA CDL (30 m corn mask) ──▶ HLS scenes (B2/B4/B5, biweekly)\n     │                              │\n     ▼                              ▼\n  AOI = corn pixels             EVI = 2.5·(N−R)/(N+6R−7.5B+1)\n                                     │\n                                     ▼\n                            Per-county zonal stats\n                            (peak EVI, ∫EVI, DOY-of-peak)\n                                     │\n     ┌───── Weather (GDD, ppt, VPD) ─┤\n     ▼                                ▼\n  XGBoost / LSTM ──▶ Yield (bu/ac) ──▶ Aug-1 forecast → USDA WAOB, traders, insurers",
+      metrics: [
+        { label: "Cropland Data Layer", value: "30 m, annual, 99% Iowa corn coverage" },
+        { label: "HLS revisit", value: "≈ 2–3 days (S2+L8+L9 combined)" },
+        { label: "XGBoost held-out R²", value: "≈ 0.85 (RMSE ≈ 12 bu/ac)" },
+        { label: "Forecast lead over USDA", value: "≈ 6 weeks (DOY 215 vs Oct report)" }
+      ],
+      extensions: "Move to pixel-level LSTMs / Transformer time-series for sub-field stress; add Sentinel-1 SAR for cloud-resilient phenology in monsoon regions; or model yield with mechanistic SCM (APSIM, DSSAT) where remote-sensing assimilation closes the gap on extrapolation years.",
+      steps: [
+        { title: "Define analysis units", component: "Cropland mask", proto: "USDA Cropland Data Layer (CDL)",
+          intuition: "The signal you care about lives in the ~38% of Iowa that's corn — masking out everything else removes 60%+ of confounding land-cover variance before any ML.",
+          example: "Iowa 2023 CDL has ~5.5 M ha of corn out of ~14.5 M ha total land; using CDL as the AOI mask increases county-level corn-yield R² by ~0.1 over unmasked NDVI averages.",
+          detail: "Mask the AOI to corn pixels only using the 30 m USDA CDL (or ESA WorldCover for global). For Iowa, that retains ~5.5 M ha of corn vs total 14.5 M ha of land — focusing the signal.",
+          pitfall: "CDL is a classification — its per-pixel accuracy is ~85% for corn in the Midwest but <70% in fragmented Southeast US; always apply a confidence threshold or use a 1-pixel internal buffer." },
+        { title: "Build VI time series", component: "16-day composites", proto: "Google Earth Engine / openEO",
+          intuition: "NDVI flattens after canopy closure (LAI > 3) because near-infrared saturates; EVI's blue-band correction keeps responding through senescence, which is exactly when corn-yield signal is strongest.",
+          complexity: "O(P·T) per county; trivially parallel — Earth Engine fans out across millions of pixels",
+          detail: "For each county-corn-pixel, compute NDVI and EVI from harmonized Landsat-Sentinel (HLS) every 16 days from planting (DOY 110) to harvest (DOY 290). EVI is preferred for corn because NDVI saturates after canopy closure (LAI > 3) around DOY 180.",
+          pitfall: "Single-date composites are dominated by cloud gaps in July (peak season); use ≥30-day median composites or Whittaker-smoothed time series to recover a clean phenology curve.",
+          code: "var hls = ee.ImageCollection('NASA/HLS/HLSL30/v002')\n  .filterDate('2024-04-15','2024-10-15').filter(ee.Filter.lt('CLOUD_COVERAGE',30));\nvar evi = hls.map(function(im){return im.expression('2.5*(N-R)/(N+6*R-7.5*B+1)', {N:im.select('B5'),R:im.select('B4'),B:im.select('B2')});});" },
+        { title: "Extract features", component: "Per-county aggregation", proto: "Zonal stats",
+          intuition: "A few summary scalars per county (peak EVI, ∫EVI, day-of-peak, July VPD) carry almost all the yield signal — collapsing 1 M pixels × 12 dates to ~12 numbers makes the ML problem tractable.",
+          complexity: "O(P) per county per date; ≈ 0.5 GB shuffled output for the Corn Belt × 1 season",
+          detail: "Per county-year, compute peak EVI value, day-of-peak, integrated EVI from emergence to peak (∫EVI dt — proxy for accumulated biomass), and the maximum 30-day rate of EVI rise. Add weather: cumulative growing-degree-days (base 10°C), July precipitation, max VPD during silking (DOY 200–215 for corn — the most sensitive 2 weeks).",
+          example: "In 2012 (Iowa drought) peak county EVI fell to ~0.55 vs the 2008–2022 mean of ~0.70, and integrated EVI dropped 22% — exactly tracking the 25% yield collapse." },
+        { title: "Train regression", component: "ML model", proto: "XGBoost / LSTM",
+          intuition: "Random k-fold leaks information across years (weather is autocorrelated) — only leave-one-year-out CV honestly estimates how the model will extrapolate to a never-before-seen 2012-style drought.",
+          complexity: "XGBoost: minutes on a laptop; LSTM on pixel time-series: hours on a single GPU",
+          detail: "Train on NASS-reported county yields 2008–2022 (~15 years × 99 Iowa counties = 1485 obs). XGBoost with the ~12 features above achieves R² ≈ 0.85 and RMSE ≈ 12 bu/ac on held-out years; LSTM on full pixel time-series gets 0.88 but needs much more data engineering. Always validate by holding out entire years (not random shuffle) — 2012 (drought) and 2019 (wet planting) test extrapolation.",
+          pitfall: "Beware target leakage: USDA NASS yield estimates from the same year already use August imagery — using the released-year NASS as a feature inflates R² but destroys generalization.",
+          refs: [{ label: "Khaki & Wang 2020 — DL for yield", url: "https://doi.org/10.3389/fpls.2019.01750" }] },
+        { title: "Issue forecast", component: "August 1 prediction", proto: "Operational pipeline",
+          intuition: "By DOY 215 (silking complete) corn yield is essentially decided — most of the remaining variance is harvest loss, so a sensor-derived model can beat the official October report by weeks.",
+          example: "USDA WAOB's August WASDE-corn estimate has historical RMSE ≈ 9 bu/ac vs final realized yield; satellite-augmented ensembles (e.g., Climate Corp, Descartes Labs) routinely match or beat that 6 weeks earlier.",
+          detail: "By DOY 215 (silking complete) the model has enough VI accumulation to forecast yield with σ ≈ 8% — 6 weeks ahead of USDA's October report. Used by commodity traders, USDA WAOB, and crop insurers. Sentinel-2's 5-day cadence and 10 m resolution are increasingly preferred over Landsat's 16-day for sub-field stress detection." }
+      ]
+    },
+    {
+      id: "uc-cloudmask", title: "Cloud-Masking Pipeline for Sentinel-2",
+      desc: "Building a reliable per-pixel cloud + shadow mask — the unsexy step that every operational EO pipeline lives or dies on.",
+      icon: "☁️", color: "#79c0ff",
+      summary: "Every downstream EO analysis (NDVI, change detection, yield) silently corrupts unless cloud and shadow pixels are removed first. Operational pipelines combine the <strong>Sentinel-2 SCL band</strong>, the lightweight <strong>s2cloudless</strong> classifier (per-pixel probability), and a <strong>projected shadow mask</strong> from solar geometry — then dilate and composite over time to produce gap-free, analysis-ready surface reflectance.",
+      pipeline: "S2 L2A bands ──▶ SCL classes (3,8,9,10 = cloud/shadow/cirrus)\n     │\n     ├──▶ s2cloudless gradient-boosting on 10 bands ──▶ p(cloud) ∈ [0,1]\n     │\n     ▼\n  Union mask  +  dilation (50 m)  ──▶  shadow projection (sun azimuth/elev)\n     │\n     ▼\n  Per-pixel temporal compositing (median over N=10 cleanest dates)\n     │\n     ▼\n  Analysis-Ready Data (ARD) → NDVI, classifiers, change detection",
+      metrics: [
+        { label: "s2cloudless overall accuracy", value: "≈ 95% (validated on CMIX-2)" },
+        { label: "SCL cloud-shadow recall", value: "≈ 70% (under-detects shadows)" },
+        { label: "Mask dilation buffer", value: "Typically 1–5 px (10–50 m)" },
+        { label: "Cloud-free composite window", value: "30–90 days in tropics for 1 clean obs" }
+      ],
+      extensions: "Replace classifiers with a U-Net (CloudSEN12) trained on hand-labeled S2 patches; fuse Sentinel-1 SAR (cloud-immune) to fill gaps; or move to Fmask-Lite / CESBIO's MAJA multi-temporal cloud detector when single-date methods fail on bright surfaces (snow, sand, rooftops).",
+      steps: [
+        { title: "Read SCL scene-classification band", component: "Sentinel-2 L2A SCL", proto: "rasterio / xarray",
+          intuition: "ESA ships a free per-pixel land-cover/cloud label with every L2A scene — it's not perfect, but it's a fast, calibrated first pass that gets you most of the way for free.",
+          complexity: "O(H·W); one pass over a 20 m raster (5490 × 5490 px per tile)",
+          detail: "Sentinel-2 L2A products include a Scene Classification Layer (SCL) at 20 m with classes: 0 no_data, 1 saturated, 2 dark, 3 cloud_shadow, 4 vegetation, 5 bare, 6 water, 7 unclassified, 8 cloud_medium, 9 cloud_high, 10 cirrus, 11 snow. Mark 3,8,9,10 as masked and (optionally) 1,2,11 depending on use case.",
+          pitfall: "SCL is computed scene-at-a-time by Sen2Cor and routinely mislabels bright rooftops as cloud and snow as cirrus — never trust it as the sole mask over urban or alpine AOIs.",
+          code: "import rioxarray as rxr\nscl = rxr.open_rasterio('T19LDC_SCL.jp2').squeeze()\ncloud_or_shadow = scl.isin([3, 8, 9, 10])" },
+        { title: "Run s2cloudless probability", component: "Per-pixel ML classifier", proto: "sentinelhub-py / s2cloudless",
+          intuition: "A gradient-boosted classifier trained on all 10 reflective bands captures spectral signatures (high blue, low NIR/SWIR contrast) that single-band thresholds miss — and outputs a continuous probability instead of a hard label.",
+          complexity: "~30 s per S2 tile on CPU; LightGBM model is ~5 MB",
+          example: "On the CMIX-2 cloud-mask intercomparison, s2cloudless reaches ~95% overall accuracy and matches Sen2Cor on most biomes while running 20× faster than Fmask.",
+          detail: "s2cloudless is a pre-trained gradient-boosting classifier (LightGBM) that consumes 10 reflective bands at 10 m and emits per-pixel cloud probability ∈ [0,1]. Threshold at 0.4 for high recall, 0.6 for high precision; combine with SCL for an ensemble mask.",
+          code: "from s2cloudless import S2PixelCloudDetector\ndetector = S2PixelCloudDetector(threshold=0.4, average_over=4, dilation_size=2)\ncloud_prob = detector.get_cloud_probability_maps(bands_10m)" },
+        { title: "Project cloud shadows", component: "Solar-geometry shadow casting", proto: "Numpy + sun azimuth/elevation",
+          intuition: "A cloud at altitude h casts a shadow at horizontal offset h·tan(θ_solar) along the anti-sun direction — knowing sun geometry turns the cloud mask into a free shadow predictor.",
+          complexity: "O(N_cloud_pixels · N_height_samples) — practical for 1–10 km cloud-top heights",
+          detail: "For each cloud pixel, project a shadow ray along the anti-solar azimuth at incremental heights (1, 2, 4, 8, 10 km). Where the ray hits the ground, mark a candidate shadow. Intersect with low-NIR pixels for confirmation. This recovers 20–30% of shadows that SCL misses, especially at oblique sun angles.",
+          pitfall: "Tall cumulus near the swath edge has parallax errors of hundreds of meters at S2's ~10° view angles — using cloud-top height from a fixed lookup fails; ideally use parallax matching between the L2A vapor band and the cloud mask." },
+        { title: "Dilate & combine", component: "Morphological mask cleanup", proto: "scikit-image binary_dilation",
+          intuition: "Cloud edges are fuzzy (anti-aliasing, sub-pixel mixing); a few-pixel dilation captures soft shadows and partial-cloud contamination at the cost of slightly higher data loss.",
+          complexity: "O(H·W·k²) with structuring-element radius k; ~1 s per S2 tile at k=5",
+          detail: "Take union(SCL_mask, s2cloudless > 0.4, projected_shadows), then dilate by 1–5 pixels (10–50 m) to capture the cloud halo. Track masked fraction per scene; drop entire scenes with > 80% cloud cover before compositing.",
+          example: "Empirically, a 3-pixel (30 m) dilation removes ~95% of residual NDVI biases caused by sub-pixel cirrus along cloud edges, at the cost of ~5% extra data loss.",
+          code: "from skimage.morphology import binary_dilation, disk\nmask = (scl.isin([3,8,9,10]) | (cloud_prob > 0.4) | shadow_proj)\nmask = binary_dilation(mask, disk(3))" },
+        { title: "Composite over time", component: "Median compositing", proto: "xarray / Earth Engine",
+          intuition: "Even with 80% cloud cover per scene, stacking 10–20 scenes and taking the per-pixel median over masked values converges to a clean, gap-free 'best-pixel' image.",
+          complexity: "O(P · T · log T) — sort dominates; ~2 GB RAM per S2 tile × 12 dates",
+          detail: "Over a rolling window (30–90 days depending on biome), take the per-pixel median of unmasked surface reflectance to produce an Analysis-Ready Data (ARD) composite. Median is preferred over mean because it suppresses residual undetected clouds (which are always brighter than the surface in the visible).",
+          pitfall: "Median-compositing across a phenological boundary (e.g., March–June in temperate latitudes) mixes leaf-off and leaf-on observations and destroys NDVI — always composite within a phenologically stable window or use BAP (best-available-pixel) scoring instead." }
+      ]
+    }
+  ],
+
+  // === BEGIN glossary v1 data placeholder ===
+  glossary: [
+    { id: 'emr', term: 'Electromagnetic Radiation', aka: 'EMR', category: 'concepts',
+      short: 'Self-propagating EM waves spanning UV through microwave that carry the signal remote sensors measure.',
+      long: 'All passive remote sensing detects either reflected solar EMR or thermally emitted EMR from the surface. The useful Earth-observation portion clusters in atmospheric windows: 0.4–2.5 µm (reflective VIS/NIR/SWIR), 3–5 µm and 8–14 µm (thermal), and microwave above 1 mm where SAR operates. Wavelength choice is physics-driven — chlorophyll absorbs red, leaves scatter NIR, water vapour absorbs around 0.94, 1.14 and 1.38 µm.',
+      seeAlso: ['atmosphere', 'atmospheric-window', 'sensors', 'sar'] },
+
+    { id: 'atmosphere', term: 'Atmosphere (radiative effects)', category: 'concepts',
+      short: 'Scatters and absorbs EMR between sensor and surface; must be corrected to recover surface reflectance.',
+      long: 'Photons traverse the atmosphere twice (Sun→ground→sensor), picking up Rayleigh scattering (∝1/λ⁴, strong in blue), aerosol scattering (Mie), and selective gas absorption from H₂O, CO₂, O₃, CH₄. Two pixels with identical surface reflectance can differ by 10–20% at top-of-atmosphere purely from haze, which is why surface-reflectance products run atmospheric-correction codes before any time-series analysis.',
+      seeAlso: ['atm-correction', 'atmospheric-window', 'toa-reflectance', 'surface-reflectance'] },
+
+    { id: 'atmospheric-window', term: 'Atmospheric Window', category: 'concepts',
+      short: 'Wavelength region where atmospheric transmittance is high enough to image the surface.',
+      long: 'Useful windows are reflective (0.4–2.5 µm), mid-wave IR (3–5 µm), thermal IR (8–14 µm), and microwave (>1 mm). Bands between them are dominated by water-vapour or CO₂ absorption and only used for atmospheric sounding or — like the 1.38 µm cirrus band on Landsat-8 B9 and Sentinel-2 B10 — as dedicated cloud screens because the surface signal is invisible while high cirrus shines.',
+      seeAlso: ['emr', 'atm-correction', 'cirrus'] },
+
+    { id: 'cirrus', term: 'Cirrus Band (1.38 µm)', category: 'concepts',
+      short: 'A band inside a strong H₂O absorption — surface is invisible, only high cirrus reflects.',
+      long: 'Landsat-8 Band 9 and Sentinel-2 Band 10 sit at 1.38 µm, where atmospheric water vapour absorbs almost all surface-reflected light. Anything bright in this band must lie above most of the water column — i.e., high cirrus. The band is therefore used purely as a cirrus mask, never for surface analysis, and is essential for scrubbing thin-cloud contamination from time-series products.',
+      seeAlso: ['atmospheric-window', 'atm-correction'] },
+
+    { id: 'sensors', term: 'Electro-Optical Sensor', aka: 'EO sensor', category: 'hardware',
+      short: 'Passive instrument that focuses VIS/NIR/SWIR/TIR light onto detector arrays via a telescope.',
+      long: 'EO payloads include a telescope, dispersive optics or filters that split light into bands, and detector arrays (Si for VIS/NIR, InGaAs or HgCdTe for SWIR/TIR). Bands are sampled discretely — Landsat-8 OLI has 9 reflective bands at 30 m, Sentinel-2 MSI has 13 bands at 10/20/60 m. Sensor geometry is either whisk-broom (mirror sweep) or push-broom (linear array).',
+      seeAlso: ['push-broom', 'whisk-broom', 'multispectral', 'resolution'] },
+
+    { id: 'enhancement', term: 'Image Enhancement', category: 'software',
+      short: 'Stretching, filtering, PCA and band ratios that improve interpretability before analysis.',
+      long: 'Enhancement does not add information — it redistributes it for human or downstream-algorithm consumption. Linear/percent stretches expand the dynamic range of 12-bit data into 8-bit displays; histogram equalisation flattens the distribution; PCA decorrelates bands so the first 3 components capture >95% of variance for false-colour display. Band ratios (NDVI, NDWI, NBR) and convolution filters (high-pass for edges, low-pass for noise) are also enhancement operations.',
+      seeAlso: ['preprocessing', 'ndvi', 'multispectral'] },
+
+    { id: 'multispectral', term: 'Multispectral Imaging', aka: 'MSI', category: 'concepts',
+      short: 'Imaging in ~3–15 discrete bands chosen to exploit known reflectance/absorption features.',
+      long: 'Multispectral sensors trade continuous spectral coverage for SNR, data volume and well-understood bands tuned to physics: blue/green/red for natural colour, NIR for vegetation structure, SWIR for moisture and minerals, TIR for surface temperature. Hyperspectral systems (PRISMA, EnMAP) extend this to 100s of contiguous narrow bands at higher data cost.',
+      seeAlso: ['sensors', 'red-edge', 'ndvi', 'evi'] },
+
+    { id: 'red-edge', term: 'Red Edge', category: 'concepts',
+      short: 'The steep rise in vegetation reflectance between ~680 and 780 nm caused by chlorophyll-to-mesophyll transition.',
+      long: 'Healthy chlorophyll absorbs strongly in the red but the leaf interior scatters NIR — the transition slope and inflection point shift with chlorophyll content, leaf water and stress. Sentinel-2 dedicates three narrow bands at 705, 740 and 783 nm to sample this jump; the resulting NDRE index saturates later than NDVI in mature canopies and discriminates senescence from drought.',
+      seeAlso: ['multispectral', 'ndvi', 'evi'] },
+
+    { id: 'sar', term: 'Synthetic Aperture Radar', aka: 'SAR', category: 'hardware',
+      short: 'Active side-looking microwave imager that synthesises a long virtual antenna from platform motion.',
+      long: 'A SAR transmits a chirp pulse at 1–24 cm wavelength and times the echoes; coherently summing pulses along-track simulates an antenna kilometres long, giving 5–20 m azimuth resolution from a 12 m physical antenna. Side-looking geometry (incidence 20°–50°) is required so elevation differences map to range delays. SAR provides its own illumination and sees through clouds — Sentinel-1 C-band over Amazon, ALOS-2/NISAR L-band for biomass.',
+      seeAlso: ['side-looking', 'insar', 'speckle', 'polarization'] },
+
+    { id: 'side-looking', term: 'Side-Looking Geometry', category: 'concepts',
+      short: 'Off-nadir viewing required by SAR so that range = slant distance disambiguates points.',
+      long: 'A nadir-pointing radar receives identical echo times from any two points equidistant from the sensor, making them indistinguishable. Looking sideways at incidence θ_i converts terrain elevation into time-of-flight, with across-track resolution = c·τ/(2·sin θ_i). The same geometry produces three artefacts on relief: layover (peaks fall toward sensor), foreshortening (near-side slopes compress), and radar shadow (far-side hidden).',
+      seeAlso: ['sar', 'insar'] },
+
+    { id: 'speckle', term: 'SAR Speckle', category: 'numerics',
+      short: 'Multiplicative grainy noise from coherent interference of sub-pixel scatterers.',
+      long: 'Single-look SAR pixels have standard deviation equal to the mean, producing a salt-and-pepper appearance even over uniform fields. Multi-looking (incoherent averaging of N looks) reduces speckle by √N at the cost of resolution; edge-preserving Lee, Frost, and refined-Lee filters are standard. Linear smoothing biases the mean and must not be used on SAR amplitude data.',
+      seeAlso: ['sar', 'polarization'] },
+
+    { id: 'polarization', term: 'Polarization (VV/VH/HH/HV)', category: 'concepts',
+      short: 'Orientation of the transmitted/received electric-field vector — encodes scattering type.',
+      long: 'A dual-pol SAR like Sentinel-1 IW transmits vertical and records both VV and VH. VV (co-pol) is strong on rough surfaces and water with wind-driven Bragg waves; VH (cross-pol) is strong on volume scatterers like forest canopies. The VV/VH ratio separates surface from volume scattering and underpins operational deforestation alerts (RADD, GFW).',
+      seeAlso: ['sar', 'speckle'] },
+
+    { id: 'insar', term: 'Interferometric SAR', aka: 'InSAR', category: 'concepts',
+      short: 'Phase difference between two SAR acquisitions of the same area, used to measure topography or displacement.',
+      long: 'If two SAR passes view the same scene from slightly different orbits, the interferometric phase encodes a combination of topography and ground motion at λ/4π resolution — millimetres at C-band. Differential InSAR (DInSAR) removes the topographic phase using a DEM, leaving subsidence, glacier flow, or coseismic slip. Sentinel-1’s 6-day repeat enables operational InSAR globally; the chief pitfalls are atmospheric phase delay and decorrelation in vegetated terrain.',
+      seeAlso: ['sar', 'side-looking'] },
+
+    { id: 'orbits', term: 'Earth Orbits (LEO / SSO / GEO)', category: 'systems',
+      short: 'Altitude and inclination set revisit, GSD trade and coverage geometry.',
+      long: 'LEO at 400–900 km gives the finest GSD but small swaths and long single-satellite revisit. Sun-synchronous orbits are near-polar LEOs whose plane precesses with the Sun so every pass crosses each latitude at the same local solar time. GEO at 35 786 km hovers over one longitude giving 10–15 minute hemispheric weather imaging at 0.5–2 km GSD.',
+      seeAlso: ['sun-synchronous', 'geostationary', 'cubesats', 'resolution'] },
+
+    { id: 'sun-synchronous', term: 'Sun-Synchronous Orbit', aka: 'SSO', category: 'systems',
+      short: 'Near-polar LEO whose plane precesses with the Sun so equator crossings happen at a fixed local time.',
+      long: 'Earth’s J2 oblateness perturbs orbits; tuning altitude (≈700–900 km) and inclination (≈98°, slightly retrograde) makes the precession exactly 360°/365.25 days, locking the orbit plane to the Sun. Landsat-8 has a 10:00 AM ±15 min descending node, guaranteeing comparable illumination across years. Period is ~99 min; 14–15 orbits per day give 16-day (Landsat) or 5-day (Sentinel-2 A+B) global repeat.',
+      seeAlso: ['orbits', 'geostationary'] },
+
+    { id: 'geostationary', term: 'Geostationary Orbit', aka: 'GEO', category: 'systems',
+      short: 'Equatorial orbit at 35 786 km with a 24-hour period — the satellite hovers over one longitude.',
+      long: 'GEO trades resolution for cadence: GOES-R ABI, Meteosat, and Himawari deliver hemispheric weather every 10–15 minutes at 0.5 km VIS / 2 km IR. The huge altitude makes polar coverage impossible (zenith angle > 81° above ±70° latitude). Three GEO platforms at 0°, 140°W and 140°E together cover mid-latitudes globally.',
+      seeAlso: ['orbits', 'sun-synchronous'] },
+
+    { id: 'cubesats', term: 'CubeSat / Smallsat', category: 'hardware',
+      short: 'Standardized 10 cm-cube nanosatellites; constellations like Planet Doves give daily global revisit.',
+      long: 'A 3U CubeSat is 10×10×30 cm, ~4 kg, launched as secondary payload. Planet operates 150+ Doves at 3–4 m GSD and SuperDoves with 8 bands, building a daily global mosaic. CubeSats use push-broom optics with no moving parts and lower SNR than flagship missions, but the constellation makes up for the per-satellite limitations through revisit cadence.',
+      seeAlso: ['orbits', 'push-broom', 'resolution'] },
+
+    { id: 'push-broom', term: 'Push-Broom Scanner', category: 'hardware',
+      short: 'Linear CCD with one detector per cross-track pixel; platform motion advances the array along-track.',
+      long: 'Push-broom designs (Sentinel-2 MSI, Landsat-8/9 OLI, SPOT, Planet) image an entire row simultaneously, giving dwell time ≈ pixel size / ground-track velocity — ~4.5 ms per pixel for OLI versus ~10 µs for a whisk-broom. Higher SNR or narrower bands result. No moving parts means lower power and longer mission life, at the cost of per-detector radiometric calibration to suppress vertical striping.',
+      seeAlso: ['whisk-broom', 'sensors', 'dwell-time'] },
+
+    { id: 'whisk-broom', term: 'Whisk-Broom Scanner', category: 'hardware',
+      short: 'Rotating/oscillating mirror sweeps one or a few detectors across the swath, one row per sweep.',
+      long: 'Landsat MSS, TM, and ETM+ used whisk-broom designs. The single detector path gives identical calibration for every pixel and no detector-to-detector striping. The penalties are short dwell time per pixel (microseconds), high mirror sample rates, and a moving part whose failure (Landsat-7 Scan-Line Corrector, 2003) can cripple the mission.',
+      seeAlso: ['push-broom', 'sensors'] },
+
+    { id: 'dwell-time', term: 'Dwell Time', category: 'performance',
+      short: 'Integration time the sensor spends on each pixel — sets SNR and the spectral/spatial trade.',
+      long: 'For a push-broom: dwell ≈ pixel size / ground-track velocity (≈4.5 ms for OLI 30 m at 6.76 km/s). For a whisk-broom: dwell = swath sample rate. Longer dwell collects more photons → better SNR, allowing narrower bands or finer GSD at the same noise floor. This is the main reason modern instruments are push-broom.',
+      seeAlso: ['push-broom', 'whisk-broom', 'resolution'] },
+
+    { id: 'resolution', term: 'Resolution (4 kinds)', category: 'performance',
+      short: 'Spatial (GSD), spectral, radiometric and temporal — set by aperture, optics, ADC, and orbit.',
+      long: 'Spatial = ground sample distance (Sentinel-2 10 m, Landsat 30 m, MODIS 250–1000 m). Spectral = number and width of bands. Radiometric = bit depth (Landsat-8: 12-bit). Temporal = revisit cadence. The four trade against each other: finer GSD shrinks swath, narrower bands cut dwell time, more bits raise data rate.',
+      seeAlso: ['gsd', 'dwell-time', 'orbits'] },
+
+    { id: 'gsd', term: 'Ground Sample Distance', aka: 'GSD', category: 'performance',
+      short: 'Linear size on the ground covered by one detector — the spatial-resolution headline number.',
+      long: 'GSD is set by detector pitch, focal length and altitude. Common values: WorldView-3 0.31 m pan, Planet SkySat 0.5 m, Sentinel-2 10 m visible, Landsat 30 m, MODIS 250 m. Note GSD is not the same as resolvable feature size — that depends on optical MTF and SNR. Pan-sharpening can fuse a higher-GSD panchromatic band with multispectral bands to a finer effective GSD.',
+      seeAlso: ['resolution', 'sensors'] },
+
+    { id: 'geolocation', term: 'Geolocation & Georeferencing', category: 'software',
+      short: 'Tying each pixel to a real lat/lon using orbit ephemeris, attitude, Earth model and GCPs.',
+      long: 'Level-1 processing models the line-of-sight from telescope pointing (star trackers, gyros) and orbit ephemeris (GPS, SLR), intersected with a DEM to give per-pixel ground coordinates. Ground Control Points refine the geometry to sub-pixel accuracy. Output is typically resampled to UTM (Landsat, Sentinel-2) using cubic convolution or bilinear interpolation.',
+      seeAlso: ['preprocessing', 'orthorectification'] },
+
+    { id: 'orthorectification', term: 'Orthorectification', category: 'software',
+      short: 'Geometric correction that removes terrain-induced parallax using a DEM, producing a map-projected image.',
+      long: 'Without a DEM, mountains lean toward nadir and pixels misregister by hundreds of metres in steep terrain. Orthorectification ray-traces each pixel through the line-of-sight to its DEM intersection and resamples onto a regular grid. Sentinel-2 L1C and Landsat Collection-2 are delivered already ortho-rectified using global DEMs (PlanetDEM-90, GLS).',
+      seeAlso: ['geolocation', 'preprocessing'] },
+
+    { id: 'preprocessing', term: 'Preprocessing Chain', category: 'software',
+      short: 'Geometric + radiometric corrections that turn raw downlink into analysis-ready data.',
+      long: 'The standard chain: dark-current/bias removal → per-detector flat-fielding and stripe correction → conversion DN→radiance using gain/bias metadata → geometric model + orthorectification → optional atmospheric correction to surface reflectance. Outputs are Level-1 (TOA) and Level-2 (surface). NASA HLS additionally co-registers Landsat and Sentinel-2 and reprojects them to a common 30 m grid.',
+      seeAlso: ['radiometric-cal', 'atm-correction', 'geolocation'] },
+
+    { id: 'radiometric-cal', term: 'Radiometric Calibration', category: 'numerics',
+      short: 'Converts raw DN to physical radiance and reflectance using per-band gain, bias, sun-Earth distance.',
+      long: 'L_λ = M·DN + A converts 12/16-bit counts to spectral radiance (W·m⁻²·sr⁻¹·µm⁻¹). Then ρ_TOA = π·L_λ·d²/(ESUN_λ·cos θ_s) gives unitless top-of-atmosphere reflectance, removing solar geometry. Without this chain, scenes from different sensors, dates, or even gain states cannot be compared. Sentinel-2 ships reflectance directly: ρ = DN/10 000.',
+      seeAlso: ['toa-reflectance', 'surface-reflectance', 'preprocessing'] },
+
+    { id: 'toa-reflectance', term: 'TOA Reflectance', aka: 'ρ_TOA', category: 'numerics',
+      short: 'Unitless ratio of reflected to incident solar flux at the top of the atmosphere.',
+      long: 'ρ_TOA = π·L_λ·d²/(ESUN_λ·cos θ_s) is bounded 0–1 and removes sun-Earth distance (±3.4% over the year) and solar elevation, but still includes atmospheric scattering and absorption. For short time spans or broad-scale studies it is often "good enough" and avoids the failure modes of atmospheric correction.',
+      seeAlso: ['radiometric-cal', 'surface-reflectance', 'atm-correction'] },
+
+    { id: 'surface-reflectance', term: 'Surface Reflectance', aka: 'ρ_SR', category: 'numerics',
+      short: 'Reflectance you would measure standing on the ground — atmospheric effects removed.',
+      long: 'Codes like 6SV, LaSRC (Landsat), Sen2Cor and MAJA (Sentinel-2), and ACOLITE (water) estimate aerosol optical depth and water vapour from the scene then invert the radiative-transfer equation. Outputs (Landsat Collection-2 L2, Sentinel-2 L2A) are the standard input for time-series analytics, indices, and classification.',
+      seeAlso: ['atm-correction', 'toa-reflectance', 'bdrf'] },
+
+    { id: 'atm-correction', term: 'Atmospheric Correction', category: 'software',
+      short: 'Removes Rayleigh, aerosol, water-vapour and ozone effects to recover surface reflectance.',
+      long: 'Algorithms range from empirical Dark-Object Subtraction to full radiative-transfer codes (6SV, MODTRAN). LaSRC, Sen2Cor, MAJA and ACOLITE are operational packages. DOS assumes the scene’s darkest pixel is opaque — fine over land NIR but fails over deep ocean blue, where ACOLITE or c2rcc are preferred.',
+      seeAlso: ['surface-reflectance', 'toa-reflectance', 'dos'] },
+
+    { id: 'dos', term: 'Dark Object Subtraction', aka: 'DOS', category: 'software',
+      short: 'Empirical atmospheric correction that subtracts the scene’s darkest-pixel radiance as path radiance.',
+      long: 'DOS picks the histogram dark-end of each band (typically 0.01 percentile) as an estimate of additive atmospheric path radiance and subtracts it before reflectance conversion. Cheap and DEM-free, but it assumes a truly dark target exists in every band — false over coastal scenes in blue/green, where it over-corrects to negative reflectance.',
+      seeAlso: ['atm-correction', 'surface-reflectance'] },
+
+    { id: 'bdrf', term: 'BRDF & NBAR', category: 'numerics',
+      short: 'Surface reflectance depends on view/sun geometry; BRDF correction normalises to nadir.',
+      long: 'The Bidirectional Reflectance Distribution Function describes how reflectance varies with sun and view angles. Even after atmospheric correction, an off-nadir Sentinel-2 view of a forest looks different from a nadir view. MODIS MCD43A products fit a kernel-driven BRDF model and produce Nadir BRDF-Adjusted Reflectance (NBAR) for cross-sensor consistency.',
+      seeAlso: ['surface-reflectance', 'radiometric-cal'] },
+
+    { id: 'ndvi', term: 'Normalized Difference Vegetation Index', aka: 'NDVI', category: 'numerics',
+      short: '(NIR − Red)/(NIR + Red) — the workhorse vegetation index, bounded −1 to +1.',
+      long: 'Chlorophyll absorbs red strongly while leaf mesophyll scatters NIR, so healthy vegetation has high (NIR−Red) and low (Red). The ratio cancels brightness variations from sun angle and slope, making values comparable across sensors with red and NIR bands — Landsat MSS through Sentinel-2. NDVI saturates above ~0.85 in dense canopies (LAI > 3); use EVI or NDRE there.',
+      seeAlso: ['evi', 'red-edge', 'multispectral', 'change-detection'] },
+
+    { id: 'evi', term: 'Enhanced Vegetation Index', aka: 'EVI', category: 'numerics',
+      short: '2.5·(NIR−R)/(NIR+6R−7.5B+1) — vegetation index optimised for high-biomass canopies.',
+      long: 'EVI was designed for MODIS to overcome NDVI’s saturation in dense canopies and its sensitivity to soil background. The blue-band term corrects for aerosol, and the +1 in the denominator decouples it from background. EVI tracks tropical forest seasonality and crop biomass where NDVI flattens; the cost is needing a calibrated blue band and surface reflectance.',
+      seeAlso: ['ndvi', 'multispectral'] },
+
+    { id: 'classification', term: 'Image Classification', category: 'software',
+      short: 'Assigning land-cover or material labels to every pixel — supervised, unsupervised, or deep.',
+      long: 'Supervised methods (Random Forest, SVM, gradient boosting, U-Net) learn from labelled training pixels then label every pixel; unsupervised (k-means, ISODATA) cluster first and assign labels later. Random Forest with 6 reflective bands + 5 indices typically reaches 85–92% overall accuracy with ≥30 training pixels per class. Stratified spatially-disjoint validation is mandatory.',
+      seeAlso: ['confusion-matrix', 'kappa', 'deep-learning'] },
+
+    { id: 'confusion-matrix', term: 'Confusion Matrix', category: 'performance',
+      short: 'Cross-tab of predicted vs reference class — source of overall, producer’s, and user’s accuracy.',
+      long: 'Rows are predicted class, columns are reference. Diagonal = correct. Overall Accuracy = trace/total. Producer’s accuracy (column-wise) = 1 − omission error; User’s accuracy (row-wise) = 1 − commission error. Always report all three plus per-class metrics: a 95% OA can hide a class whose user accuracy is 40%.',
+      seeAlso: ['classification', 'kappa'] },
+
+    { id: 'kappa', term: 'Cohen’s Kappa', aka: 'κ', category: 'performance',
+      short: 'Agreement statistic that corrects overall accuracy for chance agreement between classes.',
+      long: 'κ = (OA − P_chance)/(1 − P_chance) where P_chance = Σ(row_i × col_i)/N². κ > 0.80 = strong, 0.60–0.80 = moderate, <0.40 = poor. Critics note κ is sensitive to class imbalance, so modern practice reports OA + per-class accuracies alongside κ rather than κ alone.',
+      seeAlso: ['confusion-matrix', 'classification'] },
+
+    { id: 'change-detection', term: 'Change Detection', category: 'software',
+      short: 'Identifying differences in surface conditions over time — deforestation, urban growth, disasters.',
+      long: 'Approaches range from simple image differencing and post-classification comparison to time-series methods like BFAST, CCDC, and LandTrendr that model phenology and break-point statistics. Operational systems (GLAD, RADD, GFW) flag a pixel after NDVI drops below μ−3σ for ≥2 clear observations or SAR backscatter drops > 2 dB, achieving 7–10 day latency.',
+      seeAlso: ['ndvi', 'sar', 'classification'] },
+
+    { id: 'deep-learning', term: 'Deep Learning for EO', category: 'software',
+      short: 'CNNs, U-Nets and Vision Transformers applied to multispectral/SAR for segmentation and detection.',
+      long: 'Modern benchmarks (SpaceNet, DeepGlobe, BigEarthNet) are dominated by U-Net variants for building footprints and roads, and ViTs for scene classification. Compared to Random Forest, deep models need 1000× more labels but generalise better across cities and seasons. Foundation models pretrained on petabytes of unlabeled imagery (Prithvi, SatMAE) now allow few-shot fine-tuning.',
+      seeAlso: ['classification', 'change-detection'] },
+
+    { id: 'hls', term: 'Harmonized Landsat-Sentinel', aka: 'HLS', category: 'systems',
+      short: 'NASA product that co-registers and cross-calibrates Landsat-8/9 and Sentinel-2 to a 30 m grid.',
+      long: 'HLS performs atmospheric correction (LaSRC), BRDF normalisation, bandpass adjustment to a common spectral response, and reprojection to Sentinel-2 MGRS tiles. The result is a dense ~2–3 day time series at 30 m where both sensors are radiometrically interchangeable — essential for time-series methods that assume sensor consistency.',
+      seeAlso: ['surface-reflectance', 'bdrf', 'change-detection'] }
+  ],
+  // === END glossary v1 data placeholder ===
+
+  problems: [
+    {
+      week: "Week 1 — Physics & Spectrum",
+      items: [
+        { tag: "design", text: "Design a 6-band multispectral CubeSat (3U, 100 m GSD goal) for inland-water quality monitoring. Which wavelengths do you select and why? Specify centre wavelength, bandwidth, and the algal-bloom or turbidity feature each band targets.",
+          hint: "Think about the chlorophyll-a fluorescence peak near 685 nm, the 'red edge' of phytoplankton, the 620 nm phycocyanin band for cyanobacteria, plus a NIR atmospheric-correction band where water is dark." },
+        { tag: "derive", text: "Show that the (NIR − Red)/(NIR + Red) form of NDVI is invariant under multiplicative illumination changes (i.e. NDVI(kρ_R, kρ_N) = NDVI(ρ_R, ρ_N) for k > 0), but NOT invariant under additive offsets such as path radiance.",
+          hint: "Substitute kρ for ρ in the formula and simplify; then try ρ + Δ and observe what survives." },
+        { tag: "paper", text: "Read Hansen et al. (2013) 'High-Resolution Global Maps of 21st-Century Forest Cover Change'. Summarize: (a) input dataset, (b) classification approach, (c) the loss/gain definitions used, (d) two reasons their estimates diverge from FAO national reports.",
+          hint: "Pay attention to tree-cover threshold (≥30%) and how 'forest' differs from FAO's land-use definition." }
+      ]
+    },
+    {
+      week: "Week 2 — Sensors & Orbits",
+      items: [
+        { tag: "derive", text: "A satellite is in a circular sun-synchronous orbit at altitude 705 km (Landsat-8). Compute (a) orbital period in minutes, (b) ground-track velocity in km/s, (c) number of complete orbits per day, (d) longitudinal shift (in degrees) between consecutive equator crossings.",
+          hint: "Use μ = GM_⊕ = 3.986e14 m³/s², R_⊕ = 6378 km. Period T = 2π√(r³/μ). Earth rotates 360°/86 164 s; subtract that during one orbit." },
+        { tag: "design", text: "Compare a push-broom and a whisk-broom design for a 30-m GSD, 185-km swath thermal sensor. List three advantages and three disadvantages of each, and recommend one with justification given current detector technology and the SLC-failure history of Landsat-7.",
+          hint: "Consider dwell time per pixel, calibration burden across many detectors, mechanical reliability, and TIR-detector array availability (HgCdTe arrays are still expensive at large counts)." },
+        { tag: "debug", text: "An analyst stacks Landsat-7 ETM+ and Landsat-8 OLI NDVI from 1999–present and sees a step jump of +0.04 in mean NDVI starting in 2013. List three possible causes ranked by likelihood, and the diagnostic plot you would make for each.",
+          hint: "OLI's NIR band is narrower (845–885 nm vs ETM+ 770–900 nm) and its red band sits 10 nm bluer; SLC-off gap-fill artefacts; different surface-reflectance algorithms (LEDAPS vs LaSRC)." }
+      ]
+    },
+    {
+      week: "Week 3 — Processing & Atmosphere",
+      items: [
+        { tag: "code", text: "Write a function (Python + numpy) that converts a Landsat-8 OLI Band-4 DN array to TOA reflectance, given metadata fields RADIANCE_MULT_BAND_4, RADIANCE_ADD_BAND_4, SUN_ELEVATION, EARTH_SUN_DISTANCE, and ESUN_4 = 1535 W·m⁻²·µm⁻¹. Include a guard for fill values (DN = 0).",
+          hint: "Two-line core: L = M*DN + A; rho = pi*L*d**2 / (ESUN*sin(radians(SUN_ELEVATION))). Note SUN_ELEVATION is from horizon, so use sin not cos." },
+        { tag: "debug", text: "After applying Dark-Object Subtraction to a coastal Sentinel-2 scene the surface-reflectance image shows negative values (down to −0.04) over the open ocean in the blue band. What went wrong, and how do you fix it without throwing the whole scene out?",
+          hint: "DOS assumes the darkest pixel is opaque/zero — but ocean blue ρ ≈ 0.02–0.05 in clear deep water. Use a NIR-anchored aerosol retrieval instead (ACOLITE, c2rcc), or accept a blue-band offset and clip at 0." },
+        { tag: "design", text: "You need to monitor a 50 km² archaeological site in Egypt for looting pits (~3 m diameter). Specify a satellite/sensor combination that meets the resolution, revisit, and budget constraints. Justify your tradeoffs.",
+          hint: "Planet SkySat (~0.5 m, on-demand tasking) vs WorldView-3 (0.31 m, expensive) vs free Sentinel-2 (10 m, too coarse). Consider whether a single high-res snap or a weekly low-res baseline + on-demand WV-3 trigger is more cost-effective." }
+      ]
+    },
+    {
+      week: "Week 4 — SAR & Active Sensing",
+      items: [
+        { tag: "derive", text: "Derive the slant-range resolution of a SAR sending a chirp pulse compressed to bandwidth B at incidence angle θ_i. Then compute the ground-range resolution and explain why it improves at larger θ_i.",
+          hint: "Slant resolution = c/(2B). Project to ground: ground = slant/sinθ_i. At nadir (θ_i=0) ground range becomes infinite — yet another reason SAR looks sideways." },
+        { tag: "debug", text: "An InSAR interferogram over a city shows fringes you suspect are subsidence, but they form concentric rings exactly co-located with a 4-km-tall mountain at the scene edge. What is happening and how do you correct it before declaring 'subsidence'?",
+          hint: "Topographic phase contamination — the DEM you used to remove flat-Earth + topo phase is wrong/coarse over the mountain. Use SRTM 1-arc-sec or a TanDEM-X DEM, or two-pass differential InSAR (DInSAR) with a different baseline." },
+        { tag: "paper", text: "Summarise Reigber & Moreira (2000) 'First Demonstration of Airborne SAR Tomography'. What does adding a third (elevation) dimension to SAR enable that 2-D SAR cannot, and what is the price paid in acquisition geometry?",
+          hint: "Tomography resolves vertical structure inside a forest canopy or building — needs N parallel passes at slightly different heights → cost is repeat acquisitions and very precise baseline knowledge." }
+      ]
+    },
+    {
+      week: "Week 5 — Classification & Applications",
+      items: [
+        { tag: "design", text: "Design a near-real-time deforestation alert system for the Congo basin using Sentinel-2 + Sentinel-1. Specify (a) data ingestion latency, (b) cloud-handling strategy, (c) detection algorithm, (d) minimum mappable unit and acceptable commission/omission rates.",
+          hint: "Congo cloud-cover > 70% most days → SAR-led; use Sentinel-1 6-day backscatter drop > 2 dB confirmed by next clear S2 NDVI drop > 0.2; MMU around 0.5 ha to match RADD/GFW operational thresholds." },
+        { tag: "code", text: "Given a 3×3 confusion matrix [[42,3,1],[2,38,2],[0,1,45]] for classes Forest/Urban/Water, write a function that returns overall accuracy, producer's accuracy per class, user's accuracy per class, and Cohen's kappa.",
+          hint: "OA = trace/sum. Producer's = diag / col_sum. User's = diag / row_sum. Kappa = (OA − Pe)/(1 − Pe) where Pe = Σ(row_i_total × col_i_total) / N²." },
+        { tag: "debug", text: "A Random Forest land-cover classifier reports 96% overall accuracy on the validation set but performs poorly when applied to a neighbouring scene one month later. List three likely causes and the experiment you would run to confirm each.",
+          hint: "Spatial autocorrelation (training and validation pixels were neighbours) → re-split with spatially-disjoint folds. Phenology drift between dates → test on same-month scene. Atmospheric/radiometric mismatch → compare to TOA-trained model." }
+      ]
+    }
+  ],
+
 
   youtube: {
     videos: [
@@ -904,7 +1940,9 @@ if (C.graph && C.graph.nodes && C.graph.nodes.length) tabs.push({ id: 'graph',  
 if (C.deepDives && C.deepDives.length)  tabs.push({ id: 'deepdive', label: '📚 Deep Dives' });
 if (C.useCases && C.useCases.length)    tabs.push({ id: 'usecase',  label: '🔬 Use Cases' });
 if (C.youtube && C.youtube.videos && C.youtube.videos.length) tabs.push({ id: 'appendix', label: '📹 Appendix' });
+if (C.glossary && C.glossary.length)    tabs.push({ id: 'glossary', label: '📖 Glossary' }); /* glossary v1 tab */
 tabs.push({ id: 'problems', label: '🧠 Practice' });
+tabs.push({ id: 'quiz',     label: '🎯 Quiz' });
 
 document.getElementById('toolbar-title').textContent = '🧠 ' + C.course.code;
 document.title = C.course.code + ' — Interactive Study Tool';
@@ -1220,6 +2258,7 @@ function initGraph() {
   // Nodes
   const node = gGraph.selectAll("g.graph-node").data(nodes).enter().append("g")
     .attr("class", "graph-node")
+    .attr("data-id", d => d.id) /* glossary v1 data-id */
     .call(d3.drag().on("start", (evt, d) => { if (!evt.active) simul.alphaTarget(0.3).restart(); d.fx = d.x; d.fy = d.y; })
       .on("drag", (evt, d) => { d.fx = evt.x; d.fy = evt.y; })
       .on("end", (evt, d) => { if (!evt.active) simul.alphaTarget(0); d.fx = null; d.fy = null; }))
@@ -1561,6 +2600,8 @@ if (C.deepDives && C.deepDives.length) {
     // Full view
     const full = document.createElement('div'); full.className = 'dd-full'; full.id = 'dd-full-' + dd.id;
     let fhtml = `<div class="dd-infographic"><h2 style="color:${dd.color}">${dd.icon || ''} ${dd.title}</h2><div class="dd-subtitle">${dd.num || ''}${dd.num && dd.desc ? ' · ' : ''}${dd.desc || ''}</div>`;
+    // Navigator at the top for quick prev/grid/next without scrolling
+    fhtml += `<div class="dd-nav dd-nav-top"><button class="btn" onclick="navDD(-1)">← Prev</button><button class="btn" onclick="showCardGrid()">Grid</button><button class="btn" onclick="navDD(1)">Next →</button></div>`;
     if (dd.svg) fhtml += dd.svg(800, 300);
     // Render top-level content fields (markdown/body/content) as a single section
     const topText = dd.markdown || dd.body || dd.content || dd.detail;
@@ -1582,7 +2623,7 @@ if (C.deepDives && C.deepDives.length) {
       dd.keypoints.forEach(kp => { fhtml += `<div class="dd-kp"><strong>${kp.title}</strong><span>${kp.text || kp.body || ''}</span></div>`; });
       fhtml += '</div>';
     }
-    fhtml += `<div class="dd-nav"><button class="btn" onclick="navDD(-1)">← Prev</button><button class="btn" onclick="showCardGrid()">Grid</button><button class="btn" onclick="navDD(1)">Next →</button></div></div>`;
+    fhtml += `</div>`; // dd-nav v1 top inserted
     full.innerHTML = fhtml;
     fullContainer.appendChild(full);
   });
@@ -1650,6 +2691,20 @@ function showUseCase(idx) {
   html += '<button class="uc-back-btn" onclick="showUseCaseGrid()">← Back to All Use Cases</button>';
   html += `<h2>${uc.icon} ${uc.title}</h2>`;
   html += `<div class="uc-subtitle">${uc.desc}</div>`;
+  if (uc.summary || uc.pipeline || uc.metrics || uc.extensions) {
+    html += '<div class="uc-overview">';
+    if (uc.summary)   html += `<div class="uc-summary">${uc.summary}</div>`;
+    if (uc.pipeline)  html += `<div class="uc-pipeline">${uc.pipeline}</div>`;
+    if (uc.metrics && uc.metrics.length) {
+      html += '<div class="uc-metrics">';
+      uc.metrics.forEach(m => {
+        html += `<div class="uc-metric"><div class="uc-metric-label">${m.label}</div><div class="uc-metric-value">${m.value}</div></div>`;
+      });
+      html += '</div>';
+    }
+    if (uc.extensions) html += `<div class="uc-extensions"><strong>Where to go next:</strong> ${uc.extensions}</div>`;
+    html += '</div>';
+  }
   html += '<div class="uc-flow-controls">';
   html += '<button onclick="ucPrev()">← Previous</button>';
   html += '<button class="primary" onclick="ucNext()">Next Step →</button>';
@@ -1670,8 +2725,14 @@ function showUseCase(idx) {
     html += '<div class="uc-body">';
     html += `<div class="uc-title">${step.title}</div>`;
     html += `<div class="uc-component">📍 ${step.component}</div>`;
-    let detailHtml = `<p>${step.detail}</p><span class="uc-proto">${step.proto}</span>`;
+    let detailHtml = '';
+    if (step.intuition) detailHtml += `<div class="uc-intuition"><strong>💡 Intuition:</strong> ${step.intuition}</div>`;
+    detailHtml += `<p>${step.detail}</p>`;
+    if (step.proto) detailHtml += `<span class="uc-proto">${step.proto}</span>`;
+    if (step.complexity) detailHtml += `<span class="uc-complexity">⏱ ${step.complexity}</span>`;
     if (step.code) detailHtml += `<pre class="uc-code">${step.code}</pre>`;
+    if (step.example) detailHtml += `<div class="uc-example"><strong>📊 In practice:</strong> ${step.example}</div>`;
+    if (step.pitfall) detailHtml += `<div class="uc-pitfall"><strong>⚠ Pitfall:</strong> ${step.pitfall}</div>`;
     if (step.refs && step.refs.length) {
       detailHtml += '<div class="uc-refs">' + step.refs.map(r => `<a href="${r.url}" target="_blank" rel="noopener">${r.label}</a>`).join('') + '</div>';
     }
@@ -1999,10 +3060,64 @@ function toggleUnit(headerRow) {
 
 
 
-window.PROBLEMS_DATA=[{week:'EMR & Sensors',title:'Spectrum & Resolution',items:[{tag:'derive',text:'A sensor at 700 km altitude has a 0.3 m aperture at lambda=0.5 um. Compute diffraction-limited ground resolution. Why is this a fundamental limit?',hint:'delta ~ 1.22*lambda*R/D.'},{tag:'design',text:'Design a multispectral sensor for crop monitoring. Which bands (and why)? What spatial, spectral, temporal resolution tradeoffs?'}]},{week:'Image Processing',title:'Preprocessing & Correction',items:[{tag:'debug',text:'A Landsat image has a 5% brightness difference across the scene due to atmospheric scattering. Propose 2 correction methods — one absolute, one relative — and their limitations.'},{tag:'derive',text:'NDVI = (NIR - Red)/(NIR + Red). Why normalize? What does NDVI ~ 0.7 mean vs 0.2? Why is NDVI saturated for dense canopy?'}]},{week:'Classification',title:'Supervised & Deep Learning',items:[{tag:'design',text:'Design a pipeline to detect illegal mining from Sentinel-2 imagery. What labels? What preprocessing? Why does a simple CNN fail vs a Siamese change-detection model?'}]}];
+window.PROBLEMS_DATA=[
+  {week:'EMR & Sensors', title:'Spectrum, Bands & Signatures',
+    hook:'Every material on Earth has a spectral fingerprint — choosing bands is choosing physics. Get the band wrong and a healthy crop looks like dry soil.',
+    items:[
+      {tag:'derive', star:true, text:'A sensor at 700 km altitude has a 0.3 m aperture at λ=0.5 µm. Compute diffraction-limited ground resolution. Why is this a fundamental limit no software can beat?', hint:'δ ≈ 1.22·λ·R/D. Plug in: 1.22·0.5e-6·7e5/0.3 ≈ 1.4 m. Bigger aperture or shorter wavelength is the only way out — and aperture is mass/cost on a rocket.'},
+      {tag:'design', star:true, text:'Design a multispectral sensor for crop monitoring. Which bands (and why)? What spatial / spectral / temporal resolution trade-offs?', hint:'Blue (aerosol), Red (chlorophyll absorption), Red-Edge (chlorophyll concentration), NIR (cell structure), SWIR (leaf water). 10–30 m, 5–10 day revisit. Higher spatial → smaller swath → slower revisit.'},
+      {tag:'paper', text:'Predict before reading: why does Sentinel-2 add 3 narrow Red-Edge bands at 705/740/783 nm that Landsat does not have? What biophysical quantity do they measure that NDVI misses?', hint:'They straddle the steep chlorophyll-content "red-edge" reflectance jump — NDVI saturates around LAI=3 but Red-Edge keeps responding up to LAI=6.'},
+      {tag:'debug', text:'Two analysts compute NDVI for the same Iowa cornfield — one from Landsat-8 Band 5, one from Sentinel-2 Band 8. They differ by 0.04. Is one wrong? What is going on?', hint:'L8 B5 NIR is 845–885 nm (40 nm wide). S2 B8 NIR is 785–900 nm (115 nm wide). Different band centers and widths sample different parts of the canopy reflectance curve. Use NASA HLS harmonized product or B8A (narrow NIR) on S2.'}
+    ]
+  },
+  {week:'Orbits & Geometry', title:'Orbits, Scanners & GSD',
+    hook:'Orbit altitude sets a hard ceiling: low orbit = tiny pixels but a narrow ribbon, high orbit = continent in one frame but city blocks blur. You cannot have both.',
+    items:[
+      {tag:'derive', star:true, text:'A LEO satellite at 705 km has GSD 30 m and swath 185 km. A GEO at 35 786 km has GSD 2 km and swath 5 500 km (full disk). Show that GSD scales linearly with altitude for a fixed aperture, and explain why GOES cannot resolve cars but sees a hurricane in one shot.', hint:'GSD = altitude × pixel_pitch / focal_length. 35786/705 ≈ 51× → 30 m × 51 ≈ 1.5 km, matching GOES. Same physics — Earth is just farther away.'},
+      {tag:'design', text:'Design an orbit for a 5 m GSD agricultural monitor that revisits every farm in India every 3 days. Pick altitude, inclination, and constellation size. Justify each choice.', hint:'Sun-synchronous at 500–600 km for consistent illumination, polar inclination ~98°, swath ~25 km at 5 m GSD → need ~12 satellites to get 3-day revisit at India\'s latitude. This is essentially the Planet PlanetScope architecture.'},
+      {tag:'debug', text:'A push-broom Sentinel-2 image shows a faint vertical "stripe" pattern every ~100 columns. A whisk-broom Landsat-7 image shows the famous SLC-off black gap stripes. What instrument failure mode causes each, and why are they different?', hint:'Push-broom: per-detector calibration drift in the linear array → column-wise striping. Whisk-broom: Scan Line Corrector failure → cross-track gaps that grow toward image edges. Different geometries, different failure signatures.'},
+      {tag:'paper', text:'Before reading the Sentinel-2 mission paper, predict: why 5-day revisit (with both A & B), why 290 km swath, why 786 km altitude? What was traded against what?', hint:'786 km balances GSD vs lifetime (lower=better resolution but more drag). 290 km swath × 5-day revisit covers all global landmasses. Adding S2B halves revisit without doubling cost (shared ground segment).'}
+    ]
+  },
+  {week:'Active Sensing', title:'SAR & Radar',
+    hook:'SAR sees through clouds, through darkness, through smoke — because it brings its own flashlight at radio wavelengths. The "image" you get back is geometry, not photography.',
+    items:[
+      {tag:'derive', star:true, text:'Real-aperture radar at 700 km altitude with a 10 m antenna at λ=5.6 cm (C-band) has azimuth resolution ≈ λ·R/L = 3.9 km. SAR achieves 5 m. Explain how synthetic aperture processing buys you ~800× improvement.', hint:'Coherently sum returns from many pulses as the satellite flies past a target — the effective antenna length becomes the distance traveled while target is in beam (~km). Azimuth resolution → L_real/2 (≈5 m), independent of altitude.'},
+      {tag:'design', text:'You need to map flooded rice paddies in monsoon Bangladesh. Optical fails (clouds). Design a Sentinel-1 SAR processing chain: which polarization, which incidence angle, what to do about layover in hilly areas?', hint:'VV polarization (smooth water = low backscatter, dark; vegetation = bright). 30–45° incidence for good water/land contrast. Layover in hills → use both ascending and descending passes, mask shadow/layover from DEM.'},
+      {tag:'debug', text:'A SAR amplitude image of a city looks "speckly" — every uniform surface is a salt-and-pepper mess. Is the sensor broken? How do you fix it without losing resolution?', hint:'Coherent imaging interference (speckle) is fundamental, not a defect. Multi-look averaging trades resolution for SNR. Spatially adaptive filters (Lee, Frost, refined Lee) preserve edges. Or take amplitude time-series and average — change-detection without losing detail.'},
+      {tag:'paper', text:'Predict before reading: why does InSAR (interferometric SAR) measure ground subsidence at millimeter precision from a satellite 700 km away, when the image pixel is 5 m?', hint:'Phase, not amplitude. Two SAR passes form an interferogram; the phase difference per pixel measures range change in fractions of λ (~5.6 cm). 1° of phase ≈ 0.15 mm. Atmosphere, geometry, unwrapping are the hard parts.'}
+    ]
+  },
+  {week:'Processing', title:'Atmospheric & Radiometric Correction',
+    hook:'Atmospheric correction looks like a checkbox in a GUI — but underneath it is hiding aerosol retrieval, water-vapor lookup, BRDF assumptions, and ten papers worth of physics. Skip it and your NDVI time series is lying to you.',
+    items:[
+      {tag:'debug', star:true, text:'A Landsat scene over Beijing has a 15 % brightness lift over a forest compared to a clear-day acquisition of the same forest one month later. Vegetation has not changed. Propose 2 atmospheric correction methods — one absolute (physics-based), one relative (scene-based) — and their limitations.', hint:'Absolute: 6S / MODTRAN with measured aerosol optical depth → accurate but needs AOD/water-vapor inputs. Relative: dark-object subtraction (DOS) — assume darkest pixel has zero surface reflectance, subtract its DN from all pixels. DOS is free but assumes haze is uniform across scene (wrong over heterogeneous cities).'},
+      {tag:'derive', text:'Show the DN → at-sensor radiance → top-of-atmosphere reflectance → surface reflectance chain. What does each step physically correct for? Where does Sun-Earth distance enter, and where does aerosol optical depth enter?', hint:'DN → radiance: linear gain/offset from sensor calibration. Radiance → TOA reflectance: divide by solar irradiance × cos(SZA) × (d_SE)². TOA → surface: solve radiative transfer (6S/Py6S) using AOD, water vapor, ozone — aerosol enters in path radiance and transmittance terms.'},
+      {tag:'design', text:'Design a processing pipeline that ingests raw Sentinel-2 L1C (TOA) tiles and outputs analysis-ready surface reflectance (L2A) with cloud/shadow masks. What goes where? What can fail silently?', hint:'Sen2Cor or LaSRC for atmospheric correction + Fmask or s2cloudless for cloud detection. Silent failures: thin cirrus passing as clear, cloud shadows misclassified as water, high-aerosol days where retrieval fails and code falls back to climatology.'},
+      {tag:'code', text:'Write pseudocode to compute the BOA reflectance for a single Sentinel-2 pixel given: DN, quantification value, solar irradiance, sun zenith angle, AOD, and view zenith angle. Identify which input has the largest impact on accuracy.', hint:'rho_TOA = (DN/Q) · π · d² / (E_sun · cos(SZA)). Then 6S inversion with AOD/water-vapor to get rho_BOA. AOD dominates over dark surfaces (forests); water-vapor over NIR bands. SZA error of 1° → ~2 % reflectance error.'}
+    ]
+  },
+  {week:'Applications', title:'Classification, Indices & CubeSats',
+    hook:'CubeSats turned satellite imaging from a $500 M government program into a startup line item — Planet flies 200+ shoeboxes and images all of Earth every day. The trade: tiny apertures, noisy sensors, calibration headaches.',
+    items:[
+      {tag:'derive', star:true, text:'NDVI = (NIR − Red)/(NIR + Red). Why normalize the difference? What does NDVI = 0.7 mean vs 0.2 physically? Why does NDVI saturate for dense canopies, and what index fixes that?', hint:'Normalization cancels illumination variations (slope, shadow, sun angle) — only the spectral contrast remains. 0.7 = lush green canopy (chlorophyll absorbs red, cell structure reflects NIR). 0.2 = sparse veg / bare soil. Saturates at LAI ≈ 3 because all red is already absorbed. EVI adds blue and SAVI/NDRE fix saturation.'},
+      {tag:'design', star:true, text:'Design a pipeline to detect illegal mining from Sentinel-2 imagery. What labels do you collect? What preprocessing? Why does a vanilla CNN underperform a Siamese change-detection network here?', hint:'Labels: before/after pairs of mine vs non-mine sites. Preprocessing: cloud-free composites, surface reflectance. Vanilla CNN learns "looks like a mine today" — vulnerable to seasonal/agricultural confusion. Siamese learns "this place changed in a specific way" — robust to background variation, exploits time as a feature.'},
+      {tag:'paper', text:'Predict before reading: a 3U CubeSat (Planet Dove) at 475 km has a ~10 cm aperture and gets 3 m GSD. Show this matches diffraction. What is the catch — what cannot a CubeSat do that Landsat can?', hint:'δ = 1.22·550e-9·475e3/0.10 ≈ 3.2 m ✓. Catches: only 4 broad bands (no SWIR/TIR), 12-bit dynamic range vs 16-bit on Landsat, harder radiometric stability across the 200-sat fleet, no thermal, ~3 year lifetime in low orbit.'},
+      {tag:'debug', text:'A random-forest classifier on a Landsat scene reports 95 % overall accuracy but the kappa coefficient is 0.4. The producer\'s accuracy for "wetland" is 30 %. What happened? Trust the model?', hint:'Class imbalance — wetland is 2 % of pixels, so getting all of them wrong barely dents overall accuracy. Kappa accounts for chance agreement. Fix: stratified sampling, per-class metrics (F1), and re-balance training set.'},
+      {tag:'code', text:'You have a 10-year Sentinel-2 NDVI time series for one corn pixel. Sketch code to detect (a) the planting date, (b) anomalous years (drought), (c) a regime change (land converted to soybeans).', hint:'(a) Savitzky-Golay smooth → find first date NDVI crosses 0.4 ascending. (b) Fit seasonal climatology, flag z-score > 2σ. (c) BFAST or pelt changepoint detection on the seasonal component.'}
+    ]
+  }
+];
 // ═══════════════════════════════════════════════════════════════════════
 // PRACTICE PROBLEMS (Problem-First learning)
 // ═══════════════════════════════════════════════════════════════════════
+const PROB_STATE_KEY = STORAGE_KEY + '-probstate';
+function probLoadState() { try { return JSON.parse(localStorage.getItem(PROB_STATE_KEY) || '{}'); } catch(e) { return {}; } }
+function probSaveState(s) { try { localStorage.setItem(PROB_STATE_KEY, JSON.stringify(s)); } catch(e) {} }
+let _probState = probLoadState();
+let _probFilters = { tags: new Set(), search: '', status: 'all' };
+let _probFlat = []; // [{si, ii, p}]
+
 function renderProblems() {
   const container = document.getElementById('problems-container');
   if (!container || container.dataset.rendered) return;
@@ -2010,6 +3125,17 @@ function renderProblems() {
              : (C.problems && C.problems.length) ? C.problems : null;
   if (!data) { container.innerHTML = '<div class="prob-intro">No practice problems defined yet for this course.</div>'; container.dataset.rendered = '1'; return; }
   container.dataset.rendered = '1';
+
+  // Build flat index + per-tag counts
+  _probFlat = [];
+  const tagCounts = {};
+  data.forEach((sec, si) => (sec.items||[]).forEach((p, ii) => {
+    _probFlat.push({ si, ii, p, key: si+':'+ii });
+    const t = p.tag || 'design';
+    tagCounts[t] = (tagCounts[t]||0) + 1;
+  }));
+  const TAGS = ['design','derive','debug','code','paper'];
+
   let html = `<div class="prob-intro">
     <strong>🧠 Problem-First Learning.</strong> Try each problem for 10 minutes <em>before</em> watching the lecture — flail, sketch, be wrong. Then watch with specific questions in mind. Your attention spikes 3–5×.
     <br><br>
@@ -2019,24 +3145,653 @@ function renderProblems() {
     <span class="prob-tag debug">debug</span> find the failure mode &nbsp;
     <span class="prob-tag code">code</span> hands-on &nbsp;
     <span class="prob-tag paper">paper</span> predict before reading
-  </div>`;
-  data.forEach((sec, i) => {
-    html += `<details class="prob-section"${i < 2 ? ' open' : ''}>
-      <summary><span class="wk">${sec.week||''}</span> ${sec.title||''}</summary>
-      <div class="prob-body"><ol>`;
-    (sec.items||[]).forEach(p => {
-      html += `<li><span class="prob-tag ${p.tag||'design'}">${p.tag||'design'}</span>${p.text||''}`;
-      if (p.hint) html += `<span class="prob-hint">${p.hint}</span>`;
-      html += `</li>`;
+    <br><br>
+    <strong style="color:#ffa657">⭐ starred</strong> problems are curiosity-piquing — start there if you're new.
+    Reveals come in three layers: <strong style="color:#d2a8ff">💡 hint</strong> (nudge) · <strong style="color:#79c0ff">🔑 approach</strong> (how to attack) · <strong style="color:#7ee787">📐 answer</strong> (the result). Try the problem before peeking.
+  </div>
+  <div class="prob-toolbar">
+    <input id="prob-search" class="prob-search" type="text" placeholder="🔍 Search problems by keyword…" />
+    <div class="prob-filter-row" id="prob-tag-row">
+      ${TAGS.map(t => `<span class="prob-chip ${t}" data-tag="${t}">${t}<span class="count">${tagCounts[t]||0}</span></span>`).join('')}
+    </div>
+    <div class="prob-filter-row" id="prob-status-row">
+      <span class="prob-chip" data-status="all">All</span>
+      <span class="prob-chip" data-status="unattempted">○ New</span>
+      <span class="prob-chip" data-status="thinking">🤔 Thinking</span>
+      <span class="prob-chip" data-status="got">💡 Got it</span>
+      <span class="prob-chip" data-status="stuck">❓ Stuck</span>
+    </div>
+    <button id="prob-surprise" class="prob-actbtn primary" title="Open a random problem">🎲 Surprise me</button>
+    <button id="prob-reset" class="prob-actbtn" title="Clear all status">↺ Reset</button>
+    <div class="prob-progress" title="Problems attempted (thinking / got / stuck)">
+      <span id="prob-progress-text">0/${_probFlat.length}</span>
+      <div class="prob-progress-bar"><div id="prob-progress-fill" class="prob-progress-fill" style="width:0%"></div></div>
+    </div>
+  </div>
+  <div id="prob-sections">`;
+
+  data.forEach((sec, si) => {
+    const secTotal = (sec.items||[]).length;
+    html += `<details class="prob-section" data-si="${si}"${si < 2 ? ' open' : ''}>
+      <summary><span class="wk">${sec.week||''}</span> <span class="sec-title">${sec.title||''}</span>
+        <span class="sec-meta"><span class="done-count" data-sec-done="${si}">0</span>/<span>${secTotal}</span></span>
+      </summary>`;
+    if (sec.hook) html += `<div class="prob-hook">${sec.hook}</div>`;
+    html += `<div class="prob-body">`;
+    (sec.items||[]).forEach((p, ii) => {
+      const key = si+':'+ii;
+      const st = _probState[key] || {};
+      const tag = p.tag || 'design';
+      const statusCls = st.status ? ' status-'+st.status : '';
+      html += `<div class="prob-card${statusCls}" data-key="${key}" data-tag="${tag}" data-status="${st.status||''}">
+        <div class="pc-head">
+          <span class="pc-num">${(ii+1).toString().padStart(2,'0')}</span>
+          <span class="prob-tag ${tag}">${tag}</span>
+          ${p.star ? '<span class="pc-star" title="Curiosity pick">★</span>' : ''}
+          <div class="prob-status-btns">
+            <button class="prob-statbtn thinking${st.status==='thinking'?' active':''}" data-status="thinking" title="I'm working on this">🤔</button>
+            <button class="prob-statbtn got${st.status==='got'?' active':''}"           data-status="got"      title="Got it">💡</button>
+            <button class="prob-statbtn stuck${st.status==='stuck'?' active':''}"       data-status="stuck"    title="Stuck">❓</button>
+          </div>
+        </div>
+        <div class="pc-text">${p.text||''}</div>`;
+      const reveals = [];
+      if (p.hint)     reveals.push({ kind:'hint',     label:'💡 Reveal hint',   field:'hint',     btnCls:'',          panelCls:'prob-hint',     tag:'Hint' });
+      if (p.approach) reveals.push({ kind:'approach', label:'🔑 Show approach', field:'approach', btnCls:'approach',  panelCls:'prob-approach', tag:'Approach' });
+      if (p.answer)   reveals.push({ kind:'answer',   label:'📐 Show answer',   field:'answer',   btnCls:'answer',    panelCls:'prob-answer',   tag:'Answer' });
+      if (reveals.length) {
+        html += `<div class="pc-actions">`;
+        reveals.forEach(r => {
+          const shown = st[r.kind+'Shown'];
+          html += `<button class="prob-revealbtn ${r.btnCls}" data-action="${r.kind}" ${shown?'style="display:none"':''}>${r.label}</button>`;
+        });
+        html += `</div>`;
+        reveals.forEach(r => {
+          const shown = st[r.kind+'Shown'];
+          html += `<div class="prob-reveal-panel ${r.panelCls}${shown?' shown':''}" data-panel="${r.kind}"><span class="rh-label">${r.tag}</span>${p[r.field]}</div>`;
+        });
+      }
+      html += `</div>`;
     });
-    html += `</ol></div></details>`;
+    html += `</div></details>`;
   });
+  html += `</div>
+  <div class="prob-spotlight" id="prob-spotlight">
+    <div class="prob-spotlight-card">
+      <button class="sl-close" onclick="probCloseSpotlight()">×</button>
+      <h3>🎲 Surprise Problem</h3>
+      <div id="prob-spotlight-body"></div>
+    </div>
+  </div>`;
+
   container.innerHTML = html;
+
+  // Wire interactions
+  container.querySelectorAll('#prob-tag-row .prob-chip').forEach(c => c.addEventListener('click', () => {
+    const tag = c.dataset.tag;
+    if (_probFilters.tags.has(tag)) _probFilters.tags.delete(tag); else _probFilters.tags.add(tag);
+    c.classList.toggle('active');
+    probApplyFilters();
+  }));
+  container.querySelectorAll('#prob-status-row .prob-chip').forEach(c => c.addEventListener('click', () => {
+    container.querySelectorAll('#prob-status-row .prob-chip').forEach(x => x.classList.remove('active'));
+    c.classList.add('active');
+    _probFilters.status = c.dataset.status;
+    probApplyFilters();
+  }));
+  container.querySelector('#prob-status-row .prob-chip[data-status="all"]').classList.add('active');
+
+  const searchEl = container.querySelector('#prob-search');
+  searchEl.addEventListener('input', () => { _probFilters.search = searchEl.value.toLowerCase().trim(); probApplyFilters(); });
+
+  container.querySelector('#prob-surprise').addEventListener('click', probSurpriseMe);
+  container.querySelector('#prob-reset').addEventListener('click', () => {
+    if (!confirm('Clear status on all '+_probFlat.length+' problems?')) return;
+    _probState = {}; probSaveState(_probState);
+    container.dataset.rendered = ''; container.innerHTML = ''; renderProblems();
+  });
+
+  container.querySelectorAll('.prob-card').forEach(card => {
+    card.querySelectorAll('.prob-statbtn').forEach(btn => btn.addEventListener('click', e => {
+      e.stopPropagation();
+      const key = card.dataset.key;
+      const newStatus = btn.dataset.status;
+      const st = _probState[key] || {};
+      st.status = (st.status === newStatus) ? null : newStatus;
+      _probState[key] = st; probSaveState(_probState);
+      card.classList.remove('status-thinking','status-got','status-stuck');
+      if (st.status) card.classList.add('status-'+st.status);
+      card.dataset.status = st.status || '';
+      card.querySelectorAll('.prob-statbtn').forEach(b => b.classList.toggle('active', b.dataset.status === st.status));
+      probUpdateProgress();
+      if (_probFilters.status !== 'all') probApplyFilters();
+    }));
+    const revealBtns = card.querySelectorAll('[data-action="hint"],[data-action="approach"],[data-action="answer"]');
+    revealBtns.forEach(btn => btn.addEventListener('click', () => {
+      const kind = btn.dataset.action;
+      const panel = card.querySelector(`.prob-reveal-panel[data-panel="${kind}"]`);
+      if (panel) panel.classList.add('shown');
+      btn.style.display = 'none';
+      const key = card.dataset.key;
+      const st = _probState[key] || {};
+      st[kind+'Shown'] = true; _probState[key] = st; probSaveState(_probState);
+    }));
+  });
+
+  probUpdateProgress();
 }
+
+function probApplyFilters() {
+  const container = document.getElementById('problems-container');
+  const { tags, search, status } = _probFilters;
+  container.querySelectorAll('.prob-card').forEach(card => {
+    const tag = card.dataset.tag;
+    const cardStatus = card.dataset.status || '';
+    const text = card.querySelector('.pc-text').textContent.toLowerCase();
+    let show = true;
+    if (tags.size > 0 && !tags.has(tag)) show = false;
+    if (search && !text.includes(search)) show = false;
+    if (status !== 'all') {
+      if (status === 'unattempted') { if (cardStatus) show = false; }
+      else if (cardStatus !== status) show = false;
+    }
+    card.classList.toggle('hidden', !show);
+  });
+  // Auto-open sections with visible cards; hide empty sections
+  container.querySelectorAll('.prob-section').forEach(sec => {
+    const visible = sec.querySelectorAll('.prob-card:not(.hidden)').length;
+    sec.style.display = visible === 0 ? 'none' : '';
+    if (visible > 0 && (tags.size || search || status !== 'all')) sec.open = true;
+  });
+}
+
+function probUpdateProgress() {
+  const total = _probFlat.length;
+  let attempted = 0;
+  const perSec = {};
+  _probFlat.forEach(({si, key}) => {
+    const st = _probState[key];
+    if (st && st.status) { attempted++; perSec[si] = (perSec[si]||0) + 1; }
+  });
+  const txt = document.getElementById('prob-progress-text');
+  const fill = document.getElementById('prob-progress-fill');
+  if (txt) txt.textContent = attempted + '/' + total;
+  if (fill) fill.style.width = (total ? (attempted/total*100) : 0) + '%';
+  document.querySelectorAll('[data-sec-done]').forEach(el => {
+    const si = +el.dataset.secDone;
+    el.textContent = perSec[si] || 0;
+  });
+}
+
+function probSurpriseMe() {
+  if (!_probFlat.length) return;
+  // Prefer starred & unattempted; otherwise unattempted; otherwise any
+  const starredNew = _probFlat.filter(x => x.p.star && !(_probState[x.key]||{}).status);
+  const anyNew     = _probFlat.filter(x => !(_probState[x.key]||{}).status);
+  const pool = starredNew.length ? starredNew : (anyNew.length ? anyNew : _probFlat);
+  const pick = pool[Math.floor(Math.random()*pool.length)];
+  const { p, si, ii, key } = pick;
+  const sec = (window.PROBLEMS_DATA || (C.problems||[]))[si];
+  const tag = p.tag || 'design';
+  const body = document.getElementById('prob-spotlight-body');
+  body.innerHTML = `
+    <div style="display:flex;gap:8px;align-items:center;margin-bottom:6px;flex-wrap:wrap">
+      <span class="prob-tag ${tag}">${tag}</span>
+      ${p.star ? '<span style="color:#ffa657">★</span>' : ''}
+      <span style="color:#8b949e;font-size:12px">${sec.week||''} · ${sec.title||''} · #${ii+1}</span>
+    </div>
+    <div class="pc-text">${p.text||''}</div>
+    ${(()=>{const L=[];if(p.hint)L.push({s:'💡 Reveal hint',c:'prob-hint',t:'Hint',b:p.hint});if(p.approach)L.push({s:'🔑 Show approach',c:'prob-approach',t:'Approach',b:p.approach});if(p.answer)L.push({s:'📐 Show answer',c:'prob-answer',t:'Answer',b:p.answer});return L.map(l=>`<details style="margin-top:10px"><summary style="cursor:pointer;color:#8b949e;font-size:12px;padding:4px 0">${l.s}</summary><div class="prob-reveal-panel ${l.c} shown" style="margin-top:6px"><span class="rh-label">${l.t}</span>${l.b}</div></details>`).join('');})()}
+    <div style="margin-top:14px;display:flex;gap:6px;flex-wrap:wrap">
+      <button class="prob-actbtn" onclick="probJumpTo('${key}')">↗ Jump to it</button>
+      <button class="prob-actbtn" onclick="probSurpriseMe()">🎲 Another</button>
+    </div>`;
+  document.getElementById('prob-spotlight').classList.add('open');
+}
+function probCloseSpotlight() { const el = document.getElementById('prob-spotlight'); if (el) el.classList.remove('open'); }
+function probJumpTo(key) {
+  probCloseSpotlight();
+  const card = document.querySelector(`.prob-card[data-key="${key}"]`);
+  if (!card) return;
+  const sec = card.closest('.prob-section');
+  if (sec) sec.open = true;
+  card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  card.style.transition = 'box-shadow .3s'; card.style.boxShadow = '0 0 0 2px #58a6ff';
+  setTimeout(() => { card.style.boxShadow = ''; }, 1500);
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') probCloseSpotlight(); });
 if (typeof switchTab === 'function') {
   const _origSwitchTab_prob = switchTab;
   switchTab = function(tab) { _origSwitchTab_prob(tab); if (tab === 'problems') renderProblems(); };
 }
+
+// === BEGIN glossary v1 js ===
+// ═══════════════════════════════════════════════════════════════════════
+// GLOSSARY — definitions + cross-references with graph & mindmap
+// ═══════════════════════════════════════════════════════════════════════
+(function initGlossaryMaps() {
+  const gloss = (C && C.glossary) || [];
+  if (!gloss.length) return;
+
+  // 1. Build id → entry maps and "label/aka" → id reverse map.
+  const byId = {};
+  const byLabel = {}; // lowercased term/aka → id
+  gloss.forEach(g => {
+    byId[g.id] = g;
+    const keys = [g.term].concat(g.aka || []);
+    keys.forEach(k => { if (k) byLabel[k.toLowerCase().trim()] = g.id; });
+  });
+
+  // 2. Patch graph node tips for any node whose id matches a glossary entry.
+  let graphMatched = 0;
+  const glossByGraphNode = {};
+  if (C.graph && Array.isArray(C.graph.nodes)) {
+    C.graph.nodes.forEach(n => {
+      if (byId[n.id]) {
+        glossByGraphNode[n.id] = n.id;
+        graphMatched++;
+        if (n.tip && n.tip.indexOf('📖') < 0) n.tip = n.tip + ' · 📖 in glossary';
+      } else {
+        // Fallback: try label/aka match
+        const k = (n.label || '').toLowerCase().trim();
+        if (byLabel[k]) {
+          glossByGraphNode[n.id] = byLabel[k];
+          graphMatched++;
+          if (n.tip && n.tip.indexOf('📖') < 0) n.tip = n.tip + ' · 📖 in glossary';
+        }
+      }
+    });
+  }
+
+  // 3. Walk mindmap and build name → glossary-id map. Match relaxed:
+  //    full name (newlines → space) OR each line.
+  let mindmapMatched = 0;
+  const glossByMindmapName = {};
+  function walkMm(node) {
+    if (!node) return;
+    if (node.name) {
+      const full = node.name.replace(/\n/g, ' ').trim();
+      const candidates = [full].concat(node.name.split(/\n+/).map(s => s.trim()).filter(Boolean));
+      for (const c of candidates) {
+        const id = byLabel[c.toLowerCase()];
+        if (id) {
+          glossByMindmapName[full] = id;
+          mindmapMatched++;
+          break;
+        }
+      }
+    }
+    (node.children || []).forEach(walkMm);
+  }
+  if (C.mindmap) walkMm(C.mindmap);
+
+  window._glossaryById = byId;
+  window._glossaryByLabel = byLabel;
+  window._glossaryIdByGraphNode = glossByGraphNode;
+  window._glossaryIdByMindmapName = glossByMindmapName;
+  window._glossaryStats = { graphMatched: graphMatched, mindmapMatched: mindmapMatched };
+
+  // 4. Monkey-patch showTooltip so it appends a "📖 Defined in glossary →" link
+  //    whenever the hovered name corresponds to a glossary entry.
+  if (typeof window.showTooltip === 'function') {
+    const _origShowTooltip = window.showTooltip;
+    const ttRoot = document.getElementById('tooltip');
+    let glossFooter = ttRoot.querySelector('.tt-glossary');
+    if (!glossFooter) {
+      glossFooter = document.createElement('div');
+      glossFooter.className = 'tt-glossary';
+      ttRoot.appendChild(glossFooter);
+    }
+    window.showTooltip = function(evt, name, tip, slides) {
+      _origShowTooltip(evt, name, tip, slides);
+      glossFooter.innerHTML = '';
+      ttRoot.classList.remove('has-glossary');
+      if (!name) return;
+      const plain = String(name).replace(/\n/g, ' ').trim();
+      const key = plain.toLowerCase();
+      let id = byLabel[key] || glossByMindmapName[plain] || null;
+      if (!id) {
+        // strip parenthetical suffix e.g. "Optical Switch (OCS)" → "Optical Switch"
+        const stripped = plain.replace(/\s*\([^)]*\)\s*$/, '').toLowerCase();
+        if (stripped !== key) id = byLabel[stripped] || null;
+      }
+      if (id) {
+        const a = document.createElement('a');
+        a.textContent = '📖 Defined in glossary →';
+        a.onclick = (e) => {
+          e.stopPropagation();
+          if (typeof window.glossaryJumpToTerm === 'function') window.glossaryJumpToTerm(id);
+        };
+        glossFooter.appendChild(a);
+        ttRoot.classList.add('has-glossary');
+      }
+    };
+  }
+})();
+
+// ─── renderGlossary ───────────────────────────────────────────────────
+let _glossSelectedCat = 'all';
+let _glossSearch = '';
+let _glossSearchTimer = null;
+let _glossBuilt = false;
+
+const GLOSS_CAT_COLORS = {
+  hardware:    '#58a6ff',
+  software:    '#7ee787',
+  numerics:    '#79c0ff',
+  systems:     '#d2a8ff',
+  performance: '#f778ba',
+  concepts:    '#ffa657'
+};
+
+function renderGlossary() {
+  const data = (C.glossary || []).slice().sort((a, b) =>
+    a.term.toLowerCase().localeCompare(b.term.toLowerCase()));
+  const list = document.getElementById('glossary-list');
+  const pillBar = document.getElementById('glossary-cat-pills');
+  const countEl = document.getElementById('glossary-count');
+  const searchEl = document.getElementById('glossary-search');
+  if (!list || !pillBar || !countEl || !searchEl) return;
+
+  // Build category pills + search input wiring once.
+  if (!_glossBuilt) {
+    const cats = ['all'].concat(
+      Array.from(new Set(data.map(d => d.category))).sort());
+    pillBar.innerHTML = '';
+    cats.forEach(cat => {
+      const btn = document.createElement('button');
+      btn.textContent = cat === 'all' ? `All (${data.length})` :
+        `${cat} (${data.filter(d => d.category === cat).length})`;
+      btn.dataset.cat = cat;
+      const color = cat === 'all' ? '#58a6ff' : (GLOSS_CAT_COLORS[cat] || '#58a6ff');
+      btn.style.setProperty('--pill-color', color);
+      btn.style.setProperty('--pill-bg', color + '22');
+      if (cat === _glossSelectedCat) btn.classList.add('active');
+      btn.onclick = () => {
+        _glossSelectedCat = cat;
+        pillBar.querySelectorAll('button').forEach(b =>
+          b.classList.toggle('active', b.dataset.cat === cat));
+        renderGlossary();
+      };
+      pillBar.appendChild(btn);
+    });
+    searchEl.addEventListener('input', () => {
+      if (_glossSearchTimer) clearTimeout(_glossSearchTimer);
+      _glossSearchTimer = setTimeout(() => {
+        _glossSearch = searchEl.value.trim().toLowerCase();
+        renderGlossary();
+      }, 120);
+    });
+    _glossBuilt = true;
+  }
+
+  // Filter
+  const q = _glossSearch;
+  const visible = data.filter(d => {
+    if (_glossSelectedCat !== 'all' && d.category !== _glossSelectedCat) return false;
+    if (!q) return true;
+    const hay = [d.term, (Array.isArray(d.aka) ? d.aka.join(' ') : (d.aka || '')), d.short, d.long || ''].join(' ').toLowerCase();
+    return hay.indexOf(q) >= 0;
+  });
+
+  countEl.textContent = `${visible.length} of ${data.length} terms`;
+
+  const graphIds = new Set();
+  if (C.graph && C.graph.nodes) C.graph.nodes.forEach(n => graphIds.add(n.id));
+  const glossIds = new Set(data.map(d => d.id));
+  const mindmapNames = window._glossaryIdByMindmapName || {};
+  const reverseMindmap = {}; // glossary-id → mindmap label
+  Object.keys(mindmapNames).forEach(name => { reverseMindmap[mindmapNames[name]] = name; });
+
+  list.innerHTML = '';
+  visible.forEach(d => {
+    const color = GLOSS_CAT_COLORS[d.category] || '#58a6ff';
+    const card = document.createElement('div');
+    card.className = 'glossary-card';
+    card.dataset.id = d.id;
+    card.style.setProperty('--cat-color', color);
+
+    const head = document.createElement('div');
+    head.className = 'glossary-term-row';
+    const term = document.createElement('span');
+    term.className = 'glossary-term';
+    term.textContent = d.term;
+    head.appendChild(term);
+    const badge = document.createElement('span');
+    badge.className = 'glossary-cat-badge';
+    badge.textContent = d.category;
+    badge.style.setProperty('--cat-color', color);
+    head.appendChild(badge);
+    card.appendChild(head);
+
+    if (d.aka && d.aka.length) {
+      const aka = document.createElement('div');
+      aka.className = 'glossary-aka';
+      aka.textContent = 'aka ' + (Array.isArray(d.aka) ? d.aka.join(', ') : d.aka);
+      card.appendChild(aka);
+    }
+
+    const shortEl = document.createElement('div');
+    shortEl.className = 'glossary-short';
+    shortEl.textContent = d.short || '';
+    card.appendChild(shortEl);
+
+    if (d.long) {
+      const longEl = document.createElement('div');
+      longEl.className = 'glossary-long';
+      longEl.innerHTML = d.long;
+      card.appendChild(longEl);
+      const toggle = document.createElement('button');
+      toggle.className = 'glossary-toggle';
+      toggle.textContent = 'Show more ▾';
+      toggle.onclick = () => {
+        const expanded = card.classList.toggle('expanded');
+        toggle.textContent = expanded ? 'Show less ▴' : 'Show more ▾';
+      };
+      card.appendChild(toggle);
+    }
+
+    const links = document.createElement('div');
+    links.className = 'glossary-links';
+    if (graphIds.has(d.id)) {
+      const b = document.createElement('button');
+      b.textContent = '🔗 Topic Graph';
+      b.onclick = () => window.glossaryJumpToGraphNode(d.id);
+      links.appendChild(b);
+    }
+    if (reverseMindmap[d.id]) {
+      const b = document.createElement('button');
+      b.textContent = '📐 Mind Map';
+      b.onclick = () => window.glossaryJumpToMindmapNode(reverseMindmap[d.id]);
+      links.appendChild(b);
+    }
+    (d.seeAlso || []).forEach(otherId => {
+      if (!glossIds.has(otherId)) return;
+      const other = (C.glossary || []).find(x => x.id === otherId);
+      if (!other) return;
+      const b = document.createElement('button');
+      b.textContent = '→ ' + other.term;
+      b.onclick = () => window.glossaryJumpToTerm(otherId);
+      links.appendChild(b);
+    });
+    if (links.children.length) card.appendChild(links);
+
+    list.appendChild(card);
+  });
+}
+
+// ─── Cross-tab jump helpers ───────────────────────────────────────────
+window.glossaryJumpToTerm = function(id) {
+  if (typeof switchTab === 'function') switchTab('glossary');
+  setTimeout(() => {
+    const card = document.querySelector('.glossary-card[data-id="' + CSS.escape(id) + '"]');
+    if (!card) return;
+    card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    card.classList.remove('flash');
+    void card.offsetWidth; // restart animation
+    card.classList.add('flash');
+    // Pull the display term from the card itself so the toast matches what the user sees
+    const labelEl = card.querySelector('.glossary-term');
+    const label = labelEl ? labelEl.textContent.trim() : id;
+    if (typeof showGlossaryToast === 'function') showGlossaryToast('Glossary', label, 'glossary');
+    setTimeout(() => card.classList.remove('flash'), 2800);
+  }, 60);
+};
+
+window.glossaryJumpToGraphNode = function(id) {
+  if (typeof switchTab === 'function') switchTab('graph');
+  const tryFlash = (attempt) => {
+    const g = document.querySelector('g.graph-node[data-id="' + CSS.escape(id) + '"]');
+    if (!g) {
+      if (attempt < 12) return setTimeout(() => tryFlash(attempt + 1), 120);
+      return;
+    }
+    // Pull the node's force-simulation position from its bound datum
+    let d = null;
+    try { d = (typeof d3 !== 'undefined') ? d3.select(g).datum() : null; } catch(_) {}
+    const label = (d && (d.label || d.id)) || id;
+
+    // 1) Pan + zoom the SVG so the node is centered and reasonably zoomed in
+    try {
+      if (d && typeof d.x === 'number' && typeof d.y === 'number' && typeof d3 !== 'undefined' && typeof graphZoom !== 'undefined') {
+        const svgEl = document.getElementById('canvas-graph');
+        const W = (svgEl && svgEl.clientWidth)  || window.innerWidth;
+        const H = (svgEl && svgEl.clientHeight) || window.innerHeight;
+        const k = 1.6;
+        const tx = W / 2 - k * d.x;
+        const ty = H / 2 - k * d.y;
+        d3.select('#canvas-graph')
+          .transition().duration(650)
+          .call(graphZoom.transform, d3.zoomIdentity.translate(tx, ty).scale(k));
+      } else {
+        g.querySelector('circle') && g.querySelector('circle').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    } catch(_) {}
+
+    // 2) Big halo ring + bold class on the node group
+    g.classList.remove('glossary-highlight');
+    void g.getBoundingClientRect();
+    g.classList.add('glossary-highlight');
+    try {
+      // remove any previous halo
+      g.querySelectorAll('circle.glossary-halo').forEach(c => c.remove());
+      const halo = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+      halo.setAttribute('class', 'glossary-halo');
+      halo.setAttribute('cx', '0');
+      halo.setAttribute('cy', '0');
+      halo.setAttribute('r', '14');
+      g.insertBefore(halo, g.firstChild); // behind the node circle
+    } catch(_) {}
+
+    // 3) Top-of-screen toast
+    showGlossaryToast('Topic Graph', label, 'graph');
+
+    setTimeout(() => {
+      g.classList.remove('glossary-highlight');
+      g.querySelectorAll('circle.glossary-halo').forEach(c => c.remove());
+    }, 4200);
+  };
+  requestAnimationFrame(() => requestAnimationFrame(() => tryFlash(0)));
+};
+
+window.glossaryJumpToMindmapNode = function(label) {
+  if (typeof switchTab === 'function') switchTab('mindmap');
+  const target = (label || '').replace(/\n/g, ' ').trim().toLowerCase();
+  const tryFlash = (attempt) => {
+    const groups = document.querySelectorAll('#canvas g');
+    let hit = null;
+    groups.forEach(g => {
+      if (hit) return;
+      const txt = (g.textContent || '').replace(/\s+/g, ' ').trim().toLowerCase();
+      if (txt === target) hit = g;
+    });
+    if (!hit) {
+      if (attempt < 10) return setTimeout(() => tryFlash(attempt + 1), 150);
+      return;
+    }
+
+    // 1) Pan the mindmap so the hit node is roughly centered
+    try {
+      if (typeof d3 !== 'undefined' && typeof mmZoom !== 'undefined') {
+        const svgEl = document.getElementById('canvas');
+        const W = (svgEl && svgEl.clientWidth)  || window.innerWidth;
+        const H = (svgEl && svgEl.clientHeight) || window.innerHeight;
+        // Read the node's local SVG position from its existing transform attribute (form: translate(x,y))
+        const tr = hit.getAttribute('transform') || '';
+        const m = tr.match(/translate\(\s*([-0-9.]+)\s*[ ,]\s*([-0-9.]+)/);
+        if (m) {
+          const x = parseFloat(m[1]), y = parseFloat(m[2]);
+          const k = 1.3;
+          const tx = W / 2 - k * x;
+          const ty = H / 2 - k * y;
+          d3.select('#canvas')
+            .transition().duration(650)
+            .call(mmZoom.transform, d3.zoomIdentity.translate(tx, ty).scale(k));
+        } else {
+          hit.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      } else {
+        hit.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    } catch(_) {}
+
+    // 2) Halo ring on the mindmap node
+    try {
+      hit.querySelectorAll('circle.glossary-mm-halo').forEach(c => c.remove());
+      const halo = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+      halo.setAttribute('class', 'glossary-mm-halo');
+      halo.setAttribute('cx', '0');
+      halo.setAttribute('cy', '0');
+      halo.setAttribute('r', '14');
+      hit.insertBefore(halo, hit.firstChild);
+      setTimeout(() => halo.remove(), 4200);
+    } catch(_) {}
+
+    // 3) Stroke flash on the shape
+    const shape = hit.querySelector('circle, rect');
+    if (shape) {
+      const prev = shape.getAttribute('stroke');
+      const prevW = shape.getAttribute('stroke-width');
+      shape.setAttribute('stroke', '#f0c000');
+      shape.setAttribute('stroke-width', '5');
+      setTimeout(() => {
+        if (prev !== null) shape.setAttribute('stroke', prev); else shape.removeAttribute('stroke');
+        if (prevW !== null) shape.setAttribute('stroke-width', prevW); else shape.removeAttribute('stroke-width');
+      }, 3000);
+    }
+
+    // 4) Toast
+    showGlossaryToast('Mind Map', (label || '').replace(/\n/g, ' '), 'mindmap');
+  };
+  requestAnimationFrame(() => requestAnimationFrame(() => tryFlash(0)));
+};
+
+// Floating toast helper — visible regardless of where the target node ended up
+function showGlossaryToast(where, label, kind) {
+  let t = document.getElementById('glossary-toast');
+  if (!t) {
+    t = document.createElement('div');
+    t.id = 'glossary-toast';
+    document.body.appendChild(t);
+  }
+  const icon = kind === 'graph' ? '🔗' : (kind === 'mindmap' ? '📐' : '📖');
+  t.innerHTML = '<span class="gt-icon">' + icon + '</span>'
+              + '<span>Jumped to: <strong>' + (label || '').replace(/[<>&]/g, '') + '</strong></span>'
+              + '<span class="gt-sub">in ' + where + '</span>';
+  // restart animation
+  t.classList.remove('show');
+  void t.offsetWidth;
+  t.classList.add('show');
+  clearTimeout(t._hideTimer);
+  t._hideTimer = setTimeout(() => t.classList.remove('show'), 3200);
+}
+
+// Lazy-render hook
+if (typeof switchTab === 'function') {
+  const _origSwitchTab_gloss = switchTab;
+  switchTab = function(tab) { _origSwitchTab_gloss(tab); if (tab === 'glossary') renderGlossary(); };
+}
+// === END glossary v1 js ===
 </script>
 <!-- BEGIN tooltip-pin (click pins, click outside closes) -->
 <style>

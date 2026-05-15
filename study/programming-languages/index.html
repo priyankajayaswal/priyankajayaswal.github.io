@@ -253,6 +253,37 @@
     border-radius: 4px; font-size: 10px; color: #79c0ff; text-decoration: none; transition: all .2s;
   }
   .uc-refs a:hover { border-color: #58a6ff; color: #58a6ff; background: #0d1117; }
+
+  /* ── Use-case enrichment v2 ── */
+  .uc-overview { background: linear-gradient(135deg, #0d1117 0%, #161b22 100%); border: 1px solid #30363d;
+    border-left: 3px solid #58a6ff; border-radius: 10px; padding: 16px 18px; margin: 16px 0 20px; }
+  .uc-overview .uc-summary { font-size: 13px; color: #c9d1d9; line-height: 1.7; }
+  .uc-overview .uc-summary strong { color: #79c0ff; }
+  .uc-pipeline { margin-top: 14px; padding: 10px 12px; background: #0d1117; border: 1px solid #30363d;
+    border-radius: 6px; font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+    font-size: 11px; color: #7ee787; line-height: 1.6; white-space: pre-wrap; overflow-x: auto; }
+  .uc-metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 10px; margin-top: 14px; }
+  .uc-metric { background: #0d1117; border: 1px solid #30363d; border-radius: 8px; padding: 10px 12px; }
+  .uc-metric .uc-metric-label { font-size: 10px; color: #8b949e; text-transform: uppercase; letter-spacing: 0.5px; }
+  .uc-metric .uc-metric-value { font-size: 14px; color: #ffa657; font-weight: 600; margin-top: 4px; line-height: 1.4; }
+  .uc-extensions { margin-top: 14px; padding: 10px 12px; background: rgba(210, 168, 255, 0.06);
+    border: 1px solid rgba(210, 168, 255, 0.25); border-radius: 6px; font-size: 12px; color: #c9d1d9; line-height: 1.6; }
+  .uc-extensions strong { color: #d2a8ff; }
+  .uc-step .uc-intuition { margin-top: 8px; padding: 8px 10px; background: rgba(126, 231, 135, 0.08);
+    border-left: 2px solid #3fb950; border-radius: 4px; font-size: 12px; color: #c9d1d9; line-height: 1.55; display: none; }
+  .uc-step.active .uc-intuition { display: block; }
+  .uc-step .uc-intuition strong { color: #7ee787; }
+  .uc-step .uc-complexity { display: inline-block; margin-top: 8px; margin-right: 6px;
+    background: rgba(31, 111, 235, 0.15); border: 1px solid rgba(88, 166, 255, 0.35); border-radius: 4px;
+    padding: 2px 8px; font-size: 10px; color: #79c0ff; font-family: 'Cascadia Code', 'Consolas', monospace; }
+  .uc-step .uc-pitfall { margin-top: 8px; padding: 8px 10px; background: rgba(255, 123, 114, 0.08);
+    border-left: 2px solid #ff7b72; border-radius: 4px; font-size: 12px; color: #c9d1d9; line-height: 1.55; display: none; }
+  .uc-step.active .uc-pitfall { display: block; }
+  .uc-step .uc-pitfall strong { color: #ff7b72; }
+  .uc-step .uc-example { margin-top: 8px; padding: 8px 10px; background: rgba(255, 166, 87, 0.06);
+    border-left: 2px solid #ffa657; border-radius: 4px; font-size: 12px; color: #c9d1d9; line-height: 1.55; display: none; }
+  .uc-step.active .uc-example { display: block; }
+  .uc-step .uc-example strong { color: #ffa657; }
   .legend-close {
     position: absolute; top: 8px; right: 8px; background: none; border: none;
     color: #8b949e; font-size: 16px; cursor: pointer; line-height: 1; padding: 2px 6px;
@@ -320,27 +351,92 @@
   /* ── Practice Problems (Problem-First) ── */
   #problems-container { position: relative; top: 0; width: 100%; max-width: 1100px; margin: 0 auto; padding: 24px 16px 60px; }
   #view-problems { overflow-y: auto; height: calc(100vh - 50px); margin-top: 50px; }
-  .prob-intro { background: #161b22; border: 1px solid #30363d; border-left: 3px solid #7ee787; border-radius: 6px; padding: 14px 18px; margin-bottom: 22px; color: #c9d1d9; font-size: 14px; line-height: 1.6; }
+  .prob-intro { background: #161b22; border: 1px solid #30363d; border-left: 3px solid #7ee787; border-radius: 6px; padding: 14px 18px; margin-bottom: 18px; color: #c9d1d9; font-size: 14px; line-height: 1.6; }
   .prob-intro strong { color: #7ee787; }
-  .prob-section { margin-bottom: 22px; border: 1px solid #30363d; border-radius: 8px; background: #161b22; overflow: hidden; }
-  .prob-section > summary { padding: 14px 18px; font-size: 15px; font-weight: 600; color: #e6edf3; cursor: pointer; list-style: none; display: flex; align-items: center; gap: 10px; user-select: none; transition: background .15s; }
+  /* Toolbar */
+  .prob-toolbar { position: sticky; top: 0; z-index: 5; background: rgba(13,17,23,0.95); backdrop-filter: blur(6px); padding: 10px 0 12px; margin-bottom: 14px; border-bottom: 1px solid #21262d; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  .prob-search { flex: 1 1 200px; min-width: 180px; background: #0d1117; border: 1px solid #30363d; border-radius: 6px; padding: 7px 12px; color: #c9d1d9; font-size: 13px; outline: none; }
+  .prob-search:focus { border-color: #58a6ff; }
+  .prob-filter-row { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+  .prob-chip { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 12px; cursor: pointer; background: #161b22; border: 1px solid #30363d; color: #8b949e; text-transform: uppercase; letter-spacing: .4px; transition: all .15s; user-select: none; }
+  .prob-chip:hover { border-color: #58a6ff; color: #c9d1d9; }
+  .prob-chip.active { background: #1f6feb22; border-color: #58a6ff; color: #58a6ff; }
+  .prob-chip.design.active  { background: #58a6ff22; border-color: #58a6ff; color: #58a6ff; }
+  .prob-chip.derive.active  { background: #ffa65722; border-color: #ffa657; color: #ffa657; }
+  .prob-chip.debug.active   { background: #f8514922; border-color: #f85149; color: #f85149; }
+  .prob-chip.code.active    { background: #7ee78722; border-color: #7ee787; color: #7ee787; }
+  .prob-chip.paper.active   { background: #d2a8ff22; border-color: #d2a8ff; color: #d2a8ff; }
+  .prob-chip .count { font-size: 9px; opacity: .7; font-weight: 500; }
+  .prob-actbtn { background: #161b22; border: 1px solid #30363d; color: #c9d1d9; padding: 6px 12px; border-radius: 6px; font-size: 12px; cursor: pointer; transition: all .15s; }
+  .prob-actbtn:hover { border-color: #58a6ff; color: #58a6ff; }
+  .prob-actbtn.primary { background: #1f6feb; border-color: #58a6ff; color: #fff; }
+  .prob-actbtn.primary:hover { background: #388bfd; }
+  .prob-progress { display: flex; align-items: center; gap: 10px; flex: 0 0 auto; font-size: 11px; color: #8b949e; margin-left: auto; }
+  .prob-progress-bar { width: 100px; height: 6px; background: #21262d; border-radius: 3px; overflow: hidden; }
+  .prob-progress-fill { height: 100%; background: linear-gradient(90deg, #7ee787, #58a6ff); transition: width .3s; }
+  /* Sections */
+  .prob-section { margin-bottom: 16px; border: 1px solid #30363d; border-radius: 8px; background: #161b22; overflow: hidden; }
+  .prob-section > summary { padding: 13px 18px; font-size: 14px; font-weight: 600; color: #e6edf3; cursor: pointer; list-style: none; display: flex; align-items: center; gap: 10px; user-select: none; transition: background .15s; flex-wrap: wrap; }
   .prob-section > summary::-webkit-details-marker { display: none; }
   .prob-section > summary::before { content: '▸'; color: #8b949e; font-size: 11px; transition: transform .2s; }
   .prob-section[open] > summary::before { transform: rotate(90deg); }
   .prob-section > summary:hover { background: rgba(88,166,255,0.04); }
-  .prob-section .wk { color: #8b949e; font-size: 12px; font-weight: 500; background: #0d1117; padding: 2px 8px; border-radius: 10px; border: 1px solid #30363d; }
-  .prob-body { padding: 6px 20px 18px 40px; }
-  .prob-body > ol { padding-left: 22px; margin: 8px 0 4px; }
-  .prob-body > ol > li { margin: 12px 0; color: #c9d1d9; font-size: 14px; line-height: 1.55; }
-  .prob-body > ol > li::marker { color: #7ee787; font-weight: 600; }
-  .prob-hint { display: block; margin-top: 4px; color: #8b949e; font-size: 12.5px; font-style: italic; }
-  .prob-hint::before { content: '💡 '; font-style: normal; }
-  .prob-tag { display: inline-block; font-size: 10px; font-weight: 600; padding: 1px 7px; border-radius: 8px; margin-right: 6px; vertical-align: middle; text-transform: uppercase; letter-spacing: .4px; }
+  .prob-section .wk { color: #8b949e; font-size: 11px; font-weight: 500; background: #0d1117; padding: 2px 8px; border-radius: 10px; border: 1px solid #30363d; }
+  .prob-section .sec-meta { margin-left: auto; font-size: 11px; color: #6e7681; font-weight: 500; }
+  .prob-section .sec-meta .done-count { color: #7ee787; font-weight: 600; }
+  .prob-hook { background: #0d1117; border-bottom: 1px solid #21262d; padding: 12px 22px; font-size: 13px; color: #d2a8ff; font-style: italic; line-height: 1.6; display: flex; gap: 8px; align-items: flex-start; }
+  .prob-hook::before { content: '🪝'; font-style: normal; flex-shrink: 0; }
+  .prob-body { padding: 12px 18px 16px; display: flex; flex-direction: column; gap: 10px; }
+  /* Problem cards */
+  .prob-card { background: #0d1117; border: 1px solid #21262d; border-radius: 8px; padding: 12px 14px; transition: all .15s; position: relative; }
+  .prob-card:hover { border-color: #30363d; }
+  .prob-card.status-thinking { border-left: 3px solid #d2a8ff; }
+  .prob-card.status-got      { border-left: 3px solid #7ee787; opacity: .75; }
+  .prob-card.status-stuck    { border-left: 3px solid #f85149; }
+  .prob-card.hidden          { display: none; }
+  .prob-card .pc-head { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 4px; }
+  .prob-card .pc-num { color: #6e7681; font-size: 11px; font-weight: 600; font-family: 'Cascadia Code', monospace; }
+  .prob-card .pc-star { color: #ffa657; font-size: 13px; }
+  .prob-tag { display: inline-block; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 8px; text-transform: uppercase; letter-spacing: .4px; }
   .prob-tag.design { background: #58a6ff20; color: #58a6ff; }
   .prob-tag.debug  { background: #f8514920; color: #f85149; }
   .prob-tag.paper  { background: #d2a8ff20; color: #d2a8ff; }
   .prob-tag.code   { background: #7ee78720; color: #7ee787; }
   .prob-tag.derive { background: #ffa65720; color: #ffa657; }
+  .prob-card .pc-text { color: #c9d1d9; font-size: 13.5px; line-height: 1.6; margin: 2px 0 6px; }
+  .prob-card .pc-actions { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; margin-top: 6px; }
+  .prob-revealbtn { background: transparent; border: 1px dashed #30363d; color: #8b949e; padding: 3px 10px; border-radius: 12px; font-size: 11px; cursor: pointer; transition: all .15s; }
+  .prob-revealbtn:hover { border-color: #d2a8ff; color: #d2a8ff; border-style: solid; }
+  .prob-revealbtn.approach:hover { border-color: #79c0ff; color: #79c0ff; }
+  .prob-revealbtn.answer:hover   { border-color: #7ee787; color: #7ee787; }
+  .prob-reveal-panel { display: none; margin-top: 8px; padding: 10px 14px; background: #161b22; border-radius: 4px; color: #c9d1d9; font-size: 12.5px; line-height: 1.65; }
+  .prob-reveal-panel.shown { display: block; }
+  .prob-reveal-panel ul, .prob-reveal-panel ol { margin: 4px 0 4px 18px; padding: 0; }
+  .prob-reveal-panel li { margin: 3px 0; }
+  .prob-reveal-panel code { background: #0d1117; padding: 1px 5px; border-radius: 3px; font-size: 11.5px; color: #79c0ff; font-family: 'Cascadia Code', 'Consolas', monospace; }
+  .prob-reveal-panel strong { color: #e6edf3; }
+  .prob-reveal-panel .rh-label { display: inline-block; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .6px; margin-right: 8px; padding: 1px 6px; border-radius: 4px; vertical-align: middle; }
+  .prob-hint     { border-left: 2px solid #d2a8ff; }
+  .prob-hint     .rh-label { background: #d2a8ff22; color: #d2a8ff; }
+  .prob-approach { border-left: 2px solid #79c0ff; }
+  .prob-approach .rh-label { background: #79c0ff22; color: #79c0ff; }
+  .prob-answer   { border-left: 2px solid #7ee787; background: #0d1f17; }
+  .prob-answer   .rh-label { background: #7ee78722; color: #7ee787; }
+  .prob-status-btns { display: flex; gap: 4px; margin-left: auto; }
+  .prob-statbtn { background: transparent; border: 1px solid #30363d; color: #6e7681; padding: 3px 9px; border-radius: 12px; font-size: 11px; cursor: pointer; transition: all .15s; }
+  .prob-statbtn:hover { border-color: #58a6ff; color: #c9d1d9; }
+  .prob-statbtn.active.thinking { background: #d2a8ff22; border-color: #d2a8ff; color: #d2a8ff; }
+  .prob-statbtn.active.got      { background: #7ee78722; border-color: #7ee787; color: #7ee787; }
+  .prob-statbtn.active.stuck    { background: #f8514922; border-color: #f85149; color: #f85149; }
+  .prob-empty { text-align: center; padding: 40px 20px; color: #6e7681; font-size: 13px; }
+  /* Modal for surprise-me */
+  .prob-spotlight { position: fixed; inset: 0; background: rgba(13,17,23,0.85); backdrop-filter: blur(4px); display: none; align-items: center; justify-content: center; z-index: 100; padding: 20px; }
+  .prob-spotlight.open { display: flex; }
+  .prob-spotlight-card { background: #161b22; border: 1px solid #58a6ff; border-radius: 12px; max-width: 600px; width: 100%; padding: 24px 28px; box-shadow: 0 12px 60px rgba(88,166,255,0.3); }
+  .prob-spotlight-card h3 { color: #58a6ff; font-size: 14px; margin: 0 0 4px; text-transform: uppercase; letter-spacing: 1px; }
+  .prob-spotlight-card .pc-text { font-size: 16px; line-height: 1.55; color: #e6edf3; margin: 10px 0; }
+  .prob-spotlight-card .sl-close { background: transparent; border: none; color: #8b949e; font-size: 22px; cursor: pointer; float: right; line-height: 1; }
+  .prob-spotlight-card .sl-close:hover { color: #c9d1d9; }
   .appendix-table .watch-link:hover { color: #ff0000; text-decoration: underline; }
   /* ── Progress checkbox ── */
   .appendix-table .vid-check { width: 18px; height: 18px; cursor: pointer; accent-color: #7ee787; vertical-align: middle; }
@@ -398,6 +494,233 @@
     .dd-card-img { height: 120px; }
     .dd-keypoints { grid-template-columns: 1fr; }
   }
+
+/* === BEGIN glossary v1 css === */
+  /* dd-nav sticky top */
+  .dd-nav.dd-nav-top {
+    position: sticky; top: 0; z-index: 5;
+    margin: -4px -4px 14px; padding: 10px 8px;
+    background: linear-gradient(180deg, rgba(13,17,23,0.96) 75%, rgba(13,17,23,0));
+    backdrop-filter: blur(4px);
+    border-bottom: 1px solid #21262d;
+  }
+  /* ── Glossary ── */
+  .gloss-intro { background: #161b22; border: 1px solid #30363d; border-left: 3px solid #d2a8ff; border-radius: 6px; padding: 14px 18px; margin-bottom: 14px; color: #c9d1d9; font-size: 14px; line-height: 1.6; }
+  .gloss-intro strong { color: #d2a8ff; }
+  #view-glossary { overflow-y: auto; height: calc(100vh - 50px); margin-top: 50px; padding: 20px; box-sizing: border-box; }
+  @media (max-width: 768px) { #view-glossary { margin-top: 48px; padding: 12px; } }
+  .glossary-controls { position: sticky; top: 0; z-index: 5; background: rgba(13,17,23,0.95); backdrop-filter: blur(6px); padding: 10px 0 12px; margin: -8px 0 14px; border-bottom: 1px solid #21262d; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  #glossary-search { flex: 1 1 240px; min-width: 200px; background: #0d1117; border: 1px solid #30363d; border-radius: 6px; padding: 7px 12px; color: #c9d1d9; font-size: 13px; outline: none; }
+  #glossary-search:focus { border-color: #58a6ff; }
+  .glossary-cat-pills { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+  .glossary-cat-pills button { background: #161b22; border: 1px solid #30363d; color: #8b949e; padding: 4px 10px; border-radius: 12px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .4px; cursor: pointer; transition: all .15s; }
+  .glossary-cat-pills button:hover { border-color: #58a6ff; color: #c9d1d9; }
+  .glossary-cat-pills button.active { background: var(--pill-bg, #1f6feb22); border-color: var(--pill-color, #58a6ff); color: var(--pill-color, #58a6ff); }
+  .glossary-count { font-size: 11px; color: #8b949e; margin-left: auto; }
+  .glossary-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 14px; max-width: 1400px; margin: 0 auto; }
+  .glossary-card { background: #161b22; border: 1px solid #30363d; border-radius: 10px; padding: 14px; transition: border-color .15s, box-shadow .15s, transform .15s; }
+  .glossary-card:hover { border-color: var(--cat-color, #58a6ff); box-shadow: 0 4px 14px rgba(0,0,0,0.35); }
+  .glossary-card.flash {
+    animation: glossary-flash 2.6s cubic-bezier(.4,0,.2,1) 1 forwards;
+    position: relative;
+    z-index: 2;
+  }
+  @keyframes glossary-flash {
+    0% {
+      background: #161b22;
+      border-color: #30363d;
+      box-shadow: 0 0 0 rgba(0,0,0,0);
+      transform: scale(1);
+    }
+    8% {
+      background: color-mix(in srgb, var(--cat-color, #58a6ff) 55%, #161b22);
+      border-color: var(--cat-color, #58a6ff);
+      box-shadow:
+        0 0 0 4px var(--cat-color, #58a6ff),
+        0 0 28px 6px color-mix(in srgb, var(--cat-color, #58a6ff) 70%, transparent),
+        0 14px 36px rgba(0,0,0,0.55);
+      transform: scale(1.045);
+    }
+    22% {
+      background: color-mix(in srgb, var(--cat-color, #58a6ff) 30%, #161b22);
+      border-color: var(--cat-color, #58a6ff);
+      box-shadow:
+        0 0 0 3px var(--cat-color, #58a6ff),
+        0 0 22px 4px color-mix(in srgb, var(--cat-color, #58a6ff) 55%, transparent),
+        0 10px 28px rgba(0,0,0,0.5);
+      transform: scale(1.03);
+    }
+    45% {
+      background: color-mix(in srgb, var(--cat-color, #58a6ff) 45%, #161b22);
+      border-color: var(--cat-color, #58a6ff);
+      box-shadow:
+        0 0 0 3px var(--cat-color, #58a6ff),
+        0 0 26px 5px color-mix(in srgb, var(--cat-color, #58a6ff) 60%, transparent),
+        0 12px 32px rgba(0,0,0,0.5);
+      transform: scale(1.035);
+    }
+    70% {
+      background: color-mix(in srgb, var(--cat-color, #58a6ff) 22%, #161b22);
+      border-color: color-mix(in srgb, var(--cat-color, #58a6ff) 80%, #30363d);
+      box-shadow:
+        0 0 0 2px color-mix(in srgb, var(--cat-color, #58a6ff) 70%, transparent),
+        0 0 18px 3px color-mix(in srgb, var(--cat-color, #58a6ff) 40%, transparent);
+      transform: scale(1.015);
+    }
+    100% {
+      background: #161b22;
+      border-color: #30363d;
+      box-shadow: 0 0 0 rgba(0,0,0,0);
+      transform: scale(1);
+    }
+  }
+  /* Fallback for browsers without color-mix: solid tinted backgrounds */
+  @supports not (background: color-mix(in srgb, red, blue)) {
+    @keyframes glossary-flash {
+      0%,100% { background: #161b22; border-color: #30363d; box-shadow: none; transform: scale(1); }
+      8%, 45% {
+        background: rgba(88,166,255,0.32);
+        border-color: var(--cat-color, #58a6ff);
+        box-shadow: 0 0 0 4px var(--cat-color, #58a6ff), 0 0 28px var(--cat-color, #58a6ff);
+        transform: scale(1.04);
+      }
+    }
+  }
+  .glossary-term-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .glossary-term { font-size: 16px; font-weight: 700; color: #e6edf3; }
+  .glossary-cat-badge { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; padding: 2px 7px; border-radius: 10px; border: 1px solid var(--cat-color, #58a6ff); color: var(--cat-color, #58a6ff); background: rgba(0,0,0,0.2); }
+  .glossary-aka { font-size: 11px; color: #8b949e; font-style: italic; margin-top: 3px; }
+  .glossary-short { font-size: 13px; color: #c9d1d9; margin-top: 8px; line-height: 1.5; }
+  .glossary-long { font-size: 13px; color: #8b949e; margin-top: 8px; line-height: 1.55; display: none; }
+  .glossary-long code { background: #0d1117; border: 1px solid #21262d; border-radius: 4px; padding: 1px 5px; font-family: 'Cascadia Code', monospace; font-size: 12px; color: #d2a8ff; }
+  .glossary-card.expanded .glossary-long { display: block; }
+  .glossary-toggle { background: none; border: none; color: #58a6ff; font-size: 11px; cursor: pointer; padding: 6px 0 0; }
+  .glossary-toggle:hover { text-decoration: underline; }
+  .glossary-links { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+  .glossary-links button { background: #0d1117; border: 1px solid #30363d; color: #c9d1d9; padding: 3px 9px; border-radius: 10px; font-size: 11px; cursor: pointer; transition: all .15s; }
+  .glossary-links button:hover { border-color: #58a6ff; color: #58a6ff; }
+  /* graph-node pulse when jumped to from glossary */
+  @keyframes glossary-pulse {
+    0%   { stroke-opacity: 1; stroke-width: 14; }
+    100% { stroke-opacity: 0.55; stroke-width: 5; }
+  }
+  @keyframes glossary-halo-pulse {
+    0%   { r: 16;  stroke-opacity: 1;    stroke-width: 10; }
+    60%  { r: 90;  stroke-opacity: 0.55; stroke-width: 5; }
+    100% { r: 140; stroke-opacity: 0;    stroke-width: 2; }
+  }
+  @keyframes glossary-halo-pulse-2 {
+    0%   { r: 16;  stroke-opacity: 0.9; stroke-width: 6; }
+    60%  { r: 110; stroke-opacity: 0.4; stroke-width: 3; }
+    100% { r: 170; stroke-opacity: 0;   stroke-width: 1.5; }
+  }
+  @keyframes glossary-fill-pulse {
+    0%, 100% { fill-opacity: 0.85; }
+    50%      { fill-opacity: 1; }
+  }
+  @keyframes glossary-dim-others {
+    0%   { opacity: 1; }
+    20%  { opacity: 0.15; }
+    100% { opacity: 0.15; }
+  }
+  /* Dim everything in the graph except the highlighted node + its halos */
+  #canvas-graph.glossary-spotlight g.graph-node:not(.glossary-highlight),
+  #canvas-graph.glossary-spotlight line.graph-link,
+  #canvas-graph.glossary-spotlight text.graph-link-label {
+    animation: glossary-dim-others 0.4s ease-out forwards;
+  }
+  #canvas-graph.glossary-spotlight g.graph-node.glossary-highlight {
+    opacity: 1 !important;
+  }
+  g.graph-node.glossary-highlight circle:not(.glossary-halo):not(.glossary-halo-outer) {
+    animation:
+      glossary-pulse 0.45s ease-in-out 10 alternate,
+      glossary-fill-pulse 0.45s ease-in-out 10 alternate;
+    stroke: #ffd13b !important;
+    fill: #ffd13b !important;
+    filter:
+      drop-shadow(0 0 10px #ffd13b)
+      drop-shadow(0 0 24px #ffd13baa)
+      drop-shadow(0 0 40px #ffd13b66);
+  }
+  g.graph-node.glossary-highlight text {
+    fill: #fff !important;
+    font-weight: 900 !important;
+    font-size: 15px !important;
+    paint-order: stroke fill;
+    stroke: #5a3a00;
+    stroke-width: 4px;
+    stroke-linejoin: round;
+    filter:
+      drop-shadow(0 0 6px #000)
+      drop-shadow(0 0 12px #ffd13b)
+      drop-shadow(0 0 20px #ffd13bcc);
+  }
+  circle.glossary-halo {
+    fill: none;
+    stroke: #ffd13b;
+    pointer-events: none;
+    animation: glossary-halo-pulse 1.1s ease-out 5;
+    filter: drop-shadow(0 0 8px #ffd13baa);
+  }
+  circle.glossary-halo-outer {
+    fill: none;
+    stroke: #ffae00;
+    pointer-events: none;
+    animation: glossary-halo-pulse-2 1.4s ease-out 5;
+    animation-delay: 0.18s;
+    filter: drop-shadow(0 0 12px #ffae0099);
+  }
+  /* mindmap pulse (uses a <circle> appended) */
+  circle.glossary-mm-halo {
+    fill: none;
+    stroke: #ffd13b;
+    pointer-events: none;
+    animation: glossary-halo-pulse 1.1s ease-out 5;
+    filter: drop-shadow(0 0 8px #ffd13baa);
+  }
+  circle.glossary-mm-halo-outer {
+    fill: none;
+    stroke: #ffae00;
+    pointer-events: none;
+    animation: glossary-halo-pulse-2 1.4s ease-out 5;
+    animation-delay: 0.18s;
+    filter: drop-shadow(0 0 12px #ffae0099);
+  }
+  /* toast banner shown when jumping from glossary */
+  #glossary-toast {
+    position: fixed; top: 60px; left: 50%; transform: translateX(-50%) translateY(-30px) scale(0.92);
+    background: linear-gradient(180deg, #2a1f0a, #1a1308);
+    border: 2px solid #ffd13b; border-left: 6px solid #ffd13b;
+    color: #fff5d6; padding: 12px 22px; border-radius: 10px;
+    font-size: 15px; font-weight: 700;
+    box-shadow:
+      0 10px 32px rgba(0,0,0,0.6),
+      0 0 36px rgba(255,209,59,0.45),
+      0 0 64px rgba(255,209,59,0.25);
+    opacity: 0; pointer-events: none;
+    transition: opacity .22s ease, transform .28s cubic-bezier(.2,1.2,.4,1);
+    z-index: 10000;
+    display: flex; align-items: center; gap: 12px;
+    max-width: 90vw;
+    text-shadow: 0 0 8px rgba(255,209,59,0.5);
+  }
+  #glossary-toast.show { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+  #glossary-toast .gt-icon { font-size: 22px; filter: drop-shadow(0 0 6px #ffd13b); }
+  #glossary-toast .gt-sub { color: #c9b88c; font-weight: 500; font-size: 12.5px; margin-left: 4px; }
+  #glossary-toast strong { color: #ffd13b; text-shadow: 0 0 10px rgba(255,209,59,0.6); }
+  @media (max-width: 768px) { #glossary-toast { top: 56px; font-size: 13px; padding: 10px 16px; } }
+  /* tooltip glossary footer link */
+  #tooltip .tt-glossary { margin-top: 6px; padding-top: 5px; border-top: 1px solid #30363d; }
+  #tooltip .tt-glossary:empty { display: none; }
+  #tooltip .tt-glossary a {
+    display: inline-block; padding: 2px 8px; border-radius: 4px;
+    background: rgba(210,168,255,0.10); color: #d2a8ff; text-decoration: none;
+    font-size: 11px; font-weight: 500; cursor: pointer; border: 1px solid rgba(210,168,255,0.25);
+  }
+  #tooltip .tt-glossary a:hover { background: rgba(210,168,255,0.22); border-color: #d2a8ff; }
+  #tooltip.has-glossary { pointer-events: auto; }
+/* === END glossary v1 css === */
 </style>
 </head>
 <body>
@@ -458,6 +781,21 @@
 <div id="view-problems" class="view">
   <div id="problems-container"></div>
 </div>
+<!-- BEGIN glossary v1 view -->
+<div id="view-glossary" class="view">
+  <div class="gloss-intro">
+    <strong>📖 Glossary.</strong> Every acronym, jargon term, and unit-of-art used across <em>Use Cases</em> and <em>Deep Dives</em> — defined here, cross-linked to the <strong>Topic Graph</strong> and <strong>Mind Map</strong> so you can jump from definition → diagram in one click.
+    <br><br>
+    <span style="color:#8b949e">Tip: click a related term to flash-jump to it. Click the 🌐 graph or 🧭 mindmap links to spotlight that node on its tab.</span>
+  </div>
+  <div class="glossary-controls">
+    <input type="text" id="glossary-search" placeholder="🔍 Search terms, acronyms, or definitions…" />
+    <div class="glossary-cat-pills" id="glossary-cat-pills"></div>
+    <span class="glossary-count" id="glossary-count"></span>
+  </div>
+  <div id="glossary-list" class="glossary-list"></div>
+</div>
+<!-- END glossary v1 view -->
 
 <!-- ═══════════════ SHARED OVERLAYS ═══════════════ -->
 <div id="tooltip"><div class="tt-title"></div><div class="tt-body"></div><div class="tt-slides"></div></div>
@@ -615,99 +953,713 @@ const COURSE_CONFIG = {
       { name: "Language\nSemantics", tooltip: "Operational semantics, denotational semantics (intro)", children: [
         { name: "Operational\nSemantics", tooltip: "Defining meaning via reduction rules" },
         { name: "Denotational\nSemantics", tooltip: "Mapping programs to mathematical objects" }
+      ]},
+      { name: "Paradigms", tooltip: "Functional, imperative, OOP, logic, dataflow — orthogonal organising principles for code", children: [
+        { name: "Functional", tooltip: "Computation as evaluation of pure expressions (ML, Haskell, Scheme)" },
+        { name: "Imperative", tooltip: "Computation as state-changing commands (C, Pascal)" },
+        { name: "Object-Oriented", tooltip: "Encapsulated state + dynamic dispatch (Smalltalk, Java, Ruby)" },
+        { name: "Logic", tooltip: "Declarative goals + unification + backtracking (Prolog)" },
+        { name: "Dataflow /\nReactive", tooltip: "Computation follows data dependencies (spreadsheets, FRP)" }
+      ]},
+      { name: "Type Discipline", tooltip: "Top-level view of typing: when, what, and how strictly types are checked", children: [
+        { name: "Strong vs Weak", tooltip: "Strong types reject ill-typed operations; weak types coerce implicitly" },
+        { name: "Manifest vs\nInferred", tooltip: "Annotations vs HM-style automatic inference" },
+        { name: "Nominal vs\nStructural", tooltip: "Named-type identity (Java) vs shape-based identity (TypeScript, Go interfaces)" },
+        { name: "Dependent\nTypes", tooltip: "Types that depend on values \u2014 Idris, Agda, Coq, Lean" }
+      ]},
+      { name: "Evaluation\nStrategy", tooltip: "When and how arguments are evaluated \u2014 strict, lazy, by-need, by-name", children: [
+        { name: "Call-by-Value", tooltip: "Arguments fully evaluated before the call (most languages)" },
+        { name: "Call-by-Name", tooltip: "Arguments substituted unevaluated; may evaluate many times" },
+        { name: "Call-by-Need\n(Lazy)", tooltip: "Memoised call-by-name \u2014 Haskell\u2019s default" },
+        { name: "Short-Circuit /\nNormal Order", tooltip: "Reducing leftmost outermost first; terminates whenever any order does" }
+      ]},
+      { name: "Memory Model", tooltip: "Stack vs heap, allocation, lifetime, GC vs manual vs ownership", children: [
+        { name: "Stack vs Heap", tooltip: "Automatic-LIFO frames vs dynamically-allocated long-lived data" },
+        { name: "Garbage\nCollection", tooltip: "Tracing (mark-sweep, generational), reference counting, region-based" },
+        { name: "Manual\n(malloc/free)", tooltip: "Explicit allocation/deallocation \u2014 C, C++ without RAII" },
+        { name: "Ownership /\nBorrowing", tooltip: "Compile-time linear/affine types \u2014 Rust eliminates GC and use-after-free" },
+        { name: "Aliasing &\nMutability", tooltip: "When two paths reach the same cell \u2014 the core complication in any model" }
+      ]},
+      { name: "Concurrency", tooltip: "How parallel/concurrent execution is expressed and made safe", children: [
+        { name: "Threads &\nLocks", tooltip: "Shared memory + mutexes (pthreads, Java synchronized) \u2014 error-prone" },
+        { name: "Message Passing\n/ Actors", tooltip: "No shared state; communication via channels (Erlang, Go, Akka)" },
+        { name: "Async / Await", tooltip: "Cooperative tasks on event loops \u2014 JS, Python asyncio, Rust async" },
+        { name: "Software\nTransactional Mem", tooltip: "Composable atomic blocks (Haskell STM, Clojure refs)" },
+        { name: "Data Races &\nMemory Order", tooltip: "Compiler & CPU reorderings make naive shared-memory unsound \u2014 acquire/release, seq-cst" }
+      ]},
+      { name: "FFI &\nInterop", tooltip: "Foreign-function interfaces \u2014 how a language calls and is called by others", children: [
+        { name: "C ABI", tooltip: "The lingua franca \u2014 extern \"C\", cdecl/stdcall, struct layout" },
+        { name: "Marshalling", tooltip: "Converting between language reps (strings, arrays, ownership)" },
+        { name: "Safety\nBoundaries", tooltip: "Wrapping unsafe FFI in checked, idiomatic APIs (Rust unsafe blocks)" },
+        { name: "Embedding /\nExtending", tooltip: "Hosting an interpreter (Lua, Python, V8) vs being hosted from C" }
       ]}
     ]
   },
 
   graph: {
-    categories: { functional: "#58a6ff", types: "#7ee787", oop: "#f778ba", theory: "#ffa657" },
+    categories: { functional: "#58a6ff", types: "#7ee787", oop: "#f778ba", theory: "#ffa657", systems: "#d2a8ff" },
     edgeColors: { depends: "#58a6ff", implements: "#f778ba", enables: "#7ee787", related: "#ffa657" },
     nodes: [
-      { id: "closures",       label: "Closures",        cat: "functional", tip: "Functions capturing their lexical environment" },
-      { id: "pattern-match",  label: "Pattern Matching", cat: "functional", tip: "Destructuring data with case expressions" },
-      { id: "type-inference", label: "Type Inference",   cat: "types",      tip: "Automatic type deduction via unification" },
-      { id: "hof",            label: "HOF",              cat: "functional", tip: "Higher-order functions: map, filter, fold" },
-      { id: "mutation",       label: "Mutation",         cat: "functional", tip: "Mutable state via refs and assignment" },
-      { id: "macros",         label: "Macros",           cat: "functional", tip: "Syntactic abstraction in Racket" },
-      { id: "lazy-eval",      label: "Lazy Eval",        cat: "functional", tip: "Delayed evaluation with thunks and streams" },
-      { id: "static-typing",  label: "Static Typing",    cat: "types",      tip: "Compile-time type checking" },
-      { id: "dynamic-typing", label: "Dynamic Typing",   cat: "types",      tip: "Runtime type checking" },
-      { id: "subtyping",      label: "Subtyping",        cat: "types",      tip: "Width/depth subtyping and covariance" },
-      { id: "duck-typing",    label: "Duck Typing",      cat: "oop",        tip: "Structural compatibility at runtime" },
-      { id: "semantics",      label: "Semantics",        cat: "theory",     tip: "Formal meaning of programs" }
+      { id: "closures",       label: "Closures",          cat: "functional", tip: "Functions capturing their lexical environment" },
+      { id: "pattern-match",  label: "Pattern Matching",  cat: "functional", tip: "Destructuring data with case expressions" },
+      { id: "type-inference", label: "Type Inference",    cat: "types",      tip: "Automatic type deduction via unification" },
+      { id: "hof",            label: "HOF",               cat: "functional", tip: "Higher-order functions: map, filter, fold" },
+      { id: "mutation",       label: "Mutation",          cat: "functional", tip: "Mutable state via refs and assignment" },
+      { id: "macros",         label: "Macros",            cat: "functional", tip: "Syntactic abstraction in Racket / Lisp" },
+      { id: "lazy-eval",      label: "Lazy Eval",         cat: "functional", tip: "Delayed evaluation with thunks and streams" },
+      { id: "monads",         label: "Monads",            cat: "functional", tip: "Sequencing effects: return + bind, with three laws" },
+      { id: "static-typing",  label: "Static Typing",     cat: "types",      tip: "Compile-time type checking" },
+      { id: "dynamic-typing", label: "Dynamic Typing",    cat: "types",      tip: "Runtime type checking" },
+      { id: "subtyping",      label: "Subtyping",         cat: "types",      tip: "Width/depth subtyping and covariance" },
+      { id: "polymorphism",   label: "Polymorphism",      cat: "types",      tip: "Parametric, ad-hoc, subtype \u2014 three flavours of reuse" },
+      { id: "duck-typing",    label: "Duck Typing",       cat: "oop",        tip: "Structural compatibility at runtime" },
+      { id: "dispatch",       label: "Dynamic Dispatch",  cat: "oop",        tip: "Method lookup at runtime via vtable / method cache" },
+      { id: "semantics",      label: "Semantics",         cat: "theory",     tip: "Formal meaning of programs (operational, denotational)" },
+      { id: "lambda-calc",    label: "Lambda Calculus",   cat: "theory",     tip: "Three rules (var, \u03bb, app) \u2014 the kernel of every functional language" },
+      { id: "curry-howard",   label: "Curry\u2013Howard", cat: "theory",     tip: "Programs are proofs; types are propositions" },
+      { id: "gc",             label: "Garbage Collection",cat: "systems",    tip: "Automatic memory management \u2014 tracing, refcount, generational" },
+      { id: "ownership",      label: "Ownership",         cat: "systems",    tip: "Compile-time memory safety via affine types (Rust)" },
+      { id: "concurrency",    label: "Concurrency",       cat: "systems",    tip: "Threads, actors, async \u2014 and the data-race problem" },
+      { id: "ffi",            label: "FFI",               cat: "systems",    tip: "Calling C from a high-level language; marshalling and ABIs" }
     ],
     edges: [
+      { source: "lambda-calc",    target: "closures",       type: "enables",    label: "models" },
+      { source: "lambda-calc",    target: "hof",            type: "enables",    label: "enables" },
       { source: "closures",       target: "hof",            type: "enables",    label: "enables" },
-      { source: "pattern-match",  target: "type-inference",  type: "related",    label: "related" },
-      { source: "hof",            target: "lazy-eval",       type: "depends",       label: "uses" },
-      { source: "static-typing",  target: "type-inference",  type: "implements", label: "implements" },
-      { source: "dynamic-typing", target: "duck-typing",     type: "enables",    label: "enables" },
-      { source: "subtyping",      target: "static-typing",   type: "depends",    label: "extends" },
-      { source: "macros",         target: "dynamic-typing",  type: "related",    label: "related" },
-      { source: "semantics",      target: "type-inference",  type: "implements", label: "formalizes" },
-      { source: "static-typing", target: "mutation", type: "related" },
-      { source: "mutation", target: "semantics", type: "related" }
+      { source: "pattern-match",  target: "type-inference", type: "related",    label: "guides" },
+      { source: "hof",            target: "lazy-eval",      type: "depends",    label: "uses" },
+      { source: "static-typing",  target: "type-inference", type: "implements", label: "implements" },
+      { source: "dynamic-typing", target: "duck-typing",    type: "enables",    label: "enables" },
+      { source: "dynamic-typing", target: "dispatch",       type: "enables",    label: "needs" },
+      { source: "subtyping",      target: "static-typing",  type: "depends",    label: "extends" },
+      { source: "polymorphism",   target: "type-inference", type: "related",    label: "interacts" },
+      { source: "polymorphism",   target: "subtyping",      type: "related",    label: "alternative" },
+      { source: "macros",         target: "dynamic-typing", type: "related",    label: "common in" },
+      { source: "macros",         target: "lambda-calc",    type: "depends",    label: "desugars to" },
+      { source: "semantics",      target: "type-inference", type: "implements", label: "formalises" },
+      { source: "semantics",      target: "lambda-calc",    type: "depends",    label: "defined by" },
+      { source: "curry-howard",   target: "static-typing",  type: "implements", label: "grounds" },
+      { source: "curry-howard",   target: "lambda-calc",    type: "depends",    label: "extends" },
+      { source: "lazy-eval",      target: "monads",         type: "related",    label: "motivates" },
+      { source: "monads",         target: "mutation",       type: "enables",    label: "sequences" },
+      { source: "static-typing",  target: "mutation",       type: "related",    label: "constrains" },
+      { source: "mutation",       target: "semantics",      type: "related",    label: "complicates" },
+      { source: "gc",             target: "mutation",       type: "related",    label: "tracks" },
+      { source: "ownership",      target: "gc",             type: "related",    label: "alternative to" },
+      { source: "ownership",      target: "concurrency",    type: "enables",    label: "rules out races" },
+      { source: "concurrency",    target: "mutation",       type: "related",    label: "fights" },
+      { source: "ffi",            target: "gc",             type: "related",    label: "boundary" },
+      { source: "ffi",            target: "ownership",      type: "related",    label: "unsafe edge" }
     ]
   },
 
   deepDives: [
     {
-      id: "dd-closures", num: "Concept 1 of 4", title: "Closures",
+      id: "dd-closures", num: "Concept 1 of 5", title: "Closures",
       desc: "Lexical scope, free variables, environment capture.", color: "#58a6ff", icon: "\ud83d\udce6",
+      svg: function(w, h) {
+        return '<svg viewBox="0 0 ' + w + ' ' + h + '" xmlns="http://www.w3.org/2000/svg" style="background:#0d1117" font-family="ui-monospace,monospace">'
+          + '<defs><marker id="ca" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#58a6ff"/></marker></defs>'
+          + '<rect x="20" y="20" width="' + (w-40) + '" height="' + (h-40) + '" rx="10" fill="none" stroke="#30363d" stroke-dasharray="4 4"/>'
+          + '<text x="35" y="40" fill="#7d8590" font-size="11">outer scope env\u2080</text>'
+          + '<rect x="35" y="50" width="160" height="60" rx="6" fill="#58a6ff15" stroke="#58a6ff"/>'
+          + '<text x="50" y="72" fill="#e6edf3" font-size="13">x \u21a6 10</text>'
+          + '<text x="50" y="92" fill="#e6edf3" font-size="13">y \u21a6 "hi"</text>'
+          + '<text x="' + (w-220) + '" y="40" fill="#7d8590" font-size="11">closure value</text>'
+          + '<rect x="' + (w-220) + '" y="50" width="180" height="100" rx="6" fill="#7ee78715" stroke="#7ee787"/>'
+          + '<text x="' + (w-205) + '" y="72" fill="#e6edf3" font-size="12">code: \u03bbz. x + z</text>'
+          + '<text x="' + (w-205) + '" y="92" fill="#e6edf3" font-size="12">env: \u2022\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u25b6</text>'
+          + '<text x="' + (w-205) + '" y="115" fill="#7d8590" font-size="11">free vars: {x}</text>'
+          + '<text x="' + (w-205) + '" y="135" fill="#7d8590" font-size="11">bound: {z}</text>'
+          + '<line x1="' + (w-115) + '" y1="92" x2="195" y2="80" stroke="#58a6ff" stroke-width="1.5" marker-end="url(#ca)"/>'
+          + '<rect x="35" y="170" width="' + (w-70) + '" height="60" rx="6" fill="#0d1117" stroke="#ffa657"/>'
+          + '<text x="50" y="190" fill="#ffa657" font-size="11">apply closure to 5  \u2192  lookup x in captured env  \u2192  10 + 5  \u2192  15</text>'
+          + '<text x="50" y="215" fill="#7d8590" font-size="11">env\u2080 may be gone, yet x survives \u2014 closures keep environment frames alive (heap-allocated).</text>'
+          + '</svg>';
+      },
       sections: [
-        { title: "What Is a Closure?", text: "A closure is a function together with a referencing environment\u2014a mapping from free variables to the values they had when the closure was created. In ML, every function is a closure." },
-        { title: "Lexical Scope", text: "The body of a function is evaluated in the environment where the function was defined, not where it is called. This is what makes closures predictable and composable." },
-        { title: "Free Variables", text: "Variables used inside a function but not bound as parameters are called free variables. The closure captures these from the enclosing scope at definition time." },
-        { title: "Environment Capture", text: "When a function is created, a snapshot of the relevant bindings is stored alongside the code. This captured environment persists even after the enclosing scope has exited." }
+        { title: "What Is a Closure?", text: "A closure is a pair \u27e8code, env\u27e9: the function body together with a referencing environment that resolves its free variables. Whenever a language has first-class functions and lexical scope, closures fall out automatically: each fn-expression evaluates to a heap value carrying a snapshot of the bindings it depends on. In ML, Scheme, JS, Python, Rust (Fn/FnMut/FnOnce), and Swift, every nested function is a closure even if its captured set is empty." },
+        { title: "Lexical (Static) Scope", text: "Under lexical scope, a free variable is resolved using the program text surrounding the function's definition, not the call site. Dynamic scope (Emacs-Lisp, early Lisps) does the opposite and is brittle: callers can silently rebind your variables. Lexical scope makes equational reasoning sound \u2014 if I substitute the function's body, I do not change which x it sees \u2014 and is the prerequisite for the \u03b1-renaming used by Hindley\u2013Milner inference." },
+        { title: "Free vs Bound Variables", text: "FV(\u03bbx.e) = FV(e) \\ {x}: a variable is free in a body if it is not introduced as a parameter or by an inner let. Only free variables need to be captured \u2014 bound ones are placeholders. Compilers compute FV(e) statically to allocate the smallest possible closure record (\"flat closures\"), which is why escape analysis matters: if a closure never escapes its caller, the env can stay on the stack." },
+        { title: "Capture Semantics: Value vs Reference", text: "Languages differ on what is captured. ML and Haskell capture immutable bindings, so value vs reference is moot. Python and JS capture cells by reference, which is why `[lambda: i for i in range(3)]` returns three closures all printing 2 \u2014 they share the same `i` cell. C++ lets you choose with `[=]` vs `[&]`; Rust uses move/borrow inferred from body usage. Knowing which discipline applies prevents the classic loop-variable bug." },
+        { title: "Why Closures Matter", text: "Closures encode objects (Felleisen: \"objects are a poor man's closures\" and vice versa), implement callbacks, drive higher-order combinators (map, fold, async then), and enable continuations. They are also the runtime representation of partial application: `add 3` returns a closure capturing 3. Without closures, HOFs degenerate into top-level function pointers and the entire functional toolkit collapses." }
       ],
       keypoints: [
-        { title: "Lexical not dynamic", text: "ML uses lexical scope: a function sees the environment of its definition." },
-        { title: "Captured at creation", text: "Free variables are bound when the closure is created, not when it is called." },
-        { title: "Foundation for HOF", text: "Closures make higher-order functions like map and fold meaningful." }
+        { title: "Lexical, by definition", text: "ML: `let x=1 in let f=fn _=>x in let x=99 in f 0` evaluates to 1 \u2014 f closed over the original x." },
+        { title: "Loop-capture pitfall", text: "Python: `fs=[lambda:i for i in range(3)]; [f() for f in fs]` \u2192 [2,2,2]. Fix: `lambda i=i: i` to bind by default-arg value." },
+        { title: "Closure conversion", text: "Compilers rewrite `\u03bbx.e` with FV={y,z} into `\u27e8code_ptr, {y,z}\u27e9`; calls become `code_ptr(env, x)`. This is how OCaml/SML produce native code." },
+        { title: "Rust's three traits", text: "`Fn` (read captures), `FnMut` (mutate), `FnOnce` (consume) \u2014 the trait is inferred from how the body uses captures, enabling zero-cost closures." }
       ]
     },
     {
-      id: "dd-type-inference", num: "Concept 2 of 4", title: "Type Inference",
-      desc: "Constraint generation, unification algorithm, let-polymorphism.", color: "#7ee787", icon: "\ud83d\udd0d",
+      id: "dd-type-inference", num: "Concept 2 of 5", title: "Hindley\u2013Milner Type Inference",
+      desc: "Constraint generation, Robinson unification, let-polymorphism.", color: "#7ee787", icon: "\ud83d\udd0d",
+      svg: function(w, h) {
+        return '<svg viewBox="0 0 ' + w + ' ' + h + '" xmlns="http://www.w3.org/2000/svg" style="background:#0d1117" font-family="ui-monospace,monospace">'
+          + '<text x="20" y="28" fill="#7ee787" font-size="13" font-weight="600">Derivation: \u22a2 fn x =\u003e x  :  \u03b1 \u2192 \u03b1</text>'
+          + '<line x1="40" y1="60" x2="' + (w-40) + '" y2="60" stroke="#30363d"/>'
+          + '<text x="50" y="80" fill="#e6edf3" font-size="12">(VAR)   \u0393, x:\u03b1 \u22a2 x : \u03b1</text>'
+          + '<line x1="50" y1="92" x2="350" y2="92" stroke="#7ee787"/>'
+          + '<text x="50" y="110" fill="#e6edf3" font-size="12">(ABS)   \u0393 \u22a2 fn x =\u003e x  :  \u03b1 \u2192 \u03b1</text>'
+          + '<line x1="50" y1="122" x2="350" y2="122" stroke="#7ee787"/>'
+          + '<text x="50" y="140" fill="#d2a8ff" font-size="12">(GEN)   \u0393 \u22a2 fn x =\u003e x  :  \u2200\u03b1. \u03b1 \u2192 \u03b1   \u2190 generalise at let</text>'
+          + '<rect x="' + (w-340) + '" y="70" width="320" height="170" rx="6" fill="#161b22" stroke="#30363d"/>'
+          + '<text x="' + (w-325) + '" y="90" fill="#79c0ff" font-size="12" font-weight="600">Unification trace: id 3</text>'
+          + '<text x="' + (w-325) + '" y="112" fill="#e6edf3" font-size="11">1. instantiate id : \u03b2 \u2192 \u03b2  (fresh \u03b2)</text>'
+          + '<text x="' + (w-325) + '" y="130" fill="#e6edf3" font-size="11">2. constraint: \u03b2 \u2192 \u03b2  =  int \u2192 \u03b3</text>'
+          + '<text x="' + (w-325) + '" y="148" fill="#e6edf3" font-size="11">3. decompose: \u03b2 = int, \u03b2 = \u03b3</text>'
+          + '<text x="' + (w-325) + '" y="166" fill="#e6edf3" font-size="11">4. substitute \u03b2\u21a6int \u21d2 \u03b3 = int</text>'
+          + '<text x="' + (w-325) + '" y="186" fill="#7ee787" font-size="11">5. result type = int  \u2713</text>'
+          + '<text x="' + (w-325) + '" y="212" fill="#f85149" font-size="11">occurs-check: \u03b1 = \u03b1 \u2192 \u03b2  \u21d2  FAIL</text>'
+          + '<text x="' + (w-325) + '" y="228" fill="#7d8590" font-size="10">(prevents inferring \u00b5\u03b1.\u03b1\u2192\u03b2 = infinite type)</text>'
+          + '<text x="20" y="180" fill="#7d8590" font-size="11">Algorithm W (Damas\u2013Milner):</text>'
+          + '<text x="20" y="198" fill="#e6edf3" font-size="11">  W(\u0393, e) = (S, \u03c4)  \u2014 substitution + type</text>'
+          + '<text x="20" y="216" fill="#e6edf3" font-size="11">  Cost: O(n) practical, DEXPTIME worst-case</text>'
+          + '<text x="20" y="234" fill="#e6edf3" font-size="11">  Principal type: most general, unique up to \u03b1</text>'
+          + '</svg>';
+      },
       sections: [
-        { title: "Constraint Generation", text: "The type checker walks the AST and generates equality constraints between type variables. For example, if f is applied to x, we get the constraint type(f) = type(x) \u2192 \u03b1 for a fresh variable \u03b1." },
-        { title: "Unification Algorithm", text: "Unification solves a set of type equations by finding a most-general substitution. It proceeds by decomposing equations: matching constructors, binding variables, and failing on conflicts." },
-        { title: "Let-Polymorphism", text: "In ML, a let-bound value may be used at multiple types. The type checker generalises the inferred type at let-bindings, introducing \u2200-quantified type variables. This is the Hindley-Milner approach." }
+        { title: "Constraint Generation", text: "The inference algorithm traverses the AST bottom-up, assigning a fresh metavariable to every unknown and emitting equality constraints from the typing rules. (APP) on `f e` yields `type(f) = type(e) \u2192 \u03b1` for fresh \u03b1; (IF) yields `type(c)=bool` and `type(t)=type(e)`. The output is a multiset of equations on type expressions, completely decoupled from the program structure \u2014 solving them is a separate phase, which is what makes HM modular." },
+        { title: "Robinson Unification", text: "Unification finds the most-general unifier (mgu) of a set of equations by structural recursion: `\u03c4 = \u03c4` succeeds; `c \u03c4\u2081..\u03c4\u2099 = c \u03c3\u2081..\u03c3\u2099` decomposes; `\u03b1 = \u03c4` binds (after the occurs-check that \u03b1 \u2209 FV(\u03c4)); mismatched constructors fail. Each binding is applied to the rest of the equation set. The result is a substitution S such that S\u03c4=S\u03c3 for every original pair, and any other unifier factors through S \u2014 hence \"principal type\"." },
+        { title: "Let-Polymorphism (Generalisation)", text: "Lambdas are monomorphic (`\u03bbx. (x 1, x true)` is rejected) but `let id = fn x =\u003e x in (id 1, id true)` works because the (LET) rule generalises: after inferring `id : \u03b1 \u2192 \u03b1`, the type-checker quantifies over variables free in \u03c4 but not in \u0393, producing `\u2200\u03b1. \u03b1 \u2192 \u03b1`. Each use site instantiates with fresh metavariables. This restricted form (prenex, rank-1) keeps inference decidable; full System F inference is undecidable (Wells 1999)." },
+        { title: "Worked Example: id Across Languages", text: "ML/OCaml infers `'a -> 'a` for `let id x = x`; Haskell infers `forall a. a -> a` (same thing, written explicitly). TypeScript needs `<T>(x:T)=>T` because TS type inference is local. Rust similarly requires `fn id<T>(x:T)->T`. The HM trick \u2014 generalise once at the binding, instantiate at each use \u2014 is exactly what makes ML feel like a dynamically typed language while remaining sound." },
+        { title: "Limits and Extensions", text: "Vanilla HM cannot infer higher-rank polymorphism (`(\u2200a.a\u2192a) \u2192 (Int,Bool)`), GADTs, or first-class polymorphism \u2014 GHC requires annotations there. Type classes (Haskell) extend HM with qualified types `(C \u03b1) \u21d2 \u03c4`; row polymorphism (OCaml objects, PureScript) handles records; refinement and dependent types abandon HM entirely. The MLton-style monomorphisation, OCaml's value restriction, and Haskell's MonomorphismRestriction are practical patches around soundness or performance edges." }
       ],
       keypoints: [
-        { title: "No annotations needed", text: "ML infers types without explicit annotations in most cases." },
-        { title: "Most-general type", text: "Unification finds the principal (most general) type for every expression." },
-        { title: "Let vs lambda", text: "Polymorphism is introduced at let-bindings, not at lambda abstractions." }
+        { title: "Typing rule (VAR)", text: "\u0393(x) = \u2200\u0101.\u03c4   \u22a2   \u0393 \u22a2 x : [\u0101 \u21a6 \u03c4'] \u03c4   (instantiate at use site)" },
+        { title: "Occurs-check matters", text: "Without it, `fn x =\u003e x x` would unify \u03b1 with \u03b1\u2192\u03b2 \u2014 an infinite type. ML rejects with \"types do not unify\"." },
+        { title: "Value restriction", text: "OCaml refuses to generalise `let r = ref []` to `\u2200a. a list ref`; otherwise you could put an int and read a string. The restriction generalises only syntactic values." },
+        { title: "Principal types", text: "Theorem (Damas\u2013Milner '82): every typable term has a unique mgu \u2014 explains why ML never asks you which type to pick." }
       ]
     },
     {
-      id: "dd-expression-problem", num: "Concept 3 of 4", title: "The Expression Problem",
-      desc: "Adding new types vs new operations, FP vs OOP.", color: "#ffa657", icon: "\u2696\ufe0f",
+      id: "dd-evaluation", num: "Concept 3 of 5", title: "Evaluation Strategies",
+      desc: "Call-by-value, call-by-name, call-by-need (lazy with sharing).", color: "#d2a8ff", icon: "\u23f1\ufe0f",
+      svg: function(w, h) {
+        return '<svg viewBox="0 0 ' + w + ' ' + h + '" xmlns="http://www.w3.org/2000/svg" style="background:#0d1117" font-family="ui-monospace,monospace">'
+          + '<text x="20" y="26" fill="#d2a8ff" font-size="13" font-weight="600">Reduce: (\u03bbx. x + x) (1 + 2)</text>'
+          + '<rect x="20" y="50" width="' + (w/3 - 30) + '" height="' + (h-70) + '" rx="6" fill="#58a6ff10" stroke="#58a6ff"/>'
+          + '<text x="35" y="70" fill="#58a6ff" font-size="12" font-weight="600">CBV (eager)</text>'
+          + '<text x="35" y="92" fill="#e6edf3" font-size="11">(\u03bbx. x+x) (1+2)</text>'
+          + '<text x="35" y="110" fill="#7d8590" font-size="11">\u2193 reduce arg first</text>'
+          + '<text x="35" y="128" fill="#e6edf3" font-size="11">(\u03bbx. x+x) 3</text>'
+          + '<text x="35" y="146" fill="#7d8590" font-size="11">\u2193 substitute</text>'
+          + '<text x="35" y="164" fill="#e6edf3" font-size="11">3 + 3</text>'
+          + '<text x="35" y="182" fill="#7ee787" font-size="11">\u2193  6   (1 add of 1+2)</text>'
+          + '<text x="35" y="210" fill="#7d8590" font-size="10">ML, OCaml, Scheme, JS</text>'
+          + '<rect x="' + (w/3 + 5) + '" y="50" width="' + (w/3 - 30) + '" height="' + (h-70) + '" rx="6" fill="#ffa65710" stroke="#ffa657"/>'
+          + '<text x="' + (w/3 + 20) + '" y="70" fill="#ffa657" font-size="12" font-weight="600">CBN (name)</text>'
+          + '<text x="' + (w/3 + 20) + '" y="92" fill="#e6edf3" font-size="11">(\u03bbx. x+x) (1+2)</text>'
+          + '<text x="' + (w/3 + 20) + '" y="110" fill="#7d8590" font-size="11">\u2193 substitute unevald</text>'
+          + '<text x="' + (w/3 + 20) + '" y="128" fill="#e6edf3" font-size="11">(1+2) + (1+2)</text>'
+          + '<text x="' + (w/3 + 20) + '" y="146" fill="#7d8590" font-size="11">\u2193 reduce both</text>'
+          + '<text x="' + (w/3 + 20) + '" y="164" fill="#e6edf3" font-size="11">3 + 3</text>'
+          + '<text x="' + (w/3 + 20) + '" y="182" fill="#f85149" font-size="11">\u2193  6  (2 adds! dup work)</text>'
+          + '<text x="' + (w/3 + 20) + '" y="210" fill="#7d8590" font-size="10">Algol-60 \"name\", proofs</text>'
+          + '<rect x="' + (2*w/3 - 10) + '" y="50" width="' + (w/3 - 10) + '" height="' + (h-70) + '" rx="6" fill="#7ee78710" stroke="#7ee787"/>'
+          + '<text x="' + (2*w/3 + 5) + '" y="70" fill="#7ee787" font-size="12" font-weight="600">CBNeed (lazy + share)</text>'
+          + '<text x="' + (2*w/3 + 5) + '" y="92" fill="#e6edf3" font-size="11">(\u03bbx. x+x) thunk\u27e81+2\u27e9</text>'
+          + '<text x="' + (2*w/3 + 5) + '" y="110" fill="#7d8590" font-size="11">\u2193 share thunk</text>'
+          + '<text x="' + (2*w/3 + 5) + '" y="128" fill="#e6edf3" font-size="11">t + t   (t = thunk)</text>'
+          + '<text x="' + (2*w/3 + 5) + '" y="146" fill="#7d8590" font-size="11">\u2193 force once, memoise</text>'
+          + '<text x="' + (2*w/3 + 5) + '" y="164" fill="#e6edf3" font-size="11">3 + 3</text>'
+          + '<text x="' + (2*w/3 + 5) + '" y="182" fill="#7ee787" font-size="11">\u2193  6  (1 add, like CBV)</text>'
+          + '<text x="' + (2*w/3 + 5) + '" y="210" fill="#7d8590" font-size="10">Haskell, Miranda</text>'
+          + '</svg>';
+      },
       sections: [
-        { title: "The Problem", text: "Given a set of types and a set of operations, can you add new types and new operations without modifying existing code? Neither FP nor OOP solves both directions easily." },
-        { title: "FP Perspective", text: "In a functional language with pattern matching, adding a new operation is easy (write a new function). Adding a new type variant requires modifying every existing function." },
-        { title: "OOP Perspective", text: "In an OO language, adding a new type is easy (add a subclass). Adding a new operation requires modifying every existing class or using the Visitor pattern." },
-        { title: "Double Dispatch & Visitors", text: "The Visitor pattern simulates functional decomposition in OOP: each type accepts a visitor, and the visitor dispatches on the type. Double dispatch extends this to operations on pairs of types." }
+        { title: "The Three Strategies", text: "Call-by-value (CBV) reduces every argument before substituting; call-by-name (CBN) substitutes the unevaluated expression and re-reduces it on each use; call-by-need (lazy) is CBN plus sharing \u2014 the unevaluated expression is wrapped in a thunk that memoises its result on first force. CBV is strict; CBN and lazy are non-strict. The standardisation theorem says CBV and CBN agree on values when both terminate; they disagree on which terms terminate." },
+        { title: "Why Order Matters", text: "Consider `loop = loop` and `f x = 0`. Under CBV, `f loop` diverges; under CBN/lazy, it returns 0 because x is never forced. This is not academic: short-circuiting `&&`, `if`, and Python's `or` are special non-strict operators bolted onto strict languages. Lazy languages get this for free \u2014 every operator is non-strict by default and you opt into strictness with `seq` or bang-patterns." },
+        { title: "Sharing and Thunks", text: "Pure lazy evaluation (Haskell) builds a graph, not a tree: the thunk for `1+2` is allocated once and pointed to twice, so `let x = expensive in x + x` evaluates `expensive` exactly once. The runtime cost is allocating thunk closures and updating them in place after evaluation; the win is avoiding redundant work and supporting infinite data structures like `take 10 (iterate (*2) 1)`." },
+        { title: "Streams, Infinite Data, Productivity", text: "Lazy evaluation lets you write `primes = sieve [2..]` and consume any prefix. The producer\u2013consumer separation comes for free: any function that returns a list works on `[1..]` provided it is productive (yields head before forcing tail). In CBV languages you simulate this with explicit generators, iterators, or coroutines (Python `yield`, Rust `Iterator`, JS `function*`)." },
+        { title: "The Cost: Space Leaks and Reasoning", text: "Lazy evaluation has a famous downside: chains of unevaluated thunks accumulate, blowing the heap. `foldl (+) 0 [1..1000000]` builds `((((0+1)+2)+3)+...)` before evaluating any of it. Fix: strict `foldl'`. Reasoning about runtime cost becomes non-local \u2014 you must trace what is forced when. This is why modern Haskell idioms emphasise strict data fields (`!a`) and strict accumulators." }
       ],
       keypoints: [
-        { title: "FP: easy new ops", text: "Pattern matching makes adding operations straightforward." },
-        { title: "OOP: easy new types", text: "Subclassing makes adding data variants straightforward." },
-        { title: "No free lunch", text: "Neither paradigm solves both extension axes without trade-offs." }
+        { title: "CBV \u2260 CBN on \u22a5", text: "`(\u03bbx.0)\u22a5` = \u22a5 in CBV, = 0 in CBN/lazy. The two strategies define different operational semantics, only agreeing on terminating reductions." },
+        { title: "Lazy = CBN + memoisation", text: "Without sharing, `let x=fact 100 in x+x` would compute fact 100 twice. Thunks update in place after the first force." },
+        { title: "Strictness analysis", text: "GHC infers which arguments are guaranteed to be needed and compiles them as CBV \u2014 zero-cost laziness when provably strict." },
+        { title: "Pythagorean infinite list", text: "Haskell: `pyth = [(a,b,c) | c\u2190[1..], b\u2190[1..c], a\u2190[1..b], a*a+b*b==c*c]; take 5 pyth` \u2014 impossible without laziness." }
       ]
     },
     {
-      id: "dd-subtyping", num: "Concept 4 of 4", title: "Subtyping",
-      desc: "Covariance, contravariance, function subtyping rules.", color: "#f778ba", icon: "\ud83d\udcd0",
+      id: "dd-expression-problem", num: "Concept 4 of 5", title: "The Expression Problem",
+      desc: "Adding new types vs new operations \u2014 FP rows, OOP columns.", color: "#ffa657", icon: "\u2696\ufe0f",
+      svg: function(w, h) {
+        var cellW = (w - 100) / 4;
+        var cellH = 36;
+        var x0 = 80, y0 = 60;
+        var s = '<svg viewBox="0 0 ' + w + ' ' + h + '" xmlns="http://www.w3.org/2000/svg" style="background:#0d1117" font-family="ui-monospace,monospace">';
+        s += '<text x="20" y="30" fill="#ffa657" font-size="13" font-weight="600">Dispatch Table: rows=variants, cols=operations</text>';
+        var ops = ['eval', 'show', 'simplify', 'depth'];
+        var vars_ = ['Lit', 'Add', 'Mul', 'Neg'];
+        for (var i = 0; i < ops.length; i++) {
+          s += '<text x="' + (x0 + i*cellW + cellW/2) + '" y="' + (y0 - 8) + '" text-anchor="middle" fill="#79c0ff" font-size="11">' + ops[i] + '</text>';
+        }
+        for (var j = 0; j < vars_.length; j++) {
+          s += '<text x="' + (x0 - 10) + '" y="' + (y0 + j*cellH + cellH/2 + 4) + '" text-anchor="end" fill="#d2a8ff" font-size="11">' + vars_[j] + '</text>';
+          for (var k = 0; k < ops.length; k++) {
+            var fill = (j < 3 && k < 3) ? '#161b22' : '#21262d';
+            s += '<rect x="' + (x0 + k*cellW) + '" y="' + (y0 + j*cellH) + '" width="' + cellW + '" height="' + cellH + '" fill="' + fill + '" stroke="#30363d"/>';
+            if (j < 3 && k < 3) s += '<text x="' + (x0 + k*cellW + cellW/2) + '" y="' + (y0 + j*cellH + cellH/2 + 4) + '" text-anchor="middle" fill="#7ee787" font-size="11">\u2713</text>';
+          }
+        }
+        s += '<rect x="' + (x0 + 3*cellW) + '" y="' + y0 + '" width="' + cellW + '" height="' + (3*cellH) + '" fill="none" stroke="#58a6ff" stroke-width="2" stroke-dasharray="4 3"/>';
+        s += '<text x="' + (x0 + 3*cellW + cellW/2) + '" y="' + (y0 + 3*cellH + 18) + '" text-anchor="middle" fill="#58a6ff" font-size="10">FP: new col = new fn</text>';
+        s += '<rect x="' + x0 + '" y="' + (y0 + 3*cellH) + '" width="' + (3*cellW) + '" height="' + cellH + '" fill="none" stroke="#f778ba" stroke-width="2" stroke-dasharray="4 3"/>';
+        s += '<text x="' + (x0 + 1.5*cellW) + '" y="' + (y0 + 4*cellH + 16) + '" text-anchor="middle" fill="#f778ba" font-size="10">OOP: new row = new subclass</text>';
+        s += '<text x="20" y="' + (h - 20) + '" fill="#7d8590" font-size="10">Modifying the wrong axis means editing every existing cell \u2014 the open\u2013closed tension.</text>';
+        s += '</svg>';
+        return s;
+      },
       sections: [
-        { title: "Width & Depth Subtyping", text: "Width subtyping: a record with more fields is a subtype. Depth subtyping: a record whose fields have subtypes is also a subtype. Combined, they give structural subtyping for records." },
-        { title: "Function Subtyping", text: "A function type A \u2192 B is a subtype of C \u2192 D when C <: A (contravariant in argument) and B <: D (covariant in return). This is the standard rule for safe substitutability." },
-        { title: "Covariance & Contravariance", text: "Covariance preserves the subtype direction (outputs). Contravariance reverses it (inputs). Mutable containers are invariant because they are both read and written." },
-        { title: "Generics vs Subtyping", text: "Parametric polymorphism (\u2200 types) and subtype polymorphism (S <: T) are complementary. Bounded polymorphism (\u2200 T <: S) combines both and is found in Java/Scala generics." }
+        { title: "Wadler's Question", text: "Phil Wadler (1998) framed it sharply: given a fixed set of data variants and a fixed set of operations, can you add new variants and new operations later, without modifying or recompiling existing code, while preserving static type safety? Most mainstream paradigms make one direction trivial and the other painful, which is why the same domain (a small expression interpreter) is the textbook example in both Haskell and Java courses \u2014 the discomfort is inverted." },
+        { title: "FP: Easy New Operations", text: "Haskell: `data Expr = Lit Int | Add Expr Expr` and operations are functions that pattern-match. Adding `simplify :: Expr -> Expr` is one new top-level definition; nothing else changes. But adding `Mul` requires editing every existing function and the compiler will tell you so via non-exhaustive pattern warnings. The 2D table is filled column-by-column, so columns extend cheaply." },
+        { title: "OOP: Easy New Variants", text: "Java: `interface Expr { int eval(); String show(); }` with classes `Lit`, `Add`. Adding `Mul implements Expr` plugs in without touching the others. But adding a new operation `simplify()` means editing every existing class \u2014 or constructing a Visitor, which inverts the dispatch but reintroduces the FP problem when you want a new variant. Tables fill row-by-row." },
+        { title: "Solutions and Approximations", text: "Tagless final (Carette\u2013Kiselyov\u2013Shan): represent the language as type-class methods (`class Sym r where lit :: Int -> r; add :: r -> r -> r`); new variants = new class, new ops = new instance. Object Algebras (Oliveira\u2013Cook 2012) port the trick to Java with generics. Multimethods (Clojure, CLOS) and Scala traits with mixin composition tackle it directly. Rust uses traits + trait objects; Haskell uses type classes; F# uses active patterns. There is always a tradeoff in modular type-checking, recompilation, or syntactic overhead." },
+        { title: "Why It Still Matters", text: "Compilers, IDE tooling, AST visitors, GUI widget hierarchies, ORM frameworks all live on this spectrum. Choosing the wrong axis bakes in a maintenance tax. Microservice boundaries often align with one axis (events = operations, aggregates = variants), and the same architectural smells reappear: 'God class' = adding ops too freely; 'God function' = pattern match exploding." }
       ],
       keypoints: [
-        { title: "Contra in, co out", text: "Function arguments are contravariant; return types are covariant." },
-        { title: "Mutable = invariant", text: "Mutable references must be invariant to remain type-safe." },
-        { title: "Bounded polymorphism", text: "Combining generics with subtype bounds gives maximum flexibility." }
+        { title: "FP code: easy column", text: "`eval (Add a b) = eval a + eval b` \u2014 add a new function in isolation; old code untouched." },
+        { title: "OOP code: easy row", text: "`class Mul extends Expr { int eval() {\u2026} String show() {\u2026} }` \u2014 add a class, no edits to Lit/Add." },
+        { title: "Visitor inverts dispatch", text: "OOP simulates FP: `interface Visitor<T>{T lit(int);T add(Expr,Expr);}` \u2014 each variant has `accept(v)`. Now ops are easy, variants are hard." },
+        { title: "Tagless final solves both", text: "`class Sym r where {lit :: Int->r; add :: r->r->r}` \u2014 instances add semantics, methods add syntax, no edits required." }
+      ]
+    },
+    {
+      id: "dd-subtyping", num: "Concept 5 of 5", title: "Subtyping & Variance",
+      desc: "Width/depth, function variance, generics vs subtyping.", color: "#f778ba", icon: "\ud83d\udcd0",
+      svg: function(w, h) {
+        return '<svg viewBox="0 0 ' + w + ' ' + h + '" xmlns="http://www.w3.org/2000/svg" style="background:#0d1117" font-family="ui-monospace,monospace">'
+          + '<defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#f778ba"/></marker></defs>'
+          + '<text x="20" y="28" fill="#f778ba" font-size="13" font-weight="600">Function Subtyping Rule:  (A\u2192B) <: (C\u2192D)  \u21d4  C <: A   \u2227   B <: D</text>'
+          + '<text x="35" y="60" fill="#7d8590" font-size="11">arg position</text>'
+          + '<text x="35" y="76" fill="#79c0ff" font-size="12">CONTRAvariant \u2191</text>'
+          + '<rect x="35" y="90" width="120" height="36" rx="4" fill="#161b22" stroke="#79c0ff"/>'
+          + '<text x="95" y="113" text-anchor="middle" fill="#e6edf3" font-size="12">Animal</text>'
+          + '<line x1="95" y1="126" x2="95" y2="155" stroke="#79c0ff" stroke-width="1.5"/>'
+          + '<rect x="35" y="155" width="120" height="36" rx="4" fill="#161b22" stroke="#79c0ff"/>'
+          + '<text x="95" y="178" text-anchor="middle" fill="#e6edf3" font-size="12">Dog</text>'
+          + '<text x="35" y="215" fill="#7d8590" font-size="10">accepts Animal \u21d2 also accepts Dog (super)</text>'
+          + '<text x="' + (w/2 - 60) + '" y="60" fill="#7d8590" font-size="11">return position</text>'
+          + '<text x="' + (w/2 - 60) + '" y="76" fill="#7ee787" font-size="12">COvariant \u2193</text>'
+          + '<rect x="' + (w/2 - 60) + '" y="90" width="120" height="36" rx="4" fill="#161b22" stroke="#7ee787"/>'
+          + '<text x="' + (w/2) + '" y="113" text-anchor="middle" fill="#e6edf3" font-size="12">Animal</text>'
+          + '<line x1="' + (w/2) + '" y1="126" x2="' + (w/2) + '" y2="155" stroke="#7ee787" stroke-width="1.5"/>'
+          + '<rect x="' + (w/2 - 60) + '" y="155" width="120" height="36" rx="4" fill="#161b22" stroke="#7ee787"/>'
+          + '<text x="' + (w/2) + '" y="178" text-anchor="middle" fill="#e6edf3" font-size="12">Dog</text>'
+          + '<text x="' + (w/2 - 60) + '" y="215" fill="#7d8590" font-size="10">returns Dog \u21d2 caller can use as Animal</text>'
+          + '<rect x="' + (w - 220) + '" y="60" width="200" height="170" rx="6" fill="#161b22" stroke="#f778ba"/>'
+          + '<text x="' + (w - 210) + '" y="80" fill="#f778ba" font-size="11" font-weight="600">Mutable = INVARIANT</text>'
+          + '<text x="' + (w - 210) + '" y="100" fill="#e6edf3" font-size="11">Array&lt;Dog&gt;  not  Array&lt;Animal&gt;</text>'
+          + '<text x="' + (w - 210) + '" y="120" fill="#7d8590" font-size="10">read \u21d2 covariant want</text>'
+          + '<text x="' + (w - 210) + '" y="136" fill="#7d8590" font-size="10">write \u21d2 contravariant want</text>'
+          + '<text x="' + (w - 210) + '" y="152" fill="#7d8590" font-size="10">both \u21d2 must be exact</text>'
+          + '<text x="' + (w - 210) + '" y="178" fill="#f85149" font-size="10">Java arrays are unsafely</text>'
+          + '<text x="' + (w - 210) + '" y="192" fill="#f85149" font-size="10">covariant \u2014 ArrayStoreException</text>'
+          + '<text x="' + (w - 210) + '" y="216" fill="#7ee787" font-size="10">Scala List[+T] read-only \u2192 safe</text>'
+          + '</svg>';
+      },
+      sections: [
+        { title: "Width and Depth Subtyping (Records)", text: "Width: `{x:int, y:int, z:int} <: {x:int, y:int}` \u2014 forgetting fields is safe because clients only project the ones they know. Depth: if `T <: U` then `{f: T} <: {f: U}` for read-only access. Together they characterise structural subtyping for immutable records, used in OCaml's object types and TypeScript's structural typing. The key invariant is the Liskov Substitution Principle: every value of the subtype must satisfy every observation a client makes via the supertype interface." },
+        { title: "Function Subtyping", text: "The standard rule, due to Cardelli (1984): `A\u2192B <: C\u2192D` iff `C <: A` (contravariant in arg) and `B <: D` (covariant in result). Intuition: a function that accepts more (any Animal) can stand where one accepting less (Dog) is required; and a function returning more specific (Dog) can stand where one returning less (Animal) is needed. The arrow flips on the left because position-in-position negation flips polarity (cf. logical implication)." },
+        { title: "Variance of Type Constructors", text: "A constructor F is covariant in T if `T <: U` implies `F<T> <: F<U>` (output positions); contravariant if it implies `F<U> <: F<T>` (input positions); invariant otherwise. `List<+T>` (Scala/Kotlin), `Iterator<out T>` (C#) annotate variance at declaration. Java uses use-site variance with wildcards: `List<? extends Animal>` (covariant read), `List<? super Dog>` (contravariant write), bare `List<Dog>` (invariant). Mutable cells are always invariant \u2014 they appear in both polarities." },
+        { title: "Subtyping vs Parametric Polymorphism", text: "These are two distinct ways to write code once for many types. `\u2200T. T \u2192 T` (parametric) gives the same algorithm regardless of T \u2014 only the identity exists. `\u2200T <: Comparable. T \u2192 T \u2192 Boolean` (bounded) lets the body call methods declared on the bound. Java/Scala combine both with F-bounded polymorphism `<T extends Comparable<T>>`. Type classes (Haskell) and traits (Rust) achieve a similar effect without subtyping at all, using ad-hoc polymorphism instead." },
+        { title: "Pitfalls and Famous Bugs", text: "Java's covariant arrays let `Number[] a = new Integer[1]; a[0] = 1.0;` typecheck and throw at runtime. Generics fixed this but couldn't fix arrays for backward compatibility. C# allows array covariance for the same historical reason. Eiffel's CAT-call problem is the same disease in OO method overriding. Rust avoids the issue by tracking variance per parameter automatically and forbidding the bad combinations \u2014 for instance, `&mut T` is invariant in T." }
+      ],
+      keypoints: [
+        { title: "Cardelli's rule", text: "(A\u2192B) <: (C\u2192D)  \u21d4  C <: A  \u2227  B <: D   (contra-arg, co-result)" },
+        { title: "Java wildcard mnemonic", text: "PECS: Producer Extends, Consumer Super. `List<? extends T>` to read, `List<? super T>` to write." },
+        { title: "Mutable cells invariant", text: "`ref T` cannot be co- or contravariant; otherwise `let r:ref Animal = new ref Dog in r := Cat` typechecks unsoundly." },
+        { title: "Bounded polymorphism", text: "Scala `def max[A <: Ordered[A]](xs: List[A]): A = \u2026`  \u2014 combines parametric (works for any A) with subtype (knows A has compare)." }
+      ]
+    }
+  ],
+
+  useCases: [
+    {
+      id: "uc-dsl-embedding", title: "Embedding a DSL with Tagless Final",
+      desc: "Build a small expression DSL that supports adding both new operations and new variants without modifying existing code \u2014 the canonical solution to the expression problem.",
+      icon: "\ud83e\udd16", color: "#7ee787",
+      summary: "<strong>Tagless-final</strong> encodes a DSL as a type class whose methods are the constructors. Each <strong>carrier type</strong> is one interpretation \u2014 evaluator, pretty-printer, optimiser, type-checker \u2014 and the compiler picks it from the expected return type. The result solves the <strong>expression problem</strong>: new operations are new instances (zero edits), new variants are subclass type classes (zero edits to existing terms).",
+      pipeline: "  surface program (Sym r => r)\n        \u2502\n        \u25bc  type-driven dispatch\n  \u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u252c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u252c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510\n  \u25bc       \u25bc       \u25bc         \u25bc\n Eval     Pretty   Optimise   TypeCheck   \u2190 instances = interpretations\n  \u2502       \u2502       \u2502         \u2502\n Int    String   AST'      Either Err Ty",
+      metrics: [
+        { label: "Compile-time dispatch", value: "0 ns runtime cost (monomorphised)" },
+        { label: "GHC core size / interpreter", value: "~5\u201310 lines of Core per instance" },
+        { label: "Expression problem solved", value: "O(1) edits to add op or variant" },
+        { label: "Used in production", value: "Servant API DSL, Selda, Hasura GraphQL compiler" }
+      ],
+      extensions: "Once comfortable, study <strong>GADTs and final-encoding for typed ASTs</strong>, <strong>Oleg Kiselyov's typed tagless-final partial evaluator</strong>, and the dual <strong>initial encoding with cata/anamorphisms</strong> (recursion-schemes). For Java/Scala, read Oliveira & Cook's <em>Extensibility for the Masses</em> and the modern <strong>Scala 3 given/using</strong> rework of type classes.",
+      steps: [
+        { title: "1. Define the symbolic interface", component: "Type class / trait", proto: "Haskell",
+          intuition: "Replace data constructors with <strong>type-class methods</strong> \u2014 then the carrier type chooses the interpretation, not a pattern match.",
+          complexity: "O(1) per term node \u2014 each method is a direct call after monomorphisation",
+          detail: "Instead of an algebraic data type, expose constructors as methods of a type class parameterised by the carrier type r. The carrier becomes the choice of interpretation \u2014 evaluator, pretty-printer, optimiser \u2014 selected at use site by the desired return type.",
+          code: "class Sym r where\n  lit :: Int -> r\n  add :: r -> r -> r\n  mul :: r -> r -> r\n\n-- A program is polymorphic in the carrier:\nprog :: Sym r => r\nprog = add (lit 3) (mul (lit 2) (lit 4))",
+          example: "GHC monomorphises <code>prog :: Eval</code> down to a single <code>Eval 11</code> at compile time \u2014 no dictionary lookup at runtime, identical assembly to hand-written code.",
+          pitfall: "Forgetting to <strong>generalise</strong> the program to <code>Sym r => r</code>. If you write <code>prog :: Eval</code> directly, you lose polymorphism and can never reinterpret it as a printer.",
+          refs: [{ label: "Carette, Kiselyov, Shan \u2014 Finally Tagless", url: "https://okmij.org/ftp/tagless-final/JFP.pdf" }] },
+        { title: "2. Add a new interpretation (= new operation)", component: "Type-class instance", proto: "Haskell",
+          intuition: "An <strong>instance is a fold</strong>: it tells the compiler how to collapse each constructor into the carrier.",
+          complexity: "O(n) over the term tree, with zero allocations for unboxed carriers like Int",
+          detail: "Each interpretation is an instance of Sym for some concrete carrier. Adding pretty-printing requires zero edits to existing code \u2014 new file, new instance.",
+          code: "newtype Eval = Eval { run :: Int }\ninstance Sym Eval where\n  lit n         = Eval n\n  add (Eval a)(Eval b) = Eval (a+b)\n  mul (Eval a)(Eval b) = Eval (a*b)\n\nnewtype Pp = Pp { pp :: String }\ninstance Sym Pp where\n  lit n   = Pp (show n)\n  add a b = Pp (\"(\" ++ pp a ++ \"+\" ++ pp b ++ \")\")\n  mul a b = Pp (\"(\" ++ pp a ++ \"*\" ++ pp b ++ \")\")",
+          example: "Servant\u2019s API DSL has \u226525 instances of the same combinators (client gen, server, swagger, mock\u2026). Adding the OpenAPI generator was a single new module, no breaking changes.",
+          pitfall: "Orphan instances (instance written in a third module, not the type\u2019s or class\u2019s home) compile but produce <em>incoherent</em> behaviour when two callers import different sets \u2014 GHC warns but does not refuse." },
+        { title: "3. Add a new variant (= new method)", component: "Class extension", proto: "Haskell",
+          intuition: "New term shapes are <strong>new subclasses</strong>, so existing programs are unchanged and existing interpreters compile untouched.",
+          complexity: "O(1) per new variant \u2014 one method, one default-free instance per carrier you care about",
+          detail: "Extending the language is a one-line subclass; existing programs and interpretations keep working. New programs that use neg require Sym + Neg constraints.",
+          code: "class Sym r => SymNeg r where\n  neg :: r -> r\n\ninstance SymNeg Eval where neg (Eval a) = Eval (-a)\ninstance SymNeg Pp   where neg a = Pp (\"-\" ++ pp a)",
+          pitfall: "If you forget to add a <code>SymNeg</code> instance for a carrier, the program that uses <code>neg</code> won\u2019t type-check at <em>use</em> site \u2014 a baffling error in a different file from the omission." },
+        { title: "4. Run program at multiple types", component: "Type-driven dispatch", proto: "GHC",
+          intuition: "<strong>The type annotation is the dispatch.</strong> Inference picks the instance; the same syntactic term is multiple programs.",
+          detail: "The same syntactic prog runs as evaluator or printer based solely on the expected return type \u2014 type inference selects the instance.",
+          code: "main = do\n  print (run prog)        -- 11\n  putStrLn (pp prog)      -- (3+(2*4))",
+          example: "Hasura compiles one GraphQL query AST into SQL, an HTTP plan, a permission check, and a query-cost estimate \u2014 all four interpreters share the same tagless-final term type.",
+          pitfall: "<strong>MonomorphismRestriction</strong>: a top-level <code>let prog = \u2026</code> without a signature gets defaulted to one concrete carrier the first time it\u2019s used, then refuses to be re-used at another type.",
+          refs: [{ label: "Oleg's tagless-final tutorial", url: "https://okmij.org/ftp/tagless-final/" }] },
+        { title: "5. Cross-language port: Object Algebras in Java", component: "Generic factory interface", proto: "Java 8+",
+          intuition: "Without higher-kinded types, the type class becomes a <strong>generic factory interface</strong> \u2014 same dispatch, more brackets.",
+          complexity: "Same O(n) tree walk; JIT inlines mono-morphic call sites within ~3\u201310 \u00b5s of warmup",
+          detail: "Java port uses generic interfaces as algebras; carriers are concrete classes. Same compositional benefits, with verbose boilerplate \u2014 illustrating why ML-family languages popularised the pattern first.",
+          code: "interface Sym<R> { R lit(int n); R add(R a, R b); R mul(R a, R b); }\n<R> R prog(Sym<R> s) { return s.add(s.lit(3), s.mul(s.lit(2), s.lit(4))); }",
+          example: "Eclipse JDT\u2019s ASTVisitor is morally an object algebra. The <em>Lambda-the-Ultimate Tower</em> blog port to Scala 3 measured a 40% line-count reduction vs. the Java port for the same DSL.",
+          pitfall: "Without HKTs, you can\u2019t abstract over the carrier <em>shape</em> (e.g., <code>Eval[F[_]]</code>). You end up duplicating the algebra for monadic vs. pure interpreters.",
+          refs: [{ label: "Oliveira & Cook \u2014 Extensibility for the Masses", url: "https://www.cs.utexas.edu/~wcook/Drafts/2012/ecoop2012.pdf" }] }
+      ]
+    },
+    {
+      id: "uc-async-scheduler", title: "Async/Await Under the Hood",
+      desc: "Trace how a single-threaded runtime executes async code: from desugaring to state machines to event-loop polling, with the same logical model in JS and Rust.",
+      icon: "\u26a1", color: "#79c0ff",
+      summary: "<strong>async/await is syntactic sugar over state machines.</strong> The compiler chops your function at each <code>await</code> and turns the pieces into transitions of a struct whose fields are the live locals. An <strong>executor</strong> owns the queue of these state machines, polls each one, and parks tasks whose I/O isn\u2019t ready \u2014 the OS thread only blocks when <em>every</em> task is parked.",
+      pipeline: "  async fn fetchUser(id)\n        \u2502  rustc / Babel lower\n        \u25bc\n  enum State { S0, S1(Fut), S2(Fut), Done }   (state machine)\n        \u2502  executor.spawn(task)\n        \u25bc\n  ready queue \u25c0\u2500 waker (re-enqueue on I/O ready)\n        \u2502\n        \u25bc  poll()\n  Pending  \u2192  park(task)  \u2500\u2500\u2500\u2500\u2500\u2510\n  Ready(v) \u2192  resume / return    \u2502\n                                  \u25b2\n                                  \u2514\u2500 epoll/io_uring/kqueue",
+      metrics: [
+        { label: "Tokio task spawn", value: "~150\u2013300 ns (one heap alloc + push)" },
+        { label: "JS Promise.then microtask", value: "~50\u2013120 ns in V8" },
+        { label: "Tokio io_uring throughput", value: ">1M req/s on 8-core, 1 OS thread per core" },
+        { label: "Async function size (Rust)", value: "state machine ~= sum of locals, no hidden heap" }
+      ],
+      extensions: "Next study <strong>structured concurrency</strong> (Trio, Kotlin coroutineScope), <strong>work-stealing schedulers</strong> (Tokio multi-thread, Go runtime), <strong>io_uring</strong> as a kernel-side completion model, and <strong>green-thread runtimes</strong> like Go\u2019s GMP and Erlang BEAM that pre-empt instead of cooperate.",
+      steps: [
+        { title: "1. Source: linear async code", component: "Surface syntax", proto: "JavaScript",
+          intuition: "Each <code>await</code> is a <strong>continuation boundary</strong> \u2014 the rest of the function becomes a callback for when the awaited value resolves.",
+          detail: "The programmer writes apparently sequential code with await suspending at each I/O point. Semantically each await is a continuation boundary \u2014 the rest of the function becomes a callback.",
+          code: "async function fetchUser(id) {\n  const r = await fetch('/u/' + id);   // suspend here\n  const j = await r.json();             // and here\n  return j.name;\n}",
+          pitfall: "<code>async function</code> always returns a Promise even if you <code>return 42</code>. Forgetting <code>await</code> on the call site silently leaks the Promise and produces an <code>UnhandledPromiseRejection</code> when it rejects." },
+        { title: "2. Desugar to CPS / state machine", component: "Compiler transform", proto: "Babel / TS / rustc",
+          intuition: "The compiler stores <strong>live locals as struct fields</strong> so they survive across suspension \u2014 the state machine <em>is</em> the future\u2019s heap frame.",
+          complexity: "State machine size = O(sum of live locals across await points), zero hidden allocations in Rust",
+          detail: "The compiler rewrites the function as a state machine whose transition method is invoked when each awaited future resolves. Local variables become state-machine fields so they survive across suspension points.",
+          code: "// Conceptual lowering (Rust analogue)\nenum FetchUser { S0, S1(FetchFut), S2(JsonFut), Done }\nimpl Future for FetchUser {\n  fn poll(&mut self, cx: &mut Context) -> Poll<String> {\n    loop { match self {\n      S0 => { *self = S1(fetch(id)); }\n      S1(f) => match f.poll(cx) { Pending=>return Pending, Ready(r)=>*self=S2(r.json()) },\n      S2(f) => match f.poll(cx) { Pending=>return Pending, Ready(j)=>return Ready(j.name) },\n      Done  => panic!(\"polled after completion\"),\n    }}\n  }\n}",
+          example: "A deeply nested async function in tokio with a 4 KB buffer local produces a state machine of \u22484 KB \u2014 dropping the future frees the buffer immediately, no GC.",
+          pitfall: "<strong>Self-referential futures</strong>: if a local borrows from another local across an await, you need <code>Pin</code>. Moving a partially-polled future without pinning is UB.",
+          refs: [{ label: "Aaron Turon \u2014 Zero-cost futures in Rust", url: "https://aturon.github.io/blog/2016/08/11/futures/" }] },
+        { title: "3. Event loop / executor schedules wakers", component: "Runtime", proto: "tokio / V8 microtask queue",
+          intuition: "The <strong>Waker</strong> is just \u201chow to put me back on the ready queue\u201d \u2014 the OS notifies it when the syscall completes.",
+          complexity: "O(1) wake + enqueue per ready event; epoll/io_uring scales to ~10\u2075 fds per thread",
+          detail: "An executor owns a queue of tasks. When an I/O source becomes ready, it invokes the associated waker, which re-enqueues the task. The executor pops tasks, calls poll, and either runs them to completion or parks them again.",
+          code: "// Pseudocode for a minimal executor loop\nwhile let Some(task) = ready_queue.pop() {\n  match task.poll(cx_with_waker(&task)) {\n    Ready(_) => continue,           // task done\n    Pending  => /* parked: waker will re-enqueue */\n  }\n}",
+          example: "Tokio\u2019s <em>multi_thread</em> runtime uses work-stealing across N OS threads; on a 16-core box it can keep \u22481M idle TCP connections with <100 MB RSS \u2014 one OS thread per core, the rest are async tasks.",
+          pitfall: "Dropping a Future <em>before</em> it completes is silent cancellation. If it owned a half-written DB transaction, you\u2019re left with a half-state \u2014 design <code>Drop</code> impls accordingly.",
+          refs: [{ label: "MDN \u2014 Event loop", url: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/EventLoop" }] },
+        { title: "4. The shared rules: no preemption, cooperative yields", component: "Concurrency model", proto: "Single-threaded async",
+          intuition: "<strong>Await is the only place control transfers.</strong> Between two awaits the task has the runtime to itself \u2014 hence no locks, but also no rescue from infinite loops.",
+          detail: "Both JS and single-threaded Tokio guarantee that between two awaits no other task runs. This is what lets you mutate shared state without locks \u2014 but it also means a long synchronous loop blocks every other task. The lesson: `await` is the only place control transfers; design for it.",
+          code: "// BAD: blocks the whole loop for 200ms\nasync function jam() { for (let i=0; i<1e9; i++) {} }\n\n// GOOD: yield periodically\nasync function ok() {\n  for (let i=0; i<1e9; i++) if (i%1e6===0) await null;\n}",
+          example: "Discord moved a CPU-heavy permission check off the main async path after p99 latency spiked from 5 ms to 800 ms \u2014 a single hot task starved every other request on that worker.",
+          pitfall: "<code>tokio::sync::Mutex</code> across an <code>await</code> can deadlock with itself in single-threaded runtimes; <code>std::sync::Mutex</code> held across an <code>await</code> can deadlock work-stealing too." },
+        { title: "5. Pitfalls: cancellation, leaked futures, blocking I/O", component: "Operational hazards", proto: "Cross-runtime",
+          intuition: "The runtime can\u2019t protect you from <strong>syscalls it doesn\u2019t know about</strong> \u2014 anything synchronous on the event-loop thread blocks every task.",
+          detail: "Dropping a Rust future at any await point cancels it \u2014 destructors run mid-state-machine, so async cleanup (Drop) must be sync-safe. JS has no cancellation primitive; AbortController is cooperative. Calling sync `fs.readFileSync` or a heavy CPU loop inside an async fn freezes the entire event loop. Mitigate by offloading to a worker (JS) or `spawn_blocking` (Tokio).",
+          example: "Node\u2019s <code>fs.readFileSync</code> on a 100 MB file blocks all I/O for ~400 ms; Cloudflare Workers reject any sync I/O at admission to keep p50 latency \u22641 ms.",
+          pitfall: "<strong>Async <code>Drop</code> doesn\u2019t exist in Rust.</strong> If your future owns an async DB handle that needs to send a ROLLBACK, you must do it before dropping \u2014 the destructor can\u2019t.",
+          refs: [{ label: "Withoutboats \u2014 async/await soundness", url: "https://without.boats/blog/futures-and-segmented-stacks/" }] }
+      ]
+    },
+    {
+      id: "uc-hindley-milner", title: "Type Inference with Hindley\u2013Milner",
+      desc: "Walk the algorithm that gives ML, Haskell, OCaml, Elm and (in restricted form) Rust their \u2018no annotations needed, but rock-solid types\u2019 feel \u2014 from constraint generation to unification to generalisation.",
+      icon: "\ud83d\udd0d", color: "#d2a8ff",
+      summary: "<strong>Hindley\u2013Milner</strong> infers the most general type of every expression with no annotations by (1) generating fresh type variables for unknowns, (2) collecting <strong>equality constraints</strong> from how they\u2019re used, (3) solving them by <strong>unification</strong>, and (4) <strong>generalising</strong> free variables at <code>let</code>-bindings into polymorphic schemes. The result is principal types in (worst-case) exponential but practically linear time.",
+      pipeline: "  source AST\n     \u2502\n     \u25bc  Algorithm W\n  fresh tyvars (\u03b1, \u03b2, \u03b3\u2026)\n     \u2502\n     \u25bc  walk AST, emit constraints\n  [ \u03b1 = Int \u2192 \u03b2 ,  \u03b2 = Bool , \u2026 ]\n     \u2502\n     \u25bc  Robinson unification (union-find)\n  substitution \u03c3 : tyvar \u2192 type\n     \u2502\n     \u25bc  at each let: generalise free \u03b1\u2019s\n  scheme  \u2200\u03b1. \u03b1 \u2192 \u03b1   (principal type)",
+      metrics: [
+        { label: "Worst-case complexity", value: "DEXPTIME-complete (Mairson 1990)" },
+        { label: "GHC type-check, lib:base", value: "~1.5 s for ~140k LoC on Apple M2" },
+        { label: "OCaml typer", value: "~300 k LoC/s on a single core" },
+        { label: "Elm\u2019s helpful errors", value: "Constraint-based localisation since 0.19 (~2018)" }
+      ],
+      extensions: "Beyond plain HM, study <strong>let-should-not-be-generalised</strong> (value restriction in ML), <strong>bidirectional type checking</strong> (Pierce & Turner) used by TypeScript and Rust, <strong>row polymorphism</strong> (PureScript/OCaml objects), <strong>OutsideIn(X)</strong> (GHC\u2019s solver for GADTs/type families), and the <strong>HM(X)</strong> framework for extending HM with constraint domains.",
+      steps: [
+        { title: "1. Fresh type variables for every binder", component: "Constraint generator", proto: "Algorithm W (Damas\u2013Milner)",
+          intuition: "<strong>If you don\u2019t know the type, invent a name.</strong> A unique <code>\u03b1</code> per unknown lets later evidence speak through equations.",
+          complexity: "O(n) AST traversal",
+          detail: "Walk the AST top-down. Each lambda parameter and each let-bound name gets a fresh type variable; literals get their ground type (Int, Bool); function application f x demands that f\u2019s type be \u03b1\u2192\u03b2 for fresh \u03b1, \u03b2 with \u03b1 = type(x) and the application has type \u03b2.",
+          code: "-- For:   \\x -> x + 1\n-- Pick fresh \u03b1 for x.\n-- The body x + 1 needs (+) :: Int -> Int -> Int\n-- so \u03b1 ~ Int and result ~ Int\n-- Hence the lambda has type Int -> Int.",
+          example: "GHC\u2019s typechecker emits ~5\u201310 fresh tyvars per non-trivial function; the constraint set fits in CPU cache for most modules, which is why HM feels instantaneous.",
+          pitfall: "Confusing <strong>rigid</strong> (skolem) variables with <strong>flexible</strong> (unification) ones. A user-written <code>forall a. a -> a</code> introduces a skolem you cannot unify with <code>Int</code>." },
+        { title: "2. Generate equality constraints from usage", component: "Constraint collection", proto: "HM",
+          intuition: "Every operator or application is an <strong>equation between types</strong>. The constraint set is your proof obligation.",
+          complexity: "O(n) constraints for an n-node AST in practice; O(n\u00b2) in pathological let-nesting",
+          detail: "Each use of an operator or function instantiates its polymorphic scheme with fresh tyvars and emits the corresponding equalities. <code>if c then t else e</code> emits <code>c ~ Bool</code> and <code>t ~ e</code>. Pattern-match emits one set per arm plus an <em>equal-arms</em> constraint.",
+          code: "-- map :: (a -> b) -> [a] -> [b]\n-- For   map (\\x -> x+1) xs\n-- Instantiate: a \u21a6 \u03b1, b \u21a6 \u03b2  giving\n--   (\u03b1 -> \u03b2)   ~ Int -> Int       -- from the lambda\n--   [\u03b1]        ~ typeof xs\n--   result     ~ [\u03b2]" },
+        { title: "3. Solve by unification (Robinson)", component: "Solver", proto: "Union-find with occurs check",
+          intuition: "Unification = <strong>recursive structural equality on types</strong>, with the occurs check preventing infinite types like <code>\u03b1 = \u03b1 \u2192 \u03b1</code>.",
+          complexity: "Near-linear with union-find: O(n \u00b7 \u03b1(n)). Naive implementations are O(n\u00b2).",
+          detail: "Process constraints one at a time. To unify two types: if both are the same constructor, unify their arguments; if one is a tyvar \u03b1, bind it to the other (after the occurs check); else fail with a type mismatch.",
+          code: "// unify(\u03b1, Int)        \u2192 \u03c3 = { \u03b1 \u21a6 Int }\n// unify(\u03b1\u2192\u03b2, Int\u2192Bool) \u2192 \u03c3 = { \u03b1 \u21a6 Int, \u03b2 \u21a6 Bool }\n// unify(\u03b1, \u03b1\u2192\u03b2)        \u2192 occurs-check FAIL (infinite type)",
+          example: "OCaml\u2019s typer uses a <em>level-based</em> union-find that produces ~300 k LoC/s on a laptop; GHC\u2019s solver is slower (~50 k LoC/s) because it handles constraints (type classes, families) on top of plain unification.",
+          pitfall: "The classic <em>infinite type</em> error \u2014 <code>occurs check: cannot construct the infinite type a ~ [a]</code> \u2014 almost always means you wrote <code>x = [x]</code> instead of <code>x : [x]</code>." },
+        { title: "4. Generalise at let-bindings", component: "Polymorphism", proto: "Damas\u2013Milner let-rule",
+          intuition: "Free tyvars that <strong>don\u2019t leak into the surrounding scope</strong> become universally quantified \u2014 that\u2019s where polymorphism is born.",
+          complexity: "O(|env|) per let to compute free vars; amortises to O(n) total",
+          detail: "After solving constraints for the binding, compute the free tyvars of the inferred type minus those free in the enclosing environment, and quantify them. The result is a type scheme that can be instantiated fresh at every use site.",
+          code: "-- After solving:  id : \u03b1 -> \u03b1   with \u03b1 free in env? NO.\n-- Generalise to:  id : \u2200\u03b1. \u03b1 -> \u03b1\n--\n-- At each use site, instantiate with a fresh tyvar:\n--   id 3       -- \u03b1 \u21a6 Int  \u21d2 Int\n--   id \"hi\"    -- \u03b1 \u21a6 Str  \u21d2 Str",
+          pitfall: "<strong>Value restriction</strong>: in ML and OCaml, expressions that are not syntactic values aren\u2019t generalised, to prevent unsoundness with mutable references. <code>let r = ref None</code> infers a monomorphic, weakly polymorphic type." },
+        { title: "5. Limits & extensions in real compilers", component: "Beyond pure HM", proto: "GHC OutsideIn / Rust / TS",
+          intuition: "Real languages add features (type classes, GADTs, subtyping) that break some HM guarantees \u2014 the typer becomes a <strong>constraint solver</strong> with side-information.",
+          detail: "GHC layers OutsideIn(X) on top of HM to keep inference decidable in the presence of GADTs and type families; Rust uses bidirectional checking plus a Hindley-Milner core but requires annotations on functions; TypeScript abandons principality for usability. All pay for power with more annotations or worse error locality.",
+          example: "GHC\u2019s <em>typed holes</em> and Elm\u2019s error spans both come from keeping a <em>residual</em> constraint store and reporting the smallest contradiction \u2014 a direct descendant of HM tooling.",
+          pitfall: "Adding <strong>subtyping</strong> (Java, Scala) loses principal types: there\u2019s no unique most-general type for <code>\\x -> x.length</code> if multiple classes have a <code>length</code>. Languages cope by requiring annotations or by using local type inference only.",
+          refs: [{ label: "Damas & Milner 1982 \u2014 Principal type-schemes", url: "https://web.cs.wpi.edu/~cs4536/c12/milner-damas_principal_types.pdf" }, { label: "GHC OutsideIn(X)", url: "https://www.microsoft.com/en-us/research/publication/outsideinx-modular-type-inference-with-local-assumptions/" }] }
+      ]
+    },
+    {
+      id: "uc-gc-strategies", title: "Garbage Collection: From Refcount to Generational",
+      desc: "Compare the four canonical automatic-memory strategies side by side \u2014 reference counting, mark-and-sweep, copying, and generational \u2014 with the real pause numbers from Python, Go, Java, and .NET.",
+      icon: "\u267b\ufe0f", color: "#ffa657",
+      summary: "Every managed language sits somewhere on a tradeoff between <strong>throughput</strong>, <strong>pause time</strong>, and <strong>memory overhead</strong>. <strong>Reference counting</strong> (CPython, Swift ARC) is incremental but costly per pointer; <strong>mark-and-sweep</strong> is throughput-friendly but stop-the-world; <strong>copying / semispace</strong> halves heap to compact in one pass; <strong>generational</strong> exploits the weak-generational hypothesis \u2014 most objects die young \u2014 to make 95% of collections cheap.",
+      pipeline: "  allocation \u2192 young gen (Eden)\n                  \u2502\n                  \u25bc  minor GC (frequent, ~1\u201310 ms)\n                copying collector\n                  \u2502 survivor +1 age\n                  \u25bc  promotion threshold\n              old / tenured gen\n                  \u2502\n                  \u25bc  major GC (rare, mark-sweep-compact)\n                concurrent / parallel\n\n  side-band:   write barriers track old\u2192young refs (card table / remembered set)",
+      metrics: [
+        { label: "Go (>=1.5) STW pause", value: "<1 ms p99, concurrent tri-colour" },
+        { label: "Java ZGC pause", value: "<1 ms regardless of heap (up to 16 TB)" },
+        { label: ".NET Server GC pause", value: "~5\u201310 ms minor, ~30\u2013100 ms full" },
+        { label: "CPython refcount overhead", value: "~15\u201320% of CPU on alloc-heavy code" },
+        { label: "Swift ARC retain/release", value: "~2\u20135 ns per op, often elided by ARC optimiser" }
+      ],
+      extensions: "Study <strong>concurrent marking</strong> (Go\u2019s tri-colour with write barriers, Java G1/ZGC/Shenandoah), <strong>region-based memory</strong> (MLKit, Cyclone, Rust\u2019s arenas), <strong>compressed pointers</strong> (HotSpot CompressedOops), and the <strong>weak generational hypothesis</strong> empirical studies (Ungar 1984, Blackburn et al.).",
+      steps: [
+        { title: "1. Reference counting", component: "Per-pointer eager scheme", proto: "CPython / Swift ARC",
+          intuition: "<strong>Free as soon as nobody points to me.</strong> Every assignment bumps a counter; when it hits zero, free.",
+          complexity: "O(1) per assignment, but every assignment pays the cost. Cyclic garbage is leaked unless a backup tracer runs.",
+          detail: "Each object carries an integer refcount. Assignments do retain (++) on the new target and release (\u2013\u2013) on the old; release at zero recursively decrements and frees. Cycles (A\u2192B\u2192A) never reach zero, so CPython runs an auxiliary generational cycle collector and Swift relies on programmer-inserted <code>weak</code>/<code>unowned</code>.",
+          code: "// Conceptual ARC lowering of  obj.field = newVal\nretain(newVal);\nrelease(obj.field);  // may cascade-free\nobj.field = newVal;",
+          example: "CPython spends roughly 15\u201320% of CPU on refcount ops in alloc-heavy workloads (Skybison benchmarks). Swift ARC is faster because the optimiser elides ~70% of retain/release pairs intra-function.",
+          pitfall: "<strong>Cycles leak silently.</strong> A parent \u2194 child reference in Swift without <code>weak</code> looks correct, passes tests, and leaks the entire view controller tree." },
+        { title: "2. Mark-and-sweep", component: "Tracing collector", proto: "Classical Lisp / early JVM",
+          intuition: "<strong>Find what\u2019s reachable, free everything else.</strong> Two phases: walk from roots, then sweep unmarked.",
+          complexity: "O(reachable) mark + O(heap) sweep \u2014 pause proportional to <em>total</em> heap, not just garbage",
+          detail: "Phase 1 (mark) starts from roots (stack, globals, registers) and DFS-marks every reachable object. Phase 2 (sweep) walks the whole heap, freeing unmarked objects and resetting marks. Simple, no relocation, fragments memory.",
+          code: "// Pseudocode\nmark(roots);\nfor obj in heap:\n    if not obj.marked: free(obj)\n    else: obj.marked = false",
+          pitfall: "Stop-the-world pauses on a 4 GB heap can be 200\u20131000 ms with naive mark-sweep \u2014 unacceptable for interactive systems. This is why every modern GC adds concurrency, generations, or both." },
+        { title: "3. Copying / semispace (Cheney)", component: "Compacting collector", proto: "ML, OCaml minor heap, V8 Scavenger",
+          intuition: "Divide heap in two. <strong>Copy live objects to the empty half;</strong> the dead half is freed in one stroke.",
+          complexity: "O(live) \u2014 dead objects cost nothing. Half the heap is always idle.",
+          detail: "Allocate linearly in from-space until full; on collection, BFS-copy live objects to to-space, updating pointers via forwarding addresses; flip the spaces. Compaction is free; allocation is a single bump-pointer; the cost is 2\u00d7 address space.",
+          code: "// Cheney's algorithm (queue = scan pointer)\nfor root in roots: forward(root)\nwhile scan < free:\n    for field in scan.fields: forward(field)\n    scan += sizeof(scan)\nflip()",
+          example: "OCaml\u2019s minor heap is a 256 KB semispace; a minor GC takes ~50\u2013500 \u00b5s. V8\u2019s young-gen Scavenger is the same idea sized to L2/L3 cache." },
+        { title: "4. Generational (weak hypothesis)", component: "Tiered tracing", proto: "HotSpot G1, .NET, V8, OCaml",
+          intuition: "<strong>Most objects die young.</strong> Collect the young region often and cheaply; promote survivors and rarely scan the old region.",
+          complexity: "Minor GC: O(young live). Major GC: O(heap), but rare. With write barriers + remembered sets, total cost \u224a O(allocation).",
+          detail: "Heap is split into young (Eden + survivor) and old (tenured). New allocations land in Eden. A <em>minor GC</em> is a copying collection of the young region; survivors are copied to a survivor space, then promoted to old after surviving N collections. A <em>major GC</em> (less frequent) traces the whole heap. <strong>Write barriers</strong> record old\u2192young pointers so the minor GC doesn\u2019t have to scan the old generation.",
+          code: "// On every pointer store  old.field = young  (Java HotSpot card-marking)\ncard_table[((uintptr_t)&old.field) >> 9] = DIRTY;",
+          example: "HotSpot G1 on a 32 GB heap: minor GC \u22485\u201320 ms; mixed GC \u224850\u2013200 ms; ZGC keeps both <1 ms by being fully concurrent. .NET Server GC tunes the same tradeoff with three generations and a Large Object Heap.",
+          pitfall: "<strong>Write-barrier cost</strong>: every reference store pays \u22481\u20133 ns. In tight loops that thrash pointers (linked-list rewrites) the barrier can dominate \u2014 hence value types and primitive arrays for hot paths." },
+        { title: "5. Concurrent & low-latency frontiers", component: "Modern GCs", proto: "Go, ZGC, Shenandoah",
+          intuition: "<strong>Do GC work while the mutator runs.</strong> Pay a small per-op cost (read or write barrier) to make pauses sub-millisecond.",
+          detail: "Tri-colour marking with concurrent mark and concurrent sweep eliminates the long mark pause. ZGC and Shenandoah use coloured pointers / Brooks forwarding pointers and a <em>load barrier</em> on every reference read, paying ~1\u20135% throughput to keep pauses <1 ms on terabyte heaps. Go optimises for latency over throughput \u2014 a deliberate language-design choice.",
+          example: "Discord migrated from Go to Rust on one latency-critical service partly because Go GC, even at sub-ms pause, still cost 20\u201330% CPU at p99 on their workload \u2014 the throughput tax of low-pause GC.",
+          pitfall: "<strong>Allocation rate matters more than heap size.</strong> A 1 GB heap that allocates 1 GB/s is harder than a 100 GB heap that allocates 10 MB/s \u2014 GC tuning starts with measuring allocation pressure.",
+          refs: [{ label: "Jones, Hosking, Moss \u2014 The Garbage Collection Handbook", url: "https://gchandbook.org/" }, { label: "Go GC pacing", url: "https://go.dev/doc/gc-guide" }] }
+      ]
+    },
+    {
+      id: "uc-ownership-borrow", title: "Ownership & Borrow Checking (Rust)",
+      desc: "Trace how Rust statically guarantees memory and data-race safety without a GC \u2014 from move semantics to lifetimes to NLL and the borrow checker\u2019s rules.",
+      icon: "\ud83d\udd12", color: "#ff7b72",
+      summary: "Rust replaces a runtime GC with a <strong>compile-time discipline</strong>: every value has exactly one owner, references are tracked by <strong>lifetimes</strong>, and the <strong>borrow checker</strong> enforces the rule <em>aliasing XOR mutation</em>. The payoff is C-level performance with no use-after-free, no data races, and no double-free \u2014 at the cost of a steep learning curve dominated by lifetime errors.",
+      pipeline: "  source\n     \u2502  parse + HIR\n     \u25bc\n  type & trait check (HM-style)\n     \u2502\n     \u25bc  lower to MIR\n  MIR with explicit moves & borrows\n     \u2502\n     \u25bc  borrow checker (Polonius / NLL)\n   region inference: lifetimes solved\n     \u2502\n     \u25bc  pass? \u2192 codegen (LLVM)  no runtime overhead\n     fail? \u2192 \"cannot borrow ... as mutable\u2026\"",
+      metrics: [
+        { label: "Runtime cost of safety", value: "0 \u2014 all checks are compile-time" },
+        { label: "Borrow-check time (rustc)", value: "~5\u201315% of total compile time" },
+        { label: "Memory-safety CVEs in Rust stdlib", value: "0 in safe code since 1.0 (2015)" },
+        { label: "Android: % of memory CVEs in Rust", value: "0 of 1500+ in 2022\u20132024 (Google data)" }
+      ],
+      extensions: "Beyond the basics, study <strong>Polonius</strong> (the next-gen borrow checker as Datalog), <strong>Stacked Borrows / Tree Borrows</strong> (the formal model for <code>unsafe</code>), <strong>Pin and self-referential types</strong>, and <strong>linear types in Haskell / Idris / Granule</strong> for the broader theoretical context.",
+      steps: [
+        { title: "1. Ownership: one owner, scope ends \u21d2 drop", component: "Move semantics", proto: "Rust",
+          intuition: "<strong>Owners destroy.</strong> Pass a value by value and you give it away \u2014 the old binding is statically unusable.",
+          complexity: "O(1) at runtime: a drop is just the destructor; no refcount, no GC",
+          detail: "Each value has exactly one owner. Assignment and function calls move the value by default \u2014 the source becomes uninitialised at compile time. When the owner\u2019s scope ends, <code>Drop::drop</code> runs deterministically (RAII).",
+          code: "let s = String::from(\"hi\");\nlet t = s;          // move: s is now invalid\n// println!(\"{}\", s); // ERROR: borrow of moved value\nprintln!(\"{}\", t);  // OK\n// at end of scope, t.drop() frees the heap buffer",
+          example: "A Rust HashMap drop on 10M entries runs in ~30 ms with no pause variance; a Java HashMap of the same size produces 10\u201330 ms GC pauses for years until it\u2019s collected.",
+          pitfall: "<code>Copy</code> types (integers, <code>&T</code>) <em>look</em> like moves but actually duplicate. Adding <code>Clone</code> + accidentally relying on <code>Copy</code> creates surprising aliasing later." },
+        { title: "2. Borrowing: shared XOR mutable", component: "Reference rules", proto: "Rust",
+          intuition: "<strong>Aliasing XOR mutation.</strong> Many readers <em>or</em> one writer \u2014 never both \u2014 means no race, no aliased mutation surprises.",
+          complexity: "Compile-time check, O(MIR size); zero runtime cost",
+          detail: "Borrows produce references: <code>&T</code> (shared, may coexist with other shared) or <code>&mut T</code> (exclusive). At any program point, a value has either any number of <code>&T</code>, or exactly one <code>&mut T</code>, or neither. This rule alone eliminates data races in safe code.",
+          code: "let mut v = vec![1,2,3];\nlet r1 = &v;          // shared borrow\nlet r2 = &v;          // OK: multiple shared\n// let m = &mut v;    // ERROR while r1/r2 live\nprintln!(\"{} {}\", r1[0], r2[0]);\nlet m = &mut v;       // OK now: shared borrows ended\nm.push(4);",
+          pitfall: "<strong>Iterator invalidation</strong> caught at compile time: <code>for x in &v { v.push(\u2026) }</code> won\u2019t compile, where C++ would silently segfault on reallocation." },
+        { title: "3. Lifetimes: names for region of validity", component: "Region inference", proto: "Rust",
+          intuition: "A <strong>lifetime is a name for \u2018how long this reference is valid\u2019</strong>. The compiler infers them; you annotate when ambiguous.",
+          complexity: "Region constraints are solved during borrow check; near-linear in MIR size",
+          detail: "Every reference carries a (mostly implicit) lifetime. Function signatures with multiple references need explicit lifetime parameters when the relationship between input and output references matters. The compiler enforces that no reference outlives its referent.",
+          code: "// Compiler can't infer which input the output refers to\nfn longest<'a>(x: &'a str, y: &'a str) -> &'a str {\n    if x.len() > y.len() { x } else { y }\n}\n// The 'a says: the result lives at least as long as both inputs.",
+          example: "Most lifetime annotations are elided by three simple rules (RFC 141); ~95% of Rust functions need no explicit <code>'a</code>. The visible 5% are typically struct fields that store references.",
+          pitfall: "<strong>Lifetime in struct fields</strong> is contagious. Adding <code>&'a str</code> to a struct field makes every consumer generic over <code>'a</code> and rules out long-lived storage. Prefer owned <code>String</code> unless you genuinely need zero-copy." },
+        { title: "4. Non-lexical lifetimes (NLL)", component: "Borrow-check refinement", proto: "Rust 2018+",
+          intuition: "Borrows end at <strong>last use</strong>, not end of scope \u2014 so the checker accepts code humans expected to work.",
+          complexity: "Computed from MIR liveness, still near-linear",
+          detail: "Pre-2018 Rust ended every borrow at the end of its lexical scope, rejecting many obviously safe programs. NLL computes borrow extent from data-flow on MIR \u2014 a borrow lives until its last use \u2014 which is both more permissive and more intuitive.",
+          code: "let mut v = vec![1,2,3];\nlet r = &v[0];\nprintln!(\"{}\", r);   // r last used here\nv.push(4);           // OK under NLL (pre-NLL: ERROR)",
+          example: "Edition-2018 saw a measurable drop in beginner-error rate on r/rust because NLL eliminated a whole class of \u201cwhy doesn\u2019t this compile?\u201d patterns." },
+        { title: "5. Unsafe escape hatches \u2014 and their cost", component: "unsafe blocks", proto: "Rust",
+          intuition: "<strong>Inside <code>unsafe</code>, you become the type-checker.</strong> The compiler still helps with everything else.",
+          detail: "<code>unsafe</code> unlocks five abilities: dereferencing raw pointers, calling unsafe fns, mutating statics, implementing unsafe traits, and accessing unions. It is not a bypass for the type system \u2014 the borrow rules still apply to references derived from raw pointers. Audited <code>unsafe</code> blocks form the foundation (Vec, RefCell, channels) on top of which safe code is built.",
+          code: "// Building a safe abstraction on unsafe primitives\npub fn split_at_mut<T>(s: &mut [T], i: usize) -> (&mut [T], &mut [T]) {\n    let len = s.len();\n    let ptr = s.as_mut_ptr();\n    assert!(i <= len);\n    unsafe {\n        (std::slice::from_raw_parts_mut(ptr,         i),\n         std::slice::from_raw_parts_mut(ptr.add(i), len - i))\n    }\n}",
+          example: "The 2020 RustSec audit of the top 100 crates found that <strong>most safety bugs live in <code>unsafe</code> blocks doing pointer arithmetic in collections / FFI</strong>. Hence Miri, Loom, and the Stacked Borrows model.",
+          pitfall: "<code>unsafe</code> is not contagious in the type system but <strong>is</strong> contagious in your reasoning: a soundness bug inside <code>unsafe</code> can corrupt safe code far away. Treat every <code>unsafe</code> block as a proof obligation.",
+          refs: [{ label: "The Rustonomicon", url: "https://doc.rust-lang.org/nomicon/" }, { label: "RFC 2094 \u2014 Non-Lexical Lifetimes", url: "https://rust-lang.github.io/rfcs/2094-nll.html" }] }
+      ]
+    }
+  ],
+
+  // === BEGIN glossary v1 data placeholder ===
+  glossary: [
+    { id: "closures", term: "Closure", category: "concepts",
+      short: "A function bundled with the lexical environment it captured at definition time.",
+      long: "A closure pairs a function value with bindings for every free variable it references in its enclosing scope. Because the environment outlives the textual block, closures give you private state, partial application, and the ability to return functions from functions. Most languages capture by reference, which produces the classic 'loop variable' surprise.",
+      seeAlso: ["hof", "lambda-calc", "currying"] },
+    { id: "hof", term: "Higher-Order Function", aka: "HOF", category: "concepts",
+      short: "A function that takes or returns another function.",
+      long: "HOFs are the glue of functional programming: map, filter, fold, compose, and curry are all higher-order. They enable behaviour parameterisation without inheritance and let you build small combinators that compose into large pipelines. Most modern mainstream languages now treat functions as first-class values to support them.",
+      seeAlso: ["closures", "currying", "lambda-calc"] },
+    { id: "lambda-calc", term: "Lambda Calculus", category: "concepts",
+      short: "A minimal formal system with three rules — variable, abstraction, application — that is Turing-complete.",
+      long: "Devised by Alonzo Church, the λ-calculus is the theoretical kernel underneath every functional language. Computation proceeds by β-reduction (substitution). Typed variants (simply typed, System F, Calculus of Constructions) form the basis of modern type systems and the Curry–Howard correspondence.",
+      seeAlso: ["curry-howard", "semantics", "type-inference"] },
+    { id: "currying", term: "Currying", category: "concepts",
+      short: "Translating a multi-argument function into a chain of one-argument functions.",
+      long: "Named after Haskell Curry, currying lets `f(x, y, z)` be written `f(x)(y)(z)`, producing intermediate functions you can partially apply. ML/Haskell curry by default; many languages emulate it with closures. The dual is uncurry, and the equivalence `uncurry (curry f) = f` underpins point-free style.",
+      seeAlso: ["closures", "hof"] },
+    { id: "pattern-match", term: "Pattern Matching", category: "concepts",
+      short: "Destructuring data by shape, binding sub-components in one syntactic step.",
+      long: "Pattern matching combines case analysis with binding: `case xs of [] -> 0 | x:rest -> 1 + length rest`. Compilers warn about non-exhaustive matches and redundant clauses, turning many runtime errors into compile-time errors. Modern non-functional languages (Scala, Rust, C#, Python 3.10+) have adopted it for ADTs and records.",
+      seeAlso: ["adt", "static-typing"] },
+    { id: "adt", term: "Algebraic Data Type", aka: "ADT / sum type", category: "concepts",
+      short: "A type formed by a tagged union of variants, each carrying zero or more fields.",
+      long: "ADTs combine product types (records, tuples) with sum types (tagged unions): `data Maybe a = Nothing | Just a`. Together they form a small algebra in which most domain models can be expressed precisely, and pattern matching makes consumption ergonomic. Rust's `enum`, Swift's `enum`, and TypeScript discriminated unions are all ADTs in disguise.",
+      seeAlso: ["pattern-match", "static-typing", "polymorphism"] },
+    { id: "type-inference", term: "Type Inference", category: "concepts",
+      short: "Statically deducing types of expressions without explicit annotations.",
+      long: "Type inference frees the programmer from writing types while preserving the safety of a static checker. Most ML-family languages use Hindley–Milner, which infers principal (most general) types via unification. Bidirectional and constraint-based variants extend the idea to GADTs, dependent types, and subtyping.",
+      seeAlso: ["hindley-milner", "static-typing", "polymorphism"] },
+    { id: "hindley-milner", term: "Hindley–Milner", aka: "Algorithm W / Damas–Milner", category: "concepts",
+      short: "The classic type-inference algorithm for ML-style polymorphism, based on unification and let-generalisation.",
+      long: "HM infers a principal type scheme `∀α. τ` for every let-bound expression: it walks the AST, generates equality constraints, and solves them with Robinson unification. Generalisation at `let` is what gives `id` the type `∀α. α → α`. The classical algorithm runs in near-linear time but is theoretically DEXPTIME-complete due to nested lets.",
+      seeAlso: ["type-inference", "polymorphism", "static-typing"] },
+    { id: "polymorphism", term: "Polymorphism", category: "concepts",
+      short: "Code that operates uniformly over many types — parametric, ad-hoc, or subtype.",
+      long: "Parametric polymorphism (generics) is type-blind: `length :: [a] -> Int`. Ad-hoc polymorphism dispatches on type (typeclasses, traits, overloading). Subtype polymorphism uses an `is-a` hierarchy. Strachey's 1967 classification still organises the design space, and most modern languages mix two or three flavours.",
+      seeAlso: ["subtyping", "type-inference", "dispatch"] },
+    { id: "static-typing", term: "Static Typing", category: "concepts",
+      short: "Types are checked before the program runs, at compile time.",
+      long: "A static type system rejects ill-typed programs without executing them, catching whole classes of error and enabling aggressive optimisation. The tradeoff is ceremony and occasional false rejections of safe-but-untypable programs. Soundness means 'well-typed programs don't go wrong' — see Milner's slogan.",
+      seeAlso: ["dynamic-typing", "type-inference", "semantics"] },
+    { id: "dynamic-typing", term: "Dynamic Typing", category: "concepts",
+      short: "Types are associated with values and checked at runtime.",
+      long: "In a dynamically typed language (Python, Ruby, JavaScript, Lisp) variables hold values whose types are interrogated as the program runs. You trade compile-time guarantees for flexibility and rapid iteration, and rely on tests and runtime errors to catch mismatches. Gradual typing reconciles the two ends.",
+      seeAlso: ["static-typing", "duck-typing", "dispatch"] },
+    { id: "subtyping", term: "Subtyping & Variance", category: "concepts",
+      short: "When values of one type can be used wherever another is expected — and how that interacts with generics.",
+      long: "Width and depth subtyping describe record/object compatibility. Variance specifies how a type constructor lifts subtyping: covariant (preserves), contravariant (flips), invariant (neither). Function types are contravariant in the argument and covariant in the result — getting this wrong yields classic array-store exceptions.",
+      seeAlso: ["polymorphism", "static-typing", "dispatch"] },
+    { id: "duck-typing", term: "Duck Typing", category: "concepts",
+      short: "Structural compatibility at runtime: 'if it quacks like a duck, treat it like a duck'.",
+      long: "Duck typing accepts any object that responds to the required messages, regardless of declared type or inheritance. It is the implicit discipline of Python and Ruby, and is formalised statically by structural type systems (Go interfaces, TypeScript). The cost is later failure: type errors show up only when an unsupported message is sent.",
+      seeAlso: ["dynamic-typing", "dispatch", "subtyping"] },
+    { id: "dispatch", term: "Dynamic Dispatch", category: "concepts",
+      short: "Selecting the implementation of a method at runtime based on the receiver's type.",
+      long: "Single-dispatch (most OO languages) routes a call through a vtable or inline cache; multi-method dispatch (CLOS, Julia) selects on the types of all arguments. Inline caches and PICs (polymorphic inline caches) reclaim most of the indirection cost; megamorphic call sites are a known JIT pessimisation.",
+      seeAlso: ["polymorphism", "duck-typing", "jit"] },
+    { id: "lazy-eval", term: "Lazy Evaluation", aka: "call-by-need", category: "concepts",
+      short: "Expressions are evaluated only when their value is demanded, and each result is memoised.",
+      long: "Lazy evaluation (Haskell's default) lets you write infinite data structures, decouple producer and consumer, and skip work whose result is never used. The price is harder reasoning about memory (space leaks via unevaluated thunks) and performance. Strict-by-default languages opt-in via `lazy`, `Lazy<T>`, or thunks.",
+      seeAlso: ["semantics", "evaluation-order", "monads"] },
+    { id: "evaluation-order", term: "Evaluation Strategy", category: "concepts",
+      short: "The rule deciding when and in what order sub-expressions are reduced.",
+      long: "Call-by-value evaluates arguments before applying a function (most languages); call-by-name substitutes them unreduced; call-by-need is call-by-name plus memoisation. Strict vs non-strict semantics differ on whether `f ⊥` may yield a value. Choice of strategy interacts deeply with effects, optimisation, and equational reasoning.",
+      seeAlso: ["lazy-eval", "semantics", "monads"] },
+    { id: "monads", term: "Monad", category: "concepts",
+      short: "An interface (`return`, `bind`) for sequencing computations with structured effects.",
+      long: "A monad is a type constructor `M` with `return : a -> M a` and `bind : M a -> (a -> M b) -> M b` obeying three laws (left identity, right identity, associativity). It generalises 'computation with context': Maybe (failure), List (nondeterminism), IO (effects), State, Cont. Haskell's `do`-notation and Scala's `for`-comprehensions are sugar over `bind`.",
+      seeAlso: ["lazy-eval", "hof", "continuation"] },
+    { id: "continuation", term: "Continuation", category: "concepts",
+      short: "A reified 'rest of the program' captured as a value you can invoke or store.",
+      long: "First-class continuations (Scheme's `call/cc`) let you implement exceptions, generators, coroutines, and backtracking as library code. CPS (continuation-passing style) is the compile-time variant where every function takes an explicit 'what to do next' argument; many compilers use CPS as an IR. Async/await desugars to CPS-like state machines.",
+      seeAlso: ["monads", "concurrency", "semantics"] },
+    { id: "macros", term: "Macros", aka: "syntactic abstraction", category: "concepts",
+      short: "Compile-time program transformations that extend the language with new syntactic forms.",
+      long: "Lisp-family macros operate on the AST and (with hygiene) avoid accidental variable capture. Rust `macro_rules!` and procedural macros, Scala 3 inline+quotes, and Template Haskell give similar power in statically typed settings. The danger is debuggability — generated code is invisible at the call site.",
+      seeAlso: ["semantics", "lambda-calc"] },
+    { id: "mutation", term: "Mutation", aka: "mutable state", category: "concepts",
+      short: "Updating a memory cell in place rather than producing a new value.",
+      long: "Mutation is fast and natural for imperative algorithms but breaks referential transparency and complicates parallelism. Functional languages quarantine it (ML refs, Haskell `IORef`/`STRef`) so the rest of the program stays pure. Persistent data structures recover most of the ergonomics with O(log n) overhead.",
+      seeAlso: ["ownership", "concurrency", "semantics"] },
+    { id: "expression-problem", term: "Expression Problem", category: "concepts",
+      short: "Extending both the data variants and the operations of an ADT without modifying existing code or losing type safety.",
+      long: "Named by Wadler, the expression problem highlights a fundamental tension: OO classes extend easily with new variants (subclasses) but not new operations, while functional ADTs extend easily with new operations (new pattern-matching functions) but not new variants. Type classes, the visitor pattern, tagless final, and open data types are all attempted solutions.",
+      seeAlso: ["adt", "polymorphism", "dispatch"] },
+    { id: "semantics", term: "Semantics", category: "concepts",
+      short: "Formal definitions of program meaning — operational, denotational, axiomatic.",
+      long: "Operational semantics gives reduction rules (small-step, big-step); denotational maps programs to mathematical objects; axiomatic uses pre/post-conditions (Hoare logic). A precise semantics lets you prove soundness, equivalence of optimisations, and correctness of compilers — the foundation of CompCert and CakeML.",
+      seeAlso: ["lambda-calc", "curry-howard", "evaluation-order"] },
+    { id: "curry-howard", term: "Curry–Howard Correspondence", aka: "propositions-as-types", category: "concepts",
+      short: "Programs are proofs, types are propositions, evaluation is proof reduction.",
+      long: "Implication ↔ function type, conjunction ↔ product, disjunction ↔ sum, falsehood ↔ empty type, ∀/∃ ↔ dependent types. The correspondence powers proof assistants like Coq, Agda, Lean, and Idris, where writing a program of type `T` is literally constructing a proof of the proposition `T`.",
+      seeAlso: ["lambda-calc", "static-typing", "semantics"] },
+    { id: "gc", term: "Garbage Collection", aka: "GC", category: "systems",
+      short: "Automatic reclamation of memory that is no longer reachable from program roots.",
+      long: "Tracing collectors (mark-sweep, copying, generational) start from roots and reclaim everything unreachable; reference counting (with cycle detection) reclaims eagerly. Generational hypothesis — 'most objects die young' — drives the nursery/old-gen split used by most production VMs. Tradeoffs: pause time vs throughput vs memory overhead.",
+      seeAlso: ["ownership", "jit", "mutation"] },
+    { id: "ownership", term: "Ownership & Borrowing", category: "systems",
+      short: "Compile-time memory and aliasing discipline via affine/linear types — Rust's signature feature.",
+      long: "Each value has a unique owner; moves transfer ownership; borrows (& and &mut) give temporary access checked by the borrow checker. The rules `one mutable XOR many shared` eliminate data races and use-after-free without a GC, at the cost of a steeper learning curve and occasional fights with the checker.",
+      seeAlso: ["gc", "concurrency", "ffi"] },
+    { id: "concurrency", term: "Concurrency Model", category: "systems",
+      short: "How a language exposes simultaneous tasks — threads, actors, async, CSP, STM.",
+      long: "Shared-memory threading (Java, C++) is fastest but exposes races; the actor model (Erlang) isolates state behind message passing; async/await (Rust, JS, C#) compiles into state machines on a runtime; CSP (Go) uses channels. The choice shapes which bugs are possible: data races, deadlock, livelock, lost updates.",
+      seeAlso: ["ownership", "continuation", "mutation"] },
+    { id: "ffi", term: "Foreign Function Interface", aka: "FFI", category: "systems",
+      short: "A mechanism for calling code written in another language — usually C — from a high-level runtime.",
+      long: "FFI handles ABI compatibility, calling conventions, data-layout marshalling, GC roots across the boundary, and exception/unwind safety. Examples: Python's ctypes/cffi, Java JNI, Rust `extern \"C\"`, Haskell's foreign-import. The hard problems are not the call itself but lifetime, ownership, and asynchronous callbacks across the boundary.",
+      seeAlso: ["gc", "ownership", "concurrency"] },
+    { id: "jit", term: "JIT Compilation", aka: "Just-In-Time", category: "performance",
+      short: "Translating bytecode or source to native code at runtime, using profile data to specialise hot paths.",
+      long: "A JIT (HotSpot, V8, PyPy, .NET RyuJIT) starts in an interpreter or baseline compiler, collects type and branch profiles, then re-compiles hot methods with inlining, escape analysis, and speculation. Deoptimisation bails out when speculation fails. Tiered compilation balances startup latency against peak throughput.",
+      seeAlso: ["gc", "dispatch", "semantics"] }
+  ],
+  // === END glossary v1 data placeholder ===
+
+  problems: [
+    {
+      week: "Functional Foundations", title: "Closures, HOFs, Pattern Matching",
+      items: [
+        { tag: "code", text: "Implement `curry : ('a * 'b -> 'c) -> 'a -> 'b -> 'c` and `uncurry` in SML, then prove `uncurry (curry f) = f` for all f by case analysis.", hint: "Curry returns a function that returns a function \u2014 closures all the way down. Use \u03b7-equivalence on the proof." },
+        { tag: "debug", text: "In Python, `fs = [lambda: i for i in range(3)]; print([f() for f in fs])` prints [2,2,2]. Explain in terms of capture-by-reference and produce two distinct fixes that print [0,1,2].", hint: "One fix uses a default-argument trick; the other introduces an extra binding scope. Both work because they create fresh cells." },
+        { tag: "design", text: "Design a `fold` for a binary tree datatype `data Tree a = Leaf | Node (Tree a) a (Tree a)`. State its type, give two example uses (sum, in-order list), and explain why `foldr`-on-list is a special case.", hint: "Generalise: a fold replaces every constructor with a function. Tree has 2 constructors \u2192 fold takes 2 functions." },
+        { tag: "derive", text: "Show that `map f . map g = map (f . g)` for lists. State which evaluation strategy this equation requires \u2014 does it hold under both eager and lazy semantics? Justify.", hint: "Use induction on the list. The key step is associativity of \u2218; the equation is fine in both strategies because both sides have the same termination behaviour." },
+        { tag: "paper", text: "Read the first 4 sections of Hughes (1990) \"Why Functional Programming Matters\" and summarise in 200 words: what does Hughes claim is the unique modular advantage of HOF + lazy evaluation that imperative languages cannot match?", hint: "Focus on the producer/consumer decoupling enabled by lazy lists, and how HOF expresses gluing.", }
+      ]
+    },
+    {
+      week: "Type Systems", title: "Inference, Variance, Subtyping",
+      items: [
+        { tag: "derive", text: "Run Algorithm W by hand on `let twice = fn f =\u003e fn x =\u003e f (f x) in twice (fn n =\u003e n+1) 5`. Show every constraint, every unification step, and the final principal type of `twice`.", hint: "Expect twice : ('a \u2192 'a) \u2192 'a \u2192 'a after generalisation. Watch the order: generalise at let, instantiate at use." },
+        { tag: "debug", text: "Java compiles `Object[] a = new String[1]; a[0] = 42;` but throws `ArrayStoreException` at runtime. Explain why this is a soundness compromise, contrast with `List<Object> l = new ArrayList<String>()` (which the compiler rejects), and propose what Java would have to give up to fix arrays.", hint: "Arrays are reified and covariant; generics are erased and invariant. Fixing arrays would break legacy code that relies on the covariance." },
+        { tag: "design", text: "Add subtyping to a small ML-like language. Specify the subtyping rules for records, functions, and references, then explain why `ref T` must be invariant. Give a concrete program that would unsoundly typecheck if `ref` were covariant.", hint: "Construct an alias of `ref Animal` to a `ref Dog` cell; assign a Cat through the Animal view." },
+        { tag: "code", text: "Implement Hindley\u2013Milner unification in ~80 lines of OCaml or Haskell: types are `Var of int | Arrow of t * t | Const of string`. Include the occurs-check. Test on `(\u03b1 \u2192 \u03b2) = (int \u2192 \u03b3)`.", hint: "Use a mutable substitution map keyed by var-id, or thread an immutable substitution. The hard part is the occurs check applied after substitution." },
+        { tag: "paper", text: "Read Cardelli (1988) \"A Semantics of Multiple Inheritance\" \u00a72\u20133. In your own words, explain the F-bound `\u2200T <: F[T]` and give two examples (Comparable, Cloneable) where F-bounded polymorphism is essential and ordinary bounded polymorphism is too weak.", hint: "F-bounds let the bound mention T itself \u2014 needed when the supertype's method signature refers to the subtype, e.g. `compareTo(self): T`." }
       ]
     }
   ],
@@ -892,7 +1844,9 @@ if (C.graph && C.graph.nodes && C.graph.nodes.length) tabs.push({ id: 'graph',  
 if (C.deepDives && C.deepDives.length)  tabs.push({ id: 'deepdive', label: '📚 Deep Dives' });
 if (C.useCases && C.useCases.length)    tabs.push({ id: 'usecase',  label: '🔬 Use Cases' });
 if (C.youtube && C.youtube.videos && C.youtube.videos.length) tabs.push({ id: 'appendix', label: '📹 Appendix' });
+if (C.glossary && C.glossary.length)    tabs.push({ id: 'glossary', label: '📖 Glossary' }); /* glossary v1 tab */
 tabs.push({ id: 'problems', label: '🧠 Practice' });
+tabs.push({ id: 'quiz',     label: '🎯 Quiz' });
 
 document.getElementById('toolbar-title').textContent = '🧠 ' + C.course.code;
 document.title = C.course.code + ' — Interactive Study Tool';
@@ -1208,6 +2162,7 @@ function initGraph() {
   // Nodes
   const node = gGraph.selectAll("g.graph-node").data(nodes).enter().append("g")
     .attr("class", "graph-node")
+    .attr("data-id", d => d.id) /* glossary v1 data-id */
     .call(d3.drag().on("start", (evt, d) => { if (!evt.active) simul.alphaTarget(0.3).restart(); d.fx = d.x; d.fy = d.y; })
       .on("drag", (evt, d) => { d.fx = evt.x; d.fy = evt.y; })
       .on("end", (evt, d) => { if (!evt.active) simul.alphaTarget(0); d.fx = null; d.fy = null; }))
@@ -1549,6 +2504,8 @@ if (C.deepDives && C.deepDives.length) {
     // Full view
     const full = document.createElement('div'); full.className = 'dd-full'; full.id = 'dd-full-' + dd.id;
     let fhtml = `<div class="dd-infographic"><h2 style="color:${dd.color}">${dd.icon || ''} ${dd.title}</h2><div class="dd-subtitle">${dd.num || ''}${dd.num && dd.desc ? ' · ' : ''}${dd.desc || ''}</div>`;
+    // Navigator at the top for quick prev/grid/next without scrolling
+    fhtml += `<div class="dd-nav dd-nav-top"><button class="btn" onclick="navDD(-1)">← Prev</button><button class="btn" onclick="showCardGrid()">Grid</button><button class="btn" onclick="navDD(1)">Next →</button></div>`;
     if (dd.svg) fhtml += dd.svg(800, 300);
     // Render top-level content fields (markdown/body/content) as a single section
     const topText = dd.markdown || dd.body || dd.content || dd.detail;
@@ -1570,7 +2527,7 @@ if (C.deepDives && C.deepDives.length) {
       dd.keypoints.forEach(kp => { fhtml += `<div class="dd-kp"><strong>${kp.title}</strong><span>${kp.text || kp.body || ''}</span></div>`; });
       fhtml += '</div>';
     }
-    fhtml += `<div class="dd-nav"><button class="btn" onclick="navDD(-1)">← Prev</button><button class="btn" onclick="showCardGrid()">Grid</button><button class="btn" onclick="navDD(1)">Next →</button></div></div>`;
+    fhtml += `</div>`; // dd-nav v1 top inserted
     full.innerHTML = fhtml;
     fullContainer.appendChild(full);
   });
@@ -1638,6 +2595,20 @@ function showUseCase(idx) {
   html += '<button class="uc-back-btn" onclick="showUseCaseGrid()">← Back to All Use Cases</button>';
   html += `<h2>${uc.icon} ${uc.title}</h2>`;
   html += `<div class="uc-subtitle">${uc.desc}</div>`;
+  if (uc.summary || uc.pipeline || uc.metrics || uc.extensions) {
+    html += '<div class="uc-overview">';
+    if (uc.summary)   html += `<div class="uc-summary">${uc.summary}</div>`;
+    if (uc.pipeline)  html += `<div class="uc-pipeline">${uc.pipeline}</div>`;
+    if (uc.metrics && uc.metrics.length) {
+      html += '<div class="uc-metrics">';
+      uc.metrics.forEach(m => {
+        html += `<div class="uc-metric"><div class="uc-metric-label">${m.label}</div><div class="uc-metric-value">${m.value}</div></div>`;
+      });
+      html += '</div>';
+    }
+    if (uc.extensions) html += `<div class="uc-extensions"><strong>Where to go next:</strong> ${uc.extensions}</div>`;
+    html += '</div>';
+  }
   html += '<div class="uc-flow-controls">';
   html += '<button onclick="ucPrev()">← Previous</button>';
   html += '<button class="primary" onclick="ucNext()">Next Step →</button>';
@@ -1658,8 +2629,14 @@ function showUseCase(idx) {
     html += '<div class="uc-body">';
     html += `<div class="uc-title">${step.title}</div>`;
     html += `<div class="uc-component">📍 ${step.component}</div>`;
-    let detailHtml = `<p>${step.detail}</p><span class="uc-proto">${step.proto}</span>`;
+    let detailHtml = '';
+    if (step.intuition) detailHtml += `<div class="uc-intuition"><strong>💡 Intuition:</strong> ${step.intuition}</div>`;
+    detailHtml += `<p>${step.detail}</p>`;
+    if (step.proto) detailHtml += `<span class="uc-proto">${step.proto}</span>`;
+    if (step.complexity) detailHtml += `<span class="uc-complexity">⏱ ${step.complexity}</span>`;
     if (step.code) detailHtml += `<pre class="uc-code">${step.code}</pre>`;
+    if (step.example) detailHtml += `<div class="uc-example"><strong>📊 In practice:</strong> ${step.example}</div>`;
+    if (step.pitfall) detailHtml += `<div class="uc-pitfall"><strong>⚠ Pitfall:</strong> ${step.pitfall}</div>`;
     if (step.refs && step.refs.length) {
       detailHtml += '<div class="uc-refs">' + step.refs.map(r => `<a href="${r.url}" target="_blank" rel="noopener">${r.label}</a>`).join('') + '</div>';
     }
@@ -1987,10 +2964,80 @@ function toggleUnit(headerRow) {
 
 
 
-window.PROBLEMS_DATA=[{week:'Lambda Calculus',title:'Semantics & Reduction',items:[{tag:'derive',text:'Show that Church numerals satisfy `plus m n` gives `m+n`. Beta-reduce `plus 2 3` step-by-step.'},{tag:'design',text:'Implement `fact` in untyped lambda calculus using the Y combinator. Why cannot you write direct recursion?'}]},{week:'Type Systems',title:'HM, Polymorphism',items:[{tag:'derive',text:'Hindley-Milner infers `let f = \\\\x.x in (f 1, f "hi")` as valid. Show why the let-generalization is necessary — without it, this fails.'},{tag:'debug',text:'Why does OCaml reject `let f = fun x -> x + x in f 1.5`? What inference rule fires?'}]},{week:'Evaluation',title:'Closures, Laziness',items:[{tag:'code',text:'In Python, `[(lambda: i) for i in range(3)]` — all 3 lambdas return 2. Why? Fix with default-arg trick. Explain the closure rule.'},{tag:'derive',text:'Compare strict vs lazy evaluation using `const x y = x` applied to `(1, loop forever)`. In which order of evaluation does it terminate?'}]}];
+window.PROBLEMS_DATA=[
+{week:'Lambda Calculus',title:'Semantics & Reduction',
+ hook:'Everything computable can be written with only λ — variables, abstraction, application. That is the whole machine.',
+ items:[
+  {tag:'derive',star:true,text:'Show that Church numerals satisfy `plus m n` gives `m+n`. Beta-reduce `plus 2 3` step-by-step.',
+   hint:'plus = λm.λn.λf.λx. m f (n f x). Apply f three times to (n f x) reducing 2 first, then watch the structure collapse to λf.λx. f^5 x.'},
+  {tag:'design',star:true,text:'Implement `fact` in untyped lambda calculus using the Y combinator. Why cannot you write direct recursion?',
+   hint:'Untyped λ has no names to recurse on — every binding is a parameter. Y = λf.(λx.f (x x))(λx.f (x x)) hands the function its own fixed point.'},
+  {tag:'derive',text:'Prove that β-reduction is confluent (Church–Rosser). State the diamond property for parallel reduction and sketch why it implies confluence.',
+   hint:'Define ⇒ (parallel β) so any redex reduces in one step. Show ⇒ has the diamond; then →* is the reflexive-transitive closure of ⇒ and confluence follows by tiling.'},
+  {tag:'code',text:'Encode booleans, pairs, and the conditional in pure λ. Test `IF TRUE a b → a` and `IF FALSE a b → b` by hand-reduction.',
+   hint:'TRUE = λx.λy.x, FALSE = λx.λy.y, IF = λb.λt.λe. b t e. Pairs: PAIR = λa.λb.λs. s a b; FST = λp. p TRUE.'}
+ ]},
+{week:'Type Systems',title:'HM, Polymorphism, Proofs',
+ hook:'Curry–Howard: a well-typed program *is* a proof. Programs in System F are exactly proofs in second-order logic.',
+ items:[
+  {tag:'derive',star:true,text:'Hindley–Milner infers `let f = \\x.x in (f 1, f "hi")` as valid. Show why let-generalization is necessary — without it, this fails.',
+   hint:'Without generalization, f gets a fresh metavariable α. Using f at int forces α=int; then f "hi" wants α=string → unification failure. Generalize at the let to ∀α.α→α.'},
+  {tag:'debug',star:true,text:'Why does OCaml reject `let f = fun x -> x + x in f 1.5`? What inference rule fires?',
+   hint:'(+) at default precedence is monomorphic on int. Inference unifies x:int from `x+x`; applying to 1.5 then unifies int=float and fails. Use `+.` for float.'},
+  {tag:'design',text:'Sketch a Curry–Howard correspondence table: pair = ?, sum = ?, function = ?, ∀ = ?, ⊥ = ?. Give one program/proof per row.',
+   hint:'Pair↔∧, Sum↔∨, Fn↔⇒, ∀↔∀, ⊥↔False. `fst : A∧B→A` proves elimination of ∧; `absurd : ⊥→A` proves ex-falso.'},
+  {tag:'code',text:'Implement HM unification in ~80 lines of OCaml/Haskell over `Var of int | Arrow of t*t | Const of string`. Include the occurs-check.',
+   hint:'Carry a substitution map keyed by var-id; resolve fully before binding; reject `α = τ` if α ∈ FV(τ) (occurs-check, else infinite types like α = α→β).'},
+  {tag:'paper',text:'Read Wadler "Propositions as Types" (2015) §1–§4. Summarize in 150 words: what makes the correspondence "discovered, not invented"?',
+   hint:'Independent rediscoveries by Curry (1934), Howard (1969), de Bruijn — different motivations, same isomorphism. Suggests something objective.'}
+ ]},
+{week:'Evaluation & Effects',title:'Closures, Laziness, Monads',
+ hook:'A monad is just a pattern for sequencing computations — `return` lifts, `bind` chains. The "magic" is that this single shape captures IO, state, failure, and async alike.',
+ items:[
+  {tag:'code',star:true,text:'In Python, `[(lambda: i) for i in range(3)]` — all 3 lambdas return 2. Why? Fix with default-arg trick. Explain the closure rule.',
+   hint:'Python captures *by reference*: every lambda shares the same `i` cell, which holds 2 after the loop. `lambda i=i: i` evaluates `i` at definition time and stores it in the parameter.'},
+  {tag:'derive',star:true,text:'Compare strict vs lazy evaluation using `const x y = x` applied to `(1, loop)`. Under which order does it terminate? What is the operational difference?',
+   hint:'Lazy: `loop` is a thunk, never forced — terminates with 1. Strict: arguments evaluated before the call — diverges. Trade-off: laziness allows infinite structures but obscures cost.'},
+  {tag:'design',text:'Show that Maybe and List satisfy the monad laws (left-identity, right-identity, associativity). Why does this matter for refactoring `do`-notation?',
+   hint:'Left: `return x >>= f = f x`. Right: `m >>= return = m`. Assoc: `(m >>= f) >>= g = m >>= (\\x → f x >>= g)`. Laws guarantee `do`-blocks refactor like nested `let`s.'},
+  {tag:'debug',text:'Why does Haskell `foldl (+) 0 [1..1e7]` blow the stack while `foldl\u2032` (strict foldl) does not? What does the seq-strictness actually buy?',
+   hint:'`foldl` builds a chain of unevaluated thunks `((0+1)+2)+3+…`. The strict variant forces the accumulator at each step with `seq`, keeping it WHNF — constant space.'}
+ ]},
+{week:'Memory & Ownership',title:'GC vs Borrow Checker',
+ hook:'Garbage collection trades pauses for ergonomics; ownership trades cognitive load for predictability. Both solve "who frees this?" — at opposite ends.',
+ items:[
+  {tag:'design',star:true,text:'Compare tracing GC, reference counting, and Rust ownership on the program `let v = Vec::new(); spawn(move || use(v)); println!("{:?}", v);`. Which schemes accept it? Which reject?',
+   hint:'GC: fine (both threads share root). RC: fine but cycles leak. Rust: `move` transfers v to the closure — the println line fails to compile because v is gone.'},
+  {tag:'derive',star:true,text:'Explain why `&mut T` is invariant in T. Construct a 4-line program that would unsoundly typecheck if it were covariant.',
+   hint:'Covariance + mutation = write through a more-specific reference. `let r: &mut Animal = &mut dog; *r = Cat{};` would turn the Dog into a Cat behind any aliasing reads.'},
+  {tag:'debug',text:'A Java program shows 200 ms GC pauses every minute. What information do you collect to decide between G1, ZGC, and Shenandoah?',
+   hint:'Allocation rate, live-set size, target pause SLO, heap size. ZGC/Shenandoah: concurrent compaction → sub-ms pauses, slightly higher throughput cost. G1: best general default for <50 GB.'},
+  {tag:'code',text:'Write a doubly-linked list in Rust using `Rc<RefCell<Node>>` *and* one using `Weak` to break cycles. Demonstrate the leak in the first.',
+   hint:'In the cycle-leak version, drop both ends and inspect via `Rc::strong_count`; the count never hits 0. `Weak` parents break the cycle so children own forward, parents weak-back.'}
+ ]},
+{week:'Macros & Metaprogramming',title:'Why Lisp Is Timeless',
+ hook:'Code is data. With homoiconic syntax, the language can extend itself — and 60-year-old Lisp ideas keep being rediscovered as "new" features elsewhere.',
+ items:[
+  {tag:'design',star:true,text:'Write a Scheme/Racket `swap!` macro so `(swap! a b)` exchanges two variables without a temp visible to the caller. Why must it be a macro, not a function?',
+   hint:'A function receives values, not bindings — it cannot rebind the caller`s variables. Use `syntax-rules` and introduce a hygienic temporary the user cannot see.'},
+  {tag:'derive',star:true,text:'Define hygienic macros. Construct a small example where a non-hygienic macro causes a variable-capture bug, and show how syntax-rules avoids it.',
+   hint:'Non-hygienic: `(define-syntax-rule (or2 a b) (let ([t a]) (if t t b)))` — if caller passes `t` as `a`, capture breaks it. Hygienic renaming gives the macro its own t.'},
+  {tag:'code',text:'Add a `let` form to a tiny interpreter using only `lambda` and application as primitives. Show the desugaring `(let ([x e1]) e2) ⇒ ((lambda (x) e2) e1)`.',
+   hint:'This is the canonical macro trick: extend the language without extending the core. Every let in the source is rewritten before evaluation; the evaluator stays minimal.'},
+  {tag:'paper',text:'Read Graham "Beating the Averages" (2003). What is "Greenspun`s tenth rule"? List 3 modern features (in Rust/Python/JS) that the article foretold.',
+   hint:'"Any sufficiently complicated C/Fortran program contains an ad-hoc, informally-specified, bug-ridden, slow implementation of half of Common Lisp." Think: macros, REPL, async, pattern matching.'}
+ ]}
+];
 // ═══════════════════════════════════════════════════════════════════════
 // PRACTICE PROBLEMS (Problem-First learning)
 // ═══════════════════════════════════════════════════════════════════════
+const PROB_STATE_KEY = STORAGE_KEY + '-probstate';
+function probLoadState() { try { return JSON.parse(localStorage.getItem(PROB_STATE_KEY) || '{}'); } catch(e) { return {}; } }
+function probSaveState(s) { try { localStorage.setItem(PROB_STATE_KEY, JSON.stringify(s)); } catch(e) {} }
+let _probState = probLoadState();
+let _probFilters = { tags: new Set(), search: '', status: 'all' };
+let _probFlat = []; // [{si, ii, p}]
+
 function renderProblems() {
   const container = document.getElementById('problems-container');
   if (!container || container.dataset.rendered) return;
@@ -1998,6 +3045,17 @@ function renderProblems() {
              : (C.problems && C.problems.length) ? C.problems : null;
   if (!data) { container.innerHTML = '<div class="prob-intro">No practice problems defined yet for this course.</div>'; container.dataset.rendered = '1'; return; }
   container.dataset.rendered = '1';
+
+  // Build flat index + per-tag counts
+  _probFlat = [];
+  const tagCounts = {};
+  data.forEach((sec, si) => (sec.items||[]).forEach((p, ii) => {
+    _probFlat.push({ si, ii, p, key: si+':'+ii });
+    const t = p.tag || 'design';
+    tagCounts[t] = (tagCounts[t]||0) + 1;
+  }));
+  const TAGS = ['design','derive','debug','code','paper'];
+
   let html = `<div class="prob-intro">
     <strong>🧠 Problem-First Learning.</strong> Try each problem for 10 minutes <em>before</em> watching the lecture — flail, sketch, be wrong. Then watch with specific questions in mind. Your attention spikes 3–5×.
     <br><br>
@@ -2007,24 +3065,653 @@ function renderProblems() {
     <span class="prob-tag debug">debug</span> find the failure mode &nbsp;
     <span class="prob-tag code">code</span> hands-on &nbsp;
     <span class="prob-tag paper">paper</span> predict before reading
-  </div>`;
-  data.forEach((sec, i) => {
-    html += `<details class="prob-section"${i < 2 ? ' open' : ''}>
-      <summary><span class="wk">${sec.week||''}</span> ${sec.title||''}</summary>
-      <div class="prob-body"><ol>`;
-    (sec.items||[]).forEach(p => {
-      html += `<li><span class="prob-tag ${p.tag||'design'}">${p.tag||'design'}</span>${p.text||''}`;
-      if (p.hint) html += `<span class="prob-hint">${p.hint}</span>`;
-      html += `</li>`;
+    <br><br>
+    <strong style="color:#ffa657">⭐ starred</strong> problems are curiosity-piquing — start there if you're new.
+    Reveals come in three layers: <strong style="color:#d2a8ff">💡 hint</strong> (nudge) · <strong style="color:#79c0ff">🔑 approach</strong> (how to attack) · <strong style="color:#7ee787">📐 answer</strong> (the result). Try the problem before peeking.
+  </div>
+  <div class="prob-toolbar">
+    <input id="prob-search" class="prob-search" type="text" placeholder="🔍 Search problems by keyword…" />
+    <div class="prob-filter-row" id="prob-tag-row">
+      ${TAGS.map(t => `<span class="prob-chip ${t}" data-tag="${t}">${t}<span class="count">${tagCounts[t]||0}</span></span>`).join('')}
+    </div>
+    <div class="prob-filter-row" id="prob-status-row">
+      <span class="prob-chip" data-status="all">All</span>
+      <span class="prob-chip" data-status="unattempted">○ New</span>
+      <span class="prob-chip" data-status="thinking">🤔 Thinking</span>
+      <span class="prob-chip" data-status="got">💡 Got it</span>
+      <span class="prob-chip" data-status="stuck">❓ Stuck</span>
+    </div>
+    <button id="prob-surprise" class="prob-actbtn primary" title="Open a random problem">🎲 Surprise me</button>
+    <button id="prob-reset" class="prob-actbtn" title="Clear all status">↺ Reset</button>
+    <div class="prob-progress" title="Problems attempted (thinking / got / stuck)">
+      <span id="prob-progress-text">0/${_probFlat.length}</span>
+      <div class="prob-progress-bar"><div id="prob-progress-fill" class="prob-progress-fill" style="width:0%"></div></div>
+    </div>
+  </div>
+  <div id="prob-sections">`;
+
+  data.forEach((sec, si) => {
+    const secTotal = (sec.items||[]).length;
+    html += `<details class="prob-section" data-si="${si}"${si < 2 ? ' open' : ''}>
+      <summary><span class="wk">${sec.week||''}</span> <span class="sec-title">${sec.title||''}</span>
+        <span class="sec-meta"><span class="done-count" data-sec-done="${si}">0</span>/<span>${secTotal}</span></span>
+      </summary>`;
+    if (sec.hook) html += `<div class="prob-hook">${sec.hook}</div>`;
+    html += `<div class="prob-body">`;
+    (sec.items||[]).forEach((p, ii) => {
+      const key = si+':'+ii;
+      const st = _probState[key] || {};
+      const tag = p.tag || 'design';
+      const statusCls = st.status ? ' status-'+st.status : '';
+      html += `<div class="prob-card${statusCls}" data-key="${key}" data-tag="${tag}" data-status="${st.status||''}">
+        <div class="pc-head">
+          <span class="pc-num">${(ii+1).toString().padStart(2,'0')}</span>
+          <span class="prob-tag ${tag}">${tag}</span>
+          ${p.star ? '<span class="pc-star" title="Curiosity pick">★</span>' : ''}
+          <div class="prob-status-btns">
+            <button class="prob-statbtn thinking${st.status==='thinking'?' active':''}" data-status="thinking" title="I'm working on this">🤔</button>
+            <button class="prob-statbtn got${st.status==='got'?' active':''}"           data-status="got"      title="Got it">💡</button>
+            <button class="prob-statbtn stuck${st.status==='stuck'?' active':''}"       data-status="stuck"    title="Stuck">❓</button>
+          </div>
+        </div>
+        <div class="pc-text">${p.text||''}</div>`;
+      const reveals = [];
+      if (p.hint)     reveals.push({ kind:'hint',     label:'💡 Reveal hint',   field:'hint',     btnCls:'',          panelCls:'prob-hint',     tag:'Hint' });
+      if (p.approach) reveals.push({ kind:'approach', label:'🔑 Show approach', field:'approach', btnCls:'approach',  panelCls:'prob-approach', tag:'Approach' });
+      if (p.answer)   reveals.push({ kind:'answer',   label:'📐 Show answer',   field:'answer',   btnCls:'answer',    panelCls:'prob-answer',   tag:'Answer' });
+      if (reveals.length) {
+        html += `<div class="pc-actions">`;
+        reveals.forEach(r => {
+          const shown = st[r.kind+'Shown'];
+          html += `<button class="prob-revealbtn ${r.btnCls}" data-action="${r.kind}" ${shown?'style="display:none"':''}>${r.label}</button>`;
+        });
+        html += `</div>`;
+        reveals.forEach(r => {
+          const shown = st[r.kind+'Shown'];
+          html += `<div class="prob-reveal-panel ${r.panelCls}${shown?' shown':''}" data-panel="${r.kind}"><span class="rh-label">${r.tag}</span>${p[r.field]}</div>`;
+        });
+      }
+      html += `</div>`;
     });
-    html += `</ol></div></details>`;
+    html += `</div></details>`;
   });
+  html += `</div>
+  <div class="prob-spotlight" id="prob-spotlight">
+    <div class="prob-spotlight-card">
+      <button class="sl-close" onclick="probCloseSpotlight()">×</button>
+      <h3>🎲 Surprise Problem</h3>
+      <div id="prob-spotlight-body"></div>
+    </div>
+  </div>`;
+
   container.innerHTML = html;
+
+  // Wire interactions
+  container.querySelectorAll('#prob-tag-row .prob-chip').forEach(c => c.addEventListener('click', () => {
+    const tag = c.dataset.tag;
+    if (_probFilters.tags.has(tag)) _probFilters.tags.delete(tag); else _probFilters.tags.add(tag);
+    c.classList.toggle('active');
+    probApplyFilters();
+  }));
+  container.querySelectorAll('#prob-status-row .prob-chip').forEach(c => c.addEventListener('click', () => {
+    container.querySelectorAll('#prob-status-row .prob-chip').forEach(x => x.classList.remove('active'));
+    c.classList.add('active');
+    _probFilters.status = c.dataset.status;
+    probApplyFilters();
+  }));
+  container.querySelector('#prob-status-row .prob-chip[data-status="all"]').classList.add('active');
+
+  const searchEl = container.querySelector('#prob-search');
+  searchEl.addEventListener('input', () => { _probFilters.search = searchEl.value.toLowerCase().trim(); probApplyFilters(); });
+
+  container.querySelector('#prob-surprise').addEventListener('click', probSurpriseMe);
+  container.querySelector('#prob-reset').addEventListener('click', () => {
+    if (!confirm('Clear status on all '+_probFlat.length+' problems?')) return;
+    _probState = {}; probSaveState(_probState);
+    container.dataset.rendered = ''; container.innerHTML = ''; renderProblems();
+  });
+
+  container.querySelectorAll('.prob-card').forEach(card => {
+    card.querySelectorAll('.prob-statbtn').forEach(btn => btn.addEventListener('click', e => {
+      e.stopPropagation();
+      const key = card.dataset.key;
+      const newStatus = btn.dataset.status;
+      const st = _probState[key] || {};
+      st.status = (st.status === newStatus) ? null : newStatus;
+      _probState[key] = st; probSaveState(_probState);
+      card.classList.remove('status-thinking','status-got','status-stuck');
+      if (st.status) card.classList.add('status-'+st.status);
+      card.dataset.status = st.status || '';
+      card.querySelectorAll('.prob-statbtn').forEach(b => b.classList.toggle('active', b.dataset.status === st.status));
+      probUpdateProgress();
+      if (_probFilters.status !== 'all') probApplyFilters();
+    }));
+    const revealBtns = card.querySelectorAll('[data-action="hint"],[data-action="approach"],[data-action="answer"]');
+    revealBtns.forEach(btn => btn.addEventListener('click', () => {
+      const kind = btn.dataset.action;
+      const panel = card.querySelector(`.prob-reveal-panel[data-panel="${kind}"]`);
+      if (panel) panel.classList.add('shown');
+      btn.style.display = 'none';
+      const key = card.dataset.key;
+      const st = _probState[key] || {};
+      st[kind+'Shown'] = true; _probState[key] = st; probSaveState(_probState);
+    }));
+  });
+
+  probUpdateProgress();
 }
+
+function probApplyFilters() {
+  const container = document.getElementById('problems-container');
+  const { tags, search, status } = _probFilters;
+  container.querySelectorAll('.prob-card').forEach(card => {
+    const tag = card.dataset.tag;
+    const cardStatus = card.dataset.status || '';
+    const text = card.querySelector('.pc-text').textContent.toLowerCase();
+    let show = true;
+    if (tags.size > 0 && !tags.has(tag)) show = false;
+    if (search && !text.includes(search)) show = false;
+    if (status !== 'all') {
+      if (status === 'unattempted') { if (cardStatus) show = false; }
+      else if (cardStatus !== status) show = false;
+    }
+    card.classList.toggle('hidden', !show);
+  });
+  // Auto-open sections with visible cards; hide empty sections
+  container.querySelectorAll('.prob-section').forEach(sec => {
+    const visible = sec.querySelectorAll('.prob-card:not(.hidden)').length;
+    sec.style.display = visible === 0 ? 'none' : '';
+    if (visible > 0 && (tags.size || search || status !== 'all')) sec.open = true;
+  });
+}
+
+function probUpdateProgress() {
+  const total = _probFlat.length;
+  let attempted = 0;
+  const perSec = {};
+  _probFlat.forEach(({si, key}) => {
+    const st = _probState[key];
+    if (st && st.status) { attempted++; perSec[si] = (perSec[si]||0) + 1; }
+  });
+  const txt = document.getElementById('prob-progress-text');
+  const fill = document.getElementById('prob-progress-fill');
+  if (txt) txt.textContent = attempted + '/' + total;
+  if (fill) fill.style.width = (total ? (attempted/total*100) : 0) + '%';
+  document.querySelectorAll('[data-sec-done]').forEach(el => {
+    const si = +el.dataset.secDone;
+    el.textContent = perSec[si] || 0;
+  });
+}
+
+function probSurpriseMe() {
+  if (!_probFlat.length) return;
+  // Prefer starred & unattempted; otherwise unattempted; otherwise any
+  const starredNew = _probFlat.filter(x => x.p.star && !(_probState[x.key]||{}).status);
+  const anyNew     = _probFlat.filter(x => !(_probState[x.key]||{}).status);
+  const pool = starredNew.length ? starredNew : (anyNew.length ? anyNew : _probFlat);
+  const pick = pool[Math.floor(Math.random()*pool.length)];
+  const { p, si, ii, key } = pick;
+  const sec = (window.PROBLEMS_DATA || (C.problems||[]))[si];
+  const tag = p.tag || 'design';
+  const body = document.getElementById('prob-spotlight-body');
+  body.innerHTML = `
+    <div style="display:flex;gap:8px;align-items:center;margin-bottom:6px;flex-wrap:wrap">
+      <span class="prob-tag ${tag}">${tag}</span>
+      ${p.star ? '<span style="color:#ffa657">★</span>' : ''}
+      <span style="color:#8b949e;font-size:12px">${sec.week||''} · ${sec.title||''} · #${ii+1}</span>
+    </div>
+    <div class="pc-text">${p.text||''}</div>
+    ${(()=>{const L=[];if(p.hint)L.push({s:'💡 Reveal hint',c:'prob-hint',t:'Hint',b:p.hint});if(p.approach)L.push({s:'🔑 Show approach',c:'prob-approach',t:'Approach',b:p.approach});if(p.answer)L.push({s:'📐 Show answer',c:'prob-answer',t:'Answer',b:p.answer});return L.map(l=>`<details style="margin-top:10px"><summary style="cursor:pointer;color:#8b949e;font-size:12px;padding:4px 0">${l.s}</summary><div class="prob-reveal-panel ${l.c} shown" style="margin-top:6px"><span class="rh-label">${l.t}</span>${l.b}</div></details>`).join('');})()}
+    <div style="margin-top:14px;display:flex;gap:6px;flex-wrap:wrap">
+      <button class="prob-actbtn" onclick="probJumpTo('${key}')">↗ Jump to it</button>
+      <button class="prob-actbtn" onclick="probSurpriseMe()">🎲 Another</button>
+    </div>`;
+  document.getElementById('prob-spotlight').classList.add('open');
+}
+function probCloseSpotlight() { const el = document.getElementById('prob-spotlight'); if (el) el.classList.remove('open'); }
+function probJumpTo(key) {
+  probCloseSpotlight();
+  const card = document.querySelector(`.prob-card[data-key="${key}"]`);
+  if (!card) return;
+  const sec = card.closest('.prob-section');
+  if (sec) sec.open = true;
+  card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  card.style.transition = 'box-shadow .3s'; card.style.boxShadow = '0 0 0 2px #58a6ff';
+  setTimeout(() => { card.style.boxShadow = ''; }, 1500);
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') probCloseSpotlight(); });
 if (typeof switchTab === 'function') {
   const _origSwitchTab_prob = switchTab;
   switchTab = function(tab) { _origSwitchTab_prob(tab); if (tab === 'problems') renderProblems(); };
 }
+
+// === BEGIN glossary v1 js ===
+// ═══════════════════════════════════════════════════════════════════════
+// GLOSSARY — definitions + cross-references with graph & mindmap
+// ═══════════════════════════════════════════════════════════════════════
+(function initGlossaryMaps() {
+  const gloss = (C && C.glossary) || [];
+  if (!gloss.length) return;
+
+  // 1. Build id → entry maps and "label/aka" → id reverse map.
+  const byId = {};
+  const byLabel = {}; // lowercased term/aka → id
+  gloss.forEach(g => {
+    byId[g.id] = g;
+    const keys = [g.term].concat(g.aka || []);
+    keys.forEach(k => { if (k) byLabel[k.toLowerCase().trim()] = g.id; });
+  });
+
+  // 2. Patch graph node tips for any node whose id matches a glossary entry.
+  let graphMatched = 0;
+  const glossByGraphNode = {};
+  if (C.graph && Array.isArray(C.graph.nodes)) {
+    C.graph.nodes.forEach(n => {
+      if (byId[n.id]) {
+        glossByGraphNode[n.id] = n.id;
+        graphMatched++;
+        if (n.tip && n.tip.indexOf('📖') < 0) n.tip = n.tip + ' · 📖 in glossary';
+      } else {
+        // Fallback: try label/aka match
+        const k = (n.label || '').toLowerCase().trim();
+        if (byLabel[k]) {
+          glossByGraphNode[n.id] = byLabel[k];
+          graphMatched++;
+          if (n.tip && n.tip.indexOf('📖') < 0) n.tip = n.tip + ' · 📖 in glossary';
+        }
+      }
+    });
+  }
+
+  // 3. Walk mindmap and build name → glossary-id map. Match relaxed:
+  //    full name (newlines → space) OR each line.
+  let mindmapMatched = 0;
+  const glossByMindmapName = {};
+  function walkMm(node) {
+    if (!node) return;
+    if (node.name) {
+      const full = node.name.replace(/\n/g, ' ').trim();
+      const candidates = [full].concat(node.name.split(/\n+/).map(s => s.trim()).filter(Boolean));
+      for (const c of candidates) {
+        const id = byLabel[c.toLowerCase()];
+        if (id) {
+          glossByMindmapName[full] = id;
+          mindmapMatched++;
+          break;
+        }
+      }
+    }
+    (node.children || []).forEach(walkMm);
+  }
+  if (C.mindmap) walkMm(C.mindmap);
+
+  window._glossaryById = byId;
+  window._glossaryByLabel = byLabel;
+  window._glossaryIdByGraphNode = glossByGraphNode;
+  window._glossaryIdByMindmapName = glossByMindmapName;
+  window._glossaryStats = { graphMatched: graphMatched, mindmapMatched: mindmapMatched };
+
+  // 4. Monkey-patch showTooltip so it appends a "📖 Defined in glossary →" link
+  //    whenever the hovered name corresponds to a glossary entry.
+  if (typeof window.showTooltip === 'function') {
+    const _origShowTooltip = window.showTooltip;
+    const ttRoot = document.getElementById('tooltip');
+    let glossFooter = ttRoot.querySelector('.tt-glossary');
+    if (!glossFooter) {
+      glossFooter = document.createElement('div');
+      glossFooter.className = 'tt-glossary';
+      ttRoot.appendChild(glossFooter);
+    }
+    window.showTooltip = function(evt, name, tip, slides) {
+      _origShowTooltip(evt, name, tip, slides);
+      glossFooter.innerHTML = '';
+      ttRoot.classList.remove('has-glossary');
+      if (!name) return;
+      const plain = String(name).replace(/\n/g, ' ').trim();
+      const key = plain.toLowerCase();
+      let id = byLabel[key] || glossByMindmapName[plain] || null;
+      if (!id) {
+        // strip parenthetical suffix e.g. "Optical Switch (OCS)" → "Optical Switch"
+        const stripped = plain.replace(/\s*\([^)]*\)\s*$/, '').toLowerCase();
+        if (stripped !== key) id = byLabel[stripped] || null;
+      }
+      if (id) {
+        const a = document.createElement('a');
+        a.textContent = '📖 Defined in glossary →';
+        a.onclick = (e) => {
+          e.stopPropagation();
+          if (typeof window.glossaryJumpToTerm === 'function') window.glossaryJumpToTerm(id);
+        };
+        glossFooter.appendChild(a);
+        ttRoot.classList.add('has-glossary');
+      }
+    };
+  }
+})();
+
+// ─── renderGlossary ───────────────────────────────────────────────────
+let _glossSelectedCat = 'all';
+let _glossSearch = '';
+let _glossSearchTimer = null;
+let _glossBuilt = false;
+
+const GLOSS_CAT_COLORS = {
+  hardware:    '#58a6ff',
+  software:    '#7ee787',
+  numerics:    '#79c0ff',
+  systems:     '#d2a8ff',
+  performance: '#f778ba',
+  concepts:    '#ffa657'
+};
+
+function renderGlossary() {
+  const data = (C.glossary || []).slice().sort((a, b) =>
+    a.term.toLowerCase().localeCompare(b.term.toLowerCase()));
+  const list = document.getElementById('glossary-list');
+  const pillBar = document.getElementById('glossary-cat-pills');
+  const countEl = document.getElementById('glossary-count');
+  const searchEl = document.getElementById('glossary-search');
+  if (!list || !pillBar || !countEl || !searchEl) return;
+
+  // Build category pills + search input wiring once.
+  if (!_glossBuilt) {
+    const cats = ['all'].concat(
+      Array.from(new Set(data.map(d => d.category))).sort());
+    pillBar.innerHTML = '';
+    cats.forEach(cat => {
+      const btn = document.createElement('button');
+      btn.textContent = cat === 'all' ? `All (${data.length})` :
+        `${cat} (${data.filter(d => d.category === cat).length})`;
+      btn.dataset.cat = cat;
+      const color = cat === 'all' ? '#58a6ff' : (GLOSS_CAT_COLORS[cat] || '#58a6ff');
+      btn.style.setProperty('--pill-color', color);
+      btn.style.setProperty('--pill-bg', color + '22');
+      if (cat === _glossSelectedCat) btn.classList.add('active');
+      btn.onclick = () => {
+        _glossSelectedCat = cat;
+        pillBar.querySelectorAll('button').forEach(b =>
+          b.classList.toggle('active', b.dataset.cat === cat));
+        renderGlossary();
+      };
+      pillBar.appendChild(btn);
+    });
+    searchEl.addEventListener('input', () => {
+      if (_glossSearchTimer) clearTimeout(_glossSearchTimer);
+      _glossSearchTimer = setTimeout(() => {
+        _glossSearch = searchEl.value.trim().toLowerCase();
+        renderGlossary();
+      }, 120);
+    });
+    _glossBuilt = true;
+  }
+
+  // Filter
+  const q = _glossSearch;
+  const visible = data.filter(d => {
+    if (_glossSelectedCat !== 'all' && d.category !== _glossSelectedCat) return false;
+    if (!q) return true;
+    const hay = [d.term, (Array.isArray(d.aka) ? d.aka.join(' ') : (d.aka || '')), d.short, d.long || ''].join(' ').toLowerCase();
+    return hay.indexOf(q) >= 0;
+  });
+
+  countEl.textContent = `${visible.length} of ${data.length} terms`;
+
+  const graphIds = new Set();
+  if (C.graph && C.graph.nodes) C.graph.nodes.forEach(n => graphIds.add(n.id));
+  const glossIds = new Set(data.map(d => d.id));
+  const mindmapNames = window._glossaryIdByMindmapName || {};
+  const reverseMindmap = {}; // glossary-id → mindmap label
+  Object.keys(mindmapNames).forEach(name => { reverseMindmap[mindmapNames[name]] = name; });
+
+  list.innerHTML = '';
+  visible.forEach(d => {
+    const color = GLOSS_CAT_COLORS[d.category] || '#58a6ff';
+    const card = document.createElement('div');
+    card.className = 'glossary-card';
+    card.dataset.id = d.id;
+    card.style.setProperty('--cat-color', color);
+
+    const head = document.createElement('div');
+    head.className = 'glossary-term-row';
+    const term = document.createElement('span');
+    term.className = 'glossary-term';
+    term.textContent = d.term;
+    head.appendChild(term);
+    const badge = document.createElement('span');
+    badge.className = 'glossary-cat-badge';
+    badge.textContent = d.category;
+    badge.style.setProperty('--cat-color', color);
+    head.appendChild(badge);
+    card.appendChild(head);
+
+    if (d.aka && d.aka.length) {
+      const aka = document.createElement('div');
+      aka.className = 'glossary-aka';
+      aka.textContent = 'aka ' + (Array.isArray(d.aka) ? d.aka.join(', ') : d.aka);
+      card.appendChild(aka);
+    }
+
+    const shortEl = document.createElement('div');
+    shortEl.className = 'glossary-short';
+    shortEl.textContent = d.short || '';
+    card.appendChild(shortEl);
+
+    if (d.long) {
+      const longEl = document.createElement('div');
+      longEl.className = 'glossary-long';
+      longEl.innerHTML = d.long;
+      card.appendChild(longEl);
+      const toggle = document.createElement('button');
+      toggle.className = 'glossary-toggle';
+      toggle.textContent = 'Show more ▾';
+      toggle.onclick = () => {
+        const expanded = card.classList.toggle('expanded');
+        toggle.textContent = expanded ? 'Show less ▴' : 'Show more ▾';
+      };
+      card.appendChild(toggle);
+    }
+
+    const links = document.createElement('div');
+    links.className = 'glossary-links';
+    if (graphIds.has(d.id)) {
+      const b = document.createElement('button');
+      b.textContent = '🔗 Topic Graph';
+      b.onclick = () => window.glossaryJumpToGraphNode(d.id);
+      links.appendChild(b);
+    }
+    if (reverseMindmap[d.id]) {
+      const b = document.createElement('button');
+      b.textContent = '📐 Mind Map';
+      b.onclick = () => window.glossaryJumpToMindmapNode(reverseMindmap[d.id]);
+      links.appendChild(b);
+    }
+    (d.seeAlso || []).forEach(otherId => {
+      if (!glossIds.has(otherId)) return;
+      const other = (C.glossary || []).find(x => x.id === otherId);
+      if (!other) return;
+      const b = document.createElement('button');
+      b.textContent = '→ ' + other.term;
+      b.onclick = () => window.glossaryJumpToTerm(otherId);
+      links.appendChild(b);
+    });
+    if (links.children.length) card.appendChild(links);
+
+    list.appendChild(card);
+  });
+}
+
+// ─── Cross-tab jump helpers ───────────────────────────────────────────
+window.glossaryJumpToTerm = function(id) {
+  if (typeof switchTab === 'function') switchTab('glossary');
+  setTimeout(() => {
+    const card = document.querySelector('.glossary-card[data-id="' + CSS.escape(id) + '"]');
+    if (!card) return;
+    card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    card.classList.remove('flash');
+    void card.offsetWidth; // restart animation
+    card.classList.add('flash');
+    // Pull the display term from the card itself so the toast matches what the user sees
+    const labelEl = card.querySelector('.glossary-term');
+    const label = labelEl ? labelEl.textContent.trim() : id;
+    if (typeof showGlossaryToast === 'function') showGlossaryToast('Glossary', label, 'glossary');
+    setTimeout(() => card.classList.remove('flash'), 2800);
+  }, 60);
+};
+
+window.glossaryJumpToGraphNode = function(id) {
+  if (typeof switchTab === 'function') switchTab('graph');
+  const tryFlash = (attempt) => {
+    const g = document.querySelector('g.graph-node[data-id="' + CSS.escape(id) + '"]');
+    if (!g) {
+      if (attempt < 12) return setTimeout(() => tryFlash(attempt + 1), 120);
+      return;
+    }
+    // Pull the node's force-simulation position from its bound datum
+    let d = null;
+    try { d = (typeof d3 !== 'undefined') ? d3.select(g).datum() : null; } catch(_) {}
+    const label = (d && (d.label || d.id)) || id;
+
+    // 1) Pan + zoom the SVG so the node is centered and reasonably zoomed in
+    try {
+      if (d && typeof d.x === 'number' && typeof d.y === 'number' && typeof d3 !== 'undefined' && typeof graphZoom !== 'undefined') {
+        const svgEl = document.getElementById('canvas-graph');
+        const W = (svgEl && svgEl.clientWidth)  || window.innerWidth;
+        const H = (svgEl && svgEl.clientHeight) || window.innerHeight;
+        const k = 1.6;
+        const tx = W / 2 - k * d.x;
+        const ty = H / 2 - k * d.y;
+        d3.select('#canvas-graph')
+          .transition().duration(650)
+          .call(graphZoom.transform, d3.zoomIdentity.translate(tx, ty).scale(k));
+      } else {
+        g.querySelector('circle') && g.querySelector('circle').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    } catch(_) {}
+
+    // 2) Big halo ring + bold class on the node group
+    g.classList.remove('glossary-highlight');
+    void g.getBoundingClientRect();
+    g.classList.add('glossary-highlight');
+    try {
+      // remove any previous halo
+      g.querySelectorAll('circle.glossary-halo').forEach(c => c.remove());
+      const halo = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+      halo.setAttribute('class', 'glossary-halo');
+      halo.setAttribute('cx', '0');
+      halo.setAttribute('cy', '0');
+      halo.setAttribute('r', '14');
+      g.insertBefore(halo, g.firstChild); // behind the node circle
+    } catch(_) {}
+
+    // 3) Top-of-screen toast
+    showGlossaryToast('Topic Graph', label, 'graph');
+
+    setTimeout(() => {
+      g.classList.remove('glossary-highlight');
+      g.querySelectorAll('circle.glossary-halo').forEach(c => c.remove());
+    }, 4200);
+  };
+  requestAnimationFrame(() => requestAnimationFrame(() => tryFlash(0)));
+};
+
+window.glossaryJumpToMindmapNode = function(label) {
+  if (typeof switchTab === 'function') switchTab('mindmap');
+  const target = (label || '').replace(/\n/g, ' ').trim().toLowerCase();
+  const tryFlash = (attempt) => {
+    const groups = document.querySelectorAll('#canvas g');
+    let hit = null;
+    groups.forEach(g => {
+      if (hit) return;
+      const txt = (g.textContent || '').replace(/\s+/g, ' ').trim().toLowerCase();
+      if (txt === target) hit = g;
+    });
+    if (!hit) {
+      if (attempt < 10) return setTimeout(() => tryFlash(attempt + 1), 150);
+      return;
+    }
+
+    // 1) Pan the mindmap so the hit node is roughly centered
+    try {
+      if (typeof d3 !== 'undefined' && typeof mmZoom !== 'undefined') {
+        const svgEl = document.getElementById('canvas');
+        const W = (svgEl && svgEl.clientWidth)  || window.innerWidth;
+        const H = (svgEl && svgEl.clientHeight) || window.innerHeight;
+        // Read the node's local SVG position from its existing transform attribute (form: translate(x,y))
+        const tr = hit.getAttribute('transform') || '';
+        const m = tr.match(/translate\(\s*([-0-9.]+)\s*[ ,]\s*([-0-9.]+)/);
+        if (m) {
+          const x = parseFloat(m[1]), y = parseFloat(m[2]);
+          const k = 1.3;
+          const tx = W / 2 - k * x;
+          const ty = H / 2 - k * y;
+          d3.select('#canvas')
+            .transition().duration(650)
+            .call(mmZoom.transform, d3.zoomIdentity.translate(tx, ty).scale(k));
+        } else {
+          hit.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      } else {
+        hit.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    } catch(_) {}
+
+    // 2) Halo ring on the mindmap node
+    try {
+      hit.querySelectorAll('circle.glossary-mm-halo').forEach(c => c.remove());
+      const halo = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+      halo.setAttribute('class', 'glossary-mm-halo');
+      halo.setAttribute('cx', '0');
+      halo.setAttribute('cy', '0');
+      halo.setAttribute('r', '14');
+      hit.insertBefore(halo, hit.firstChild);
+      setTimeout(() => halo.remove(), 4200);
+    } catch(_) {}
+
+    // 3) Stroke flash on the shape
+    const shape = hit.querySelector('circle, rect');
+    if (shape) {
+      const prev = shape.getAttribute('stroke');
+      const prevW = shape.getAttribute('stroke-width');
+      shape.setAttribute('stroke', '#f0c000');
+      shape.setAttribute('stroke-width', '5');
+      setTimeout(() => {
+        if (prev !== null) shape.setAttribute('stroke', prev); else shape.removeAttribute('stroke');
+        if (prevW !== null) shape.setAttribute('stroke-width', prevW); else shape.removeAttribute('stroke-width');
+      }, 3000);
+    }
+
+    // 4) Toast
+    showGlossaryToast('Mind Map', (label || '').replace(/\n/g, ' '), 'mindmap');
+  };
+  requestAnimationFrame(() => requestAnimationFrame(() => tryFlash(0)));
+};
+
+// Floating toast helper — visible regardless of where the target node ended up
+function showGlossaryToast(where, label, kind) {
+  let t = document.getElementById('glossary-toast');
+  if (!t) {
+    t = document.createElement('div');
+    t.id = 'glossary-toast';
+    document.body.appendChild(t);
+  }
+  const icon = kind === 'graph' ? '🔗' : (kind === 'mindmap' ? '📐' : '📖');
+  t.innerHTML = '<span class="gt-icon">' + icon + '</span>'
+              + '<span>Jumped to: <strong>' + (label || '').replace(/[<>&]/g, '') + '</strong></span>'
+              + '<span class="gt-sub">in ' + where + '</span>';
+  // restart animation
+  t.classList.remove('show');
+  void t.offsetWidth;
+  t.classList.add('show');
+  clearTimeout(t._hideTimer);
+  t._hideTimer = setTimeout(() => t.classList.remove('show'), 3200);
+}
+
+// Lazy-render hook
+if (typeof switchTab === 'function') {
+  const _origSwitchTab_gloss = switchTab;
+  switchTab = function(tab) { _origSwitchTab_gloss(tab); if (tab === 'glossary') renderGlossary(); };
+}
+// === END glossary v1 js ===
 </script>
 <!-- BEGIN tooltip-pin (click pins, click outside closes) -->
 <style>
