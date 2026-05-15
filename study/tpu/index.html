@@ -1178,6 +1178,664 @@ const COURSE_CONFIG = {
     }
   ],
 
+  useCases: [
+    {
+      id: "uc-jax-xla-tpu",
+      title: "JAX → XLA → TPU: From Python to Silicon",
+      desc: "Trace a single jit-compiled function from Python source through jaxpr, HLO, the SPMD partitioner, LLO, and finally TPU execution — with the actual artifact at each stage.",
+      icon: "🔬",
+      color: "#58a6ff",
+      steps: [
+        {
+          title: "Author the function in JAX",
+          component: "User Python (JAX/Flax)",
+          proto: "Python",
+          detail: "JAX looks like NumPy but is built around <em>tracing</em>: when you call a <code>@jax.jit</code> function, JAX runs your Python with abstract <em>tracers</em> instead of real arrays to record the operations as a pure functional graph. Functions must be side-effect-free; outputs depend only on inputs. <code>jax.numpy</code> mirrors NumPy so existing array code ports almost verbatim, while <code>jax.sharding</code> annotations declare how tensors are split across a device mesh.",
+          code: `import jax, jax.numpy as jnp
+from jax.sharding import Mesh, PartitionSpec as P, NamedSharding
+
+devices = jax.devices()                # e.g. 8 TPU v5p cores
+mesh = Mesh(devices, axis_names=("data", "model"))
+sharding = NamedSharding(mesh, P("data", "model"))
+
+@jax.jit
+def layer(x, w):
+    return jax.nn.gelu(x @ w)`,
+          refs: [
+            { label: "JAX Quickstart", url: "https://jax.readthedocs.io/en/latest/quickstart.html" },
+            { label: "Sharded computation", url: "https://jax.readthedocs.io/en/latest/notebooks/Distributed_arrays_and_automatic_parallelization.html" }
+          ]
+        },
+        {
+          title: "Trace into a jaxpr",
+          component: "jax.make_jaxpr",
+          proto: "jaxpr IR",
+          detail: "Tracing produces a <strong>jaxpr</strong> — JAX&apos;s small, typed, functional IR. No numerics run; abstract values (dtype + shape) flow through the function and every primitive op gets recorded. Shardings are carried as out-of-band metadata so the downstream compiler knows how each tensor is partitioned across the mesh.",
+          code: `print(jax.make_jaxpr(layer)(x, w))
+
+# { lambda ; a:f32[1024,4096] b:f32[4096,4096]. let
+#     c:f32[1024,4096] = dot_general[
+#       dimension_numbers=(([1],[0]),([],[]))
+#     ] a b
+#     d:f32[1024,4096] = custom_jvp_call[gelu_p] c
+#   in (d,) }`,
+          refs: [
+            { label: "Understanding jaxprs", url: "https://jax.readthedocs.io/en/latest/jaxpr.html" }
+          ]
+        },
+        {
+          title: "Lower to StableHLO",
+          component: "jax.jit.lower",
+          proto: "StableHLO MLIR",
+          detail: "JAX lowers the jaxpr to <strong>StableHLO</strong> — an MLIR dialect that is the stable contract between frameworks (JAX, PyTorch/XLA, TensorFlow) and the XLA compiler. StableHLO has a versioned op set and serialization format, so a saved program can be compiled months later by a newer XLA. Sharding annotations survive the lowering as <code>mhlo.sharding</code> attributes on function arguments and results.",
+          code: `lowered = jax.jit(layer).lower(x, w)
+print(lowered.as_text())   # StableHLO MLIR text
+
+# module @jit_layer {
+#   func.func public @main(
+#       %arg0: tensor<1024x4096xf32> {mhlo.sharding = "{devices=[2,4]<=[8]}"},
+#       %arg1: tensor<4096x4096xf32> {mhlo.sharding = "{devices=[1,4,2]<=[8] last_tile_dim_replicate}"}
+#   ) -> tensor<1024x4096xf32> {
+#     %0 = stablehlo.dot_general %arg0, %arg1,
+#            contracting_dims = [1] x [0] : ...
+#     %1 = stablehlo.custom_call @gelu(%0) : ...
+#     return %1 : tensor<1024x4096xf32>
+#   }
+# }`,
+          refs: [
+            { label: "OpenXLA / StableHLO", url: "https://github.com/openxla/stablehlo" },
+            { label: "JAX AOT / lowering", url: "https://jax.readthedocs.io/en/latest/aot.html" }
+          ]
+        },
+        {
+          title: "XLA optimizes the HLO",
+          component: "XLA compiler",
+          proto: "Optimized HLO",
+          detail: "XLA runs a long pipeline of passes on the HLO: algebraic simplification (constant folding, identity elimination), <strong>op fusion</strong> (collapsing element-wise chains into a single kernel to avoid HBM round-trips), <strong>layout assignment</strong> (picking tiled / transposed layouts that match the MXU), the <strong>SPMD partitioner</strong> that turns logical tensors into per-device shards plus collectives, and a <strong>latency-hiding scheduler</strong> that overlaps compute with cross-chip communication." +
+            '<svg viewBox="0 0 760 110" style="width:100%;max-width:760px;margin-top:10px;background:#0d1117;border:1px solid #30363d;border-radius:6px">' +
+            '<defs><marker id="ucArr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#58a6ff"/></marker></defs>' +
+            '<g font-family="monospace" font-size="10" fill="#c9d1d9" text-anchor="middle">' +
+            '<rect x="6"   y="35" width="92" height="40" rx="4" fill="#1f2937" stroke="#58a6ff"/><text x="52"  y="60">StableHLO</text>' +
+            '<rect x="112" y="35" width="100" height="40" rx="4" fill="#1f2937" stroke="#58a6ff"/><text x="162" y="55">SPMD</text><text x="162" y="68">Partitioner</text>' +
+            '<rect x="226" y="35" width="100" height="40" rx="4" fill="#1f2937" stroke="#58a6ff"/><text x="276" y="55">Algebraic</text><text x="276" y="68">Simplifier</text>' +
+            '<rect x="340" y="35" width="70" height="40" rx="4" fill="#1f2937" stroke="#58a6ff"/><text x="375" y="60">Fusion</text>' +
+            '<rect x="424" y="35" width="70" height="40" rx="4" fill="#1f2937" stroke="#58a6ff"/><text x="459" y="60">Layout</text>' +
+            '<rect x="508" y="35" width="92" height="40" rx="4" fill="#1f2937" stroke="#58a6ff"/><text x="554" y="60">Scheduler</text>' +
+            '<rect x="614" y="35" width="140" height="40" rx="4" fill="#0d3a1f" stroke="#3fb950"/><text x="684" y="55" fill="#7ee787">Optimized</text><text x="684" y="68" fill="#7ee787">HLO</text>' +
+            '<line x1="98"  y1="55" x2="112" y2="55" stroke="#58a6ff" marker-end="url(#ucArr)"/>' +
+            '<line x1="212" y1="55" x2="226" y2="55" stroke="#58a6ff" marker-end="url(#ucArr)"/>' +
+            '<line x1="326" y1="55" x2="340" y2="55" stroke="#58a6ff" marker-end="url(#ucArr)"/>' +
+            '<line x1="410" y1="55" x2="424" y2="55" stroke="#58a6ff" marker-end="url(#ucArr)"/>' +
+            '<line x1="494" y1="55" x2="508" y2="55" stroke="#58a6ff" marker-end="url(#ucArr)"/>' +
+            '<line x1="600" y1="55" x2="614" y2="55" stroke="#58a6ff" marker-end="url(#ucArr)"/>' +
+            '</g></svg>',
+          refs: [
+            { label: "XLA architecture", url: "https://openxla.org/xla/architecture" }
+          ]
+        },
+        {
+          title: "SPMD partitioner inserts collectives",
+          component: "GSPMD",
+          proto: "sharded HLO",
+          detail: "<strong>GSPMD</strong> takes the user&apos;s logical program plus per-tensor shardings and rewrites it into per-device work + the minimum required cross-chip communication. A logical <code>matmul</code> on a sharded contracting dimension becomes a local <code>dot</code> followed by an <code>all-reduce</code>; a sharded non-contracting dim may need an <code>all-gather</code> or <code>reduce-scatter</code>. You wrote one function — the compiler synthesized the distributed algorithm.",
+          code: `# Logical:    Z[B,F] = X[B,K] @ W[K,F]
+# X sharded on (data, model)  ->  K is partitioned across "model"
+# W sharded on (model, ...)   ->  K is also partitioned
+
+# After GSPMD (sketch of the per-shard HLO):
+%x_local  = parameter(0)                       # f32[B/2, K/4]
+%w_local  = parameter(1)                       # f32[K/4, F]
+%dot      = dot(%x_local, %w_local),
+              lhs_contracting_dims={1},
+              rhs_contracting_dims={0}         # f32[B/2, F]  (partial)
+%full     = all-reduce(%dot), to_apply=add,
+              replica_groups={{0,1,2,3},{4,5,6,7}}
+ROOT %out = custom-call(%full), custom_call_target="gelu"`,
+          refs: [
+            { label: "GSPMD paper", url: "https://arxiv.org/abs/2105.04663" }
+          ]
+        },
+        {
+          title: "Lower to LLO and TPU binary",
+          component: "libtpu compiler",
+          proto: "TPU LLO + binary",
+          detail: "The TPU back-end (<code>libtpu</code>) lowers optimized HLO to <strong>LLO</strong> (Low-Level Operations) — TPU-specific instructions that target the actual hardware: MXU systolic-array tiles, VPU element-wise ops, scalar unit control flow, and DMA descriptors that move tiles between HBM and on-chip VMEM. The compiler also bakes in the HBM allocation plan, the DMA program, and ICI collective schedules. Output: a single binary that the runtime loads on every chip." +
+            '<svg viewBox="0 0 360 170" style="width:100%;max-width:360px;margin-top:10px;background:#0d1117;border:1px solid #30363d;border-radius:6px">' +
+            '<g font-family="monospace" font-size="10" fill="#c9d1d9" text-anchor="middle">' +
+            '<rect x="20" y="20" width="200" height="130" rx="6" fill="#161b22" stroke="#58a6ff"/>' +
+            '<text x="120" y="36" fill="#58a6ff">TensorCore</text>' +
+            '<rect x="36" y="46" width="80" height="50" rx="4" fill="#1f2937" stroke="#7ee787"/><text x="76" y="68" fill="#7ee787">MXU</text><text x="76" y="82">128x128</text>' +
+            '<rect x="124" y="46" width="80" height="50" rx="4" fill="#1f2937" stroke="#d2a8ff"/><text x="164" y="68" fill="#d2a8ff">VPU</text><text x="164" y="82">vector</text>' +
+            '<rect x="36" y="104" width="168" height="34" rx="4" fill="#1f2937" stroke="#ffa657"/><text x="120" y="124" fill="#ffa657">VMEM (on-chip)</text>' +
+            '<rect x="240" y="20" width="100" height="60" rx="4" fill="#1f2937" stroke="#ff7b72"/><text x="290" y="44" fill="#ff7b72">HBM</text><text x="290" y="60">96 GiB</text>' +
+            '<rect x="240" y="92" width="100" height="58" rx="4" fill="#1f2937" stroke="#58a6ff"/><text x="290" y="116" fill="#58a6ff">ICI links</text><text x="290" y="132">to neighbors</text>' +
+            '<line x1="220" y1="50" x2="240" y2="50" stroke="#ff7b72" stroke-width="2"/>' +
+            '<line x1="220" y1="120" x2="240" y2="120" stroke="#58a6ff" stroke-width="2"/>' +
+            '</g></svg>',
+          refs: [
+            { label: "Cloud TPU System Architecture", url: "https://cloud.google.com/tpu/docs/system-architecture-tpu-vm" }
+          ]
+        },
+        {
+          title: "Execute on the TPU mesh",
+          component: "TPU runtime / Pathways",
+          proto: "ICI",
+          detail: "The runtime distributes the binary to every chip in the slice. Inputs are <code>device_put</code>&apos;d into HBM with the requested sharding; the host kicks the program; MXUs crunch local tiles; collectives flow over <strong>ICI</strong> (high-bandwidth chip-to-chip optical links arranged in a 3D torus); outputs land back in sharded HBM. <code>block_until_ready()</code> is the only sync point — everything else is asynchronous dispatch. On multi-pod jobs, <strong>Pathways</strong> coordinates the program across slices.",
+          code: `x_sharded = jax.device_put(x, sharding)
+w_sharded = jax.device_put(w, sharding)
+
+out = layer(x_sharded, w_sharded)   # async dispatch
+out.block_until_ready()             # wait for all chips
+
+print(out.sharding)                 # NamedSharding(..., P("data", "model"))`,
+          refs: [
+            { label: "Pathways paper", url: "https://arxiv.org/abs/2203.12533" }
+          ]
+        },
+        {
+          title: "Inspect &amp; profile",
+          component: "XProf / TensorBoard",
+          proto: "Trace viewer",
+          detail: "Capture a profile to verify what the compiler actually produced: which ops fused, whether collectives overlap with compute, MXU utilization (FLOPs / peak), HBM bandwidth, and step time breakdown. The XProf trace viewer in TensorBoard shows per-core timelines so you can pinpoint where time goes — usually it&apos;s either a non-overlapped collective or a memory-bound op the fuser missed.",
+          code: `import jax.profiler as jp
+
+jp.start_trace("./tpu_trace")
+for _ in range(5):
+    layer(x_sharded, w_sharded).block_until_ready()
+jp.stop_trace()
+
+# Then:
+#   tensorboard --logdir ./tpu_trace
+# Open the "Profile" tab -> XProf trace viewer.`,
+          refs: [
+            { label: "JAX profiling guide", url: "https://jax.readthedocs.io/en/latest/profiling.html" }
+          ]
+        }
+      ]
+    },
+
+    {
+      id: "uc-llm-training",
+      title: "Training a Llama-class LLM on a TPU Pod",
+      desc: "From a HuggingFace checkpoint to a sharded training run on a v5p slice using MaxText.",
+      icon: "🧠",
+      color: "#7ee787",
+      steps: [
+        {
+          title: "Provision a TPU slice",
+          component: "GCP / queued resources",
+          proto: "gcloud",
+          detail: "Large TPU slices are scheduled via <strong>queued resources</strong>: you describe the topology you want (e.g. <code>v5p-256</code> = 128 chips, 256 TensorCores arranged as a 4×4×8 torus) and GCP allocates a contiguous block when capacity opens. The QR API is preferred over plain <code>create-node</code> because it survives preemption windows and gives you ICI-contiguous chips.",
+          code: `gcloud compute tpus queued-resources create my-train-qr \\
+    --node-id=my-v5p-256 \\
+    --project=$PROJECT --zone=us-east5-a \\
+    --accelerator-type=v5p-256 \\
+    --runtime-version=v2-alpha-tpuv5 \\
+    --best-effort
+
+gcloud compute tpus queued-resources describe my-train-qr \\
+    --project=$PROJECT --zone=us-east5-a`,
+          refs: [
+            { label: "Queued resources docs", url: "https://cloud.google.com/tpu/docs/queued-resources" }
+          ]
+        },
+        {
+          title: "Convert weights to Orbax sharded checkpoint",
+          component: "MaxText/llama_or_mistral_ckpt.py",
+          proto: "Orbax / GCS",
+          detail: "MaxText reads checkpoints in <strong>Orbax</strong> format — sharded across hosts so loading scales with the slice. The conversion script reads HuggingFace safetensors, applies MaxText&apos;s parameter naming and layout, and writes one shard per host directly to GCS. Subsequent training steps read only the local shard from each host, keeping load times under a minute even for 70B models.",
+          code: `# On a CPU VM with the HF checkpoint mounted:
+python3 MaxText/llama_or_mistral_ckpt.py \\
+    --base-model-path=/data/llama3-8b-hf \\
+    --maxtext-model-path=gs://my-bucket/ckpts/llama3-8b/0/ \\
+    --model-size=llama3-8b
+
+# Result: gs://my-bucket/ckpts/llama3-8b/0/items/{params.*}/`,
+          refs: [
+            { label: "MaxText repo", url: "https://github.com/AI-Hypercomputer/maxtext" },
+            { label: "Orbax checkpoint", url: "https://orbax.readthedocs.io/" }
+          ]
+        },
+        {
+          title: "Define mesh + parallelism strategy",
+          component: "MaxText config (base.yml)",
+          proto: "YAML",
+          detail: "Parallelism is declared as a mesh of named axes plus per-tensor shardings. A common recipe for an 8B model on v5p-256 is FSDP across the long axis (parameters and optimizer states fully sharded across data-parallel replicas) plus a small tensor-parallel degree to keep matmuls fat enough for the MXU. <code>ici_*_parallelism</code> controls within-slice sharding; <code>dcn_*_parallelism</code> controls across slices.",
+          code: `# MaxText/configs/base.yml (overrides on CLI)
+ici_data_parallelism:    1
+ici_fsdp_parallelism:    64
+ici_tensor_parallelism:  4
+ici_sequence_parallelism: 1
+
+dcn_data_parallelism:    1
+dcn_fsdp_parallelism:    1
+
+per_device_batch_size:   8
+max_target_length:       8192
+remat_policy:            "minimal"`,
+          refs: [
+            { label: "MaxText sharding", url: "https://github.com/AI-Hypercomputer/maxtext/blob/main/getting_started/Sharding.md" }
+          ]
+        },
+        {
+          title: "Launch training",
+          component: "MaxText/train.py",
+          proto: "JAX SPMD",
+          detail: "The launcher uses <code>multihost_runner.py</code> to ssh into every host of the slice in parallel and start the same training script. Each host owns 4 chips (8 TensorCores on v5p), reads its checkpoint shard, and joins the SPMD program. The first step takes a few minutes (compile + warmup); after that, steady-state step time is what you optimize.",
+          code: `python3 multihost_runner.py \\
+    --TPU_PREFIX=my-v5p-256 \\
+    --COMMAND="\\
+      python3 MaxText/train.py MaxText/configs/base.yml \\
+        run_name=llama3-8b-pretrain-001 \\
+        base_output_directory=gs://my-bucket/runs/ \\
+        dataset_path=gs://my-bucket/c4/ \\
+        load_parameters_path=gs://my-bucket/ckpts/llama3-8b/0/items \\
+        steps=50000"`,
+          refs: [
+            { label: "MaxText getting started", url: "https://github.com/AI-Hypercomputer/maxtext/tree/main/getting_started" }
+          ]
+        },
+        {
+          title: "Monitor: MFU, goodput, XProf",
+          component: "TensorBoard + XProf",
+          proto: "metrics",
+          detail: "Three numbers matter on a pod: <strong>MFU</strong> (model FLOPs utilization vs peak — 50–60% is excellent for dense LLMs on v5p), <strong>goodput</strong> (fraction of wall time spent on useful steps after restarts), and <strong>step time variance</strong> (a stragglerful host shows up immediately). MaxText logs all three to TensorBoard; XProf traces drill into individual steps.",
+          code: `# Stream metrics:
+tensorboard --logdir=gs://my-bucket/runs/llama3-8b-pretrain-001/tensorboard
+
+# Capture an XProf trace mid-run (from any host):
+python3 -m jax.tools.colab_tpu_profiler \\
+    --service_addr=$(hostname):9012 \\
+    --logdir=gs://my-bucket/runs/.../profile \\
+    --duration_ms=5000`,
+          refs: [
+            { label: "ML Goodput Measurement", url: "https://github.com/AI-Hypercomputer/ml-goodput-measurement" }
+          ]
+        },
+        {
+          title: "Async checkpoint to GCS",
+          component: "Orbax CheckpointManager",
+          proto: "GCS",
+          detail: "Checkpoints are written <strong>asynchronously</strong>: training continues on the next step while host CPUs stream the previous step&apos;s shards to GCS. With Orbax&apos;s emergency checkpoint feature, hot replicas of the latest checkpoint live in host RAM, so a preempted slice can resume in seconds instead of waiting for a GCS read. Set the period based on your preemption window — every 200–500 steps is typical.",
+          code: `# In MaxText config:
+checkpoint_period: 500            # save every N steps
+async_checkpointing: True         # don't block the train loop
+enable_emergency_checkpoint: True
+local_checkpoint_directory: /tmp/local_ckpts
+local_checkpoint_period: 100      # in-RAM replica`,
+          refs: [
+            { label: "Orbax emergency ckpt", url: "https://orbax.readthedocs.io/en/latest/guides/checkpoint/emergency_checkpoint.html" }
+          ]
+        }
+      ]
+    },
+
+    {
+      id: "uc-jetstream-serve",
+      title: "Serving an LLM with JetStream",
+      desc: "End-to-end TPU inference: from a gRPC request to streamed tokens via JetStream + MaxText.",
+      icon: "🚀",
+      color: "#ff7b72",
+      steps: [
+        {
+          title: "Build the engine and load weights",
+          component: "maxengine_server",
+          proto: "process startup",
+          detail: "<strong>JetStream</strong> is a TPU-optimized inference server with a pluggable engine; <strong>MaxEngine</strong> is the MaxText-backed engine that reuses the training model code for serving. At startup the engine compiles the prefill and decode graphs (one HLO program each), loads the Orbax checkpoint into HBM with the right sharding for the serving topology (often pure tensor-parallel across one v5e slice), and pre-allocates the paged KV cache.",
+          code: `# On a v5e-8 single-host serving slice:
+python3 MaxText/maxengine_server.py \\
+    MaxText/configs/base.yml \\
+    tokenizer_path=assets/tokenizer.llama3 \\
+    load_parameters_path=gs://my-bucket/ckpts/llama3-8b/0/items \\
+    max_prefill_predict_length=1024 \\
+    max_target_length=2048 \\
+    ici_tensor_parallelism=8 \\
+    scan_layers=false \\
+    weight_dtype=bfloat16
+
+# JetStream gRPC server now listening on :9000`,
+          refs: [
+            { label: "JetStream", url: "https://github.com/AI-Hypercomputer/JetStream" },
+            { label: "MaxText inference", url: "https://github.com/AI-Hypercomputer/maxtext/blob/main/getting_started/Run_MaxText_via_xpk.md" }
+          ]
+        },
+        {
+          title: "Client sends a Decode request",
+          component: "JetStream gRPC API",
+          proto: "gRPC stream",
+          detail: "The wire protocol is a single <code>Decode</code> RPC that streams tokens back to the client. Requests carry the input text (or pre-tokenized IDs), max output length, and sampling params. JetStream returns a stream of <code>DecodeResponse</code> messages, each holding one or more newly generated tokens — clients can render them as they arrive.",
+          code: `import grpc
+from jetstream.core.proto import jetstream_pb2, jetstream_pb2_grpc
+
+ch  = grpc.insecure_channel("localhost:9000")
+stub = jetstream_pb2_grpc.OrchestratorStub(ch)
+
+req = jetstream_pb2.DecodeRequest(
+    text_content=jetstream_pb2.DecodeRequest.TextContent(
+        text="Explain TPU systolic arrays in one paragraph."
+    ),
+    priority=0,
+    max_tokens=256,
+)
+
+for resp in stub.Decode(req):
+    for token in resp.stream_content.samples[0].text:
+        print(token, end="", flush=True)`,
+          refs: [
+            { label: "JetStream proto", url: "https://github.com/AI-Hypercomputer/JetStream/blob/main/jetstream/core/proto/jetstream.proto" }
+          ]
+        },
+        {
+          title: "Prefill: process the prompt",
+          component: "MaxEngine.prefill",
+          proto: "single HLO",
+          detail: "Prefill runs the full transformer stack over the prompt in one shot, producing the initial KV cache and the first output token. It&apos;s compute-bound (one big matmul per layer over <em>all</em> prompt tokens), so the MXU utilization is high. The cache is written into <strong>paged</strong> blocks so different requests can share HBM efficiently.",
+          code: `# Inside MaxEngine (simplified):
+@jax.jit
+def prefill(params, tokens, positions):
+    # tokens: int32[1, P]   P = prompt length
+    logits, kv_cache = model.apply(
+        params, tokens, positions,
+        decode=False,                # full attention
+        return_kv_cache=True,
+    )
+    next_token = sample(logits[:, -1, :])
+    return next_token, kv_cache      # cache lives in HBM`,
+          refs: [
+            { label: "Paged Attention (vLLM paper)", url: "https://arxiv.org/abs/2309.06180" }
+          ]
+        },
+        {
+          title: "Decode loop with continuous batching",
+          component: "MaxEngine.generate",
+          proto: "decode HLO",
+          detail: "Decode runs one token at a time but <strong>across many concurrent requests</strong> packed into a single batch (continuous batching). Each step is one HLO call that reads the paged KV cache, attends only to past tokens, projects to vocab, samples, and appends the new token to each request&apos;s cache page. Requests are added/removed from the batch every step — finished slots are immediately filled by waiting requests.",
+          code: `@jax.jit
+def generate_step(params, kv_cache, current_tokens, page_table):
+    # current_tokens: int32[B, 1]   B = active batch size
+    logits, kv_cache = model.apply(
+        params, current_tokens,
+        decode=True,
+        kv_cache=kv_cache,
+        page_table=page_table,         # which HBM pages each slot uses
+    )
+    next_tokens = sample(logits[:, -1, :])
+    return next_tokens, kv_cache`,
+          refs: [
+            { label: "Continuous batching (Orca paper)", url: "https://www.usenix.org/conference/osdi22/presentation/yu" }
+          ]
+        },
+        {
+          title: "Stream tokens back to the client",
+          component: "JetStream orchestrator",
+          proto: "gRPC stream",
+          detail: "An orchestrator thread pulls completed tokens from the engine&apos;s output queue and pushes them into each request&apos;s gRPC stream. Detokenization happens here — partial UTF-8 sequences are buffered until a full grapheme is ready, so streamed CJK and emoji render correctly. The stream closes when the engine emits an EOS token or hits <code>max_tokens</code>.",
+          code: `# Orchestrator pseudo-code:
+while not request.done:
+    token_id = await engine.next_token(request.slot)
+    text_chunk = detokenizer.feed(token_id)
+    if text_chunk:
+        await request.grpc_stream.send(
+            jetstream_pb2.DecodeResponse(
+                stream_content=...samples=[
+                    jetstream_pb2.DecodeResponse.StreamContent.Sample(
+                        text=text_chunk, token_ids=[token_id]
+                    )
+                ]
+            )
+        )
+    if token_id == EOS or request.tokens_out >= request.max_tokens:
+        request.done = True`,
+        },
+        {
+          title: "Autoscale on GKE",
+          component: "GKE + JetStream HPA",
+          proto: "Kubernetes",
+          detail: "In production JetStream runs as a <strong>Deployment</strong> on GKE with TPU node pools, fronted by a Service. A <strong>HorizontalPodAutoscaler</strong> scales replicas based on a custom metric — typically <code>jetstream_queue_size</code> (pending requests per replica) or <code>jetstream_time_per_output_token</code>. Each replica owns its own TPU slice; scale-up provisions a new slice via queued resources.",
+          code: `apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: jetstream-llama3-8b
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: jetstream-llama3-8b
+  minReplicas: 1
+  maxReplicas: 16
+  metrics:
+    - type: Pods
+      pods:
+        metric:
+          name: jetstream_queue_size
+        target:
+          type: AverageValue
+          averageValue: "4"`,
+          refs: [
+            { label: "JetStream on GKE", url: "https://cloud.google.com/kubernetes-engine/docs/tutorials/serve-llama-jetstream-tpu" }
+          ]
+        }
+      ]
+    },
+
+    {
+      id: "uc-sparsecore-rec",
+      title: "Recommender training with SparseCore",
+      desc: "Embedding-heavy recommender on TPU v5p using the SparseCore co-processor for lookups.",
+      icon: "🎯",
+      color: "#d2a8ff",
+      steps: [
+        {
+          title: "Define the embedding tables",
+          component: "JAX TPU Embedding API",
+          proto: "Python",
+          detail: "Production recommenders have hundreds of categorical features (user_id, item_id, country, device, …) feeding into embedding tables that can total <strong>terabytes</strong>. You declare each table with a vocabulary size, embedding dim, optimizer, and combiner. The API places these on the <strong>SparseCore</strong> co-processor, which has its own SRAM and is optimized for irregular gather/scatter — the regular TensorCore would be wasted on this access pattern.",
+          code: `from jax_tpu_embedding.sparsecore.lib.nn import embedding_spec, embedding
+
+tables = {
+    "user_id": embedding_spec.TableSpec(
+        vocabulary_size=200_000_000,
+        embedding_dim=128,
+        initializer=jnn.initializers.normal(0.02),
+        optimizer=embedding_spec.AdagradOptimizerSpec(learning_rate=0.01),
+        combiner="mean",
+    ),
+    "item_id": embedding_spec.TableSpec(
+        vocabulary_size=50_000_000,
+        embedding_dim=128, ...
+    ),
+}`,
+          refs: [
+            { label: "jax-tpu-embedding", url: "https://github.com/AI-Hypercomputer/jax-tpu-embedding" }
+          ]
+        },
+        {
+          title: "Shard tables across SparseCores",
+          component: "SparseCore (per-chip co-proc)",
+          proto: "table sharding",
+          detail: "Each TPU v5p chip has 4 <strong>SparseCores</strong>. Tables are sharded across all SparseCores in the slice — typically by hashing the row index modulo <code>num_sparsecores</code>. A v5p-256 slice has 128 chips × 4 = <strong>512 SparseCores</strong>, giving you ~16 TB of total embedding capacity at bf16. Lookups for any given example may hit many shards and are routed automatically." +
+            '<svg viewBox="0 0 360 110" style="width:100%;max-width:360px;margin-top:10px;background:#0d1117;border:1px solid #30363d;border-radius:6px">' +
+            '<g font-family="monospace" font-size="9" fill="#c9d1d9" text-anchor="middle">' +
+            '<rect x="10" y="20" width="120" height="70" rx="4" fill="#161b22" stroke="#d2a8ff"/>' +
+            '<text x="70" y="34" fill="#d2a8ff">Chip 0</text>' +
+            '<rect x="18" y="42" width="24" height="40" rx="2" fill="#1f2937" stroke="#d2a8ff"/><text x="30" y="65">SC0</text>' +
+            '<rect x="46" y="42" width="24" height="40" rx="2" fill="#1f2937" stroke="#d2a8ff"/><text x="58" y="65">SC1</text>' +
+            '<rect x="74" y="42" width="24" height="40" rx="2" fill="#1f2937" stroke="#d2a8ff"/><text x="86" y="65">SC2</text>' +
+            '<rect x="102" y="42" width="24" height="40" rx="2" fill="#1f2937" stroke="#d2a8ff"/><text x="114" y="65">SC3</text>' +
+            '<text x="180" y="60" fill="#7d8590">...</text>' +
+            '<rect x="220" y="20" width="130" height="70" rx="4" fill="#161b22" stroke="#d2a8ff"/>' +
+            '<text x="285" y="34" fill="#d2a8ff">Chip 127</text>' +
+            '<rect x="228" y="42" width="24" height="40" rx="2" fill="#1f2937" stroke="#d2a8ff"/><text x="240" y="65">SC0</text>' +
+            '<rect x="256" y="42" width="24" height="40" rx="2" fill="#1f2937" stroke="#d2a8ff"/><text x="268" y="65">SC1</text>' +
+            '<rect x="284" y="42" width="24" height="40" rx="2" fill="#1f2937" stroke="#d2a8ff"/><text x="296" y="65">SC2</text>' +
+            '<rect x="312" y="42" width="24" height="40" rx="2" fill="#1f2937" stroke="#d2a8ff"/><text x="324" y="65">SC3</text>' +
+            '<text x="180" y="102" fill="#7ee787">512 SparseCores total in v5p-256</text>' +
+            '</g></svg>'
+        },
+        {
+          title: "Lookup → all-to-all → dense net",
+          component: "SparseCore + ICI",
+          proto: "all-to-all",
+          detail: "On each step the SparseCores gather embedding rows for their local input shard and combine them per feature (mean/sum). The result needs to be redistributed because the dense network on the <strong>TensorCores</strong> is sharded by example, not by feature — this is an <strong>all-to-all</strong> exchange over ICI. After it lands, you have a dense bf16 activation tensor ready for the MLP.",
+          code: `# Pseudo-code of a single step:
+sparse_input = batch["categorical_features"]   # ragged ids per example
+
+# 1. SparseCore: gather + combine (per-shard)
+sparse_acts = embedding.tpu_sparse_dense_matmul(
+    sparse_input, embedding_variables, feature_specs,
+)                                              # f32[B_local, F_local, D]
+
+# 2. ICI all-to-all: re-shard so each TensorCore owns whole examples
+dense_in = jax.lax.all_to_all(
+    sparse_acts, axis_name="model",
+    split_axis=1, concat_axis=0,
+)                                              # f32[B, F, D]
+
+# 3. TensorCore: dense MLP tower
+logits = mlp_apply(mlp_params, dense_in.reshape(B, F * D))`,
+        },
+        {
+          title: "Backward + sparse optimizer step",
+          component: "SparseCore optimizer",
+          proto: "scatter-update",
+          detail: "Gradients flow backward through the dense net on the TensorCore, then go back across ICI to the SparseCores. Each SparseCore applies the per-table optimizer (Adagrad / FTRL / Adam) <strong>only to the rows that were touched this step</strong> — a sparse update, never a full table sweep. This is the whole reason SparseCore exists: dense gradient updates over a 200M-row table would dwarf the actual model compute.",
+          code: `loss, dense_grads = jax.value_and_grad(loss_fn)(mlp_params, dense_in, labels)
+mlp_params = optax.apply_updates(mlp_params, mlp_optimizer.update(dense_grads, ...))
+
+# Gradients w.r.t. the embedding activations -> back across ICI -> SparseCore:
+emb_act_grads = jax.lax.all_to_all(
+    grad_of_dense_in_wrt_sparse_acts, axis_name="model",
+    split_axis=0, concat_axis=1,
+)
+embedding_variables = embedding.tpu_sparse_dense_matmul_grad(
+    emb_act_grads, sparse_input, embedding_variables, feature_specs,
+)   # in-place sparse Adagrad on touched rows`,
+        },
+        {
+          title: "Pipeline host input → device step",
+          component: "tf.data + infeed",
+          proto: "host pipeline",
+          detail: "Recommender input pipelines are CPU-heavy (parse TFRecord/Parquet, hash features, build ragged tensors). They run on the host with <code>tf.data</code> and prefetch into the TPU&apos;s infeed queue, so step time is bounded by SparseCore + TensorCore work, not data prep. A common rule: aim for host-step time ≤ device-step time, or your $/step doubles.",
+          code: `ds = (tf.data.Dataset.from_tensor_slices(file_list)
+        .interleave(tf.data.TFRecordDataset, num_parallel_calls=tf.data.AUTOTUNE)
+        .map(parse_example, num_parallel_calls=tf.data.AUTOTUNE)
+        .batch(global_batch_size, drop_remainder=True)
+        .prefetch(8))
+
+for step, batch in enumerate(ds.as_numpy_iterator()):
+    loss = train_step(state, batch)            # async dispatch
+    if step % 100 == 0:
+        print(step, float(loss))`,
+          refs: [
+            { label: "TF Recommenders", url: "https://www.tensorflow.org/recommenders" }
+          ]
+        }
+      ]
+    },
+
+    {
+      id: "uc-multislice",
+      title: "Multislice training across pods (DCN)",
+      desc: "Scaling beyond a single pod: ICI within a slice, DCN across slices, with hierarchical collectives.",
+      icon: "🌐",
+      color: "#ffa657",
+      steps: [
+        {
+          title: "Provision multiple TPU slices",
+          component: "GCP Multislice",
+          proto: "gcloud / QR",
+          detail: "<strong>Multislice</strong> lets you run one logical job across several independently-scheduled TPU slices connected by the data-center network (<strong>DCN</strong>) instead of ICI. You request <code>--num-slices=N</code> on a single queued resource so all N slices land in the same zone with a coordinator. Each slice is a normal pod internally (full ICI torus); the slices talk to each other only over DCN.",
+          code: `gcloud compute tpus queued-resources create my-multi-qr \\
+    --node-prefix=my-v5p-multi \\
+    --node-count=4 \\
+    --project=$PROJECT --zone=us-east5-a \\
+    --accelerator-type=v5p-256 \\
+    --runtime-version=v2-alpha-tpuv5 \\
+    --multi-node-params
+
+# 4 slices x v5p-256 = 4 x 128 chips = 512 chips total
+# ICI inside each slice; DCN between slices.`,
+          refs: [
+            { label: "Cloud TPU Multislice", url: "https://cloud.google.com/tpu/docs/multislice-introduction" }
+          ]
+        },
+        {
+          title: "Configure a hierarchical mesh",
+          component: "MaxText DCN config",
+          proto: "JAX mesh",
+          detail: "The mesh has <strong>two tiers</strong>: <code>ici_*</code> axes describe sharding inside each slice (over the high-bandwidth torus) and <code>dcn_*</code> axes describe sharding across slices (over the slower DCN). The product of all axes must equal total chips. A typical recipe puts FSDP across DCN (gradient/parameter all-reduce happens slowly but only once per step) and tensor-parallel inside ICI (every-layer collectives on the fast fabric).",
+          code: `# 4 slices x 128 chips, 256 TensorCores per slice = 1024 cores total
+ici_fsdp_parallelism:    64
+ici_tensor_parallelism:  4         # 64 * 4 = 256 cores per slice  ✓
+
+dcn_fsdp_parallelism:    4         # FSDP across the 4 slices       ✓
+dcn_data_parallelism:    1
+dcn_tensor_parallelism:  1`,
+          refs: [
+            { label: "MaxText DCN sharding", url: "https://github.com/AI-Hypercomputer/maxtext/blob/main/getting_started/Sharding.md" }
+          ]
+        },
+        {
+          title: "Coordinator initializes the JAX cluster",
+          component: "jax.distributed.initialize",
+          proto: "TCP bootstrap",
+          detail: "On startup every host calls <code>jax.distributed.initialize</code> with the same coordinator address. The coordinator (host 0 of slice 0) hands out a global process index, and JAX builds a unified <code>devices()</code> view spanning all slices. From the user&apos;s perspective there&apos;s a single mesh — JAX knows which axes ride ICI and which ride DCN.",
+          code: `import jax
+
+jax.distributed.initialize(
+    coordinator_address=os.environ["MEGASCALE_COORDINATOR_ADDRESS"],
+    num_processes=int(os.environ["MEGASCALE_NUM_SLICES"]) *
+                  int(os.environ["MEGASCALE_SLICE_HOST_COUNT"]),
+    process_id=int(os.environ["MEGASCALE_PROCESS_ID"]),
+)
+
+print("global devices:", len(jax.devices()))     # 1024
+print("local devices:",  len(jax.local_devices()))  # 4 per host`,
+          refs: [
+            { label: "JAX multi-controller", url: "https://jax.readthedocs.io/en/latest/multi_process.html" }
+          ]
+        },
+        {
+          title: "Hierarchical collectives (ICI + DCN)",
+          component: "XLA collective scheduler",
+          proto: "all-reduce hierarchy",
+          detail: "The compiler turns a global all-reduce on a parameter sharded by both <code>ici_fsdp</code> and <code>dcn_fsdp</code> into a <strong>two-stage hierarchical reduction</strong>: first an ICI reduce-scatter inside each slice (fast, ~hundreds of GB/s), then a DCN all-reduce of the smaller per-slice results (slow, single-digit GB/s), then an ICI all-gather. The DCN traffic is therefore <code>1/N</code> of what a flat all-reduce would send — critical for keeping step time bounded as you scale slices." +
+            '<svg viewBox="0 0 380 130" style="width:100%;max-width:380px;margin-top:10px;background:#0d1117;border:1px solid #30363d;border-radius:6px">' +
+            '<g font-family="monospace" font-size="9" fill="#c9d1d9" text-anchor="middle">' +
+            '<rect x="10"  y="20" width="80" height="40" rx="4" fill="#1f2937" stroke="#ffa657"/><text x="50"  y="36" fill="#ffa657">Slice 0</text><text x="50"  y="50">128 chips</text>' +
+            '<rect x="100" y="20" width="80" height="40" rx="4" fill="#1f2937" stroke="#ffa657"/><text x="140" y="36" fill="#ffa657">Slice 1</text><text x="140" y="50">128 chips</text>' +
+            '<rect x="190" y="20" width="80" height="40" rx="4" fill="#1f2937" stroke="#ffa657"/><text x="230" y="36" fill="#ffa657">Slice 2</text><text x="230" y="50">128 chips</text>' +
+            '<rect x="280" y="20" width="80" height="40" rx="4" fill="#1f2937" stroke="#ffa657"/><text x="320" y="36" fill="#ffa657">Slice 3</text><text x="320" y="50">128 chips</text>' +
+            '<text x="50"  y="78" fill="#58a6ff">↓ ICI reduce-scatter</text>' +
+            '<text x="320" y="78" fill="#58a6ff">↓ ICI reduce-scatter</text>' +
+            '<line x1="90"  y1="100" x2="280" y2="100" stroke="#ff7b72" stroke-width="2" stroke-dasharray="4,3"/>' +
+            '<text x="185" y="96"  fill="#ff7b72">DCN all-reduce (small payload)</text>' +
+            '<text x="185" y="118" fill="#7ee787">then ICI all-gather inside each slice</text>' +
+            '</g></svg>'
+        },
+        {
+          title: "Fault recovery and elastic restart",
+          component: "Orbax + multihost_runner",
+          proto: "checkpoint restore",
+          detail: "At pod scale, hardware failures are routine. The standard recipe: <strong>async checkpoints</strong> every few hundred steps to GCS, <strong>emergency in-memory replicas</strong> for fast restart of the most recent step, and a <strong>supervisor</strong> that detects host loss (heartbeat over coordinator), tears down the JAX cluster, re-allocates the affected slice via the queued-resource API, and restarts all hosts at the latest checkpoint. With this loop, jobs of weeks-long wall time can sustain &gt;95% goodput.",
+          code: `# Supervisor loop (sketch):
+while True:
+    proc = launch_multislice_job(ckpt=latest_ckpt())
+    rc = proc.wait()
+    if rc == 0:
+        break                              # training finished
+    failed_slice = detect_failed_slice()
+    print(f"Slice {failed_slice} died; recreating...")
+    gcloud_qr_recreate(failed_slice)
+    # next iteration restarts from the most recent Orbax checkpoint`,
+          refs: [
+            { label: "ML Goodput / resilience", url: "https://github.com/AI-Hypercomputer/ml-goodput-measurement" }
+          ]
+        }
+      ]
+    }
+  ],
+
   youtube: {
     videos: [
       { unit: 1, id: "CS4cs9xVecg", topic: "Welcome (Deep Learning Specialization C1W1L01)" },      { unit: 1, id: "n1l-9lIMW7E", topic: "What is a Neural Network? (C1W1L02)" },      { unit: 1, id: "BYGpKPY9pO0", topic: "Supervised Learning with a Neural Network (C1W1L03)" },      { unit: 1, id: "xflCLdJh0n0", topic: "Why is deep learning taking off? (C1W1L04)" },      { unit: 1, id: "ysnIDax71yY", topic: "About This Course (C1W1L05)" },      { unit: 1, id: "7AZjh2VXD6E", topic: "Course Resources (C1W1L06)" },      { unit: 1, id: "eqEc66RFY0I", topic: "Binary Classification (C1W2L01)" },      { unit: 1, id: "hjrYrynGWGA", topic: "Logistic Regression (C1W2L02)" },      { unit: 2, id: "SHEPb1JHw5o", topic: "Logistic Regression Cost Function (C1W2L03)" },      { unit: 2, id: "uJryes5Vk1o", topic: "Gradient Descent (C1W2L04)" },      { unit: 2, id: "GzphoJOVEcE", topic: "Derivatives (C1W2L05)" },      { unit: 2, id: "5H7M5Vd3-pk", topic: "More Derivative Examples (C1W2L06)" },      { unit: 2, id: "hCP1vGoCdYU", topic: "Computation Graph (C1W2L07)" },      { unit: 2, id: "nJyUyKN-XBQ", topic: "Derivatives With Computation Graphs (C1W2L08)" },      { unit: 2, id: "z_xiwjEdAC4", topic: "Logistic Regression Gradient Descent (C1W2L09)" },      { unit: 2, id: "KKfZLXcF-aE", topic: "Gradient Descent on m Examples (C1W2L10)" },      { unit: 3, id: "qsIrQi0fzbY", topic: "Vectorization (C1W2L11)" },      { unit: 3, id: "pYWASRauTzs", topic: "More Vectorization Examples (C1W2L12)" },      { unit: 3, id: "okpqeEUdEkY", topic: "Vectorizing Logistic Regression (C1W2L13)" },      { unit: 3, id: "2BkqApHKwn0", topic: "Vectorizing Logistic Regression's Gradient Computation (C1W2L14)" },      { unit: 3, id: "tKcLaGdvabM", topic: "Broadcasting in Python (C1W2L15)" },      { unit: 3, id: "V2QlTmh6P2Y", topic: "A Note on Python/Numpy Vectors (C1W2L16)" },      { unit: 3, id: "0S9c7nHoDws", topic: "Quick Tour of Jupyter/iPython Notebooks (C1W2L17)" },      { unit: 3, id: "k_S5fnKjO-4", topic: "Explanation of Logistic Regression's Cost Function (C1W2L18)" },      { unit: 4, id: "fXOsFF95ifk", topic: "Neural Network Overview (C1W3L01)" },      { unit: 4, id: "CcRkHl75Z-Y", topic: "Neural Network Representations (C1W3L02)" },      { unit: 4, id: "rMOdrD61IoU", topic: "Computing Neural Network Output (C1W3L03)" },      { unit: 4, id: "xy5MOQpx3aQ", topic: "Vectorizing Across Multiple Examples (C1W3L04)" },      { unit: 4, id: "kkWRbIb42Ms", topic: "Explanation For Vectorized Implementation (C1W3L05)" },      { unit: 4, id: "Xvg00QnyaIY", topic: "Activation Functions (C1W3L06)" },      { unit: 4, id: "NkOv_k7r6no", topic: "Why Non-linear Activation Functions (C1W3L07)" },      { unit: 4, id: "P7_jFxTtJEo", topic: "Derivatives Of Activation Functions (C1W3L08)" },      { unit: 5, id: "7bLEWDZng_M", topic: "Gradient Descent For Neural Networks (C1W3L09)" },      { unit: 5, id: "yXcQ4B-YSjQ", topic: "Backpropagation Intuition (C1W3L10)" },      { unit: 5, id: "6by6Xas_Kho", topic: "Random Initialization (C1W3L11)" },      { unit: 5, id: "2gw5tE2ziqA", topic: "Deep L-Layer Neural Network (C1W4L01)" },      { unit: 5, id: "a8i2eJin0lY", topic: "Forward Propagation in a Deep Network (C1W4L02)" },      { unit: 5, id: "yslMo3hSbqE", topic: "Getting Matrix Dimensions Right (C1W4L03)" },      { unit: 5, id: "5dWp1mw_XNk", topic: "Why Deep Representations? (C1W4L04)" },      { unit: 5, id: "B7-iPbddhsw", topic: "Building Blocks of a Deep Neural Network (C1W4L05)" },      { unit: 6, id: "qzPQ8cEsVK8", topic: "Forward and Backward Propagation (C1W4L06)" },      { unit: 6, id: "VTE2KlfoO3Q", topic: "Parameters vs Hyperparameters (C1W4L07)" },      { unit: 6, id: "2zgon7XfN4I", topic: "What does this have to do with the brain? (C1W4L08)" }
