@@ -2582,243 +2582,412 @@ if (typeof switchTab === 'function') {
   {
     "topic": "Security Principles",
     "q": "What is the Trusted Computing Base (TCB)?",
-    "options": ["The entire operating system", "The minimal set of components that must be correct for security to hold", "All software running on a computer", "The hardware CPU only"],
+    "options": [
+      "The entire operating system",
+      "The minimal set of components that must be correct for security to hold",
+      "All software running on a computer",
+      "The hardware CPU only"
+    ],
     "answer": 1,
-    "explain": "The TCB is the minimal set of components whose correctness is critical for the security of the entire system. It should be kept as small, simple, and verifiable as possible."
+    "explain": "The Trusted Computing Base (TCB) is the minimal set of components whose correctness is absolutely critical for the entire system's security. Every component outside the TCB must be assumed potentially compromised, making TCB minimization essential for security. A smaller TCB reduces attack surface and makes formal verification tractable. For example, a secure microkernel aims to move driver and service code outside the TCB, leaving only essential kernel logic. Examples include formal verification of kernels like seL4 and the principle of least privilege that restricts what each component can do."
   },
   {
     "topic": "Security Principles",
     "q": "According to Kerckhoff's Principle, what should remain secret?",
-    "options": ["The entire system design", "Only the encryption algorithm", "Only the key", "The implementation source code"],
+    "options": [
+      "The entire system design",
+      "Only the encryption algorithm",
+      "Only the key",
+      "The implementation source code"
+    ],
     "answer": 2,
-    "explain": "Kerckhoff's Principle states that a cryptosystem should be secure even if everything except the key is public knowledge. Security should not depend on secrecy of the design."
+    "explain": "Kerckhoff's Principle (1883) states that a cryptosystem must remain secure even if every detail except the key is publicly known. Security must derive from key secrecy alone, not from obscurity of the algorithm. This principle rejects 'security through obscurity,' which fails once the algorithm is reverse-engineered or leaked. Modern cryptographic standards like AES and SHA-256 are designed openly, scrutinized by thousands of experts, yet remain secure because no one-way functions have been broken. This contrasts with proprietary ciphers that often harbor subtle weaknesses."
   },
   {
     "topic": "Security Principles",
     "q": "Which defense strategy layers security measures to reduce risk?",
-    "options": ["Single point defense", "Defense in depth", "Encrypted defense", "Perimeter defense only"],
+    "options": [
+      "Single point defense",
+      "Defense in depth",
+      "Encrypted defense",
+      "Perimeter defense only"
+    ],
     "answer": 1,
-    "explain": "Defense in depth uses multiple, overlapping security controls. If one layer is breached, others remain to provide protection."
+    "explain": "Defense in depth deploys multiple overlapping security controls across network, system, and application layers. No single breach completely compromises the system; if one defense fails, others remain operational. This strategy accepts that any single control may fail due to undiscovered vulnerabilities or misconfigurations. For example, a web application might combine firewall rules, application-level authentication, database encryption, and audit logging so that bypassing the firewall still requires defeating authentication. Real-world incidents like the Target breach (2013) exploited a single weak entry point; defense in depth would have limited damage."
   },
   {
     "topic": "Memory Safety",
     "q": "What vulnerability allows an attacker to overwrite return addresses on the stack?",
-    "options": ["Integer overflow", "Buffer overflow", "Use-after-free", "SQL injection"],
+    "options": [
+      "Integer overflow",
+      "Buffer overflow",
+      "Use-after-free",
+      "SQL injection"
+    ],
     "answer": 1,
-    "explain": "A buffer overflow occurs when writing beyond allocated buffer boundaries, potentially overwriting the return address and allowing code execution."
+    "explain": "A buffer overflow writes data beyond a buffer's allocated memory, corrupting adjacent data including the stack frame's return address. When the function returns, the processor jumps to the attacker's address instead of the legitimate return point, executing arbitrary code. This is a classic vulnerability exploited by worms like Morris (1988) and Slammer (2003). Modern mitigations include ASLR (randomizing addresses), DEP/NX (marking stack non-executable), and stack canaries (detecting overwrites). However, legacy code and memory-unsafe languages like C remain vulnerable; recent CVEs exploit buffer overflows in browsers (Chrome) and system libraries."
   },
   {
     "topic": "Memory Safety",
     "q": "Which language feature helps prevent buffer overflows?",
-    "options": ["Pointers", "Bounds checking", "Dynamic memory allocation", "Inline assembly"],
+    "options": [
+      "Pointers",
+      "Bounds checking",
+      "Dynamic memory allocation",
+      "Inline assembly"
+    ],
     "answer": 1,
-    "explain": "Bounds checking ensures that array accesses stay within allocated memory, preventing buffer overflow attacks."
+    "explain": "Bounds checking validates that every array or buffer access stays within the allocated bounds before allowing it to proceed. High-level languages like Java, Python, and Rust enforce bounds checking automatically, preventing entire classes of memory corruption. C and C++ require manual bounds checking or safe wrappers; failure to do so causes overflow vulnerabilities. Bounds checking has minimal performance overhead on modern CPUs with branch prediction and is essential for safety-critical systems. Many modern C++ libraries and frameworks now use checked containers (e.g., span, checked_cast) to mitigate legacy overflow risks."
   },
   {
     "topic": "Memory Safety",
     "q": "What does Address Space Layout Randomization (ASLR) do?",
-    "options": ["Encrypts all memory addresses", "Randomizes memory layout of processes", "Prevents all malware", "Eliminates buffer overflows"],
+    "options": [
+      "Encrypts all memory addresses",
+      "Randomizes memory layout of processes",
+      "Prevents all malware",
+      "Eliminates buffer overflows"
+    ],
     "answer": 1,
-    "explain": "ASLR randomizes the memory addresses of program components, making it harder for attackers to predict memory locations for exploits."
+    "explain": "Address Space Layout Randomization (ASLR) randomizes the base addresses of code, heap, stack, and libraries each time a process starts, preventing attackers from reliably predicting target addresses for exploits. An attacker leveraging a buffer overflow must guess or leak addresses; wrong guesses crash the process rather than achieving code execution. ASLR was introduced in Linux 2.6.12 (2005) and is now standard on all major OSes, including Windows (Vista+), macOS, iOS, and Android. However, information disclosure vulnerabilities can leak addresses, and 32-bit ASLR is weak due to limited entropy. Full ASLR effectiveness requires combining it with other mitigations like DEP and CFI."
   },
   {
     "topic": "Cryptography",
     "q": "What is the primary advantage of symmetric-key encryption?",
-    "options": ["Can be used for digital signatures", "Fast and efficient", "No key distribution needed", "Provides non-repudiation"],
+    "options": [
+      "Can be used for digital signatures",
+      "Fast and efficient",
+      "No key distribution needed",
+      "Provides non-repudiation"
+    ],
     "answer": 1,
-    "explain": "Symmetric encryption (like AES) is computationally efficient and fast, making it ideal for encrypting large amounts of data."
+    "explain": "Symmetric-key encryption like AES performs block or stream cipher operations using only XOR and simple arithmetic, achieving throughput of gigabits per second on modern hardware. Asymmetric encryption (RSA) is 100,000+ times slower due to modular exponentiation and thus impractical for bulk data. Symmetric encryption is therefore used for file encryption, disk encryption, and streaming media despite requiring secure key distribution beforehand. AES-256 provides 256-bit security against both classical and quantum computers, and AES-GCM adds authentication. This efficiency-security tradeoff explains why TLS uses asymmetric crypto to exchange a symmetric session key, then encrypts bulk data symmetrically."
   },
   {
     "topic": "Cryptography",
     "q": "What security notion does AES in CBC mode without authentication lack?",
-    "options": ["Confidentiality", "Integrity", "Non-repudiation", "Forward secrecy"],
+    "options": [
+      "Confidentiality",
+      "Integrity",
+      "Non-repudiation",
+      "Forward secrecy"
+    ],
     "answer": 1,
-    "explain": "CBC mode provides confidentiality but NOT integrity. An attacker can modify ciphertext and the recipient won't know the message was tampered with."
+    "explain": "AES-CBC encrypts each plaintext block XORed with the previous ciphertext block, providing semantic security (same plaintext encrypts differently). However, CBC offers no integrity protection: an attacker can flip bits in ciphertext, resulting in predictable corruption of the corresponding plaintext blocks. The recipient cannot detect tampering without an authentication tag. This led to real exploits like POODLE (2014) which exploited this lack of integrity to strip TLS versions. The solution is authenticated encryption (AES-GCM, ChaCha20-Poly1305) which combines confidentiality with integrity, ensuring both secrecy and authenticity."
   },
   {
     "topic": "Cryptography",
     "q": "Which property must a cryptographic hash function have?",
-    "options": ["Reversible transformation", "Collision resistance", "Fast preimage computation", "Symmetric key requirement"],
+    "options": [
+      "Reversible transformation",
+      "Collision resistance",
+      "Fast preimage computation",
+      "Symmetric key requirement"
+    ],
     "answer": 1,
-    "explain": "Collision resistance means it's computationally infeasible to find two different inputs that produce the same hash output."
+    "explain": "A collision-resistant hash function h(x) should satisfy: for any two distinct inputs x ≠ y, computing h(x) = h(y) requires roughly 2^n operations (where n is hash size), not less. SHA-256 has 256-bit output, so brute-force collision finding requires ~2^128 operations (birthday bound), which is computationally infeasible today. MD5 and SHA-1 have been broken: practical collisions exist for MD5 (Wang et al., 2004) and SHA-1 (Compromised in 2017). Lack of collision resistance breaks digital signatures and certificate validity. Modern standards use SHA-256 or SHA-3, and NIST deprecated SHA-1 in 2011."
   },
   {
     "topic": "Cryptography",
     "q": "What does HMAC provide?",
-    "options": ["Encryption and secrecy", "Message authentication and integrity", "Digital signatures only", "Key agreement"],
+    "options": [
+      "Encryption and secrecy",
+      "Message authentication and integrity",
+      "Digital signatures only",
+      "Key agreement"
+    ],
     "answer": 1,
-    "explain": "HMAC (Hash-based Message Authentication Code) combines a hash function with a secret key to verify both message integrity and authenticity."
+    "explain": "HMAC computes h(key XOR pad1 || h(key XOR pad2 || message)) using a cryptographic hash like SHA-256, producing an authentication tag that proves both integrity and authenticity. Only the holder of the secret key can compute the correct HMAC; an attacker cannot forge a valid tag without the key. HMAC protects against tampering and is used in TLS, OAuth tokens, and DNS DNSSEC. Unlike encryption, HMAC provides integrity without confidentiality, so the message itself remains visible. HMAC is parameterized by the hash algorithm (HMAC-SHA256, HMAC-SHA512) and can be keyed with any length; key sizes matching hash output (256 or 512 bits) are standard."
   },
   {
     "topic": "Cryptography",
     "q": "In RSA encryption, which key is publicly shared?",
-    "options": ["The private key", "The public key (e, n)", "Both keys", "A session key"],
+    "options": [
+      "The private key",
+      "The public key (e, n)",
+      "Both keys",
+      "A session key"
+    ],
     "answer": 1,
-    "explain": "RSA's public key (e, n) is shared openly. Only the private key d must be kept secret."
+    "explain": "RSA generates two keys: public (e, n) and private (d, n), where n is the product of two large primes and ed ≡ 1 (mod φ(n)). The public key can be freely distributed and is embedded in X.509 certificates; it enables encryption and signature verification. The private key d is strictly secret; compromise of d breaks all RSA security for that key pair. Key sizes of 2048 bits (minimum) or 4096 bits (recommended) ensure security against factorization attacks. RSA key management requires secure storage (hardware security modules, key escrow) and rotation policies. Leaked private keys (e.g., Sony 2014) render all encrypted data vulnerable."
   },
   {
     "topic": "Cryptography",
     "q": "What is the purpose of a digital signature?",
-    "options": ["Encrypt the message", "Verify authenticity and non-repudiation", "Provide confidentiality", "Speed up transmission"],
+    "options": [
+      "Encrypt the message",
+      "Verify authenticity and non-repudiation",
+      "Provide confidentiality",
+      "Speed up transmission"
+    ],
     "answer": 1,
-    "explain": "Digital signatures prove that a message came from the claimed sender and the sender cannot deny having sent it (non-repudiation)."
+    "explain": "A digital signature uses asymmetric cryptography to bind a message to its signer: the signer hashes the message and encrypts the hash with their private key, producing a signature. The receiver uses the signer's public key to decrypt the signature and verify the hash matches the message, proving authenticity. Cryptographic binding ensures the signer cannot forge signatures from others, and the signer cannot deny signing a message they actually signed (non-repudiation). Digital signatures are used in email (PGP/S/MIME), code signing, and blockchain. Combined with a trusted CA certificate infrastructure, signatures enable end-to-end verification of software, documents, and transactions."
   },
   {
     "topic": "Cryptography",
     "q": "Which cryptographic primitive is used in Diffie-Hellman key exchange?",
-    "options": ["RSA", "Modular exponentiation", "AES", "HMAC"],
+    "options": [
+      "RSA",
+      "Modular exponentiation",
+      "AES",
+      "HMAC"
+    ],
     "answer": 1,
-    "explain": "Diffie-Hellman uses the difficulty of computing discrete logarithms (modular exponentiation) to allow two parties to agree on a shared secret."
+    "explain": "Diffie-Hellman (DH) key exchange works by having Alice and Bob each generate random exponents, compute g^a mod p and g^b mod p respectively, exchange these public values, and compute (g^b)^a mod p = (g^a)^b mod p = g^(ab) mod p, which is their shared secret. An eavesdropper sees g^a and g^b but cannot compute g^(ab) without solving the Discrete Logarithm Problem (DLP), which is believed hard. DH is vulnerable to man-in-the-middle (MITM) attacks unless authentication is added; this is why TLS uses DHE with signature verification. Elliptic Curve DH (ECDH) offers the same security with smaller key sizes (256 bits ~ 2048-bit RSA)."
   },
   {
     "topic": "Cryptography",
     "q": "What is a certificate authority (CA) responsible for?",
-    "options": ["Encrypting all internet traffic", "Binding public keys to identities", "Creating encryption keys", "Preventing man-in-the-middle attacks only"],
+    "options": [
+      "Encrypting all internet traffic",
+      "Binding public keys to identities",
+      "Creating encryption keys",
+      "Preventing man-in-the-middle attacks only"
+    ],
     "answer": 1,
-    "explain": "A CA verifies an entity's identity and digitally signs their public key, creating a certificate that binds the key to that entity."
+    "explain": "A Certificate Authority (CA) performs identity verification (domain ownership for HTTPS, organizational identity for EV certs) and then digitally signs the public key along with metadata (domain name, validity dates) using the CA's private key, creating an X.509 certificate. This binding prevents substitution attacks: an attacker cannot present their own public key as belonging to example.com if the legitimate certificate is signed by a trusted CA. The CA's root certificate is trusted by default in browsers and OS keystores; intermediate CAs form a chain of trust. CA compromises (Comodo 2011, DigiNotar 2011) can issue fraudulent certificates and must be revoked. Modern approaches include certificate pinning and Certificate Transparency to detect misissuance."
   },
   {
     "topic": "Cryptography",
     "q": "Why is password salting important?",
-    "options": ["Makes passwords longer", "Prevents rainbow table attacks", "Encrypts the password", "Speeds up authentication"],
+    "options": [
+      "Makes passwords longer",
+      "Prevents rainbow table attacks",
+      "Encrypts the password",
+      "Speeds up authentication"
+    ],
     "answer": 1,
-    "explain": "Salting adds random data to each password before hashing, ensuring identical passwords produce different hashes and defeating precomputed rainbow tables."
+    "explain": "Password salting prepends a random salt to each password before hashing, so identical passwords hash to different values if different salts are used. Without salts, an attacker using precomputed rainbow tables (hash tables of common passwords) can instantly crack many accounts. With salts, each password requires a unique computation, making bulk attacks infeasible. A strong KDF (Key Derivation Function) like PBKDF2, bcrypt, or Argon2 combines salting with intentionally slow computation (iterating millions of times) to further slow attacks. The salt is stored in plaintext alongside the hash (only the salt, not the password, is public). Modern security standards (NIST, OWASP) mandate unique random salts (16+ bytes) and slow KDFs like Argon2."
   },
   {
     "topic": "Web Security",
     "q": "What does the Same-Origin Policy (SOP) prevent?",
-    "options": ["SQL injection attacks", "Scripts from one origin accessing data from another", "All network attacks", "Phishing attacks"],
+    "options": [
+      "SQL injection attacks",
+      "Scripts from one origin accessing data from another",
+      "All network attacks",
+      "Phishing attacks"
+    ],
     "answer": 1,
-    "explain": "SOP restricts scripts from one origin (scheme + host + port) from accessing DOM or data from a different origin, isolating web applications."
+    "explain": "The Same-Origin Policy (SOP) is a fundamental browser security model enforced by all browsers since Netscape 2 (1995): scripts from origin A (scheme + hostname + port) cannot read DOM or make cross-origin XMLHttpRequests to origin B. This isolation prevents a malicious script on attacker.com from stealing a user's bank data on bank.com. Origins are defined strictly: https://example.com:443 and http://example.com:80 are different origins (scheme and port matter). Cross-Origin Resource Sharing (CORS) allows servers to selectively permit cross-origin requests via HTTP headers; misconfigured CORS (Access-Control-Allow-Origin: *) reintroduces SOP weaknesses. SOP is why iframes and frames are isolated; JavaScript cannot reach frames from different origins."
   },
   {
     "topic": "Web Security",
     "q": "What is a CSRF attack?",
-    "options": ["Stealing user credentials directly", "Tricking a browser into making unwanted requests on behalf of an authenticated user", "Injecting SQL code", "Buffer overflow attack"],
+    "options": [
+      "Stealing user credentials directly",
+      "Tricking a browser into making unwanted requests on behalf of an authenticated user",
+      "Injecting SQL code",
+      "Buffer overflow attack"
+    ],
     "answer": 1,
-    "explain": "CSRF (Cross-Site Request Forgery) tricks an authenticated user's browser into performing actions on another site without their knowledge."
+    "explain": "A CSRF attack exploits the fact that browsers automatically send cookies with cross-origin requests: an attacker creates a malicious webpage that tricks a victim (already logged into their bank) into clicking a link or visiting an image that silently transfers money or changes the password. The bank receives a valid session cookie with the request and cannot distinguish it from a legitimate user action. Victims do not see the attack happen. CSRF affects state-changing operations (POST, PUT, DELETE) but not GET requests (which should be idempotent). High-profile CSRF vulnerabilities have targeted Gmail (2007) and GitHub (2014). The attack requires the victim to visit attacker.com while logged into bank.com simultaneously."
   },
   {
     "topic": "Web Security",
     "q": "How can CSRF attacks be mitigated?",
-    "options": ["Using HTTPS only", "CSRF tokens that must be included in state-changing requests", "Disabling JavaScript", "Setting secure cookies"],
+    "options": [
+      "Using HTTPS only",
+      "CSRF tokens that must be included in state-changing requests",
+      "Disabling JavaScript",
+      "Setting secure cookies"
+    ],
     "answer": 1,
-    "explain": "CSRF tokens are unique, unpredictable values that an attacker cannot obtain. They must be included in any state-changing request (POST, PUT, DELETE)."
+    "explain": "CSRF tokens are cryptographically random values (128+ bits) issued by the server to the client in forms or JavaScript; the client must include the token in POST/PUT/DELETE requests, and the server validates it before processing. An attacker cannot forge a valid token because it is unpredictable and bound to a session. Unlike cookies (sent automatically), tokens must be explicitly included in the request body or header, preventing cross-site forgery. Best practices: per-request tokens (new token per form), SameSite=Strict cookies (preventing cross-site cookie sending), and double-submit cookie patterns (token also in cookie, server checks they match). Frameworks like Django, Rails, and Spring automatically implement CSRF token validation."
   },
   {
     "topic": "Web Security",
     "q": "What is XSS (Cross-Site Scripting)?",
-    "options": ["A network protocol attack", "Injecting malicious scripts into a web page viewed by other users", "A cryptographic attack", "A denial of service method"],
+    "options": [
+      "A network protocol attack",
+      "Injecting malicious scripts into a web page viewed by other users",
+      "A cryptographic attack",
+      "A denial of service method"
+    ],
     "answer": 1,
-    "explain": "XSS attacks inject malicious JavaScript into web pages. When other users visit the page, the script executes in their browsers, stealing data or performing actions."
+    "explain": "Cross-Site Scripting (XSS) exploits the browser's trust in page content by injecting malicious JavaScript that executes with the privileges of the authenticated user. Stored XSS saves the payload in a database (comments, forum posts) so every visitor is attacked; reflected XSS passes the payload via URL parameters and requires social engineering. The injected script can steal session cookies, redirect to phishing pages, capture keystrokes, or modify page content. XSS was the most common web vulnerability (OWASP top 3) affecting billions of users via MySpace (2005, Samy worm), Gmail, and Facebook. Mitigations include input validation, output encoding, Content Security Policy (CSP), and HTTPOnly cookies. Modern frameworks (React, Vue) auto-escape by default."
   },
   {
     "topic": "Web Security",
     "q": "What is SQL injection?",
-    "options": ["Encrypting SQL queries", "Inserting malicious SQL code into input fields to manipulate database queries", "Deleting database records", "A network attack"],
+    "options": [
+      "Encrypting SQL queries",
+      "Inserting malicious SQL code into input fields to manipulate database queries",
+      "Deleting database records",
+      "A network attack"
+    ],
     "answer": 1,
-    "explain": "SQL injection exploits improper input handling in queries. Attackers insert SQL code via input fields to access, modify, or delete unauthorized data."
+    "explain": "SQL injection occurs when user input is directly concatenated into SQL queries without proper escaping or parameterization. An attacker enters input like ' OR '1'='1 to bypass authentication or ' ; DROP TABLE users; -- to delete data. The database executes the attacker's SQL commands with the application's database privileges, leading to authentication bypass, data theft, or data destruction. SQL injection has affected millions of systems: Yahoo (2013, 500M users), Adobe (2013, 150M users), and countless others. Prevention requires parameterized queries (prepared statements) that separate SQL logic from data, input validation, principle of least privilege (app DB user has minimal permissions), and Web Application Firewalls (WAF). ORM frameworks like Hibernate and SQLAlchemy provide parameterized query wrappers by default."
   },
   {
     "topic": "Web Security",
     "q": "What does the HttpOnly cookie attribute prevent?",
-    "options": ["Sending cookies over HTTP", "JavaScript from accessing the cookie", "All cookie-based attacks", "Session fixation attacks"],
+    "options": [
+      "Sending cookies over HTTP",
+      "JavaScript from accessing the cookie",
+      "All cookie-based attacks",
+      "Session fixation attacks"
+    ],
     "answer": 1,
-    "explain": "HttpOnly prevents JavaScript from accessing the cookie, mitigating some XSS attacks where stolen session cookies could be used to hijack sessions."
+    "explain": "The HttpOnly cookie attribute restricts cookie access to HTTP requests only; JavaScript (document.cookie) cannot read HttpOnly cookies even if XSS is present. This prevents XSS payloads from stealing session cookies, though attackers can still perform actions via XSS (using the victim's authenticated session). HttpOnly must be set server-side in Set-Cookie headers; it does not prevent transmission of the cookie (HTTPS+Secure attribute does). Combining HttpOnly with Secure (HTTPS-only) and SameSite=Strict provides defense-in-depth against session hijacking. Before HttpOnly (introduced 2005), session fixation and XSS attacks routinely compromised user accounts via cookie theft. Most modern web frameworks (Spring, Django, Express) set HttpOnly by default on session cookies."
   },
   {
     "topic": "Web Security",
     "q": "What is cookie poisoning?",
-    "options": ["Deleting cookies from the browser", "Modifying cookie values to forge authentication", "Encrypting all cookies", "Stealing cookies over HTTPS"],
+    "options": [
+      "Deleting cookies from the browser",
+      "Modifying cookie values to forge authentication",
+      "Encrypting all cookies",
+      "Stealing cookies over HTTPS"
+    ],
     "answer": 1,
-    "explain": "Cookie poisoning involves modifying cookie values (if not properly signed) to forge authentication, bypass access controls, or escalate privileges."
+    "explain": "Cookie poisoning exploits unprotected cookies by modifying their values in the browser (using developer tools or interception proxies like Burp Suite) to forge authentication tokens or role claims. An attacker might change isAdmin=false to isAdmin=true if the cookie is not cryptographically signed. Without HMAC or digital signature verification, the server accepts the forged cookie as valid. Signed cookies use HMAC-SHA256 to bind the cookie value to a secret; any modification invalidates the signature. Session cookies should be server-side (stored on server, client only receives a session ID) rather than client-side (JWT tokens must be signed, and payload claims must be verified). Incidents like PlayStation Network breaches involved weak session management enabling token forgery."
   },
   {
     "topic": "Network Security",
     "q": "Which OSI layer does TCP operate on?",
-    "options": ["Physical (Layer 1)", "Data Link (Layer 2)", "Transport (Layer 4)", "Application (Layer 7)"],
+    "options": [
+      "Physical (Layer 1)",
+      "Data Link (Layer 2)",
+      "Transport (Layer 4)",
+      "Application (Layer 7)"
+    ],
     "answer": 2,
-    "explain": "TCP is a transport layer protocol that establishes connections and ensures reliable, ordered delivery of data."
+    "explain": "TCP (Transmission Control Protocol, OSI Layer 4) establishes a connection via a three-way handshake (SYN, SYN-ACK, ACK), maintains sequence numbers to ensure ordered delivery, and provides flow control and congestion avoidance. TCP detects lost packets and retransmits them, unlike UDP (connectionless). TCP's connection state machine is complex and has been a source of security vulnerabilities (RST injection, connection hijacking). TLS operates above TCP, encrypting the data stream but relying on TCP for reliable transport. Attacks on TCP include SYN floods (exhausting connection tables), TCP reset injection (Comcast throttling), and hijacking attacks exploiting sequence number prediction (fixed in RFC 1948, 1996). TCP default window size and sequence number randomization are crucial for security."
   },
   {
     "topic": "Network Security",
     "q": "What vulnerability does ARP spoofing exploit?",
-    "options": ["Lack of authentication in IP addresses", "Lack of authentication in ARP protocol", "Weak encryption", "Buffer overflows"],
+    "options": [
+      "Lack of authentication in IP addresses",
+      "Lack of authentication in ARP protocol",
+      "Weak encryption",
+      "Buffer overflows"
+    ],
     "answer": 1,
-    "explain": "ARP spoofing sends false ARP replies to associate an attacker's MAC address with a legitimate IP, enabling man-in-the-middle attacks."
+    "explain": "Address Resolution Protocol (ARP) maps IP addresses to MAC addresses on a local network. ARP requests are broadcast in clear; attackers send spoofed ARP replies claiming attacker.com's IP address maps to the attacker's MAC, poisoning the ARP cache on victim machines. Victim traffic intended for attacker.com is redirected to the attacker's MAC, enabling man-in-the-middle (MITM) interception. ARP spoofing requires local network access (same VLAN or network segment) but is trivial to execute (tools: arpspoof, ettercap). Mitigations include gratuitous ARP updates, ARP inspection on switches, VPNs, and HTTPS to encrypt even if traffic is intercepted. ARP spoofing was used in the Target breach (2013) to intercept payment data on the internal network."
   },
   {
     "topic": "Network Security",
     "q": "What is a SYN flood attack?",
-    "options": ["Flooding with SMTP packets", "Sending many incomplete TCP connections to exhaust server resources", "Overwriting system memory", "Crashing routers"],
+    "options": [
+      "Flooding with SMTP packets",
+      "Sending many incomplete TCP connections to exhaust server resources",
+      "Overwriting system memory",
+      "Crashing routers"
+    ],
     "answer": 1,
-    "explain": "A SYN flood sends many TCP SYN packets without completing the handshake, exhausting server connection tables and causing denial of service."
+    "explain": "A SYN flood attacks TCP's three-way handshake by sending many SYN packets (with spoofed source IPs) to a target server, which allocates resources for each half-open connection. The attacker never sends the final ACK, leaving thousands of incomplete connections lingering in the server's SYN queue until timeout. When the queue fills, legitimate connections are rejected, denying service. The attack requires no authentication or payload and can be amplified via botnets or reflected through amplifiers. SYN floods have disabled major services: GitHub (2018, 1.35 Tbps), Dyn DNS (2016, causing widespread outages). Mitigations include SYN cookies (stateless challenge-response), rate limiting, and DDoS mitigation services. Modern servers implement SYN cookies, limiting the attack's effectiveness."
   },
   {
     "topic": "Network Security",
     "q": "What does DNSSEC provide?",
-    "options": ["Encryption of DNS queries", "Authentication and integrity verification of DNS records", "Faster DNS resolution", "Privacy from ISPs"],
+    "options": [
+      "Encryption of DNS queries",
+      "Authentication and integrity verification of DNS records",
+      "Faster DNS resolution",
+      "Privacy from ISPs"
+    ],
     "answer": 1,
-    "explain": "DNSSEC uses cryptographic signatures to verify that DNS responses are authentic and haven't been tampered with by attackers."
+    "explain": "DNSSEC adds RRSIG (Resource Record Signature) records to DNS zones, digitally signing DNS records with a zone private key. Validating resolvers verify signatures using the zone public key, ensuring responses haven't been modified by attackers or returned from a poisoned cache. DNSSEC requires a chain of trust from the root zone down through TLDs to authoritative nameservers; any break in the chain prevents validation. DNSSEC prevents DNS spoofing (DNS cache poisoning, where attackers inject fake records into resolvers' caches) and BGP hijacking (where attackers steal IP prefixes). However, DNSSEC adoption is limited (~1.5% of queries in 2023) due to complexity, key management overhead, and performance impact. DANE uses DNSSEC to bind certificates to domains, enabling end-to-end email encryption."
   },
   {
     "topic": "Network Security",
     "q": "How does TLS establish a secure connection?",
-    "options": ["Using only symmetric encryption", "Via a handshake that negotiates cipher suites and establishes shared keys", "By encrypting IP addresses", "Without any key exchange"],
+    "options": [
+      "Using only symmetric encryption",
+      "Via a handshake that negotiates cipher suites and establishes shared keys",
+      "By encrypting IP addresses",
+      "Without any key exchange"
+    ],
     "answer": 1,
-    "explain": "TLS handshake uses asymmetric cryptography to authenticate endpoints and agree on symmetric session keys for the encrypted connection."
+    "explain": "The TLS 1.3 handshake (improved from TLS 1.2) uses ECDH (Elliptic Curve Diffie-Hellman) to compute a shared secret, with the server's X.509 certificate providing authentication. The client verifies the certificate chain (checking signatures up to a trusted root CA) and confirms the server knows the private key matching its certificate. Both parties derive session keys from the shared secret using a Key Derivation Function (KDF, specifically HKDF in TLS 1.3). TLS 1.3 reduces the handshake from 2 round trips to 1 (1-RTT mode) or 0 with session resumption (0-RTT), improving latency. Forward secrecy ensures that compromise of the server's private key does not decrypt past sessions because ephemeral keys are used. TLS 1.3 removed weak algorithms (MD5, RC4, non-ECDH key exchange)."
   },
   {
     "topic": "Network Security",
     "q": "What is a firewall's primary function?",
-    "options": ["Encrypt all data", "Filter network traffic based on rules", "Provide encryption keys", "Authenticate users"],
+    "options": [
+      "Encrypt all data",
+      "Filter network traffic based on rules",
+      "Provide encryption keys",
+      "Authenticate users"
+    ],
     "answer": 1,
-    "explain": "Firewalls enforce security policies by allowing or blocking traffic based on rules (stateful or stateless packet filtering)."
+    "explain": "Firewalls operate at OSI layers 3–4 (stateless) or 3–7 (stateful/application layer), filtering packets based on rules matching source/destination IP, port, and protocol. Stateless firewalls apply rules to individual packets independently; stateful firewalls track connection state and only allow packets belonging to established connections. Application-layer firewalls (WAF, next-gen firewalls) inspect payload content, detecting malware, SQL injection, and custom attacks. Firewalls are the first line of defense against network attacks and enforce network segmentation (DMZs, internal network isolation). Personal firewalls protect individual hosts. However, firewalls cannot prevent inside attacks, must be properly configured to avoid misses, and introduce latency. Cloudflare and Akamai provide cloud-based firewall/DDoS mitigation at scale."
   },
   {
     "topic": "Network Security",
     "q": "What does Intrusion Detection System (IDS) detect?",
-    "options": ["Only viruses", "Malicious network activity and attacks", "Hardware failures", "Encryption algorithms"],
+    "options": [
+      "Only viruses",
+      "Malicious network activity and attacks",
+      "Hardware failures",
+      "Encryption algorithms"
+    ],
     "answer": 1,
-    "explain": "An IDS monitors network traffic for signs of attacks using signature-based detection (known attack patterns) or anomaly detection (unusual behavior)."
+    "explain": "An Intrusion Detection System (IDS) passively monitors network traffic, analyzing packets against a database of known attack signatures (Snort rules) and behavioral baselines to detect intrusions. Signature-based detection identifies known attacks instantly but misses zero-days and variants; anomaly detection uses machine learning to flag deviations from normal traffic (e.g., sudden spike in outbound traffic) but generates false positives. IDS can be network-based (monitor all traffic on a segment, NIDS) or host-based (monitor traffic to/from an individual machine, HIDS). An Intrusion Prevention System (IPS) actively blocks traffic matching attack signatures. DARPA and other orgs evaluate IDS tools like Suricata and Zeek (formerly Bro). False negatives (missed attacks) and false positives (benign flagged as attacks) are ongoing challenges."
   },
   {
     "topic": "Network Security",
     "q": "What security vulnerability does Tor address?",
-    "options": ["Weak encryption", "ISP monitoring and user anonymity", "Buffer overflows", "SQL injection"],
+    "options": [
+      "Weak encryption",
+      "ISP monitoring and user anonymity",
+      "Buffer overflows",
+      "SQL injection"
+    ],
     "answer": 1,
-    "explain": "Tor uses onion routing through multiple relays to anonymize user traffic, hiding the user's IP address from the destination server."
+    "explain": "Tor (The Onion Router) routes traffic through three or more relays, with each relay decrypting one layer of encryption (onion skin) and forwarding to the next. The entry node (guard) sees the user's IP but not the destination; the exit node sees the destination but not the user's IP; middle relays see neither. Even if an attacker compromises one relay, they cannot correlate user and destination. Tor enables anonymous web browsing, anonymous publishing, and censorship circumvention; it is used by journalists, activists, and law enforcement. However, Tor traffic is identifiable (distinctive packet sizes and timing), and traffic correlation attacks can deanonymize users if they're not careful. Tor has a history of funding from the US Naval Research Lab (2003) and DARPA, and is now maintained by the Tor Project non-profit."
   },
   {
     "topic": "Authentication",
     "q": "What is multi-factor authentication (MFA)?",
-    "options": ["Using a longer password", "Requiring multiple authentication factors (something you know, have, are)", "Encrypting passwords", "Using biometrics only"],
+    "options": [
+      "Using a longer password",
+      "Requiring multiple authentication factors (something you know, have, are)",
+      "Encrypting passwords",
+      "Using biometrics only"
+    ],
     "answer": 1,
-    "explain": "MFA requires at least two different types of verification (e.g., password + phone code), significantly improving security over passwords alone."
+    "explain": "Multi-Factor Authentication (MFA) combines two or more authentication factors: something you know (password), something you have (phone, FIDO key), and something you are (fingerprint, face). Requiring multiple factors prevents account compromise via password reuse, phishing, or credential stuffing attacks; even if a password is leaked, the attacker cannot access the account without the second factor. MFA types include Time-based One-Time Passwords (TOTP, Google Authenticator), Push notifications, SMS codes, and Hardware tokens (YubiKey, FIDO2). MFA adoption prevents 99.9% of account takeovers according to Microsoft research. However, SMS-based MFA is vulnerable to SIM swapping attacks (hijacking the phone number) and social engineering. FIDO2/WebAuthn provides the strongest MFA, eliminating phishing by binding authentication to the specific website URL."
   },
   {
     "topic": "Authentication",
     "q": "What vulnerability does session fixation exploit?",
-    "options": ["Weak passwords", "Predictable session identifiers or failure to regenerate sessions after login", "Lack of encryption", "Strong hashing"],
+    "options": [
+      "Weak passwords",
+      "Predictable session identifiers or failure to regenerate sessions after login",
+      "Lack of encryption",
+      "Strong hashing"
+    ],
     "answer": 1,
-    "explain": "Session fixation tricks a user into authenticating with a session ID chosen by the attacker, allowing the attacker to hijack the session."
+    "explain": "Session fixation occurs when an application accepts a pre-set session ID (e.g., via URL parameter or cookie) and allows a user to authenticate with that ID. An attacker tricks a victim into visiting attacker.com?sessionid=attacker-chosen-id, then visits the legitimate site with that ID. If the site accepts the ID and the victim logs in, the attacker (who knows the ID) can now access the victim's account. Prevention requires generating a new session ID after successful authentication (session regeneration), discarding pre-set session IDs. Session fixation was common in PHP applications pre-2006; modern frameworks (Django, Spring, Rails) automatically regenerate sessions post-authentication. The attack requires social engineering and is less common now, but remains a risk in custom-built applications. Standards like OWASP recommend always generating a new session on login."
   },
   {
     "topic": "Malware",
     "q": "What is the main difference between viruses and worms?",
-    "options": ["Speed of propagation", "Viruses need a host; worms self-propagate over networks", "Viruses are more dangerous", "Worms only affect Windows"],
+    "options": [
+      "Speed of propagation",
+      "Viruses need a host; worms self-propagate over networks",
+      "Viruses are more dangerous",
+      "Worms only affect Windows"
+    ],
     "answer": 1,
-    "explain": "Viruses require a host program to propagate; worms are self-contained and spread automatically across networks without user intervention."
+    "explain": "A virus is malicious code that infects a host executable and propagates by attaching itself to other executables, requiring user action (running a program) to spread. A worm is self-contained malware that exploits network vulnerabilities to spread automatically without user interaction, copying itself across infected systems. Viruses were dominant in the 1990s–2000s (Melissa, ILOVEYOU); worms caused massive outbreaks (Morris 1988, Slammer 2003, Conficker 2008). Modern threats blur the distinction: ransomware can combine worm-like spreading with virus-like file encryption. Botnets often spread as worms, then act as platforms for various payloads. Viruses and worms are detected by antivirus signature databases, heuristics (behavior analysis), and sandboxing. Prevention requires keeping OS and software patches current; worm-like vulnerabilities (RCE) are patched quickly by vendors."
   },
   {
     "topic": "Malware",
     "q": "What is a botnet?",
-    "options": ["A software testing framework", "A network of compromised computers controlled by attackers", "A type of firewall", "A web server"],
+    "options": [
+      "A software testing framework",
+      "A network of compromised computers controlled by attackers",
+      "A type of firewall",
+      "A web server"
+    ],
     "answer": 1,
-    "explain": "A botnet consists of many compromised machines ('bots') controlled by an attacker through a command-and-control server for coordinated attacks like DDoS."
+    "explain": "A botnet is a network of compromised machines (bots) infected with malware that connects to a central command-and-control (C2) server, receiving commands from the attacker (botmaster). Botnets are used for Distributed Denial-of-Service (DDoS) attacks, spamming, credential stuffing, cryptocurrency mining, and ransomware distribution. Botnets range from thousands (Mirai) to millions (Zeus, Conficker) of infected machines. The Mirai botnet (2016) comprised IoT devices and caused 1.2 Tbps DDoS attacks on Dyn DNS, disrupting major services. Botnet command-and-control communication is encrypted or obfuscated; disinfecting individual machines is ineffective because the C2 can reinfect them. Law enforcement takedowns (Europol, FBI) seize C2 infrastructure or redirect it to sinkhole servers to prevent bot reinfection. Modern threat hunting uses DNS sinkhole data to identify infected machines."
   }
 ]
-
 </script>
 <script>
 (function() {
