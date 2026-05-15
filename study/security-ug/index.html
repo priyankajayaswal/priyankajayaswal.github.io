@@ -2207,254 +2207,434 @@ if (typeof switchTab === 'function') {
   {
     "topic": "Cryptography (Symmetric)",
     "q": "Which cipher mode is best for encrypting large files and is most resistant to pattern attacks?",
-    "options": ["ECB (Electronic Codebook)", "CBC (Cipher Block Chaining)", "OFB (Output Feedback)", "CTR (Counter)"],
+    "options": [
+      "ECB (Electronic Codebook)",
+      "CBC (Cipher Block Chaining)",
+      "OFB (Output Feedback)",
+      "CTR (Counter)"
+    ],
     "answer": 1,
-    "explain": "CBC and CTR are superior; CBC is traditional and widely used. ECB is insecure because identical plaintext blocks produce identical ciphertext blocks, leaking patterns."
+    "explain": "CBC (Cipher Block Chaining) chaining mode randomizes encryption using the previous ciphertext block as IV, preventing pattern leakage. ECB (Electronic Codebook) encrypts each plaintext block independently, so identical plaintext blocks produce identical ciphertext blocks—a fatal flaw visible in the famous ECB penguin image. CTR mode is also secure but CBC remains the traditional standard. This design principle of eliminating patterns is fundamental to secure symmetric encryption."
   },
   {
     "topic": "Cryptography (Symmetric)",
     "q": "What is the key weakness of the DES (Data Encryption Standard) algorithm?",
-    "options": ["Non-linear S-boxes", "Short key length (56 bits)", "Insecure mode of operation", "Weak IV handling"],
+    "options": [
+      "Non-linear S-boxes",
+      "Short key length (56 bits)",
+      "Insecure mode of operation",
+      "Weak IV handling"
+    ],
     "answer": 1,
-    "explain": "DES has a 56-bit key, which is too short for modern security. It can be brute-forced in hours with current hardware."
+    "explain": "DES's fatal flaw is its 56-bit key, far too short for modern hardware capable of brute-forcing it in hours. Originally designed in 1977 for government use, cryptanalysis and computational advances quickly made it vulnerable. Triple-DES (3DES) extends key length to 168 bits but remains slower than modern ciphers like AES. DES's deprecation in 1999 and removal from FIPS 186-4 demonstrates why key length is paramount—no algorithmic brilliance compensates for insufficient key material against exhaustive search."
   },
   {
     "topic": "Cryptography (Symmetric)",
     "q": "Which of the following is NOT a recommended modern symmetric cipher?",
-    "options": ["AES-256", "ChaCha20", "Twofish", "RC4"],
+    "options": [
+      "AES-256",
+      "ChaCha20",
+      "Twofish",
+      "RC4"
+    ],
     "answer": 3,
-    "explain": "RC4 is deprecated and broken. It has known statistical biases and should never be used for new systems."
+    "explain": "RC4 is broken and cryptographically dangerous due to statistical biases in its keystream and known plaintext attacks like CRIME and BEAST. Its initial keystream bytes are biased toward certain values, leaking key information. Modern ciphers like AES and ChaCha20 use proven mathematical foundations (S-boxes, block modes) rather than stream generation tricks. RC4's removal from TLS 1.3 and browser deprecation reflects decades of vulnerability research showing it should never be used for new systems."
   },
   {
     "topic": "Cryptography (Symmetric)",
     "q": "In symmetric cryptography, what is a nonce?",
-    "options": ["A number used once with a key to prevent replay attacks", "A non-secret random value used to randomize encryption", "A signature of the plaintext", "A hash of the key"],
+    "options": [
+      "A number used once with a key to prevent replay attacks",
+      "A non-secret random value used to randomize encryption",
+      "A signature of the plaintext",
+      "A hash of the key"
+    ],
     "answer": 1,
-    "explain": "A nonce ('number used once') is a random or unique value combined with a key to ensure different ciphertexts for the same plaintext encrypted multiple times."
+    "explain": "A nonce (number used once) is a random or unique value paired with a key to ensure that encrypting the same plaintext multiple times produces different ciphertexts. In modes like CBC (with random IV) or CTR/GCM (with explicit nonce), this prevents attackers from recognizing repeated messages via pattern analysis. Reusing a nonce with the same key is catastrophic—it reveals XOR differences in plaintexts and defeats the mode entirely. Examples: IVs in CBC, counters in CTR, or random values in GCM."
   },
   {
     "topic": "Cryptography (Asymmetric & Hashing)",
     "q": "What is the fundamental security assumption behind RSA encryption?",
-    "options": ["Discrete logarithm problem", "Factoring large numbers is hard", "SHA hashing is one-way", "Prime numbers are random"],
+    "options": [
+      "Discrete logarithm problem",
+      "Factoring large numbers is hard",
+      "SHA hashing is one-way",
+      "Prime numbers are random"
+    ],
     "answer": 1,
-    "explain": "RSA security relies on the difficulty of factoring large composite numbers into primes. If factoring becomes easy, RSA is broken."
+    "explain": "RSA security rests on the computational hardness of factoring large composite numbers into primes. Breaking RSA requires factoring N=pq; if p and q are 1024-bit primes, no known polynomial-time algorithm exists despite decades of research. Quantum computers using Shor's algorithm could factor efficiently, necessitating post-quantum replacements. This one-way function property—easy to verify (N=pq) but hard to reverse (factor N)—is why RSA has dominated public-key cryptography for 40+ years."
   },
   {
     "topic": "Cryptography (Asymmetric & Hashing)",
     "q": "What makes a cryptographic hash function secure?",
-    "options": ["It's reversible only by the owner", "Pre-image resistance, collision resistance, and avalanche effect", "It uses a secret key", "It's faster than symmetric encryption"],
+    "options": [
+      "It's reversible only by the owner",
+      "Pre-image resistance, collision resistance, and avalanche effect",
+      "It uses a secret key",
+      "It's faster than symmetric encryption"
+    ],
     "answer": 1,
-    "explain": "A secure hash must have: (1) pre-image resistance, (2) collision resistance, and (3) avalanche effect. MD5 and SHA-1 fail these criteria."
+    "explain": "A cryptographically secure hash function must satisfy three properties: (1) pre-image resistance (given H(x), finding x is infeasible), (2) collision resistance (finding two different inputs with the same hash is infeasible), and (3) avalanche effect (small plaintext changes drastically alter the hash). MD5 and SHA-1 fail collision resistance tests with practical attacks published in 2004-2005. SHA-256 and SHA-3 currently meet all criteria; the NIST recommends SHA-256 or higher for new systems."
   },
   {
     "topic": "Cryptography (Asymmetric & Hashing)",
     "q": "Which hash algorithm is cryptographically broken and should never be used?",
-    "options": ["SHA-256", "SHA-3", "MD5", "BLAKE2"],
+    "options": [
+      "SHA-256",
+      "SHA-3",
+      "MD5",
+      "BLAKE2"
+    ],
     "answer": 2,
-    "explain": "MD5 is broken. Collision attacks exist that can produce two different inputs with the same hash in seconds. SHA-1 is also deprecated."
+    "explain": "MD5 is cryptographically broken and should never be used for security purposes. Collision attacks were first demonstrated by Wang (2004), and by 2007 attackers could forge MD5 certificates in seconds—notably the \"Flame\" malware used forged Microsoft code-signing certificates. MD5 produces a 128-bit hash, making collision attacks faster than brute force per birthday paradox. SHA-1 is also deprecated (sunset from TLS handshakes in 2020). NIST and security standards mandate SHA-256 or SHA-3 for integrity and authentication."
   },
   {
     "topic": "Cryptography (Asymmetric & Hashing)",
     "q": "What does a digital signature prove?",
-    "options": ["That the message was not modified", "Authenticity and non-repudiation", "That encryption is secure", "That the sender is honest"],
+    "options": [
+      "That the message was not modified",
+      "Authenticity and non-repudiation",
+      "That encryption is secure",
+      "That the sender is honest"
+    ],
     "answer": 1,
-    "explain": "A digital signature proves both authenticity (signer is who they claim) and non-repudiation (signer cannot deny signing)."
+    "explain": "A digital signature proves authenticity (the signer is who they claim) and non-repudiation (the signer cannot deny having signed the message) using public-key cryptography. The signer encrypts a hash of the message with their private key; anyone with the public key can decrypt and verify, but only the holder of the private key could have created it. This differs from HMAC, which requires a shared secret and allows either party to sign. Digital signatures underpin PKI, certificate-based authentication, and legal/regulatory compliance (e-signatures)."
   },
   {
     "topic": "Authentication & Authorization",
     "q": "Which of the following is a two-factor authentication method?",
-    "options": ["Username and password", "Password and a one-time code from an authenticator app", "Two passwords", "Username twice"],
+    "options": [
+      "Username and password",
+      "Password and a one-time code from an authenticator app",
+      "Two passwords",
+      "Username twice"
+    ],
     "answer": 1,
-    "explain": "2FA requires two independent factors: something you know (password) and something you have (TOTP code, security key)."
+    "explain": "Two-factor authentication (2FA) requires two independent factors: something you know (password) and something you have (TOTP code from an authenticator app or security key). This prevents account compromise even if a password is stolen via phishing or breaches, since the attacker lacks the second factor. Common 2FA methods include time-based OTP (Google Authenticator), push notifications (Duo), and hardware security keys (FIDO2/WebAuthn). SMS-based 2FA is weaker due to SIM-swap attacks and SS7 vulnerabilities."
   },
   {
     "topic": "Authentication & Authorization",
     "q": "What is a rainbow table attack?",
-    "options": ["Brute-forcing a password character by character", "Precomputed hash table to crack unsalted passwords quickly", "Timing attack on password comparison", "Replay attack on authentication tokens"],
+    "options": [
+      "Brute-forcing a password character by character",
+      "Precomputed hash table to crack unsalted passwords quickly",
+      "Timing attack on password comparison",
+      "Replay attack on authentication tokens"
+    ],
     "answer": 1,
-    "explain": "Rainbow tables are precomputed lookup tables of plaintext → hash mappings. They defeat unsalted hashes instantly but are useless against properly salted hashes."
+    "explain": "Rainbow tables are precomputed lookup tables mapping plaintext passwords to their hashes, enabling instant password cracking against unsalted hashes. Attackers spend weeks precomputing billions of plaintext → hash pairs (e.g., rainbow tables exist for MD5), then look up stolen hashes in seconds. However, rainbow tables are useless against properly salted hashes—unique salt per password means each must be cracked individually. This defense made rainbow tables obsolete by 2000; OWASP recommends salting all passwords."
   },
   {
     "topic": "Authentication & Authorization",
     "q": "What is the primary purpose of a salt in password storage?",
-    "options": ["Encrypt the password", "Add randomness to prevent identical hashes for identical passwords", "Increase password complexity requirements", "Make the hash faster to compute"],
+    "options": [
+      "Encrypt the password",
+      "Add randomness to prevent identical hashes for identical passwords",
+      "Increase password complexity requirements",
+      "Make the hash faster to compute"
+    ],
     "answer": 1,
-    "explain": "A salt is random data appended to a password before hashing. It ensures two users with the same password produce different hashes."
+    "explain": "A salt is random data appended to a password before hashing, ensuring two users with identical passwords produce different hashes despite having the same plaintext + algorithm. Salts prevent precomputed attacks (rainbow tables) and make brute-force more expensive since each candidate guess must be hashed with all possible salts. Best practice: use cryptographically random salts (16+ bytes) and modern algorithms like bcrypt or Argon2, which handle salting automatically. MD5/SHA-1 + salt is still weak; use stronger algorithms regardless of salt."
   },
   {
     "topic": "Authentication & Authorization",
     "q": "In OAuth 2.0, what does the authorization server issue after the user grants consent?",
-    "options": ["Client secret", "Access token and optionally refresh token", "User password", "API key"],
+    "options": [
+      "Client secret",
+      "Access token and optionally refresh token",
+      "User password",
+      "API key"
+    ],
     "answer": 1,
-    "explain": "OAuth 2.0 issues an access token (short-lived) and optionally a refresh token (long-lived). The client never sees the user's password."
+    "explain": "OAuth 2.0 issues an access token (short-lived, minutes to hours) after the user grants consent, allowing the application to access protected resources on behalf of the user. Optionally, a refresh token (long-lived) is issued, letting the app obtain new access tokens without user re-authentication. Critically, the application never sees the user's password—the authorization server handles all authentication. This delegation model powers single sign-on (SSO) and is the standard for modern identity federation (Google/GitHub login)."
   },
   {
     "topic": "OS Security",
     "q": "What does ASLR (Address Space Layout Randomization) protect against?",
-    "options": ["SQL injection", "Buffer overflow and ROP attacks", "Cross-site scripting", "Privilege escalation via symlinks"],
+    "options": [
+      "SQL injection",
+      "Buffer overflow and ROP attacks",
+      "Cross-site scripting",
+      "Privilege escalation via symlinks"
+    ],
     "answer": 1,
-    "explain": "ASLR randomizes memory addresses of code, data, and heap, making it harder for attackers to predict where executable code is located."
+    "explain": "ASLR (Address Space Layout Randomization) randomizes the memory addresses of executable code, data segments, and heap regions, making it nearly impossible for attackers to predict where exploit code or ROP gadgets are located. Buffer overflows and ROP (Return-Oriented Programming) attacks typically rely on fixed addresses; ASLR defeats this by changing addresses each run. ASLR is standard on modern OS (Linux, Windows, macOS) and significantly raises the bar for code-injection attacks. Combined with DEP/NX, it forms the foundation of modern memory protection."
   },
   {
     "topic": "OS Security",
     "q": "What is the purpose of DEP/NX (Data Execution Prevention / No-eXecute)?",
-    "options": ["Prevent reading data from memory", "Mark data sections non-executable to prevent code injection", "Encrypt sensitive memory regions", "Prevent privileged code from executing"],
+    "options": [
+      "Prevent reading data from memory",
+      "Mark data sections non-executable to prevent code injection",
+      "Encrypt sensitive memory regions",
+      "Prevent privileged code from executing"
+    ],
     "answer": 1,
-    "explain": "DEP/NX prevents code execution from data segments (stack, heap). This stops simple shellcode injection attacks."
+    "explain": "DEP (Data Execution Prevention) or NX (No-eXecute) marks data segments (stack, heap) as non-executable, preventing code injected there from running. Simple shellcode injection attacks, where an attacker writes machine code into a buffer and jumps to it, fail because the CPU refuses to execute data pages. DEP/NX is hardware-enforced on modern processors and enabled by default on all major OSs. Attackers must use ROP/JOP gadgets instead, making exploits vastly more complex; combined with ASLR, they provide strong defenses."
   },
   {
     "topic": "OS Security",
     "q": "Which privilege model is considered most secure for OS design?",
-    "options": ["Monolithic kernel", "Microkernel with privilege separation", "Single-level security", "Userspace-only kernel"],
+    "options": [
+      "Monolithic kernel",
+      "Microkernel with privilege separation",
+      "Single-level security",
+      "Userspace-only kernel"
+    ],
     "answer": 1,
-    "explain": "Microkernel architecture separates critical functions into isolated, privilege-separated processes. A bug in one service doesn't compromise the entire OS."
+    "explain": "Microkernel architectures isolate critical OS functions (drivers, file systems, networking) into separate user-mode processes with privilege separation, so a bug or compromise in one service cannot directly corrupt the entire OS. This contrasts with monolithic kernels (Linux, Windows) where all functions run in privileged kernel mode—a single bug is catastrophic. Microkernels (QNX, seL4, Fuchsia) trade performance for security and fault isolation. A compromised driver in a microkernel remains sandboxed; in a monolithic kernel, it owns the entire system."
   },
   {
     "topic": "OS Security",
     "q": "What is a use-after-free vulnerability?",
-    "options": ["Using a variable before initialization", "Accessing memory after it has been freed and reused", "Freeing the same pointer twice", "Using freed memory that's been overwritten"],
+    "options": [
+      "Using a variable before initialization",
+      "Accessing memory after it has been freed and reused",
+      "Freeing the same pointer twice",
+      "Using freed memory that's been overwritten"
+    ],
     "answer": 1,
-    "explain": "Use-after-free occurs when code accesses memory after it's been freed. The freed memory may be reallocated for new objects, causing data corruption."
+    "explain": "Use-after-free (UAF) occurs when code accesses memory after it has been freed, either dereferencing a stale pointer or writing to reused memory. The freed region is often reallocated to a new object, causing data corruption, privilege escalation, or code execution if an attacker controls the reallocation timing. UAF is a major threat in C/C++; Rust's borrow checker prevents this at compile time. UAF vulnerabilities (CVE-2019-11707 in Firefox, many in Chrome) remain top exploitable bugs in memory-unsafe languages."
   },
   {
     "topic": "Memory Safety & Buffer Overflows",
     "q": "What is a stack buffer overflow?",
-    "options": ["Writing more data than a stack buffer can hold, overwriting the return address", "Reading from stack memory out of bounds", "Copying from heap to stack", "Allocating too much stack space"],
+    "options": [
+      "Writing more data than a stack buffer can hold, overwriting the return address",
+      "Reading from stack memory out of bounds",
+      "Copying from heap to stack",
+      "Allocating too much stack space"
+    ],
     "answer": 0,
-    "explain": "A stack buffer overflow writes beyond a buffer's boundaries, overwriting the return address. When the function returns, execution jumps to attacker-controlled code."
+    "explain": "A stack buffer overflow writes more data than a stack buffer can hold, overwriting adjacent memory, notably the return address. When the function returns, instead of jumping to legitimate code, execution jumps to attacker-controlled address (shellcode or ROP gadget), resulting in code execution. Classic attack: strcpy() without bounds checking allows an attacker to overwrite a buffer and return address in a single write. Stack canaries, DEP/NX, and ASLR have made this harder but not impossible, especially in C legacy code."
   },
   {
     "topic": "Memory Safety & Buffer Overflows",
     "q": "What is a stack canary?",
-    "options": ["A process that monitors stack activity", "A random value placed between local variables and return address, checked before function returns", "A warning system that logs overflows", "Encryption of stack memory"],
+    "options": [
+      "A process that monitors stack activity",
+      "A random value placed between local variables and return address, checked before function returns",
+      "A warning system that logs overflows",
+      "Encryption of stack memory"
+    ],
     "answer": 1,
-    "explain": "A stack canary is a random value placed on the stack. Before the function returns, the OS checks if the canary is intact. If overwritten, the program exits."
+    "explain": "A stack canary is a random value placed on the stack between local variables and the return address; before the function returns, the CPU verifies the canary is intact. If a buffer overflow corrupts the canary, the verification fails and the program is terminated instead of allowing exploitation. Canaries are transparent to correct code but catch overflows with high probability (the random canary is nearly impossible to guess). Combined with ASLR and DEP/NX, canaries significantly reduce exploitability of buffer overflows, making them a key defense in modern systems."
   },
   {
     "topic": "Memory Safety & Buffer Overflows",
     "q": "How does format string vulnerability allow code execution?",
-    "options": ["It bypasses input validation", "It reads/writes arbitrary memory by misusing printf-family functions with user input", "It exploits compiler optimizations", "It overwrites function pointers on the stack"],
+    "options": [
+      "It bypasses input validation",
+      "It reads/writes arbitrary memory by misusing printf-family functions with user input",
+      "It exploits compiler optimizations",
+      "It overwrites function pointers on the stack"
+    ],
     "answer": 1,
-    "explain": "Format string bugs occur when user input is passed directly as a format string. Attacker can use format specifiers (%x, %n) to read/write memory."
+    "explain": "Format string bugs occur when user input is passed directly as a format string to printf(), scanf(), or similar functions, allowing attackers to read/write arbitrary memory. The format specifiers (%x, %s, %n) dereference values on the stack; %n writes to memory. An attacker can leak stack contents (%x) or write arbitrary values (%n) to overwrite function pointers and achieve code execution. This vulnerability is prevented by treating format strings as literals and passing user input as an argument, never as the format string itself."
   },
   {
     "topic": "Memory Safety & Buffer Overflows",
     "q": "Which programming language is most resistant to memory safety vulnerabilities?",
-    "options": ["C", "C++", "Rust", "Assembly"],
+    "options": [
+      "C",
+      "C++",
+      "Rust",
+      "Assembly"
+    ],
     "answer": 2,
-    "explain": "Rust enforces memory safety at compile time through its borrow checker, preventing buffer overflows and use-after-free. C and C++ require manual memory management."
+    "explain": "Rust enforces memory safety at compile time through the borrow checker, preventing buffer overflows, use-after-free, and data races without requiring garbage collection or runtime overhead. The compiler rejects programs that violate borrowing rules, eliminating entire classes of bugs before code execution. C and C++ require manual memory management and have no compile-time checks, making them memory-unsafe by design. Rust's adoption for systems programming (Linux kernel modules, Mozilla Firefox components, AWS Nitro hypervisor) reflects the security advantages of enforced memory safety."
   },
   {
     "topic": "Web Security",
     "q": "What is a Cross-Site Scripting (XSS) attack?",
-    "options": ["Injecting SQL into web forms", "Injecting malicious JavaScript into a web page viewed by other users", "Stealing HTTP headers", "Overwriting DNS records"],
+    "options": [
+      "Injecting SQL into web forms",
+      "Injecting malicious JavaScript into a web page viewed by other users",
+      "Stealing HTTP headers",
+      "Overwriting DNS records"
+    ],
     "answer": 1,
-    "explain": "XSS occurs when untrusted user input (JavaScript) is rendered in a browser without proper escaping. Stored XSS saves it in a database for persistence."
+    "explain": "Cross-Site Scripting (XSS) occurs when an attacker injects malicious JavaScript into a web page that is then executed in victims' browsers. Reflected XSS: attacker crafts a URL with malicious script, victim clicks it, and the script runs immediately. Stored XSS: attacker injects script into a database field, and it persists—every user viewing that page executes the attacker's script. XSS enables session theft (stealing cookies), credential harvesting, and malware distribution. Prevention: output encoding, Content Security Policy, and input validation."
   },
   {
     "topic": "Web Security",
     "q": "What protection does the SameSite cookie attribute provide?",
-    "options": ["Encryption during transit", "Prevents CSRF by restricting cookie sending on cross-site requests", "Hides cookie value from JavaScript", "Prevents cookie theft"],
+    "options": [
+      "Encryption during transit",
+      "Prevents CSRF by restricting cookie sending on cross-site requests",
+      "Hides cookie value from JavaScript",
+      "Prevents cookie theft"
+    ],
     "answer": 1,
-    "explain": "SameSite=Strict/Lax restricts when cookies are sent on cross-site requests, preventing CSRF attacks. Strict is most secure."
+    "explain": "The SameSite cookie attribute restricts when cookies are sent on cross-site requests: SameSite=Strict never sends cookies on cross-site requests; SameSite=Lax sends them only on top-level navigations (GET). This prevents CSRF attacks, where an attacker tricks a user into making unintended requests to another site where the user is authenticated. Without SameSite, the browser automatically includes cookies even in cross-site requests (e.g., a form POST to a banking site), allowing the attacker's site to impersonate the user. Modern browsers default SameSite=Lax, though explicit setting is recommended."
   },
   {
     "topic": "Web Security",
     "q": "What is SQL injection?",
-    "options": ["Sending too many SQL queries", "Injecting malicious SQL into input fields to manipulate database queries", "Using prepared statements incorrectly", "Storing SQL in cookies"],
+    "options": [
+      "Sending too many SQL queries",
+      "Injecting malicious SQL into input fields to manipulate database queries",
+      "Using prepared statements incorrectly",
+      "Storing SQL in cookies"
+    ],
     "answer": 1,
-    "explain": "SQL injection occurs when unsanitized user input is concatenated into SQL queries. Parameterized queries prevent this."
+    "explain": "SQL injection occurs when unsanitized user input is concatenated into SQL query strings, allowing an attacker to alter the query logic and extract or modify database contents. Example: if input \"1' OR '1'='1\" is concatenated into a query, the logic changes from \"WHERE id=1\" to \"WHERE id=1' OR '1'='1'\" (always true). Prevention: use parameterized queries/prepared statements, where user input is bound as data, not parsed as SQL syntax. OWASP Top 10 #3; affects databases from MySQL to Oracle to PostgreSQL."
   },
   {
     "topic": "Web Security",
     "q": "Which header protects against clickjacking?",
-    "options": ["X-Frame-Options", "Content-Security-Policy", "X-Content-Type-Options", "Strict-Transport-Security"],
+    "options": [
+      "X-Frame-Options",
+      "Content-Security-Policy",
+      "X-Content-Type-Options",
+      "Strict-Transport-Security"
+    ],
     "answer": 0,
-    "explain": "X-Frame-Options: DENY prevents the page from being framed, protecting against clickjacking. CSP is broader; HSTS enforces HTTPS."
+    "explain": "X-Frame-Options: DENY prevents the page from being loaded in an iframe on another site, protecting against clickjacking attacks where an attacker tricks users into clicking invisible iframes. X-Frame-Options: SAMEORIGIN allows framing only on same-origin pages. CSP (Content Security Policy) with frame-ancestors is more flexible. HSTS enforces HTTPS but doesn't prevent framing. The clickjacking threat is significant—users may unknittingly click on hidden UI elements framed from an attacker's site."
   },
   {
     "topic": "TLS / HTTPS",
     "q": "What is the purpose of the TLS handshake?",
-    "options": ["Encrypt all data immediately", "Authenticate server and negotiate shared encryption keys", "Verify user identity", "Establish TCP connection"],
+    "options": [
+      "Encrypt all data immediately",
+      "Authenticate server and negotiate shared encryption keys",
+      "Verify user identity",
+      "Establish TCP connection"
+    ],
     "answer": 1,
-    "explain": "TLS handshake authenticates the server via certificate and negotiates cipher suites. After handshake, bulk data is encrypted."
+    "explain": "The TLS handshake authenticates the server (via certificate signature chain) and negotiates shared encryption keys and cipher suites. Client and server exchange hello messages, the server presents its certificate (signed by a trusted CA), and they perform key exchange (RSA or DH). After handshake, all data is encrypted with the negotiated cipher and key. The handshake is the security foundation for HTTPS; it enables SSL/TLS to protect bulk data transfer and verify the server's identity."
   },
   {
     "topic": "TLS / HTTPS",
     "q": "What does a certificate authority (CA) do?",
-    "options": ["Encrypts all network traffic", "Issues and signs digital certificates, binding a public key to a domain", "Generates encryption keys", "Monitors network activity"],
+    "options": [
+      "Encrypts all network traffic",
+      "Issues and signs digital certificates, binding a public key to a domain",
+      "Generates encryption keys",
+      "Monitors network activity"
+    ],
     "answer": 1,
-    "explain": "A CA verifies domain ownership, then issues a signed certificate. Browsers trust CAs' signatures, allowing them to verify server authenticity."
+    "explain": "A Certificate Authority (CA) verifies domain ownership, then issues a signed digital certificate binding a public key to the domain. The CA's digital signature on the certificate proves it performed verification. Web browsers trust CA signatures (included in root certificate stores), so when a user visits an HTTPS site, the browser validates the server's certificate signature against its trusted CAs. If a CA is compromised or issues a fraudulent cert, all domains under that CA are vulnerable; the 2011 DigiNotar breach and 2016 Symantec CA issues highlight CA security importance."
   },
   {
     "topic": "TLS / HTTPS",
     "q": "What is certificate pinning?",
-    "options": ["Storing certificates on disk", "Hardcoding a server's certificate/public key into a client app to prevent MITM attacks", "Signing certificates with pins", "Encrypting certificate data"],
+    "options": [
+      "Storing certificates on disk",
+      "Hardcoding a server's certificate/public key into a client app to prevent MITM attacks",
+      "Signing certificates with pins",
+      "Encrypting certificate data"
+    ],
     "answer": 1,
-    "explain": "Certificate pinning embeds the expected certificate or public key in the app. If the server's certificate changes, the pinned certificate won't match."
+    "explain": "Certificate pinning hardcodes the expected server certificate (or public key) into the client application, so the client will reject any certificate that doesn't match—even if it's valid and signed by a trusted CA. This prevents man-in-the-middle attacks if a CA is compromised or an attacker acquires a legitimate certificate for the domain. Pinning trades flexibility (certificate rotation requires app updates) for security; used by banks and security-sensitive apps. Example: if Gmail updates its certificate, pinned clients would fail until updated—so pinning must include backup pins or rotation mechanisms."
   },
   {
     "topic": "TLS / HTTPS",
     "q": "What vulnerability did Heartbleed exploit?",
-    "options": ["Weak RSA keys", "Buffer over-read in OpenSSL, leaking sensitive server memory", "TLS downgrade attacks", "Invalid certificate validation"],
+    "options": [
+      "Weak RSA keys",
+      "Buffer over-read in OpenSSL, leaking sensitive server memory",
+      "TLS downgrade attacks",
+      "Invalid certificate validation"
+    ],
     "answer": 1,
-    "explain": "Heartbleed was a buffer over-read in OpenSSL's heartbeat extension. A malicious request caused the server to leak up to 64KB of memory."
+    "explain": "Heartbleed (CVE-2014-0160) exploited a buffer over-read in OpenSSL's heartbeat extension, allowing an attacker to send a malicious heartbeat request that caused the server to leak up to 64KB of its memory per request. Attackers could repeatedly leak memory and recover session keys, X.509 certificates, and plaintext passwords, defeating HTTPS encryption. This affected 17% of HTTPS servers; the patch was urgent and immediate. Heartbleed demonstrates how subtle buffer management bugs in widely-used crypto libraries can compromise billions of users simultaneously."
   },
   {
     "topic": "Network Security",
     "q": "What does a firewall do?",
-    "options": ["Encrypts all traffic", "Monitors and filters network traffic based on predefined rules", "Prevents all outbound connections", "Automatically detects malware"],
+    "options": [
+      "Encrypts all traffic",
+      "Monitors and filters network traffic based on predefined rules",
+      "Prevents all outbound connections",
+      "Automatically detects malware"
+    ],
     "answer": 1,
-    "explain": "A firewall filters packets based on rules. Stateful firewalls track connection states and allow responses to outbound connections."
+    "explain": "A firewall monitors and filters network traffic based on predefined rules, allowing or blocking packets by IP address, port, or protocol. Stateful firewalls track connection states, permitting responses to outbound connections automatically while blocking unsolicited inbound. Firewalls are a fundamental perimeter defense, separating trusted internal networks from untrusted external networks. A poorly configured firewall allows attackers to reach vulnerable services; a properly configured one significantly raises the barrier to entry for network-based attacks."
   },
   {
     "topic": "Network Security",
     "q": "What is a DDoS attack?",
-    "options": ["Extracting data from a database", "Flooding a target with requests from multiple sources to overwhelm and disable service", "Injecting malicious code", "Capturing unencrypted packets"],
+    "options": [
+      "Extracting data from a database",
+      "Flooding a target with requests from multiple sources to overwhelm and disable service",
+      "Injecting malicious code",
+      "Capturing unencrypted packets"
+    ],
     "answer": 1,
-    "explain": "DDoS attacks overwhelm a target with traffic from many sources (botnet), making it unavailable. Mitigation includes rate limiting and traffic filtering."
+    "explain": "A Distributed Denial-of-Service (DDoS) attack floods a target with traffic from many sources (a botnet), overwhelming its capacity and rendering the service unavailable. Common DDoS attacks: volumetric (flood bandwidth), protocol-based (exhaust server resources via SYN floods, Smurf), or application-layer (HTTP floods). Mitigation: rate limiting, traffic filtering, CDNs (absorb traffic), and behavioral analysis. DDoS is a major threat; the 2016 Dyn attack (106 Gbps) knocked out major sites. Unlike intrusion attacks, DDoS often requires law enforcement; prevention is easier than recovery."
   },
   {
     "topic": "Network Security",
     "q": "What does DNSSEC do?",
-    "options": ["Encrypts DNS queries", "Digitally signs DNS records to prevent DNS spoofing", "Encrypts domain names", "Prevents DNS queries from being logged"],
+    "options": [
+      "Encrypts DNS queries",
+      "Digitally signs DNS records to prevent DNS spoofing",
+      "Encrypts domain names",
+      "Prevents DNS queries from being logged"
+    ],
     "answer": 1,
-    "explain": "DNSSEC signs DNS records with cryptographic signatures. Resolvers verify signatures, preventing attackers from injecting fake DNS responses."
+    "explain": "DNSSEC digitally signs DNS records with cryptographic signatures, allowing resolvers to verify that a DNS response truly came from the authoritative nameserver, not an attacker's fake response. Without DNSSEC, DNS is vulnerable to spoofing: an attacker can inject fake DNS records, redirect users to phishing sites or malware servers. DNSSEC adoption has been slow due to complexity and key management overhead. DNS remains one of the internet's critical infrastructures; compromise affects everything relying on domain resolution."
   },
   {
     "topic": "Network Security",
     "q": "What is a man-in-the-middle (MITM) attack?",
-    "options": ["Modifying software before execution", "Intercepting and altering communication between two parties without their knowledge", "Stealing encryption keys", "Phishing victims for passwords"],
+    "options": [
+      "Modifying software before execution",
+      "Intercepting and altering communication between two parties without their knowledge",
+      "Stealing encryption keys",
+      "Phishing victims for passwords"
+    ],
     "answer": 1,
-    "explain": "A MITM attacker positions themselves between two parties, intercepting and potentially modifying traffic. HTTPS/TLS prevents this."
+    "explain": "A Man-in-the-Middle (MITM) attack positions an attacker between two communicating parties (on the network path or via ARP/DNS spoofing), allowing them to intercept, read, and modify traffic. On unencrypted channels, MITM is trivial; an attacker on public WiFi can capture passwords and session cookies. HTTPS/TLS prevents MITM by encrypting traffic and authenticating the server; the attacker cannot decrypt traffic or forge valid certificates (assuming no CA compromise or pinning bypass). Perfect forward secrecy further ensures that compromise of long-term keys doesn't expose past sessions."
   },
   {
     "topic": "Cryptography (Asymmetric & Hashing)",
     "q": "What is the birthday paradox in cryptographic hashing?",
-    "options": ["Hash functions always fail on birthdays", "Collisions occur in O(2^n) attempts, not 2^(2n), where n is hash bit length", "Identical inputs hash differently over time", "Old hashes are reused"],
+    "options": [
+      "Hash functions always fail on birthdays",
+      "Collisions occur in O(2^n) attempts, not 2^(2n), where n is hash bit length",
+      "Identical inputs hash differently over time",
+      "Old hashes are reused"
+    ],
     "answer": 1,
-    "explain": "The birthday paradox says that with a 128-bit hash, collisions are likely after ~2^64 hashes. This is why modern hashes use 256+ bits."
+    "explain": "The birthday paradox in cryptographic hashing states that collisions occur in O(2^(n/2)) attempts, not 2^n, where n is the hash output bit length. A 128-bit hash like MD5 requires only ~2^64 operations to find a collision (birthday bound), not 2^128—Wang demonstrated this with MD5 collisions in 2004. This is why NIST recommends 256-bit hashes (SHA-256): 2^128 collision resistance is infeasible. The effect: birthday paradox makes 128-bit hashes much weaker than they appear; this mathematical inevitability drove migration to SHA-256 and SHA-512."
   },
   {
     "topic": "Cryptography (Asymmetric & Hashing)",
     "q": "What is Elliptic Curve Cryptography (ECC)?",
-    "options": ["Encryption using magnetic curves", "Public-key cryptography using elliptic curve math, offering similar security to RSA with smaller keys", "A hash algorithm", "Symmetric encryption on curved surfaces"],
+    "options": [
+      "Encryption using magnetic curves",
+      "Public-key cryptography using elliptic curve math, offering similar security to RSA with smaller keys",
+      "A hash algorithm",
+      "Symmetric encryption on curved surfaces"
+    ],
     "answer": 1,
-    "explain": "ECC provides equivalent security to RSA with much smaller keys (256-bit ECC ≈ 3072-bit RSA). It's faster and uses less power."
+    "explain": "Elliptic Curve Cryptography (ECC) provides equivalent security to RSA using dramatically smaller keys: a 256-bit ECC key is as secure as a 3072-bit RSA key. ECC's math is based on elliptic curves over finite fields; the discrete logarithm problem (finding k given kG) has no known subexponential algorithm. ECC offers faster computation, lower power consumption, and smaller key sizes—ideal for mobile and IoT. Adoption accelerated with ECDSA for signatures (TLS 1.3, Bitcoin) and ECDH for key exchange; quantum computers would break both RSA and ECC."
   },
   {
     "topic": "Web Security",
     "q": "What is CSRF (Cross-Site Request Forgery)?",
-    "options": ["Stealing form data", "Tricking a user into making unintended requests to another site where they're authenticated", "Injecting scripts into forms", "Phishing users for passwords"],
+    "options": [
+      "Stealing form data",
+      "Tricking a user into making unintended requests to another site where they're authenticated",
+      "Injecting scripts into forms",
+      "Phishing users for passwords"
+    ],
     "answer": 1,
-    "explain": "CSRF tricks authenticated users into making unintended requests on a different site. Mitigations: CSRF tokens, SameSite cookies, and checking Referer headers."
+    "explain": "Cross-Site Request Forgery (CSRF) tricks an authenticated user into making unintended requests on another site by crafting a malicious page or link they click. Example: attacker's site includes <img src=\"https://bank.com/transfer?to=attacker&amt=1000\"> and if the user is logged into their bank, the browser automatically sends the authenticated request. The bank cannot distinguish a legitimate user action from a CSRF attack since the request has valid credentials. Defenses: CSRF tokens (unpredictable per-request), SameSite cookies, and checking the Referer header."
   },
   {
     "topic": "Authentication & Authorization",
     "q": "What does a WebAuthn/FIDO2 security key provide?",
-    "options": ["One-time passwords via SMS", "Phishing-resistant 2FA without relying on shared secrets", "Multi-device authentication", "Biometric storage"],
+    "options": [
+      "One-time passwords via SMS",
+      "Phishing-resistant 2FA without relying on shared secrets",
+      "Multi-device authentication",
+      "Biometric storage"
+    ],
     "answer": 1,
-    "explain": "WebAuthn/FIDO2 security keys are phishing-resistant. They verify the site's identity before sending a response, preventing phishing."
+    "explain": "WebAuthn/FIDO2 security keys provide phishing-resistant 2FA by using public-key cryptography and verifying the website's identity before sending an authentication response. Unlike SMS/TOTP, FIDO2 authenticates the site to the user's device—a phishing site cannot impersonate the legitimate domain. Users approve login with a button press or biometric; no shared secret is transmitted or stored on servers. FIDO2 is resistant to account takeover, password reuse, and social engineering; supported by GitHub, Google, Microsoft, and major platforms. It's considered the gold standard for phishing-resistant authentication."
   }
 ]
 </script>

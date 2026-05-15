@@ -2211,7 +2211,7 @@ if (typeof switchTab === 'function') {
       "Yeast-based alcohol production"
     ],
     "q": "What is the primary driving force behind anaerobic digestion?",
-    "explain": "Anaerobic digestion is driven by a consortium of bacteria and archaea that thrive without oxygen, breaking down organic matter in multiple stages."
+    "explain": "Anaerobic digestion is driven by a consortium of anaerobic bacteria and archaea that break down organic matter in four sequential stages: hydrolysis, acidogenesis, acetogenesis, and methanogenesis. This process eliminates the need for oxygen (which would oxidize substrates to CO2) and instead generates methane—a valuable energy source. The absence of oxygen is critical; aerobic systems would produce only CO2 and heat. In practice, digesters must be sealed and anaerobic conditions maintained to ensure methane production rather than compost formation."
   },
   {
     "answer": 2,
@@ -2223,7 +2223,7 @@ if (typeof switchTab === 'function') {
       "Acetogenesis"
     ],
     "q": "Which stage of anaerobic digestion converts complex polymers into simple monomers?",
-    "explain": "Hydrolysis is the first stage where enzymes break down complex carbohydrates, proteins, and lipids into their constituent monomers (sugars, amino acids, fatty acids)."
+    "explain": "Hydrolysis is the first stage where extracellular enzymes (proteases, lipases, cellulases) from hydrolytic bacteria break down complex polymers—carbohydrates, proteins, and lipids—into soluble monomers and dimers. This is the rate-limiting step in AD; slow hydrolysis (especially of lignocellulose) reduces overall biogas yield. For feedstocks like food waste, hydrolysis is rapid; for straw or manure fiber, it becomes a bottleneck. Pre-treatment (thermal, mechanical, enzymatic) accelerates hydrolysis, improving plant efficiency."
   },
   {
     "answer": 1,
@@ -2235,7 +2235,7 @@ if (typeof switchTab === 'function') {
       "75-80°C"
     ],
     "q": "What is the typical temperature range for mesophilic anaerobic digestion?",
-    "explain": "Mesophilic digestion operates at moderate temperatures (35-40°C), which is more energy-efficient than thermophilic digestion and is most commonly used in practice."
+    "explain": "Mesophilic digestion operates at 35–40°C, the optimal temperature for most mesophilic bacteria and archaea, and is the most common choice in practice because it requires less heating energy than thermophilic systems (50–55°C). At mesophilic conditions, HRT is typically 15–30 days; thermophilic digestion is faster but demands 5–10 kW/m³ thermal input. Thermophilic improves pathogen kill and volatile solids reduction but is cost-prohibitive except in climate-controlled industrial settings or when waste heat is available."
   },
   {
     "answer": 1,
@@ -2247,7 +2247,7 @@ if (typeof switchTab === 'function') {
       "Viruses"
     ],
     "q": "Which microorganism is primarily responsible for methanogenesis?",
-    "explain": "Methanogens are specialized archaea that produce methane from acetate, hydrogen, and CO2 in the final stage of anaerobic digestion."
+    "explain": "Methanogens are archaea (not bacteria) that perform the final stage: producing methane from acetate (acetoclastic methanogens) or from H2 + CO2 (hydrogenotrophic methanogens). They are strictly anaerobic and sensitive to toxins, high VFA, and pH < 6.5 or > 7.8. Methanogens account for ~10–15% of AD microbial populations but drive the process; their failure is the primary cause of digester collapse. Temperature shifts and toxin spikes kill methanogens faster than they reproduce, causing system crashes."
   },
   {
     "answer": 1,
@@ -2259,7 +2259,7 @@ if (typeof switchTab === 'function') {
       "100-150:1"
     ],
     "q": "What is the optimal carbon-to-nitrogen (C:N) ratio for anaerobic digestion?",
-    "explain": "The ideal C:N ratio is approximately 20-30:1, which ensures sufficient carbon for energy and nitrogen for microbial growth without nitrogen imbalance."
+    "explain": "The optimal C:N ratio of 20–30:1 ensures sufficient carbon (energy source) for microbial metabolism without excess that leads to accumulation of degradation-resistant organics, and provides enough nitrogen for protein synthesis without ammonia toxicity. Ratios above 40:1 lead to slow digestion and incomplete nutrient utilization; below 15:1, free ammonia rises (especially at pH > 7.5) and inhibits methanogens. Co-digestion of manure (N-rich) with straw or food waste (C-rich) achieves balance."
   },
   {
     "answer": 1,
@@ -2271,7 +2271,7 @@ if (typeof switchTab === 'function') {
       "Simpler digester design"
     ],
     "q": "Co-digestion of multiple feedstocks provides which advantage?",
-    "explain": "Co-digestion balances nutrient ratios, improves microbial diversity, and can increase biogas yield while stabilizing the process against single-substrate limitations."
+    "explain": "Co-digestion of multiple feedstocks improves process stability by balancing C:N ratios, diluting potentially toxic single-feedstock constituents, and broadening substrate diversity to support diverse microbial guilds. Biogas yield often increases 20–40% compared to mono-digestion of low-yield substrates. Co-digestion also buffers against supply variability; if manure supply drops, food waste or agricultural residue can maintain feedstock continuity. Industrial plants routinely co-digest manure, food waste, and sewage sludge."
   },
   {
     "answer": 2,
@@ -2283,7 +2283,7 @@ if (typeof switchTab === 'function') {
       "UV irradiation"
     ],
     "q": "Which pre-treatment method breaks down lignocellulose by heating biomass without oxygen?",
-    "explain": "Thermal pre-treatment uses heat to disrupt lignin and cellulose crystallinity, improving enzyme accessibility for hydrolysis in anaerobic digestion."
+    "explain": "Thermal pre-treatment heats biomass to 70–150°C without oxygen (dry heat or steam), disrupting lignin structure and reducing cellulose crystallinity, thereby increasing enzyme accessibility during hydrolysis. This is particularly valuable for lignocellulose (straw, wood, energy crops), which have low intrinsic biodegradability; yield can double. Thermal pre-treatment consumes energy but pays off if the biogas energy gain (150–300% yield increase) exceeds fuel cost. Pressure and duration control the degree of degradation."
   },
   {
     "answer": 1,
@@ -2295,7 +2295,7 @@ if (typeof switchTab === 'function') {
       "Over 95%"
     ],
     "q": "What is the typical methane content in raw biogas from anaerobic digestion?",
-    "explain": "Raw biogas typically contains 50-70% methane (CH₄) with the remainder being CO₂ and trace gases like H₂S, H₂, and N₂."
+    "explain": "Raw biogas from AD typically contains 55–65% methane, 30–40% CO2, 0.5–2% H2S, traces of NH3, and <1% O2 (if ingress occurs). CO2 is inert but reduces energy content; H2S is toxic and corrosive; NH3 is irritant. Feedstock and process conditions (pH, retention time, temperature) shift the ratio. At pH > 7.5, more CO2 dissolves as bicarbonate, raising CH4 %; H2S rises with sulfur-rich feedstock (manure from animals fed high-S forage or supplements)."
   },
   {
     "answer": 1,
@@ -2307,7 +2307,7 @@ if (typeof switchTab === 'function') {
       "Increases gas volume"
     ],
     "q": "Hydrogen sulfide (H₂S) in biogas poses which primary concern?",
-    "explain": "H₂S is highly corrosive to equipment and combustion engines, and it is a potent greenhouse gas and air pollutant that must be removed before use."
+    "explain": "Hydrogen sulfide (H2S) is highly corrosive—it oxidizes to sulfuric acid in presence of moisture, attacking steel, brass, and aluminum equipment and engine cylinders. Beyond equipment damage, H2S is a potent greenhouse gas (GWP ~10) and air pollutant (acid rain precursor). Threshold for toxicity to humans is ~10 ppm (headache), lethal above 100 ppm; even 50 ppm impairs cognition. H2S removal via iron hydroxide, zinc oxide, or biodesulfurization is essential before CHP use or grid injection."
   },
   {
     "answer": 1,
@@ -2319,7 +2319,7 @@ if (typeof switchTab === 'function') {
       "Photosynthesis"
     ],
     "q": "Which technology is used to upgrade raw biogas to biomethane (>95% CH₄)?",
-    "explain": "Upgrading uses PSA, membrane separation, or chemical scrubbing to remove CO₂ and impurities, producing high-purity biomethane suitable for grid injection or vehicles."
+    "explain": "Upgrading raw biogas (55–65% CH4) to biomethane (>95% CH4) is done via PSA (pressure swing adsorption), membrane separation, water scrubbing (absorption), or amine-based scrubbing. PSA and membranes are cost-effective at small–medium scale (10–1000 Nm³/h); water scrubbing is simpler but generates wastewater; amines are most selective but require regeneration. Upgrading costs €0.05–0.15/Nm³; at typical biogas prices (€0.04/Nm³ raw), upgrading is economically feasible only for grid injection or high-value CHP."
   },
   {
     "answer": 2,
@@ -2331,7 +2331,7 @@ if (typeof switchTab === 'function') {
       "CSTR"
     ],
     "q": "Which digester type has a fixed gas collection dome and no moving parts?",
-    "explain": "Fixed dome digesters have a masonry dome built over an underground pit, providing simple construction with minimal mechanical components and low maintenance."
+    "explain": "A fixed dome digester is an underground chamber with a hemispherical or conical masonry dome for gas collection; gas pressure is maintained by the dome weight, requiring no moving parts. Construction is simple and durable (30+ year lifespan in some regions), ideal for rural/community scale; however, maintenance access is difficult, pH/VFA monitoring requires sampling, and the volume is fixed (cannot scale easily). Common in sub-Saharan Africa and South Asia for 5–50 m³ household–community plants."
   },
   {
     "answer": 2,
@@ -2343,7 +2343,7 @@ if (typeof switchTab === 'function') {
       "Aluminum"
     ],
     "q": "A tubular/plug-flow digester is typically constructed from which material for low-cost applications?",
-    "explain": "Tubular digesters use plastic film (typically HDPE or UV-resistant plastic) stretched over a frame, offering low capital costs and ease of installation for household or community scale."
+    "explain": "Tubular digesters use plastic film (HDPE, UV-resistant polyethylene) stretched over a frame, creating a long, narrow chamber where feedstock flows sequentially (plug-flow dynamics). They are extremely low-cost ($500–$2000 for 10 m³), easy to install with basic tools, and suitable for distributed household or farming operations. Drawbacks: plastic degrades in 5–10 years (tropical climates faster); no mechanical mixing (natural stratification); limited temperature control; and difficult to monitor or repair internal components."
   },
   {
     "answer": 1,
@@ -2355,7 +2355,7 @@ if (typeof switchTab === 'function') {
       "Highest H₂S removal"
     ],
     "q": "What is the main advantage of a Continuously Stirred Tank Reactor (CSTR) digester?",
-    "explain": "CSTRs provide uniform mixing and temperature distribution, enabling higher throughput, consistent biogas quality, and better process control for industrial applications."
+    "explain": "A Continuously Stirred Tank Reactor (CSTR) provides uniform mixing (mechanical or gas-recirculation), ensuring consistent temperature, pH, and substrate distribution across the digester volume. This uniformity enables 15–20 day HRT and high volumetric loading rates (2–5 kg VS/m³·day), typical of industrial 500–5000 m³ plants treating manure, food waste, or sewage sludge. CSTRs require power input (~0.3–1 kW per 100 m³ for mixing) and more capital investment but offer superior process control and biogas stability."
   },
   {
     "answer": 1,
@@ -2367,7 +2367,7 @@ if (typeof switchTab === 'function') {
       "Feedstock color"
     ],
     "q": "What operational parameter must be monitored to prevent digester failure (acidosis)?",
-    "explain": "Monitoring pH (optimal 6.8-7.8) and VFA levels prevents acidosis, where organic acids accumulate and kill methanogens, causing digestion failure."
+    "explain": "Monitoring pH (optimal 6.8–7.2) and volatile fatty acid (VFA) concentration (<5000 mg/L; ideally <2000 mg/L) is critical for preventing acidosis: a cascade failure where VFA accumulates faster than methanogens can convert it, pH drops below 6.5, methanogens are inhibited, and biogas production crashes. Daily or 3× weekly pH/VFA testing allows early intervention (lime addition, feedstock reduction) before irreversible damage. Field kits (pH paper, simple titration) are sufficient for basic monitoring; industrial plants use online probes."
   },
   {
     "answer": 1,
@@ -2379,7 +2379,7 @@ if (typeof switchTab === 'function') {
       "Reduce digester temperature"
     ],
     "q": "What is the role of syntrophic bacteria in anaerobic digestion?",
-    "explain": "Syntrophs oxidize volatile fatty acids into acetate and hydrogen gas, which methanogens then convert to methane in a mutually beneficial relationship."
+    "explain": "Syntrophic bacteria oxidize volatile fatty acids (propionate, butyrate, lactate) into acetate and H2, which methanogens then consume in thermodynamically unfavorable reactions that are only viable at very low H2 partial pressure. This mutualistic relationship is essential; without syntrophs, acids accumulate and pH crashes. Syntrophic partners include Syntrophobacter and Syntrophomonas; their slow growth (doubling time >10 days) makes them vulnerable to washout if HRT is too short or feedstock contains inhibitors."
   },
   {
     "answer": 1,
@@ -2391,7 +2391,7 @@ if (typeof switchTab === 'function') {
       "pH = 7.0, < 1 g/L"
     ],
     "q": "Ammonia inhibition in digesters occurs at which pH and concentration range?",
-    "explain": "High free ammonia (from protein degradation) at elevated pH inhibits methanogens, typically problematic above pH 7.5 and free ammonia concentrations > 3 g/L."
+    "explain": "Free ammonia (NH3, not NH4+) inhibits methanogens at concentrations >3 g/L, especially at pH > 7.5 where the NH4+/NH3 equilibrium shifts toward toxic NH3. Protein-rich feedstocks (slaughterhouse waste, food waste) release high amino nitrogen; coupled with high pH (often from over-dosing buffer), inhibition occurs. Inhibition is reversible if pH is reduced or retention time extended; symptoms include VFA accumulation and gradual CH4 decline. Mitigation: avoid protein overloading, maintain pH 6.8–7.2, use coarse feedstock to slow hydrolysis."
   },
   {
     "answer": 1,
@@ -2403,7 +2403,7 @@ if (typeof switchTab === 'function') {
       "Over 200 days"
     ],
     "q": "What is the hydraulic retention time (HRT) typically used in a 1-5 m³ household digester?",
-    "explain": "Household digesters typically operate with HRT of 15-30 days at mesophilic conditions, balancing gas production rate with digestion completeness."
+    "explain": "Household digesters (5–15 m³) typically operate at 15–30 day hydraulic retention time (HRT) under mesophilic conditions (~37°C), balancing biogas production rate against digestion completeness and capital volume. Shorter HRT (10 days) risks washout of slow-growing methanogens and incomplete digestion; longer HRT (40+ days) requires larger volume and slower gas emergence. A 10 m³ digester at 20-day HRT processes ~500 kg feedstock/day, producing ~50–100 Nm³ biogas/day for cooking and small electricity."
   },
   {
     "answer": 1,
@@ -2415,7 +2415,7 @@ if (typeof switchTab === 'function') {
       "Skin irritation"
     ],
     "q": "What is the primary safety hazard of biogas in an enclosed space?",
-    "explain": "Biogas (50-70% CH₄) is highly flammable; when mixed with air at 5-15% concentration, it forms an explosive mixture requiring proper ventilation and flame arrestors."
+    "explain": "Biogas (50–70% CH4) is highly flammable; when mixed with air at 5–15% concentration, it forms an explosive atmosphere. In confined spaces (pipe networks, digesters with leaks), even static discharge can ignite the mixture, causing explosions that damage equipment and pose injury risk. Industrial plants must ventilate enclosed areas, avoid hot surfaces (>230°C ignition temperature), and test for biogas presence in spaces before hot work. Flame arrestors on outlets prevent backflash from burners toward the digester."
   },
   {
     "answer": 1,
@@ -2427,7 +2427,7 @@ if (typeof switchTab === 'function') {
       "pH probe"
     ],
     "q": "Which device should be installed on a biogas pipeline to prevent backflow explosions?",
-    "explain": "Flame arrestors (or safety valves) prevent flames from traveling back through the pipeline if ignition occurs, critical for preventing digester explosions."
+    "explain": "A flame arrestor (or safety valve) is a device installed on biogas pipelines that allows gas flow but blocks flames from traveling backward if ignition occurs outside (e.g., at a burner). Flame arrestors use a matrix of small passages that cool flames below their propagation temperature or include check valves that close on reverse flow. They are essential on all digesters used for cooking or CHP, preventing catastrophic explosions. Regular inspection for blockage (charring, residue) ensures continued function."
   },
   {
     "answer": 1,
@@ -2439,7 +2439,7 @@ if (typeof switchTab === 'function') {
       "0.5 times"
     ],
     "q": "Methane is how many times more potent as a greenhouse gas than CO₂ over a 20-year period?",
-    "explain": "Methane has a Global Warming Potential (GWP) of ~28-34 times CO₂ over 20 years, making methane capture and combustion (CO₂ production) environmentally beneficial."
+    "explain": "Methane has a Global Warming Potential (GWP) of ~28–34 times CO2 over a 20-year timeframe (more potent in short term due to rapid atmospheric lifetime), or ~11–12× over 100 years. This high potency makes uncontrolled CH4 release from landfills or cattle highly damaging; however, it also means biogas capture and combustion (converting CH4 to CO2) yields ~10–15× net climate benefit. Biogas projects are often eligible for carbon credits (CDM, VCS) at ~$5–$15/ton CO2-eq avoided."
   },
   {
     "answer": 1,
@@ -2451,7 +2451,7 @@ if (typeof switchTab === 'function') {
       "Easier transportation"
     ],
     "q": "What is the primary advantage of using biogas for cooking compared to biomass fuel burning?",
-    "explain": "Biogas burns cleanly without smoke, reducing indoor air pollution and health risks compared to solid biomass, while providing reliable, controlled heat."
+    "explain": "Biogas combusts cleanly without smoke, unlike solid biomass (wood, crop residue, dung cakes), which produces indoor air pollution: particulates, CO, benzene, and other toxins that cause respiratory illness and premature mortality. WHO estimates ~3 million deaths/year from indoor biomass burning. Biogas appliances (stove, lamp) provide odorless, controllable heat; stored gas allows 24/7 use. In rural Asia and Africa, biogas adoption correlates with improved health outcomes and reduced firewood scarcity pressure."
   },
   {
     "answer": 1,
@@ -2463,7 +2463,7 @@ if (typeof switchTab === 'function') {
       "Over 90%"
     ],
     "q": "Combined Heat and Power (CHP) systems using biogas achieve typical electrical efficiency of:",
-    "explain": "CHP engines achieve ~30-40% electrical efficiency, and when waste heat is recovered for heating, total efficiency can exceed 80%, making them highly effective."
+    "explain": "Combined Heat and Power (CHP) engines burning biogas achieve ~30–40% electrical efficiency (converting chemical energy to electricity) and recover ~40–50% as thermal energy in exhaust and cooling water. Total efficiency can exceed 80% when waste heat powers digester heating, drying, or local district heating. Standalone combustion generators are only ~25% efficient; CHP is the standard for biogas utilization above 100 kW scale. Micro-CHP (<20 kW) is less efficient (~28%) due to fixed losses."
   },
   {
     "answer": 1,
@@ -2475,7 +2475,7 @@ if (typeof switchTab === 'function') {
       "No specific standard"
     ],
     "q": "What is biomethane when injected into natural gas grids typically required to meet?",
-    "explain": "Grid-injected biomethane must meet strict standards (>99% CH₄) and must have odor added (mercaptan) and moisture removed to match natural gas specifications."
+    "explain": "Grid-injected biomethane must meet strict quality standards: ≥99% CH4 (to match natural gas), <20 mg/m³ H2S, <100 mg/m³ other S compounds (to avoid equipment corrosion), <100 mg/m³ H2O (moisture causes hydrate formation, pipe blockage), and odor added (mercaptan at ~0.8 ppm) for safety leak detection. Some grids require additional limits on CO2, O2, and inert gases. Upgrading technology must remove CO2, H2S, water, and siloxanes (from waste-derived feedstock). Non-compliance risks grid rejection or equipment damage."
   },
   {
     "answer": 1,
@@ -2487,7 +2487,7 @@ if (typeof switchTab === 'function') {
       "Over ,000"
     ],
     "q": "What is the typical capital cost range for a 10 m³ household biogas digester in developing countries?",
-    "explain": "A 10 m³ digester in developing regions typically costs ,000-3,000 USD, with payback periods of 3-7 years through gas savings and improved soil via digestate."
+    "explain": "A 10 m³ household biogas digester in developing countries costs $1,000–$3,000 USD for materials and labor (fixed dome: $1,500–$2,500; tubular: $500–$1,500; brick+cement: $1,000–$2,000). Operating costs are minimal (~$50/year maintenance). Payback periods are 3–7 years through avoided biomass fuel purchases ($200–$500/year saved) and improved soil fertility via digestate. Higher feedstock availability (cattle) and larger family size (>8 people) improve economics; subsidies or microfinance often bridge affordability gaps."
   },
   {
     "answer": 1,
@@ -2499,7 +2499,7 @@ if (typeof switchTab === 'function') {
       "Only < 50 kg/day"
     ],
     "q": "Community-scale biogas plants (serving villages) typically process feedstock at which daily rate?",
-    "explain": "Community plants process 100-500 kg/day of feedstock (animal manure, agricultural residues), producing enough gas for 50-200 households and generating digestate for agriculture."
+    "explain": "Community-scale biogas plants (50–500 household beneficiaries) typically process 100–500 kg/day of feedstock, most commonly cattle manure (30–100 kg/day per household with 2–4 cattle) supplemented by agricultural residues or food waste. This feedstock rate yields 200–1000 m³ biogas/day (at 0.2–0.4 m³ CH4/kg VS), sufficient for 50–200 households at cooking (2 hrs/day, 2–3 kg feedstock/day). Community plants require feedstock collection logistics, regular maintenance training, and governance (fee collection) to sustain operation."
   },
   {
     "answer": 1,
@@ -2511,7 +2511,7 @@ if (typeof switchTab === 'function') {
       "Electricity only"
     ],
     "q": "Industrial biogas plants often co-digest sewage sludge and food waste; what is a major revenue stream?",
-    "explain": "Large plants profit from biogas/electricity sales, digestate (soil conditioner) revenue, and tipping fees for accepting organic waste, improving economic viability."
+    "explain": "Large industrial biogas plants (500–2000 m³ digesters, processing 10–50 tons/day) generate revenue from three streams: (1) biogas/electricity sales (€0.10–$0.20/kWh after CHP conversion, depending on grid tariffs and subsidies), (2) digestate sales (€5–€15/ton as soil amendment), and (3) tipping fees for accepting organic waste (€10–€30/ton, significant in high-waste-cost regions like Northern Europe). Combined, these streams achieve ROI in 8–15 years; government incentives (feed-in tariffs, renewable credits) accelerate payback."
   },
   {
     "answer": 1,
@@ -2523,7 +2523,7 @@ if (typeof switchTab === 'function') {
       "5+ m³"
     ],
     "q": "How much biogas (m³) can typically be produced from 1 kg of organic waste in a digester?",
-    "explain": "Typical biogas yield is 0.1-0.2 m³ of biogas per kg of organic matter (VS), though this varies with feedstock type and digestion conditions."
+    "explain": "Typical biogas yield is 0.1–0.2 m³ (0.056–0.112 m³ CH4) per kg of volatile solids (VS) degraded, though this varies by feedstock and conditions. Food waste yields ~0.15–0.25 m³/kg VS (easily degradable carbohydrates); manure yields ~0.1–0.15 m³/kg VS (partially stabilized organics); straw yields <0.05 m³/kg VS (recalcitrant lignocellulose). Pre-treatment increases yield 50–150%. Industrial calculations often assume 0.17 m³/kg VS for mixed feedstock as a baseline; pilot tests refine estimates for specific waste streams."
   },
   {
     "answer": 2,
@@ -2535,7 +2535,7 @@ if (typeof switchTab === 'function') {
       "Increases soil acidity"
     ],
     "q": "Digestate from biogas digesters is beneficial for soil because it:",
-    "explain": "Digested digestate is disease-suppressive, rich in stable organic matter, has improved nutrient availability, and poses lower pathogen risk than raw manure."
+    "explain": "Digestate from AD is nutrient-rich (N, P, K), disease-suppressive (pathogens reduced 99.9% vs. raw manure), and contains stable organic matter that improves soil structure, water retention, and microbial activity. Unlike raw manure (which can introduce weeds, pathogens, and antibiotic resistance genes), digestate is safer for food crops. Liquid digestate (centrifuge supernatant) is applied as plant-available N fertilizer (~40–80 mg/L N); solid fiber is used as mulch or soil amendment. Digestate replaces 50–80% of mineral fertilizer need."
   },
   {
     "answer": 2,
@@ -2547,7 +2547,7 @@ if (typeof switchTab === 'function') {
       "Over 100%"
     ],
     "q": "What percentage reduction in greenhouse gases can biogas production achieve compared to landfill disposal of the same organic waste?",
-    "explain": "Biogas prevents methane emissions from landfills and displaces fossil fuels, achieving net GHG reductions of 80-90% across the waste lifecycle."
+    "explain": "Biogas systems achieve 80–90% GHG reduction vs. landfill disposal of the same waste because: (1) they prevent landfill methane emissions (CH4 is 28× CO2 over 20yr), (2) they displace fossil fuel energy (if biogas is used for heat/power), and (3) they eliminate transport emissions on excavation. Avoided emissions typically total 1–3 tons CO2-eq per ton waste processed. In lifecycle assessments, biogas projects consistently show net negative emissions, qualifying for carbon offsets and climate finance."
   },
   {
     "answer": 1,
@@ -2559,7 +2559,7 @@ if (typeof switchTab === 'function') {
       "Reduce H₂S"
     ],
     "q": "What is the purpose of pH buffering (adding lime or bicarbonate) in a digester?",
-    "explain": "Buffering maintains pH near optimal levels (6.8-7.8) by counteracting organic acid buildup, preventing methanogen inhibition and digester failure."
+    "explain": "pH buffering (adding lime CaCO3, sodium bicarbonate NaHCO3, or wood ash) maintains pH near 6.8–7.2 by neutralizing organic acids (acetate, propionate) that accumulate during rapid hydrolysis and acidogenesis. Without buffering, pH can crash to 5.5–6.0 within hours during feedstock shock, inhibiting methanogens and triggering cascade failure. Over-buffering (pH > 7.5) increases ammonia (NH3) toxicity. Most digesters operate on inherent buffering from feedstock (manure is alkaline); industrial plants add lime (0.1–0.5 kg/ton feedstock) prophylactically during high-strength feedstock campaigns."
   },
   {
     "answer": 2,
@@ -2571,7 +2571,7 @@ if (typeof switchTab === 'function') {
       "Chemical (acid/alkali)"
     ],
     "q": "Which pre-treatment method uses enzymes to directly break down cellulose and hemicellulose?",
-    "explain": "Enzymatic pre-treatment uses cellulases and hemicellulases to degrade lignocellulose, improving biogas yield, though costs are a challenge for large-scale implementation."
+    "explain": "Enzymatic hydrolysis uses purified cellulases, hemicellulases, and pectinases to directly break down cellulose and hemicellulose into glucose and sugar oligomers, dramatically increasing biogas yield (often 150–300% boost for lignocellulose). This is particularly effective for straw, wood chips, and energy crops. Drawback: enzyme costs ($10–$50/kg biomass) often exceed the value of incremental biogas; feasible only for high-value applications or when co-located with enzyme production (breweries, biofuel facilities). Emerging enzyme recycling improves economics."
   },
   {
     "answer": 1,
@@ -2583,11 +2583,9 @@ if (typeof switchTab === 'function') {
       "Eliminates the need for gas upgrading"
     ],
     "q": "What is the key principle of two-stage digestion (separate hydrolysis/acidogenesis from methanogenesis)?",
-    "explain": "Two-stage digestion separates acidogenic and methanogenic conditions, allowing pH~5-6 for acid producers and pH~7-7.8 for methanogens, increasing efficiency."
+    "explain": "Two-stage AD separates acidogenic and methanogenic processes into distinct reactors: Stage 1 (pH 5–6, short HRT 3–5 days) optimizes hydrolysis and VFA production by acid-forming bacteria; Stage 2 (pH 7–7.8, HRT 15–20 days) optimizes methanogenesis by methanogens. This design prevents pH interference (acidogens generate acid, methanogens need pH~7.2), avoids ammonia inhibition by maintaining lower pH in Stage 1, and allows independent control of each microbial guild. Overall yield increases 15–25%; typical for food waste or high-strength industrial waste."
   }
-]
-
-</script>
+]</script>
 <script>
 (function() {
   const dataEl = document.getElementById('quiz-data');

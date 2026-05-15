@@ -2163,7 +2163,7 @@ if (typeof switchTab === 'function') {
       "Monitor radio broadcast signals across the globe"
     ],
     "answer": 0,
-    "explain": "Radar (Radio Detection and Ranging) fundamentally transmits electromagnetic waves and analyzes their reflections to detect, locate, and measure target properties."
+    "explain": "Radar (Radio Detection and Ranging) fundamentally transmits electromagnetic waves and analyzes their reflections to detect, locate, and measure target properties. This round-trip detection principle enables range measurement via time-of-flight, which distinguishes radar from passive sensing. Weather radar measures precipitation patterns, satellite systems produce maps, and broadcast monitoring are specialized applications, but core radar function is active detection through echo analysis. Modern radars use pulse compression, Doppler processing, and phased arrays to enhance this capability. The radar equation Pr = Pt·G²·λ²·σ / ((4π)³·R⁴·L) governs this fundamental physics."
   },
   {
     "topic": "Radar Fundamentals",
@@ -2175,7 +2175,7 @@ if (typeof switchTab === 'function') {
       "It measures the Doppler frequency shift of moving targets"
     ],
     "answer": 0,
-    "explain": "The Radar Range Equation (Pr = Pt·G²·λ²·σ / (4π)³·R⁴) is fundamental to radar design, relating transmitted power, antenna gain, wavelength, radar cross section, and range to the received power."
+    "explain": "The Radar Range Equation Pr = Pt·G²·λ²·σ / (4π)³·R⁴ relates received power to system parameters: transmit power (Pt), antenna gain (G), wavelength (λ), radar cross section (σ), range (R), and losses (L). This derived relationship governs maximum detection range—directly enabling system trade-study between power, gain, and antenna size. The R⁴ dependence means range scales as ⁴√Pt, requiring 16× power increase to double range. Options B and C confuse altitude prediction and transmitter efficiency; option D is Doppler physics, not the range equation. This equation is fundamental to all radar design and performance prediction."
   },
   {
     "topic": "Radar Fundamentals",
@@ -2187,7 +2187,7 @@ if (typeof switchTab === 'function') {
       "Radar Clarity Standard — the resolution quality metric of radar systems"
     ],
     "answer": 0,
-    "explain": "Radar Cross Section (RCS) quantifies how detectable a target is by radar, measured in square meters. It represents the effective area that scatters energy back to the radar."
+    "explain": "Radar Cross Section (RCS) measures target detectability in square meters (dBsm), quantifying energy scattered back to radar. Unlike physical cross-sectional area, RCS depends on target geometry, material, aspect angle, and wavelength—a complex aerodynamic phenomenon. The radar equation shows received power is proportional to RCS: Pr ∝ σ/R⁴, so stealth design minimizes σ. RCS ranges from 0.01 m² (fighter aircraft) to 100,000 m² (large ships). PESA/AESA radar and modern interceptors optimize RCS estimation for classification and threat assessment."
   },
   {
     "topic": "Waveforms & Modulation",
@@ -2199,7 +2199,7 @@ if (typeof switchTab === 'function') {
       "Pulsed radar is immune to electronic jamming"
     ],
     "answer": 0,
-    "explain": "Pulsed radar measures range by analyzing the delay (time-of-flight) of pulse returns, while simple CW radar only detects velocity via Doppler shift. Modern pulse-Doppler radars combine both capabilities."
+    "explain": "Pulsed radar measures range by analyzing pulse echo delay (time-of-flight): R = c·Δt/2, while basic CW radar cannot measure range—only velocity via Doppler. Modern pulse-Doppler radars combine both: pulses enable range gating while PRF repetition enables Doppler velocity processing. Option B overgeneralizes (efficiency depends on duty cycle); option C (range resolution) is correct only for pulse compression; option D ignores modern ECM/ECCM techniques. Pulsed waveforms dominate military and commercial radar because range information is essential for track correlation and terrain navigation."
   },
   {
     "topic": "Waveforms & Modulation",
@@ -2211,7 +2211,7 @@ if (typeof switchTab === 'function') {
       "Real-time frequency hopping for jam resistance"
     ],
     "answer": 0,
-    "explain": "LFM (chirp) waveforms enable pulse compression, where a long-duration, frequency-swept pulse is compressed on receive to achieve high range resolution and detection energy simultaneously."
+    "explain": "LFM (chirp) waveforms enable pulse compression: a long-duration, frequency-swept pulse is matched-filtered on receive to achieve range resolution independent of pulse length. Range resolution δR = c / (2·B_pulse) depends only on bandwidth B, not pulse duration τ. This decouples range resolution from transmit energy—a fundamental advantage. For example, a 1 μs LFM pulse sweeping 500 MHz bandwidth compresses to ~1 m range resolution while providing long-range detection energy. ECM clutter and matched filter techniques exploit this property; adaptive waveforms counter advanced threats."
   },
   {
     "topic": "Waveforms & Modulation",
@@ -2223,7 +2223,7 @@ if (typeof switchTab === 'function') {
       "The frequency modulation applied to avoid radar detection"
     ],
     "answer": 0,
-    "explain": "Doppler shift (f_d = 2·v·f₀/c) is the frequency change observed from a moving target. Positive Doppler indicates approach; negative indicates recession. It enables velocity measurement."
+    "explain": "Doppler frequency shift f_d = 2·v·f₀/c is the frequency change observed from moving targets. Positive Doppler indicates approach (increasing frequency), negative indicates recession (decreasing frequency). The factor of 2 represents round-trip Doppler: the target observes shifted transmission, then the radar receives doubly-shifted returns. This enables velocity measurement: v = c·f_d / (2·f₀). MTI/MTD radars exploit Doppler to suppress stationary clutter. Blind speeds occur when target Doppler aligns with PRF spectral nulls, rendering targets invisible despite large RCS."
   },
   {
     "topic": "Antenna & Beam Control",
@@ -2235,7 +2235,7 @@ if (typeof switchTab === 'function') {
       "The efficiency of the radar's power supply"
     ],
     "answer": 0,
-    "explain": "Antenna gain (G) amplifies both transmit and receive. Higher gain increases range but narrows beamwidth, concentrating energy in preferred directions. Gain relates to effective aperture area."
+    "explain": "Antenna gain (G) amplifies both transmit power and received signal collection in preferred directions, measured in linear (×) or dB units. Higher gain increases range proportionally: R ∝ √G (from radar equation), but gain narrows beamwidth inversely: BW ≈ λ/D (wavelength/aperture). Directivity concentrates energy, improving SNR and reducing clutter. Aperture A = G·λ²/(4π), so phased array and parabolic antennas achieve high gain. Track-while-scan requires rapid beam steering; narrower beams reduce clutter but slow surveillance coverage."
   },
   {
     "topic": "Antenna & Beam Control",
@@ -2247,7 +2247,7 @@ if (typeof switchTab === 'function') {
       "An antenna array optimized for detecting phase-modulated signals"
     ],
     "answer": 0,
-    "explain": "Phased array radars control beam direction electronically by adjusting the phase of each element. This enables rapid, agile beam steering for track-while-scan and AESA systems."
+    "explain": "Phased array radars steer beams electronically by adjusting phase of each element, achieving rapid beam agility without mechanical rotation. Beam direction θ is controlled by phase taper: phase_n = 2π·n·d·sin(θ)/λ. This enables track-while-scan, multi-target engagement, and AESA simultaneous operations. PESA arrays (passive transmit) use a single power tube; AESA arrays (active T/R modules per element) enable graceful degradation and powerful ECM resistance. Modern air defense systems (AN/SPY-1, Thales APAR) rely on phased arrays for fleet-wide simultaneous targeting."
   },
   {
     "topic": "Antenna & Beam Control",
@@ -2259,7 +2259,7 @@ if (typeof switchTab === 'function') {
       "The frequency range over which the antenna pattern remains stable"
     ],
     "answer": 0,
-    "explain": "3-dB beamwidth is the angular extent where radiated power drops to half the peak. Narrower beams improve range resolution and reduce clutter, but require larger antennas or higher frequencies."
+    "explain": "3-dB beamwidth is the angular width where radiated power drops to half the peak (–3 dB or 0.5 linear ratio). For circular apertures, 3-dB BW ≈ 1.02·λ/D (wavelength/diameter), approximately 1.22·λ/D to first null. Narrower beams improve angular resolution and reduce clutter but require larger antennas or higher frequencies. SAR systems exploit narrow beams: SAR azimuth resolution ≈ beamwidth (independent of range!). Radar design trades beamwidth against beam agility, sidelobe suppression, and aperture cost."
   },
   {
     "topic": "Detection & Signal Processing",
@@ -2271,7 +2271,7 @@ if (typeof switchTab === 'function') {
       "A processing mode that eliminates all clutter returns from the radar display"
     ],
     "answer": 0,
-    "explain": "CFAR adaptively adjusts detection thresholds based on local clutter and noise estimates. It maintains a constant false alarm rate (Pfa) despite varying environmental conditions."
+    "explain": "CFAR adaptively adjusts detection thresholds based on local clutter and noise estimates, maintaining constant false alarm probability Pfa despite varying environmental conditions. Cell-Averaging CFAR estimates noise in guard cells around the test cell and adjusts threshold proportionally. This counters clutter variability from rain, sea state, and terrain. CFAR failure modes include target masking and edge effects. Advanced ECCM uses ordered-statistic (OS) CFAR to mitigate jamming. CFAR is essential for autonomous detection in multi-environment scenarios."
   },
   {
     "topic": "Detection & Signal Processing",
@@ -2283,7 +2283,7 @@ if (typeof switchTab === 'function') {
       "The percentage of targets successfully detected by the radar"
     ],
     "answer": 0,
-    "explain": "SNR = Signal Power / Noise Power. Higher SNR improves detection probability and range. The radar range equation determines SNR at a given distance for specified targets."
+    "explain": "SNR = Signal Power / Noise Power indicates radar capability to detect targets above background. The radar range equation Pr = Pt·G²·λ²·σ / ((4π)³·R⁴·L) determines SNR at a given range for specified targets and system parameters. Detection probability Pd increases monotonically with SNR; typical requirement Pd ≥ 0.9 demands SNR ≥ 10–12 dB. Range performance is SNR-limited: doubling range reduces received power by 16×, requiring proportional Pt increase. Noise figure, receiver gain, and waveform optimize SNR utilization."
   },
   {
     "topic": "Detection & Signal Processing",
@@ -2295,7 +2295,7 @@ if (typeof switchTab === 'function') {
       "Transmit power has no effect on maximum range; only receiver sensitivity matters"
     ],
     "answer": 0,
-    "explain": "From the radar equation, maximum range R ∝ ⁴√Pt. To double range requires 16× increase in transmit power, illustrating the severe range-power tradeoff."
+    "explain": "From the radar equation, maximum detection range R_max ∝ ⁴√(Pt·G). To double range requires 16× increase in transmit power—a severe penalty illustrating the range-power tradeoff. This fourth-root dependence arises from R⁴ denominator in the radar equation and inversely proportional Pfa on SNR. System designers exploit antenna gain (phased arrays, frequency increase) and waveform techniques (pulse compression, MIMO) to improve range without proportional Pt increase. Energy-efficient radar design prioritizes gain and processing over raw transmit power."
   },
   {
     "topic": "Doppler & Velocity",
@@ -2307,7 +2307,7 @@ if (typeof switchTab === 'function') {
       "A method for reducing radar cross-section of friendly aircraft"
     ],
     "answer": 0,
-    "explain": "MTI exploits Doppler differences: moving targets have non-zero Doppler frequency, while clutter has zero Doppler. MTI filters reject stationary/slow clutter, improving signal-to-clutter ratio."
+    "explain": "MTI signal processing suppresses stationary clutter (ground, sea, buildings) while preserving moving target signals. MTI exploits Doppler differences: moving targets produce non-zero Doppler frequency, while clutter has zero Doppler. Frequency-domain MTI applies bandpass filters rejecting clutter Doppler notch; time-domain MTI uses coherent pulse trains. MTI gain quantifies clutter rejection: 20–40 dB is typical. MTI limitations include blind speeds, range ambiguity, and sensitivity to radar motion. Combined with CFAR, MTI enables detection in high-clutter environments."
   },
   {
     "topic": "Doppler & Velocity",
@@ -2319,7 +2319,7 @@ if (typeof switchTab === 'function') {
       "The time delay before velocity estimates become reliable after target acquisition"
     ],
     "answer": 0,
-    "explain": "Blind speeds occur when target Doppler aligns with PRF notches (spectral nulls). A target at velocity v = n·λ·PRF/(2) produces zero Doppler in the filter bank, becoming invisible to MTI."
+    "explain": "Blind speeds occur when target Doppler aligns with PRF spectral notches (Doppler ambiguity), producing zero response in MTI filter bank. The n-th blind speed is v_blind = n·λ·PRF/2, where n = 1,2,3... For PRF = 10 kHz and λ = 0.03 m (X-band), first blind speed = 150 m/s. High PRF (fast PRF) raises blind speeds above tactical velocities; multiple PRF modes eliminate blindness. Doppler processing advances (velocity gates, MUSIC) supplement MTI. Blind speed avoidance is critical for air defense systems tracking diverse target speeds."
   },
   {
     "topic": "Doppler & Velocity",
@@ -2331,7 +2331,7 @@ if (typeof switchTab === 'function') {
       "The time dilation correction for relativistic radar"
     ],
     "answer": 0,
-    "explain": "The factor of 2 accounts for round-trip Doppler: the target approaches with shifted frequency (first Doppler), and the radar receives doubly-shifted returns. Total is 2·v·f₀/c."
+    "explain": "The factor of 2 in f_d = 2·v·f₀/c accounts for round-trip Doppler: the target observes transmitted frequency shifted by v (first Doppler), then the radar receives the return doubly shifted (second Doppler). Mathematically: (1 + v/c)·(1 + v/c)·f₀ ≈ f₀·(1 + 2v/c) for v << c. Radar designers exploit this: a 300 m/s target at X-band (f₀ = 10 GHz) produces 20 kHz Doppler, easily processed. Single-platform systems require this round-trip correction; bistatic radar eliminates it (different Tx/Rx platforms)."
   },
   {
     "topic": "Clutter & Jamming",
@@ -2343,7 +2343,7 @@ if (typeof switchTab === 'function') {
       "The distortion introduced by atmospheric refraction of radar waves"
     ],
     "answer": 0,
-    "explain": "Clutter is the radar return from the environment: ground clutter (terrain), sea clutter (ocean), rain/weather clutter, and vegetation. Clutter management is critical for target detection."
+    "explain": "Radar clutter is unwanted return echoes from the environment: ground clutter (terrain), sea clutter (ocean roughness), weather clutter (rain, snow), and vegetation. Clutter power often exceeds target return, degrading SNR. Sea clutter increases with wind speed and grazing angle; weather clutter dominates weather radar design. Clutter-to-noise ratio (CNR) determines MTI effectiveness; high CNR enables significant MTI rejection. Clutter management (MTI, CFAR, waveform design) is essential for target detection. Clutter maps (terrain databases) predict stationary clutter for enhanced suppression."
   },
   {
     "topic": "Clutter & Jamming",
@@ -2355,7 +2355,7 @@ if (typeof switchTab === 'function') {
       "Disable radar by injecting malicious code into radar control systems"
     ],
     "answer": 0,
-    "explain": "ECM includes noise jamming (broadband interference), deception jamming (false returns), and mechanical jamming (chaff). ECCM (counter-countermeasures) include frequency hopping and CFAR."
+    "explain": "ECM techniques disrupt radar through noise jamming (broadband interference), deception jamming (false returns, velocity shifting), and mechanical jamming (chaff reflectors). Noise jamming saturates receiver with wideband noise; deception creates phantom targets. ECCM (counter-countermeasures) include frequency hopping (rapid frequency changes), spread-spectrum waveforms (chirp), PRF variation, and adaptive CFAR. Modern LPI (low probability of intercept) radars minimize transmit power and spectrum occupancy to evade ESM detection. Radar vs. EW is a continuous technology race."
   },
   {
     "topic": "Clutter & Jamming",
@@ -2367,7 +2367,7 @@ if (typeof switchTab === 'function') {
       "Radar designed to operate in high-clutter environments"
     ],
     "answer": 0,
-    "explain": "LPI radars are difficult for adversary ESM to detect due to low average power, spectral spreading (chirps, frequency hopping), and agile waveforms. Used for air defense and military applications."
+    "explain": "LPI radars minimize detection by adversary ESM receivers through low average power, frequency hopping (rapid frequency changes), and spread-spectrum waveforms (chirps, FMCW). Instead of continuous transmission on fixed frequency, LPI uses brief, spectrally-spread pulses difficult to detect. Agile waveform parameters (frequency, PRF, pulse width) change per burst. Applications include air defense, airborne intercept, and military communications. Civil weather radar is non-LPI; military systems emphasize LPI to survive adversary detection."
   },
   {
     "topic": "SAR & Imaging",
@@ -2379,7 +2379,7 @@ if (typeof switchTab === 'function') {
       "Radar that simulates terrain using database lookups rather than direct measurement"
     ],
     "answer": 0,
-    "explain": "SAR exploits motion (aircraft, satellite) to collect coherent phase histories over a synthetic aperture length L_sar = λ·R / (2·Δ_az). Azimuth resolution = λ·R / L_sar = Δ_az (independent of range!)."
+    "explain": "SAR synthesizes a large virtual antenna by coherently combining echoes as the radar moves, achieving fine azimuth resolution independent of range. A moving platform (aircraft/satellite) collects phase-coherent returns over an effective aperture length L_sar = λ·R / (2·Δ_az). Azimuth resolution ≈ physical antenna beamwidth ≈ Δ_az (actual antenna beamwidth), regardless of range R. Range resolution δR = c/(2·B), independent of motion. SAR applications include reconnaissance, maritime surveillance, and geology. Processing complexity (autofocus, phase correction) enables high-resolution imagery."
   },
   {
     "topic": "SAR & Imaging",
@@ -2391,7 +2391,7 @@ if (typeof switchTab === 'function') {
       "The terrain elevation and roughness at the target location"
     ],
     "answer": 0,
-    "explain": "SAR azimuth resolution ≈ physical antenna beamwidth. As the platform moves, longer integration distances provide finer angular resolution: Δ_az ≈ (λ·R) / L_synthetic."
+    "explain": "SAR azimuth resolution is determined by physical antenna beamwidth Δ_az: narrow beamwidth → fine resolution. As the platform moves distance L_sar, the beam integrates echoes, achieving effective resolution Δ_az_eff ≈ λ·R / L_sar. For a small antenna (narrow native BW), long integration distances produce SAR imaging resolution equivalent to beamwidth-limited systems with large antennas. This surprising result—resolution independent of range—is SAR's fundamental advantage over conventional imaging radar. Longer integration (slower platform, finer resolution) trades off collection time."
   },
   {
     "topic": "SAR & Imaging",
@@ -2403,7 +2403,7 @@ if (typeof switchTab === 'function') {
       "Electronic beam focusing technique that improves antenna directivity"
     ],
     "answer": 0,
-    "explain": "SAR autofocus corrects phase errors from platform motion, timing drift, or refraction. Algorithms estimate and remove residual phase to sharpen imagery, improving target recognition."
+    "explain": "SAR autofocus corrects residual phase errors from platform motion instabilities, receiver clock drift, and atmospheric propagation effects. These errors degrade image sharpness and false-alarm rate. Autofocus algorithms (phase-gradient, map-drift, speckle-contrast) estimate and remove phase error residuals across the synthetic aperture. Success requires integration of fine phase histories: typical autofocus improves image contrast by 3–5 dB. Limitations include Doppler ambiguity and convergence failures in low-SNR scenarios. Autofocus is critical for real-time and video SAR applications."
   },
   {
     "topic": "Tracking & Estimation",
@@ -2415,7 +2415,7 @@ if (typeof switchTab === 'function') {
       "A method for compressing radar data during storage and transmission"
     ],
     "answer": 0,
-    "explain": "Kalman filtering combines measurement noise and process models to optimally estimate target states. It predicts next position, minimizes covariance, and is the industry standard for track maintenance."
+    "explain": "Kalman filtering optimally estimates target state (position, velocity, acceleration) by fusing noisy measurements with motion models. The filter predicts next state, computes measurement residual (innovation), and updates estimate using Kalman gain K = P·H^T / (H·P·H^T + R). It minimizes state covariance P, balancing measurement noise and process model uncertainty. Variants: Extended Kalman (nonlinear targets), Unscented Kalman (higher accuracy), Particle filters (multi-modal). Industry standard for radar track maintenance; superior to α-β filters (constant-gain heuristics)."
   },
   {
     "topic": "Tracking & Estimation",
@@ -2427,7 +2427,7 @@ if (typeof switchTab === 'function') {
       "Matching target signatures from different radar systems"
     ],
     "answer": 0,
-    "explain": "Data association solves: given new measurements and existing tracks, which measurement belongs to which track? Solutions include nearest-neighbor, global nearest neighbor, and probabilistic methods (e.g., JPDA)."
+    "explain": "Data association solves: given new measurements and existing tracks, which measurement belongs to which track? With multiple targets and clutter, measurement-to-track assignment is combinatorially complex. Solutions include nearest-neighbor (fast, greedy), global nearest neighbor (optimal, NP-hard), and probabilistic JPDA (joint probability data association). Multi-target tracking fails without correct association; false associations corrupt track estimates. Gating (distance-based filtering) reduces hypotheses; measurement validation improves association. Challenges increase with target density and clutter."
   },
   {
     "topic": "Tracking & Estimation",
@@ -2439,7 +2439,7 @@ if (typeof switchTab === 'function') {
       "Display mode that shows historical track trails on the radar screen"
     ],
     "answer": 0,
-    "explain": "TWS divides radar time between surveillance (scanning for new targets) and track (updates on known targets). Modern phased arrays enable rapid switching; older mechanically scanned radars use time-sharing."
+    "explain": "TWS divides radar time between surveillance (scanning for new targets) and track (Kalman updates on known targets). Phased arrays enable rapid beam switching (milliseconds); mechanically-scanned radars use fixed-percentage time-sharing. TWS prioritizes track accuracy on selected targets while maintaining situational awareness. Resource allocation (time budget) becomes critical with many tracks. Advanced systems (AESA) enable simultaneous tracking on all resolution cells—eliminating the scan/track tradeoff. TWS is standard in air defense systems managing simultaneous threats."
   },
   {
     "topic": "Phased Arrays & Modern Systems",
@@ -2451,7 +2451,7 @@ if (typeof switchTab === 'function') {
       "Antenna Element Spacing Adjustment — a calibration procedure for phased arrays"
     ],
     "answer": 0,
-    "explain": "AESA uses active T/R modules per element, enabling independent control. Advantages: rapid beam agility, simultaneous multibeam operations, graceful degradation, and powerful jamming resistance."
+    "explain": "AESA uses independent transmit/receive modules per antenna element, enabling rapid agile beam steering and simultaneous multi-beam operations. Unlike PESA (single power tube), AESA provides element-level control for waveform shaping and adaptive beamforming. Advantages: rapid beam agility, simultaneous multi-target engagement, jamming resistance (element-by-element nulling), graceful degradation (failed elements transparent to performance). Examples: AN/SPY-1D (Navy), APAR (NATO). Complexity and cost are higher than PESA; power efficiency is superior."
   },
   {
     "topic": "Phased Arrays & Modern Systems",
@@ -2463,7 +2463,7 @@ if (typeof switchTab === 'function') {
       "Modified Interleaved Multi-operation — a mode mixing surveillance and tracking in time-shared intervals"
     ],
     "answer": 0,
-    "explain": "MIMO radars transmit orthogonal waveforms from multiple Tx and receive at multiple Rx. This creates a virtual aperture for improved range/angle/velocity resolution and target separation."
+    "explain": "MIMO (Multiple-Input Multiple-Output) radar transmits orthogonal waveforms from multiple Tx and collects independent receives at multiple Rx. Virtual aperture synthesis creates resolution improvements: range/Doppler/angle separation exceeds traditional radar with equivalent physical size. MIMO enables waveform optimization, diversity processing (clutter rejection), and improved target classification. Trade-off: increased complexity and transmit power. Research areas: waveform design, receive signal processing, and parameter estimation. Emerging military and automotive (80 GHz) applications."
   },
   {
     "topic": "Phased Arrays & Modern Systems",
@@ -2475,7 +2475,7 @@ if (typeof switchTab === 'function') {
       "Radar equipped with knowledge base of known targets and countermeasures"
     ],
     "answer": 0,
-    "explain": "Cognitive radar closes the loop: sense environment → optimize waveforms/parameters → transmit → receive → learn. It adapts to jamming, clutter, and target dynamics for improved performance."
+    "explain": "Cognitive radar closes the perception-action loop: sense environment (clutter, jamming, target dynamics) → optimize waveforms and processing → transmit → receive → learn. Machine learning algorithms adapt waveform parameters (frequency, PRF, pulse shape) and signal processing (beamforming, CFAR) to maximize performance. Advantages: autonomous adaptation to jamming, clutter diversity, and target behavior. Challenges: real-time algorithm convergence, reliability under uncertainty. Emerging research; limited operational deployment to date."
   },
   {
     "topic": "Swerling & Fluctuation",
@@ -2487,7 +2487,7 @@ if (typeof switchTab === 'function') {
       "The angular spreading of radar beams in the upper atmosphere"
     ],
     "answer": 0,
-    "explain": "Swerling models (I–IV) characterize target RCS variability. Swerling I/III: slow fluctuation between hits. Swerling II/IV: decorrelated hits. Models guide detection threshold and probability calculations."
+    "explain": "Swerling models characterize target RCS fluctuation due to target aspect angle changes and complex multi-point scattering. Models I–IV describe statistics: Swerling I/III (slow fluctuation between antenna scans), Swerling II/IV (decorrelated pulse-to-pulse). Model 0 (steady RCS) is unrealistic; fluctuating targets have lower average RCS. Detection probability Pd calculations integrate over RCS probability distribution—fluctuating targets require higher SNR for equivalent Pd. Swerling models guide design of detection thresholds and integration strategies."
   },
   {
     "topic": "Swerling & Fluctuation",
@@ -2499,7 +2499,7 @@ if (typeof switchTab === 'function') {
       "RCS fluctuation improves detection by averaging multiple observations"
     ],
     "answer": 0,
-    "explain": "Fluctuating targets have lower average RCS than worst-case steady targets, requiring higher SNR for equivalent Pd. Pd calculations integrate over RCS probability distribution for each Swerling model."
+    "explain": "Fluctuating targets have lower average RCS than worst-case steady targets, requiring higher SNR to maintain constant detection probability Pd. For Swerling II (decorrelated hits), Pd decreases by ~2–3 dB compared to steady RCS at equivalent average power. Probability calculations involve the RCS probability density function (Rayleigh or exponential). Integration (coherent combining) or non-coherent summation improves detection; more pulses → higher effective Pd. Fluctuation awareness is essential for realistic system performance prediction."
   },
   {
     "topic": "Receiver & Noise",
@@ -2511,7 +2511,7 @@ if (typeof switchTab === 'function') {
       "The rate at which the receiver processes samples per second"
     ],
     "answer": 0,
-    "explain": "Noise Figure F = SNR_in / SNR_out. F=1 (0 dB) = ideal; F>1 means receiver degrades SNR. Low-noise amplifiers minimize F; typical receiver F = 3–6 dB."
+    "explain": "Noise figure F = SNR_in / SNR_out quantifies receiver degradation: F=1 (0 dB) = ideal; F>1 means receiver adds noise. Typical receiver F = 3–6 dB (2–4× noise multiplication). Low-noise amplifiers (LNA) minimize F; cryogenic cooling achieves F < 1 dB. From radar equation, F directly impacts SNR, affecting maximum range: worse F reduces detection range. Receiver noise figure often limits sensitivity, especially weak-signal detection (passive radar, radar astronomy). Careful LNA design and location are critical."
   },
   {
     "topic": "Receiver & Noise",
@@ -2523,7 +2523,7 @@ if (typeof switchTab === 'function') {
       "Range resolution depends only on transmit power, not receiver bandwidth"
     ],
     "answer": 0,
-    "explain": "Range resolution δR = c / (2·B_pulse). Broader transmit bandwidth → finer range resolution. Receiver bandwidth must match to capture pulse spectrum without excessive noise."
+    "explain": "Range resolution δR = c / (2·B_pulse) depends on transmitted pulse bandwidth B, not receiver bandwidth alone. Receiver bandwidth must be sufficient to capture the transmit signal spectrum without clipping (causing sidelobe growth). Narrow bandwidth reduces noise but filters transmitted bandwidth, degrading range resolution. Optimal receiver bandwidth matches transmit spectrum (matched filter). Trade-off: narrower BW for noise rejection vs. broader BW for clean pulse compression. Receiver design balances noise and pulse fidelity."
   },
   {
     "topic": "Stealth & RCS Reduction",
@@ -2535,7 +2535,7 @@ if (typeof switchTab === 'function') {
       "Increasing antenna size to scatter energy in preferred directions"
     ],
     "answer": 0,
-    "explain": "Stealth design: geometry avoids specular reflection (sharp edges → diffuse), RAM absorbs energy, cancellation coatings add destructive interference. Combined, these reduce RCS by orders of magnitude."
+    "explain": "Stealth design minimizes RCS through shaping (curved, angular surfaces avoiding specular reflection), radar-absorbing materials (RAM), and cancellation coatings (destructive interference). Angular geometry scatters energy diffusely rather than retrograde (back to radar). Carbon-loaded foam, ferrite tiles absorb energy. Cancellation coatings exploit destructive interference over specific frequencies. Combined techniques reduce RCS by 20–40 dB. Trade-offs: weight, cost, maintenance, and narrowband optimization. Frequency-dependent effectiveness: stealth optimized for X-band (10 GHz) may be vulnerable at L-band (1 GHz)."
   },
   {
     "topic": "Stealth & RCS Reduction",
@@ -2547,7 +2547,7 @@ if (typeof switchTab === 'function') {
       "Stealth technology works equally well across all frequency bands"
     ],
     "answer": 0,
-    "explain": "RCS depends on target size relative to wavelength. Stealth effectiveness is frequency-dependent: a design optimized for X-band may have high RCS at L-band. Multi-band threats require multi-frequency stealth."
+    "explain": "RCS depends strongly on target size relative to wavelength: longer wavelengths (lower frequencies) make small objects difficult to detect efficiently. Stealth design targeting X-band (λ ≈ 30 mm) is ineffective at L-band (λ ≈ 300 mm) where target size is smaller relative to wavelength. Designers must address multi-band threats: low-frequency air defense systems (L/S-band) threaten traditional stealth; modern designs emphasize broadband RCS reduction. Stealth radar cross-section is inherently frequency-dependent and multi-threat systems require comprehensive design."
   },
   {
     "topic": "Performance & Metrics",
@@ -2559,7 +2559,7 @@ if (typeof switchTab === 'function') {
       "The speed at which the radar can process and display detections"
     ],
     "answer": 0,
-    "explain": "Pd depends on SNR, receiver threshold, and detection criterion (Neyman-Pearson). Typical design: Pd ≥ 0.9 and Pfa = 10⁻⁶. Tradeoff: raising threshold increases Pfa but may reduce Pd."
+    "explain": "Probability of detection (Pd) is the likelihood a radar detects a target present in a given resolution cell, given SNR and false alarm probability constraints. Pd depends on detection threshold, SNR, waveform (coherent/non-coherent), and target fluctuation model (Swerling). Typical design requires Pd ≥ 0.9 for critical targets. Receiver operating characteristic (ROC) curve plots Pd vs. false alarm probability (Pfa); higher threshold increases Pfa, lower threshold increases Pd. SNR requirement for Pd=0.9 typically 10–12 dB."
   },
   {
     "topic": "Performance & Metrics",
@@ -2571,10 +2571,10 @@ if (typeof switchTab === 'function') {
       "Pfa and Pd are independent parameters that can be optimized separately"
     ],
     "answer": 0,
-    "explain": "Detection threshold sets the ROC (Receiver Operating Characteristic) curve. Threshold too high → low Pd, low Pfa. Threshold too low → high Pd, high Pfa. Optimal threshold depends on mission."
+    "explain": "Detection threshold sets Receiver Operating Characteristic (ROC): raising threshold reduces false alarms but also reduces Pd; lowering threshold increases Pd but increases false alarms. Optimal threshold depends on mission: air traffic control tolerates high Pfa (multiple tracking); weapons systems require very low Pfa (minimize false engagements). CFAR maintains constant Pfa despite clutter variability. No-signal detection probability (Pfa) follows noise statistics; threshold is typically 4–7 standard deviations above mean noise. Threshold selection involves Neyman-Pearson criteria optimizing cost of missed detections vs. false alarms."
   }
 ]
-</script>
+</script></script>
 <script>
 (function() {
   const dataEl = document.getElementById('quiz-data');

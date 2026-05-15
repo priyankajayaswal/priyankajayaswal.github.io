@@ -2366,272 +2366,453 @@ switchTab = function(tab) {
 <!-- ============================================================
      DROP-IN QUIZ MODULE — self-bootstrapping
      Place this entire block immediately before </body>.
-     Customize the JSON inside <script id="quiz-data"> for the domain.
-     Each question: { topic, q, options:[...4], answer:0..3, explain }
-     ============================================================ -->
-<script id="quiz-data" type="application/json">
+     Customize the JSON inside <script id="quiz-data" type="application/json">
 [
   {
     "topic": "MapReduce & Basics",
     "q": "What is the primary purpose of MapReduce?",
-    "options": ["To enable distributed processing on large clusters", "To provide SQL queries", "To manage cache consistency", "To implement consensus"],
+    "options": [
+      "To enable distributed processing on large clusters",
+      "To provide SQL queries",
+      "To manage cache consistency",
+      "To implement consensus"
+    ],
     "answer": 0,
-    "explain": "MapReduce enables simplified data processing across distributed clusters. Programmers write Map and Reduce functions; the framework handles distribution, fault tolerance, and data shuffling."
+    "explain": "MapReduce simplifies distributed data processing by abstracting parallel computation into Map and Reduce phases. Programmers write two functions: Map processes input in parallel across distributed nodes, producing key-value pairs, while Reduce aggregates values by key, enabling sequential processing of massive datasets without explicit concurrency management. This design enabled Google to process petabytes of data reliably, as documented in their seminal 2004 paper."
   },
   {
     "topic": "MapReduce & Basics",
     "q": "In MapReduce, what does the combiner function do?",
-    "options": ["Combines intermediate outputs from mappers before sending to reducers", "Combines all final results into one file", "Combines multiple clusters", "Combines Map and Reduce into one function"],
+    "options": [
+      "Combines intermediate outputs from mappers before sending to reducers",
+      "Combines all final results into one file",
+      "Combines multiple clusters",
+      "Combines Map and Reduce into one function"
+    ],
     "answer": 0,
-    "explain": "The combiner is an optional function that runs on mappers' outputs locally, reducing the amount of data sent over the network to reducers (local aggregation)."
+    "explain": "The combiner is an optional local optimization function run on each mapper's output before data is shuffled and sorted to reducers. It applies the same aggregation logic as the Reduce phase, significantly reducing network traffic and intermediate data size. Combiners are crucial for performance in systems like Hadoop, especially when aggregating large datasets across wide-area networks."
   },
   {
     "topic": "RPC & Threads",
     "q": "What is 'at-most-once' RPC semantics?",
-    "options": ["A request is executed zero or one time, never duplicated", "A request may be executed multiple times", "A request is always executed once", "A request may not be executed at all"],
+    "options": [
+      "A request is executed zero or one time, never duplicated",
+      "A request may be executed multiple times",
+      "A request is always executed once",
+      "A request may not be executed at all"
+    ],
     "answer": 0,
-    "explain": "At-most-once semantics guarantee no duplicate execution—each RPC executes 0 or 1 times. Achieved via RPC ID tracking and deduplication on the server."
+    "explain": "At-most-once guarantees each RPC executes either zero or one time, preventing duplicate execution even if the client retries. The system assigns unique RPC IDs and tracks them on the server; duplicate requests are detected and discarded without re-executing the handler. This is simpler than exactly-once but inadequate for non-idempotent operations—a critical distinction discussed in 6.824."
   },
   {
     "topic": "RPC & Threads",
     "q": "In Go, what is a goroutine?",
-    "options": ["A lightweight thread managed by the Go runtime", "A synchronous function call", "A type of mutex", "A garbage collection mechanism"],
+    "options": [
+      "A lightweight thread managed by the Go runtime",
+      "A synchronous function call",
+      "A type of mutex",
+      "A garbage collection mechanism"
+    ],
     "answer": 0,
-    "explain": "Goroutines are lightweight concurrency primitives in Go, managed by the runtime. Thousands can run concurrently, unlike OS threads which are expensive."
+    "explain": "Goroutines are lightweight concurrency primitives managed by the Go runtime, not OS threads. Thousands run concurrently on a handful of OS threads via multiplexing, with scheduling and garbage collection handled automatically. Unlike Java threads, goroutines have minimal memory overhead and enable highly scalable concurrent applications—a key reason distributed systems code favors Go."
   },
   {
     "topic": "GFS",
     "q": "What is the role of the Master in Google File System?",
-    "options": ["Manages namespace, replication, and chunk placement", "Stores all file data", "Executes MapReduce jobs", "Handles user login"],
+    "options": [
+      "Manages namespace, replication, and chunk placement",
+      "Stores all file data",
+      "Executes MapReduce jobs",
+      "Handles user login"
+    ],
     "answer": 0,
-    "explain": "The GFS Master maintains the namespace, manages the file system tree, and handles chunk creation, replication, and placement—but does NOT store data."
+    "explain": "The GFS Master maintains the file system namespace, manages the file system tree, and orchestrates chunk creation, deletion, and replication across chunkservers. It does not store file data; instead, it makes critical decisions about replica placement and coordinates garbage collection. Separating metadata management from data storage enabled GFS to scale to thousands of machines."
   },
   {
     "topic": "GFS",
     "q": "What does 'chunk lease' provide in GFS?",
-    "options": ["A time window during which one replica has write permission", "A rental period for using server storage", "A lease on accessing a file", "A contract between client and master"],
+    "options": [
+      "A time window during which one replica has write permission",
+      "A rental period for using server storage",
+      "A lease on accessing a file",
+      "A contract between client and master"
+    ],
     "answer": 0,
-    "explain": "A chunk lease grants a primary replica temporary exclusive write authority. Other replicas apply mutations after receiving them from the primary, ensuring consistency."
+    "explain": "A chunk lease grants one primary replica temporary exclusive write authority (default 60 seconds, extendable). During the lease period, all mutations flow through the primary and are then applied to secondaries in the same order. This mechanism ensures consistency without global synchronization, allowing GFS to tolerate replica failures and network partitions gracefully."
   },
   {
     "topic": "Replication",
     "q": "What is the key difference between Primary-Backup Replication and Chain Replication?",
-    "options": ["Chain writes through intermediate nodes; Primary-Backup writes to all in parallel", "Primary-Backup is faster", "Chain Replication uses consensus", "There is no difference"],
+    "options": [
+      "Chain writes through intermediate nodes; Primary-Backup writes to all in parallel",
+      "Primary-Backup is faster",
+      "Chain Replication uses consensus",
+      "There is no difference"
+    ],
     "answer": 0,
-    "explain": "In Chain Replication, writes flow sequentially: head → middle → tail. In Primary-Backup, the primary writes to all backups in parallel, then waits for acknowledgment."
+    "explain": "Primary-Backup Replication sends writes to all replicas in parallel, returning acknowledgment when the primary and backup confirm; if the primary fails, the backup takes over. Chain Replication sequences writes linearly: head → intermediate → tail. Chain replication can be more efficient for reads (served by tail) but more latency-sensitive for writes, as studied in CRAQ."
   },
   {
     "topic": "Replication",
     "q": "What does VMware FT (Fault Tolerance) use to maintain replica consistency?",
-    "options": ["Deterministic replay of log entries", "Shared memory", "Consensus protocol", "Eventual consistency"],
+    "options": [
+      "Deterministic replay of log entries",
+      "Shared memory",
+      "Consensus protocol",
+      "Eventual consistency"
+    ],
     "answer": 0,
-    "explain": "VMware FT records non-deterministic events (I/O, network, timers) in a log and replays them deterministically on the backup to keep it in sync with the primary."
+    "explain": "VMware FT records all non-deterministic events—I/O interrupts, network packets, timers—on the primary and replays them identically on the backup, creating a deterministic virtual machine checkpoint. This logging ensures the backup and primary remain in lock-step state despite differences in external timing. VMware FT achieves transparent fault tolerance by virtualizing hardware, eliminating application code changes."
   },
   {
     "topic": "Consensus",
     "q": "In Raft, what is a 'term'?",
-    "options": ["A logical clock that increases when a new leader is elected", "A time period like a semester", "The duration of a leader's tenure", "A collection of log entries"],
+    "options": [
+      "A logical clock that increases when a new leader is elected",
+      "A time period like a semester",
+      "The duration of a leader's tenure",
+      "A collection of log entries"
+    ],
     "answer": 0,
-    "explain": "A term is a logical clock in Raft. Servers track the current term; terms increase monotonically, providing a way to detect stale leaders and prevent split-brain."
+    "explain": "A term is Raft's logical clock: each server maintains a current term number that increases monotonically. Terms are used to detect stale leaders and servers; if a server receives an RPC with a higher term, it updates its term and steps down if it was a leader. This simple mechanism ensures no two leaders can coexist in the same term, a foundational safety property of Raft."
   },
   {
     "topic": "Consensus",
     "q": "What does Raft's RequestVote RPC accomplish?",
-    "options": ["Candidates ask followers for votes to become leader", "Followers vote on new policies", "The leader sends heartbeats", "The leader replicates log entries"],
+    "options": [
+      "Candidates ask followers for votes to become leader",
+      "Followers vote on new policies",
+      "The leader sends heartbeats",
+      "The leader replicates log entries"
+    ],
     "answer": 0,
-    "explain": "During leader election, candidates issue RequestVote RPCs. Followers grant a vote if the candidate's log is at least as up-to-date as theirs, ensuring the most recent data is elected."
+    "explain": "During leader election, a candidate sends RequestVote RPCs to all peers, requesting their votes for the current term. A follower grants a vote if the candidate's log is at least as up-to-date as the follower's (checked via term and index). Once a candidate receives a majority of votes, it becomes the leader. This RPC ensures only one leader can be elected per term."
   },
   {
     "topic": "Consensus",
     "q": "In Raft, what does 'commitment' mean?",
-    "options": ["An entry is replicated to a majority and safe to apply to state machine", "An entry is written to disk", "An entry is sent to the leader", "An entry is received by a follower"],
+    "options": [
+      "An entry is replicated to a majority and safe to apply to state machine",
+      "An entry is written to disk",
+      "An entry is sent to the leader",
+      "An entry is received by a follower"
+    ],
     "answer": 0,
-    "explain": "An entry is committed when it's been replicated to a majority of servers. Committed entries are guaranteed to persist and are safe to apply to the state machine."
+    "explain": "An entry is committed when it has been replicated to a majority of servers and the leader for the current term has confirmed it replicated. Committed entries are guaranteed to persist even if the leader crashes—future leaders will retain them. Only committed entries can be applied to the state machine, ensuring all servers execute the same sequence of commands and reach consensus."
   },
   {
     "topic": "Consensus",
     "q": "What is the purpose of Raft's log compaction snapshots?",
-    "options": ["To reduce log size by replacing old entries with a state machine snapshot", "To backup the leader", "To speed up message sending", "To prevent term numbers from growing"],
+    "options": [
+      "To reduce log size by replacing old entries with a state machine snapshot",
+      "To backup the leader",
+      "To speed up message sending",
+      "To prevent term numbers from growing"
+    ],
     "answer": 0,
-    "explain": "Snapshots allow servers to discard old log entries that have been applied to the state machine, reducing log size. New servers can install a snapshot quickly via InstallSnapshot."
+    "explain": "Snapshots allow servers to discard old log entries that have already been applied to the state machine, reducing disk and memory usage. A server periodically checkpoints its state machine and stores the committed index; new servers can be brought up-to-date by loading the snapshot plus remaining log entries. Snapshotting is critical for long-running systems where logs would grow unbounded."
   },
   {
     "topic": "Consensus",
     "q": "How does Zookeeper provide linearizability?",
-    "options": ["All writes go through a single leader in strict order", "All clients read from their local cache", "Reads are always stale", "No ordering is guaranteed"],
+    "options": [
+      "All writes go through a single leader in strict order",
+      "All clients read from their local cache",
+      "Reads are always stale",
+      "No ordering is guaranteed"
+    ],
     "answer": 0,
-    "explain": "Zookeeper ensures linearizability by routing all writes through a single leader in strict order. All replicas apply writes in the same order, guaranteeing strong consistency."
+    "explain": "Zookeeper routes all writes through a single leader in strict order, ensuring a total order of updates. All replicas apply writes via Zookeeper Atomic Broadcast (ZAB) protocol, a Paxos-like algorithm that guarantees consistency. Clients reading from any replica see writes linearized with real-time precedence, making Zookeeper suitable for distributed coordination and configuration management."
   },
   {
     "topic": "Consistency",
     "q": "What is the difference between causal consistency and linearizability?",
-    "options": ["Linearizability requires real-time ordering; causal only respects causality", "Causal is stronger", "They are identical", "Linearizability is for caches only"],
+    "options": [
+      "Linearizability requires real-time ordering; causal only respects causality",
+      "Causal is stronger",
+      "They are identical",
+      "Linearizability is for caches only"
+    ],
     "answer": 0,
-    "explain": "Linearizability requires all operations to have a total order respecting real-time precedence. Causal consistency only respects causal dependencies, allowing concurrent ops to be unordered."
+    "explain": "Linearizability requires all operations to have a total order respecting real-time causality—if operation A completed before B started, A must appear before B globally. Causal consistency is weaker: it only requires that causally dependent operations are ordered; concurrent operations may be reordered. Dynamo and Cassandra provide causal (via vector clocks), while Spanner and strict consensus enforce linearizability."
   },
   {
     "topic": "Consistency",
     "q": "In Chain Replication with Apportioned Queries (CRAQ), where can reads be served?",
-    "options": ["From any replica, with version tracking for consistency", "Only from the head", "Only from the tail", "Only after a quorum vote"],
+    "options": [
+      "From any replica, with version tracking for consistency",
+      "Only from the head",
+      "Only from the tail",
+      "Only after a quorum vote"
+    ],
     "answer": 0,
-    "explain": "CRAQ allows reads from any replica by tracking object versions. If a replica is not up-to-date, it queries the next replica in the chain for the latest version."
+    "explain": "CRAQ allows reads from any replica by tracking the version of each object and the highest committed version. If a replica is not fully up-to-date, it queries the next replica in the chain. This improves read scalability compared to pure chain replication (reads from tail only) while maintaining strong consistency by ensuring clients never see stale reads."
   },
   {
     "topic": "Transactions",
     "q": "What is the main problem with Two-Phase Commit?",
-    "options": ["It blocks if a participant crashes during the commit phase", "It's too fast", "It doesn't provide atomicity", "It only works on local networks"],
+    "options": [
+      "It blocks if a participant crashes during the commit phase",
+      "It's too fast",
+      "It doesn't provide atomicity",
+      "It only works on local networks"
+    ],
     "answer": 0,
-    "explain": "Two-Phase Commit is blocking: if the coordinator crashes after sending commit to some but not all participants, those are stuck in prepared state until the coordinator recovers."
+    "explain": "Two-Phase Commit is blocking: if the coordinator crashes after sending 'commit' to some participants but not others, those who received the commit are stuck holding locks. The protocol cannot unilaterally abort because other participants might have already committed. This is why consensus-based approaches (Paxos, Raft) are preferred in modern systems like Spanner for coordinating multi-replica transactions."
   },
   {
     "topic": "Transactions",
     "q": "What is Optimistic Concurrency Control (OCC)?",
-    "options": ["Read without locking; check for conflicts at commit time", "Lock all data immediately on read", "Avoid concurrent transactions", "Read data only when committed"],
+    "options": [
+      "Read without locking; check for conflicts at commit time",
+      "Lock all data immediately on read",
+      "Avoid concurrent transactions",
+      "Read data only when committed"
+    ],
     "answer": 0,
-    "explain": "OCC allows transactions to read without locks, buffering writes. At commit, it checks if any transaction's read set was modified by others. Restart on conflict."
+    "explain": "OCC allows transactions to read and buffer writes without acquiring locks. At commit time, the system checks if any other transaction modified objects in the current transaction's read set; if not, the write is atomic. If conflict is detected, the transaction aborts and retries. OCC trades abort overhead for higher concurrency and is used in systems like FaRM where most transactions don't conflict."
   },
   {
     "topic": "Distributed Databases",
     "q": "What does Google Spanner use TrueTime for?",
-    "options": ["To assign globally-consistent timestamps to transactions", "To synchronize clocks", "To detect failures", "To reduce latency"],
+    "options": [
+      "To assign globally-consistent timestamps to transactions",
+      "To synchronize clocks",
+      "To detect failures",
+      "To reduce latency"
+    ],
     "answer": 0,
-    "explain": "TrueTime provides a bounded-uncertainty interval for each timestamp (via GPS + atomic clocks). Spanner uses this to guarantee external consistency without consensus on every write."
+    "explain": "TrueTime provides a synchronized, bounded-uncertainty interval for each logical timestamp, using GPS and atomic clocks across data centers. Spanner uses TrueTime to guarantee external consistency: if transaction T1 commits before T2 starts (in real time), T1's writes are visible to T2 globally. This eliminates the consistency violations common in asynchronous replication, as detailed in the Spanner paper."
   },
   {
     "topic": "Distributed Databases",
     "q": "How does Spanner partition data?",
-    "options": ["By key ranges (sharding); each partition is a Paxos group", "Randomly across all servers", "Only geographically", "Using consistent hashing"],
+    "options": [
+      "By key ranges (sharding); each partition is a Paxos group",
+      "Randomly across all servers",
+      "Only geographically",
+      "Using consistent hashing"
+    ],
     "answer": 0,
-    "explain": "Spanner shards data by key ranges. Each shard (directory) is replicated across multiple data centers using Paxos, providing both consistency and availability."
+    "explain": "Spanner shards data by key ranges into directories; each directory is independently replicated across geographically dispersed data centers using Paxos. This enables parallel writes to different ranges and geographic load balancing. Within each directory, Paxos ensures strong consistency, while directory placement is managed to optimize latency and fault tolerance."
   },
   {
     "topic": "Caching",
     "q": "What is the main consistency challenge in memcache?",
-    "options": ["Database writes bypass cache, causing stale data in cache", "Cache writes block database", "Cache is too small", "Memcache doesn't replicate"],
+    "options": [
+      "Database writes bypass cache, causing stale data in cache",
+      "Cache writes block database",
+      "Cache is too small",
+      "Memcache doesn't replicate"
+    ],
     "answer": 0,
-    "explain": "In typical web applications, database writes bypass the cache layer (write-through is rare). This causes cache inconsistency: the cache may serve stale data after a database update."
+    "explain": "In typical web applications, database writes bypass the cache layer (write-through is rare), causing the cache to become stale. When the database updates but cache is not invalidated, clients read old values. Facebook's memcache architecture addresses this with invalidation messages and `lease tokens` to prevent replaying old data, reducing but not eliminating inconsistency windows."
   },
   {
     "topic": "Caching",
     "q": "In Facebook's memcache architecture, what happens on a cache miss?",
-    "options": ["Request goes to database; result is cached", "Request is dropped", "The server waits for cache to populate", "A background worker updates cache"],
+    "options": [
+      "Request goes to database; result is cached",
+      "Request is dropped",
+      "The server waits for cache to populate",
+      "A background worker updates cache"
+    ],
     "answer": 0,
-    "explain": "On miss, the application queries the database and updates memcache with the result. Thundering herd (many concurrent misses) is mitigated via probabilistic early expiration."
+    "explain": "On miss, the application queries the database and updates memcache with the result. If many requests arrive during the miss, they may all query the database (thundering herd problem). Facebook uses `lease tokens`—memcache gives the first miss requester a unique token to be the sole updater, and other requesters wait briefly for the cached value, reducing database load."
   },
   {
     "topic": "Advanced",
     "q": "What is the difference between COPS (Causal Consistency) and Spanner's model?",
-    "options": ["COPS guarantees causality only; Spanner guarantees linearizability across shards", "COPS is faster", "They're the same", "Spanner only works on one server"],
+    "options": [
+      "COPS guarantees causality only; Spanner guarantees linearizability across shards",
+      "COPS is faster",
+      "They're the same",
+      "Spanner only works on one server"
+    ],
     "answer": 0,
-    "explain": "COPS ensures causal consistency: reads reflect all causally-prior writes. Spanner ensures external consistency (linearizability): respects real-time order of all txns globally."
+    "explain": "COPS ensures causal consistency: reads reflect all causally-prior writes without requiring a total order. Operations with no causal dependency can be reordered. Spanner enforces external consistency (linearizability), requiring a global total order via TrueTime and Paxos. COPS is more available but allows more reordering; Spanner is stronger but requires synchronized clocks across data centers."
   },
   {
     "topic": "Advanced",
     "q": "What is a CRDT (Conflict-free Replicated Data Type)?",
-    "options": ["A data structure that merges replicas without coordination", "A consensus algorithm", "A type of lock", "A cache invalidation technique"],
+    "options": [
+      "A data structure that merges replicas without coordination",
+      "A consensus algorithm",
+      "A type of lock",
+      "A cache invalidation technique"
+    ],
     "answer": 0,
-    "explain": "A CRDT is designed so that concurrent updates can be applied in any order and still converge to the same state, enabling eventually-consistent, coordination-free systems."
+    "explain": "A CRDT is a data structure designed so concurrent updates applied in any order converge to the same state without coordination. Examples include last-writer-wins registers, version vectors, and grow-only sets. CRDTs enable eventual consistency with offline-first systems and edge computing, where strong consistency is impossible. They trade flexibility (updates always succeed) for weaker guarantees than linearizability."
   },
   {
     "topic": "Advanced",
     "q": "What is Bitcoin's main distributed systems challenge?",
-    "options": ["Achieving consensus among untrusted, decentralized nodes", "Scaling to many users", "Implementing a database", "Handling network partitions"],
+    "options": [
+      "Achieving consensus among untrusted, decentralized nodes",
+      "Scaling to many users",
+      "Implementing a database",
+      "Handling network partitions"
+    ],
     "answer": 0,
-    "explain": "Bitcoin solves Byzantine fault tolerance without a trusted leader using proof-of-work consensus, where miners compete to extend the longest chain."
+    "explain": "Bitcoin solves Byzantine fault tolerance without a trusted central authority or synchronized clocks using Proof-of-Work consensus. Miners compete to solve a computational puzzle; the winner's block is appended to the chain and replicated. This economic incentive mechanism enables consensus among thousands of untrusted nodes, a breakthrough compared to traditional consensus algorithms requiring known peer sets."
   },
   {
     "topic": "Storage",
     "q": "What does FaRM use for fast transactions across data centers?",
-    "options": ["RDMA (Remote Direct Memory Access) for low-latency read/write", "Message passing", "HTTP", "Disk I/O"],
+    "options": [
+      "RDMA (Remote Direct Memory Access) for low-latency read/write",
+      "Message passing",
+      "HTTP",
+      "Disk I/O"
+    ],
     "answer": 0,
-    "explain": "FaRM uses RDMA to bypass the OS and enable microsecond-latency remote memory access. Combined with optimistic concurrency control, this achieves fast distributed transactions."
+    "explain": "FaRM uses RDMA (Remote Direct Memory Access) to bypass the OS and kernel stack, enabling microsecond-latency remote memory access across data centers. Combined with optimistic concurrency control and a distributed transaction protocol, FaRM achieves ACID semantics with significantly lower latency than traditional databases. RDMA eliminates the CPU overhead of network stacks, a key innovation in modern distributed systems."
   },
   {
     "topic": "Sharding",
     "q": "What is the primary tradeoff in sharding a database?",
-    "options": ["Improves write scalability but complicates cross-shard queries", "Always improves query speed", "Has no downsides", "Only works for read-only workloads"],
+    "options": [
+      "Improves write scalability but complicates cross-shard queries",
+      "Always improves query speed",
+      "Has no downsides",
+      "Only works for read-only workloads"
+    ],
     "answer": 0,
-    "explain": "Sharding distributes load across partitions, enabling parallel writes. However, queries spanning multiple shards must coordinate results, adding complexity and latency."
+    "explain": "Sharding distributes data across partitions by key, enabling parallel writes and scale-out. However, queries spanning multiple shards must coordinate across partitions (cross-shard joins become expensive) and transactions involving multiple shards require distributed consensus. Sharding trades consistency and query flexibility for write scalability—a central design decision in systems like Cassandra and Spanner."
   },
   {
     "topic": "Failure Modes",
     "q": "What is a 'fail-stop' failure model?",
-    "options": ["A server stops abruptly; others can detect it has failed", "A server continues running but is corrupted", "A network partition", "A slow server"],
+    "options": [
+      "A server stops abruptly; others can detect it has failed",
+      "A server continues running but is corrupted",
+      "A network partition",
+      "A slow server"
+    ],
     "answer": 0,
-    "explain": "Fail-stop assumes servers either work correctly or stop completely, and others can reliably detect when a server has crashed (via heartbeats, timeouts). No Byzantine failures."
+    "explain": "Fail-stop assumes servers either work correctly or crash completely; other servers can reliably detect when a failed server has stopped responding. This is the simplest failure model, suitable for systems with reliable failure detection (e.g., via timeouts and heartbeats). More complex models include Byzantine failures (where failed nodes send incorrect data) and partial failures, both present in real wide-area systems."
   },
   {
     "topic": "Failure Modes",
     "q": "What is Byzantine Fault Tolerance?",
-    "options": ["Tolerance for arbitrary/malicious faults including corrupted messages", "Tolerance for only crash failures", "Tolerance for network delays", "A consensus algorithm"],
+    "options": [
+      "Tolerance for arbitrary/malicious faults including corrupted messages",
+      "Tolerance for only crash failures",
+      "Tolerance for network delays",
+      "A consensus algorithm"
+    ],
     "answer": 0,
-    "explain": "Byzantine fault tolerance handles adversarial failures: servers may crash, return incorrect data, or send conflicting messages. Typically requires 3f+1 replicas to tolerate f faults."
+    "explain": "Byzantine fault tolerance handles adversarial failures: servers may crash, return incorrect data, or send conflicting messages to different peers. BFT protocols like PBFT guarantee consensus even if one-third of nodes are faulty. Bitcoin uses Proof-of-Work as an alternative BFT approach. BFT is essential for high-security systems but requires more messages and bandwidth than crash-fault-tolerant protocols."
   },
   {
     "topic": "MapReduce & Basics",
     "q": "How does MapReduce handle fault tolerance?",
-    "options": ["Re-executes failed map/reduce tasks on other nodes", "Requires all nodes to be reliable", "Uses checkpointing on every operation", "Doesn't handle faults"],
+    "options": [
+      "Re-executes failed map/reduce tasks on other nodes",
+      "Requires all nodes to be reliable",
+      "Uses checkpointing on every operation",
+      "Doesn't handle faults"
+    ],
     "answer": 0,
-    "explain": "If a map or reduce task fails, MapReduce re-executes it on a different node. This works because tasks are deterministic and intermediate results are stored durably."
+    "explain": "If a map or reduce task fails, MapReduce re-executes it on a different node. This works because tasks are deterministic: the same input always produces the same output. The master tracks task progress and re-runs failures transparently to the application. For the same reason, MapReduce jobs must avoid non-deterministic operations (like generating random numbers); all randomness must be embedded in input data."
   },
   {
     "topic": "Consensus",
     "q": "What is the 'split-brain' problem in systems without proper consensus?",
-    "options": ["Two partitions each elect a leader, causing conflicting state", "A server's brain is divided between two functions", "Two networks communicating", "A read-write conflict"],
+    "options": [
+      "Two partitions each elect a leader, causing conflicting state",
+      "A server's brain is divided between two functions",
+      "Two networks communicating",
+      "A read-write conflict"
+    ],
     "answer": 0,
-    "explain": "During network partition, each partition may elect its own leader, leading to two independent systems making conflicting decisions. Consensus algorithms prevent this by requiring majority quorum."
+    "explain": "During a network partition, each partition may elect its own leader independently, resulting in two systems each thinking it is the sole authority. This causes conflicting decisions, data loss, and inconsistency. Consensus protocols like Raft prevent this by requiring a majority for leader election; a partition without a majority cannot elect a leader, avoiding split-brain at the cost of reduced availability."
   },
   {
     "topic": "Replication",
     "q": "What does 'quorum' mean in distributed systems?",
-    "options": ["A majority of replicas (>N/2 for N replicas)", "All replicas", "Any single replica", "A minority of replicas"],
+    "options": [
+      "A majority of replicas (>N/2 for N replicas)",
+      "All replicas",
+      "Any single replica",
+      "A minority of replicas"
+    ],
     "answer": 0,
-    "explain": "A quorum is a set of replicas larger than half the total. Reading from or writing to a quorum ensures that any two quorums intersect, enabling strong consistency."
+    "explain": "A quorum is a set of replicas larger than half the total—for N replicas, a quorum has size > N/2. Reading from or writing to a quorum ensures that any two quorums overlap in at least one replica, preventing lost updates or stale reads. Quorum-based replication (used in Dynamo and Cassandra) enables weaker consistency than primary-backup but better availability in high-latency networks."
   },
   {
     "topic": "Consistency",
     "q": "What is 'eventual consistency'?",
-    "options": ["All replicas eventually converge to the same state after writes stop", "Immediate consistency across all replicas", "Data is never consistent", "Only one replica is consistent"],
+    "options": [
+      "All replicas eventually converge to the same state after writes stop",
+      "Immediate consistency across all replicas",
+      "Data is never consistent",
+      "Only one replica is consistent"
+    ],
     "answer": 0,
-    "explain": "Eventual consistency allows temporary divergence. After all writes stop, all replicas will converge to the same state. Used in many large-scale systems for availability."
+    "explain": "Eventual consistency allows temporary divergence between replicas. After all writes stop, all replicas will converge to the same state through anti-entropy repair. Used in systems like Dynamo and Cassandra, eventual consistency enables high availability and partition tolerance (CAP theorem) by sacrificing strong consistency. Applications must tolerate temporary stale reads and use mechanisms like version vectors to resolve conflicts."
   },
   {
     "topic": "RPC & Threads",
     "q": "What is a 'deadlock' in concurrent programming?",
-    "options": ["Circular wait where threads block each other, never progressing", "A thread that terminates", "A thread that runs too fast", "A network timeout"],
+    "options": [
+      "Circular wait where threads block each other, never progressing",
+      "A thread that terminates",
+      "A thread that runs too fast",
+      "A network timeout"
+    ],
     "answer": 0,
-    "explain": "Deadlock occurs when threads or processes wait for locks held by each other in a cycle. Prevention requires careful ordering of lock acquisition or using lock-free data structures."
+    "explain": "Deadlock occurs when threads or processes wait for locks held by each other in a cycle (A waits for B, B waits for A). Prevention requires careful ordering of lock acquisition—always acquire locks in a consistent order—or using lock-free data structures. Distributed deadlocks are even harder to detect; systems like Spanner use timeouts and Paxos to recover from deadlock."
   },
   {
     "topic": "GFS",
     "q": "How does GFS achieve high availability for reads?",
-    "options": ["Replicates each chunk across multiple machines; reads can come from any", "Stores data on one machine with backup", "Uses erasure coding only", "Caches everything in memory"],
+    "options": [
+      "Replicates each chunk across multiple machines; reads can come from any",
+      "Stores data on one machine with backup",
+      "Uses erasure coding only",
+      "Caches everything in memory"
+    ],
     "answer": 0,
-    "explain": "GFS replicates each chunk (typically 3 copies) across different machines. Clients can read from any replica, and the system remains available even if one or two replicas fail."
+    "explain": "GFS replicates each chunk to multiple machines (typically three) across different failure domains. Clients can read from any replica, distributing load and improving availability. If a replica is unavailable, clients read from others. The master tracks replica locations and instructs clients which replicas are available, enabling both high availability and read scalability."
   },
   {
     "topic": "Transactions",
     "q": "What is 'snapshot isolation' in databases?",
-    "options": ["A transaction reads from a consistent snapshot; writes conflict if key was modified", "All transactions see all data", "Old data is never visible", "No snapshot is used"],
+    "options": [
+      "A transaction reads from a consistent snapshot; writes conflict if key was modified",
+      "All transactions see all data",
+      "Old data is never visible",
+      "No snapshot is used"
+    ],
     "answer": 0,
-    "explain": "Snapshot isolation assigns each transaction a consistent snapshot of the database at start time. Conflicts occur when two transactions write the same key, maintaining serializability for most cases."
+    "explain": "Snapshot isolation assigns each transaction a consistent snapshot of the database at its start time. The transaction reads from this snapshot while buffering writes. At commit, the system checks if any other transaction modified objects in the read set; if not, the write is committed atomically. Snapshot isolation provides stronger guarantees than read-committed but weaker than serializability, used in PostgreSQL and Oracle."
   },
   {
     "topic": "Advanced",
     "q": "What is the CAP theorem's key insight?",
-    "options": ["A system cannot simultaneously guarantee Consistency, Availability, and Partition tolerance", "All three can always be achieved", "Partition tolerance is never needed", "The theorem is outdated"],
+    "options": [
+      "A system cannot simultaneously guarantee Consistency, Availability, and Partition tolerance",
+      "All three can always be achieved",
+      "Partition tolerance is never needed",
+      "The theorem is outdated"
+    ],
     "answer": 0,
-    "explain": "CAP states that during a network partition, you must choose between Consistency (all nodes see same data) and Availability (nodes respond). You cannot have both and partition tolerance."
+    "explain": "CAP states that during a network partition, a distributed system must choose between Consistency (all nodes see the same data) and Availability (all requests receive responses). You cannot have both—either you halt to maintain consistency or you diverge to stay available. The PACELC theorem extends this: even in absence of partitions (normal case), you trade Latency for Consistency. Understanding CAP guides system design choices."
   },
   {
     "topic": "Distributed Databases",
     "q": "How does Spanner use Paxos?",
-    "options": ["Each partition (shard) runs Paxos independently for replication", "Only the master runs Paxos", "Paxos is used for consensus on every read", "Spanner doesn't use Paxos"],
+    "options": [
+      "Each partition (shard) runs Paxos independently for replication",
+      "Only the master runs Paxos",
+      "Paxos is used for consensus on every read",
+      "Spanner doesn't use Paxos"
+    ],
     "answer": 0,
-    "explain": "Spanner replicates each partition (directory) using Paxos across multiple data centers. This ensures that each partition is fault-tolerant and strongly consistent."
+    "explain": "Spanner replicates each directory (partition) across multiple data centers using Paxos, ensuring that every write achieves consensus before becoming durable. Paxos guarantees that even if a data center fails, replicas in other centers continue serving reads. Multiple Paxos instances (one per directory) enable parallel consensus, allowing Spanner to scale to thousands of partitions worldwide."
   }
 ]
-
 </script>
 <script>
 (function() {

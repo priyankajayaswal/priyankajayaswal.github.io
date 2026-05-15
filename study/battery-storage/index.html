@@ -2158,46 +2158,486 @@ if (typeof switchTab === 'function') {
      ============================================================ -->
 <script id="quiz-data" type="application/json">
 [
-  {"topic":"Electrochemistry Fundamentals","q":"In electrochemistry, what does the Nernst equation describe?","options":["The relationship between voltage and ion concentration","The rate of electron transfer","The heat generated in a cell","The resistance of the electrolyte"],"answer":0,"explain":"The Nernst equation: E = E° − (RT/nF)ln(Q) describes how the cell potential depends on temperature and the concentration of reactants."},
-  {"topic":"Electrochemistry Fundamentals","q":"What is the standard electrode potential (E°) for the reduction of Cu²⁺ to Cu?","options":["-0.76 V","+0.34 V","+0.80 V","-0.34 V"],"answer":1,"explain":"The standard reduction potential for Cu²⁺/Cu is +0.34 V vs SHE, one of the key values in electrochemistry."},
-  {"topic":"Electrochemistry Fundamentals","q":"Which describes an oxidation reaction?","options":["Loss of electrons","Gain of electrons","Combination with oxygen","Formation of ions"],"answer":0,"explain":"Oxidation is defined as the loss of electrons. The mnemonic is 'LEO' (Loss of Electrons = Oxidation)."},
-  {"topic":"Electrochemistry Fundamentals","q":"What does Faraday's Law determine?","options":["The voltage of a cell","The amount of substance produced by electrolysis from the charge passed","The temperature rise in a battery","The color of the electrolyte"],"answer":1,"explain":"Faraday's Law: amount (mol) = Q/(nF), where Q is charge (C), n is electrons, F is Faraday's constant (96,485 C/mol)."},
-  {"topic":"Li-Ion: NMC & LFP","q":"What does NMC stand for in battery cathodes?","options":["Nickel Manganese Cobalt oxide","Nickel Metal Carbon","Nickel Magnesium Ceramic","Nitrogen Manganese Cobalt"],"answer":0,"explain":"NMC (LiNi₀.₃Mn₀.₃Co₀.₃O₂) is a layered oxide cathode material offering good energy density, power, and cycle life."},
-  {"topic":"Li-Ion: NMC & LFP","q":"Which cathode material is known for superior thermal stability and safety?","options":["LiCoO₂","LiFePO₄ (LFP)","NMC","LiMn₂O₄"],"answer":1,"explain":"LFP (LiFePO₄) has an olivine structure with stronger Fe-O bonds, providing excellent thermal stability and resistance to thermal runaway."},
-  {"topic":"Li-Ion: NMC & LFP","q":"What is a key trade-off between NMC and LFP cathodes?","options":["NMC has higher energy density but lower thermal stability","LFP has better cycle life but lower cost","NMC is safer but lower voltage","LFP has higher power density"],"answer":0,"explain":"NMC offers higher energy density (~200 Wh/kg) and operates at higher voltages, but LFP is inherently safer and more thermally stable."},
-  {"topic":"Li-Ion: NMC & LFP","q":"What is the typical discharge voltage plateau for LFP cells?","options":["3.2 V","3.6 V","3.8 V","4.2 V"],"answer":0,"explain":"LFP cells have a characteristic flat discharge profile around 3.2 V (nominal 3.3 V), which is lower than NMC but more stable."},
-  {"topic":"Li-Ion: Anode & Electrolyte","q":"What is the standard anode material in commercial Li-ion batteries?","options":["Lithium metal foil","Graphite","Silicon carbide","Copper oxide"],"answer":1,"explain":"Graphite is the standard anode in Li-ion cells. It intercalates Li⁺ at ~0.05 V vs Li/Li⁺, providing stable voltage and cycling performance."},
-  {"topic":"Li-Ion: Anode & Electrolyte","q":"Why are organic carbonate solvents used in Li-ion electrolyte?","options":["They are cheaper","They provide good ionic conductivity, high electrochemical stability, and allow SEI formation","They reduce weight","They improve safety"],"answer":1,"explain":"Organic carbonates (EC, DEC, DMC) dissolve lithium salts well, offer wide electrochemical windows, and enable protective SEI film on graphite."},
-  {"topic":"Li-Ion: Anode & Electrolyte","q":"What is LiPF₆ in battery electrolyte?","options":["A cathode material","The salt dissolved in organic solvents to provide Li⁺ ions and conductivity","A separator material","A thermal additive"],"answer":1,"explain":"LiPF₆ (lithium hexafluorophosphate) is the standard salt in Li-ion electrolytes. It dissociates to provide Li⁺ ions for transport and conducts current."},
-  {"topic":"Battery Management Systems (BMS)","q":"What is the primary function of a Battery Management System?","options":["Monitor and protect the battery pack from unsafe conditions","Increase the battery capacity","Reduce the cost of materials","Prevent chemical reactions"],"answer":0,"explain":"BMS monitors voltage, current, and temperature of individual cells, manages cell balancing, and protects against overcharge, overdischarge, and thermal runaway."},
-  {"topic":"Battery Management Systems (BMS)","q":"What is cell balancing in a BMS?","options":["Matching cells from the same manufacturer","Equalizing the state of charge across cells in a pack","Rotating cells during operation","Reducing the number of cells"],"answer":1,"explain":"Cell balancing ensures all cells reach similar charge levels, extending pack life and preventing some cells from overcharging or over-discharging."},
-  {"topic":"Battery Management Systems (BMS)","q":"What is the difference between passive and active cell balancing?","options":["Passive is manual, active is automatic","Passive dissipates excess energy as heat, active transfers energy between cells","Active is cheaper than passive","Passive requires more power"],"answer":1,"explain":"Passive balancing uses resistors to dissipate energy from high cells. Active balancing uses DC-DC converters to transfer energy from high to low cells, more efficient."},
-  {"topic":"Battery Management Systems (BMS)","q":"How is State of Charge (SOC) estimated?","options":["Only by measuring voltage","Using coulomb counting and voltage/temperature models","By physical weight change","From the age of the battery"],"answer":1,"explain":"SOC is estimated by integrating current (coulomb counting), combined with voltage and temperature models to correct for measurement drift."},
-  {"topic":"Thermal Management","q":"What causes heat generation in a lithium-ion cell?","options":["Entropy of mixing only","Joule heating (I²R) and entropic losses","Chemical decomposition","Light absorption"],"answer":1,"explain":"Heat is generated from resistive losses (I²R) and entropy changes during lithiation/delithiation. High-rate operation increases Joule heating."},
-  {"topic":"Thermal Management","q":"At what temperature does thermal runaway typically begin in Li-ion cells?","options":["Below 50°C","Around 80–150°C depending on chemistry","Above 300°C","Below 0°C"],"answer":1,"explain":"Thermal runaway in Li-ion cells typically initiates around 80–150°C when the solid-electrolyte interphase breaks down, triggering exothermic reactions."},
-  {"topic":"Thermal Management","q":"Which cooling method is most effective for high-power battery packs?","options":["Passive air cooling","Liquid cooling","Passive thermal interfaces","Insulation"],"answer":1,"explain":"Liquid cooling provides superior heat transfer (high specific heat and thermal conductivity) for high-power applications like EVs."},
-  {"topic":"Thermal Management","q":"What is the optimal operating temperature range for Li-ion batteries?","options":["−40 to +60°C","15°C to 35°C","50°C to 80°C","Below 0°C"],"answer":1,"explain":"Li-ion batteries perform best at 15–35°C. Outside this range, cycle life degrades rapidly: cold reduces power, heat accelerates aging."},
-  {"topic":"Grid Storage","q":"What is a key advantage of using Li-ion batteries for grid-scale energy storage?","options":["Infinite cycle life","Fast response time and good round-trip efficiency (90%+)","Zero environmental impact","No maintenance required"],"answer":1,"explain":"Li-ion batteries provide millisecond-scale response to demand changes and 90–95% round-trip efficiency, making them ideal for grid services."},
-  {"topic":"Grid Storage","q":"What does BESS stand for?","options":["Battery Energy Storage System","Battery External Storage Site","Business Energy Service System","Bulk Electric Storage Spot"],"answer":0,"explain":"BESS (Battery Energy Storage System) is the standard term for battery-based grid storage systems that provide capacity, energy, and services."},
-  {"topic":"Grid Storage","q":"Which battery technology is best for 4+ hour duration grid storage?","options":["Supercapacitors","Flow batteries or long-duration Li-ion with energy arbitrage","Superconductors","Lead-acid"],"answer":1,"explain":"Flow batteries (vanadium, zinc-bromine) and long-duration Li-ion systems are cost-effective for multi-hour grid storage and energy arbitrage."},
-  {"topic":"Grid Storage","q":"What service can a battery energy storage system provide to the grid?","options":["Frequency regulation only","Peak shaving, frequency regulation, blackstart capability, energy arbitrage","Voltage support only","No specific services"],"answer":1,"explain":"BESS provides multiple ancillary services: frequency regulation, peak shaving, energy time-shifting, voltage support, and blackstart for grid stability."},
-  {"topic":"Safety","q":"What is the most common cause of Li-ion battery fires?","options":["Overcharging leading to internal short circuit or thermal runaway","Low temperature operation","UV exposure","Physical vibration"],"answer":0,"explain":"Overcharging causes separator breakdown, internal short circuits, and thermal runaway. Thermal management and BMS protection are critical."},
-  {"topic":"Safety","q":"What does a current interrupt device (CID) in a battery do?","options":["Increases the discharge current","Disconnects the battery circuit if internal pressure exceeds a threshold","Balances the cells","Reduces self-discharge"],"answer":1,"explain":"A CID is a safety mechanism that opens the internal circuit if abnormal pressure builds up, typically due to internal short circuit or venting."},
-  {"topic":"Safety","q":"Why is SEI (Solid Electrolyte Interphase) important for battery safety?","options":["It increases conductivity","It insulates the anode and prevents further electrolyte decomposition","It speeds up charging","It has no safety role"],"answer":1,"explain":"The SEI is a protective layer formed on the anode during initial cycling that prevents electrolyte decomposition and improves cycle life and safety."},
-  {"topic":"Battery Degradation","q":"What is calendar aging in batteries?","options":["Capacity loss due to cycling","Capacity loss over time even without use","Increase in voltage over time","Physical corrosion of terminals"],"answer":1,"explain":"Calendar aging occurs through parasitic reactions (electrolyte oxidation, SEI growth) even when the battery is idle, accelerated by temperature."},
-  {"topic":"Battery Degradation","q":"What is the primary cause of cycle fade in Li-ion batteries?","options":["Loss of lithium ions to side reactions","Increase in cathode structural disorder","All of the above","Electrode material dissolution and electrolyte decomposition"],"answer":2,"explain":"Cycle fade is caused by lithium loss (plating, SEI growth), structural changes in cathode/anode, electrolyte decomposition, and transition metal dissolution."},
-  {"topic":"Battery Degradation","q":"How does depth of discharge (DoD) affect cycle life?","options":["DoD has no effect","Shallower DoD extends cycle life; full DoD cycling reduces it","Deeper DoD always improves life","DoD only affects voltage"],"answer":1,"explain":"Operating at shallow depth of discharge (e.g., 20% DoD) can extend cycle life to 10,000+ cycles; 100% DoD reduces life to 1,000–2,000 cycles."},
-  {"topic":"Battery Degradation","q":"What is State of Health (SOH)?","options":["Voltage at any instant","The remaining capacity as a percentage of the original rated capacity","The operating temperature","The age in years"],"answer":1,"explain":"SOH quantifies battery degradation: SOH = (current max capacity) / (original max capacity) × 100%. Used to predict end-of-life."},
-  {"topic":"Solid-State Batteries","q":"What is the main advantage of solid-state batteries over conventional Li-ion?","options":["Lower cost","Higher energy density and improved safety due to solid electrolyte","Faster charging only","Better thermal management only"],"answer":1,"explain":"Solid electrolytes eliminate flammability, enable higher voltage cathodes, and allow lithium metal anodes, targeting 500+ Wh/kg and improved safety."},
-  {"topic":"Solid-State Batteries","q":"What is a key challenge in solid-state battery commercialization?","options":["Electrolyte toxicity","Interfacial resistance and dendrite formation","Lack of raw materials","Patent restrictions"],"answer":1,"explain":"Solid-state batteries face challenges with ionic transport at interfaces, dendrite penetration through solid electrolytes, and manufacturing scalability."},
-  {"topic":"Solid-State Batteries","q":"Which electrolyte type is most commonly pursued for solid-state batteries?","options":["Liquid organic","Polymer (PVDF-HFP)","Ceramic oxide or sulfide","Aqueous"],"answer":2,"explain":"Ceramic (e.g., LLZO, Li₃PS₄) and sulfide solid electrolytes are leading candidates due to high ionic conductivity and electrochemical stability."},
-  {"topic":"Flow Batteries","q":"What is the key operational principle of flow batteries?","options":["Electrochemical reactions in fixed electrodes like conventional batteries","Active materials dissolved in liquid electrolyte stored in external tanks","Mechanical pumping of solid particles","Magnetic confinement"],"answer":1,"explain":"Flow batteries store energy in liquid electrolytes in external tanks. Energy capacity scales with tank size; power with stack area—independent scaling."},
-  {"topic":"Flow Batteries","q":"What is a major advantage of vanadium redox flow batteries (VRFB)?","options":["Lower cost than Li-ion","Single electrolyte with all four redox states in vanadium enables full rebalancing","Faster response than Li-ion","No safety concerns"],"answer":1,"explain":"VRFB uses one element (vanadium) in all four redox states, allowing full rebalancing and recovery from deep discharge or imbalance."},
-  {"topic":"Flow Batteries","q":"What is the round-trip efficiency typical for flow batteries?","options":["95%+","50–70%","70–85%","20–40%"],"answer":2,"explain":"Vanadium redox and other flow batteries typically achieve 70–85% round-trip efficiency due to electrode overpotentials and shunt currents."},
-  {"topic":"Sodium-Ion Batteries","q":"Why are sodium-ion batteries attractive as an alternative to Li-ion?","options":["Sodium is more abundant and cheaper than lithium","They have higher energy density","They are inherently safer","Both A and C"],"answer":0,"explain":"Sodium is ~1000× more abundant than lithium, significantly cheaper, and geographically distributed. This reduces supply chain risk and cost."},
-  {"topic":"Sodium-Ion Batteries","q":"What is a typical energy density of sodium-ion batteries compared to Li-ion?","options":["2× higher","Similar to Li-ion (~200 Wh/kg)","30–50% lower (~150 Wh/kg)","Much lower, <50 Wh/kg"],"answer":2,"explain":"Sodium-ion batteries typically deliver 150–160 Wh/kg, vs 200–250 Wh/kg for Li-ion. Lower density due to heavier Na⁺ ions."},
-  {"topic":"Supercapacitors","q":"How does an Electric Double-Layer Capacitor (EDLC) store charge?","options":["Chemical reactions","Electrostatic accumulation at the electrode-electrolyte interface","Magnetic fields","Phase transitions"],"answer":1,"explain":"EDLC stores energy through Helmholtz double-layer capacitance: ions accumulate at the electrode surface without Faradaic reactions, enabling fast charge/discharge."},
-  {"topic":"Supercapacitors","q":"What is a key difference between supercapacitors and batteries?","options":["Supercapacitors have higher energy density","Batteries use Faradaic reactions; supercapacitors use electrostatic storage","Supercapacitors last forever","No difference"],"answer":1,"explain":"Batteries store energy chemically (Faradaic); supercapacitors store energy electrostatically. Result: supercaps are fast & long-lived but lower energy density."}
+  {
+    "topic": "Electrochemistry Fundamentals",
+    "q": "In electrochemistry, what does the Nernst equation describe?",
+    "options": [
+      "The relationship between voltage and ion concentration",
+      "The rate of electron transfer",
+      "The heat generated in a cell",
+      "The resistance of the electrolyte"
+    ],
+    "answer": 0,
+    "explain": "The Nernst equation E = E° − (RT/nF)ln(Q) quantifies how electrode potential depends on temperature and ion concentration. This fundamental relationship shows that voltage changes logarithmically with the activity quotient Q, enabling prediction of cell behavior at different conditions. The equation demonstrates why concentration cells can generate voltage even with identical electrodes. This principle underpins electrochemistry labs and industrial processes like the Tesla Megapack's state estimation algorithms, which use voltage-concentration models."
+  },
+  {
+    "topic": "Electrochemistry Fundamentals",
+    "q": "What is the standard electrode potential (E°) for the reduction of Cu²⁺ to Cu?",
+    "options": [
+      "-0.76 V",
+      "+0.34 V",
+      "+0.80 V",
+      "-0.34 V"
+    ],
+    "answer": 1,
+    "explain": "Cu²⁺/Cu has a standard reduction potential of +0.34 V vs. the standard hydrogen electrode (SHE), a key reference in the electrochemical series. This moderately positive value indicates copper is a fair oxidizing agent. Option A (+0.76 V, actually for Zn²⁺/Zn but negative) and C (+0.80 V, similar to oxygen reduction) are incorrect reference values. Understanding these potentials is critical for designing Li-ion systems where cathode materials (LiCoO₂ at ~4.3 V) exploit redox chemistry."
+  },
+  {
+    "topic": "Electrochemistry Fundamentals",
+    "q": "Which describes an oxidation reaction?",
+    "options": [
+      "Loss of electrons",
+      "Gain of electrons",
+      "Combination with oxygen",
+      "Formation of ions"
+    ],
+    "answer": 0,
+    "explain": "Oxidation is defined as loss of electrons (LEO mnemonic). This definition is the cornerstone of redox chemistry—electrons transfer from reducing agent to oxidizing agent. Option B (gain of electrons) describes reduction, not oxidation. Option C conflates oxygen involvement with the definition. In battery systems, the anode oxidizes (e.g., graphite loses electrons during discharge), while cathode reduction occurs; Tesla's BMS tracks these electron flows via coulomb counting."
+  },
+  {
+    "topic": "Electrochemistry Fundamentals",
+    "q": "What does Faraday's Law determine?",
+    "options": [
+      "The voltage of a cell",
+      "The amount of substance produced by electrolysis from the charge passed",
+      "The temperature rise in a battery",
+      "The color of the electrolyte"
+    ],
+    "answer": 1,
+    "explain": "Faraday's Law, n = Q/(nF), quantifies the amount (in moles) of substance produced by electrolysis from total charge passed. Here Q is charge in coulombs, n is electrons transferred, and F = 96,485 C/mol (Faraday's constant). Option A (voltage) and C (temperature) are unrelated to charge-mass relationships. This law explains battery capacity: a 50 Ah cell transfers 50 × 3600 = 180,000 coulombs, directly tied to electrochemistry and cycle life predictions."
+  },
+  {
+    "topic": "Li-Ion: NMC & LFP",
+    "q": "What does NMC stand for in battery cathodes?",
+    "options": [
+      "Nickel Manganese Cobalt oxide",
+      "Nickel Metal Carbon",
+      "Nickel Magnesium Ceramic",
+      "Nitrogen Manganese Cobalt"
+    ],
+    "answer": 0,
+    "explain": "NMC (LiNi₀.₃Mn₀.₃Co₀.₃O₂) is a layered oxide cathode offering excellent trade-offs: ~200 Wh/kg energy density, good power output, and stable cycle life (~2,000–3,000 cycles at 80% DoD). The nickel provides energy density, manganese structural stability, and cobalt cycle life. Options B, C, D are incorrect expansions. NMC dominates Tesla Model 3 packs and most commercial EVs due to its balanced performance and mature supply chain."
+  },
+  {
+    "topic": "Li-Ion: NMC & LFP",
+    "q": "Which cathode material is known for superior thermal stability and safety?",
+    "options": [
+      "LiCoO₂",
+      "LiFePO₄ (LFP)",
+      "NMC",
+      "LiMn₂O₄"
+    ],
+    "answer": 1,
+    "explain": "LiFePO₄ (LFP) has an olivine crystal structure with very strong Fe-O bonds, making it exceptionally thermally stable and resistant to thermal runaway above 300°C. This safety superiority is why LFP is used in stationary grid storage (Tesla Megapack uses LFP) and safety-critical applications. LiCoO₂ is unstable, NMC offers less thermal headroom, LiMn₂O₄ is weaker. LFP's lower energy density (~150 Wh/kg) is the trade-off for inherent safety."
+  },
+  {
+    "topic": "Li-Ion: NMC & LFP",
+    "q": "What is a key trade-off between NMC and LFP cathodes?",
+    "options": [
+      "NMC has higher energy density but lower thermal stability",
+      "LFP has better cycle life but lower cost",
+      "NMC is safer but lower voltage",
+      "LFP has higher power density"
+    ],
+    "answer": 0,
+    "explain": "NMC provides ~200 Wh/kg energy density at ~3.7 V nominal voltage, ideal for range-demanding EVs like Tesla Model 3. LFP delivers only ~150 Wh/kg at 3.2 V, but exhibits superior thermal stability and can cycle to 6,000+ cycles at shallow DoD. Option B (cycle life) contradicts the data—NMC also cycles well with proper BMS. The energy-safety trade-off explains why Tesla uses NMC in performance vehicles and LFP in economy/grid markets."
+  },
+  {
+    "topic": "Li-Ion: NMC & LFP",
+    "q": "What is the typical discharge voltage plateau for LFP cells?",
+    "options": [
+      "3.2 V",
+      "3.6 V",
+      "3.8 V",
+      "4.2 V"
+    ],
+    "answer": 0,
+    "explain": "LFP cells discharge with a characteristic flat ~3.2 V plateau (nominal 3.3 V) maintained over 90% of capacity, different from NMC's sloping profile. This flat discharge enables simple BMS voltage-based SOC estimation. Options A (3.6 V, NMC nominal), B, D are incorrect. Tesla Megapack uses this flat profile for predictable charge-discharge cycles in grid services like frequency regulation, where stable voltage behavior improves power electronics design."
+  },
+  {
+    "topic": "Li-Ion: Anode & Electrolyte",
+    "q": "What is the standard anode material in commercial Li-ion batteries?",
+    "options": [
+      "Lithium metal foil",
+      "Graphite",
+      "Silicon carbide",
+      "Copper oxide"
+    ],
+    "answer": 1,
+    "explain": "Graphite is the standard anode in Li-ion cells because it intercalates Li⁺ reversibly at a low potential (~0.05 V vs. Li/Li⁺), avoiding lithium metal deposition (dendrites) while maintaining stable SEI cycling. Graphite's specific capacity is ~372 mAh/g. Lithium metal causes dendrites and thermal runaway; silicon carbide and copper oxide don't intercalate lithium. Graphite's mature supply and consistent performance are why it dominates Tesla and all commercial Li-ion anodes."
+  },
+  {
+    "topic": "Li-Ion: Anode & Electrolyte",
+    "q": "Why are organic carbonate solvents used in Li-ion electrolyte?",
+    "options": [
+      "They are cheaper",
+      "They provide good ionic conductivity, high electrochemical stability, and allow SEI formation",
+      "They reduce weight",
+      "They improve safety"
+    ],
+    "answer": 1,
+    "explain": "Organic carbonate solvents (ethylene carbonate EC, diethyl carbonate DEC, dimethyl carbonate DMC) dissolve LiPF₆ well, offer wide electrochemical windows (0–4.3 V), and crucially enable SEI (solid-electrolyte interphase) formation on graphite during initial cycling. This protective SEI is essential for cycle life and safety. Aqueous solvents cause rapid degradation; non-carbonate organics don't form stable SEI. Modern battery packs rely on SEI stability for >1000 cycles."
+  },
+  {
+    "topic": "Li-Ion: Anode & Electrolyte",
+    "q": "What is LiPF₆ in battery electrolyte?",
+    "options": [
+      "A cathode material",
+      "The salt dissolved in organic solvents to provide Li⁺ ions and conductivity",
+      "A separator material",
+      "A thermal additive"
+    ],
+    "answer": 1,
+    "explain": "LiPF₆ (lithium hexafluorophosphate) is the standard electrolyte salt in Li-ion cells. It dissociates fully: LiPF₆ → Li⁺ + PF₆⁻, providing mobile lithium ions for intercalation and anion transport for electrical neutrality. Option A (cathode material) misidentifies the component. LiPF₆ enables ~1 M ionic conductivity in carbonate solvents, critical for discharge rates above 1C. This chemistry underpins every smartphone and EV battery worldwide."
+  },
+  {
+    "topic": "Battery Management Systems (BMS)",
+    "q": "What is the primary function of a Battery Management System?",
+    "options": [
+      "Monitor and protect the battery pack from unsafe conditions",
+      "Increase the battery capacity",
+      "Reduce the cost of materials",
+      "Prevent chemical reactions"
+    ],
+    "answer": 0,
+    "explain": "BMS continuously monitors voltage, current, and temperature at cell and pack levels, performing multiple protection functions: preventing overcharge (>4.2 V typically triggers cutoff), overdischarge (<2.5 V damages SEI), and thermal runaway (>60°C preemptively throttles current). It also estimates SOC and manages cell balancing. Options B, C, D are consequences, not primary functions. Tesla's BMS adds predictive models to anticipate degradation; this comprehensive protection extends pack life to 8+ years."
+  },
+  {
+    "topic": "Battery Management Systems (BMS)",
+    "q": "What is cell balancing in a BMS?",
+    "options": [
+      "Matching cells from the same manufacturer",
+      "Equalizing the state of charge across cells in a pack",
+      "Rotating cells during operation",
+      "Reducing the number of cells"
+    ],
+    "answer": 1,
+    "explain": "Cell balancing equalizes the state of charge (SOC) across all cells in a pack, preventing imbalance where some cells overcharge while others discharge excessively. Overcharged cells age faster (accelerated side reactions); over-discharged cells suffer SEI damage. Imbalance reduces usable capacity and cycle life. Tesla packs use active balancing to handle manufacturing tolerances. Proper balancing extends total pack life by 20–50%, critical for grid storage economics."
+  },
+  {
+    "topic": "Battery Management Systems (BMS)",
+    "q": "What is the difference between passive and active cell balancing?",
+    "options": [
+      "Passive is manual, active is automatic",
+      "Passive dissipates excess energy as heat, active transfers energy between cells",
+      "Active is cheaper than passive",
+      "Passive requires more power"
+    ],
+    "answer": 1,
+    "explain": "Passive balancing uses resistors to dissipate excess energy from high-charged cells, typically 100–200 mW per cell—slow and wasteful. Active balancing uses DC-DC converters to transfer energy from high cells to low cells, recovering ~85–95% of that energy—much more efficient. Passive costs less upfront but wastes energy; active requires more sophisticated electronics but lowers operating costs. Tesla's Model S uses active balancing for efficiency; stationary grid systems often use passive for simplicity."
+  },
+  {
+    "topic": "Battery Management Systems (BMS)",
+    "q": "How is State of Charge (SOC) estimated?",
+    "options": [
+      "Only by measuring voltage",
+      "Using coulomb counting and voltage/temperature models",
+      "By physical weight change",
+      "From the age of the battery"
+    ],
+    "answer": 1,
+    "explain": "SOC is estimated by integrating discharge current over time (coulomb counting: SOC_change = ∫I dt / capacity), then refined using OCV (open-circuit voltage) lookup tables and temperature-dependent models to correct for measurement drift and self-discharge. Voltage alone is insufficient because different discharge rates produce different transient voltages. The Kalman filter combines these sensors for accuracy. Tesla and grid operators depend on ±2–5% SOC accuracy for safe operation and optimal energy dispatch."
+  },
+  {
+    "topic": "Thermal Management",
+    "q": "What causes heat generation in a lithium-ion cell?",
+    "options": [
+      "Entropy of mixing only",
+      "Joule heating (I²R) and entropic losses",
+      "Chemical decomposition",
+      "Light absorption"
+    ],
+    "answer": 1,
+    "explain": "Heat in Li-ion cells arises from I²R resistive losses (dominant during high-rate discharge) and entropy changes during lithiation/delithiation reactions. High C-rates dramatically increase Joule heating. Option A (entropy alone) underestimates resistive heat. Options C, D are incorrect. At 3C discharge rate, cells can exceed 60°C within minutes, accelerating calendar aging and risking thermal runaway if cooling fails. Tesla implements advanced thermal management to keep cells at optimal 25–35°C for maximum cycle life."
+  },
+  {
+    "topic": "Thermal Management",
+    "q": "At what temperature does thermal runaway typically begin in Li-ion cells?",
+    "options": [
+      "Below 50°C",
+      "Around 80–150°C depending on chemistry",
+      "Above 300°C",
+      "Below 0°C"
+    ],
+    "answer": 1,
+    "explain": "Thermal runaway in Li-ion typically initiates at 80–150°C when the SEI layer becomes unstable, triggering exothermic decomposition reactions (lithium-carbonate breakdown, cathode decomposition) that cascade uncontrollably. Below 50°C (option A), cells are dormant; above 300°C (option C) is far too late. Recent regulations (UL 9540, NFPA 855) mandate thermal propagation prevention in grid storage; Tesla Megapack uses compartmentalized cooling and thermal barriers to contain a failed module without triggering site-wide runaway."
+  },
+  {
+    "topic": "Thermal Management",
+    "q": "Which cooling method is most effective for high-power battery packs?",
+    "options": [
+      "Passive air cooling",
+      "Liquid cooling",
+      "Passive thermal interfaces",
+      "Insulation"
+    ],
+    "answer": 1,
+    "explain": "Liquid cooling (water or glycol-water mixtures circulating through cold plates) transfers heat 3–5× more efficiently than passive air cooling due to higher specific heat capacity and thermal conductivity. For 300+ kW power systems (EVs, grid storage), passive cooling cannot maintain 15–35°C during continuous operation. Tesla uses liquid cooling in all high-performance vehicles. This technology is essential for stationary BESS operating at sustained high power; without it, cycle life drops precipitously."
+  },
+  {
+    "topic": "Thermal Management",
+    "q": "What is the optimal operating temperature range for Li-ion batteries?",
+    "options": [
+      "−40 to +60°C",
+      "15°C to 35°C",
+      "50°C to 80°C",
+      "Below 0°C"
+    ],
+    "answer": 1,
+    "explain": "Li-ion performance peaks at 15–35°C: cold reduces ionic conductivity (lower power output, higher IR drop), while heat accelerates degradation mechanisms (SEI growth, structural changes, lithium plating). Outside 0–50°C, cycle life degrades rapidly—each 10°C above 25°C roughly halves calendar life. Tesla preconditioning warms cold battery packs before driving; grid systems use immersion cooling in hot climates. Regulatory standards (IEC 62619) require operation testing across −20 to +60°C ranges."
+  },
+  {
+    "topic": "Grid Storage",
+    "q": "What is a key advantage of using Li-ion batteries for grid-scale energy storage?",
+    "options": [
+      "Infinite cycle life",
+      "Fast response time and good round-trip efficiency (90%+)",
+      "Zero environmental impact",
+      "No maintenance required"
+    ],
+    "answer": 1,
+    "explain": "Li-ion BESS provides two key advantages: (1) millisecond-level response enabling frequency regulation services (grid must respond within 1 second), and (2) round-trip efficiency of 90–95% (charge then discharge losses), making energy arbitrage profitable. Lead-acid offers only 70% efficiency; supercapacitors can't store multi-hour energy. Tesla Megapack's 92% efficiency allows 100 discharge cycles/year profitably. These metrics define BESS value in modern deregulated markets."
+  },
+  {
+    "topic": "Grid Storage",
+    "q": "What does BESS stand for?",
+    "options": [
+      "Battery Energy Storage System",
+      "Battery External Storage Site",
+      "Business Energy Service System",
+      "Bulk Electric Storage Spot"
+    ],
+    "answer": 0,
+    "explain": "BESS (Battery Energy Storage System) is the industry standard term for any battery-based grid storage facility providing capacity, energy services, and ancillary services. Options B, C, D use non-standard acronyms. BESS units are now registered as resources in NERC compliance and are critical for grid stability as fossil plants retire. The term appears in interconnection agreements, procurement contracts, and regulatory filings (FERC Order 841 in the US explicitly references BESS)."
+  },
+  {
+    "topic": "Grid Storage",
+    "q": "Which battery technology is best for 4+ hour duration grid storage?",
+    "options": [
+      "Supercapacitors",
+      "Flow batteries or long-duration Li-ion with energy arbitrage",
+      "Superconductors",
+      "Lead-acid"
+    ],
+    "answer": 1,
+    "explain": "For 4+ hour continuous discharge (e.g., evening peak), flow batteries (vanadium VRFB, zinc-bromine ZnBr) scale energy capacity independently from power by simply adding storage tanks—cost-effective for multi-hour needs. Long-duration Li-ion packs are increasingly viable for 4–6 hour cycles due to falling costs. Supercapacitors store seconds only; lead-acid lacks cycle life. Eos Energy's zinc hybrid system and Ambri's liquid-metal batteries target 8–12 hour grid-scale storage with lower costs than Li-ion."
+  },
+  {
+    "topic": "Grid Storage",
+    "q": "What service can a battery energy storage system provide to the grid?",
+    "options": [
+      "Frequency regulation only",
+      "Peak shaving, frequency regulation, blackstart capability, energy arbitrage",
+      "Voltage support only",
+      "No specific services"
+    ],
+    "answer": 1,
+    "explain": "BESS provides multiple grid services: (1) frequency regulation (±30 s response within 1 Hz), (2) peak shaving (reduce 15-min demand charges), (3) energy arbitrage (buy low, sell high), (4) blackstart (restart grid after cascade failure), (5) voltage support (reactive power compensation). These stacked services can generate 5–10 revenue streams. Tesla and other BESS operators stack services to achieve 15–30% IRR, justifying $150–200/kWh capex."
+  },
+  {
+    "topic": "Safety",
+    "q": "What is the most common cause of Li-ion battery fires?",
+    "options": [
+      "Overcharging leading to internal short circuit or thermal runaway",
+      "Low temperature operation",
+      "UV exposure",
+      "Physical vibration"
+    ],
+    "answer": 0,
+    "explain": "Li-ion fires result from overcharging beyond the stable voltage window (~4.25 V for NMC), which causes separator breakdown, internal short circuits, and thermal runaway. The cascade leads to uncontrolled exothermic reactions. Cold and UV don't cause fires; vibration typically doesn't (though it can damage internal components). BMS overvoltage protection, cell-level current interrupt devices (CID), and thermal fuses are critical defenses. NFPA 855 now mandates fire suppression systems in large BESS facilities."
+  },
+  {
+    "topic": "Safety",
+    "q": "What does a current interrupt device (CID) in a battery do?",
+    "options": [
+      "Increases the discharge current",
+      "Disconnects the battery circuit if internal pressure exceeds a threshold",
+      "Balances the cells",
+      "Reduces self-discharge"
+    ],
+    "answer": 1,
+    "explain": "A current interrupt device (CID) is a one-time safety fuse inside the battery can that opens if internal pressure exceeds ~10 bar (from venting or internal short circuit), disconnecting the battery circuit permanently. It prevents runaway thermal events from creating external hazards. This is different from a thermal fuse (stops current above a temperature) or BMS (electronic monitoring). CIDs are mandatory in portable devices and emergency backup systems; they're a passive, irreversible safety mechanism."
+  },
+  {
+    "topic": "Safety",
+    "q": "Why is SEI (Solid Electrolyte Interphase) important for battery safety?",
+    "options": [
+      "It increases conductivity",
+      "It insulates the anode and prevents further electrolyte decomposition",
+      "It speeds up charging",
+      "It has no safety role"
+    ],
+    "answer": 1,
+    "explain": "The SEI (solid-electrolyte interphase) is a thin (~50–200 nm) passivation layer formed on the graphite anode during the first charge cycle when the electrolyte decomposes irreversibly. This layer protects deeper graphite from further electrolyte attack, preventing continuous decomposition and capacity fade. A robust SEI is essential for cycle life. Option A (increased conductivity) contradicts reality—SEI adds resistance but improves long-term stability. Tesla and all manufacturers optimize SEI formation protocols during production to achieve >1000 cycles."
+  },
+  {
+    "topic": "Battery Degradation",
+    "q": "What is calendar aging in batteries?",
+    "options": [
+      "Capacity loss due to cycling",
+      "Capacity loss over time even without use",
+      "Increase in voltage over time",
+      "Physical corrosion of terminals"
+    ],
+    "answer": 1,
+    "explain": "Calendar aging is capacity loss over time at rest due to parasitic side reactions: electrolyte oxidative decomposition, lithium-oxygen reactions, and SEI growth. These reactions proceed even without cycling, accelerated exponentially by temperature. A battery at 100% SOC degrades ~3–5% annually at 25°C but ~10–20% annually at 45°C. Stationary grid storage is less affected than portable devices because they can operate at lower average SoC (60–80%) and controlled temperatures, extending calendar life to 20+ years."
+  },
+  {
+    "topic": "Battery Degradation",
+    "q": "What is the primary cause of cycle fade in Li-ion batteries?",
+    "options": [
+      "Loss of lithium ions to side reactions",
+      "Increase in cathode structural disorder",
+      "All of the above",
+      "Electrode material dissolution and electrolyte decomposition"
+    ],
+    "answer": 2,
+    "explain": "Cycle fade (loss of capacity per cycle) is caused by the combined effects of: lithium-ion loss (irreversible plating on anode, electrolyte reduction products), structural changes in cathode and anode (oxygen loss, phase transitions), electrolyte decomposition creating impedance growth, and transition metal (Ni, Mn, Co) dissolution from cathode into electrolyte. All these mechanisms occur simultaneously. Option A alone (lithium loss) or B alone (structural disorder) are incomplete. Modern separators, coatings, and doped electrolytes address each mechanism."
+  },
+  {
+    "topic": "Battery Degradation",
+    "q": "How does depth of discharge (DoD) affect cycle life?",
+    "options": [
+      "DoD has no effect",
+      "Shallower DoD extends cycle life; full DoD cycling reduces it",
+      "Deeper DoD always improves life",
+      "DoD only affects voltage"
+    ],
+    "answer": 1,
+    "explain": "Depth of discharge (DoD) dramatically affects cycle life due to accelerated side reactions at high and low state-of-charge. Shallow DoD operation (20% cycles: 0–20% SoC) can achieve 10,000+ cycles; 100% DoD (full discharge each cycle) typically yields only 1,000–2,000 cycles. This is why grid storage systems often operate at 50–90% DoD for longevity and economics. Tesla's software limits maximum charge to 80% for daily use, extending pack life. This is the #1 lever for extending battery calendar life."
+  },
+  {
+    "topic": "Battery Degradation",
+    "q": "What is State of Health (SOH)?",
+    "options": [
+      "Voltage at any instant",
+      "The remaining capacity as a percentage of the original rated capacity",
+      "The operating temperature",
+      "The age in years"
+    ],
+    "answer": 1,
+    "explain": "SOH (State of Health) quantifies battery degradation as a percentage: SOH = (current maximum capacity) / (original rated capacity) × 100%. A battery at 80% SOH has lost 20% of usable capacity due to cycling and calendar aging. When SOH drops below 70–80%, most users or grid operators replace the battery. SOH is estimated by fitting impedance growth and capacity fade trends over time. Tesla and grid operators predict end-of-life (70–75% SOH threshold) to schedule replacements."
+  },
+  {
+    "topic": "Solid-State Batteries",
+    "q": "What is the main advantage of solid-state batteries over conventional Li-ion?",
+    "options": [
+      "Lower cost",
+      "Higher energy density and improved safety due to solid electrolyte",
+      "Faster charging only",
+      "Better thermal management only"
+    ],
+    "answer": 1,
+    "explain": "Solid-state batteries replace liquid electrolyte with a rigid ceramic (LLZO, Li₃PS₄) or polymer material, eliminating the flammability risk of organic carbonates. This enables lithium metal anodes (vastly higher specific capacity: ~3,860 mAh/g vs. 372 mAh/g graphite) and higher-voltage cathodes, targeting 500+ Wh/kg and improved safety. Quantumscape, Samsung, and QuantumScape are in pilot production phases. Options A (cost) and D (thermal management) are secondary benefits; the safety-energy density combination is transformational."
+  },
+  {
+    "topic": "Solid-State Batteries",
+    "q": "What is a key challenge in solid-state battery commercialization?",
+    "options": [
+      "Electrolyte toxicity",
+      "Interfacial resistance and dendrite formation",
+      "Lack of raw materials",
+      "Patent restrictions"
+    ],
+    "answer": 1,
+    "explain": "Solid-state challenges include: (1) interfacial resistance—the solid electrolyte/electrode interfaces create large impedance barriers, limiting power output; (2) lithium dendrite penetration—pressureless cycling allows dendrites to pierce the solid electrolyte, causing short circuits; (3) manufacturing scalability—uniform ceramic deposition requires new equipment; (4) long-term cycling—interface reactions still degrade performance over 500–1000 cycles. These are being addressed by coating strategies, applied pressure, and interfacial engineering. Commercial viability is targeted for 2026–2028."
+  },
+  {
+    "topic": "Solid-State Batteries",
+    "q": "Which electrolyte type is most commonly pursued for solid-state batteries?",
+    "options": [
+      "Liquid organic",
+      "Polymer (PVDF-HFP)",
+      "Ceramic oxide or sulfide",
+      "Aqueous"
+    ],
+    "answer": 2,
+    "explain": "Ceramic (oxide: LLZO Li₇La₃Zr₂O₁₂ or sulfide: Li₃PS₄) solid electrolytes have ionic conductivities of 1–10 mS/cm at room temperature, approaching liquid electrolytes. They are stable against lithium metal (avoiding dendrite growth as easily as liquids would) and against high-voltage cathodes. Polymers offer lower processing temperatures but lower conductivity. All solid electrolytes face interfacial resistance. Capacity fade is still 1–3% per cycle in early prototypes; industry targets <0.5% per cycle for commercialization."
+  },
+  {
+    "topic": "Flow Batteries",
+    "q": "What is the key operational principle of flow batteries?",
+    "options": [
+      "Electrochemical reactions in fixed electrodes like conventional batteries",
+      "Active materials dissolved in liquid electrolyte stored in external tanks",
+      "Mechanical pumping of solid particles",
+      "Magnetic confinement"
+    ],
+    "answer": 1,
+    "explain": "Flow batteries decouple energy and power: active materials (vanadium, zinc, bromine) are dissolved in liquid electrolytes stored in external tanks. Energy capacity scales with tank volume (Wh = tankVolume × concentration × voltage); power scales with stack electrode area (W = stackArea × currentDensity × voltage). This separation enables independent optimization: a 100 MWh system is just one 100 MW stack with 100 × 4-hour tanks. Stationary systems can achieve 4–12 hour durations cost-effectively; Tesla Megapack uses Li-ion (coupled design) for faster response."
+  },
+  {
+    "topic": "Flow Batteries",
+    "q": "What is a major advantage of vanadium redox flow batteries (VRFB)?",
+    "options": [
+      "Lower cost than Li-ion",
+      "Single electrolyte with all four redox states in vanadium enables full rebalancing",
+      "Faster response than Li-ion",
+      "No safety concerns"
+    ],
+    "answer": 1,
+    "explain": "Vanadium redox flow batteries (VRFB) use a single element, vanadium, in four oxidation states (II, III, IV, V), stored in separate electrolytes. This enables complete rebalancing: if the battery becomes imbalanced (e.g., after overdischarge), you can chemically rebalance it by mixing and re-cycling—impossible with multi-element systems like zinc-bromine. This unique property gives VRFB exceptional cycle life (>13,000 cycles demonstrated) and resilience. VRFBs are deployed for 4–8 hour grid storage in China and Australia."
+  },
+  {
+    "topic": "Flow Batteries",
+    "q": "What is the round-trip efficiency typical for flow batteries?",
+    "options": [
+      "95%+",
+      "50–70%",
+      "70–85%",
+      "20–40%"
+    ],
+    "answer": 2,
+    "explain": "Flow batteries achieve 70–85% round-trip efficiency (typically 75–80%) due to electrode overpotentials during charge/discharge and shunt currents through the membrane. Higher current densities reduce efficiency; lower speeds are more efficient but reduce power density. Options A (95%+, theoretical upper bound for Li-ion) and B (50–70%, low-cost lead-acid range) are incorrect. For multi-hour cycles, 75% efficiency still beats alternatives; weekly storage (e.g., wind curtailment) often uses >8 hour storage where efficiency matters less than duration."
+  },
+  {
+    "topic": "Sodium-Ion Batteries",
+    "q": "Why are sodium-ion batteries attractive as an alternative to Li-ion?",
+    "options": [
+      "Sodium is more abundant and cheaper than lithium",
+      "They have higher energy density",
+      "They are inherently safer",
+      "Both A and C"
+    ],
+    "answer": 0,
+    "explain": "Sodium is ~1000× more abundant than lithium (Earth's crust: 2.3% Na vs. 0.002% Li), much cheaper (~$5/kg vs. $10,000/kg for high-purity Li₂CO₃), and geographically distributed (rock salt deposits worldwide vs. lithium mines in South America and Australia). This dramatically reduces supply chain risk and cost. Sodium-ion batteries also use iron (abundant, cheap) and manganese cathodes. Energy density is lower, but cost per MWh is competitive for stationary storage. CATL, Relion, and Natron offer Na-ion systems."
+  },
+  {
+    "topic": "Sodium-Ion Batteries",
+    "q": "What is a typical energy density of sodium-ion batteries compared to Li-ion?",
+    "options": [
+      "2× higher",
+      "Similar to Li-ion (~200 Wh/kg)",
+      "30–50% lower (~150 Wh/kg)",
+      "Much lower, <50 Wh/kg"
+    ],
+    "answer": 2,
+    "explain": "Sodium-ion batteries deliver 150–160 Wh/kg (CATL 160 Wh/kg reported), compared to 200–250 Wh/kg for Li-ion. The disadvantage is the heavier Na⁺ ion (23 g/mol vs. 7 g/mol for Li⁺) and lower redox potentials, yielding lower cell voltage (~3.0 V vs. 3.7 V for Li-ion). For stationary applications (weight not critical), this 25–30% penalty is acceptable. Total cost of ownership (LCOE $/MWh) is competitive because sodium-ion cells cost 20–40% less than Li-ion, offsetting the energy density loss."
+  },
+  {
+    "topic": "Supercapacitors",
+    "q": "How does an Electric Double-Layer Capacitor (EDLC) store charge?",
+    "options": [
+      "Chemical reactions",
+      "Electrostatic accumulation at the electrode-electrolyte interface",
+      "Magnetic fields",
+      "Phase transitions"
+    ],
+    "answer": 1,
+    "explain": "Electric Double-Layer Capacitors (EDLC) store charge through Helmholtz double-layer capacitance: when voltage is applied, cations and anions migrate to the electrode surfaces, forming an electrostatic field without Faradaic reactions. Energy is U = ½CV². No oxidation-reduction occurs, enabling extremely fast charge/discharge (seconds) and unlimited cycle life (>1M cycles). Option B (electrostatic accumulation) is correct; options A (chemical reactions) and C (magnetic fields) are fundamentally different energy storage mechanisms. EDLCs complement batteries in hybrid systems."
+  },
+  {
+    "topic": "Supercapacitors",
+    "q": "What is a key difference between supercapacitors and batteries?",
+    "options": [
+      "Supercapacitors have higher energy density",
+      "Batteries use Faradaic reactions; supercapacitors use electrostatic storage",
+      "Supercapacitors last forever",
+      "No difference"
+    ],
+    "answer": 1,
+    "explain": "Batteries store energy chemically via Faradaic oxidation-reduction reactions at electrodes, offering high energy density but slower charge/discharge and limited cycles (~1000–5000 for Li-ion). Supercapacitors store energy electrostatically without redox reactions, enabling fast charge/discharge (microseconds to seconds) and virtually unlimited cycles (1M+), but with lower energy density (~5–10 Wh/kg vs. 200+ Wh/kg for Li-ion). Hybrid systems combine both: supercaps handle peak power transients; batteries supply sustained energy. Tesla roadsters use this approach for regenerative braking pulses."
+  }
 ]
 </script>
 <script>

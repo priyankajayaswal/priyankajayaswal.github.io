@@ -2185,46 +2185,428 @@ if (typeof switchTab === 'function') {
      Customize the JSON inside <script id="quiz-data"> for the domain.
      Each question: { topic, q, options:[...4], answer:0..3, explain }
      ============================================================ -->
-<script id="quiz-data" type="application/json">
-[
-  { "topic": "Semantics", "q": "What does operational semantics describe?", "options": ["How to execute programs step-by-step", "The meaning of types", "Memory layout", "Compilation process"], "answer": 0, "explain": "Operational semantics defines the computation through execution steps; denotational semantics uses mathematical interpretation." },
-  { "topic": "Semantics", "q": "Denotational semantics typically uses which mathematical structure?", "options": ["Domain theory", "Graph theory", "Set notation", "Calculus"], "answer": 0, "explain": "Domain theory provides the mathematical foundation for denotational semantics, mapping programs to mathematical values." },
-  { "topic": "Semantics", "q": "Which evaluation strategy evaluates function arguments before the function call?", "options": ["Eager evaluation", "Lazy evaluation", "Call-by-name", "Call-by-need"], "answer": 0, "explain": "Eager (strict) evaluation evaluates arguments first; lazy defers evaluation until needed." },
-  { "topic": "Type Systems", "q": "Hindley-Milner type inference works by solving which mathematical problem?", "options": ["Unification of type constraints", "Linear equations", "Graph coloring", "SAT solving"], "answer": 0, "explain": "HM uses unification to solve type constraints discovered during type checking." },
-  { "topic": "Type Systems", "q": "What is parametric polymorphism?", "options": ["A single function works for multiple types", "Different implementations per type", "Runtime type checking", "Object-oriented inheritance"], "answer": 0, "explain": "Parametric polymorphism (generics) allows one definition to work uniformly for all types." },
-  { "topic": "Type Systems", "q": "In dependent type systems, what can types depend on?", "options": ["Values at runtime", "Type parameters only", "Memory addresses", "Stack frames"], "answer": 0, "explain": "Dependent types allow types to be indexed by values, enabling more precise specifications." },
-  { "topic": "Functional", "q": "What is a closure?", "options": ["A function with captured variables from its environment", "A static method", "A compiled function", "A garbage collected object"], "answer": 0, "explain": "Closures capture variables from their lexical scope, enabling higher-order functions and state encapsulation." },
-  { "topic": "Functional", "q": "Which is a pure functional operation?", "options": ["map(f, list)", "list.sort()", "global = 5", "file.write(data)"], "answer": 0, "explain": "map is pure: it produces a new list without side effects; sort, assignment, and I/O are impure." },
-  { "topic": "Functional", "q": "What does fold (reduce) compute?", "options": ["An accumulated result from iterating over a list", "A list of the same length", "A boolean test", "A type signature"], "answer": 0, "explain": "Fold/reduce threads an accumulator through list elements, combining them into a single result." },
-  { "topic": "OOP", "q": "In OOP, what does polymorphism enable?", "options": ["Writing code that works with objects of different types", "Memory optimization", "Faster compilation", "Type erasure"], "answer": 0, "explain": "Polymorphism lets code operate on base types, dispatching to the actual runtime type." },
-  { "topic": "OOP", "q": "What is the Liskov Substitution Principle?", "options": ["Subtypes must be substitutable for their base types", "All objects inherit from Object", "Dynamic dispatch must be used", "Classes must be immutable"], "answer": 0, "explain": "LSP ensures that derived classes don't violate the contracts of base classes." },
-  { "topic": "Imperative", "q": "What does a mutable reference (ref cell) store?", "options": ["A location that can be read and written", "An immutable value", "A function pointer", "Type information"], "answer": 0, "explain": "Refs enable imperative updates by storing mutable state in a container." },
-  { "topic": "Imperative", "q": "Which is an imperative feature?", "options": ["Variable assignment (mutation)", "Pattern matching", "Type inference", "List comprehension"], "answer": 0, "explain": "Assignment mutates state; the others are declarative features." },
-  { "topic": "Lambda Calculus", "q": "In lambda calculus, what does β-reduction represent?", "options": ["Function application", "Type substitution", "Memory allocation", "Garbage collection"], "answer": 0, "explain": "β-reduction is the substitution of arguments into a lambda abstraction (function application)." },
-  { "topic": "Lambda Calculus", "q": "What is α-equivalence?", "options": ["Two functions are equivalent if they differ only in bound variable names", "Reduction to normal form", "Type checking", "Compilation"], "answer": 0, "explain": "λx.x and λy.y are α-equivalent; renaming bound variables doesn't change meaning." },
-  { "topic": "Lambda Calculus", "q": "A term is in normal form when:", "options": ["No more β-reductions are possible", "All variables are renamed", "It is type-checked", "It is compiled"], "answer": 0, "explain": "Normal form means a term is fully reduced and cannot be simplified further." },
-  { "topic": "Lazy Evaluation", "q": "Lazy evaluation delays computation until:", "options": ["The result is actually needed", "The function is defined", "Memory is low", "Type checking completes"], "answer": 0, "explain": "Lazy languages like Haskell defer computation, enabling infinite data structures and potential performance gains." },
-  { "topic": "Lazy Evaluation", "q": "A thunk is:", "options": ["A zero-argument function that delays computation", "A compiled closure", "A type variable", "A memory block"], "answer": 0, "explain": "Thunks wrap computations in functions, allowing lazy evaluation strategies." },
-  { "topic": "Continuations", "q": "What is a continuation?", "options": ["The remainder of the computation after a point", "A loop construct", "A type annotation", "A garbage collection phase"], "answer": 0, "explain": "Continuations represent 'what happens next'; they enable control flow like call/cc." },
-  { "topic": "Continuations", "q": "Call/cc (call-with-current-continuation) captures:", "options": ["The current continuation and passes it as a function", "The current stack frame", "The current type environment", "The current memory state"], "answer": 0, "explain": "call/cc captures the continuation as a function that can be invoked later." },
-  { "topic": "Effects & Monads", "q": "What is the purpose of a monad in functional programming?", "options": ["Encapsulating side effects in a structured way", "Type inference", "Memory management", "Inheritance"], "answer": 0, "explain": "Monads provide a pattern for sequencing effectful computations while maintaining purity." },
-  { "topic": "Effects & Monads", "q": "The Maybe monad is used for:", "options": ["Handling computations that might not have a result", "Multiple inheritance", "Lazy evaluation", "Type checking"], "answer": 0, "explain": "Maybe encodes success (Just x) or failure (Nothing), avoiding null references." },
-  { "topic": "GC", "q": "Mark-and-sweep garbage collection works by:", "options": ["Marking reachable objects, then sweeping unreachable ones", "Reference counting", "Copying live data to new space", "Generational promotion"], "answer": 0, "explain": "Mark-and-sweep traces from roots, marks reachable objects, then frees unmarked ones." },
-  { "topic": "GC", "q": "Generational garbage collection assumes:", "options": ["Most objects die young; separate young and old spaces", "All objects need equal scan time", "Reference counting is sufficient", "Manual memory is safer"], "answer": 0, "explain": "Young objects are collected more frequently; old objects less so, improving GC performance." },
-  { "topic": "Type Inference", "q": "Type inference can produce:", "options": ["The principal type for an expression", "Multiple incompatible types", "Unbounded type variables", "Runtime type errors"], "answer": 0, "explain": "Principal types are the most general types; inference discovers constraints and solves them." },
-  { "topic": "Type Inference", "q": "A type variable in HM is:", "options": ["An unknown type that must be determined", "A type parameter in a class", "A runtime variable", "A memory address"], "answer": 0, "explain": "Type variables (often 'a', 'b') represent unknown types during inference." },
-  { "topic": "Semantics", "q": "What distinguishes call-by-value from call-by-name?", "options": ["When arguments are evaluated: before vs during function application", "Argument order", "Function size", "Memory layout"], "answer": 0, "explain": "Call-by-value evaluates eagerly; call-by-name passes unevaluated expressions (like macros)." },
-  { "topic": "Functional", "q": "What is eta-reduction?", "options": ["Simplifying λx.f(x) to f (function equivalence)", "Collecting unreachable objects", "Renaming variables", "Type erasure"], "answer": 0, "explain": "Eta-reduction recognizes that λx.f(x) and f are equivalent (both apply f to one argument)." },
-  { "topic": "OOP", "q": "Duck typing means:", "options": ["Type is determined by what methods/attributes an object has, not its declared type", "All objects inherit from a base", "Types are checked at compile time", "Methods must be virtual"], "answer": 0, "explain": "Duck typing: if it walks and quacks like a duck, it's a duck (Python, Ruby)." },
-  { "topic": "Type Systems", "q": "What is type soundness?", "options": ["Well-typed programs cannot exhibit runtime type errors", "Type checking is fast", "Types are erased at runtime", "All values are immutable"], "answer": 0, "explain": "Soundness guarantees that the type system prevents certain runtime errors." },
-  { "topic": "Lambda Calculus", "q": "Church encoding represents numbers using:", "options": ["Lambda functions", "Reference cells", "Pattern matching", "Arrays"], "answer": 0, "explain": "Church numerals encode natural numbers as functions: n ≡ λf.λx.f^n(x)." },
-  { "topic": "Semantics", "q": "Fixed-point combinators (like Y) are used for:", "options": ["Defining recursive functions in languages without explicit recursion", "Garbage collection", "Type checking", "Memory allocation"], "answer": 0, "explain": "The Y combinator enables recursion in lambda calculus: Y(f) = f(Y(f))." },
-  { "topic": "Functional", "q": "Immutability in functional languages ensures:", "options": ["No state changes after creation; predictable, thread-safe behavior", "Better performance always", "Smaller code size", "Easier compilation"], "answer": 0, "explain": "Immutable data structures prevent bugs and simplify reasoning about program behavior." },
-  { "topic": "Type Systems", "q": "Type erasure means:", "options": ["Generic type information is removed at runtime", "Variables lose their names", "Memory is deallocated", "Compilation fails"], "answer": 0, "explain": "Java/C# erase generic info: List<int> and List<string> become the same bytecode List at runtime." },
-  { "topic": "Imperative", "q": "What is the main drawback of mutable state?", "options": ["Difficult to reason about; state can change unexpectedly", "Slower execution", "Uses more memory", "Harder to compile"], "answer": 0, "explain": "Mutations make code harder to debug, test, and parallelize; side effects are unpredictable." }
-]
-
-</script>
+<script id="quiz-data" type="application/json">[
+  {
+    "topic": "Semantics",
+    "q": "What does operational semantics describe?",
+    "options": [
+      "How to execute programs step-by-step",
+      "The meaning of types",
+      "Memory layout",
+      "Compilation process"
+    ],
+    "answer": 0,
+    "explain": "Operational semantics defines a language's meaning through execution steps (small-step or big-step), showing how programs compute rather than what they mean mathematically. This contrasts with denotational semantics, which maps programs to mathematical objects in a domain. Operational semantics is more intuitive because programmers reason about step-by-step execution; it's also closer to implementation via interpreters, making it practical for proving program properties like termination and equivalence\u2014Python's execution model is operationally defined."
+  },
+  {
+    "topic": "Semantics",
+    "q": "Denotational semantics typically uses which mathematical structure?",
+    "options": [
+      "Domain theory",
+      "Graph theory",
+      "Set notation",
+      "Calculus"
+    ],
+    "answer": 0,
+    "explain": "Denotational semantics uses domain theory, providing mathematical structures (domains) that model program meanings as functions or fixed points. Each syntactic construct maps to a semantic function; programs denote mathematical values, enabling formal proofs of equivalence and optimization correctness. Unlike operational semantics which shows 'how' to compute, denotational semantics explains 'what' the result means in mathematics. This abstraction layer is crucial for proving that compiler optimizations preserve program semantics\u2014Haskell's semantics are partly denotational."
+  },
+  {
+    "topic": "Semantics",
+    "q": "Which evaluation strategy evaluates function arguments before the function call?",
+    "options": [
+      "Eager evaluation",
+      "Lazy evaluation",
+      "Call-by-name",
+      "Call-by-need"
+    ],
+    "answer": 0,
+    "explain": "Eager (call-by-value) evaluation evaluates all arguments before passing them to a function; lazy (call-by-name/need) defers argument evaluation until the value is actually used. Call-by-value is more intuitive and matches most imperative languages; call-by-name avoids unnecessary computation but requires thunks and is less predictable for side effects. Strict evaluation dominates because side effects (printing, I/O) are order-dependent; lazy evaluation shines in pure languages where order doesn't matter\u2014Haskell uses lazy evaluation by default."
+  },
+  {
+    "topic": "Type Systems",
+    "q": "Hindley-Milner type inference works by solving which mathematical problem?",
+    "options": [
+      "Unification of type constraints",
+      "Linear equations",
+      "Graph coloring",
+      "SAT solving"
+    ],
+    "answer": 0,
+    "explain": "Hindley-Milner inference solves type equations (constraints) generated from unification of program terms, finding the most general type. The key algorithm is W or Damas-Hindley-Milner (DHM), which traverses the AST, records constraints, and solves them with Robinson's unification. HM cannot handle dependent types or some advanced features; it excels at inferring polymorphic types without annotations. ML, Haskell, and OCaml all use HM-based inference to provide strong static typing without verbosity."
+  },
+  {
+    "topic": "Type Systems",
+    "q": "What is parametric polymorphism?",
+    "options": [
+      "A single function works for multiple types",
+      "Different implementations per type",
+      "Runtime type checking",
+      "Object-oriented inheritance"
+    ],
+    "answer": 0,
+    "explain": "Parametric polymorphism allows a function to work on any type uniformly\u2014e.g., `id x = x` works for all types. Achieved via type variables (\u2200 a. a \u2192 a), it contrasts with ad-hoc polymorphism (overloading) where different implementations exist per type. Parametric polymorphism guarantees that the function treats all types identically (relational parametricity), which enables compiler optimizations and strong abstraction. The key theorem is Reynolds' Parametricity: a parametrically polymorphic function cannot inspect the structure of its argument\u2014GenericList<T> in C# or `list<'a>` in OCaml exemplify this."
+  },
+  {
+    "topic": "Type Systems",
+    "q": "In dependent type systems, what can types depend on?",
+    "options": [
+      "Values at runtime",
+      "Type parameters only",
+      "Memory addresses",
+      "Stack frames"
+    ],
+    "answer": 0,
+    "explain": "In dependent types, types can depend on values (not just other types)\u2014e.g., `Vec n` represents a vector of exactly length n, where n is a value. This enables type-level verification of properties (length, bounds, etc.), moving runtime checks to compile-time. Dependent types are more expressive than simple types but complicate inference and require more annotations; not all computations on dependents are decidable. Idris and Coq support full dependent types, while Haskell's type-level promoted naturals approximate this."
+  },
+  {
+    "topic": "Functional",
+    "q": "What is a closure?",
+    "options": [
+      "A function with captured variables from its environment",
+      "A static method",
+      "A compiled function",
+      "A garbage collected object"
+    ],
+    "answer": 0,
+    "explain": "A closure is a function bundled with its captured environment (free variables), allowing the function to access variables from its enclosing scope even after that scope exits. Closures require either heap allocation for captured variables or lazy capture of environment; without closures, inner functions couldn't access outer scope. Closures enable high-order programming patterns (callbacks, partial application, memoization). They are fundamental to functional programming\u2014every lambda in JavaScript or Python creates a closure."
+  },
+  {
+    "topic": "Functional",
+    "q": "Which is a pure functional operation?",
+    "options": [
+      "map(f, list)",
+      "list.sort()",
+      "global = 5",
+      "file.write(data)"
+    ],
+    "answer": 0,
+    "explain": "Pure operations have no side effects (no mutation, I/O, or external state change) and return the same output for the same input. Pure functions are easier to reason about, test, cache, and parallelize; impure operations depend on or modify global state, breaking these guarantees. In Haskell, purity is enforced by the type system via the IO monad; in imperative languages, purity is a convention."
+  },
+  {
+    "topic": "Functional",
+    "q": "What does fold (reduce) compute?",
+    "options": [
+      "An accumulated result from iterating over a list",
+      "A list of the same length",
+      "A boolean test",
+      "A type signature"
+    ],
+    "answer": 0,
+    "explain": "Fold (reduce) aggregates a collection by applying a binary function across all elements with an accumulator. fold (+) 0 [1,2,3] computes ((0 + 1) + 2) + 3 = 6, combining all elements into a single result. Fold is a fundamental recursion scheme in functional programming, expressing loops without explicit state mutation. Every computation over a collection (sum, max, concatenation) can be expressed as a fold\u2014map and filter are special folds\u2014making it a powerful abstraction."
+  },
+  {
+    "topic": "OOP",
+    "q": "In OOP, what does polymorphism enable?",
+    "options": [
+      "Writing code that works with objects of different types",
+      "Memory optimization",
+      "Faster compilation",
+      "Type erasure"
+    ],
+    "answer": 0,
+    "explain": "Polymorphism enables one interface (function or class) to operate on different types, providing flexibility and code reuse. Parametric polymorphism (generics) works for all types; ad-hoc polymorphism (overloading/method dispatch) allows different behaviors per type. Without polymorphism, languages must duplicate code for each type or use unsafe casts. Object-oriented polymorphism via method dispatch is ubiquitous; functional parametric polymorphism is equally powerful."
+  },
+  {
+    "topic": "OOP",
+    "q": "What is the Liskov Substitution Principle?",
+    "options": [
+      "Subtypes must be substitutable for their base types",
+      "All objects inherit from Object",
+      "Dynamic dispatch must be used",
+      "Classes must be immutable"
+    ],
+    "answer": 0,
+    "explain": "The Liskov Substitution Principle (LSP) states that objects of a derived class must be substitutable for base class objects without breaking correctness. If you can pass a derived class instance where a base class is expected, the program must remain correct. Violating LSP (e.g., Square inheriting from Rectangle) breaks substitutability and introduces subtle bugs. LSP is key to sound subtyping; languages without enforced LSP (like C++ with covariant return types) allow unsound inheritance."
+  },
+  {
+    "topic": "Imperative",
+    "q": "What does a mutable reference (ref cell) store?",
+    "options": [
+      "A location that can be read and written",
+      "An immutable value",
+      "A function pointer",
+      "Type information"
+    ],
+    "answer": 0,
+    "explain": "A mutable reference (ref cell or pointer) stores a value that can be changed in-place after creation. Mutation violates immutability and functional purity, making programs harder to reason about and parallelize, but it enables efficient in-place updates. Ref cells allow imperative patterns in functional languages; most languages provide some form of reference for performance. Rust's borrow checker restricts mutable references to prevent data races and use-after-free."
+  },
+  {
+    "topic": "Imperative",
+    "q": "Which is an imperative feature?",
+    "options": [
+      "Variable assignment (mutation)",
+      "Pattern matching",
+      "Type inference",
+      "List comprehension"
+    ],
+    "answer": 0,
+    "explain": "Imperative features include mutable state, explicit sequencing, loops, and side effects\u2014changing variables, I/O, global state modification. Imperative code specifies 'how' to compute via a sequence of state-changing commands, contrasting with functional 'what' declarations. Most mainstream languages (C, Java, Python) are imperative or multi-paradigm, prioritizing performance and intuitive control flow. Pure imperative languages (like C) have no abstraction for managing effects."
+  },
+  {
+    "topic": "Lambda Calculus",
+    "q": "In lambda calculus, what does \u03b2-reduction represent?",
+    "options": [
+      "Function application",
+      "Type substitution",
+      "Memory allocation",
+      "Garbage collection"
+    ],
+    "answer": 0,
+    "explain": "\u03b2-reduction (beta-reduction) is the substitution of an argument for a parameter in a lambda term: (\u03bbx. e) a reduces to e[a/x]. It represents function application and is the core computation mechanism in lambda calculus. \u03b2-reduction is deterministic if the language uses call-by-value; multiple redexes can exist (call-by-name), leading to different reduction orders. The Church-Rosser theorem guarantees that regardless of reduction order, if a term has a normal form, all reduction sequences reach the same result."
+  },
+  {
+    "topic": "Lambda Calculus",
+    "q": "What is \u03b1-equivalence?",
+    "options": [
+      "Two functions are equivalent if they differ only in bound variable names",
+      "Reduction to normal form",
+      "Type checking",
+      "Compilation"
+    ],
+    "answer": 0,
+    "explain": "\u03b1-equivalence (alpha-equivalence) states that two terms are equal if they differ only in bound variable names: \u03bbx. x+1 and \u03bby. y+1 are \u03b1-equivalent. \u03b1-equivalence avoids spurious distinctions caused by variable renaming and is essential for defining structural equality in lambda calculus. Correct implementation requires careful variable capture; in implementations, terms are often converted to canonical forms (de Bruijn indices) to make \u03b1-equivalence automatic."
+  },
+  {
+    "topic": "Lambda Calculus",
+    "q": "A term is in normal form when:",
+    "options": [
+      "No more \u03b2-reductions are possible",
+      "All variables are renamed",
+      "It is type-checked",
+      "It is compiled"
+    ],
+    "answer": 0,
+    "explain": "A term is in normal form when no further \u03b2-reductions are possible\u2014the term cannot be simplified further. Every lambda calculus program eventually reaches a normal form or diverges (infinite loop). Normal forms represent final computed values; a language's semantics is defined partly by which normal form is reached (or if one exists). Not all terms have normal forms (e.g., (\u03bbx. x x)(\u03bbx. x x) loops forever); the halting problem makes detection undecidable."
+  },
+  {
+    "topic": "Lazy Evaluation",
+    "q": "Lazy evaluation delays computation until:",
+    "options": [
+      "The result is actually needed",
+      "The function is defined",
+      "Memory is low",
+      "Type checking completes"
+    ],
+    "answer": 0,
+    "explain": "Lazy evaluation delays computation until a value is actually needed, avoiding unnecessary work and enabling infinite data structures (lazy lists, streams). A thunk (unevaluated computation) is created instead of immediately computing; evaluation happens on-demand. Lazy evaluation can dramatically improve performance by skipping irrelevant branches but complicates reasoning about side effects and resource usage (garbage collection, space leaks). Haskell is famously lazy; Python's generators use lazy evaluation."
+  },
+  {
+    "topic": "Lazy Evaluation",
+    "q": "A thunk is:",
+    "options": [
+      "A zero-argument function that delays computation",
+      "A compiled closure",
+      "A type variable",
+      "A memory block"
+    ],
+    "answer": 0,
+    "explain": "A thunk is an unevaluated expression bundled as a closure, deferring computation until forced. Creating thunks replaces eager evaluation; they encapsulate the computation and its environment. Thunks are the runtime mechanism implementing lazy evaluation; each lazy value is stored as a thunk until demanded. Rust's lazy_static and closures are thunk-like; languages use thunks for laziness or as a general suspension mechanism."
+  },
+  {
+    "topic": "Continuations",
+    "q": "What is a continuation?",
+    "options": [
+      "The remainder of the computation after a point",
+      "A loop construct",
+      "A type annotation",
+      "A garbage collection phase"
+    ],
+    "answer": 0,
+    "explain": "A continuation is a function representing 'the rest of the computation' from a given point onward\u2014what the program does with the result of the current expression. Continuations are implicit in procedural languages (control flow, return addresses on the stack) but can be made explicit via first-class continuations (call/cc). Continuations enable powerful control abstractions (loops, exceptions, backtracking) and are central to CPS (continuation-passing style) transformation. Racket and Scheme expose call/cc for advanced control flow."
+  },
+  {
+    "topic": "Continuations",
+    "q": "Call/cc (call-with-current-continuation) captures:",
+    "options": [
+      "The current continuation and passes it as a function",
+      "The current stack frame",
+      "The current type environment",
+      "The current memory state"
+    ],
+    "answer": 0,
+    "explain": "Call/cc (call-with-current-continuation) captures the current continuation as a first-class function, allowing the program to 'jump' back to that point by invoking the captured continuation. This enables non-local exits (exceptions, coroutines) and advanced control structures that are otherwise impossible. Capturing continuations is powerful but can break reasoning about program flow; most languages avoid exposing continuations to prevent complexity. Scheme and Racket provide call/cc for advanced metaprogramming."
+  },
+  {
+    "topic": "Effects & Monads",
+    "q": "What is the purpose of a monad in functional programming?",
+    "options": [
+      "Encapsulating side effects in a structured way",
+      "Type inference",
+      "Memory management",
+      "Inheritance"
+    ],
+    "answer": 0,
+    "explain": "A monad abstracts an effect (IO, state, exceptions, nondeterminism) as a computational structure, providing bind (>>=) to sequence effects while hiding imperative details. Monads satisfy three laws (left/right identity, associativity), ensuring composability and predictability. The monad pattern separates pure logic (function definitions) from impure effects (monad operations), enabling functional abstraction of side effects. Haskell uses monads for all effects via the IO, State, Maybe, and List monads."
+  },
+  {
+    "topic": "Effects & Monads",
+    "q": "The Maybe monad is used for:",
+    "options": [
+      "Handling computations that might not have a result",
+      "Multiple inheritance",
+      "Lazy evaluation",
+      "Type checking"
+    ],
+    "answer": 0,
+    "explain": "The Maybe monad handles computations that may fail (return Nothing or a value). It allows chaining operations that might fail without explicit null checks\u2014bind propagates Nothing through the chain. Maybe prevents null pointer exceptions by making failure explicit in the type. Languages without explicit Maybe types (like Java) conflate null (failure) with legitimate values, causing bugs; Rust's Option<T> and Haskell's Maybe enforce safe handling."
+  },
+  {
+    "topic": "GC",
+    "q": "Mark-and-sweep garbage collection works by:",
+    "options": [
+      "Marking reachable objects, then sweeping unreachable ones",
+      "Reference counting",
+      "Copying live data to new space",
+      "Generational promotion"
+    ],
+    "answer": 0,
+    "explain": "Mark-and-sweep garbage collection stops the program, marks all reachable objects starting from roots (stack, globals), sweeps over all objects removing unmarked ones, and restarts. It's conceptually simple and handles cycles unlike reference counting, but incurs pauses during the mark phase. Mark-and-sweep is foundational; most collectors use variants (tri-color marking, incremental marking) to reduce pause times. The JVM and Go use mark-and-sweep-based collectors."
+  },
+  {
+    "topic": "GC",
+    "q": "Generational garbage collection assumes:",
+    "options": [
+      "Most objects die young; separate young and old spaces",
+      "All objects need equal scan time",
+      "Reference counting is sufficient",
+      "Manual memory is safer"
+    ],
+    "answer": 0,
+    "explain": "Generational garbage collection assumes most objects die young (weak generational hypothesis), collecting young objects frequently and old objects rarely. This reduces pause times by focusing effort on the short-lived objects where most reclamation happens. Generational collection requires tracking references from old to young objects (write barriers), adding overhead but enabling faster young-generation collection. The JVM's G1GC and most modern collectors use generational strategies."
+  },
+  {
+    "topic": "Type Inference",
+    "q": "Type inference can produce:",
+    "options": [
+      "The principal type for an expression",
+      "Multiple incompatible types",
+      "Unbounded type variables",
+      "Runtime type errors"
+    ],
+    "answer": 0,
+    "explain": "Type inference produces the most general type for a term, inferred automatically without explicit annotations. Principal types (most general types) are unique for well-typed programs; different type assumptions could infer different types, but one is most general. Type inference is decidable for simple types and HM but undecidable for higher-rank or dependent types. HM type inference produces principal types; Haskell infers `\\x -> x` as `\u2200a. a \u2192 a` without annotation."
+  },
+  {
+    "topic": "Type Inference",
+    "q": "A type variable in HM is:",
+    "options": [
+      "An unknown type that must be determined",
+      "A type parameter in a class",
+      "A runtime variable",
+      "A memory address"
+    ],
+    "answer": 0,
+    "explain": "A type variable in HM (Hindley-Milner) is a schematic placeholder for an unknown type, universally quantified in a generic function. Type variables are introduced during inference and unified (constrained) by usage; unbound type variables remain quantified. Type variables enable `\\x -> x` to have type `\u2200a. a \u2192 a`, working on any input. Type variables are distinct from type parameters in imperative languages (Java generics)\u2014HM variables are inferred, not explicitly declared."
+  },
+  {
+    "topic": "Semantics",
+    "q": "What distinguishes call-by-value from call-by-name?",
+    "options": [
+      "When arguments are evaluated: before vs during function application",
+      "Argument order",
+      "Function size",
+      "Memory layout"
+    ],
+    "answer": 0,
+    "explain": "Call-by-value evaluates arguments eagerly before applying the function; call-by-name passes arguments unevaluated (as thunks), reducing them on each use. Call-by-value dominates because it matches intuition, handles side effects predictably, and is efficient; call-by-name can duplicate evaluation if an argument is used multiple times. Call-by-need (lazy evaluation) is call-by-name with memoization\u2014reusing the result\u2014balancing both benefits. Languages differ: Lisp uses call-by-value; Haskell uses call-by-need."
+  },
+  {
+    "topic": "Functional",
+    "q": "What is eta-reduction?",
+    "options": [
+      "Simplifying \u03bbx.f(x) to f (function equivalence)",
+      "Collecting unreachable objects",
+      "Renaming variables",
+      "Type erasure"
+    ],
+    "answer": 0,
+    "explain": "Eta-reduction (\u03b7-reduction) simplifies `\u03bbx. f x` to `f`, removing the redundant lambda wrapper since both express the same function. \u03b7-reduction is a structural simplification in lambda calculus, eliminating vacuous abstraction. Unlike \u03b2-reduction (function application), \u03b7-reduction is about recognizing equivalent functions and is safe only when no side effects or strict evaluation are present. Most compilers apply \u03b7-reduction for optimization."
+  },
+  {
+    "topic": "OOP",
+    "q": "Duck typing means:",
+    "options": [
+      "Type is determined by what methods/attributes an object has, not its declared type",
+      "All objects inherit from a base",
+      "Types are checked at compile time",
+      "Methods must be virtual"
+    ],
+    "answer": 0,
+    "explain": "Duck typing allows an object to be used wherever a compatible interface is present, without explicit type declarations. If it walks like a duck and quacks like a duck, it's a duck\u2014structural compatibility, not inheritance. Duck typing provides flexibility and is easier for prototyping but sacrifices static type safety; errors appear at runtime. Python, JavaScript, and Ruby embrace duck typing; languages like Java enforce nominal subtyping instead."
+  },
+  {
+    "topic": "Type Systems",
+    "q": "What is type soundness?",
+    "options": [
+      "Well-typed programs cannot exhibit runtime type errors",
+      "Type checking is fast",
+      "Types are erased at runtime",
+      "All values are immutable"
+    ],
+    "answer": 0,
+    "explain": "Type soundness ensures that well-typed programs don't go wrong (don't perform undefined operations like adding an integer to a list). Formally: if a program type-checks, its execution either terminates normally or diverges (no type errors at runtime). Type soundness requires the type system (syntax) and semantics (execution) to align; soundness is proven via type preservation and progress theorems. Rust's type system is sound regarding memory safety; untyped languages (Python) are unsound."
+  },
+  {
+    "topic": "Lambda Calculus",
+    "q": "Church encoding represents numbers using:",
+    "options": [
+      "Lambda functions",
+      "Reference cells",
+      "Pattern matching",
+      "Arrays"
+    ],
+    "answer": 0,
+    "explain": "Church encoding represents numbers and data structures as lambda terms (functions): 0 \u2261 \u03bbs. \u03bbz. z (apply s zero times), 1 \u2261 \u03bbs. \u03bbz. s z (apply s once), etc. Arithmetic operations are defined as lambda terms: addition chains applications of the successor function. Church encoding shows that functions alone (no primitives) suffice to compute anything\u2014proving lambda calculus is Turing complete. Church encoding is impractical but theoretically fundamental to computability."
+  },
+  {
+    "topic": "Semantics",
+    "q": "Fixed-point combinators (like Y) are used for:",
+    "options": [
+      "Defining recursive functions in languages without explicit recursion",
+      "Garbage collection",
+      "Type checking",
+      "Memory allocation"
+    ],
+    "answer": 0,
+    "explain": "Fixed-point combinators (like Y) compute fixed points of functions, enabling recursion in lambda calculus where functions don't have names. Y f finds x such that x = f x, allowing f x x... to loop back. Fixed-point combinators are used for expressing recursion in purely functional languages and proving completeness; they're rarely needed in practice because languages provide `letrec` or named recursion. Implementing recursion via Y is a key result in lambda calculus."
+  },
+  {
+    "topic": "Functional",
+    "q": "Immutability in functional languages ensures:",
+    "options": [
+      "No state changes after creation; predictable, thread-safe behavior",
+      "Better performance always",
+      "Smaller code size",
+      "Easier compilation"
+    ],
+    "answer": 0,
+    "explain": "Immutability ensures variables or objects cannot change after creation, enforcing functional purity and preventing accidental modifications. Immutable data structures simplify reasoning (no hidden state changes), enable parallelization (no race conditions), and improve compiler optimizations. Immutability trades some performance (copying instead of in-place updates) for safety and correctness. Functional languages (Haskell, Lisp) default to immutability; imperative languages (Java, Rust) provide immutable variants."
+  },
+  {
+    "topic": "Type Systems",
+    "q": "Type erasure means:",
+    "options": [
+      "Generic type information is removed at runtime",
+      "Variables lose their names",
+      "Memory is deallocated",
+      "Compilation fails"
+    ],
+    "answer": 0,
+    "explain": "Type erasure removes generic type information at runtime, replacing type parameters with their bounds (usually Object). After compilation, `List<String>` and `List<Integer>` become the same bytecode (List), enabling backward compatibility but preventing runtime type reflection. Type erasure was chosen for Java generics for compatibility; it complicates reflection and prevents specialized code generation. C++ templates avoid erasure, generating specialized code per type."
+  },
+  {
+    "topic": "Imperative",
+    "q": "What is the main drawback of mutable state?",
+    "options": [
+      "Difficult to reason about; state can change unexpectedly",
+      "Slower execution",
+      "Uses more memory",
+      "Harder to compile"
+    ],
+    "answer": 0,
+    "explain": "Mutable state (modifying variables or objects in-place) breaks pure functional reasoning, introduces hidden dependencies (temporal coupling), complicates concurrency (race conditions), and prevents optimization. Pure functions without mutable state are referentially transparent\u2014substitutable by their results\u2014enabling compiler optimizations and parallel execution. Languages restrict mutability via types (Rust's borrow checker) or convention (Haskell IO monad) to maintain reasoning ability."
+  }
+]</script>
 <script>
 (function() {
   const dataEl = document.getElementById('quiz-data');

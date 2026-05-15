@@ -2176,795 +2176,401 @@ if (typeof switchTab === 'function') {
 })();
 </script>
 <!-- END tooltip-pin -->
-<script>
-(function() {
-  const dataEl = document.getElementById('quiz-data');
-  if (!dataEl) return;
-  let questions;
-  try { questions = JSON.parse(dataEl.textContent); } catch(e) { console.error('Quiz JSON parse error', e); return; }
-  if (!Array.isArray(questions) || !questions.length) return;
 
-  // ── Inject CSS ──
-  const css = `
-  #view-quiz { overflow-y: auto; padding-top: 60px; height: 100vh; }
-  .quiz-wrap { max-width: 880px; margin: 0 auto; padding: 24px 24px 80px; }
-  .quiz-header { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; margin-bottom: 12px; }
-  .quiz-header h2 { font-size: 22px; color: #58a6ff; }
-  .quiz-header .quiz-sub { font-size: 12px; color: #8b949e; margin-top: 2px; }
-  .quiz-stats { display:flex; gap:10px; flex-wrap:wrap; }
-  .quiz-stat { background:#161b22; border:1px solid #30363d; border-radius:8px; padding:8px 14px; font-size:12px; color:#8b949e; }
-  .quiz-stat b { color:#c9d1d9; font-size:15px; display:block; }
-  .quiz-stat.ok b { color:#7ee787; }
-  .quiz-stat.bad b { color:#ff7b72; }
-  .quiz-filters { display:flex; flex-wrap:wrap; gap:6px; margin: 12px 0 16px; }
-  .quiz-chip { background:#0d1117; border:1px solid #30363d; color:#8b949e; padding:5px 12px; border-radius:16px; cursor:pointer; font-size:12px; transition:all .15s; }
-  .quiz-chip:hover { color:#c9d1d9; border-color:#58a6ff; }
-  .quiz-chip.active { background:#1f6feb; color:#fff; border-color:#58a6ff; }
-  .quiz-actions { display:flex; gap:8px; flex-wrap:wrap; margin-bottom: 14px; }
-  .quiz-actions .qbtn { background:#21262d; border:1px solid #30363d; color:#c9d1d9; padding:6px 14px; border-radius:6px; cursor:pointer; font-size:12px; }
-  .quiz-actions .qbtn:hover { background:#30363d; border-color:#58a6ff; }
-  .quiz-progress { height:6px; background:#161b22; border-radius:4px; overflow:hidden; margin-bottom:16px; border:1px solid #30363d; }
-  .quiz-progress > div { height:100%; background:linear-gradient(90deg,#1f6feb,#58a6ff); transition:width .3s; }
-  .quiz-card { background:#161b22; border:1px solid #30363d; border-radius:12px; padding:22px 26px; box-shadow:0 4px 18px rgba(0,0,0,.3); }
-  .quiz-card .qc-meta { font-size:11px; color:#58a6ff; font-weight:600; text-transform:uppercase; letter-spacing:.5px; margin-bottom:8px; display:flex; justify-content:space-between; }
-  .quiz-card .qc-meta .qc-num { color:#8b949e; }
-  .quiz-card .qc-q { font-size:16px; color:#c9d1d9; line-height:1.55; font-weight:600; margin-bottom:16px; }
-  .quiz-options { display:flex; flex-direction:column; gap:8px; }
-  .quiz-opt { background:#0d1117; border:1px solid #30363d; color:#c9d1d9; padding:11px 16px; border-radius:8px; cursor:pointer; text-align:left; font-size:14px; transition:all .15s; line-height:1.4; display:flex; align-items:flex-start; gap:10px; }
-  .quiz-opt:hover:not(.disabled) { border-color:#58a6ff; background:#161b22; }
-  .quiz-opt .opt-letter { flex-shrink:0; width:22px; height:22px; border-radius:50%; background:#21262d; color:#8b949e; font-size:11px; font-weight:600; display:inline-flex; align-items:center; justify-content:center; }
-  .quiz-opt.correct { border-color:#3fb950; background:rgba(63,185,80,.08); }
-  .quiz-opt.correct .opt-letter { background:#3fb950; color:#fff; }
-  .quiz-opt.wrong { border-color:#f85149; background:rgba(248,81,73,.08); }
-  .quiz-opt.wrong .opt-letter { background:#f85149; color:#fff; }
-  .quiz-opt.disabled { cursor:default; }
-  .quiz-explain { margin-top:14px; padding:12px 16px; background:#0d1117; border-left:3px solid #58a6ff; border-radius:6px; font-size:13px; color:#8b949e; line-height:1.6; }
-  .quiz-explain b { color:#58a6ff; }
-  .quiz-nav { display:flex; justify-content:space-between; gap:10px; margin-top:18px; }
-  .quiz-nav .qbtn { padding:8px 18px; font-size:13px; background:#21262d; border:1px solid #30363d; color:#c9d1d9; border-radius:6px; cursor:pointer; }
-  .quiz-nav .qbtn:hover { background:#30363d; border-color:#58a6ff; }
-  .quiz-nav .qbtn.primary { background:#1f6feb; border-color:#58a6ff; color:#fff; }
-  .quiz-nav .qbtn.primary:hover { background:#388bfd; }
-  .quiz-nav .qbtn:disabled { opacity:.4; cursor:not-allowed; }
-  .quiz-empty { text-align:center; color:#484f58; padding:60px 20px; font-style:italic; }
-  .quiz-summary { background:#161b22; border:1px solid #30363d; border-radius:12px; padding:32px; text-align:center; }
-  .quiz-summary h3 { color:#58a6ff; font-size:22px; margin-bottom:6px; }
-  .quiz-summary .qs-score { font-size:56px; font-weight:700; color:#7ee787; margin:12px 0; }
-  .quiz-summary .qs-pct { color:#8b949e; font-size:14px; margin-bottom:16px; }
-  .quiz-summary .qs-breakdown { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:8px; margin:20px 0; text-align:left; }
-  .quiz-summary .qs-row { background:#0d1117; border:1px solid #30363d; border-radius:8px; padding:8px 12px; font-size:12px; color:#8b949e; }
-  .quiz-summary .qs-row b { display:block; color:#c9d1d9; font-size:14px; margin-bottom:2px; }
-  @media (max-width: 600px) {
-    .quiz-wrap { padding:14px 12px 80px; }
-    .quiz-card { padding:16px; }
-    .quiz-card .qc-q { font-size:15px; }
-    .quiz-opt { font-size:13px; padding:10px 12px; }
-  }`;
-  const styleEl = document.createElement('style');
-  styleEl.textContent = css;
-  document.head.appendChild(styleEl);
-
-  // ── Inject view container ──
-  function ensureView() {
-    let view = document.getElementById('view-quiz');
-    if (!view) {
-      view = document.createElement('div');
-      view.id = 'view-quiz';
-      view.className = 'view';
-      view.innerHTML = '<div id="quiz-container"></div>';
-      document.body.appendChild(view);
-    }
-    return view;
-  }
-  const viewEl = ensureView();
-
-  // ── State ──
-  const state = { filter: 'ALL', order: [], cursor: 0, answers: {}, built: false };
-
-  function shuffleArr(a) { for (let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} }
-  function escapeHtml(s) { return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
-  function topics() { return ['ALL', ...Array.from(new Set(questions.map(q => q.topic || 'General')))]; }
-  function pool() { return state.order.map(i => ({i, q: questions[i]})).filter(x => state.filter === 'ALL' || (x.q.topic||'General') === state.filter); }
-
-  function build() {
-    state.order = questions.map((_, i) => i);
-    shuffleArr(state.order);
-    const root = document.getElementById('quiz-container');
-    root.innerHTML = `
-      <div class="quiz-wrap">
-        <div class="quiz-header">
-          <div>
-            <h2>🎯 Knowledge Quiz</h2>
-            <div class="quiz-sub">${questions.length} questions across ${topics().length - 1} topics — pick a topic or take it all.</div>
-          </div>
-          <div class="quiz-stats" id="quiz-stats"></div>
-        </div>
-        <div class="quiz-filters" id="quiz-filters"></div>
-        <div class="quiz-actions">
-          <button class="qbtn" data-act="shuffle">🔀 Shuffle</button>
-          <button class="qbtn" data-act="reset">↺ Reset Answers</button>
-          <button class="qbtn" data-act="next-unans">⏭ Next Unanswered</button>
-          <button class="qbtn" data-act="summary">📊 Summary</button>
-        </div>
-        <div class="quiz-progress"><div id="quiz-progress-bar" style="width:0%"></div></div>
-        <div id="quiz-body"></div>
-      </div>`;
-    root.querySelectorAll('.qbtn[data-act]').forEach(b => b.addEventListener('click', () => {
-      const a = b.getAttribute('data-act');
-      if (a === 'shuffle') { shuffleArr(state.order); state.cursor = 0; renderQ(); }
-      else if (a === 'reset') { if (confirm('Reset all answers?')) { state.answers = {}; renderQ(); } }
-      else if (a === 'next-unans') { const p = pool(); const n = p.findIndex(x => state.answers[x.i] === undefined); if (n >= 0) { state.cursor = n; renderQ(); } }
-      else if (a === 'summary') { showSummary(); }
-    }));
-    renderFilters();
-    renderQ();
-    state.built = true;
-  }
-
-  function renderFilters() {
-    const el = document.getElementById('quiz-filters');
-    el.innerHTML = '';
-    topics().forEach(t => {
-      const count = t === 'ALL' ? questions.length : questions.filter(q => (q.topic || 'General') === t).length;
-      const chip = document.createElement('button');
-      chip.className = 'quiz-chip' + (t === state.filter ? ' active' : '');
-      chip.textContent = t === 'ALL' ? `All (${count})` : `${t} (${count})`;
-      chip.addEventListener('click', () => { state.filter = t; state.cursor = 0; renderFilters(); renderQ(); });
-      el.appendChild(chip);
-    });
-  }
-
-  function renderStats() {
-    const p = pool();
-    const answered = p.filter(x => state.answers[x.i] !== undefined);
-    const correct = answered.filter(x => state.answers[x.i] === x.q.answer).length;
-    const wrong = answered.length - correct;
-    const el = document.getElementById('quiz-stats');
-    if (el) el.innerHTML = `
-      <div class="quiz-stat"><b>${p.length}</b>Questions</div>
-      <div class="quiz-stat ok"><b>${correct}</b>Correct</div>
-      <div class="quiz-stat bad"><b>${wrong}</b>Wrong</div>
-      <div class="quiz-stat"><b>${answered.length}/${p.length}</b>Done</div>`;
-    const pct = p.length ? Math.round(100 * answered.length / p.length) : 0;
-    const bar = document.getElementById('quiz-progress-bar');
-    if (bar) bar.style.width = pct + '%';
-  }
-
-  function renderQ() {
-    const p = pool();
-    const body = document.getElementById('quiz-body');
-    if (!p.length) { body.innerHTML = '<div class="quiz-empty">No questions for this filter.</div>'; renderStats(); return; }
-    if (state.cursor >= p.length) state.cursor = p.length - 1;
-    if (state.cursor < 0) state.cursor = 0;
-    const cur = p[state.cursor];
-    const q = cur.q;
-    const selected = state.answers[cur.i];
-    const answered = selected !== undefined;
-    const optsHtml = q.options.map((opt, i) => {
-      let cls = '';
-      if (answered) { if (i === q.answer) cls = 'correct'; else if (i === selected) cls = 'wrong'; cls += ' disabled'; }
-      const letter = String.fromCharCode(65 + i);
-      return `<button class="quiz-opt ${cls}" data-opt="${i}" ${answered ? 'disabled' : ''}>
-        <span class="opt-letter">${letter}</span><span>${escapeHtml(opt)}</span>
-      </button>`;
-    }).join('');
-    body.innerHTML = `
-      <div class="quiz-card">
-        <div class="qc-meta"><span>${escapeHtml(q.topic || 'General')}</span><span class="qc-num">${state.cursor + 1} / ${p.length}</span></div>
-        <div class="qc-q">${escapeHtml(q.q)}</div>
-        <div class="quiz-options">${optsHtml}</div>
-        ${answered ? `<div class="quiz-explain"><b>${selected === q.answer ? '✓ Correct.' : '✗ Not quite.'}</b> ${escapeHtml(q.explain || '')}</div>` : ''}
-        <div class="quiz-nav">
-          <button class="qbtn" data-nav="prev" ${state.cursor === 0 ? 'disabled' : ''}>← Previous</button>
-          <button class="qbtn primary" data-nav="next" ${state.cursor === p.length - 1 ? 'disabled' : ''}>Next →</button>
-        </div>
-      </div>`;
-    body.querySelectorAll('.quiz-opt[data-opt]').forEach(b => b.addEventListener('click', () => {
-      const idx = cur.i;
-      if (state.answers[idx] !== undefined) return;
-      state.answers[idx] = +b.getAttribute('data-opt');
-      renderQ();
-    }));
-    body.querySelectorAll('[data-nav]').forEach(b => b.addEventListener('click', () => {
-      const dir = b.getAttribute('data-nav');
-      const pp = pool();
-      if (dir === 'next' && state.cursor < pp.length - 1) { state.cursor++; renderQ(); }
-      else if (dir === 'prev' && state.cursor > 0) { state.cursor--; renderQ(); }
-    }));
-    renderStats();
-  }
-
-  function showSummary() {
-    const p = pool();
-    const answered = p.filter(x => state.answers[x.i] !== undefined);
-    const correct = answered.filter(x => state.answers[x.i] === x.q.answer).length;
-    const pct = answered.length ? Math.round(100 * correct / answered.length) : 0;
-    const topicStats = {};
-    p.forEach(x => {
-      const t = x.q.topic || 'General';
-      if (!topicStats[t]) topicStats[t] = { total: 0, answered: 0, correct: 0 };
-      topicStats[t].total++;
-      if (state.answers[x.i] !== undefined) {
-        topicStats[t].answered++;
-        if (state.answers[x.i] === x.q.answer) topicStats[t].correct++;
-      }
-    });
-    const rows = Object.entries(topicStats).map(([t,s]) =>
-      `<div class="qs-row"><b>${escapeHtml(t)}</b>${s.correct}/${s.answered} correct · ${s.total} total</div>`).join('');
-    document.getElementById('quiz-body').innerHTML = `
-      <div class="quiz-summary">
-        <h3>Summary</h3>
-        <div class="qs-score">${correct} / ${answered.length || p.length}</div>
-        <div class="qs-pct">${pct}% correct · ${answered.length} of ${p.length} answered</div>
-        <div class="qs-breakdown">${rows}</div>
-        <div class="quiz-nav" style="justify-content:center">
-          <button class="qbtn primary" id="qs-back">Back to Questions</button>
-          <button class="qbtn" id="qs-reset">Reset Answers</button>
-        </div>
-      </div>`;
-    document.getElementById('qs-back').addEventListener('click', renderQ);
-    document.getElementById('qs-reset').addEventListener('click', () => { if (confirm('Reset all answers?')) { state.answers = {}; renderQ(); } });
-  }
-
-  // ── Activate when the quiz tab is shown ──
-  function activate() {
-    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-    viewEl.classList.add('active');
-    document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.view === 'quiz'));
-    // hide any floating canvas-controls from other tabs
-    document.querySelectorAll('.canvas-controls').forEach(c => { if (c.id !== 'quiz-controls') c.style.display = 'none'; });
-    if (!state.built) build();
-  }
-
-  // ── Bootstrap on DOM ready: add tab button, hook switchTab ──
-  function boot() {
-    // Find the tab-group container (handles both class and id variants)
-    const tg = document.querySelector('#tab-group') || document.querySelector('.tab-group');
-    if (tg) {
-      // Avoid duplicate
-      if (!tg.querySelector('[data-view="quiz"]')) {
-        const btn = document.createElement('button');
-        btn.className = 'tab';
-        btn.dataset.view = 'quiz';
-        btn.textContent = '🎯 Quiz';
-        btn.addEventListener('click', () => {
-          if (typeof window.switchTab === 'function') {
-            try { window.switchTab('quiz'); } catch(e) { activate(); }
-            // even if host switchTab handles 'quiz', ensure quiz is built & active
-            activate();
-          } else {
-            activate();
-          }
-        });
-        tg.appendChild(btn);
-      }
-    }
-    // Wrap host switchTab so that programmatic switches also work
-    if (typeof window.switchTab === 'function') {
-      const orig = window.switchTab;
-      window.switchTab = function(tab) {
-        if (tab === 'quiz') { activate(); return; }
-        try { orig(tab); } catch(e) {}
-      };
-    }
-  }
-
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
-  else boot();
-})();
-</script>
 
 <!-- ============================================================
      DROP-IN QUIZ MODULE — self-bootstrapping
      Place this entire block immediately before </body>.
-     Customize the JSON inside <script id="quiz-data"> for the domain.
-     Each question: { topic, q, options:[...4], answer:0..3, explain }
-     ============================================================ -->
+     Customize the JSON inside 
+
+
 <script id="quiz-data" type="application/json">
 [
   {
     "topic": "Cryptography",
     "q": "What security property do zero-knowledge proofs provide?",
-    "options": ["User's identity is hidden", "Verifier learns nothing except proof correctness", "All messages are encrypted", "Prover must reveal private key"],
+    "options": [
+      "User's identity is hidden",
+      "Verifier learns nothing except proof correctness",
+      "All messages are encrypted",
+      "Prover must reveal private key"
+    ],
     "answer": 1,
-    "explain": "ZKPs prove a statement is true without revealing any other information to the verifier."
+    "explain": "Zero-knowledge proofs allow a prover to convince a verifier of a statement's truth without revealing any additional information beyond the statement itself. Formally, this satisfies completeness (true statements are provable), soundness (false statements cannot be proven), and zero-knowledge (verifier learns only proof validity). Sigma protocols and Fiat-Shamir transform exemplify this in practice; rejecting options like 'identity is hidden' (incorrect—ZKP concerns statement validity, not anonymity) and 'prover reveals private key' (contradicts the zero-knowledge property). This property is foundational for privacy-preserving systems and authentication schemes, as demonstrated in blockchain applications like Zcash."
   },
   {
     "topic": "Cryptography",
     "q": "In Multi-Party Computation (MPC), what is the primary goal?",
-    "options": ["Compute function output with public data", "Compute function on private inputs while keeping inputs secret", "Encrypt data with multiple keys", "Distribute cryptographic keys"],
+    "options": [
+      "Compute function output with public data",
+      "Compute function on private inputs while keeping inputs secret",
+      "Encrypt data with multiple keys",
+      "Distribute cryptographic keys"
+    ],
     "answer": 1,
-    "explain": "MPC allows parties to jointly compute a result while each party keeps inputs private."
+    "explain": "Multi-party computation enables multiple parties to collaboratively compute a function output without any party revealing its individual input to others. Foundationally, MPC constructions like GMW (Goldreich-Micali-Wigderson) use garbled circuits and oblivious transfer, while BGW (Ben-Or, Goldwasser, Wigderson) leverages Shamir secret sharing for passive security. Unlike naive approaches that require a trusted third party or reveal intermediate data, MPC maintains input secrecy via cryptographic protocols. It's distinct from symmetric encryption (option C) as it enables computation, not just confidentiality, and applies to real-world scenarios like secure auctions and privacy-preserving analytics where data holders cannot trust each other."
   },
   {
     "topic": "Cryptography",
     "q": "Which post-quantum algorithm is based on lattice problems?",
-    "options": ["NTRU only", "RSA-QC", "Both NTRU and Kyber", "McEliece only"],
+    "options": [
+      "NTRU only",
+      "RSA-QC",
+      "Both NTRU and Kyber",
+      "McEliece only"
+    ],
     "answer": 2,
-    "explain": "Both NTRU and Kyber are lattice-based PQ candidates; Kyber is NIST-standardized."
+    "explain": "Lattice-based cryptography resists both classical and quantum adversaries by reducing to hard lattice problems like LWE (Learning With Errors). Both NTRU and Kyber solve these lattice problems, making option 2 correct; NIST standardized Kyber as ML-KEM in 2024 for key encapsulation, while NTRU remains a strong alternative. Option 1 (NTRU only) ignores Kyber's standardization; option 3 (McEliece) references code-based PQC, a different family. Lattice-based algorithms are superior to traditional RSA (which Shor's algorithm breaks on quantum computers) and are now mandated in post-quantum migration standards like NIST SP 800-285, reflecting enterprise threat models anticipating harvest-now-decrypt-later attacks."
   },
   {
     "topic": "Cryptography",
     "q": "What is the security reduction of elliptic curve cryptography?",
-    "options": ["Factorization problem", "Discrete logarithm problem", "Subset sum problem", "Boolean satisfiability"],
+    "options": [
+      "Factorization problem",
+      "Discrete logarithm problem",
+      "Subset sum problem",
+      "Boolean satisfiability"
+    ],
     "answer": 1,
-    "explain": "ECDLP (Elliptic Curve Discrete Logarithm Problem) is the hard problem underlying ECC."
+    "explain": "Elliptic curve cryptography's security reduction rests on the Elliptic Curve Discrete Logarithm Problem: given generator g and point Q = dg, computing d is computationally hard. This differs fundamentally from factorization (RSA) and integer factorization, offering smaller key sizes (~256 bits) equivalent to 3072-bit RSA. The reduction is rigorous: any efficient ECDLP solver breaks ECC; conversely, any attacker must solve ECDLP. Subset sum and Boolean satisfiability (options C and D) are NP-hard but unrelated to ECC. In practice, ECDLP is attacked via Pollard rho (~2^128 for 256-bit curves), motivating curve selection (P-256, Curve25519) and driving adoption in TLS 1.3 and EdDSA signatures for improved efficiency."
   },
   {
     "topic": "Side Channels",
     "q": "Spectre exploits which CPU feature to leak data?",
-    "options": ["Cache timing", "Speculative execution", "Branch prediction", "Memory protection"],
+    "options": [
+      "Cache timing",
+      "Speculative execution",
+      "Branch prediction",
+      "Memory protection"
+    ],
     "answer": 1,
-    "explain": "Spectre leverages speculative execution to load secret data into CPU cache where timing can be used to read it."
+    "explain": "Spectre (CVE-2017-5753) exploits CPU speculative execution, where processors execute instructions ahead of branch resolution, then roll back if mispredicted. An attacker misdirects the speculator to load kernel memory into cache; though the CPU reverts the load, the data's presence in cache creates a measurable timing side-channel (Flush+Reload). This differs from Meltdown (out-of-order execution) and is harder to patch, requiring microcode and ISA-level defenses. Branch prediction and memory protection (options A, C, D) are not exploited; speculative execution alone enables the breach. Spectre's discovery catalyzed microarchitectural defense research (retpoline, LFENCE, transient execution defenses) and influenced hardware design across Intel, AMD, and ARM."
   },
   {
     "topic": "Side Channels",
     "q": "What does a Flush+Reload attack require?",
-    "options": ["Physical access to hardware", "Shared L3 cache and ability to flush memory", "Root privileges only", "Network connectivity"],
+    "options": [
+      "Physical access to hardware",
+      "Shared L3 cache and ability to flush memory",
+      "Root privileges only",
+      "Network connectivity"
+    ],
     "answer": 1,
-    "explain": "Flush+Reload exploits shared L3 cache to detect memory access patterns by flushing lines and measuring reload time."
+    "explain": "Flush+Reload is a cache-based side-channel attack where the attacker flushes a memory line from cache, observes the victim's code, then measures the time to reload the line. If the victim accessed the line, reload is fast (hit); if not, reload is slow (miss), leaking code execution paths. This requires shared L3 cache (Intel multi-core) and precise timing (available via TSC or RDTSC instructions). Physical access is unnecessary (ruling out option A); root is helpful but not strictly required; networking is irrelevant. Real-world exploits have extracted cryptographic keys from OpenSSL, libgcrypt, and SGX enclaves, demonstrating the attack's practicality and motivating cache partitioning (Intel CAT) and constant-time code."
   },
   {
     "topic": "Side Channels",
     "q": "How does power analysis differ from timing attacks?",
-    "options": ["Power uses EMI; timing uses CPU frequency", "Power measures electrical consumption; timing measures execution duration", "They are identical concepts", "Power requires network sniffing"],
+    "options": [
+      "Power uses EMI; timing uses CPU frequency",
+      "Power measures electrical consumption; timing measures execution duration",
+      "They are identical concepts",
+      "Power requires network sniffing"
+    ],
     "answer": 1,
-    "explain": "Power analysis directly measures power consumption to infer operations; timing attacks measure how long operations take."
+    "explain": "Power analysis and timing attacks are distinct side-channel vectors: power analysis monitors electrical consumption (via side-channel measurement or dedicated power probes), revealing which operations the CPU performs, while timing attacks observe execution duration. Differential Power Analysis (DPA) can recover AES keys from smartcards; Simple Power Analysis (SPA) correlates power spikes with cryptographic operations. Timing attacks (like Kocher's against RSA modular exponentiation) deduce private key bits from operation latency. EMI (option A) is neither; both relate to physical observables, not protocol differences (ruling out C). Mitigations include power smoothing, random delays, and randomized algorithms—critical for IoT, smartcards, and edge devices where physical proximity enables extraction of session keys or authentication codes."
   },
   {
     "topic": "Side Channels",
     "q": "What is a Meltdown's core vulnerability?",
-    "options": ["Branch prediction unit flaw", "Out-of-order execution allows reading kernel memory before access check", "Speculative prefetching", "L3 cache coherency bug"],
+    "options": [
+      "Branch prediction unit flaw",
+      "Out-of-order execution allows reading kernel memory before access check",
+      "Speculative prefetching",
+      "L3 cache coherency bug"
+    ],
     "answer": 1,
-    "explain": "Meltdown exploits out-of-order execution: CPU reads kernel memory speculatively before permission checks occur."
+    "explain": "Meltdown (CVE-2017-5754) abuses out-of-order execution: CPUs speculatively fetch kernel memory before permission checks complete. Though the load is eventually faulted, the data's side-effects in cache persist, leaking via Flush+Reload or similar timing attacks. This differs from Spectre (speculative execution) and uniquely broke memory isolation between user and kernel, affecting nearly all x86/ARM processors pre-2018. Branch prediction (option A) is not the root cause; cache coherency bugs (option D) are orthogonal. Kernel patches applied mitigations (KPTI—Kernel Page Table Isolation) with significant performance cost, driving hardware fixes (Intel's IPRED, AMD's Zen3 redesign). CVE-2017-5754 exemplifies how transient execution violations compromise decades-old security assumptions."
   },
   {
     "topic": "Web Security",
     "q": "What is the SameSite cookie attribute's primary defense against?",
-    "options": ["SQL injection", "CSRF attacks", "XSS attacks", "Cache poisoning"],
+    "options": [
+      "SQL injection",
+      "CSRF attacks",
+      "XSS attacks",
+      "Cache poisoning"
+    ],
     "answer": 1,
-    "explain": "SameSite restricts cookies in cross-site requests, mitigating CSRF by preventing automatic cookie inclusion."
+    "explain": "The SameSite cookie attribute prevents cookies from being sent with cross-site requests, blocking Cross-Site Request Forgery (CSRF) attacks where malicious sites forge authenticated requests. By setting SameSite=Strict or Lax, the browser omits cookies from <img>, <form>, or fetch() calls to third-party sites. This directly mitigates CSRF because attackers cannot include session cookies in forged requests. SQL injection (option A) involves database queries, not cookie transmission; XSS (option C) relates to script injection; cache poisoning (option D) is content-layer. Browsers now default to SameSite=Lax, but legacy applications must opt-in. Notably, CSRF defenses also include token-based CSRF protection and Origin/Referer header validation, all working in defense-in-depth."
   },
   {
     "topic": "Web Security",
     "q": "In Content Security Policy, what does 'nonce' protect against?",
-    "options": ["MITM attacks", "XSS via inline scripts", "SQL injection", "CORS violations"],
+    "options": [
+      "MITM attacks",
+      "XSS via inline scripts",
+      "SQL injection",
+      "CORS violations"
+    ],
     "answer": 1,
-    "explain": "CSP nonces enable specific inline scripts while blocking others, preventing XSS from injected inline code."
+    "explain": "Content Security Policy (CSP) nonces allow developers to whitelist specific inline <script> tags by assigning unique cryptographic values (nonces) to each trusted script and including matching nonce-* directives in the CSP header. This prevents reflected or stored XSS from executing injected inline scripts lacking the nonce. For example, <script nonce='abc123'> would execute only if CSP includes script-src 'nonce-abc123'. This differs from MITM attacks (handled by HTTPS), SQL injection (database-level), and CORS violations (cross-origin fetch policy). Modern CSP also supports script hashes for immutable scripts. Real-world deployments (e.g., Google, Twitter) use nonces for legitimate ad networks and analytics while blocking malicious injections—a critical defense against Magecart and similar supply-chain compromises."
   },
   {
     "topic": "Web Security",
     "q": "What is the DOM-based XSS vulnerability pattern?",
-    "options": ["Server echoes user input in HTML", "Client-side code unsafely uses attacker-controlled input", "HTTP response splitting", "URL parameter tampering"],
+    "options": [
+      "Server echoes user input in HTML",
+      "Client-side code unsafely uses attacker-controlled input",
+      "HTTP response splitting",
+      "URL parameter tampering"
+    ],
     "answer": 1,
-    "explain": "DOM XSS occurs when client JavaScript writes untrusted data to the DOM using innerHTML or similar methods."
+    "explain": "DOM-based XSS is a client-side vulnerability where JavaScript code unsafely uses attacker-controlled input (from URL, localStorage, or message events) and writes it directly to the DOM via innerHTML, document.write(), or eval(). Unlike reflected/stored XSS, DOM XSS may never reach the server, making it harder to detect with server logs. For instance, vulnerable code like `element.innerHTML = location.hash.substring(1)` allows attackers to inject scripts via URL fragments. Server echo (option A) describes reflected XSS; HTTP response splitting (option C) is a protocol-level attack; URL tampering (option D) is overly broad. Prevention includes using textContent instead of innerHTML, DOMPurify, and strict CSP. OWASP Top 10 continues ranking XSS (including DOM XSS) in the top 3, reflecting widespread exploitation in single-page applications."
   },
   {
     "topic": "Web Security",
     "q": "How does HTTP Strict-Transport-Security (HSTS) work?",
-    "options": ["Encrypts all traffic", "Forces HTTPS for future connections to that domain", "Prevents clickjacking", "Blocks mixed content"],
+    "options": [
+      "Encrypts all traffic",
+      "Forces HTTPS for future connections to that domain",
+      "Prevents clickjacking",
+      "Blocks mixed content"
+    ],
     "answer": 1,
-    "explain": "HSTS tells browsers to use HTTPS for all future connections, preventing SSLstrip attacks."
+    "explain": "HTTP Strict-Transport-Security (HSTS) is an HTTP header (Strict-Transport-Security: max-age=31536000) that instructs browsers to always use HTTPS when connecting to a domain, for the specified duration. This prevents SSLstrip attacks where adversaries intercept HTTP traffic and remove upgrade-to-HTTPS directives. Once a browser receives HSTS, it refuses HTTP connections and upgrades them internally to HTTPS. Encryption alone (option A) doesn't ensure HTTPS use; clickjacking defense (option C) is addressed by X-Frame-Options; mixed content blocking (option D) is a separate mechanism. HSTS also includes the Preload list: domains (chrome://net-internals/#hsts) are pre-loaded with HSTS in browsers, protecting even first visits. Adoption by large services (e.g., Google, Amazon, GitHub) significantly reduced SSLstrip and SSL stripping attacks, improving security for millions of users."
   },
   {
     "topic": "OS Security",
     "q": "What is the purpose of a reference monitor?",
-    "options": ["Audit user actions", "Enforce access control policy without bypass", "Manage process scheduling", "Handle interrupt requests"],
+    "options": [
+      "Audit user actions",
+      "Enforce access control policy without bypass",
+      "Manage process scheduling",
+      "Handle interrupt requests"
+    ],
     "answer": 1,
     "explain": "Reference monitors are tamper-proof mechanisms that mediate access to resources and enforce security policy."
   },
   {
     "topic": "OS Security",
     "q": "How does SELinux's Type Enforcement differ from DAC?",
-    "options": ["Only administrators can set it", "Enforces mandatory policy even if owner permits access", "It is less restrictive than DAC", "It replaces file ownership"],
+    "options": [
+      "Only administrators can set it",
+      "Enforces mandatory policy even if owner permits access",
+      "It is less restrictive than DAC",
+      "It replaces file ownership"
+    ],
     "answer": 1,
-    "explain": "TE enforces policy for all users; DAC allows owners to grant permissions, making TE a stricter mandatory access control."
+    "explain": "SELinux Type Enforcement (TE) is mandatory access control (MAC): the OS enforces policy regardless of file ownership or user privileges. A file with type bin_t can only be accessed by subjects with matching allow rules, even if the owner permits access. DAC (traditional Unix) allows owners to change permissions via chmod, bypassing system policy. Only administrators setting TE doesn't capture its strength—TE is stricter than DAC for all users (option A wrong). TE doesn't replace file ownership (option D) but operates orthogonally. TE policies are defined in policy modules and enforced by the kernel; breaches are logged for forensics. Real deployments (Red Hat Enterprise Linux, Android) use TE to contain compromised daemons and apps, preventing lateral movement—exemplified by SELinux confining Apache httpd or the init daemon."
   },
   {
     "topic": "OS Security",
     "q": "What is a capability in capability-based security?",
-    "options": ["User's skill level", "Unforgeable token granting specific rights to a resource", "Role-based permission", "Audit log entry"],
+    "options": [
+      "User's skill level",
+      "Unforgeable token granting specific rights to a resource",
+      "Role-based permission",
+      "Audit log entry"
+    ],
     "answer": 1,
-    "explain": "Capabilities are unforgeable tokens that grant the holder specific rights to perform operations on resources."
+    "explain": "A capability in capability-based security is an unforgeable, cryptographically secured (or hardware-protected) token encoding both a resource reference and access rights (e.g., 'read file /etc/passwd'). The holder of a capability may perform only the rights it encodes; rights cannot be escalated. Capabilities differ fundamentally from Access Control Lists (ACLs), which list which principals can access a resource. Early capability OSes (CAP, KEYKOS) and modern microkernels (seL4) rely on capabilities for fine-grained security and crash containment. User skill level (option A) is irrelevant; role-based permission (option C) is a different model; audit logs (option D) record access. Capabilities enable principle of least privilege by default: if a capability is not held, access is impossible, reducing attack surface for confused deputy attacks."
   },
   {
     "topic": "OS Security",
     "q": "What does ASLR primarily protect against?",
-    "options": ["Buffer overflow itself", "Predicting code/library base addresses to craft exploits", "Integer overflows", "Format string attacks"],
+    "options": [
+      "Buffer overflow itself",
+      "Predicting code/library base addresses to craft exploits",
+      "Integer overflows",
+      "Format string attacks"
+    ],
     "answer": 1,
-    "explain": "ASLR randomizes memory layouts so absolute addresses in exploits become invalid, raising the bar for attacks."
+    "explain": "Address Space Layout Randomization (ASLR) randomizes base addresses of code, libraries, and stack at runtime, preventing attackers from using hardcoded addresses in ROP chains or shellcode. Each execution has different layout; an exploit crafted for one run fails on the next. However, ASLR is not a complete buffer overflow defense (option A)—overflows still occur; attackers must leak addresses (via information disclosures) or use address-independent gadgets (JIT-ROP). Integer overflows (option C) and format strings (option D) are unaffected by ASLR alone. Real-world bypass techniques include heap spraying, pointer leaks (CVE-2022-0847, Dirty Pipe), and microarchitectural side-channels (Spectre). ASLR is now standard on Linux, Windows, and macOS; combined with DEP/NX and CFI, it significantly raises exploit difficulty, though determined attackers often circumvent it."
   },
   {
     "topic": "Formal Methods",
     "q": "What does a proof-carrying code signature verify?",
-    "options": ["File is from known source", "Code satisfies stated properties", "No bugs are present", "Code efficiency"],
+    "options": [
+      "File is from known source",
+      "Code satisfies stated properties",
+      "No bugs are present",
+      "Code efficiency"
+    ],
     "answer": 1,
-    "explain": "PCC bundles proofs with code; the verifier confirms the code actually satisfies its claimed properties."
+    "explain": "Proof-Carrying Code (PCC) attaches formal proofs certifying that compiled code satisfies claimed safety properties (e.g., 'no buffer overflows' or 'only accesses allocated memory'). The code producer generates a proof (often via type systems or theorem provers); the consumer verifies the proof without trusting the producer. This differs from code signing (option A, which only verifies source), bug detection (option C, which is incomplete), and performance measurement (option D). PCC leverages theorem proving and type-theoretic foundations; practical implementations use assembly-level type safety. Adoption is limited due to proof generation complexity, but it inspired certified compilers (CompCert) and verified systems (seL4 microkernel). Real-world impact: verified C code (CompCert) reduces bugs, and certified protocols (EasyCrypt) prevent cryptographic flaws."
   },
   {
     "topic": "Formal Methods",
     "q": "In formal verification, what is a 'model'?",
-    "options": ["A test case", "Abstract representation of system behavior", "Documentation", "Security policy"],
+    "options": [
+      "A test case",
+      "Abstract representation of system behavior",
+      "Documentation",
+      "Security policy"
+    ],
     "answer": 1,
-    "explain": "A model is a formal mathematical abstraction of the system that can be analyzed by theorem provers."
+    "explain": "In formal verification, a model is a mathematical abstraction encoding system behavior, states, transitions, and properties. Common model types include finite-state machines, labeled transition systems, and timed automata. Theorem provers (Coq, Isabelle) and model checkers (SPIN, TLA+) analyze models to verify properties (safety: bad states unreachable; liveness: progress guaranteed). A model differs from a test case (option A), which is concrete; documentation (option C) describes the model but isn't formal; security policy (option D) is input to modeling, not the model itself. Building a good model requires careful abstraction: too coarse loses detail; too fine becomes intractable. Successful formal verification in security includes TLS 1.3 (RFC 8446 formally verified), SGX enclaves, and cryptographic protocols, reducing design flaws before implementation."
   },
   {
     "topic": "Formal Methods",
     "q": "What does symbolic execution track?",
-    "options": ["Actual runtime values", "Symbolic values (variables) to explore all paths", "Stack frame details", "CPU cache state"],
+    "options": [
+      "Actual runtime values",
+      "Symbolic values (variables) to explore all paths",
+      "Stack frame details",
+      "CPU cache state"
+    ],
     "answer": 1,
-    "explain": "Symbolic execution tracks symbolic values, allowing analysis of all execution paths without concrete inputs."
+    "explain": "Symbolic execution represents variables as symbolic values (e.g., x is any integer) rather than concrete ones, executing code over all possible inputs simultaneously. Each conditional branch (if x > 5) spawns a path constraint (x > 5); the tool solves constraints to find concrete inputs triggering each path. This exhaustively explores code paths, finding bugs (buffer overflows, divide-by-zero) that unit tests might miss. Actual runtime values (option A) lose generality; stack frames (option C) are execution details, not tracked; CPU cache (option D) is irrelevant. Tools like KLEE and angr scale symbolic execution to real programs. Real-world findings: KLEE found bugs in GNU coreutils, uclibc; angr cracked CTF challenges. Symbolic execution is foundational for automated test generation, fuzzing guidance, and exploit development."
   },
   {
     "topic": "Formal Methods",
     "q": "How does KLEE find bugs in C code?",
-    "options": ["Random testing", "Symbolic execution to explore paths and generate test cases", "Fuzzing only", "Static pattern matching"],
+    "options": [
+      "Random testing",
+      "Symbolic execution to explore paths and generate test cases",
+      "Fuzzing only",
+      "Static pattern matching"
+    ],
     "answer": 1,
-    "explain": "KLEE uses symbolic execution to systematically explore program paths and generate inputs that trigger bugs."
+    "explain": "KLEE is a symbolic execution engine for C code that systematically explores paths and generates test cases. Upon encountering a conditional, KLEE branches: one path follows the true branch, another follows false, with constraint tracking. If either branch violates an assertion or accesses invalid memory, KLEE reports the bug and outputs the test case (concrete input) that triggers it. Random testing (option A) lacks systematicity; fuzzing (option C) uses heuristics; static pattern matching (option D) misses runtime bugs. KLEE's effectiveness stems from constraint solving (via Z3 or other SMT solvers) and lazy state merging, reducing redundancy. Verified findings include bugs in OpenBSD utilities and cryptographic libraries (libsodium). Combined with taint tracking, KLEE has automated vulnerability discovery in network-facing software."
   },
   {
     "topic": "Hardware Security",
     "q": "What is a Rowhammer attack?",
-    "options": ["Physical ramming of hardware", "Repeatedly accessing DRAM rows to corrupt nearby rows", "Cache coherency attack", "TLB pollution"],
+    "options": [
+      "Physical ramming of hardware",
+      "Repeatedly accessing DRAM rows to corrupt nearby rows",
+      "Cache coherency attack",
+      "TLB pollution"
+    ],
     "answer": 1,
-    "explain": "Rowhammer exploits DRAM refresh intervals; repeated row accesses cause bit flips in adjacent rows."
+    "explain": "Rowhammer (CVE-2014-4687) is a fault-injection attack on DRAM: by repeatedly accessing ('hammering') a memory row, EM disturbance and refresh delays cause bit flips in adjacent rows. An attacker can corrupt page tables, escalate privileges, or breach SGX enclaves (SGXPing attack). The underlying cause: DRAM density increases; adjacency improves; refresh time windows shrink, enabling exploitation. Physical ramming (option A) is misdirection; cache coherency (option C) and TLB pollution (option D) are unrelated. Mitigations include target row refresh (TRR), probabilistic defenses (PARA), and DRAM address randomization. Real exploits (Exploiting Rowhammer 2015, CVE-2021-47495) hijacked kernel from user space. Rowhammer exemplifies how hardware optimization (higher density) can introduce vulnerability, influencing DRAM manufacturers to deploy defenses."
   },
   {
     "topic": "Hardware Security",
     "q": "What does TEE (Trusted Execution Environment) provide?",
-    "options": ["Complete system security", "Isolated execution protected from OS and other apps", "No additional isolation", "Only authentication"],
+    "options": [
+      "Complete system security",
+      "Isolated execution protected from OS and other apps",
+      "No additional isolation",
+      "Only authentication"
+    ],
     "answer": 1,
-    "explain": "TEE isolates execution so that even the OS cannot access secure code/data running in the TEE."
+    "explain": "A Trusted Execution Environment (TEE) is an isolated CPU mode (Intel SGX, ARM TrustZone, AMD SEV-SNP) where code and data are encrypted and protected from the untrusted OS and other apps. TEE enforcement is hardware-backed: only TEE software can decrypt and access TEE memory, even the OS cannot. Examples include SGX enclaves (isolated containers with no OS visibility), ARM TrustZone (separate secure world), AMD SEV (entire VM encryption). Complete system security (option A) is excessive; no isolation (option C) contradicts TEE definition; authentication-only (option D) is insufficient. Real deployments: Azure confidential computing (SEV-SNP VMs), Samsung Knox (TrustZone), Qualcomm Secure Enclave. Attacks include side-channels (Spectre in enclaves, cache timing), microarchitectural leaks (PLATYPUS), and SGX2 privilege escalation."
   },
   {
     "topic": "Hardware Security",
     "q": "What is a side-channel resistant implementation?",
-    "options": ["Uses encryption", "Constant-time or cache-oblivious operations", "Has many features", "Only for classified systems"],
+    "options": [
+      "Uses encryption",
+      "Constant-time or cache-oblivious operations",
+      "Has many features",
+      "Only for classified systems"
+    ],
     "answer": 1,
-    "explain": "Side-channel resistant code avoids timing/power variations that could leak secrets (e.g., constant-time comparisons)."
+    "explain": "Side-channel resistant implementations eliminate operations whose timing, power consumption, or cache behavior depends on secret data. For instance, constant-time comparison (comparing secrets byte-by-byte without early exit) ensures timing is independent of input values, thwarting timing attacks. Cache-oblivious algorithms avoid data-dependent cache accesses. Bit-slicing and masking are advanced defenses. Mere encryption (option A) does not guarantee resistance; abundant features (option C) may introduce vulnerabilities; classification level (option D) is orthogonal. Crypto libraries (libsodium, wolfSSL) build constant-time primitives; compilers (Clang, rustc) provide sanitizers (UBSan detects undefined behavior). Real-world impact: Constant-time Curve25519 (libsodium) replaced vulnerable implementations; side-channel resistant Kyber/Dilithium now deployed in post-quantum pilots."
   },
   {
     "topic": "Hardware Security",
     "q": "How do fault injection attacks work?",
-    "options": ["Inject SQL commands", "Intentionally perturb hardware (voltage, EM) to cause computation errors", "Flood network", "Crack passwords"],
+    "options": [
+      "Inject SQL commands",
+      "Intentionally perturb hardware (voltage, EM) to cause computation errors",
+      "Flood network",
+      "Crack passwords"
+    ],
     "answer": 1,
-    "explain": "Fault injection induces errors in cryptographic computations to extract secrets or bypass verification."
+    "explain": "Fault injection attacks deliberately perturb hardware (electromagnetic pulses, laser strikes, voltage glitches) to induce transient errors (bit flips) in computations. A single fault in RSA or AES decryption can leak private keys or authentication codes via differential fault analysis (DFA). For instance, inducing an error in the last round of AES and comparing faulty vs. correct ciphertexts reveals the key. Smartcards, embedded devices, and even cloud CPUs are vulnerable. SQL injection (option A) is database-level; network flooding (option B) is DoS; password cracking (option D) is brute force. Defenses include redundant checks, randomized algorithms, and hardware hardening. Real exploits: DFA on AES (Giraud 2006), SGX enclave extraction (fault + side-channel combined), node extraction from Ledger Nano S. Fault injection remains a top hardware threat, motivating formal analysis and certified countermeasures."
   },
   {
     "topic": "Threat Modeling",
     "q": "In STRIDE, what does 'D' stand for?",
-    "options": ["Denial of access", "Denial of Service", "Defacement", "Debugging"],
+    "options": [
+      "Denial of access",
+      "Denial of Service",
+      "Defacement",
+      "Debugging"
+    ],
     "answer": 1,
-    "explain": "STRIDE includes Denial of Service; modeling threats of availability loss."
+    "explain": "STRIDE is a threat-modeling acronym: Spoofing, Tampering, Repudiation, Information Disclosure, Denial of Service, Elevation of Privilege. Each category represents a threat class: DoS threatens availability by exhausting resources (CPU, bandwidth, memory), making services unavailable. Denial of access (option A) is vague; defacement (option C) falls under Tampering (integrity); debugging (option D) is unrelated. STRIDE helps organize threat analysis across security properties (CIA: Confidentiality, Integrity, Availability). For each component (process, data store, flow), teams enumerate threats per category, then design mitigations. Real-world use: Microsoft's SDL, threat-modeling frameworks. DoS mitigations span rate limiting, admission control, DDoS scrubbing, and resource isolation. Threat modeling early in design (before implementation) is vastly cheaper than post-deployment fixes."
   },
   {
     "topic": "Threat Modeling",
     "q": "What is the purpose of threat modeling?",
-    "options": ["Penetration testing", "Identify potential attacks during design", "Implement firewalls", "Write documentation"],
+    "options": [
+      "Penetration testing",
+      "Identify potential attacks during design",
+      "Implement firewalls",
+      "Write documentation"
+    ],
     "answer": 1,
-    "explain": "Threat modeling proactively identifies attack vectors during design so mitigations can be built in."
+    "explain": "Threat modeling is a structured analysis process performed during design and architecture phases to identify potential attacks, vulnerabilities, and entry points before implementation. By reasoning about adversary capabilities, trust boundaries, and data flows, teams can design defenses (cryptography, access control, logging) into the system rather than patching afterwards. Formal threat modeling (STRIDE, DFD-based) is far cheaper and more effective than penetration testing alone (option A), which occurs post-implementation. Firewalls (option C) and documentation (option D) are outputs/artifacts, not the purpose. Successful threat modeling prevents entire classes of attacks: if threat modeling identified SQL injection risks, input validation is designed in; if privilege escalation is modeled, capability-based or TEE designs emerge. Case study: Azure's Security Development Lifecycle (SDL) mandates threat modeling for every service."
   },
   {
     "topic": "Threat Modeling",
     "q": "What does 'defense in depth' mean?",
-    "options": ["Deep encryption", "Multiple overlapping security layers", "Keeping secrets", "Single strong perimeter"],
+    "options": [
+      "Deep encryption",
+      "Multiple overlapping security layers",
+      "Keeping secrets",
+      "Single strong perimeter"
+    ],
     "answer": 1,
     "explain": "Defense in depth uses multiple security controls so that if one fails, others still protect the system."
   },
   {
     "topic": "Threat Modeling",
     "q": "How is attack surface defined?",
-    "options": ["Number of firewall rules", "All entry points an attacker could exploit", "Total codebase size", "Number of users"],
+    "options": [
+      "Number of firewall rules",
+      "All entry points an attacker could exploit",
+      "Total codebase size",
+      "Number of users"
+    ],
     "answer": 1,
-    "explain": "Attack surface includes all entry points (network interfaces, APIs, etc.) that an attacker could leverage."
+    "explain": "Attack surface is the set of all potential entry points, data flows, and trust boundaries an attacker could exploit. Examples: listening network ports (SSH, HTTP), APIs (REST endpoints), file format parsers (image decoders), middleware (web servers), and environmental interfaces (USB, Bluetooth). A large attack surface (many services, protocols, code paths) correlates with higher risk. Reducing attack surface means disabling unused services, minimizing code complexity, and deploying privilege isolation (containers, SELinux). Firewall rules (option A) quantify firewall complexity, not attack surface; codebase size (option C) is a weak proxy (quality matters more); user count (option D) is irrelevant. Practical tools (Shodan, CVE databases) enumerate exposed surfaces. Gartner and security boards recommend minimizing attack surface as a first-line defense."
   },
   {
     "topic": "Advanced Protocols",
     "q": "What is the 0-RTT handshake in TLS 1.3?",
-    "options": ["No encryption in first round", "Sends encrypted data in first round using PSK", "Only works with RSA", "Requires mutual authentication first"],
+    "options": [
+      "No encryption in first round",
+      "Sends encrypted data in first round using PSK",
+      "Only works with RSA",
+      "Requires mutual authentication first"
+    ],
     "answer": 1,
-    "explain": "0-RTT resumes sessions by sending early data encrypted with pre-shared keys, reducing handshake latency."
+    "explain": "0-RTT (zero round-trip time) in TLS 1.3 allows clients to send encrypted data (early_data) in the first handshake message using a pre-shared key (PSK) from a prior session or out-of-band agreement. The server accepts the data after verifying the PSK, eliminating one round trip compared to full TLS 1.2 handshakes. However, 0-RTT introduces a replay window: an attacker can capture and replay early_data, violating forward secrecy for that data. Real-world impact: HTTP/1.1 and HTTP/2 over TLS 1.3 with 0-RTT reduces latency for repeat connections, improving user experience. Servers must carefully design 0-RTT policies to reject unsafe operations (state-changing requests). No encryption in first round (option A) is wrong; RSA-only (option C) is outdated; mutual auth requirement (option D) conflicts with resumption. Adoption in browsers and CDNs demonstrates value despite replay considerations."
   },
   {
     "topic": "Advanced Protocols",
     "q": "What problem does Certificate Transparency solve?",
-    "options": ["SSL/TLS encryption", "Prevent rogue certificate issuance by logging certs publicly", "Key exchange security", "Authentication speed"],
+    "options": [
+      "SSL/TLS encryption",
+      "Prevent rogue certificate issuance by logging certs publicly",
+      "Key exchange security",
+      "Authentication speed"
+    ],
     "answer": 1,
-    "explain": "CT publishes certificates in immutable logs, allowing domains to detect unauthorized certs issued in their name."
+    "explain": "Certificate Transparency (CT, RFC 6962) requires Certificate Authorities to log all issued certificates in append-only, cryptographically verifiable logs. Domains monitor logs for unauthorized certs issued in their names; browsers (Chrome, Firefox) enforce CT—requiring logged certs for validation. CT prevents rogue CA or compromised CA from silently issuing valid certs for domains without domain owner detection. SSL/TLS encryption (option A) is orthogonal; key exchange (option C) is separate; speed (option D) is irrelevant. Transparency logs use Merkle trees; any deletion or tampering is detectable. Real incident: CTLogs caught Facebook-specific certs issued mistakenly by Comodo; Google detected domain hijacks. CT is now mandatory in Chrome for all certs; it's a foundational trust augmentation alongside HSTS, enabling domains to enforce stricter TLS policies and detect supply-chain compromises."
   },
   {
     "topic": "Advanced Protocols",
     "q": "In Kerberos, what does the TGT (Ticket Granting Ticket) do?",
-    "options": ["Encrypt network traffic", "Grant the user a ticket to request service tickets without re-authentication", "Authenticate the server", "Provide session keys"],
+    "options": [
+      "Encrypt network traffic",
+      "Grant the user a ticket to request service tickets without re-authentication",
+      "Authenticate the server",
+      "Provide session keys"
+    ],
     "answer": 1,
-    "explain": "The TGT allows the user to request service tickets without repeatedly entering passwords."
+    "explain": "In Kerberos, the Ticket Granting Ticket (TGT) is a time-limited credential issued by the KDC (Key Distribution Center) after the user authenticates with a password. Armed with a TGT, the user requests service tickets (for SSH, file servers, etc.) without re-entering credentials. The TGT is encrypted with the user's derived key; service tickets are encrypted with the service's key. This reduces password exposure and network latency. Encrypting network traffic (option A) is handled by service protocols; server authentication (option C) is orthogonal; session keys (option D) are a component but not the TGT's purpose. Kerberos is standard in enterprise environments (Active Directory); vulnerabilities include Golden Ticket attacks (forged TGTs if KDC key is compromised) and Kerberoasting (offline cracking of service tickets). TGT expiration and renewal are critical to limiting breach impact."
   },
   {
     "topic": "Advanced Protocols",
     "q": "How does Diffie-Hellman key exchange prevent MITM?",
-    "options": ["Uses RSA encryption", "Alone it cannot; must be combined with authentication", "Encodes server certificate", "Uses symmetric keys"],
+    "options": [
+      "Uses RSA encryption",
+      "Alone it cannot; must be combined with authentication",
+      "Encodes server certificate",
+      "Uses symmetric keys"
+    ],
     "answer": 1,
-    "explain": "DH alone is vulnerable to MITM; authentication (signatures or certificates) is needed to bind DH parameters to identities."
+    "explain": "Diffie-Hellman key exchange is mathematically secure for shared secret derivation but provides no authentication: an attacker can position between parties, negotiate separate shared secrets with each (Mallory-in-the-middle), and decrypt/modify all subsequent communication. Binding DH parameters to identities—via digital signatures (signed DH values) or certificates (authenticated DH from TLS)—defeats MITM. RSA encryption (option A) is a separate primitive; it doesn't inherently authenticate DH. Symmetric keys alone (option D) cannot establish authenticated channels. Real protocols: TLS uses certificates to authenticate server DH values; SSH uses key fingerprints; Signal/WhatsApp use out-of-band identity verification (safety numbers). The DH patent (expired 1997) and elliptic-curve DH (ECDH) are now standard. Combined DH+authentication is foundational to secure channels and exemplifies why cryptographic primitives must be composed correctly."
   }
 ]
-
-</script>
-<script>
-(function() {
-  const dataEl = document.getElementById('quiz-data');
-  if (!dataEl) return;
-  let questions;
-  try { questions = JSON.parse(dataEl.textContent); } catch(e) { console.error('Quiz JSON parse error', e); return; }
-  if (!Array.isArray(questions) || !questions.length) return;
-
-  // ── Inject CSS ──
-  const css = `
-  #view-quiz { overflow-y: auto; padding-top: 60px; height: 100vh; }
-  .quiz-wrap { max-width: 880px; margin: 0 auto; padding: 24px 24px 80px; }
-  .quiz-header { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; margin-bottom: 12px; }
-  .quiz-header h2 { font-size: 22px; color: #58a6ff; }
-  .quiz-header .quiz-sub { font-size: 12px; color: #8b949e; margin-top: 2px; }
-  .quiz-stats { display:flex; gap:10px; flex-wrap:wrap; }
-  .quiz-stat { background:#161b22; border:1px solid #30363d; border-radius:8px; padding:8px 14px; font-size:12px; color:#8b949e; }
-  .quiz-stat b { color:#c9d1d9; font-size:15px; display:block; }
-  .quiz-stat.ok b { color:#7ee787; }
-  .quiz-stat.bad b { color:#ff7b72; }
-  .quiz-filters { display:flex; flex-wrap:wrap; gap:6px; margin: 12px 0 16px; }
-  .quiz-chip { background:#0d1117; border:1px solid #30363d; color:#8b949e; padding:5px 12px; border-radius:16px; cursor:pointer; font-size:12px; transition:all .15s; }
-  .quiz-chip:hover { color:#c9d1d9; border-color:#58a6ff; }
-  .quiz-chip.active { background:#1f6feb; color:#fff; border-color:#58a6ff; }
-  .quiz-actions { display:flex; gap:8px; flex-wrap:wrap; margin-bottom: 14px; }
-  .quiz-actions .qbtn { background:#21262d; border:1px solid #30363d; color:#c9d1d9; padding:6px 14px; border-radius:6px; cursor:pointer; font-size:12px; }
-  .quiz-actions .qbtn:hover { background:#30363d; border-color:#58a6ff; }
-  .quiz-progress { height:6px; background:#161b22; border-radius:4px; overflow:hidden; margin-bottom:16px; border:1px solid #30363d; }
-  .quiz-progress > div { height:100%; background:linear-gradient(90deg,#1f6feb,#58a6ff); transition:width .3s; }
-  .quiz-card { background:#161b22; border:1px solid #30363d; border-radius:12px; padding:22px 26px; box-shadow:0 4px 18px rgba(0,0,0,.3); }
-  .quiz-card .qc-meta { font-size:11px; color:#58a6ff; font-weight:600; text-transform:uppercase; letter-spacing:.5px; margin-bottom:8px; display:flex; justify-content:space-between; }
-  .quiz-card .qc-meta .qc-num { color:#8b949e; }
-  .quiz-card .qc-q { font-size:16px; color:#c9d1d9; line-height:1.55; font-weight:600; margin-bottom:16px; }
-  .quiz-options { display:flex; flex-direction:column; gap:8px; }
-  .quiz-opt { background:#0d1117; border:1px solid #30363d; color:#c9d1d9; padding:11px 16px; border-radius:8px; cursor:pointer; text-align:left; font-size:14px; transition:all .15s; line-height:1.4; display:flex; align-items:flex-start; gap:10px; }
-  .quiz-opt:hover:not(.disabled) { border-color:#58a6ff; background:#161b22; }
-  .quiz-opt .opt-letter { flex-shrink:0; width:22px; height:22px; border-radius:50%; background:#21262d; color:#8b949e; font-size:11px; font-weight:600; display:inline-flex; align-items:center; justify-content:center; }
-  .quiz-opt.correct { border-color:#3fb950; background:rgba(63,185,80,.08); }
-  .quiz-opt.correct .opt-letter { background:#3fb950; color:#fff; }
-  .quiz-opt.wrong { border-color:#f85149; background:rgba(248,81,73,.08); }
-  .quiz-opt.wrong .opt-letter { background:#f85149; color:#fff; }
-  .quiz-opt.disabled { cursor:default; }
-  .quiz-explain { margin-top:14px; padding:12px 16px; background:#0d1117; border-left:3px solid #58a6ff; border-radius:6px; font-size:13px; color:#8b949e; line-height:1.6; }
-  .quiz-explain b { color:#58a6ff; }
-  .quiz-nav { display:flex; justify-content:space-between; gap:10px; margin-top:18px; }
-  .quiz-nav .qbtn { padding:8px 18px; font-size:13px; background:#21262d; border:1px solid #30363d; color:#c9d1d9; border-radius:6px; cursor:pointer; }
-  .quiz-nav .qbtn:hover { background:#30363d; border-color:#58a6ff; }
-  .quiz-nav .qbtn.primary { background:#1f6feb; border-color:#58a6ff; color:#fff; }
-  .quiz-nav .qbtn.primary:hover { background:#388bfd; }
-  .quiz-nav .qbtn:disabled { opacity:.4; cursor:not-allowed; }
-  .quiz-empty { text-align:center; color:#484f58; padding:60px 20px; font-style:italic; }
-  .quiz-summary { background:#161b22; border:1px solid #30363d; border-radius:12px; padding:32px; text-align:center; }
-  .quiz-summary h3 { color:#58a6ff; font-size:22px; margin-bottom:6px; }
-  .quiz-summary .qs-score { font-size:56px; font-weight:700; color:#7ee787; margin:12px 0; }
-  .quiz-summary .qs-pct { color:#8b949e; font-size:14px; margin-bottom:16px; }
-  .quiz-summary .qs-breakdown { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:8px; margin:20px 0; text-align:left; }
-  .quiz-summary .qs-row { background:#0d1117; border:1px solid #30363d; border-radius:8px; padding:8px 12px; font-size:12px; color:#8b949e; }
-  .quiz-summary .qs-row b { display:block; color:#c9d1d9; font-size:14px; margin-bottom:2px; }
-  @media (max-width: 600px) {
-    .quiz-wrap { padding:14px 12px 80px; }
-    .quiz-card { padding:16px; }
-    .quiz-card .qc-q { font-size:15px; }
-    .quiz-opt { font-size:13px; padding:10px 12px; }
-  }`;
-  const styleEl = document.createElement('style');
-  styleEl.textContent = css;
-  document.head.appendChild(styleEl);
-
-  // ── Inject view container ──
-  function ensureView() {
-    let view = document.getElementById('view-quiz');
-    if (!view) {
-      view = document.createElement('div');
-      view.id = 'view-quiz';
-      view.className = 'view';
-      view.innerHTML = '<div id="quiz-container"></div>';
-      document.body.appendChild(view);
-    }
-    return view;
-  }
-  const viewEl = ensureView();
-
-  // ── State ──
-  const state = { filter: 'ALL', order: [], cursor: 0, answers: {}, built: false };
-
-  function shuffleArr(a) { for (let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} }
-  function escapeHtml(s) { return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
-  function topics() { return ['ALL', ...Array.from(new Set(questions.map(q => q.topic || 'General')))]; }
-  function pool() { return state.order.map(i => ({i, q: questions[i]})).filter(x => state.filter === 'ALL' || (x.q.topic||'General') === state.filter); }
-
-  function build() {
-    state.order = questions.map((_, i) => i);
-    shuffleArr(state.order);
-    const root = document.getElementById('quiz-container');
-    root.innerHTML = `
-      <div class="quiz-wrap">
-        <div class="quiz-header">
-          <div>
-            <h2>🎯 Knowledge Quiz</h2>
-            <div class="quiz-sub">${questions.length} questions across ${topics().length - 1} topics — pick a topic or take it all.</div>
-          </div>
-          <div class="quiz-stats" id="quiz-stats"></div>
-        </div>
-        <div class="quiz-filters" id="quiz-filters"></div>
-        <div class="quiz-actions">
-          <button class="qbtn" data-act="shuffle">🔀 Shuffle</button>
-          <button class="qbtn" data-act="reset">↺ Reset Answers</button>
-          <button class="qbtn" data-act="next-unans">⏭ Next Unanswered</button>
-          <button class="qbtn" data-act="summary">📊 Summary</button>
-        </div>
-        <div class="quiz-progress"><div id="quiz-progress-bar" style="width:0%"></div></div>
-        <div id="quiz-body"></div>
-      </div>`;
-    root.querySelectorAll('.qbtn[data-act]').forEach(b => b.addEventListener('click', () => {
-      const a = b.getAttribute('data-act');
-      if (a === 'shuffle') { shuffleArr(state.order); state.cursor = 0; renderQ(); }
-      else if (a === 'reset') { if (confirm('Reset all answers?')) { state.answers = {}; renderQ(); } }
-      else if (a === 'next-unans') { const p = pool(); const n = p.findIndex(x => state.answers[x.i] === undefined); if (n >= 0) { state.cursor = n; renderQ(); } }
-      else if (a === 'summary') { showSummary(); }
-    }));
-    renderFilters();
-    renderQ();
-    state.built = true;
-  }
-
-  function renderFilters() {
-    const el = document.getElementById('quiz-filters');
-    el.innerHTML = '';
-    topics().forEach(t => {
-      const count = t === 'ALL' ? questions.length : questions.filter(q => (q.topic || 'General') === t).length;
-      const chip = document.createElement('button');
-      chip.className = 'quiz-chip' + (t === state.filter ? ' active' : '');
-      chip.textContent = t === 'ALL' ? `All (${count})` : `${t} (${count})`;
-      chip.addEventListener('click', () => { state.filter = t; state.cursor = 0; renderFilters(); renderQ(); });
-      el.appendChild(chip);
-    });
-  }
-
-  function renderStats() {
-    const p = pool();
-    const answered = p.filter(x => state.answers[x.i] !== undefined);
-    const correct = answered.filter(x => state.answers[x.i] === x.q.answer).length;
-    const wrong = answered.length - correct;
-    const el = document.getElementById('quiz-stats');
-    if (el) el.innerHTML = `
-      <div class="quiz-stat"><b>${p.length}</b>Questions</div>
-      <div class="quiz-stat ok"><b>${correct}</b>Correct</div>
-      <div class="quiz-stat bad"><b>${wrong}</b>Wrong</div>
-      <div class="quiz-stat"><b>${answered.length}/${p.length}</b>Done</div>`;
-    const pct = p.length ? Math.round(100 * answered.length / p.length) : 0;
-    const bar = document.getElementById('quiz-progress-bar');
-    if (bar) bar.style.width = pct + '%';
-  }
-
-  function renderQ() {
-    const p = pool();
-    const body = document.getElementById('quiz-body');
-    if (!p.length) { body.innerHTML = '<div class="quiz-empty">No questions for this filter.</div>'; renderStats(); return; }
-    if (state.cursor >= p.length) state.cursor = p.length - 1;
-    if (state.cursor < 0) state.cursor = 0;
-    const cur = p[state.cursor];
-    const q = cur.q;
-    const selected = state.answers[cur.i];
-    const answered = selected !== undefined;
-    const optsHtml = q.options.map((opt, i) => {
-      let cls = '';
-      if (answered) { if (i === q.answer) cls = 'correct'; else if (i === selected) cls = 'wrong'; cls += ' disabled'; }
-      const letter = String.fromCharCode(65 + i);
-      return `<button class="quiz-opt ${cls}" data-opt="${i}" ${answered ? 'disabled' : ''}>
-        <span class="opt-letter">${letter}</span><span>${escapeHtml(opt)}</span>
-      </button>`;
-    }).join('');
-    body.innerHTML = `
-      <div class="quiz-card">
-        <div class="qc-meta"><span>${escapeHtml(q.topic || 'General')}</span><span class="qc-num">${state.cursor + 1} / ${p.length}</span></div>
-        <div class="qc-q">${escapeHtml(q.q)}</div>
-        <div class="quiz-options">${optsHtml}</div>
-        ${answered ? `<div class="quiz-explain"><b>${selected === q.answer ? '✓ Correct.' : '✗ Not quite.'}</b> ${escapeHtml(q.explain || '')}</div>` : ''}
-        <div class="quiz-nav">
-          <button class="qbtn" data-nav="prev" ${state.cursor === 0 ? 'disabled' : ''}>← Previous</button>
-          <button class="qbtn primary" data-nav="next" ${state.cursor === p.length - 1 ? 'disabled' : ''}>Next →</button>
-        </div>
-      </div>`;
-    body.querySelectorAll('.quiz-opt[data-opt]').forEach(b => b.addEventListener('click', () => {
-      const idx = cur.i;
-      if (state.answers[idx] !== undefined) return;
-      state.answers[idx] = +b.getAttribute('data-opt');
-      renderQ();
-    }));
-    body.querySelectorAll('[data-nav]').forEach(b => b.addEventListener('click', () => {
-      const dir = b.getAttribute('data-nav');
-      const pp = pool();
-      if (dir === 'next' && state.cursor < pp.length - 1) { state.cursor++; renderQ(); }
-      else if (dir === 'prev' && state.cursor > 0) { state.cursor--; renderQ(); }
-    }));
-    renderStats();
-  }
-
-  function showSummary() {
-    const p = pool();
-    const answered = p.filter(x => state.answers[x.i] !== undefined);
-    const correct = answered.filter(x => state.answers[x.i] === x.q.answer).length;
-    const pct = answered.length ? Math.round(100 * correct / answered.length) : 0;
-    const topicStats = {};
-    p.forEach(x => {
-      const t = x.q.topic || 'General';
-      if (!topicStats[t]) topicStats[t] = { total: 0, answered: 0, correct: 0 };
-      topicStats[t].total++;
-      if (state.answers[x.i] !== undefined) {
-        topicStats[t].answered++;
-        if (state.answers[x.i] === x.q.answer) topicStats[t].correct++;
-      }
-    });
-    const rows = Object.entries(topicStats).map(([t,s]) =>
-      `<div class="qs-row"><b>${escapeHtml(t)}</b>${s.correct}/${s.answered} correct · ${s.total} total</div>`).join('');
-    document.getElementById('quiz-body').innerHTML = `
-      <div class="quiz-summary">
-        <h3>Summary</h3>
-        <div class="qs-score">${correct} / ${answered.length || p.length}</div>
-        <div class="qs-pct">${pct}% correct · ${answered.length} of ${p.length} answered</div>
-        <div class="qs-breakdown">${rows}</div>
-        <div class="quiz-nav" style="justify-content:center">
-          <button class="qbtn primary" id="qs-back">Back to Questions</button>
-          <button class="qbtn" id="qs-reset">Reset Answers</button>
-        </div>
-      </div>`;
-    document.getElementById('qs-back').addEventListener('click', renderQ);
-    document.getElementById('qs-reset').addEventListener('click', () => { if (confirm('Reset all answers?')) { state.answers = {}; renderQ(); } });
-  }
-
-  // ── Activate when the quiz tab is shown ──
-  function activate() {
-    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-    viewEl.classList.add('active');
-    document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.view === 'quiz'));
-    // hide any floating canvas-controls from other tabs
-    document.querySelectorAll('.canvas-controls').forEach(c => { if (c.id !== 'quiz-controls') c.style.display = 'none'; });
-    if (!state.built) build();
-  }
-
-  // ── Bootstrap on DOM ready: add tab button, hook switchTab ──
-  function boot() {
-    // Find the tab-group container (handles both class and id variants)
-    const tg = document.querySelector('#tab-group') || document.querySelector('.tab-group');
-    if (tg) {
-      // Avoid duplicate
-      if (!tg.querySelector('[data-view="quiz"]')) {
-        const btn = document.createElement('button');
-        btn.className = 'tab';
-        btn.dataset.view = 'quiz';
-        btn.textContent = '🎯 Quiz';
-        btn.addEventListener('click', () => {
-          if (typeof window.switchTab === 'function') {
-            try { window.switchTab('quiz'); } catch(e) { activate(); }
-            // even if host switchTab handles 'quiz', ensure quiz is built & active
-            activate();
-          } else {
-            activate();
-          }
-        });
-        tg.appendChild(btn);
-      }
-    }
-    // Wrap host switchTab so that programmatic switches also work
-    if (typeof window.switchTab === 'function') {
-      const orig = window.switchTab;
-      window.switchTab = function(tab) {
-        if (tab === 'quiz') { activate(); return; }
-        try { orig(tab); } catch(e) {}
-      };
-    }
-  }
-
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
-  else boot();
-})();
 </script>
 
 </body>

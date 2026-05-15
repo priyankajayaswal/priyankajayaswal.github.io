@@ -2103,241 +2103,403 @@ if (typeof switchTab === 'function') {
 <!-- ============================================================
      DROP-IN QUIZ MODULE — self-bootstrapping
      Place this entire block immediately before </body>.
-     Customize the JSON inside <script id="quiz-data"> for the domain.
-     Each question: { topic, q, options:[...4], answer:0..3, explain }
-     ============================================================ -->
-<script id="quiz-data" type="application/json">
+     Customize the JSON inside <script id="quiz-data">
 [
   {
     "topic": "Curves & Parametrization",
     "q": "What is a parametrized curve in R³?",
-    "options": ["A set of straight lines", "A continuous map c(t): I → R³ from an interval I", "A discrete set of points", "A differential equation"],
+    "options": [
+      "A set of straight lines",
+      "A continuous map c(t): I → R³ from an interval I",
+      "A discrete set of points",
+      "A differential equation"
+    ],
     "answer": 1,
-    "explain": "A parametrized curve is formally a continuous (or smooth) map from an interval I ⊂ ℝ into Euclidean space R³. It traces out a path as the parameter t varies."
+    "explain": "A parametrized curve c(t): I → ℝ³ is a continuous map from an interval into space, forming a path. This definition makes curves rigorous mathematical objects with well-defined tangent vectors. Viewing curves as functions (not just sets) allows differentiation and integration. Why not 'set of lines'? That's too rigid—parametrized curves include spirals, circles, and complex 3D paths. Key in differential geometry: the parametrization encodes motion and speed."
   },
   {
     "topic": "Curves & Parametrization",
     "q": "If a curve is parametrized by c(t) = (cos(t), sin(t), t), what does the tangent vector c'(t) represent?",
-    "options": ["The position on the curve", "The velocity vector; direction and speed of motion", "The curvature at that point", "The binormal direction"],
+    "options": [
+      "The position on the curve",
+      "The velocity vector; direction and speed of motion",
+      "The curvature at that point",
+      "The binormal direction"
+    ],
     "answer": 1,
-    "explain": "The tangent vector c'(t) is the first derivative, which gives both the direction and speed of motion along the curve at parameter value t."
+    "explain": "The tangent vector c'(t) = dc/dt is the velocity vector—it gives both direction and speed of traversal along the curve. Geometrically, T = c'/|c'| is the direction of the curve. Why not 'position'? That's c(t) itself, not its derivative. Torsion and curvature are higher-order properties involving second derivatives. Essential in Frenet-Serret formalism: T drives the entire kinematic frame."
   },
   {
     "topic": "Arc Length & Curvature",
     "q": "What is the arc length of the curve c(t) = (t, t², 0) from t=0 to t=1?",
-    "options": ["1", "√(2) ln(1+√2) - √2 + 1", "√2", "π"],
+    "options": [
+      "1",
+      "√(2) ln(1+√2) - √2 + 1",
+      "√2",
+      "π"
+    ],
     "answer": 1,
-    "explain": "Arc length L = ∫₀¹ |c'(t)| dt. Here c'(t) = (1, 2t, 0), so |c'(t)| = √(1 + 4t²). Integrate to get the answer."
+    "explain": "Arc length L = ∫₀¹ √(1 + 4t²) dt requires hyperbolic substitution, yielding √(2)·ln(1+√(2)) - √(2) + 1 ≈ 1.44. This formula ∫|c'(t)|dt computes intrinsic distance on the curve. Why not 1 or π? Wrong due to missing the factor √(1+4t²). Arc length is reparametrization-invariant: curves with different speeds trace same length if endpoints match."
   },
   {
     "topic": "Arc Length & Curvature",
     "q": "The curvature κ of a curve c(t) measures:",
-    "options": ["The length of the curve", "How sharply the curve bends at each point", "The distance from the origin", "The area enclosed by the curve"],
+    "options": [
+      "The length of the curve",
+      "How sharply the curve bends at each point",
+      "The distance from the origin",
+      "The area enclosed by the curve"
+    ],
     "answer": 1,
-    "explain": "Curvature κ quantifies how rapidly the tangent vector changes direction—it measures the bending intensity of the curve locally."
+    "explain": "Curvature κ = |dT/ds| measures how sharply a unit-speed curve turns. For c(t), κ = |c'×c''|/|c'|³. High κ means tight bending (circle has κ=1/r), low κ means flat (line has κ=0). Why not 'length'? Arc length measures total extent, not bending. Curvature is intrinsic: isometric curves have equal curvature everywhere."
   },
   {
     "topic": "Frenet-Serret",
     "q": "What are the three vectors in the Frenet frame (TNB)?",
-    "options": ["Tangent, Normal, Binormal", "Three arbitrary orthogonal vectors", "Tangent, Non-planar, Bending", "Tensor, Null, Boundary"],
+    "options": [
+      "Tangent, Normal, Binormal",
+      "Three arbitrary orthogonal vectors",
+      "Tangent, Non-planar, Bending",
+      "Tensor, Null, Boundary"
+    ],
     "answer": 0,
-    "explain": "T is the unit tangent, N is the unit principal normal, and B is the unit binormal (B = T × N). They form an orthonormal basis moving along the curve."
+    "explain": "The Frenet frame {T, N, B} provides an orthonormal basis moving along the curve: T is unit tangent, N is principal normal (points toward center of curvature), B = T × N is binormal (perpendicular to osculating plane). These form an instantaneous coordinate system. Why other options? They're either non-orthonormal, non-moving, or made-up terms. Fundamental for analyzing 3D curve geometry."
   },
   {
     "topic": "Frenet-Serret",
     "q": "The Frenet-Serret formula T' = κN means:",
-    "options": ["Tangent vector is constant", "Change in tangent equals curvature times normal", "Normal vector equals tangent times curvature", "Torsion is zero"],
+    "options": [
+      "Tangent vector is constant",
+      "Change in tangent equals curvature times normal",
+      "Normal vector equals tangent times curvature",
+      "Torsion is zero"
+    ],
     "answer": 1,
-    "explain": "This formula shows how the tangent vector rotates along the curve. The rate of rotation (T') is proportional to the curvature κ, in the direction of the principal normal N."
+    "explain": "The Frenet-Serret formula T' = κN says the tangent vector's rate of change equals curvature times the principal normal. This quantifies how rapidly the curve's direction twists. Why not 'tangent constant'? That would be a straight line (κ=0). The formula shows κN is the centripetal acceleration vector. Critical: T' tells us how the frame rotates."
   },
   {
     "topic": "Frenet-Serret",
     "q": "Torsion τ in the formula B' = −τN measures:",
-    "options": ["How fast the curve bends in the xy-plane", "How much the curve twists out of the osculating plane", "The length of the binormal", "The rate of change of curvature"],
+    "options": [
+      "How fast the curve bends in the xy-plane",
+      "How much the curve twists out of the osculating plane",
+      "The length of the binormal",
+      "The rate of change of curvature"
+    ],
     "answer": 1,
-    "explain": "Torsion τ quantifies how the curve rotates out of its osculating plane (the plane spanned by T and N). High torsion means the curve spirals."
+    "explain": "Torsion τ = -(dB/ds)·N measures how much a curve spirals out of its osculating plane (T-N plane). High τ means the curve writhes like a helix; τ=0 means planar curve. The Frenet-Serret formula B' = -τN encodes this twist. Why not 'curvature change'? That's dκ/ds. Torsion and curvature completely determine curves up to isometry: fundamental theorem of curves."
   },
   {
     "topic": "Surfaces & Patches",
     "q": "A regular parametric surface patch is given by X(u,v). What does regularity require?",
-    "options": ["X must be smooth (C∞)", "Xu × Xv ≠ 0 (cross product is non-zero) everywhere", "X must be injective", "All of the above"],
+    "options": [
+      "X must be smooth (C∞)",
+      "Xu × Xv ≠ 0 (cross product is non-zero) everywhere",
+      "X must be injective",
+      "All of the above"
+    ],
     "answer": 3,
-    "explain": "Regularity ensures that the surface has a well-defined tangent plane and normal at every point. We need smoothness and a non-zero normal Xu × Xv."
+    "explain": "A regular parametric surface X(u,v) requires C∞ smoothness AND non-vanishing normal Xu × Xv ≠ 0 everywhere. This ensures a well-defined tangent plane and normal vector at each point. Regularity excludes singularities (cusps, self-intersections). Why all of above? Injectivity alone doesn't guarantee geometric regularity; a smooth but singular map violates Xu × Xv = 0. Regularity is prerequisite for intrinsic geometry."
   },
   {
     "topic": "Surfaces & Patches",
     "q": "The First Fundamental Form I (or E, F, G notation) on a surface encodes:",
-    "options": ["How the surface sits in space (extrinsic)", "Distances and angles measured on the surface (intrinsic)", "The Euler characteristic", "Curvature only"],
+    "options": [
+      "How the surface sits in space (extrinsic)",
+      "Distances and angles measured on the surface (intrinsic)",
+      "The Euler characteristic",
+      "Curvature only"
+    ],
     "answer": 1,
-    "explain": "The first fundamental form ds² = E du² + 2F du dv + G dv² captures all metric information intrinsic to the surface—distances and angles computed on it."
+    "explain": "The first fundamental form I = E du² + 2F du dv + G dv² (where E=Xu·Xu, F=Xu·Xv, G=Xv·Xv) encodes intrinsic metric: distances and angles measured ON the surface itself. Arc length on surface: ds² = I. Why 'extrinsic'? How surface sits in ℝ³ involves the normal and embedding. Theorema Egregium: intrinsic curvature (Gaussian K) depends only on I, not on how surface bends into space."
   },
   {
     "topic": "Surfaces & Patches",
     "q": "The Second Fundamental Form II (or L, M, N notation) encodes:",
-    "options": ["Intrinsic metric information", "How the surface bends in the ambient space (extrinsic)", "The area of the surface", "Geodesic lines"],
+    "options": [
+      "Intrinsic metric information",
+      "How the surface bends in the ambient space (extrinsic)",
+      "The area of the surface",
+      "Geodesic lines"
+    ],
     "answer": 1,
-    "explain": "The second fundamental form II = L du² + 2M du dv + N dv² measures how normal to the surface the second derivatives are—it quantifies extrinsic bending."
+    "explain": "The second fundamental form II = L du² + 2M du dv + N dv² (L=Xuu·n, M=Xuv·n, N=Xvv·n, n=normal) measures extrinsic bending: how the surface curves in ambient space. Shape operator S relates I and II. Why not arc length? That's first form. Why not Euler characteristic? That's topological. Second form vanishes for developable surfaces (cylinder, cone) and determines principal curvatures via eigenvalues."
   },
   {
     "topic": "Curvature",
     "q": "The principal curvatures κ₁ and κ₂ are:",
-    "options": ["Always positive", "Eigenvalues of the shape operator S = dN where dN is the differential of the Gauss map N", "The same everywhere on any surface", "Related only to geodesics"],
+    "options": [
+      "Always positive",
+      "Eigenvalues of the shape operator S = dN where dN is the differential of the Gauss map N",
+      "The same everywhere on any surface",
+      "Related only to geodesics"
+    ],
     "answer": 1,
-    "explain": "Principal curvatures are the extreme values of normal curvature. They are eigenvalues of the shape operator (or Weingarten map), which encodes how the surface bends."
+    "explain": "Principal curvatures κ₁, κ₂ are eigenvalues of the shape operator S (Weingarten map): S(v) = -dN(v). They represent maximum and minimum normal curvatures at a point. Shape operator encodes how the normal vector changes along the surface. Why 'always positive'? Wrong—saddle points have κ₁ > 0, κ₂ < 0. Geometric intuition: sphere has κ₁=κ₂=1/r; saddle has opposite signs."
   },
   {
     "topic": "Curvature",
     "q": "Gaussian curvature K of a surface satisfies K = κ₁ · κ₂. For a sphere of radius r:",
-    "options": ["K = 0", "K = 1/r", "K = 1/r²", "K = 2/r"],
+    "options": [
+      "K = 0",
+      "K = 1/r",
+      "K = 1/r²",
+      "K = 2/r"
+    ],
     "answer": 2,
-    "explain": "For a sphere, both principal curvatures equal 1/r, so K = (1/r) × (1/r) = 1/r². On a plane, κ₁ = κ₂ = 0, so K = 0."
+    "explain": "Gaussian curvature K = κ₁κ₂ on a sphere of radius r: both principal curvatures are 1/r, so K = 1/r². For a plane, κ₁=κ₂=0, so K=0. A cylinder has κ₁=1/r, κ₂=0, so K=0 (developable). Why 1/r? Wrong—that's mean curvature H. Theorema Egregium: K is intrinsic and depends only on first fundamental form. Positive K (sphere) vs negative K (hyperbolic plane) determines global geometry."
   },
   {
     "topic": "Curvature",
     "q": "Mean curvature H = (κ₁ + κ₂)/2. A minimal surface satisfies:",
-    "options": ["K = 0 everywhere", "H = 0 everywhere", "κ₁ = κ₂", "K = H"],
+    "options": [
+      "K = 0 everywhere",
+      "H = 0 everywhere",
+      "κ₁ = κ₂",
+      "K = H"
+    ],
     "answer": 1,
-    "explain": "Minimal surfaces have zero mean curvature everywhere. Examples include catenoids and helicoids. They are critical points of surface area."
+    "explain": "Minimal surfaces satisfy H = (κ₁+κ₂)/2 = 0 everywhere, making them critical points of area functional. Minimal surfaces balance positive and negative curvatures. Examples: catenoid, helicoid, soap films (physical realization). Why not K=0? That's cylinders/cones (developable, not minimal). Minimal surfaces appear in General Relativity (foliations) and soap bubbles. Mean curvature H drives surface evolution in mean-curvature flow."
   },
   {
     "topic": "Theorema Egregium",
     "q": "Gauss's Theorema Egregium states that:",
-    "options": ["All surfaces have positive curvature", "Gaussian curvature is an intrinsic invariant—it depends only on distances measured on the surface", "Mean curvature must be constant", "Geodesics never exist"],
+    "options": [
+      "All surfaces have positive curvature",
+      "Gaussian curvature is an intrinsic invariant—it depends only on distances measured on the surface",
+      "Mean curvature must be constant",
+      "Geodesics never exist"
+    ],
     "answer": 1,
-    "explain": "Theorema Egregium is profound: K can be computed from the first fundamental form alone, without knowing how the surface sits in space. Isometries preserve K."
+    "explain": "Theorema Egregium: Gaussian curvature K is intrinsic—it depends only on the first fundamental form (metric), not on how the surface sits in ℝ³. Isometries (distance-preserving maps) preserve K. Consequence: sphere (K=1) cannot be isometric to cylinder (K=0), despite both being smooth. Why 'K always positive'? Hyperbolic planes have K < 0. This theorem unifies differential geometry: intrinsic geometry is all that matters."
   },
   {
     "topic": "Geodesics",
     "q": "A geodesic on a surface is:",
-    "options": ["Any smooth curve", "A curve with zero geodesic curvature (locally a shortest path)", "Always a straight line", "A curve with constant curvature"],
+    "options": [
+      "Any smooth curve",
+      "A curve with zero geodesic curvature (locally a shortest path)",
+      "Always a straight line",
+      "A curve with constant curvature"
+    ],
     "answer": 1,
-    "explain": "Geodesics are curves that 'go straight' on the surface in an intrinsic sense. They have κg = 0 and locally minimize arc length between nearby points."
+    "explain": "Geodesics are curves with zero geodesic curvature κg=0—they 'go straight' intrinsically and locally minimize arc length between nearby points. Satisfy Euler-Lagrange equations derived from arc-length functional. Why not 'any smooth curve'? Most curves curve intrinsically (κg≠0). Geodesics are fundamental: in GR, massive particles follow geodesics; gauge theory uses geodesics in connection spaces."
   },
   {
     "topic": "Geodesics",
     "q": "On a sphere, geodesics are:",
-    "options": ["Spirals", "Great circles (intersection of plane through center with sphere)", "Circles parallel to the equator", "Logarithmic spirals"],
+    "options": [
+      "Spirals",
+      "Great circles (intersection of plane through center with sphere)",
+      "Circles parallel to the equator",
+      "Logarithmic spirals"
+    ],
     "answer": 1,
-    "explain": "Great circles are the geodesics on a sphere. They have maximum radius and represent the shortest paths between two points on the sphere (up to direction)."
+    "explain": "On a sphere, great circles (intersections of planes through the center) are geodesics. They maximize radius and represent shortest paths between two points on the sphere up to direction. Smaller circles (parallels) have κg≠0. Great circles are length-minimizing: flight paths follow great circles. Why 'spirals' or 'logarithmic'? Wrong—those curve on the sphere intrinsically. Great circles encode sphere's symmetry."
   },
   {
     "topic": "Geodesics",
     "q": "Parallel transport on a surface describes:",
-    "options": ["Moving at constant velocity", "Moving a tangent vector along a curve while keeping it 'parallel' in the intrinsic sense", "Rotating a vector around a fixed point", "Moving perpendicular to a geodesic"],
+    "options": [
+      "Moving at constant velocity",
+      "Moving a tangent vector along a curve while keeping it 'parallel' in the intrinsic sense",
+      "Rotating a vector around a fixed point",
+      "Moving perpendicular to a geodesic"
+    ],
     "answer": 1,
-    "explain": "Parallel transport moves a vector along a curve such that its intrinsic derivative is zero. On a sphere, a vector transported around a closed loop doesn't return to its original direction."
+    "explain": "Parallel transport moves a tangent vector along a curve while preserving its 'parallelness' in the intrinsic sense: covariant derivative ∇_v V = 0 along the curve. On a sphere, a vector transported around a closed loop rotates (holonomy), failing to return unchanged. This non-trivial holonomy characterizes curvature. Critical in GR: covariant derivative ∇ determines how vectors change along paths in curved spacetime."
   },
   {
     "topic": "Gauss-Bonnet",
     "q": "The Gauss-Bonnet theorem for a surface S with boundary ∂S relates:",
-    "options": ["K to the length of geodesics only", "The total Gaussian curvature ∫∫K dA and boundary integral ∫κg ds to the Euler characteristic χ(S)", "Mean curvature to surface area", "Torsion to topology"],
+    "options": [
+      "K to the length of geodesics only",
+      "The total Gaussian curvature ∫∫K dA and boundary integral ∫κg ds to the Euler characteristic χ(S)",
+      "Mean curvature to surface area",
+      "Torsion to topology"
+    ],
     "answer": 1,
-    "explain": "∫∫_S K dA + ∫_{∂S} κ_g ds = 2πχ(S). This connects local geometry (K) and boundary data to global topology (χ), which counts holes."
+    "explain": "The Gauss-Bonnet theorem: ∫∫_S K dA + ∫_{∂S} κ_g ds = 2πχ(S), where χ is Euler characteristic (counts holes). It connects intrinsic curvature (K) and boundary geodesic curvature (κ_g) to global topology (χ). For closed surfaces (no boundary): ∫∫ K dA = 2πχ. Why 'boundary geodesics only'? K itself matters. Profound: local geometry (K) determines global topology."
   },
   {
     "topic": "Gauss-Bonnet",
     "q": "For a sphere (χ = 2), Gauss-Bonnet tells us that:",
-    "options": ["K is negative everywhere", "∫∫_S K dA = 4π × 1 = 4π (integrating K over a sphere of radius 1)", "∫∫_S K dA = 0", "K must be zero"],
+    "options": [
+      "K is negative everywhere",
+      "∫∫_S K dA = 4π × 1 = 4π (integrating K over a sphere of radius 1)",
+      "∫∫_S K dA = 0",
+      "K must be zero"
+    ],
     "answer": 1,
-    "explain": "On a unit sphere, K = 1 everywhere, so ∫∫_S 1 dA = surface area = 4π. Gauss-Bonnet is satisfied: 4π + 0 = 2π × 2."
+    "explain": "For a unit sphere, χ=2 and K=1 everywhere. Gauss-Bonnet: ∫∫_S 1 dA = surface area = 4π (for unit sphere). Boundary integral vanishes (no boundary). Check: 4π = 2π × 2. Why K < 0 or K = 0? Wrong—sphere has positive Gaussian curvature. This example validates Gauss-Bonnet: topology (χ=2) forces total curvature 4π regardless of parametrization."
   },
   {
     "topic": "Tangent Spaces",
     "q": "The tangent space T_pS at a point p on a surface S is:",
-    "options": ["The entire surface", "A 2-dimensional vector space spanned by tangent vectors Xu(p) and Xv(p) at that point", "A 1-dimensional curve", "The normal to the surface at p"],
+    "options": [
+      "The entire surface",
+      "A 2-dimensional vector space spanned by tangent vectors Xu(p) and Xv(p) at that point",
+      "A 1-dimensional curve",
+      "The normal to the surface at p"
+    ],
     "answer": 1,
-    "explain": "T_pS is the 2D plane at p tangent to S, generated by the partial derivatives Xu and Xv. It's the best linear approximation to the surface near p."
+    "explain": "The tangent space T_pS is a 2D vector space at point p spanned by the partial derivative vectors X_u(p) and X_v(p). It's the best linear approximation to S near p. Why not 'entire surface'? That's not a vector space. Why 1D? A surface is 2D. T_pS exists abstractly on manifolds without embedding in ℝ³. Tangent bundle TS = ∪_p T_pS is fundamental: vector fields are sections of TS."
   },
   {
     "topic": "Tensors & Metrics",
     "q": "A Riemannian metric g on a surface assigns to each point p and tangent vectors a:",
-    "options": ["Curvature value", "Scalar product ⟨v,w⟩_g defining angles and lengths", "Topological invariant", "Vector field"],
+    "options": [
+      "Curvature value",
+      "Scalar product ⟨v,w⟩_g defining angles and lengths",
+      "Topological invariant",
+      "Vector field"
+    ],
     "answer": 1,
-    "explain": "A Riemannian metric is a smooth assignment of an inner product to each tangent space, allowing us to measure distances and angles intrinsically on the manifold."
+    "explain": "A Riemannian metric g defines a scalar product ⟨v,w⟩_g on each tangent space T_pS, making it a Euclidean space. This defines lengths and angles intrinsically. g is positive-definite, symmetric. Locally: g = E du² + 2F du dv + G dv² (first fundamental form). Why 'curvature'? That's extrinsic. Why 'topological invariant'? Topology is coarser than metric. Metric is the foundation of Riemannian geometry."
   },
   {
     "topic": "Tensors & Metrics",
     "q": "In coordinates, the metric g is represented by the matrix with entries E, F, G (the first fundamental form coefficients):",
-    "options": ["g = [[L,M],[M,N]]", "g = [[E,F],[F,G]]", "g = [[κ₁,0],[0,κ₂]]", "g = [[K,H],[H,0]]"],
+    "options": [
+      "g = [[L,M],[M,N]]",
+      "g = [[E,F],[F,G]]",
+      "g = [[κ₁,0],[0,κ₂]]",
+      "g = [[K,H],[H,0]]"
+    ],
     "answer": 1,
-    "explain": "The first fundamental form I = E du² + 2F du dv + G dv² defines the metric. In matrix form, g_ij = [E F; F G]."
+    "explain": "In coordinates (u,v), the Riemannian metric g is represented by the matrix G = [[E, F], [F, G]], where E=⟨X_u,X_u⟩, F=⟨X_u,X_v⟩, G=⟨X_v,X_v⟩. Determinant det(G) = EG - F² is crucial for area elements: dA = √(det G) du dv. Inverse matrix G⁻¹ raises indices in tensor calculations. Christoffel symbols depend on derivatives of G."
   },
   {
     "topic": "Connections & Covariant Derivative",
     "q": "A connection on a manifold defines:",
-    "options": ["A way to compute angles only", "How to differentiate vector fields (the covariant derivative) in a way consistent with the metric", "The curvature tensor directly", "The Euler characteristic"],
+    "options": [
+      "A way to compute angles only",
+      "How to differentiate vector fields (the covariant derivative) in a way consistent with the metric",
+      "The curvature tensor directly",
+      "The Euler characteristic"
+    ],
     "answer": 1,
-    "explain": "A connection is a tool for taking derivatives of tangent vectors along curves while respecting the manifold's geometry. For Riemannian manifolds, the Levi-Civita connection is canonical."
+    "explain": "A connection ∇ on a manifold defines covariant differentiation of vector fields: ∇_X Y gives the directional derivative of Y in direction X, accounting for manifold curvature. Torsion-free (symmetric): ∇_X Y - ∇_Y X = [X,Y]. On Riemannian manifolds, the Levi-Civita connection is unique: metric-compatible (∇g=0) and torsion-free. Essential: connections extend calculus to curved spaces."
   },
   {
     "topic": "Connections & Covariant Derivative",
     "q": "Christoffel symbols Γᵏ_ij characterize:",
-    "options": ["Curvature at a single point", "How basis vectors change in a coordinate system (components of the connection)", "The metric tensor only", "Geodesic curvature"],
+    "options": [
+      "Curvature at a single point",
+      "How basis vectors change in a coordinate system (components of the connection)",
+      "The metric tensor only",
+      "Geodesic curvature"
+    ],
     "answer": 1,
-    "explain": "Christoffel symbols Γᵏ_ij encode how the coordinate basis vectors ∂_i change. They determine the covariant derivative and are computed from metric derivatives."
+    "explain": "Christoffel symbols Γᵏ_ij characterize how basis vectors change from point to point on a manifold. They appear in covariant derivatives: ∇_i e_j = Γᵏ_ij e_k. For Levi-Civita, they're determined by metric: Γᵏ_ij = ½ g^(km) (∂_i g_mj + ∂_j g_mi - ∂_m g_ij). Not tensors (don't transform covariantly), but their derivatives form curvature tensors. Symbols vanish in Euclidean space in Cartesian coordinates."
   },
   {
     "topic": "Riemannian Curvature",
     "q": "The Riemann curvature tensor R measures:",
-    "options": ["Only scalar curvature", "How parallel transport around a closed loop fails to return a vector to itself (intrinsic curvature)", "The area of a surface", "Geodesic length"],
+    "options": [
+      "Only scalar curvature",
+      "How parallel transport around a closed loop fails to return a vector to itself (intrinsic curvature)",
+      "The area of a surface",
+      "Geodesic length"
+    ],
     "answer": 1,
-    "explain": "The Riemann tensor R_ijkl encodes how vectors change when parallel transported around loops. Its contraction gives Ricci curvature and scalar curvature."
+    "explain": "The Riemann curvature tensor R measures how vectors fail to return unchanged after parallel transport around infinitesimal closed curves. R^ρ_σμν = ∂_μΓ^ρ_νσ - ∂_νΓ^ρ_μσ + Γ^ρ_μλΓ^λ_νσ - Γ^ρ_νλΓ^λ_μσ. Gaussian curvature K relates to a component of R. Why 'distance'? That's metric. Riemann tensor encodes all intrinsic curvature; contracting gives Ricci and scalar curvature."
   },
   {
     "topic": "Riemannian Curvature",
     "q": "For a 2D surface, the Riemann tensor is completely determined by:",
-    "options": ["Mean curvature only", "The Gaussian curvature K (one component) because the manifold is 2-dimensional", "Principal curvatures", "Geodesic distance"],
+    "options": [
+      "Mean curvature only",
+      "The Gaussian curvature K (one component) because the manifold is 2-dimensional",
+      "Principal curvatures",
+      "Geodesic distance"
+    ],
     "answer": 1,
-    "explain": "In 2D, there is essentially only one independent component of the Riemann tensor, which can be expressed via the scalar curvature, which equals 2K for surfaces."
+    "explain": "For 2D surfaces, the Riemann tensor is completely determined by scalar curvature: R_ρσμν = K(g_ρμ g_σν - g_ρν g_σμ). Only one independent component (Gaussian curvature K). Higher dimensions have more degrees of freedom: a 4D spacetime (GR) has 20 independent components of R. Why 'completely determined by K'? True in 2D; false generally. This makes 2D geometry tractable."
   },
   {
     "topic": "Special Surfaces",
     "q": "A surface of revolution is generated by rotating a plane curve around an axis. For such a surface, geodesics satisfy:",
-    "options": ["Clairaut's theorem: r sin(φ) = constant along geodesics, where r is distance from axis and φ is angle from meridian", "All geodesics are meridians or parallels", "Geodesics must have constant curvature", "No geodesics exist"],
+    "options": [
+      "Clairaut's theorem: r sin(φ) = constant along geodesics, where r is distance from axis and φ is angle from meridian",
+      "All geodesics are meridians or parallels",
+      "Geodesics must have constant curvature",
+      "No geodesics exist"
+    ],
     "answer": 0,
-    "explain": "Clairaut's theorem is a beautiful result: along any geodesic on a surface of revolution, the product r sin(φ) remains constant. This determines geodesic behavior."
+    "explain": "A surface of revolution is generated by rotating a plane curve (profile) around an axis. Parametrization: X(u,v) = (f(u)cos(v), f(u)sin(v), g(u)), where (f(u), g(u)) is the profile. First fundamental form is diagonal when profile is regular. Examples: sphere, torus, cone. First fundamental form E = (f')² + (g')², F = 0, G = f². Gaussian curvature K = -f''/(f((f')²+(g')²)) depends only on profile."
   },
   {
     "topic": "Special Surfaces",
     "q": "A catenoid is:",
-    "options": ["A ruled surface with zero Gaussian curvature", "A minimal surface of revolution (H = 0 everywhere) generated by rotating a catenary curve", "A surface with constant mean curvature", "A paraboloid"],
+    "options": [
+      "A ruled surface with zero Gaussian curvature",
+      "A minimal surface of revolution (H = 0 everywhere) generated by rotating a catenary curve",
+      "A surface with constant mean curvature",
+      "A paraboloid"
+    ],
     "answer": 1,
-    "explain": "The catenoid is the only minimal surface of revolution (besides the plane). It's generated by rotating y = a cosh(z/a). It's locally isometric to the helicoid."
+    "explain": "The catenoid is a minimal surface of revolution generated by rotating the catenary y = c·cosh(x/c) around the x-axis. It has H = 0 everywhere (minimal) but non-zero Gaussian curvature (saddle-shaped, K < 0). Catenoid and helicoid are the only minimal surfaces of revolution. Soap film between coaxial rings forms catenoid (minimal area). Key in PDEs: minimal surfaces solve geometric PDE."
   },
   {
     "topic": "Special Surfaces",
     "q": "The pseudosphere is notable because:",
-    "options": ["It is a sphere with constant curvature", "It has constant negative Gaussian curvature K = -1 (locally models hyperbolic geometry)", "It minimizes surface area", "It is a surface of revolution with positive curvature"],
+    "options": [
+      "It is a sphere with constant curvature",
+      "It has constant negative Gaussian curvature K = -1 (locally models hyperbolic geometry)",
+      "It minimizes surface area",
+      "It is a surface of revolution with positive curvature"
+    ],
     "answer": 1,
-    "explain": "The pseudosphere is a surface of revolution with K = -1 everywhere. It is a classical model for hyperbolic geometry and shows how non-Euclidean geometry arises geometrically."
+    "explain": "The pseudosphere (tractricoid) is a surface of revolution with constant negative Gaussian curvature K = -1/r². It has a cusp singularity but models hyperbolic plane H² locally and intrinsically. Parallel transport around closed loops on pseudosphere exhibits holonomy. Incomplete surface (asymptotic to a cone), but demonstrates that K < 0 everywhere is geometrically realizable as embedded surface in ℝ³."
   },
   {
     "topic": "Intrinsic vs Extrinsic",
     "q": "An intrinsic property of a surface is:",
-    "options": ["How it looks from outside (depends on embedding)", "A property that depends only on the first fundamental form (independent of how it sits in space)", "The mean curvature", "Whether it is ruled"],
+    "options": [
+      "How it looks from outside (depends on embedding)",
+      "A property that depends only on the first fundamental form (independent of how it sits in space)",
+      "The mean curvature",
+      "Whether it is ruled"
+    ],
     "answer": 1,
-    "explain": "Intrinsic properties are determined by the metric alone. Examples: Gaussian curvature (by Theorema Egregium), geodesics, and distances. Extrinsic properties depend on the embedding (like mean curvature)."
+    "explain": "An intrinsic property depends only on the first fundamental form (metric): distances, angles, arc length, geodesics, Gaussian curvature (Theorema Egregium). Isometries preserve intrinsic properties. Examples: curvature κ, arc length, geodesic curvature. Why others fail? Mean curvature H is extrinsic (depends on shape operator S, encoding how surface bends into ambient space). Conceptually: intrinsic = what ant crawling on surface measures."
   },
   {
     "topic": "Intrinsic vs Extrinsic",
     "q": "A cylinder and a plane are:",
-    "options": ["Equally curved in all directions", "Locally isometric (same intrinsic geometry; both have K = 0) but different as embedded surfaces", "Geodesically equivalent everywhere", "Both have positive curvature"],
+    "options": [
+      "Equally curved in all directions",
+      "Locally isometric (same intrinsic geometry; both have K = 0) but different as embedded surfaces",
+      "Geodesically equivalent everywhere",
+      "Both have positive curvature"
+    ],
     "answer": 1,
-    "explain": "Both a plane and cylinder have Gaussian curvature K = 0, so locally you can 'unroll' one onto the other via an isometry. But globally they differ topologically."
+    "explain": "A cylinder and plane are locally isometric (both have K=0) but NOT globally isometric: cylinder wraps around (compact in one direction), plane extends infinitely. Both are developable (K=0 everywhere). Locally, you can flatten a cylinder into a plane without stretching. Globally, topologies differ: cylinder has non-trivial S¹ fiber. Isometry requires bijection preserving distances; topology obstruction prevents global isometry."
   },
   {
     "topic": "Isometries & Conformal Maps",
     "q": "An isometry between two surfaces preserves:",
-    "options": ["Angles only", "Distances and angles (the metric)", "Only curvature", "Mean curvature"],
+    "options": [
+      "Angles only",
+      "Distances and angles (the metric)",
+      "Only curvature",
+      "Mean curvature"
+    ],
     "answer": 1,
-    "explain": "An isometry is a diffeomorphism f: S → S' that preserves the metric: g' = f*g. It preserves all intrinsic geometry (distances, angles, Gaussian curvature, geodesics)."
+    "explain": "An isometry between surfaces is a distance-preserving diffeomorphism: |curve γ| and |f∘γ| have equal arc lengths. Isometries preserve all intrinsic properties: angles, curvatures, geodesics. Examples: cylinder ↔ plane (locally), sphere of radius r ↔ sphere of radius r. Why not 'angles only'? That's conformal maps. Isometry ⇒ conformal (preserves angles), but not vice versa. Isometries form the symmetry group of a surface."
   },
   {
     "topic": "Isometries & Conformal Maps",
     "q": "A conformal map between surfaces preserves:",
-    "options": ["Distances exactly", "Angles (but not distances) up to a scaling factor", "Curvature everywhere", "Geodesics exactly"],
+    "options": [
+      "Distances exactly",
+      "Angles (but not distances) up to a scaling factor",
+      "Curvature everywhere",
+      "Geodesics exactly"
+    ],
     "answer": 1,
-    "explain": "Conformal maps preserve angles locally. They satisfy the Cauchy-Riemann equations (in complex form). Mercator projection is a famous conformal map from sphere to plane."
+    "explain": "A conformal map preserves angles but not necessarily distances: ⟨df(v), df(w)⟩ = λ(p)²⟨v,w⟩ (scaling λ). Stereographic projection: sphere ↔ plane (conformal). Angle preservation: conformal maps are holomorphic in complex-analytic coordinates. Why not 'distances'? That's isometry. Why not 'areas'? Conformal scaling distorts area by λ². In gauge theory and string theory, conformal maps describe topological field theory symmetries."
   }
 ]
 </script>
@@ -2621,3 +2783,4 @@ if (typeof switchTab === 'function') {
 
 </body>
 </html>
+

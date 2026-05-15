@@ -2139,58 +2139,7 @@ if (typeof switchTab === 'function') {
 <!-- ============================================================
      DROP-IN QUIZ MODULE — self-bootstrapping
      Place this entire block immediately before </body>.
-     Customize the JSON inside <script id="quiz-data"> for the domain.
-     Each question: { topic, q, options:[...4], answer:0..3, explain }
-     ============================================================ -->
-<script id="quiz-data" type="application/json">
-[
-  {"topic":"Fundamentals","q":"What is the Tsiolkovsky rocket equation?","options":["Δv = Isp·g₀·ln(m₀/mf)","F = m·a","v² = v₀² + 2·a·s","p = ρ·g·h"],"answer":0,"explain":"The Tsiolkovsky equation is the fundamental equation of astronautics, relating velocity change to exhaust velocity and mass ratio. It shows that achieving higher Δv requires exponentially more propellant."},
-  {"topic":"Fundamentals","q":"What does Isp (Specific Impulse) measure?","options":["Impulse per unit mass of propellant","Thrust per unit time","Pressure times volume","Energy per kilogram"],"answer":0,"explain":"Isp measures the efficiency of a rocket engine — it's the thrust produced per unit mass flow rate of propellant. Higher Isp means more efficient propulsion."},
-  {"topic":"Fundamentals","q":"What is the standard gravity constant g₀ used in rocket calculations?","options":["9.81 m/s²","10 m/s²","6.67 m/s²","3.71 m/s²"],"answer":0,"explain":"g₀ = 9.81 m/s² is Earth's surface gravity. It's used to convert Isp from seconds to exhaust velocity in m/s via ve = Isp·g₀."},
-  {"topic":"Fundamentals","q":"What is the typical Δv required to reach Low Earth Orbit (LEO)?","options":["~3 km/s","~9.3 km/s","~15 km/s","~20 km/s"],"answer":1,"explain":"Reaching LEO requires overcoming gravity losses and achieving orbital velocity at ~7.8 km/s altitude. Total Δv budget is approximately 9.3 km/s accounting for atmospheric drag and gravity."},
-  {"topic":"Fundamentals","q":"In rocket propulsion, what does 'thrust' represent?","options":["Rate of momentum change","Exhaust velocity","Mass flow rate","Specific impulse"],"answer":0,"explain":"Thrust F is the rate of momentum change of the exhaust: F = dm/dt · ve. It's the force that accelerates the rocket forward."},
-  {"topic":"Chemical Propulsion","q":"What are the two main types of chemical rockets?","options":["Solid and Liquid","Liquid and Electric","Hybrid and Nuclear","Thermal and Cryogenic"],"answer":0,"explain":"Chemical rockets are broadly divided into solid propellant motors (where fuel and oxidizer are mixed in a solid grain) and liquid propellant engines (where separate fuels and oxidizers are pumped and mixed)."},
-  {"topic":"Chemical Propulsion","q":"What is a hybrid rocket?","options":["Rocket using both solid fuel and liquid oxidizer","Two rockets fired together","Multiple combustion chambers","Rocket with two nozzles"],"answer":0,"explain":"Hybrid rockets combine a solid fuel grain with a liquid or gaseous oxidizer, offering advantages of both systems: better throttling than solids, simpler than pure liquids."},
-  {"topic":"Chemical Propulsion","q":"Which propellant combination has the highest Isp?","options":["RP-1/LOX","Hydrazine","H₂/LOX","Solid ammonium perchlorate"],"answer":2,"explain":"Hydrogen/Oxygen gives the highest Isp (~460 sec vacuum) due to the high energy-to-weight ratio of H₂ and the high exhaust velocity. Used on Space Shuttle Main Engines (SSME)."},
-  {"topic":"Chemical Propulsion","q":"What is hypergolic propellant ignition?","options":["Spontaneous ignition when fuel and oxidizer contact","Ignition via spark plug","Ignition by compression","Ignition by laser"],"answer":0,"explain":"Hypergolic propellants ignite spontaneously upon contact without external ignition. Examples: N₂H₄ (hydrazine) with N₂O₄. Advantage: reliable ignition; Disadvantage: toxic."},
-  {"topic":"Nozzle Theory","q":"What is the function of the converging section of a rocket nozzle?","options":["Accelerates subsonic flow to Mach 1","Expands supersonic flow","Cools the exhaust","Controls pressure drop"],"answer":0,"explain":"The converging section accelerates subsonic flow and reaches choked flow (Mach = 1) at the throat. Downstream pressure variations don't affect throat conditions once choked."},
-  {"topic":"Nozzle Theory","q":"What happens in the diverging section of a De Laval nozzle?","options":["Subsonic flow accelerates","Supersonic flow further accelerates to higher Mach","Flow velocity decreases","Pressure increases"],"answer":1,"explain":"In the diverging section (downstream of the throat where flow is supersonic), expanding area causes supersonic flow to accelerate further, reaching hypersonic velocities and producing thrust."},
-  {"topic":"Nozzle Theory","q":"What is 'under-expansion' in a rocket nozzle?","options":["Exit pressure > ambient pressure, plume expands","Exit pressure < ambient pressure, plume compresses","Nozzle too small for the flow","Combustion chamber pressure too low"],"answer":0,"explain":"Under-expansion occurs when exit pressure exceeds ambient (atmospheric/vacuum). The exhaust plume expands beyond the nozzle lip, losing efficiency."},
-  {"topic":"Nozzle Theory","q":"What is the throat area critical to?","options":["It determines the maximum mass flow rate for given chamber pressure","It controls the Isp","It regulates engine shutdown","It stabilizes combustion"],"answer":0,"explain":"At the throat, flow reaches sonic conditions (Mach = 1). Mass flow rate ṁ = pc·At·√(Γ/(R·Tc)). Throat area is the key parameter determining engine size and thrust for a given chamber pressure."},
-  {"topic":"Nozzle Theory","q":"What is the area ratio (Ae/At) of a sea-level optimized nozzle?","options":["~5-10","~50-100","~200-300","~1000"],"answer":0,"explain":"Sea-level nozzles use area ratios around 10-30 to optimize for ambient pressure. Vacuum nozzles use much larger area ratios (~200+) since there's no opposing ambient pressure."},
-  {"topic":"Combustion","q":"What causes combustion instability in rocket engines?","options":["Acoustic coupling between pressure oscillations and heat release","Engine vibration","Nozzle erosion","Thermal stress on walls"],"answer":0,"explain":"Combustion instability occurs when pressure oscillations couple with heat release. The Rayleigh criterion ∫p'·q' dt > damping determines stability. It's one of the most destructive failure modes."},
-  {"topic":"Combustion","q":"What are the three main frequency regimes of combustion instability?","options":["Chugging, buzzing, screaming","Low, medium, high","First, second, third mode","Acoustic, thermal, mechanical"],"answer":0,"explain":"Chugging (10–400 Hz, feed-system coupling), buzzing (400–1000 Hz), screaming/screeching (1000+ Hz, acoustic resonance with chamber). Each requires different mitigation."},
-  {"topic":"Combustion","q":"What is the Rayleigh criterion in combustion stability?","options":["Instability grows when p'·q' are in-phase and exceed damping","Flame speed must exceed sonic velocity","Pressure must exceed critical value","Temperature must be uniform"],"answer":0,"explain":"The Rayleigh criterion: ∫p'·q' dt > damping indicates instability when pressure and heat-release oscillations are in-phase. Mitigation includes injector baffles and acoustic cavities."},
-  {"topic":"Combustion","q":"What is a Helmholtz resonator in rocket engine design?","options":["Acoustic cavity tuned to absorb specific instability frequencies","High-pressure tank","Fuel pump component","Nozzle insert"],"answer":0,"explain":"Helmholtz resonators are acoustic cavities designed to absorb energy at specific frequencies, dampening combustion instability. They're tuned to the engine's problem frequency."},
-  {"topic":"Solid Rocket Motors","q":"What is the grain in a solid rocket motor?","options":["The solid propellant block","The nozzle exit","The combustion chamber liner","The ignition charge"],"answer":0,"explain":"The grain is the solid propellant charge — a block of fuel and oxidizer mixed together. Its geometry (shape of the burning surface) determines the thrust profile over time."},
-  {"topic":"Solid Rocket Motors","q":"What grain geometry produces constant pressure in a solid motor?","options":["Progressive burn (star, slot, or wagon-wheel cross-section)","Neutral burn (cylindrical)","Regressive burn (end-burning)","Any shape works"],"answer":0,"explain":"Progressive grains (star, slot, wagon-wheel shapes) present increasing surface area as they burn, maintaining roughly constant pressure. Neutral = constant area; Regressive = decreasing area."},
-  {"topic":"Solid Rocket Motors","q":"What is a 'web' in solid propellant terminology?","options":["Thickness of propellant from surface to core (burning distance)","Connecting structure in grain","Combustion chamber wall layer","Nozzle insert material"],"answer":0,"explain":"The web is the thickness of propellant measured from the burning surface to the unburned core. It determines the burn duration — longer web = longer burn."},
-  {"topic":"Liquid Rocket Engines","q":"What is a turbopump in a liquid rocket engine?","options":["Centrifugal pump driven by hot gas turbine to deliver propellants","Compressor for combustion chamber pressure","Relief valve for safety","Mixing chamber"],"answer":0,"explain":"Turbopumps use a turbine (driven by hot exhaust) to power a centrifugal pump delivering fuel and oxidizer from tanks to the combustion chamber at high pressure — enabling compact engine design."},
-  {"topic":"Liquid Rocket Engines","q":"What is regenerative cooling in liquid rocket engines?","options":["Using cold fuel to cool chamber walls before injection","Spraying water on the outside","Thermal insulation","Radiative cooling"],"answer":0,"explain":"Regenerative cooling routes cold fuel (or oxidizer) through passages in the engine walls, absorbing heat before entering the combustion chamber. Efficient and heats the propellant."},
-  {"topic":"Liquid Rocket Engines","q":"What is the injector's role in a liquid rocket engine?","options":["Mixes and atomizes fuel and oxidizer in the chamber","Supplies initial pressure","Prevents backflow","Controls nozzle expansion"],"answer":0,"explain":"The injector sprays and mixes fuel and oxidizer streams to ensure rapid, complete combustion. Injector design strongly influences combustion efficiency and stability."},
-  {"topic":"Liquid Rocket Engines","q":"What is the staged combustion cycle?","options":["Preburner produces hot gas driving turbines; gases then fed to main chamber","Sequential ignition of multiple chambers","Two-stage expansion process","Staggered fuel/oxidizer injection"],"answer":0,"explain":"Staged combustion uses a preburner (fuel-rich or oxidizer-rich) to generate hot gas that powers the main turbine, then this exhaust enters the main chamber. Used on Space Shuttle SSME and Falcon 9 Merlin."},
-  {"topic":"Electric Propulsion","q":"What is an ion thruster?","options":["Accelerates ionized propellant via electric field to high velocity","Uses electrodes to mix fuel","Electric ignition system","Battery-powered thruster"],"answer":0,"explain":"Ion thrusters ionize a propellant (typically xenon), then accelerate the ions via electric field. Produces very high Isp (~3000+ sec) but low thrust — ideal for station-keeping and deep-space missions."},
-  {"topic":"Electric Propulsion","q":"What is a Hall thruster?","options":["Uses magnetic field to trap electrons and ionize propellant","Electric pump design","Fuel valve design","Combustion ignition device"],"answer":0,"explain":"Hall thrusters use crossed electric and magnetic fields to ionize and accelerate propellant. Isp is lower than ion thrusters (~1000–1500 sec) but thrust is higher. Widely used on satellites."},
-  {"topic":"Electric Propulsion","q":"What is the primary advantage of electric propulsion?","options":["Very high Isp (300–3000 sec), extremely efficient","Very high thrust","Low cost","Instant ignition"],"answer":0,"explain":"Electric propulsion's main advantage is exceptional efficiency (high Isp), reducing propellant mass for a given mission. Disadvantage: low thrust requires long acceleration times."},
-  {"topic":"Staging","q":"Why is multi-stage rockets essential for reaching orbit?","options":["Single stage mass ratio > 20 is infeasible; stages reset the denominator","Stages improve thrust","Stages improve stability","Stages provide redundancy"],"answer":0,"explain":"The Tsiolkovsky equation shows single-stage mass ratios need to exceed 20 to reach orbit — impractical. Multi-staging drops empty tanks/engines, resetting the mass ratio for each stage."},
-  {"topic":"Staging","q":"What is the 'tyranny of the rocket equation'?","options":["Exponential growth of propellant mass needed for higher Δv","Linear scaling of thrust with mass","Nonlinear dependency on altitude","Combustion instability"],"answer":0,"explain":"The logarithmic term in Δv = Isp·g₀·ln(m₀/mf) means achieving higher velocities requires exponentially more propellant. Getting to orbit is much harder than reaching suborbital speeds."},
-  {"topic":"Staging","q":"How does staging affect payload fraction?","options":["Staging increases payload fraction by removing dead mass","Staging decreases payload fraction","Staging has no effect on payload fraction","Staging increases total mass"],"answer":0,"explain":"Staging improves payload fraction by jettisoning engine and tank structure after use. The Saturn V's 3-stage design achieved ~4-5% payload fraction to the Moon."},
-  {"topic":"Thermodynamics","q":"What is isentropic flow in a rocket nozzle?","options":["Reversible adiabatic process with no entropy increase","Isothermal process","Process with constant pressure","Incompressible flow"],"answer":0,"explain":"Isentropic flow assumes reversible adiabatic expansion in the nozzle. Real nozzles have losses (divergence, friction, heat transfer), producing entropy increase and reducing efficiency."},
-  {"topic":"Thermodynamics","q":"What are stagnation properties in rocket thermodynamics?","options":["Pressure, temperature, enthalpy if flow is brought to rest isentropically","Properties at sea level","Properties at the nozzle exit","Properties at maximum velocity"],"answer":0,"explain":"Stagnation (or total) properties are measured by isentropically bringing the flow to rest. Chamber conditions approach stagnation conditions; exhaust has lower stagnation temperature due to expansion."},
-  {"topic":"Thermodynamics","q":"What is the characteristic velocity (c*) in a rocket engine?","options":["c* = pc·At·√(Γ/(R·Tc)) / ṁ, chamber efficiency measure","Exhaust velocity at nozzle exit","Flame propagation speed","Speed of sound in exhaust"],"answer":0,"explain":"Characteristic velocity c* = pc·At·√(Γ/(R·Tc)) / ṁ represents combustion chamber efficiency independent of nozzle design. It's roughly 1000–1500 m/s for chemical rockets."},
-  {"topic":"Performance Analysis","q":"What is delta-V (Δv)?","options":["Total velocity change needed for a mission","Velocity at one instant","Change in exhaust velocity","Velocity relative to Sun"],"answer":0,"explain":"Delta-V is the total velocity change budget for a mission. Calculated as the sum of individual maneuvers (burns): reaching orbit (~9.3 km/s), circularization, escape, landing, etc."},
-  {"topic":"Performance Analysis","q":"What is the payload fraction of a rocket?","options":["Ratio of payload mass to initial total mass","Ratio of fuel mass to payload mass","Ratio of payload to structure","Payload density"],"answer":0,"explain":"Payload fraction = (payload mass) / (total initial mass). Typical values: 1–5% to LEO, 0.5–2% to geostationary orbit, 0.01–0.1% to the Moon."},
-  {"topic":"Performance Analysis","q":"How does engine efficiency affect the payload fraction?","options":["Higher efficiency (Isp) reduces propellant needed, increasing payload fraction","Higher efficiency decreases payload fraction","Efficiency has no effect","Efficiency only affects thrust"],"answer":0,"explain":"Higher Isp (engine efficiency) means less propellant is needed to achieve a given Δv, leaving more mass for payload. This is why the space industry emphasizes high-Isp engines."},
-  {"topic":"Advanced Concepts","q":"What is a nuclear thermal rocket?","options":["Uses nuclear reactor to heat propellant (typically H₂) to high temperature","Rocket powered by nuclear decay","Rocket with uranium payload","Thermal engine inside nuclear reactor"],"answer":0,"explain":"Nuclear thermal rockets use a nuclear reactor to heat a propellant like liquid hydrogen to very high temperature (~2500 K), achieving Isp ~800–900 sec — significantly higher than chemical engines."},
-  {"topic":"Advanced Concepts","q":"What is an aerospike nozzle?","options":["External nozzle design adapting to altitude pressure changes","Nozzle with aerodynamic spike inside","Nozzle optimized for high altitudes","Spike-shaped combustion chamber"],"answer":0,"explain":"Aerospike nozzles use an external compression surface instead of a bell diverging section. They naturally adapt to changing ambient pressure, providing near-optimal expansion at all altitudes."},
-  {"topic":"Advanced Concepts","q":"What is a solar sail?","options":["Reflective sail propelled by photon radiation pressure from the Sun","Sail using solar thermal energy","Wind-catching sail in space","Sail powered by solar cells"],"answer":0,"explain":"Solar sails are propelled by momentum transfer from photons. They require no onboard propellant but offer low thrust — attractive for interstellar missions given infinite mission duration."},
-  {"topic":"Materials & GNC","q":"What is the main challenge in rocket engine materials?","options":["Extreme heat and pressure requiring high-temperature alloys and cooling","Heavy weight","Corrosion by propellants","Thermal expansion mismatch"],"answer":0,"explain":"Combustion chamber walls experience extreme temperatures (up to 3500 K) and high pressure. Materials must withstand this while being lightweight. Cooling (regenerative or film cooling) is essential."},
-  {"topic":"Materials & GNC","q":"What does GNC stand for in spacecraft?","options":["Guidance, Navigation, and Control","Global Navigation Coverage","Gravitational Navigation Constant","Ground Network Controller"],"answer":0,"explain":"GNC systems autonomously guide, navigate, and control spacecraft. They use sensors (accelerometers, gyros, star trackers), thrusters, and control algorithms to maintain attitude and follow trajectories."},
-  {"topic":"Materials & GNC","q":"What is gimbal control in a rocket engine?","options":["Pivoting nozzle to direct thrust for attitude control","Rotating turbine blades","Changing combustion pressure","Modulating fuel flow"],"answer":0,"explain":"Gimbal control pivots the nozzle to vector thrust, enabling attitude control without separate RCS thrusters. Hydraulic actuators move the engine up to ~5-10° for vector control."}
-]
-
-</script>
-<script>
+     Customize the JSON inside <script>
 (function() {
   const dataEl = document.getElementById('quiz-data');
   if (!dataEl) return;
@@ -2468,6 +2417,531 @@ if (typeof switchTab === 'function') {
 })();
 </script>
 
+
+<!-- ============================================================ -->
+<!-- Quiz Data Block: Study Tool Question Set                      -->
+<!-- Each question has: { topic, q, options:[...4], answer:0..3, explain } -->
+<!-- ============================================================ -->
+<script id="quiz-data" type="application/json">
+[
+  {
+    "topic": "Fundamentals",
+    "q": "What is the Tsiolkovsky rocket equation?",
+    "options": [
+      "Δv = Isp·g₀·ln(m₀/mf)",
+      "F = m·a",
+      "v² = v₀² + 2·a·s",
+      "p = ρ·g·h"
+    ],
+    "answer": 0,
+    "explain": "The Tsiolkovsky rocket equation, Δv = Isp·g₀·ln(m₀/mf), is the fundamental law of rocket propulsion relating velocity change to exhaust velocity and mass ratio. The logarithmic term reveals why achieving orbit requires exponentially more propellant—doubling Δv doesn't double mass, it squares it. This principle drove the Saturn V's three-stage architecture; ignoring it would require structurally impossible single-stage designs. Every mission from Apollo to Falcon 9 relies on this equation."
+  },
+  {
+    "topic": "Fundamentals",
+    "q": "What does Isp (Specific Impulse) measure?",
+    "options": [
+      "Impulse per unit mass of propellant",
+      "Thrust per unit time",
+      "Pressure times volume",
+      "Energy per kilogram"
+    ],
+    "answer": 0,
+    "explain": "Isp (Specific Impulse) measures exhaust velocity efficiency: it's the thrust produced per unit weight flow rate of propellant, expressed in seconds. Mathematically, Isp = ve / g₀, where ve is exhaust velocity; higher Isp means less propellant burned to achieve a given Δv. Chemical engines range ~300–465 sec (H₂/LOX), while electric propulsion exceeds 3000 sec. Every percentage point of Isp gain reduces payload mass or extends mission range—critical for cost and performance."
+  },
+  {
+    "topic": "Fundamentals",
+    "q": "What is the standard gravity constant g₀ used in rocket calculations?",
+    "options": [
+      "9.81 m/s²",
+      "10 m/s²",
+      "6.67 m/s²",
+      "3.71 m/s²"
+    ],
+    "answer": 0,
+    "explain": "g₀ = 9.81 m/s² is Earth's surface gravity, used as a conversion constant between thrust-per-weight-rate (seconds) and exhaust velocity (m/s): ve = Isp·g₀. This normalization makes Isp independent of location, allowing engineers to specify engine performance globally. Without g₀, Isp would have inconsistent units; with it, a 300-sec engine always means ve ≈ 2943 m/s regardless of launch site."
+  },
+  {
+    "topic": "Fundamentals",
+    "q": "What is the typical Δv required to reach Low Earth Orbit (LEO)?",
+    "options": [
+      "~3 km/s",
+      "~9.3 km/s",
+      "~15 km/s",
+      "~20 km/s"
+    ],
+    "answer": 1,
+    "explain": "Reaching Low Earth Orbit (~7.8 km/s circular velocity at 200 km altitude) requires approximately 9.3 km/s Δv to overcome atmospheric drag (~1.5 km/s), gravity losses (~1 km/s during vertical climb), and achieve orbital insertion. The extra 1.5 km/s beyond orbital velocity accounts for inefficiencies; ascent is never vertical—rockets follow gravity-turn trajectories to minimize losses. SpaceX targets this budget; overperforming wastes propellant."
+  },
+  {
+    "topic": "Fundamentals",
+    "q": "In rocket propulsion, what does 'thrust' represent?",
+    "options": [
+      "Rate of momentum change",
+      "Exhaust velocity",
+      "Mass flow rate",
+      "Specific impulse"
+    ],
+    "answer": 0,
+    "explain": "Thrust F is the rate of momentum change of the expelled exhaust: F = ṁ·ve + (pe − pa)·Ae, where ṁ is mass flow rate, ve is exhaust velocity, and the pressure term accounts for exit pressure exceeding ambient. On Earth's surface, this pressure term is significant; in vacuum, only ṁ·ve matters. Thrust accelerates the rocket by Newton's third law; it's the 'push' against the exhaust stream."
+  },
+  {
+    "topic": "Chemical Propulsion",
+    "q": "What are the two main types of chemical rockets?",
+    "options": [
+      "Solid and Liquid",
+      "Liquid and Electric",
+      "Hybrid and Nuclear",
+      "Thermal and Cryogenic"
+    ],
+    "answer": 0,
+    "explain": "Chemical rockets divide into solid and liquid: solid motors mix fuel and oxidizer in a single solid grain, offering simplicity and high thrust-to-weight but limited throttling; liquid engines pump separate fuels and oxidizers, enabling throttling, restart, and higher Isp. Solids power boosters (Space Shuttle SRBs, Atlas V); liquids power upper stages and high-performance engines (Merlin, J-2X). Each serves different mission needs."
+  },
+  {
+    "topic": "Chemical Propulsion",
+    "q": "What is a hybrid rocket?",
+    "options": [
+      "Rocket using both solid fuel and liquid oxidizer",
+      "Two rockets fired together",
+      "Multiple combustion chambers",
+      "Rocket with two nozzles"
+    ],
+    "answer": 0,
+    "explain": "Hybrid rockets combine a solid fuel grain with a liquid or gaseous oxidizer, attempting to merge benefits: more throttling and restart capability than solids, simpler feed system than liquids, and higher Isp than most solids (~300 sec). They avoid hypergolic toxicity and solid grain cracking issues but introduce complexity and lower performance than optimized liquid engines. SpaceX explored hybrids; they remain niche."
+  },
+  {
+    "topic": "Chemical Propulsion",
+    "q": "Which propellant combination has the highest Isp?",
+    "options": [
+      "RP-1/LOX",
+      "Hydrazine",
+      "H₂/LOX",
+      "Solid ammonium perchlorate"
+    ],
+    "answer": 2,
+    "explain": "Hydrogen/LOX delivers the highest chemical Isp (~460 sec vacuum, ~370 sec sea-level) because H₂ has the highest energy-to-weight ratio and forms water—very high exhaust velocity. The Space Shuttle Main Engine (SSME) achieved 453 sec vacuum; F-1 (Apollo) with LOX/RP-1 achieved only 304 sec. Disadvantage: H₂ requires cryogenic storage (20 K), complex turbopumps, and large tank volume—why Falcon 9 uses RP-1/LOX for simplicity."
+  },
+  {
+    "topic": "Chemical Propulsion",
+    "q": "What is hypergolic propellant ignition?",
+    "options": [
+      "Spontaneous ignition when fuel and oxidizer contact",
+      "Ignition via spark plug",
+      "Ignition by compression",
+      "Ignition by laser"
+    ],
+    "answer": 0,
+    "explain": "Hypergolic propellants (e.g., hydrazine N₂H₄ + dinitrogen tetroxide N₂O₄) ignite spontaneously on contact without spark or ignition source. Advantage: reliable, always-ready ignition for critical maneuvers (orbital correction, landing). Disadvantage: extremely toxic, requiring careful handling and hazmat protocols—N₂H₄ damages nervous systems, N₂O₄ causes nitrogen dioxide poisoning. Used in satellite thrusters and Lunar Module Ascent Engine despite toxicity."
+  },
+  {
+    "topic": "Nozzle Theory",
+    "q": "What is the function of the converging section of a rocket nozzle?",
+    "options": [
+      "Accelerates subsonic flow to Mach 1",
+      "Expands supersonic flow",
+      "Cools the exhaust",
+      "Controls pressure drop"
+    ],
+    "answer": 0,
+    "explain": "The converging section accelerates subsonic flow toward the throat, where sonic conditions (Mach = 1) are reached. Once choked at the throat, mass flow rate ṁ = pc·At·√(Γ/(R·Tc)) becomes independent of downstream pressure—no external effect can slow the flow. This is why rockets maintain thrust even at sea level or high altitude; pressure changes downstream don't matter."
+  },
+  {
+    "topic": "Nozzle Theory",
+    "q": "What happens in the diverging section of a De Laval nozzle?",
+    "options": [
+      "Subsonic flow accelerates",
+      "Supersonic flow further accelerates to higher Mach",
+      "Flow velocity decreases",
+      "Pressure increases"
+    ],
+    "answer": 1,
+    "explain": "In the diverging section (past the throat where flow is already supersonic), expanding area causes further acceleration, reaching hypersonic velocities and extreme Mach numbers (5–10+). This counterintuitive result—area increases, speed increases—occurs only in supersonic flow, obeying the Area-Mach relation. Nozzle area ratio (Ae/At) determines exhaust velocity and thus Isp. SSME's large expansion ratio (69:1 vacuum) achieves its high Isp."
+  },
+  {
+    "topic": "Nozzle Theory",
+    "q": "What is 'under-expansion' in a rocket nozzle?",
+    "options": [
+      "Exit pressure > ambient pressure, plume expands",
+      "Exit pressure < ambient pressure, plume compresses",
+      "Nozzle too small for the flow",
+      "Combustion chamber pressure too low"
+    ],
+    "answer": 0,
+    "explain": "Under-expansion occurs when nozzle exit pressure exceeds ambient pressure, causing the exhaust plume to expand beyond the nozzle lip rather than remaining attached. This expansion is isentropic but happens outside the nozzle, wasting potential thrust—the shock cells in an under-expanded plume are visible as diamonds in rocket plumes. Over-expansion (exit pressure < ambient) is worse, causing flow separation and shock."
+  },
+  {
+    "topic": "Nozzle Theory",
+    "q": "What is the throat area critical to?",
+    "options": [
+      "It determines the maximum mass flow rate for given chamber pressure",
+      "It controls the Isp",
+      "It regulates engine shutdown",
+      "It stabilizes combustion"
+    ],
+    "answer": 0,
+    "explain": "The throat area At is the critical parameter determining engine size and mass flow rate for a given combustion chamber pressure pc. At the throat, mass flow ṁ = pc·At·√(Γ/(R·Tc)) is constant and proportional to throat area. Double the throat, double the thrust (at constant chamber pressure). This is why scaling rocket engines is engineering-intensive: proportional scaling is thermodynamically impossible."
+  },
+  {
+    "topic": "Nozzle Theory",
+    "q": "What is the area ratio (Ae/At) of a sea-level optimized nozzle?",
+    "options": [
+      "~5-10",
+      "~50-100",
+      "~200-300",
+      "~1000"
+    ],
+    "answer": 0,
+    "explain": "Sea-level engines use area ratios (Ae/At) of 10–30 because ambient pressure is ~101 kPa; larger ratios expand too much, over-expanding and causing separation. Vacuum engines use ratios 150–300+ since there's no ambient pressure, and the low back-pressure permits greater expansion and higher Isp. The Saturn V F-1 used ~19:1 (sea-level); SSME used 69:1 (designed for vacuum, altitude performance)."
+  },
+  {
+    "topic": "Combustion",
+    "q": "What causes combustion instability in rocket engines?",
+    "options": [
+      "Acoustic coupling between pressure oscillations and heat release",
+      "Engine vibration",
+      "Nozzle erosion",
+      "Thermal stress on walls"
+    ],
+    "answer": 0,
+    "explain": "Combustion instability occurs when acoustic pressure oscillations (p') couple with heat release rate oscillations (q'), satisfying the Rayleigh criterion: ∫p'·q' dt > damping. In-phase coupling amplifies instability, creating high-frequency vibrations that crack chambers or cause catastrophic failure. The 1962 F-1 engine suffered severe instability (screaming) until injector baffles were added—a classic example of how instability cost years of development."
+  },
+  {
+    "topic": "Combustion",
+    "q": "What are the three main frequency regimes of combustion instability?",
+    "options": [
+      "Chugging, buzzing, screaming",
+      "Low, medium, high",
+      "First, second, third mode",
+      "Acoustic, thermal, mechanical"
+    ],
+    "answer": 0,
+    "explain": "Combustion instability manifests in three frequency regimes—chugging (10–400 Hz, feed-system coupling), buzzing (400–1000 Hz), and screaming/screeching (1000+ Hz, acoustic resonance). Each has different physics and mitigation: chugging needs stable feed pressures; buzzing and screaming need injector design changes or acoustic cavities. The Apollo F-1 screamed at ~1500 Hz until injector baffles dampened it, proving frequency-specific solutions work."
+  },
+  {
+    "topic": "Combustion",
+    "q": "What is the Rayleigh criterion in combustion stability?",
+    "options": [
+      "Instability grows when p'·q' are in-phase and exceed damping",
+      "Flame speed must exceed sonic velocity",
+      "Pressure must exceed critical value",
+      "Temperature must be uniform"
+    ],
+    "answer": 0,
+    "explain": "The Rayleigh criterion, ∫(p'/p_bar)·(q'/q_bar) dt > damping, predicts instability when pressure and heat-release oscillations are in-phase—they feed back and amplify. If p' leads q' (out-of-phase), oscillations damp naturally. Combustion chamber design, injector geometry, and acoustic cavities tune this; the F-1's injector baffles increased phase lag, stabilizing it. Modern engines like Raptor use all-three mitigation strategies."
+  },
+  {
+    "topic": "Combustion",
+    "q": "What is a Helmholtz resonator in rocket engine design?",
+    "options": [
+      "Acoustic cavity tuned to absorb specific instability frequencies",
+      "High-pressure tank",
+      "Fuel pump component",
+      "Nozzle insert"
+    ],
+    "answer": 0,
+    "explain": "A Helmholtz resonator is an acoustic cavity tuned to absorb energy at specific instability frequencies, dampening oscillations via viscous dissipation. Its resonant frequency f = (c/2π)·√(A/(V·L)), where c is sound speed, A is opening area, V is cavity volume, L is neck length. Multiple cavities target different frequencies. F-1 engines used them; SpaceX Raptor design includes acoustic devices to prevent instability."
+  },
+  {
+    "topic": "Solid Rocket Motors",
+    "q": "What is the grain in a solid rocket motor?",
+    "options": [
+      "The solid propellant block",
+      "The nozzle exit",
+      "The combustion chamber liner",
+      "The ignition charge"
+    ],
+    "answer": 0,
+    "explain": "The grain is the solid propellant block—a mechanical mixture of fuel (aluminum powder or plastic binder), oxidizer (ammonium perchlorate), and stabilizers. Its geometry determines thrust profile: star/slot shapes burn progressively (increasing area), maintaining pressure; end-burning regresses axially, reducing pressure. SRB grains are 12 m long, ~3.7 m diameter; the detailed shape is kept classified for military reasons."
+  },
+  {
+    "topic": "Solid Rocket Motors",
+    "q": "What grain geometry produces constant pressure in a solid motor?",
+    "options": [
+      "Progressive burn (star, slot, or wagon-wheel cross-section)",
+      "Neutral burn (cylindrical)",
+      "Regressive burn (end-burning)",
+      "Any shape works"
+    ],
+    "answer": 0,
+    "explain": "Progressive grain geometries (star, slot, wagon-wheel cross-sections) present increasing burning surface area as material ablates, maintaining roughly constant chamber pressure over burn time. A star-cross-section might increase from 2 m² to 6 m² as it burns—this compensates for decreasing burn rate as the flame reaches the outer surface. Neutral burn (cylindrical) keeps area constant; regressive (end-burning) decreases pressure."
+  },
+  {
+    "topic": "Solid Rocket Motors",
+    "q": "What is a 'web' in solid propellant terminology?",
+    "options": [
+      "Thickness of propellant from surface to core (burning distance)",
+      "Connecting structure in grain",
+      "Combustion chamber wall layer",
+      "Nozzle insert material"
+    ],
+    "answer": 0,
+    "explain": "Web is the radial distance from the burning surface to the unburned core. A 0.5 m web burns in ~30 sec at typical solid rocket regression rates (~6 mm/s); a 1 m web burns ~60 sec. SRB webs are ~0.6 m, producing ~120 sec burn. Designers choose web thickness to match required burn duration. Too thin = short burst; too thick = inefficient mass."
+  },
+  {
+    "topic": "Liquid Rocket Engines",
+    "q": "What is a turbopump in a liquid rocket engine?",
+    "options": [
+      "Centrifugal pump driven by hot gas turbine to deliver propellants",
+      "Compressor for combustion chamber pressure",
+      "Relief valve for safety",
+      "Mixing chamber"
+    ],
+    "answer": 0,
+    "explain": "A turbopump uses a multi-stage axial or radial turbine (powered by hot exhaust from a preburner or tap-off) to drive a centrifugal pump, delivering fuel and oxidizer at 200+ bar to the combustion chamber. A single turbopump can produce 50,000 HP. This enables compact engine design; without turbopumps, you'd need massive tanks at high pressure, reducing payload. Raptor uses a unique full-flow staged combustion design with two turbopumps."
+  },
+  {
+    "topic": "Liquid Rocket Engines",
+    "q": "What is regenerative cooling in liquid rocket engines?",
+    "options": [
+      "Using cold fuel to cool chamber walls before injection",
+      "Spraying water on the outside",
+      "Thermal insulation",
+      "Radiative cooling"
+    ],
+    "answer": 0,
+    "explain": "Regenerative cooling routes cold fuel or oxidizer through passages in the engine walls, absorbing heat (from 3500 K combustion products) before entering the combustion chamber. This preheats propellant (gaining energy efficiency) and cools the chamber, protecting it from thermal stress. SSME used this extensively; RP-1 passages cooled the chamber walls to ~800 K. Without regenerative cooling, chamber walls would melt."
+  },
+  {
+    "topic": "Liquid Rocket Engines",
+    "q": "What is the injector's role in a liquid rocket engine?",
+    "options": [
+      "Mixes and atomizes fuel and oxidizer in the chamber",
+      "Supplies initial pressure",
+      "Prevents backflow",
+      "Controls nozzle expansion"
+    ],
+    "answer": 0,
+    "explain": "The injector atomizes and mixes fuel and oxidizer streams in the combustion chamber, enabling rapid, complete combustion. Injector design (impinging jets, swirlers, shear coaxial elements) strongly influences combustion efficiency (targets ~98%), stability, and flame position. Poor injector design causes instability, incomplete combustion, and reduced Isp. Injector development is critical—F-1 injector redesigns took years of testing."
+  },
+  {
+    "topic": "Liquid Rocket Engines",
+    "q": "What is the staged combustion cycle?",
+    "options": [
+      "Preburner produces hot gas driving turbines; gases then fed to main chamber",
+      "Sequential ignition of multiple chambers",
+      "Two-stage expansion process",
+      "Staggered fuel/oxidizer injection"
+    ],
+    "answer": 0,
+    "explain": "Staged combustion uses a preburner (fuel-rich to prevent nozzle erosion, or oxidizer-rich) to generate hot exhaust gas that drives the main turbine, then this exhaust is fed into the main combustion chamber where additional fuel/oxidizer burns at very high pressure. This enables high chamber pressure (250+ bar) and high turbine inlet temperature, boosting Isp and power. Falcon 9 Merlin uses oxidizer-rich staged combustion; SSME used fuel-rich."
+  },
+  {
+    "topic": "Electric Propulsion",
+    "q": "What is an ion thruster?",
+    "options": [
+      "Accelerates ionized propellant via electric field to high velocity",
+      "Uses electrodes to mix fuel",
+      "Electric ignition system",
+      "Battery-powered thruster"
+    ],
+    "answer": 0,
+    "explain": "Ion thrusters ionize neutral propellant (usually xenon) via electron bombardment, then accelerate ions through an electric grid, reaching exhaust velocities ~30–50 km/s—far beyond chemical rockets. This produces specific impulse 2500–3500 sec but only millinewtons of thrust. Deep Space 1 used an ion thruster for 20,000+ hours of operation; they're ideal for station-keeping or interplanetary missions but useless for launch."
+  },
+  {
+    "topic": "Electric Propulsion",
+    "q": "What is a Hall thruster?",
+    "options": [
+      "Uses magnetic field to trap electrons and ionize propellant",
+      "Electric pump design",
+      "Fuel valve design",
+      "Combustion ignition device"
+    ],
+    "answer": 0,
+    "explain": "Hall thrusters (E×B thrusters) use crossed electric and magnetic fields to ionize propellant and create an azimuthal electric discharge that accelerates ions radially outward. Isp is lower than ion thrusters (~1000–1500 sec) but thrust is 10–100 mN, offering better power efficiency for some applications. Widely used on commercial satellites; Iridium constellation uses thousands of Hall thrusters."
+  },
+  {
+    "topic": "Electric Propulsion",
+    "q": "What is the primary advantage of electric propulsion?",
+    "options": [
+      "Very high Isp (300–3000 sec), extremely efficient",
+      "Very high thrust",
+      "Low cost",
+      "Instant ignition"
+    ],
+    "answer": 0,
+    "explain": "Electric propulsion's defining advantage is exceptional efficiency: Isp values 2–10 times higher than chemical rockets mean dramatically less propellant needed for a given Δv. A 1000 kg spacecraft on a Hohmann Mars transfer needs ~5000 kg chemical propellant but only ~800 kg electric—a game-changer for deep-space exploration. Disadvantage: 1–100 mN thrust requires weeks of continuous acceleration, infeasible for launch but perfect for orbital transfers."
+  },
+  {
+    "topic": "Staging",
+    "q": "Why is multi-stage rockets essential for reaching orbit?",
+    "options": [
+      "Single stage mass ratio > 20 is infeasible; stages reset the denominator",
+      "Stages improve thrust",
+      "Stages improve stability",
+      "Stages provide redundancy"
+    ],
+    "answer": 0,
+    "explain": "Single-stage-to-orbit (SSTO) requires mass ratio m₀/mf > 20 (Tsiolkovsky equation shows why: ln(20) ≈ 3). Building a structure with 95% of its initial mass as propellant is engineering suicide—tank walls become infinitesimally thin, structural margins vanish. Multi-staging drops empty tanks and engines after use, resetting the mass ratio. Saturn V's 3-stage design achieved sequential mass ratios of ~15 each, making the Moon attainable."
+  },
+  {
+    "topic": "Staging",
+    "q": "What is the 'tyranny of the rocket equation'?",
+    "options": [
+      "Exponential growth of propellant mass needed for higher Δv",
+      "Linear scaling of thrust with mass",
+      "Nonlinear dependency on altitude",
+      "Combustion instability"
+    ],
+    "answer": 0,
+    "explain": "The logarithmic term Δv = Isp·g₀·ln(m₀/mf) means achieving higher velocities requires exponentially more propellant. Reaching 3 km/s suborbital requires ~7× initial mass as propellant; reaching 9.3 km/s orbital requires ~20×. The exponential scaling is why 1% Isp improvements are worth billions in engine development—they directly reduce propellant mass and cost. SpaceX's pursuit of Isp improvements (Raptor 2 vs. Raptor 1) reflects this."
+  },
+  {
+    "topic": "Staging",
+    "q": "How does staging affect payload fraction?",
+    "options": [
+      "Staging increases payload fraction by removing dead mass",
+      "Staging decreases payload fraction",
+      "Staging has no effect on payload fraction",
+      "Staging increases total mass"
+    ],
+    "answer": 0,
+    "explain": "Multi-stage rockets improve payload fraction by shedding structure; Saturn V's three stages achieved ~4-5% payload to Earth surface (payload/initial mass). SSTO would need ~1–2% payload fraction due to tank mass penalties; staging adds 4–5× more payload capability per launch mass. Falcon 9's two-stage design achieves ~3–4% to LEO and 1–2% to GTO. This massive leverage explains why staging is universal."
+  },
+  {
+    "topic": "Thermodynamics",
+    "q": "What is isentropic flow in a rocket nozzle?",
+    "options": [
+      "Reversible adiabatic process with no entropy increase",
+      "Isothermal process",
+      "Process with constant pressure",
+      "Incompressible flow"
+    ],
+    "answer": 0,
+    "explain": "Isentropic (reversible adiabatic, constant-entropy) flow is the ideal assumption for nozzle expansion thermodynamics—no heat transfer, no friction, reversible. Real nozzles deviate: wall friction, turbulence, and shock losses increase entropy, reducing efficiency (~95% for well-designed nozzles). Efficiency is measured by comparing real exit velocity to isentropic exit velocity; design margins account for this penalty. Perfect isentropic performance is unreachable but essential for baseline calculations."
+  },
+  {
+    "topic": "Thermodynamics",
+    "q": "What are stagnation properties in rocket thermodynamics?",
+    "options": [
+      "Pressure, temperature, enthalpy if flow is brought to rest isentropically",
+      "Properties at sea level",
+      "Properties at the nozzle exit",
+      "Properties at maximum velocity"
+    ],
+    "answer": 0,
+    "explain": "Stagnation (or total) properties are defined by isentropically bringing flowing gas to rest. Stagnation temperature T0 is higher than static temperature T by the dynamic temperature term: T0 = T + V²/(2·cp). In the combustion chamber (~0 velocity), conditions are nearly stagnation; in the nozzle, static temperature drops as velocity climbs. Chamber stagnation temperature guides material selection; nozzle exit static temperature guides efficiency."
+  },
+  {
+    "topic": "Thermodynamics",
+    "q": "What is the characteristic velocity (c*) in a rocket engine?",
+    "options": [
+      "c* = pc·At·√(Γ/(R·Tc)) / ṁ, chamber efficiency measure",
+      "Exhaust velocity at nozzle exit",
+      "Flame propagation speed",
+      "Speed of sound in exhaust"
+    ],
+    "answer": 0,
+    "explain": "Characteristic velocity c* = pc·At·√(Γ/(R·Tc)) / ṁ is a combustion chamber efficiency metric independent of nozzle design. It represents how well the injector mixes and combustion chamber burns propellant, decoupled from expansion dynamics. Typical values: LOX/RP-1 ~1520 m/s, LOX/LH₂ ~1900 m/s, solids ~1300–1500 m/s. Higher c* means better combustion; it's measured during static test firings to validate engine health."
+  },
+  {
+    "topic": "Performance Analysis",
+    "q": "What is delta-V (Δv)?",
+    "options": [
+      "Total velocity change needed for a mission",
+      "Velocity at one instant",
+      "Change in exhaust velocity",
+      "Velocity relative to Sun"
+    ],
+    "answer": 0,
+    "explain": "Delta-V (Δv) is the total velocity change budget for a mission, calculated as the sum of individual maneuvers (impulses): Δv_total = √[(Δv_launch² + Δv_coast² + Δv_circularize² + ...)] or sum if coplanar. Reaching LEO: 9.3 km/s. Escaping Earth: 11.2 km/s. Hohmann to Mars: ~5–6 km/s from LEO. Engineers build Δv budgets for every mission profile; Falcon 9 can deliver 9.5+ km/s to LEO."
+  },
+  {
+    "topic": "Performance Analysis",
+    "q": "What is the payload fraction of a rocket?",
+    "options": [
+      "Ratio of payload mass to initial total mass",
+      "Ratio of fuel mass to payload mass",
+      "Ratio of payload to structure",
+      "Payload density"
+    ],
+    "answer": 0,
+    "explain": "Payload fraction = payload mass / initial total mass. Typical values: 1–5% to LEO, 0.5–2% to geostationary orbit, 0.01–0.1% to the Moon. SSTO would struggle to exceed 1%; Falcon 9 achieves ~3.5% to LEO (15 ton payload / ~550 ton initial mass). Every 1% improvement in structural efficiency translates directly to payload mass—why reusable rockets (lower structural penalty) enable lower costs."
+  },
+  {
+    "topic": "Performance Analysis",
+    "q": "How does engine efficiency affect the payload fraction?",
+    "options": [
+      "Higher efficiency (Isp) reduces propellant needed, increasing payload fraction",
+      "Higher efficiency decreases payload fraction",
+      "Efficiency has no effect",
+      "Efficiency only affects thrust"
+    ],
+    "answer": 0,
+    "explain": "Higher Isp (better combustion and expansion efficiency) reduces propellant mass needed for a given Δv, directly increasing payload fraction: Δv = Isp·g₀·ln(m₀/mf), so m₀/mf decreases with higher Isp, leaving more room for payload. SSME's 453 sec Isp vs. F-1's 304 sec Isp meant Space Shuttle could carry more payload than its mass ratio alone would predict. This is why SpaceX invests billions in Raptor development—each second of Isp gains money at launch."
+  },
+  {
+    "topic": "Advanced Concepts",
+    "q": "What is a nuclear thermal rocket?",
+    "options": [
+      "Uses nuclear reactor to heat propellant (typically H₂) to high temperature",
+      "Rocket powered by nuclear decay",
+      "Rocket with uranium payload",
+      "Thermal engine inside nuclear reactor"
+    ],
+    "answer": 0,
+    "explain": "Nuclear thermal rockets use a nuclear reactor to heat a propellant (typically liquid hydrogen, boiling point 20 K) to extremely high temperature (~2500 K), achieving Isp ~800–900 sec—roughly 2× chemical Isp. No combustion needed; pure thermal acceleration. NERVA program tested them in the 1970s, achieving 850 sec. Advantages: no combustion instability, simple feed system. Disadvantage: radiation safety, limited testing, no flight heritage."
+  },
+  {
+    "topic": "Advanced Concepts",
+    "q": "What is an aerospike nozzle?",
+    "options": [
+      "External nozzle design adapting to altitude pressure changes",
+      "Nozzle with aerodynamic spike inside",
+      "Nozzle optimized for high altitudes",
+      "Spike-shaped combustion chamber"
+    ],
+    "answer": 0,
+    "explain": "Aerospike nozzles use an external expansion surface (spike) instead of internal diverging sections, compressing exhaust isentropically across the spike surface. As ambient pressure drops (rocket climbs), flow naturally adapts—expansion increases, maintaining near-optimal performance across all altitudes. Sea-level Isp ~310 sec, vacuum Isp ~380 sec (interpolated efficiency at all altitudes). Disadvantage: complex flow dynamics, cooler walls, difficult to cool. SpaceX considered them for Raptor."
+  },
+  {
+    "topic": "Advanced Concepts",
+    "q": "What is a solar sail?",
+    "options": [
+      "Reflective sail propelled by photon radiation pressure from the Sun",
+      "Sail using solar thermal energy",
+      "Wind-catching sail in space",
+      "Sail powered by solar cells"
+    ],
+    "answer": 0,
+    "explain": "Solar sails are propelled by photon radiation pressure (momentum transfer from sunlight), requiring no onboard propellant. Sail area must be huge (10,000+ m²) for appreciable acceleration (mm/s²), but infinite fuel means unbounded mission duration. Ikaros (2010) tested 14×14 m sails, proving concept. Disadvantage: only useful beyond Earth's sphere of influence where solar intensity and distances are vast. For interstellar missions, they're ideal; for Earth orbit, they're useless."
+  },
+  {
+    "topic": "Materials & GNC",
+    "q": "What is the main challenge in rocket engine materials?",
+    "options": [
+      "Extreme heat and pressure requiring high-temperature alloys and cooling",
+      "Heavy weight",
+      "Corrosion by propellants",
+      "Thermal expansion mismatch"
+    ],
+    "answer": 0,
+    "explain": "Combustion chamber walls experience extreme temperatures (3500 K from hot gas, cooled to ~800 K by regenerative cooling), combined with pressure spikes (250+ bar), thermal stress, and erosion from high-velocity combustion products. Materials must be lightweight (aluminum-lithium alloys, copper-based), high-temperature (titanium, superalloys for turbines), and thermally stable. Material failure is why test firings are necessary—unexpected erosion or cracks guide redesigns."
+  },
+  {
+    "topic": "Materials & GNC",
+    "q": "What does GNC stand for in spacecraft?",
+    "options": [
+      "Guidance, Navigation, and Control",
+      "Global Navigation Coverage",
+      "Gravitational Navigation Constant",
+      "Ground Network Controller"
+    ],
+    "answer": 0,
+    "explain": "GNC (Guidance, Navigation, and Control) is the autonomous system directing spacecraft attitude and trajectory. Navigation uses accelerometers and gyros (inertial) or star trackers (absolute) to determine position/attitude; Guidance computes optimal trajectories and control commands; Control implements them via thrusters or gimbal engines. Modern rockets use GNC for controlled ascent (maintaining angle-of-attack, coping with winds), staging accuracy, and reentry orientation."
+  },
+  {
+    "topic": "Materials & GNC",
+    "q": "What is gimbal control in a rocket engine?",
+    "options": [
+      "Pivoting nozzle to direct thrust for attitude control",
+      "Rotating turbine blades",
+      "Changing combustion pressure",
+      "Modulating fuel flow"
+    ],
+    "answer": 0,
+    "explain": "Gimbal control pivots the engine nozzle ±5–10° to vector thrust for attitude control, replacing dedicated RCS thrusters. Hydraulic or electromechanical actuators respond to gyro feedback, tilting the nozzle to correct attitude errors. Falcon 9's Merlin engines gimbal; Saturn V F-1 engines gimbaled. Disadvantage: thrust misalignment wastes ~2–3% of effective thrust; advantage: fewer thrusters, simpler plumbing. Large gimbal angles cause excessive loss."
+  }
+]
+</script>
 </body>
 </html>
 

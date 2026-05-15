@@ -197,6 +197,38 @@
   .dd-nav { display: flex; gap: 10px; justify-content: center; margin-top: 20px; }
   .dd-nav button { padding: 8px 20px; }
 
+  .dd-section table.dd-table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 12px; background: #0d1117; border: 1px solid #30363d; border-radius: 8px; overflow: hidden; }
+  .dd-section table.dd-table th, .dd-section table.dd-table td { padding: 8px 10px; text-align: left; border-bottom: 1px solid #21262d; color: #c9d1d9; }
+  .dd-section table.dd-table th { background: #161b22; color: #58a6ff; font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; position: sticky; top: 0; }
+  .dd-section table.dd-table tr:last-child td { border-bottom: none; }
+  .dd-section table.dd-table tr:hover td { background: #161b22; }
+  .dd-section table.dd-table td.num { font-family: 'Courier New', monospace; color: #7ee787; text-align: right; }
+  .dd-section .dd-mini { display: block; margin: 12px auto; max-width: 100%; }
+  .dd-section .dd-callout { display: flex; gap: 12px; padding: 12px 14px; margin: 12px 0; background: #0d1117; border-left: 3px solid #d2a8ff; border-radius: 6px; font-size: 12px; color: #c9d1d9; }
+  .dd-section .dd-callout .dd-callout-icon { font-size: 20px; flex-shrink: 0; }
+  .dd-section .dd-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; margin: 12px 0; }
+  .dd-section .dd-tile { background: #0d1117; border: 1px solid #30363d; border-radius: 8px; padding: 12px; font-size: 12px; }
+  .dd-section .dd-tile h4 { color: #d2a8ff; font-size: 13px; margin-bottom: 6px; }
+  .dd-section .dd-tile .dd-spec { display: flex; justify-content: space-between; padding: 3px 0; border-bottom: 1px solid #21262d; color: #8b949e; }
+  .dd-section .dd-tile .dd-spec:last-child { border-bottom: none; }
+  .dd-section .dd-tile .dd-spec b { color: #7ee787; font-family: 'Courier New', monospace; }
+  .dd-section .dd-flow { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin: 12px 0; justify-content: center; }
+  .dd-section .dd-flow-step { background: #0d1117; border: 1px solid #d2a8ff; border-radius: 8px; padding: 8px 12px; font-size: 11px; color: #d2a8ff; text-align: center; min-width: 80px; }
+  .dd-section .dd-flow-arrow { color: #6e7681; font-size: 18px; }
+  .dd-section pre.dd-code { background: #0d1117; border: 1px solid #30363d; border-left: 3px solid #7ee787; border-radius: 6px; padding: 12px 14px; margin: 10px 0; font-family: 'Courier New', monospace; font-size: 12px; color: #c9d1d9; line-height: 1.55; overflow-x: auto; white-space: pre; }
+  .dd-section pre.dd-code .c { color: #6e7681; font-style: italic; }
+  .dd-section pre.dd-code .k { color: #ff7b72; }
+  .dd-section pre.dd-code .s { color: #a5d6ff; }
+  .dd-section pre.dd-code .n { color: #d2a8ff; }
+  .dd-section .dd-links { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0; }
+  .dd-section .dd-links a { background: #0d1117; border: 1px solid #30363d; border-radius: 6px; padding: 6px 10px; font-size: 11px; color: #58a6ff; text-decoration: none; }
+  .dd-section .dd-links a:hover { border-color: #58a6ff; background: #161b22; }
+  .dd-section .dd-twocol { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 12px 0; }
+  .dd-section .dd-twocol > div { background: #0d1117; border: 1px solid #30363d; border-radius: 8px; padding: 12px; }
+  .dd-section .dd-twocol h4 { color: #ff7b72; font-size: 13px; margin-bottom: 6px; }
+  .dd-section .dd-badge { display: inline-block; padding: 2px 8px; border-radius: 10px; background: #ff7b7222; border: 1px solid #ff7b72; color: #ff7b72; font-size: 10px; font-weight: 600; margin: 0 4px 4px 0; }
+  @media (max-width: 700px) { .dd-section .dd-twocol { grid-template-columns: 1fr; } }
+
   /* ── Use Cases ── */
   .uc-flow { max-width: 960px; margin: 0 auto; padding: 32px; }
   .uc-flow h2 { font-size: 22px; color: #58a6ff; margin-bottom: 4px; }
@@ -680,7 +712,7 @@ const COURSE_CONFIG = {
 
   deepDives: [
     {
-      id: "dd-systolic", num: "Concept 1 of 3", title: "Systolic Arrays",
+      id: "dd-systolic", num: "Concept 1 of 6", title: "Systolic Arrays",
       desc: "2D grid of MACs, weight-stationary dataflow, matrix multiply.", color: "#58a6ff", icon: "\ud83d\udd32",
       svg: function(w, h) {
         var g = 4, s = Math.min((w - 80) / g, (h - 80) / g), ox = (w - g * s) / 2, oy = (h - g * s) / 2;
@@ -705,7 +737,7 @@ const COURSE_CONFIG = {
       ]
     },
     {
-      id: "dd-bfloat16", num: "Concept 2 of 3", title: "bfloat16",
+      id: "dd-bfloat16", num: "Concept 2 of 6", title: "bfloat16",
       desc: "Brain floating point, 8-bit exponent + 7-bit mantissa, vs FP32/FP16.", color: "#7ee787", icon: "\ud83d\udd22",
       svg: function(w, h) {
         var out = '<svg viewBox="0 0 ' + w + ' ' + h + '" xmlns="http://www.w3.org/2000/svg" style="background:#0d1117">';
@@ -735,7 +767,7 @@ const COURSE_CONFIG = {
       ]
     },
     {
-      id: "dd-pod", num: "Concept 3 of 3", title: "TPU Pod Architecture",
+      id: "dd-pod", num: "Concept 3 of 6", title: "TPU Pod Architecture",
       desc: "Inter-chip interconnect, ICI mesh, scaling to thousands.", color: "#ffa657", icon: "\ud83c\udfd7\ufe0f",
       svg: function(w, h) {
         var out = '<svg viewBox="0 0 ' + w + ' ' + h + '" xmlns="http://www.w3.org/2000/svg" style="background:#0d1117">';
@@ -759,6 +791,389 @@ const COURSE_CONFIG = {
         { title: "ICI Bandwidth", text: "Each chip-to-chip link provides hundreds of Gbps for fast collective communication." },
         { title: "Optical Switching", text: "TPU v4 uses optical circuit switches to reconfigure topology without rewiring." },
         { title: "Exaflop Scale", text: "A full v4 pod delivers over 1 exaflop of bfloat16 compute." }
+      ]
+    },
+    {
+      id: "dd-history", num: "Concept 4 of 6", title: "History of TPU",
+      desc: "Generations from v1 (2015) through Ironwood (v7), and what changed in each.", color: "#d2a8ff", icon: "\ud83d\udcdc",
+      svg: function(w, h) {
+        var gens = [
+          { name: "v1",       year: "2015", peak: 92,   color: "#6e7681" },
+          { name: "v2",       year: "2017", peak: 46,   color: "#58a6ff" },
+          { name: "v3",       year: "2018", peak: 123,  color: "#58a6ff" },
+          { name: "v4",       year: "2021", peak: 275,  color: "#3fb950" },
+          { name: "v5e",      year: "2023", peak: 197,  color: "#ffa657" },
+          { name: "v5p",      year: "2023", peak: 459,  color: "#ffa657" },
+          { name: "Trillium", year: "2024", peak: 926,  color: "#d2a8ff" },
+          { name: "Ironwood", year: "2025", peak: 4614, color: "#ff7b72" }
+        ];
+        var n = gens.length, pad = 60;
+        var step = (w - pad*2) / (n - 1);
+        var maxLog = Math.log10(6000), minLog = Math.log10(35);
+        var maxBarH = Math.max(60, h * 0.45);
+        var axisY = h - 70;
+        var barBase = axisY - 12;
+        var s = '<svg viewBox="0 0 '+w+' '+h+'" xmlns="http://www.w3.org/2000/svg" style="background:#0d1117">';
+        s += '<text x="'+(w/2)+'" y="22" text-anchor="middle" fill="#c9d1d9" font-size="14" font-weight="700">TPU Generations \u2014 Timeline &amp; Peak Compute (log scale)</text>';
+        s += '<line x1="'+pad+'" y1="'+barBase+'" x2="'+(w-pad)+'" y2="'+barBase+'" stroke="#21262d" stroke-width="1"/>';
+        s += '<line x1="'+pad+'" y1="'+axisY+'" x2="'+(w-pad)+'" y2="'+axisY+'" stroke="#30363d" stroke-width="2"/>';
+        for (var i = 0; i < n; i++) {
+          var x = pad + i*step;
+          var bh = Math.max(8, ((Math.log10(gens[i].peak) - minLog) / (maxLog - minLog)) * maxBarH);
+          var by = barBase - bh;
+          s += '<rect x="'+(x-24)+'" y="'+by+'" width="48" height="'+bh+'" rx="3" fill="'+gens[i].color+'33" stroke="'+gens[i].color+'" stroke-width="1.5"/>';
+          s += '<text x="'+x+'" y="'+(by-5)+'" text-anchor="middle" fill="'+gens[i].color+'" font-size="11" font-weight="700">'+gens[i].peak+' TF</text>';
+          s += '<line x1="'+x+'" y1="'+barBase+'" x2="'+x+'" y2="'+axisY+'" stroke="'+gens[i].color+'66" stroke-width="1" stroke-dasharray="2,2"/>';
+          s += '<circle cx="'+x+'" cy="'+axisY+'" r="7" fill="'+gens[i].color+'" stroke="#0d1117" stroke-width="2"/>';
+          s += '<text x="'+x+'" y="'+(axisY+22)+'" text-anchor="middle" fill="#c9d1d9" font-size="11" font-weight="700">'+gens[i].name+'</text>';
+          s += '<text x="'+x+'" y="'+(axisY+36)+'" text-anchor="middle" fill="#8b949e" font-size="10">'+gens[i].year+'</text>';
+        }
+        s += '<text x="'+(w/2)+'" y="'+(h-6)+'" text-anchor="middle" fill="#6e7681" font-size="10">Bars: peak per-chip compute (TFLOPS BF16; v1 = TOPS INT8, Ironwood = TFLOPS FP8) on a log scale</text>';
+        s += '</svg>';
+        return s;
+      },
+      sections: [
+        { title: "Why Google built the TPU", text: "By 2013 Google projected that scaling voice search to all Android users would roughly double its datacenter footprint on CPUs alone. A custom inference ASIC was the answer \u2014 cheaper, denser, and lower-latency than CPUs or GPUs of the time. Two years later, TPU v1 was running in production." +
+          '<div class="dd-flow">' +
+            '<div class="dd-flow-step">Voice / Search<br/>demand</div>' +
+            '<div class="dd-flow-arrow">\u2192</div>' +
+            '<div class="dd-flow-step">Projected 2\u00d7<br/>datacenter footprint</div>' +
+            '<div class="dd-flow-arrow">\u2192</div>' +
+            '<div class="dd-flow-step">Custom ASIC<br/>(INT8 inference)</div>' +
+            '<div class="dd-flow-arrow">\u2192</div>' +
+            '<div class="dd-flow-step">TPU v1<br/>deployed 2015</div>' +
+          '</div>' },
+        { title: "Generations at a glance", text: "Eight generations in ten years. Each row shows the headline numbers \u2014 peak compute, HBM capacity, and pod size all march upward, while process node, numerics, and topology each take their own staircase." +
+          '<table class="dd-table"><thead><tr><th>Gen</th><th>Year</th><th>Process</th><th>Peak (BF16/FP8)</th><th>HBM</th><th>HBM BW</th><th>ICI Topology</th><th>Pod</th><th>Focus</th></tr></thead><tbody>' +
+            '<tr><td>v1</td><td class="num">2015</td><td>28 nm</td><td class="num">92 TOPS INT8</td><td class="num">8 GiB DDR3</td><td class="num">34 GB/s</td><td>PCIe only</td><td class="num">1</td><td>Inference</td></tr>' +
+            '<tr><td>v2</td><td class="num">2017</td><td>16 nm</td><td class="num">46 TF BF16</td><td class="num">16 GiB HBM</td><td class="num">600 GB/s</td><td>2D torus 16\u00d716</td><td class="num">256</td><td>Training</td></tr>' +
+            '<tr><td>v3</td><td class="num">2018</td><td>16 nm</td><td class="num">123 TF BF16</td><td class="num">32 GiB HBM</td><td class="num">900 GB/s</td><td>2D torus 32\u00d732</td><td class="num">1024</td><td>Training (liquid)</td></tr>' +
+            '<tr><td>v4</td><td class="num">2021</td><td>7 nm</td><td class="num">275 TF BF16</td><td class="num">32 GiB HBM2</td><td class="num">1.2 TB/s</td><td>3D torus + OCS</td><td class="num">4096</td><td>Training</td></tr>' +
+            '<tr><td>v5e</td><td class="num">2023</td><td>5 nm</td><td class="num">197 TF BF16</td><td class="num">16 GiB HBM2</td><td class="num">819 GB/s</td><td>2D torus</td><td class="num">256</td><td>Cost-efficient</td></tr>' +
+            '<tr><td>v5p</td><td class="num">2023</td><td>5 nm</td><td class="num">459 TF BF16</td><td class="num">95 GiB HBM3</td><td class="num">2.76 TB/s</td><td>3D torus</td><td class="num">8960</td><td>Flagship training</td></tr>' +
+            '<tr><td>Trillium (v6e)</td><td class="num">2024</td><td>~5 nm</td><td class="num">~926 TF BF16</td><td class="num">32 GiB HBM</td><td class="num">~1.6 TB/s</td><td>2D torus + SC g3</td><td class="num">256</td><td>Mixed</td></tr>' +
+            '<tr><td>Ironwood (v7)</td><td class="num">2025</td><td>~3 nm</td><td class="num">~4614 TF FP8</td><td class="num">192 GiB HBM3e</td><td class="num">7.4 TB/s</td><td>3D torus optical</td><td class="num">9216</td><td>Inference at scale</td></tr>' +
+          '</tbody></table>' },
+        { title: "Numerics evolution",text: "Each generation rebalanced where bits get spent. v1 was pure INT8 inference. v2 introduced bfloat16 multiply with FP32 accumulate so training kept FP32-like dynamic range at half the storage. v5e/v5p kept BF16 and added INT8 paths for serving. Trillium and Ironwood add FP8 for ~2\u00d7 throughput on the same silicon." +
+          '<svg class="dd-mini" viewBox="0 0 700 170" xmlns="http://www.w3.org/2000/svg" style="background:#0d1117;border:1px solid #30363d;border-radius:8px"><text x="350" y="22" text-anchor="middle" fill="#c9d1d9" font-size="12" font-weight="700">Dominant numerics per generation</text>' +
+            '<g font-size="10" font-family="Courier New,monospace">' +
+              '<rect x="40" y="50" width="60" height="22" fill="#ff7b7244" stroke="#ff7b72"/><text x="70" y="65" text-anchor="middle" fill="#ff7b72">INT8</text><text x="70" y="106" text-anchor="middle" fill="#8b949e">v1</text>' +
+              '<rect x="120" y="50" width="60" height="22" fill="#58a6ff44" stroke="#58a6ff"/><text x="150" y="65" text-anchor="middle" fill="#58a6ff">BF16</text><rect x="120" y="74" width="60" height="14" fill="#3fb95044" stroke="#3fb950"/><text x="150" y="85" text-anchor="middle" fill="#3fb950" font-size="9">FP32 acc</text><text x="150" y="106" text-anchor="middle" fill="#8b949e">v2</text>' +
+              '<rect x="200" y="50" width="60" height="22" fill="#58a6ff44" stroke="#58a6ff"/><text x="230" y="65" text-anchor="middle" fill="#58a6ff">BF16</text><rect x="200" y="74" width="60" height="14" fill="#3fb95044" stroke="#3fb950"/><text x="230" y="85" text-anchor="middle" fill="#3fb950" font-size="9">FP32 acc</text><text x="230" y="106" text-anchor="middle" fill="#8b949e">v3</text>' +
+              '<rect x="280" y="50" width="60" height="22" fill="#58a6ff44" stroke="#58a6ff"/><text x="310" y="65" text-anchor="middle" fill="#58a6ff">BF16</text><rect x="280" y="74" width="60" height="14" fill="#3fb95044" stroke="#3fb950"/><text x="310" y="85" text-anchor="middle" fill="#3fb950" font-size="9">FP32 acc</text><text x="310" y="106" text-anchor="middle" fill="#8b949e">v4</text>' +
+              '<rect x="360" y="50" width="60" height="22" fill="#58a6ff44" stroke="#58a6ff"/><text x="390" y="65" text-anchor="middle" fill="#58a6ff">BF16</text><rect x="360" y="74" width="60" height="14" fill="#ff7b7244" stroke="#ff7b72"/><text x="390" y="85" text-anchor="middle" fill="#ff7b72" font-size="9">INT8</text><text x="390" y="106" text-anchor="middle" fill="#8b949e">v5e</text>' +
+              '<rect x="440" y="50" width="60" height="22" fill="#58a6ff44" stroke="#58a6ff"/><text x="470" y="65" text-anchor="middle" fill="#58a6ff">BF16</text><rect x="440" y="74" width="60" height="14" fill="#ff7b7244" stroke="#ff7b72"/><text x="470" y="85" text-anchor="middle" fill="#ff7b72" font-size="9">INT8</text><text x="470" y="106" text-anchor="middle" fill="#8b949e">v5p</text>' +
+              '<rect x="520" y="50" width="60" height="22" fill="#58a6ff44" stroke="#58a6ff"/><text x="550" y="65" text-anchor="middle" fill="#58a6ff">BF16</text><rect x="520" y="74" width="60" height="14" fill="#d2a8ff44" stroke="#d2a8ff"/><text x="550" y="85" text-anchor="middle" fill="#d2a8ff" font-size="9">FP8</text><text x="550" y="106" text-anchor="middle" fill="#8b949e">Trillium</text>' +
+              '<rect x="600" y="50" width="60" height="22" fill="#d2a8ff44" stroke="#d2a8ff"/><text x="630" y="65" text-anchor="middle" fill="#d2a8ff">FP8</text><rect x="600" y="74" width="60" height="14" fill="#58a6ff44" stroke="#58a6ff"/><text x="630" y="85" text-anchor="middle" fill="#58a6ff" font-size="9">BF16</text><text x="630" y="106" text-anchor="middle" fill="#8b949e">Ironwood</text>' +
+            '</g>' +
+            '<g font-size="10"><rect x="60" y="135" width="12" height="12" fill="#ff7b7244" stroke="#ff7b72"/><text x="78" y="145" fill="#c9d1d9">INT8</text>' +
+              '<rect x="140" y="135" width="12" height="12" fill="#58a6ff44" stroke="#58a6ff"/><text x="158" y="145" fill="#c9d1d9">BF16</text>' +
+              '<rect x="220" y="135" width="12" height="12" fill="#3fb95044" stroke="#3fb950"/><text x="238" y="145" fill="#c9d1d9">FP32 accumulator</text>' +
+              '<rect x="370" y="135" width="12" height="12" fill="#d2a8ff44" stroke="#d2a8ff"/><text x="388" y="145" fill="#c9d1d9">FP8</text></g>' +
+          '</svg>' },
+        { title: "Memory evolution", text: "v1 used commodity DDR3; v2 was the first TPU with HBM. From there it\'s a steady walk: HBM \u2192 HBM2 \u2192 HBM3 \u2192 HBM3e, with capacity per chip growing from 8 GiB to 192 GiB (24\u00d7) over a decade. The dip at v5e is intentional \u2014 it\'s the cheap-and-cheerful SKU." +
+          (function(){
+            var mem = [
+              { n: "v1",       v: 8,   c: "#6e7681" },
+              { n: "v2",       v: 16,  c: "#58a6ff" },
+              { n: "v3",       v: 32,  c: "#58a6ff" },
+              { n: "v4",       v: 32,  c: "#3fb950" },
+              { n: "v5e",      v: 16,  c: "#ffa657" },
+              { n: "v5p",      v: 95,  c: "#ffa657" },
+              { n: "Trillium", v: 32,  c: "#d2a8ff" },
+              { n: "Ironwood", v: 192, c: "#ff7b72" }
+            ];
+            var W = 700, H = 220, pad = 50, baseY = H - 50;
+            var stepX = (W - pad*2) / (mem.length - 1);
+            var maxV = 200, scale = (baseY - 40) / maxV;
+            var s = '<svg class="dd-mini" viewBox="0 0 '+W+' '+H+'" xmlns="http://www.w3.org/2000/svg" style="background:#0d1117;border:1px solid #30363d;border-radius:8px">';
+            s += '<text x="'+(W/2)+'" y="22" text-anchor="middle" fill="#c9d1d9" font-size="12" font-weight="700">HBM (or DDR3) capacity per chip \u2014 GiB</text>';
+            s += '<line x1="'+pad+'" y1="'+baseY+'" x2="'+(W-pad)+'" y2="'+baseY+'" stroke="#30363d"/>';
+            var ticks = [0, 50, 100, 150, 200];
+            for (var t = 0; t < ticks.length; t++) {
+              var ty = baseY - ticks[t]*scale;
+              s += '<line x1="'+(pad-4)+'" y1="'+ty+'" x2="'+(W-pad)+'" y2="'+ty+'" stroke="#21262d" stroke-dasharray="2,3"/>';
+              s += '<text x="'+(pad-8)+'" y="'+(ty+3)+'" text-anchor="end" fill="#6e7681" font-size="9">'+ticks[t]+'</text>';
+            }
+            for (var i = 0; i < mem.length; i++) {
+              var x = pad + i*stepX;
+              var bw = 50;
+              var bh = mem[i].v * scale;
+              var by = baseY - bh;
+              s += '<rect x="'+(x-bw/2)+'" y="'+by+'" width="'+bw+'" height="'+bh+'" rx="3" fill="'+mem[i].c+'44" stroke="'+mem[i].c+'" stroke-width="1.5"/>';
+              s += '<text x="'+x+'" y="'+(by-4)+'" text-anchor="middle" fill="'+mem[i].c+'" font-size="10" font-weight="700">'+mem[i].v+'</text>';
+              s += '<text x="'+x+'" y="'+(baseY+14)+'" text-anchor="middle" fill="#c9d1d9" font-size="10">'+mem[i].n+'</text>';
+            }
+            s += '</svg>';
+            return s;
+          })() },
+        { title: "Interconnect evolution", text: "v1 was a PCIe co-processor talking only to its host. v2/v3 introduced ICI as a 2D torus. v4 made it a 3D torus and added Optical Circuit Switches so a pod could be sliced and reshaped without rewiring. v5p and Ironwood push to higher-radix optical fabrics with multi-Tb/s links per chip." +
+          (function(){
+            var s = '<svg class="dd-mini" viewBox="0 0 760 180" xmlns="http://www.w3.org/2000/svg" style="background:#0d1117;border:1px solid #30363d;border-radius:8px"><text x="380" y="22" text-anchor="middle" fill="#c9d1d9" font-size="12" font-weight="700">ICI topology progression</text>';
+            // Panel 1: PCIe (v1)
+            s += '<g transform="translate(40,50)"><text x="70" y="-8" text-anchor="middle" fill="#d2a8ff" font-size="11" font-weight="700">v1 \u2014 PCIe</text>';
+            s += '<rect x="40" y="20" width="60" height="26" rx="3" fill="#6e768133" stroke="#6e7681"/><text x="70" y="38" text-anchor="middle" fill="#c9d1d9" font-size="10">CPU host</text>';
+            s += '<line x1="70" y1="46" x2="70" y2="76" stroke="#6e7681" stroke-width="2"/>';
+            s += '<rect x="40" y="76" width="60" height="26" rx="3" fill="#d2a8ff33" stroke="#d2a8ff"/><text x="70" y="94" text-anchor="middle" fill="#c9d1d9" font-size="10">TPU v1</text>';
+            s += '</g>';
+            // Panel 2: 2D torus (v2/v3)
+            s += '<g transform="translate(220,50)"><text x="70" y="-8" text-anchor="middle" fill="#d2a8ff" font-size="11" font-weight="700">v2/v3 \u2014 2D torus</text>';
+            for (var r = 0; r < 3; r++) for (var c = 0; c < 3; c++) {
+              var cx = 20 + c*40, cy = 25 + r*30;
+              s += '<rect x="'+(cx-8)+'" y="'+(cy-8)+'" width="16" height="16" rx="2" fill="#58a6ff44" stroke="#58a6ff"/>';
+              if (c < 2) s += '<line x1="'+(cx+8)+'" y1="'+cy+'" x2="'+(cx+32)+'" y2="'+cy+'" stroke="#58a6ff88"/>';
+              if (r < 2) s += '<line x1="'+cx+'" y1="'+(cy+8)+'" x2="'+cx+'" y2="'+(cy+22)+'" stroke="#58a6ff88"/>';
+            }
+            s += '<path d="M 20 25 Q 0 60 20 85" fill="none" stroke="#58a6ff66" stroke-dasharray="3,3"/>';
+            s += '<path d="M 100 25 Q 130 60 100 85" fill="none" stroke="#58a6ff66" stroke-dasharray="3,3"/>';
+            s += '</g>';
+            // Panel 3: 3D torus + OCS (v4)
+            s += '<g transform="translate(400,50)"><text x="70" y="-8" text-anchor="middle" fill="#d2a8ff" font-size="11" font-weight="700">v4 \u2014 3D torus + OCS</text>';
+            for (var r2 = 0; r2 < 2; r2++) for (var c2 = 0; c2 < 2; c2++) {
+              var bx = 35 + c2*30, by2 = 18 + r2*22;
+              s += '<rect x="'+(bx-7)+'" y="'+(by2-7)+'" width="14" height="14" rx="2" fill="#3fb95033" stroke="#3fb95088"/>';
+            }
+            for (var r3 = 0; r3 < 2; r3++) for (var c3 = 0; c3 < 2; c3++) {
+              var fx = 25 + c3*30, fy = 38 + r3*22;
+              s += '<rect x="'+(fx-7)+'" y="'+(fy-7)+'" width="14" height="14" rx="2" fill="#3fb95066" stroke="#3fb950"/>';
+            }
+            s += '<line x1="25" y1="38" x2="35" y2="18" stroke="#3fb95088" stroke-dasharray="2,2"/>';
+            s += '<line x1="55" y1="38" x2="65" y2="18" stroke="#3fb95088" stroke-dasharray="2,2"/>';
+            s += '<line x1="25" y1="60" x2="35" y2="40" stroke="#3fb95088" stroke-dasharray="2,2"/>';
+            s += '<line x1="55" y1="60" x2="65" y2="40" stroke="#3fb95088" stroke-dasharray="2,2"/>';
+            s += '<rect x="95" y="40" width="42" height="22" rx="4" fill="#ffa65733" stroke="#ffa657"/><text x="116" y="55" text-anchor="middle" fill="#ffa657" font-size="9" font-weight="700">OCS</text>';
+            s += '<line x1="65" y1="50" x2="95" y2="50" stroke="#ffa65788" stroke-width="2"/>';
+            s += '</g>';
+            // Panel 4: optical fabric (v5p / Ironwood)
+            s += '<g transform="translate(580,50)"><text x="70" y="-8" text-anchor="middle" fill="#d2a8ff" font-size="11" font-weight="700">v5p / Ironwood</text>';
+            s += '<circle cx="70" cy="55" r="14" fill="#ff7b7244" stroke="#ff7b72" stroke-width="2"/><text x="70" y="59" text-anchor="middle" fill="#ff7b72" font-size="9" font-weight="700">OCS</text>';
+            var nodes = [[20,20],[70,15],[120,20],[20,90],[70,95],[120,90],[15,55],[125,55]];
+            for (var k = 0; k < nodes.length; k++) {
+              var nx = nodes[k][0], ny = nodes[k][1];
+              s += '<rect x="'+(nx-7)+'" y="'+(ny-7)+'" width="14" height="14" rx="2" fill="#ff7b7233" stroke="#ff7b72"/>';
+              s += '<line x1="'+nx+'" y1="'+ny+'" x2="70" y2="55" stroke="#ff7b7266" stroke-width="1"/>';
+            }
+            s += '</g>';
+            s += '</svg>';
+            return s;
+          })() },
+        { title: "Specialization timeline", text: "Early TPUs were generalists, then the line forked. v4 introduced SparseCore for embedding-heavy workloads. v5 split into a cost-efficient (v5e) and a flagship (v5p). Trillium upgraded SparseCore again, and Ironwood was designed inference-first for serving reasoning and agentic models at fleet scale." +
+          '<div class="dd-flow">' +
+            '<div class="dd-flow-step">Generalist<br/>v1 \u2013 v3</div>' +
+            '<div class="dd-flow-arrow">\u2192</div>' +
+            '<div class="dd-flow-step">Pod-scale training<br/>v4 + SparseCore</div>' +
+            '<div class="dd-flow-arrow">\u2192</div>' +
+            '<div class="dd-flow-step">Efficient<br/>v5e</div>' +
+            '<div class="dd-flow-arrow">+</div>' +
+            '<div class="dd-flow-step">Flagship<br/>v5p</div>' +
+            '<div class="dd-flow-arrow">\u2192</div>' +
+            '<div class="dd-flow-step">SparseCore gen3<br/>Trillium</div>' +
+            '<div class="dd-flow-arrow">\u2192</div>' +
+            '<div class="dd-flow-step">Inference-first<br/>Ironwood</div>' +
+          '</div>' },
+        { title: "Key takeaways", text: "Per-chip peak compute grew ~50\u00d7 from v1 to Ironwood (92 \u2192 4614 TF, mixing INT8/BF16/FP8). Pod size grew from a single card to 9216 chips. The recurring pattern is the same every generation: numerics shrink, memory grows, interconnect widens, and specialization deepens." +
+          '<div class="dd-callout"><span class="dd-callout-icon">\ud83d\udca1</span><span><b>The pattern:</b> every TPU generation rebalances four levers \u2014 <b>numerics</b> (smaller dtypes), <b>memory</b> (more &amp; faster HBM), <b>interconnect</b> (wider, more flexible ICI), and <b>specialization</b> (SparseCore, inference SKUs). Knowing where a generation sits on these four axes tells you almost everything you need.</span></div>' }
+      ],
+      keypoints: [
+        { title: "v1 was inference-only", text: "INT8, 256\u00d7256 MXU, no HBM \u2014 a PCIe card to keep voice/search costs in check (2015)." },
+        { title: "v2 introduced bfloat16 + HBM", text: "Training-class chip with 128\u00d7128 MXU, BF16 multiply / FP32 accumulate, and the first ICI torus (2017)." },
+        { title: "v3 doubled almost everything", text: "Two MXUs per TensorCore, 32 GiB HBM, liquid cooling, 1024-chip pods (2018)." },
+        { title: "v4 added OCS + SparseCore", text: "3D torus with optical circuit switches and an embedding co-processor; 4096-chip exaflop pods (2021)." },
+        { title: "v5 split into e and p", text: "v5e for cost-efficient inference/fine-tuning; v5p as the high-end training flagship with HBM3 and 8960-chip pods (2023)." },
+        { title: "Trillium (v6) quadrupled v5e", text: "~4.7\u00d7 compute per chip over v5e, 3rd-gen SparseCore, much better energy efficiency (2024)." },
+        { title: "Ironwood (v7) targets inference", text: "FP8-first, 192 GiB HBM3e, 9216-chip pods at ~42.5 EFLOPS for serving reasoning/agentic models (2025)." }
+      ]
+    },
+    {
+      id: "dd-inference", num: "Concept 5 of 6", title: "Inference Stack E2E on TPU",
+      desc: "From an HTTP request down to the systolic array: frameworks, XLA, libtpu, JetStream/vLLM, and how requests are batched and served.", color: "#ff7b72", icon: "\ud83d\ude80",
+      svg: function(w, h) {
+        var vbW = 880, vbH = 360;
+        var out = '<svg viewBox="0 0 ' + vbW + ' ' + vbH + '" xmlns="http://www.w3.org/2000/svg" style="background:#0d1117;width:100%;height:auto">';
+        out += '<text x="' + vbW/2 + '" y="22" text-anchor="middle" fill="#c9d1d9" font-size="14" font-weight="700">End-to-End TPU Inference Stack</text>';
+        var Lx = 20, Ly = 44, Lw = 380, boxH = 34, gap = 8;
+        var layers = [
+          { n: 'Client', s: 'HTTP / gRPC request', c: '#8b949e' },
+          { n: 'HTTPS Load Balancer', s: 'GKE Ingress \u00b7 Cloud LB', c: '#58a6ff' },
+          { n: 'API Gateway', s: 'Auth \u00b7 routing \u00b7 streaming', c: '#58a6ff' },
+          { n: 'JetStream Server', s: 'Batcher \u00b7 scheduler \u00b7 KV manager', c: '#ff7b72' },
+          { n: 'Engine (XLA Compiled Graph)', s: 'AOT HLO \u2192 StableHLO \u2192 LLO', c: '#ffa657' },
+          { n: 'libtpu / Pathways Runtime', s: 'Multi-host orchestration', c: '#7ee787' },
+          { n: 'TPU Pod (chips \u00b7 HBM \u00b7 ICI mesh)', s: 'MXU + VPU + HBM3e', c: '#d2a8ff' }
+        ];
+        for (var i = 0; i < layers.length; i++) {
+          var y = Ly + i * (boxH + gap);
+          var L = layers[i];
+          out += '<rect x="' + Lx + '" y="' + y + '" width="' + Lw + '" height="' + boxH + '" rx="6" fill="#161b22" stroke="' + L.c + '" stroke-width="1.5"/>';
+          out += '<text x="' + (Lx+10) + '" y="' + (y+14) + '" fill="' + L.c + '" font-size="11" font-weight="700">' + L.n + '</text>';
+          out += '<text x="' + (Lx+10) + '" y="' + (y+27) + '" fill="#8b949e" font-size="9.5">' + L.s + '</text>';
+          if (i < layers.length-1) {
+            var ax = Lx + Lw/2;
+            out += '<line x1="' + ax + '" y1="' + (y+boxH) + '" x2="' + ax + '" y2="' + (y+boxH+gap-1) + '" stroke="#ff7b72" stroke-width="2"/>';
+            out += '<polygon points="' + (ax-3) + ',' + (y+boxH+gap-3) + ' ' + (ax+3) + ',' + (y+boxH+gap-3) + ' ' + ax + ',' + (y+boxH+gap+1) + '" fill="#ff7b72"/>';
+          }
+        }
+        var lastY = Ly + 6*(boxH+gap);
+        for (var r=0; r<2; r++) for (var c=0; c<4; c++) {
+          out += '<rect x="' + (Lx+220+c*16) + '" y="' + (lastY+4+r*13) + '" width="12" height="10" rx="1" fill="#0d1117" stroke="#d2a8ff" stroke-width="0.7"/>';
+        }
+        out += '<line x1="' + (Lx+232) + '" y1="' + (lastY+9) + '" x2="' + (Lx+280) + '" y2="' + (lastY+9) + '" stroke="#d2a8ff" stroke-width="0.6" stroke-dasharray="2,1"/>';
+        out += '<line x1="' + (Lx+232) + '" y1="' + (lastY+22) + '" x2="' + (Lx+280) + '" y2="' + (lastY+22) + '" stroke="#d2a8ff" stroke-width="0.6" stroke-dasharray="2,1"/>';
+        out += '<text x="' + (Lx+296) + '" y="' + (lastY+13) + '" fill="#d2a8ff" font-size="8">ICI</text>';
+        out += '<line x1="' + (Lx+Lw+25) + '" y1="44" x2="' + (Lx+Lw+25) + '" y2="' + (vbH-30) + '" stroke="#30363d" stroke-width="1" stroke-dasharray="3,3"/>';
+        var Rx = Lx + Lw + 50, Ry = 60, Rw = vbW - Rx - 20;
+        out += '<text x="' + Rx + '" y="38" fill="#c9d1d9" font-size="12" font-weight="700">Request lifecycle (one generation)</text>';
+        out += '<line x1="' + Rx + '" y1="' + (Ry+30) + '" x2="' + (Rx+Rw) + '" y2="' + (Ry+30) + '" stroke="#30363d" stroke-width="1.2"/>';
+        var stages = [
+          { x:0,   w:60,  c:'#58a6ff', n:'Tokenize', s:'CPU' },
+          { x:60,  w:120, c:'#ffa657', n:'Prefill',  s:'1 big TPU call' },
+          { x:180, w:50,  c:'#ff7b72', n:'Decode 1', s:'1 token' },
+          { x:230, w:50,  c:'#ff7b72', n:'Decode 2', s:'1 token' },
+          { x:280, w:50,  c:'#ff7b72', n:'Decode 3', s:'1 token' },
+          { x:330, w:80,  c:'#7ee787', n:'Stream out', s:'gRPC' }
+        ];
+        var scale = Rw / 410;
+        for (var s2=0; s2<stages.length; s2++) {
+          var st = stages[s2];
+          var x = Rx + st.x*scale, ww = st.w*scale - 4;
+          out += '<rect x="' + x + '" y="' + (Ry+18) + '" width="' + ww + '" height="24" rx="3" fill="' + st.c + '22" stroke="' + st.c + '" stroke-width="1.2"/>';
+          out += '<text x="' + (x+ww/2) + '" y="' + (Ry+33) + '" text-anchor="middle" fill="' + st.c + '" font-size="10" font-weight="700">' + st.n + '</text>';
+          out += '<text x="' + (x+ww/2) + '" y="' + (Ry+54) + '" text-anchor="middle" fill="#8b949e" font-size="8.5">' + st.s + '</text>';
+        }
+        var kvY = Ry + 90;
+        out += '<text x="' + Rx + '" y="' + kvY + '" fill="#d2a8ff" font-size="11" font-weight="700">KV cache (HBM)</text>';
+        out += '<rect x="' + Rx + '" y="' + (kvY+8) + '" width="' + Rw + '" height="22" rx="3" fill="#0d1117" stroke="#d2a8ff" stroke-width="1" stroke-dasharray="2,2"/>';
+        out += '<text x="' + (Rx+6) + '" y="' + (kvY+23) + '" fill="#d2a8ff" font-size="9.5">written by prefill \u00b7 read+appended every decode step</text>';
+        out += '<line x1="' + (Rx+(60+60)*scale) + '" y1="' + (Ry+42) + '" x2="' + (Rx+(60+60)*scale) + '" y2="' + (kvY+8) + '" stroke="#d2a8ff" stroke-width="0.8" stroke-dasharray="2,2"/>';
+        out += '<line x1="' + (Rx+(180+25)*scale) + '" y1="' + (Ry+42) + '" x2="' + (Rx+(180+25)*scale) + '" y2="' + (kvY+8) + '" stroke="#d2a8ff" stroke-width="0.8" stroke-dasharray="2,2"/>';
+        out += '<line x1="' + (Rx+(280+25)*scale) + '" y1="' + (Ry+42) + '" x2="' + (Rx+(280+25)*scale) + '" y2="' + (kvY+8) + '" stroke="#d2a8ff" stroke-width="0.8" stroke-dasharray="2,2"/>';
+        out += '<text x="' + Rx + '" y="' + (kvY+62) + '" fill="#8b949e" font-size="10"><tspan fill="#ffa657" font-weight="700">TTFT</tspan> = tokenize + prefill   \u00b7   <tspan fill="#ff7b72" font-weight="700">TPS</tspan> = 1 / decode-step</text>';
+        out += '<text x="' + Rx + '" y="' + (kvY+78) + '" fill="#8b949e" font-size="10">Same XLA program every decode step \u2192 compiled once, dispatched many times</text>';
+        out += '<text x="' + vbW/2 + '" y="' + (vbH-10) + '" text-anchor="middle" fill="#6e7681" font-size="10">Left: physical request path  \u00b7  Right: temporal lifecycle of one generation</text>';
+        out += '</svg>';
+        return out;
+      },
+      sections: [
+        { title: "The 30-second mental model", text: "TPU inference is one idea repeated at every layer: a <b>compiled graph</b> running on a <b>sharded mesh</b> behind a <b>continuous-batching server</b>. Python doesn't drive kernels at runtime — XLA produced a binary ahead of time, GSPMD baked the sharding into it, and the serving engine just feeds it batches of tokens.<div class=\"dd-flow\"><div class=\"dd-flow-step\">Model Code<br/><span style=\"color:#8b949e;font-size:10px\">JAX / Flax</span></div><div class=\"dd-flow-arrow\">→</div><div class=\"dd-flow-step\">XLA Compile<br/><span style=\"color:#8b949e;font-size:10px\">HLO → LLO</span></div><div class=\"dd-flow-arrow\">→</div><div class=\"dd-flow-step\">Sharded Plan<br/><span style=\"color:#8b949e;font-size:10px\">GSPMD</span></div><div class=\"dd-flow-arrow\">→</div><div class=\"dd-flow-step\">Serving Engine<br/><span style=\"color:#8b949e;font-size:10px\">JetStream / vLLM</span></div><div class=\"dd-flow-arrow\">→</div><div class=\"dd-flow-step\">TPU Mesh<br/><span style=\"color:#8b949e;font-size:10px\">ICI all-reduce</span></div></div><div class=\"dd-callout\"><span class=\"dd-callout-icon\">🧠</span><span>Mental rule of thumb: if you need to ask <i>“what kernel ran?”</i>, you're thinking about it like a GPU stack. On TPU there is no kernel — there is one big XLA program per shape.</span></div>" },
+        { title: "Layer-by-layer responsibilities", text: "Each layer of the stack owns a narrow contract; failures usually map cleanly to one row of this table.<table class=\"dd-table\"><thead><tr><th>Layer</th><th>Examples</th><th>Owns</th><th>Failure mode</th></tr></thead><tbody><tr><td><b style=\"color:#ffa657\">Model &amp; framework</b></td><td>JAX/Flax, PyTorch-XLA, Keras 3</td><td>Math, weights, sharding annotations</td><td>Wrong dtype / shape</td></tr><tr><td><b style=\"color:#ffa657\">Compiler</b></td><td>XLA, StableHLO, MLIR</td><td>Op fusion, layout, collectives</td><td>Recompile thrash</td></tr><tr><td><b style=\"color:#ffa657\">Runtime</b></td><td>libtpu, Pathways, megacore</td><td>Multi-host orchestration, memory</td><td>OOM, ICI stalls</td></tr><tr><td><b style=\"color:#ffa657\">Serving engine</b></td><td>JetStream, vLLM-TPU, Saxml</td><td>Batching, KV cache, scheduler</td><td>Tail latency</td></tr><tr><td><b style=\"color:#ffa657\">Reference impls</b></td><td>MaxText, MaxDiffusion</td><td>Optimized model code</td><td>Stale model shapes</td></tr><tr><td><b style=\"color:#ffa657\">Deployment</b></td><td>GKE, TPU VMs, GCS</td><td>Autoscale, weight loading</td><td>Cold start</td></tr></tbody></table>" },
+        { title: "Frameworks → Compiler: writing a sharded model", text: "In JAX you describe <i>where</i> tensors live with <code>Mesh</code>, <code>NamedSharding</code>, and <code>PartitionSpec</code>; the body of <code>@jax.jit</code> (or an explicit <code>shard_map</code>) is then traced into a single XLA HLO graph. GSPMD propagates the sharding through every op and inserts the required ICI collectives.<pre class=\"dd-code\"><span class=\"k\">import</span> jax, jax.numpy <span class=\"k\">as</span> jnp\n<span class=\"k\">from</span> jax.sharding <span class=\"k\">import</span> Mesh, NamedSharding, PartitionSpec <span class=\"k\">as</span> P\n\n<span class=\"c\"># 8 chips arranged as data=2, model=4</span>\ndevices = jax.devices()\nmesh    = Mesh(devices.reshape(2,4), axis_names=(<span class=\"s\">'data'</span>,<span class=\"s\">'model'</span>))\n\n<span class=\"n\">@jax.jit</span>\n<span class=\"k\">def</span> decode_step(params, kv_cache, token):\n    logits, kv_cache = model.apply(params, kv_cache, token)\n    <span class=\"k\">return</span> logits.argmax(-1), kv_cache\n\nparams   = jax.device_put(params,   NamedSharding(mesh, P(<span class=\"s\">None</span>, <span class=\"s\">'model'</span>)))\nkv_cache = jax.device_put(kv_cache, NamedSharding(mesh, P(<span class=\"s\">'data'</span>, <span class=\"s\">'model'</span>, <span class=\"s\">None</span>)))\n\n<span class=\"c\"># first call compiles HLO → StableHLO → LLO → TPU binary; later calls just dispatch</span>\nnext_tok, kv_cache = decode_step(params, kv_cache, token)</pre><svg class=\"dd-mini\" viewBox=\"0 0 420 170\" xmlns=\"http://www.w3.org/2000/svg\" style=\"background:#0d1117;border:1px solid #30363d;border-radius:6px\"><text x=\"210\" y=\"16\" text-anchor=\"middle\" fill=\"#c9d1d9\" font-size=\"11\" font-weight=\"700\">Mesh(axes=('data','model')) on 2×4 TPU</text><text x=\"40\" y=\"36\" fill=\"#58a6ff\" font-size=\"10\" font-weight=\"700\">data →</text><text x=\"4\" y=\"100\" fill=\"#ff7b72\" font-size=\"10\" font-weight=\"700\" transform=\"rotate(-90 14 100)\">model →</text><rect x=\"60\" y=\"50\" width=\"50\" height=\"34\" rx=\"4\" fill=\"#161b22\" stroke=\"#30363d\"/><text x=\"85\" y=\"70\" text-anchor=\"middle\" fill=\"#c9d1d9\" font-size=\"10\">d0,m0</text><rect x=\"120\" y=\"50\" width=\"50\" height=\"34\" rx=\"4\" fill=\"#161b22\" stroke=\"#30363d\"/><text x=\"145\" y=\"70\" text-anchor=\"middle\" fill=\"#c9d1d9\" font-size=\"10\">d1,m0</text><rect x=\"180\" y=\"50\" width=\"50\" height=\"34\" rx=\"4\" fill=\"#161b22\" stroke=\"#30363d\"/><text x=\"205\" y=\"70\" text-anchor=\"middle\" fill=\"#c9d1d9\" font-size=\"10\">d2,m0</text><rect x=\"240\" y=\"50\" width=\"50\" height=\"34\" rx=\"4\" fill=\"#161b22\" stroke=\"#30363d\"/><text x=\"265\" y=\"70\" text-anchor=\"middle\" fill=\"#c9d1d9\" font-size=\"10\">d3,m0</text><rect x=\"60\" y=\"92\" width=\"50\" height=\"34\" rx=\"4\" fill=\"#161b22\" stroke=\"#30363d\"/><text x=\"85\" y=\"112\" text-anchor=\"middle\" fill=\"#c9d1d9\" font-size=\"10\">d0,m1</text><rect x=\"120\" y=\"92\" width=\"50\" height=\"34\" rx=\"4\" fill=\"#161b22\" stroke=\"#30363d\"/><text x=\"145\" y=\"112\" text-anchor=\"middle\" fill=\"#c9d1d9\" font-size=\"10\">d1,m1</text><rect x=\"180\" y=\"92\" width=\"50\" height=\"34\" rx=\"4\" fill=\"#161b22\" stroke=\"#30363d\"/><text x=\"205\" y=\"112\" text-anchor=\"middle\" fill=\"#c9d1d9\" font-size=\"10\">d2,m1</text><rect x=\"240\" y=\"92\" width=\"50\" height=\"34\" rx=\"4\" fill=\"#161b22\" stroke=\"#30363d\"/><text x=\"265\" y=\"112\" text-anchor=\"middle\" fill=\"#c9d1d9\" font-size=\"10\">d3,m1</text><text x=\"330\" y=\"40\" fill=\"#ff7b72\" font-size=\"10\" font-weight=\"700\">params P(_, model)</text><rect x=\"320\" y=\"50\" width=\"80\" height=\"34\" rx=\"3\" fill=\"#0d1117\" stroke=\"#ff7b72\"/><rect x=\"320\" y=\"50\" width=\"80\" height=\"17\" fill=\"#ff7b7222\"/><text x=\"360\" y=\"63\" text-anchor=\"middle\" fill=\"#ff7b72\" font-size=\"9\">shard 0</text><text x=\"360\" y=\"80\" text-anchor=\"middle\" fill=\"#ff7b72\" font-size=\"9\">shard 1</text><text x=\"330\" y=\"112\" fill=\"#58a6ff\" font-size=\"10\" font-weight=\"700\">batch P(data, _)</text><rect x=\"320\" y=\"122\" width=\"80\" height=\"34\" rx=\"3\" fill=\"#0d1117\" stroke=\"#58a6ff\"/><rect x=\"320\" y=\"122\" width=\"20\" height=\"34\" fill=\"transparent\" stroke=\"#58a6ff\" stroke-width=\"0.5\"/><rect x=\"340\" y=\"122\" width=\"20\" height=\"34\" fill=\"#58a6ff22\" stroke=\"#58a6ff\" stroke-width=\"0.5\"/><rect x=\"360\" y=\"122\" width=\"20\" height=\"34\" fill=\"transparent\" stroke=\"#58a6ff\" stroke-width=\"0.5\"/><rect x=\"380\" y=\"122\" width=\"20\" height=\"34\" fill=\"#58a6ff22\" stroke=\"#58a6ff\" stroke-width=\"0.5\"/><text x=\"360\" y=\"144\" text-anchor=\"middle\" fill=\"#58a6ff\" font-size=\"9\">4 data shards</text></svg><div class=\"dd-links\"><a href=\"https://jax.readthedocs.io/en/latest/notebooks/Distributed_arrays_and_automatic_parallelization.html\" target=\"_blank\">JAX distributed arrays</a><a href=\"https://jax.readthedocs.io/en/latest/notebooks/shard_map.html\" target=\"_blank\">JAX shard_map tutorial</a></div>" },
+        { title: "Compiler → Runtime: what XLA actually does", text: "XLA takes the traced graph and runs ~6 stages of lowering. Sharding annotations become explicit collectives; the scheduler interleaves compute and ICI traffic so the chip never stalls.<svg class=\"dd-mini\" viewBox=\"0 0 820 80\" xmlns=\"http://www.w3.org/2000/svg\" style=\"background:#0d1117;border:1px solid #30363d;border-radius:6px\"><rect x=\"10\" y=\"20\" width=\"115\" height=\"42\" rx=\"6\" fill=\"#161b22\" stroke=\"#58a6ff\" stroke-width=\"1.4\"/><text x=\"67\" y=\"37\" text-anchor=\"middle\" fill=\"#58a6ff\" font-size=\"11\" font-weight=\"700\">Python</text><text x=\"67\" y=\"50\" text-anchor=\"middle\" fill=\"#58a6ff\" font-size=\"11\" font-weight=\"700\">Trace</text><line x1=\"125\" y1=\"41\" x2=\"143\" y2=\"41\" stroke=\"#6e7681\" stroke-width=\"1.4\"/><polygon points=\"138,38 138,44 144,41\" fill=\"#6e7681\"/><rect x=\"145\" y=\"20\" width=\"115\" height=\"42\" rx=\"6\" fill=\"#161b22\" stroke=\"#ffa657\" stroke-width=\"1.4\"/><text x=\"202\" y=\"37\" text-anchor=\"middle\" fill=\"#ffa657\" font-size=\"11\" font-weight=\"700\">HLO</text><line x1=\"260\" y1=\"41\" x2=\"278\" y2=\"41\" stroke=\"#6e7681\" stroke-width=\"1.4\"/><polygon points=\"273,38 273,44 279,41\" fill=\"#6e7681\"/><rect x=\"280\" y=\"20\" width=\"115\" height=\"42\" rx=\"6\" fill=\"#161b22\" stroke=\"#ffa657\" stroke-width=\"1.4\"/><text x=\"337\" y=\"37\" text-anchor=\"middle\" fill=\"#ffa657\" font-size=\"11\" font-weight=\"700\">SPMD</text><text x=\"337\" y=\"50\" text-anchor=\"middle\" fill=\"#ffa657\" font-size=\"11\" font-weight=\"700\">Partitioner</text><line x1=\"395\" y1=\"41\" x2=\"413\" y2=\"41\" stroke=\"#6e7681\" stroke-width=\"1.4\"/><polygon points=\"408,38 408,44 414,41\" fill=\"#6e7681\"/><rect x=\"415\" y=\"20\" width=\"115\" height=\"42\" rx=\"6\" fill=\"#161b22\" stroke=\"#ffa657\" stroke-width=\"1.4\"/><text x=\"472\" y=\"37\" text-anchor=\"middle\" fill=\"#ffa657\" font-size=\"11\" font-weight=\"700\">Optimized</text><text x=\"472\" y=\"50\" text-anchor=\"middle\" fill=\"#ffa657\" font-size=\"11\" font-weight=\"700\">HLO</text><line x1=\"530\" y1=\"41\" x2=\"548\" y2=\"41\" stroke=\"#6e7681\" stroke-width=\"1.4\"/><polygon points=\"543,38 543,44 549,41\" fill=\"#6e7681\"/><rect x=\"550\" y=\"20\" width=\"115\" height=\"42\" rx=\"6\" fill=\"#161b22\" stroke=\"#7ee787\" stroke-width=\"1.4\"/><text x=\"607\" y=\"37\" text-anchor=\"middle\" fill=\"#7ee787\" font-size=\"11\" font-weight=\"700\">LLO</text><line x1=\"665\" y1=\"41\" x2=\"683\" y2=\"41\" stroke=\"#6e7681\" stroke-width=\"1.4\"/><polygon points=\"678,38 678,44 684,41\" fill=\"#6e7681\"/><rect x=\"685\" y=\"20\" width=\"115\" height=\"42\" rx=\"6\" fill=\"#161b22\" stroke=\"#d2a8ff\" stroke-width=\"1.4\"/><text x=\"742\" y=\"37\" text-anchor=\"middle\" fill=\"#d2a8ff\" font-size=\"11\" font-weight=\"700\">TPU Binary</text></svg><ul style=\"margin:10px 0 10px 20px;font-size:12px;color:#c9d1d9;line-height:1.7\"><li><b style=\"color:#ffa657\">Op fusion</b> — collapse many small ops into one MXU-friendly kernel</li><li><b style=\"color:#ffa657\">Layout assignment</b> — pick tiling that matches the 128×128 systolic array</li><li><b style=\"color:#ffa657\">SPMD partitioning</b> — insert all-gather / reduce-scatter / all-reduce over ICI</li><li><b style=\"color:#ffa657\">Latency-hiding scheduler</b> — overlap collectives with matmuls</li><li><b style=\"color:#ffa657\">Memory space assignment</b> — place tensors in HBM, VMEM, or SMEM (rematerialize when needed)</li></ul><pre class=\"dd-code\"><span class=\"k\">from</span> jax.experimental.shard_map <span class=\"k\">import</span> shard_map\n<span class=\"k\">from</span> jax.sharding <span class=\"k\">import</span> PartitionSpec <span class=\"k\">as</span> P\n\n<span class=\"n\">@jax.jit</span>\n<span class=\"k\">def</span> all_reduce_mean(x):\n    <span class=\"k\">def</span> per_shard(x):\n        s = jax.lax.psum(x, axis_name=<span class=\"s\">'model'</span>)   <span class=\"c\"># manual ICI all-reduce</span>\n        <span class=\"k\">return</span> s / jax.lax.axis_size(<span class=\"s\">'model'</span>)\n    <span class=\"k\">return</span> shard_map(per_shard, mesh=mesh,\n                     in_specs=P(<span class=\"s\">'model'</span>,), out_specs=P(<span class=\"s\">'model'</span>,))(x)</pre><div class=\"dd-links\"><a href=\"https://openxla.org/xla\" target=\"_blank\">OpenXLA</a><a href=\"https://arxiv.org/abs/2203.12533\" target=\"_blank\">Pathways paper</a></div>" },
+        { title: "Serving engine internals", text: "Two reference engines dominate TPU LLM serving today. Both use <b>continuous batching</b> (slot new prefills into the running decode batch instead of waiting), <b>paged attention</b> (KV stored as fixed-size blocks), and separate <b>prefill</b> (compute-bound, one big call) from <b>decode</b> (memory-bound, many tiny steps).<div class=\"dd-twocol\"><div><h4>JetStream</h4><ul style=\"margin:6px 0 0 18px;font-size:11.5px;color:#c9d1d9;line-height:1.65\"><li>gRPC <code>engine_api</code> — swap in MaxText, Pax, custom JAX</li><li>Prefill thread + decode thread, joined via a token queue</li><li>Paged KV cache, AOT-compiled by default</li><li>Tuned for TPU v5e / v5p / Trillium</li></ul><pre class=\"dd-code\"><span class=\"c\"># Launch JetStream + MaxText on a TPU v5e-8 VM</span>\npython -m MaxText.maxengine_server \\\n  MaxText/configs/base.yml \\\n  tokenizer_path=assets/tokenizer.llama2 \\\n  load_parameters_path=gs://my-bucket/llama2-7b/ckpt \\\n  max_prefill_predict_length=1024 \\\n  max_target_length=2048 \\\n  per_device_batch_size=4 \\\n  ici_tensor_parallelism=8</pre></div><div><h4>vLLM-TPU</h4><ul style=\"margin:6px 0 0 18px;font-size:11.5px;color:#c9d1d9;line-height:1.65\"><li>HuggingFace-compatible model loading</li><li>Automatic paged attention (same as GPU vLLM)</li><li>OpenAI-compatible HTTP server out of the box</li><li>JAX/XLA backend (also a PyTorch-XLA backend)</li></ul><pre class=\"dd-code\"><span class=\"c\"># vLLM-TPU: same API as GPU vLLM</span>\nvllm serve meta-llama/Llama-3.1-8B-Instruct \\\n  --tensor-parallel-size 8 --max-model-len 8192\n\n<span class=\"k\">from</span> vllm <span class=\"k\">import</span> LLM, SamplingParams\nllm = LLM(model=<span class=\"s\">'meta-llama/Llama-3.1-8B-Instruct'</span>,\n          tensor_parallel_size=8)\nout = llm.generate([<span class=\"s\">'Hello TPU'</span>], SamplingParams(max_tokens=64))</pre></div></div><svg class=\"dd-mini\" viewBox=\"0 0 720 180\" xmlns=\"http://www.w3.org/2000/svg\" style=\"background:#0d1117;border:1px solid #30363d;border-radius:6px\"><text x=\"360\" y=\"16\" text-anchor=\"middle\" fill=\"#c9d1d9\" font-size=\"11\" font-weight=\"700\">Continuous batching: 4 requests share decode steps</text><text x=\"70\" y=\"36\" text-anchor=\"middle\" fill=\"#6e7681\" font-size=\"9\">t0</text><text x=\"125\" y=\"36\" text-anchor=\"middle\" fill=\"#6e7681\" font-size=\"9\">t1</text><text x=\"180\" y=\"36\" text-anchor=\"middle\" fill=\"#6e7681\" font-size=\"9\">t2</text><text x=\"235\" y=\"36\" text-anchor=\"middle\" fill=\"#6e7681\" font-size=\"9\">t3</text><text x=\"290\" y=\"36\" text-anchor=\"middle\" fill=\"#6e7681\" font-size=\"9\">t4</text><text x=\"345\" y=\"36\" text-anchor=\"middle\" fill=\"#6e7681\" font-size=\"9\">t5</text><text x=\"400\" y=\"36\" text-anchor=\"middle\" fill=\"#6e7681\" font-size=\"9\">t6</text><text x=\"455\" y=\"36\" text-anchor=\"middle\" fill=\"#6e7681\" font-size=\"9\">t7</text><text x=\"510\" y=\"36\" text-anchor=\"middle\" fill=\"#6e7681\" font-size=\"9\">t8</text><text x=\"565\" y=\"36\" text-anchor=\"middle\" fill=\"#6e7681\" font-size=\"9\">t9</text><text x=\"620\" y=\"36\" text-anchor=\"middle\" fill=\"#6e7681\" font-size=\"9\">t10</text><text x=\"40\" y=\"65\" text-anchor=\"middle\" fill=\"#58a6ff\" font-size=\"11\" font-weight=\"700\">R1</text><rect x=\"60\" y=\"50\" width=\"108\" height=\"22\" rx=\"3\" fill=\"#58a6ff55\" stroke=\"#58a6ff\"/><text x=\"114\" y=\"65\" text-anchor=\"middle\" fill=\"#c9d1d9\" font-size=\"9\" font-weight=\"700\">prefill</text><rect x=\"170\" y=\"50\" width=\"493\" height=\"22\" rx=\"3\" fill=\"#58a6ff22\" stroke=\"#58a6ff\" stroke-dasharray=\"2,2\"/><text x=\"416.5\" y=\"65\" text-anchor=\"middle\" fill=\"#58a6ff\" font-size=\"9\">decode steps (shared batch)</text><text x=\"40\" y=\"95\" text-anchor=\"middle\" fill=\"#ffa657\" font-size=\"11\" font-weight=\"700\">R2</text><rect x=\"115\" y=\"80\" width=\"108\" height=\"22\" rx=\"3\" fill=\"#ffa65755\" stroke=\"#ffa657\"/><text x=\"169\" y=\"95\" text-anchor=\"middle\" fill=\"#c9d1d9\" font-size=\"9\" font-weight=\"700\">prefill</text><rect x=\"225\" y=\"80\" width=\"328\" height=\"22\" rx=\"3\" fill=\"#ffa65722\" stroke=\"#ffa657\" stroke-dasharray=\"2,2\"/><text x=\"389\" y=\"95\" text-anchor=\"middle\" fill=\"#ffa657\" font-size=\"9\">decode steps (shared batch)</text><text x=\"40\" y=\"125\" text-anchor=\"middle\" fill=\"#7ee787\" font-size=\"11\" font-weight=\"700\">R3</text><rect x=\"225\" y=\"110\" width=\"108\" height=\"22\" rx=\"3\" fill=\"#7ee78755\" stroke=\"#7ee787\"/><text x=\"279\" y=\"125\" text-anchor=\"middle\" fill=\"#c9d1d9\" font-size=\"9\" font-weight=\"700\">prefill</text><rect x=\"335\" y=\"110\" width=\"328\" height=\"22\" rx=\"3\" fill=\"#7ee78722\" stroke=\"#7ee787\" stroke-dasharray=\"2,2\"/><text x=\"499\" y=\"125\" text-anchor=\"middle\" fill=\"#7ee787\" font-size=\"9\">decode steps (shared batch)</text><text x=\"40\" y=\"155\" text-anchor=\"middle\" fill=\"#d2a8ff\" font-size=\"11\" font-weight=\"700\">R4</text><rect x=\"390\" y=\"140\" width=\"108\" height=\"22\" rx=\"3\" fill=\"#d2a8ff55\" stroke=\"#d2a8ff\"/><text x=\"444\" y=\"155\" text-anchor=\"middle\" fill=\"#c9d1d9\" font-size=\"9\" font-weight=\"700\">prefill</text><rect x=\"500\" y=\"140\" width=\"163\" height=\"22\" rx=\"3\" fill=\"#d2a8ff22\" stroke=\"#d2a8ff\" stroke-dasharray=\"2,2\"/><text x=\"581.5\" y=\"155\" text-anchor=\"middle\" fill=\"#d2a8ff\" font-size=\"9\">decode steps (shared batch)</text><text x=\"360\" y=\"172\" text-anchor=\"middle\" fill=\"#8b949e\" font-size=\"10\">Solid = prefill (compute-bound) · dashed = decode (memory-bound, batched per step)</text></svg><div class=\"dd-links\"><a href=\"https://github.com/AI-Hypercomputer/JetStream\" target=\"_blank\">JetStream</a><a href=\"https://github.com/AI-Hypercomputer/maxtext\" target=\"_blank\">MaxText</a><a href=\"https://docs.vllm.ai/en/latest/getting_started/installation/google_tpu.html\" target=\"_blank\">vLLM TPU</a><a href=\"https://github.com/google/saxml\" target=\"_blank\">Saxml</a></div>" },
+        { title: "Optimization toolbox", text: "Production TPU serving is a small, well-known cookbook. Pick from these six — most stacks combine 3–4.<div class=\"dd-grid\"><div class=\"dd-tile\"><h4>Paged attention</h4><div style=\"color:#8b949e;font-size:11px;margin:4px 0\">KV stored as fixed blocks; no per-request reallocation.</div><div class=\"dd-spec\"><span>Wins</span><b>~2-4× throughput</b></div></div><div class=\"dd-tile\"><h4>Continuous batching</h4><div style=\"color:#8b949e;font-size:11px;margin:4px 0\">Retire finished seqs every step, slot in new prefills.</div><div class=\"dd-spec\"><span>Wins</span><b>5-23× vs static</b></div></div><div class=\"dd-tile\"><h4>Prefill / decode split</h4><div style=\"color:#8b949e;font-size:11px;margin:4px 0\">Two pools: long compute-bound prefills vs short memory-bound decodes.</div><div class=\"dd-spec\"><span>Wins</span><b>lower TTFT + ↑ TPS</b></div></div><div class=\"dd-tile\"><h4>FP8 / INT8 quant</h4><div style=\"color:#8b949e;font-size:11px;margin:4px 0\">Native on Trillium / Ironwood; per-channel scales.</div><div class=\"dd-spec\"><span>Wins</span><b>1.5-2×, ½ HBM</b></div></div><div class=\"dd-tile\"><h4>Speculative decoding</h4><div style=\"color:#8b949e;font-size:11px;margin:4px 0\">Small draft proposes k tokens; big model verifies in 1 pass.</div><div class=\"dd-spec\"><span>Wins</span><b>2-3× tok/s</b></div></div><div class=\"dd-tile\"><h4>KV cache compression</h4><div style=\"color:#8b949e;font-size:11px;margin:4px 0\">INT8 / grouping / sliding-window for KV bytes.</div><div class=\"dd-spec\"><span>Wins</span><b>longer ctx, less HBM</b></div></div></div><div class=\"dd-callout\"><span class=\"dd-callout-icon\">💡</span><span><b>How to combine:</b> always-on → paged attention + continuous batching + INT8 weights. Add <b>prefill/decode split</b> when TTFT matters and you can afford two pools. Add <b>spec decoding</b> when decode dominates and you have a fast draft. <b>FP8</b> only on Trillium/Ironwood; on v5e stick to INT8.</span></div>" },
+        { title: "A request's life: prefill → decode → stream", text: "One generation walks across three lanes: the client opens an HTTP/gRPC stream, the server tokenizes and runs <b>one big prefill</b> on the TPU (initializing the KV cache), then enters a tight loop of small <b>decode</b> calls. Each decode appends to the KV cache and streams a token back; an ICI all-reduce happens inside every decode step.<svg class=\"dd-mini\" viewBox=\"0 0 820 240\" xmlns=\"http://www.w3.org/2000/svg\" style=\"background:#0d1117;border:1px solid #30363d;border-radius:6px\"><text x=\"410\" y=\"16\" text-anchor=\"middle\" fill=\"#c9d1d9\" font-size=\"11\" font-weight=\"700\">Swimlane: one request, prefill → decode loop → stream</text><line x1=\"80\" y1=\"40\" x2=\"800\" y2=\"40\" stroke=\"#30363d\" stroke-dasharray=\"2,3\"/><text x=\"74\" y=\"44\" text-anchor=\"end\" fill=\"#58a6ff\" font-size=\"11\" font-weight=\"700\">Client</text><line x1=\"80\" y1=\"100\" x2=\"800\" y2=\"100\" stroke=\"#30363d\" stroke-dasharray=\"2,3\"/><text x=\"74\" y=\"104\" text-anchor=\"end\" fill=\"#ff7b72\" font-size=\"11\" font-weight=\"700\">Server</text><line x1=\"80\" y1=\"170\" x2=\"800\" y2=\"170\" stroke=\"#30363d\" stroke-dasharray=\"2,3\"/><text x=\"74\" y=\"174\" text-anchor=\"end\" fill=\"#d2a8ff\" font-size=\"11\" font-weight=\"700\">TPU</text><rect x=\"90\" y=\"30\" width=\"70\" height=\"20\" rx=\"3\" fill=\"#58a6ff22\" stroke=\"#58a6ff\"/><text x=\"125\" y=\"44\" text-anchor=\"middle\" fill=\"#58a6ff\" font-size=\"10\">HTTP POST</text><line x1=\"125\" y1=\"50\" x2=\"180\" y2=\"90\" stroke=\"#58a6ff\" stroke-width=\"1.2\"/><polygon points=\"177,84 184,89 178,93\" fill=\"#58a6ff\"/><rect x=\"180\" y=\"90\" width=\"70\" height=\"20\" rx=\"3\" fill=\"#ff7b7222\" stroke=\"#ff7b72\"/><text x=\"215\" y=\"104\" text-anchor=\"middle\" fill=\"#ff7b72\" font-size=\"10\">tokenize</text><line x1=\"215\" y1=\"110\" x2=\"275\" y2=\"160\" stroke=\"#ff7b72\" stroke-width=\"1.2\"/><polygon points=\"271,154 278,159 273,163\" fill=\"#ff7b72\"/><rect x=\"275\" y=\"160\" width=\"110\" height=\"20\" rx=\"3\" fill=\"#ffa65722\" stroke=\"#ffa657\"/><text x=\"330\" y=\"174\" text-anchor=\"middle\" fill=\"#ffa657\" font-size=\"10\">PREFILL (1 call)</text><line x1=\"380\" y1=\"170\" x2=\"380\" y2=\"195\" stroke=\"#d2a8ff\" stroke-dasharray=\"2,2\"/><text x=\"385\" y=\"194\" fill=\"#d2a8ff\" font-size=\"9\">KV cache initialized</text><rect x=\"410\" y=\"160\" width=\"50\" height=\"20\" rx=\"3\" fill=\"#ff7b7222\" stroke=\"#ff7b72\"/><text x=\"435\" y=\"174\" text-anchor=\"middle\" fill=\"#ff7b72\" font-size=\"9\">decode</text><rect x=\"470\" y=\"160\" width=\"50\" height=\"20\" rx=\"3\" fill=\"#ff7b7222\" stroke=\"#ff7b72\"/><text x=\"495\" y=\"174\" text-anchor=\"middle\" fill=\"#ff7b72\" font-size=\"9\">decode</text><rect x=\"530\" y=\"160\" width=\"50\" height=\"20\" rx=\"3\" fill=\"#ff7b7222\" stroke=\"#ff7b72\"/><text x=\"555\" y=\"174\" text-anchor=\"middle\" fill=\"#ff7b72\" font-size=\"9\">decode</text><rect x=\"590\" y=\"160\" width=\"50\" height=\"20\" rx=\"3\" fill=\"#ff7b7222\" stroke=\"#ff7b72\"/><text x=\"615\" y=\"174\" text-anchor=\"middle\" fill=\"#ff7b72\" font-size=\"9\">decode</text><line x1=\"435\" y1=\"180\" x2=\"435\" y2=\"205\" stroke=\"#d2a8ff\" stroke-dasharray=\"2,2\"/><line x1=\"495\" y1=\"180\" x2=\"495\" y2=\"205\" stroke=\"#d2a8ff\" stroke-dasharray=\"2,2\"/><line x1=\"555\" y1=\"180\" x2=\"555\" y2=\"205\" stroke=\"#d2a8ff\" stroke-dasharray=\"2,2\"/><line x1=\"615\" y1=\"180\" x2=\"615\" y2=\"205\" stroke=\"#d2a8ff\" stroke-dasharray=\"2,2\"/><text x=\"525\" y=\"218\" text-anchor=\"middle\" fill=\"#d2a8ff\" font-size=\"9\">KV append + ICI all-reduce per step</text><line x1=\"435\" y1=\"160\" x2=\"435\" y2=\"50\" stroke=\"#7ee787\" stroke-width=\"0.7\" stroke-dasharray=\"1,2\"/><line x1=\"495\" y1=\"160\" x2=\"495\" y2=\"50\" stroke=\"#7ee787\" stroke-width=\"0.7\" stroke-dasharray=\"1,2\"/><line x1=\"555\" y1=\"160\" x2=\"555\" y2=\"50\" stroke=\"#7ee787\" stroke-width=\"0.7\" stroke-dasharray=\"1,2\"/><line x1=\"615\" y1=\"160\" x2=\"615\" y2=\"50\" stroke=\"#7ee787\" stroke-width=\"0.7\" stroke-dasharray=\"1,2\"/><rect x=\"660\" y=\"30\" width=\"110\" height=\"20\" rx=\"3\" fill=\"#7ee78722\" stroke=\"#7ee787\"/><text x=\"715\" y=\"44\" text-anchor=\"middle\" fill=\"#7ee787\" font-size=\"10\">streamed tokens</text><rect x=\"690\" y=\"160\" width=\"60\" height=\"20\" rx=\"3\" fill=\"#21262d\" stroke=\"#8b949e\"/><text x=\"720\" y=\"174\" text-anchor=\"middle\" fill=\"#8b949e\" font-size=\"10\">close</text></svg><table class=\"dd-table\"><thead><tr><th>Latency component</th><th>Typical (Llama-8B, v5e-8)</th><th>Notes</th></tr></thead><tbody><tr><td>Time to first token (TTFT)</td><td class=\"num\">200-800 ms</td><td>Tokenize + 1 prefill call (1-2k tokens)</td></tr><tr><td>Per-token decode</td><td class=\"num\">10-40 ms</td><td>One XLA dispatch + ICI all-reduce</td></tr><tr><td>Throughput @ batch 64</td><td class=\"num\">~2000 tok/s</td><td>Aggregate across the continuous batch</td></tr><tr><td>HBM read per decode</td><td class=\"num\">~weights + KV</td><td>Decode is HBM-bandwidth bound</td></tr></tbody></table>" },
+        { title: "Deployment: VMs vs GKE", text: "Two real shapes. Pick TPU VMs for a single replica you SSH into; pick GKE for autoscaled fleets and multislice training/serving.<div class=\"dd-twocol\"><div><h4>Cloud TPU VMs</h4><ul style=\"margin:6px 0 0 18px;font-size:11.5px;color:#c9d1d9;line-height:1.65\"><li>Direct SSH; install JAX + JetStream/vLLM</li><li>Simplest path — zero k8s overhead</li><li>Manual scaling, no auto-recovery</li></ul><pre class=\"dd-code\">gcloud compute tpus tpu-vm create infer-1 \\\n  --zone=us-central2-b --accelerator-type=v5p-8 \\\n  --version=tpu-ubuntu2204-base</pre></div><div><h4>GKE TPU node pools</h4><ul style=\"margin:6px 0 0 18px;font-size:11.5px;color:#c9d1d9;line-height:1.65\"><li>Cluster autoscaler + HPA per replica</li><li>JobSets / LeaderWorkerSet for multi-host slices</li><li><code>google.com/tpu</code> resource scheduling</li></ul><pre class=\"dd-code\">apiVersion: v1\nkind: Pod\nmetadata: { name: jetstream }\nspec:\n  nodeSelector:\n    cloud.google.com/gke-tpu-accelerator: tpu-v5-lite-podslice\n    cloud.google.com/gke-tpu-topology: 2x4\n  containers:\n  - name: server\n    image: us-docker.pkg.dev/.../jetstream:latest\n    resources:\n      limits: { google.com/tpu: 8 }</pre></div></div><div class=\"dd-flow\"><div class=\"dd-flow-step\">GCS bucket<br/><span style=\"color:#8b949e;font-size:10px\">.safetensors / orbax</span></div><div class=\"dd-flow-arrow\">→</div><div class=\"dd-flow-step\">Orbax<br/>checkpoint</div><div class=\"dd-flow-arrow\">→</div><div class=\"dd-flow-step\">Host CPU<br/>pinned mem</div><div class=\"dd-flow-arrow\">→</div><div class=\"dd-flow-step\">HBM (sharded)<br/><span style=\"color:#8b949e;font-size:10px\">per-chip slice</span></div></div><div class=\"dd-links\"><a href=\"https://cloud.google.com/tpu/docs/jax-quickstart-tpu-vm\" target=\"_blank\">Cloud TPU JAX quickstart</a><a href=\"https://cloud.google.com/kubernetes-engine/docs/concepts/tpus\" target=\"_blank\">GKE TPUs</a><a href=\"https://cloud.google.com/tpu/docs/tutorials/LLM/jetstream-maxtext\" target=\"_blank\">JetStream/MaxText tutorial</a></div>" },
+        { title: "Common pitfalls", text: "Six gotchas that bite every team eventually:<ul style=\"margin:10px 0 0 20px;font-size:12px;color:#c9d1d9;line-height:1.75\"><li><b style=\"color:#ff7b72\">Recompilation thrash</b> — every new input shape triggers a full XLA compile. Bucket prompt lengths, pad batches, use <code>padded_shapes</code>.</li><li><b style=\"color:#ff7b72\">Host↔device transfer bottleneck</b> — a slow Python tokenizer can cap throughput at 100 tok/s. Pre-warm the tokenizer, use a Rust BPE, keep token IDs on host.</li><li><b style=\"color:#ff7b72\">Wrong sharding axis</b> — setting <code>--tensor-parallel-size 8</code> when the model dim isn't divisible by 8 silently degrades to 1. Always check <code>jax.debug.visualize_array_sharding</code>.</li><li><b style=\"color:#ff7b72\">KV cache blow-up at long context</b> — KV grows linearly with seq len; at 32k tokens it dwarfs the weights. Quantize KV (INT8), tune page size, or shard the head axis.</li><li><b style=\"color:#ff7b72\">Cold-start weight load</b> — streaming a 70B checkpoint from GCS can take minutes. Keep a warm replica pool, use Orbax async restore.</li><li><b style=\"color:#ff7b72\">XLA OOM from un-rematerialized activations</b> — long prefills exceed HBM. Enable rematerialization (<code>jax.checkpoint</code>) on attention blocks.</li></ul>" }
+      ],
+      keypoints: [
+        { title: "The stack is compiler-first", text: "Unlike GPU kernel-launch loops, the entire model is lowered to one XLA program (HLO → StableHLO → LLO) and dispatched as a single binary per shape." },
+        { title: "Sharding is explicit, not implicit", text: "You declare a Mesh + PartitionSpec (or shard_map) in JAX and GSPMD inserts the ICI collectives — there is no autopartitioner guessing for you in production." },
+        { title: "JetStream + MaxText is the reference path", text: "Google’s open-source JetStream engine plus MaxText models gives a turnkey, AOT-compiled, continuous-batching LLM server tuned for TPU v5e/v5p/Trillium/Ironwood." },
+        { title: "vLLM-TPU brings the GPU API", text: "Same vllm serve / LLM(...) interface, JAX/XLA backend underneath — the easiest migration path for teams already on vLLM." },
+        { title: "Paged attention + continuous batching", text: "Block-structured KV cache plus per-step batch reshuffling is what closes the gap to peak HBM bandwidth on long, variable-length workloads." },
+        { title: "FP8 / INT8 quantization is the default", text: "Trillium and Ironwood are FP8-native; INT8 weight-only quant is table-stakes for cost-efficient serving on v5e." },
+        { title: "Deploy on TPU VMs or GKE + GCS", text: "VMs for single-replica, GKE TPU node pools for autoscaled multi-replica fleets; weights live in GCS and stream in at startup." }
+      ]
+    },
+    {
+      id: "dd-ecosystem", num: "Concept 6 of 6", title: "TPU vs the Inference Ecosystem",
+      desc: "How TPU stacks up against NVIDIA, AMD, AWS, and Intel for LLM inference.", color: "#79c0ff", icon: "\u2696\ufe0f",
+      svg: function(w, h) {
+        var vbW = 880, vbH = 320;
+        var out = '<svg viewBox="0 0 ' + vbW + ' ' + vbH + '" xmlns="http://www.w3.org/2000/svg" style="background:#0d1117;width:100%;height:auto">';
+        out += '<text x="' + vbW/2 + '" y="20" text-anchor="middle" fill="#c9d1d9" font-size="14" font-weight="700">Flagship inference chips \u2014 peak FP8/INT8 \u00b7 HBM capacity \u00b7 HBM bandwidth</text>';
+        var plats = [
+          { n:'TPU v5p',       c:'#79c0ff', tflops:918,  hbm:95,  bw:2.76 },
+          { n:'Ironwood (v7)', c:'#58a6ff', tflops:4614, hbm:192, bw:7.4  },
+          { n:'NVIDIA H100',   c:'#7ee787', tflops:1979, hbm:80,  bw:3.35 },
+          { n:'NVIDIA B200',   c:'#3fb950', tflops:4500, hbm:192, bw:8.0  },
+          { n:'AMD MI300X',    c:'#ff7b72', tflops:2614, hbm:192, bw:5.3  },
+          { n:'AWS Trainium2', c:'#ffa657', tflops:1300, hbm:96,  bw:2.9  }
+        ];
+        var legendY = 36, lx = 30;
+        for (var i = 0; i < plats.length; i++) {
+          out += '<rect x="' + lx + '" y="' + (legendY-9) + '" width="11" height="11" rx="2" fill="' + plats[i].c + '"/>';
+          out += '<text x="' + (lx+16) + '" y="' + legendY + '" fill="#c9d1d9" font-size="11">' + plats[i].n + '</text>';
+          lx += 145;
+        }
+        var groups = [
+          { label:'Peak FP8/INT8 (TFLOPS)', key:'tflops', max:5000, unit:'' },
+          { label:'HBM capacity (GiB)',     key:'hbm',    max:300,  unit:'' },
+          { label:'HBM bandwidth (TB/s)',   key:'bw',     max:10,   unit:'' }
+        ];
+        var gx = 230, gy = 70, gw = 600, gh = 70, gap = 10;
+        for (var g = 0; g < groups.length; g++) {
+          var grp = groups[g];
+          var by = gy + g * (gh + gap);
+          out += '<text x="220" y="' + (by-4) + '" text-anchor="end" fill="#c9d1d9" font-size="11" font-weight="700">' + grp.label + '</text>';
+          out += '<line x1="' + gx + '" y1="' + (by+gh) + '" x2="' + (gx+gw) + '" y2="' + (by+gh) + '" stroke="#30363d" stroke-width="1"/>';
+          for (var t = 1; t <= 4; t++) {
+            var tx = gx + (gw * t/4);
+            out += '<line x1="' + tx + '" y1="' + by + '" x2="' + tx + '" y2="' + (by+gh) + '" stroke="#21262d" stroke-width="0.6" stroke-dasharray="2,2"/>';
+            out += '<text x="' + tx + '" y="' + (by+gh+11) + '" text-anchor="middle" fill="#6e7681" font-size="9">' + (grp.max*t/4) + '</text>';
+          }
+          var bh = (gh-8) / plats.length;
+          for (var p = 0; p < plats.length; p++) {
+            var v = plats[p][grp.key];
+            var bw = (v / grp.max) * gw;
+            var byy = by + 4 + p * bh;
+            out += '<rect x="' + gx + '" y="' + byy + '" width="' + bw + '" height="' + (bh-1) + '" rx="2" fill="' + plats[p].c + '" opacity="0.85"/>';
+            out += '<text x="' + (gx+bw+5) + '" y="' + (byy+bh-2) + '" fill="#c9d1d9" font-size="9">' + v + '</text>';
+          }
+        }
+        out += '<text x="' + vbW/2 + '" y="' + (vbH-8) + '" text-anchor="middle" fill="#6e7681" font-size="10">Sources: vendor datasheets (2023-2025). Peak numbers are dense FP8/INT8 per chip; software-realized perf differs.</text>';
+        out += '</svg>';
+        return out;
+      },
+      sections: [
+        { title: "The competitive landscape", text: "Google\u2019s TPU stack is unusual because Google designs the <b>chip</b>, the <b>optical interconnect (ICI)</b>, the <b>compiler (XLA)</b>, the <b>serving engine (JetStream/Saxml)</b>, and the <b>cloud (GCP)</b>. Every other major inference platform splits those layers across vendors \u2014 NVIDIA owns chip+CUDA but rents capacity through clouds; AMD owns chip+ROCm but relies on OEMs; AWS owns chip+Neuron but uses third-party serving; Intel\u2019s Gaudi sits inside cloud and on-prem servers built by partners.<div class=\"dd-flow\" style=\"flex-wrap:wrap;gap:8px\"><div class=\"dd-flow-step\" style=\"border-color:#79c0ff\"><b style=\"color:#79c0ff\">Google</b><br/><span style=\"color:#8b949e;font-size:10px\">TPU v5p / Ironwood</span></div><div class=\"dd-flow-step\" style=\"border-color:#7ee787\"><b style=\"color:#7ee787\">NVIDIA</b><br/><span style=\"color:#8b949e;font-size:10px\">H100 / H200 / B200 / GB200</span></div><div class=\"dd-flow-step\" style=\"border-color:#ff7b72\"><b style=\"color:#ff7b72\">AMD</b><br/><span style=\"color:#8b949e;font-size:10px\">MI300X / MI325X</span></div><div class=\"dd-flow-step\" style=\"border-color:#ffa657\"><b style=\"color:#ffa657\">AWS</b><br/><span style=\"color:#8b949e;font-size:10px\">Inferentia2 / Trainium2</span></div><div class=\"dd-flow-step\" style=\"border-color:#d2a8ff\"><b style=\"color:#d2a8ff\">Intel</b><br/><span style=\"color:#8b949e;font-size:10px\">Gaudi 3</span></div></div><div class=\"dd-callout\"><span class=\"dd-callout-icon\">\u2696\ufe0f</span><span><b>Vertical integration</b> lets Google co-design the compiler with the silicon (XLA knows MXU tile sizes, ICI topology, and HBM pages). The trade-off: <b>TPUs are GCP-only</b>; you can\u2019t buy a single chip or run on-prem.</span></div>" },
+        { title: "Spec-sheet showdown", text: "Realistic per-chip specs from vendor datasheets. \u201CPod / scale-up\u201D is the largest coherent NVLink/ICI/Infinity-Fabric domain \u2014 not multi-rack scale-out.<table class=\"dd-table\"><thead><tr><th>Chip</th><th>Vendor</th><th>Process</th><th>Peak (FP8/INT8)</th><th>HBM</th><th>HBM BW</th><th>Interconnect</th><th>Pod / scale-up</th><th>Year</th></tr></thead><tbody><tr><td><b style=\"color:#79c0ff\">TPU v5p</b></td><td>Google</td><td>5 nm</td><td class=\"num\">918 TOPS INT8</td><td class=\"num\">95 GiB HBM3</td><td class=\"num\">2.76 TB/s</td><td>ICI 3D torus</td><td class=\"num\">8960 chips</td><td class=\"num\">2023</td></tr><tr><td><b style=\"color:#58a6ff\">Ironwood (TPU v7)</b></td><td>Google</td><td>~3 nm</td><td class=\"num\">4614 TF FP8</td><td class=\"num\">192 GiB HBM3e</td><td class=\"num\">7.4 TB/s</td><td>ICI 3D torus</td><td class=\"num\">9216 chips</td><td class=\"num\">2025</td></tr><tr><td><b style=\"color:#7ee787\">H100 SXM</b></td><td>NVIDIA</td><td>4 nm</td><td class=\"num\">1979 TF FP8</td><td class=\"num\">80 GiB HBM3</td><td class=\"num\">3.35 TB/s</td><td>NVLink 4 (900 GB/s)</td><td class=\"num\">256 (NVL)</td><td class=\"num\">2022</td></tr><tr><td><b style=\"color:#7ee787\">H200</b></td><td>NVIDIA</td><td>4 nm</td><td class=\"num\">1979 TF FP8</td><td class=\"num\">141 GiB HBM3e</td><td class=\"num\">4.8 TB/s</td><td>NVLink 4</td><td class=\"num\">256</td><td class=\"num\">2024</td></tr><tr><td><b style=\"color:#3fb950\">B200</b></td><td>NVIDIA</td><td>4NP</td><td class=\"num\">4500 TF FP8</td><td class=\"num\">192 GiB HBM3e</td><td class=\"num\">8 TB/s</td><td>NVLink 5 (1.8 TB/s)</td><td class=\"num\">576 (NVL72)</td><td class=\"num\">2024</td></tr><tr><td><b style=\"color:#3fb950\">GB200 NVL72</b></td><td>NVIDIA</td><td>4NP</td><td class=\"num\">5\u00d7 B200</td><td class=\"num\">13.5 TB pod</td><td class=\"num\">\u2014</td><td>NVLink 5 + IB</td><td class=\"num\">72 GPUs / rack</td><td class=\"num\">2024</td></tr><tr><td><b style=\"color:#ff7b72\">MI300X</b></td><td>AMD</td><td>5 nm</td><td class=\"num\">2614 TF FP8</td><td class=\"num\">192 GiB HBM3</td><td class=\"num\">5.3 TB/s</td><td>Infinity Fabric (896 GB/s)</td><td class=\"num\">8 GPU node</td><td class=\"num\">2023</td></tr><tr><td><b style=\"color:#ff7b72\">MI325X</b></td><td>AMD</td><td>5 nm</td><td class=\"num\">2614 TF FP8</td><td class=\"num\">256 GiB HBM3e</td><td class=\"num\">6 TB/s</td><td>Infinity Fabric</td><td class=\"num\">8 GPU</td><td class=\"num\">2024</td></tr><tr><td><b style=\"color:#ffa657\">Trainium2</b></td><td>AWS</td><td>\u2014</td><td class=\"num\">1300 TF FP8</td><td class=\"num\">96 GiB HBM</td><td class=\"num\">2.9 TB/s</td><td>NeuronLink</td><td class=\"num\">16 (Trn2 UltraServer 64)</td><td class=\"num\">2024</td></tr><tr><td><b style=\"color:#ffa657\">Inferentia2</b></td><td>AWS</td><td>\u2014</td><td class=\"num\">190 TF BF16</td><td class=\"num\">32 GiB HBM</td><td class=\"num\">\u2014</td><td>NeuronLink</td><td class=\"num\">12-chip server</td><td class=\"num\">2023</td></tr><tr><td><b style=\"color:#d2a8ff\">Gaudi 3</b></td><td>Intel</td><td>5 nm</td><td class=\"num\">1835 TF FP8</td><td class=\"num\">128 GiB HBM2e</td><td class=\"num\">3.7 TB/s</td><td>24\u00d7 200GbE RDMA</td><td class=\"num\">8 chip</td><td class=\"num\">2024</td></tr></tbody></table>" },
+        { title: "Stack-by-stack mapping", text: "Each layer of TPU\u2019s stack has equivalents elsewhere \u2014 but the <b>ownership boundaries differ</b>. NVIDIA owns the compiler+kernels but not the cloud; AWS owns the cloud+chip but defers to OSS for serving; Google owns everything top to bottom.<table class=\"dd-table\"><thead><tr><th>Layer</th><th>Google TPU</th><th>NVIDIA</th><th>AMD</th><th>AWS</th><th>Intel</th></tr></thead><tbody><tr><td><b>Chip</b></td><td>TPU v5p / Ironwood</td><td>H100 / B200</td><td>MI300X</td><td>Trainium2 / Inferentia2</td><td>Gaudi 3</td></tr><tr><td><b>Scale-up fabric</b></td><td>ICI (optical)</td><td>NVLink + NVSwitch</td><td>Infinity Fabric</td><td>NeuronLink</td><td>RoCE (Ethernet)</td></tr><tr><td><b>Compiler</b></td><td>XLA</td><td>CUDA + cuDNN + TensorRT-LLM</td><td>ROCm + MIGraphX</td><td>Neuron SDK</td><td>SynapseAI / OneAPI</td></tr><tr><td><b>Kernel lib</b></td><td>Pallas, MaxText kernels</td><td>CUTLASS, FA3, TRT-LLM</td><td>hipBLASLt, FA-ROCm</td><td>Neuron Kernel Interface</td><td>hpu-graph</td></tr><tr><td><b>Serving engine</b></td><td>JetStream, Saxml</td><td>Triton + TRT-LLM, vLLM</td><td>vLLM (ROCm), SGLang</td><td>vLLM-Neuron</td><td>TGI, vLLM-HPU</td></tr><tr><td><b>Reference impl</b></td><td>MaxText, MaxDiffusion</td><td>NeMo, Megatron-LM</td><td>Composer, Llama-stack</td><td>NxD, neuronx-distributed</td><td>Optimum-Habana</td></tr><tr><td><b>Cloud-only?</b></td><td><b style=\"color:#ff7b72\">Yes (GCP)</b></td><td>No (any cloud + on-prem)</td><td>No</td><td><b style=\"color:#ff7b72\">Yes (AWS)</b></td><td>No</td></tr></tbody></table>" },
+        { title: "Software ecosystem reality check", text: "NVIDIA wins on framework breadth and OSS community gravity; TPU wins on JAX integration and compiler maturity; AMD\u2019s ROCm has closed most of the gap on PyTorch but kernel coverage is still uneven; AWS Neuron is narrow but solid for supported models; Intel\u2019s Gaudi has decent PyTorch via Optimum-Habana.<div class=\"dd-grid\"><div class=\"dd-tile\"><h4>Google TPU</h4><div class=\"dd-spec\"><span>PyTorch</span><b>\u26a0\ufe0f via XLA</b></div><div class=\"dd-spec\"><span>JAX</span><b>\u2705 native</b></div><div class=\"dd-spec\"><span>Custom kernels</span><b>\u26a0\ufe0f Pallas only</b></div><div class=\"dd-spec\"><span>OSS vibrancy</span><b>\u26a0\ufe0f narrow</b></div></div><div class=\"dd-tile\"><h4>NVIDIA</h4><div class=\"dd-spec\"><span>PyTorch</span><b>\u2705 first-class</b></div><div class=\"dd-spec\"><span>JAX</span><b>\u2705 supported</b></div><div class=\"dd-spec\"><span>Custom kernels</span><b>\u2705 CUDA + Triton</b></div><div class=\"dd-spec\"><span>OSS vibrancy</span><b>\u2705 dominant</b></div></div><div class=\"dd-tile\"><h4>AMD</h4><div class=\"dd-spec\"><span>PyTorch</span><b>\u2705 ROCm</b></div><div class=\"dd-spec\"><span>JAX</span><b>\u26a0\ufe0f experimental</b></div><div class=\"dd-spec\"><span>Custom kernels</span><b>\u26a0\ufe0f HIP</b></div><div class=\"dd-spec\"><span>OSS vibrancy</span><b>\u26a0\ufe0f growing</b></div></div><div class=\"dd-tile\"><h4>AWS Neuron</h4><div class=\"dd-spec\"><span>PyTorch</span><b>\u2705 torch-neuronx</b></div><div class=\"dd-spec\"><span>JAX</span><b>\u26a0\ufe0f limited</b></div><div class=\"dd-spec\"><span>Custom kernels</span><b>\u274c NKI early</b></div><div class=\"dd-spec\"><span>OSS vibrancy</span><b>\u26a0\ufe0f AWS-only</b></div></div><div class=\"dd-tile\"><h4>Intel Gaudi</h4><div class=\"dd-spec\"><span>PyTorch</span><b>\u2705 Optimum-Habana</b></div><div class=\"dd-spec\"><span>JAX</span><b>\u274c no</b></div><div class=\"dd-spec\"><span>Custom kernels</span><b>\u26a0\ufe0f TPC-C</b></div><div class=\"dd-spec\"><span>OSS vibrancy</span><b>\u26a0\ufe0f modest</b></div></div></div><div class=\"dd-links\"><a href=\"https://pytorch.org/xla\" target=\"_blank\">PyTorch/XLA</a><a href=\"https://rocm.docs.amd.com/\" target=\"_blank\">AMD ROCm docs</a><a href=\"https://awsdocs-neuron.readthedocs-hosted.com/\" target=\"_blank\">AWS Neuron SDK</a><a href=\"https://docs.habana.ai/\" target=\"_blank\">Intel Gaudi docs</a></div>" },
+        { title: "Performance-per-dollar landscape", text: "List-price perf/$ is murky: hyperscaler chips aren\u2019t sold standalone, so you compare <b>cloud on-demand instances</b> instead. Numbers below are approximate public on-demand pricing (2024) \u2014 reserved/committed contracts can be 30-60% cheaper.<table class=\"dd-table\"><thead><tr><th>Instance</th><th>Chip</th><th>On-demand $/hr</th><th>HBM total</th><th>HBM / $</th><th>Notes</th></tr></thead><tbody><tr><td>GCP <code>ct5lp-hightpu-8t</code></td><td>TPU v5e \u00d7 8</td><td class=\"num\">~$5\u20136</td><td class=\"num\">128 GiB</td><td class=\"num\">~23 GiB/$</td><td>Inference-tuned</td></tr><tr><td>GCP <code>ct5p-hightpu-8t</code></td><td>TPU v5p \u00d7 8</td><td class=\"num\">~$30\u201340</td><td class=\"num\">760 GiB</td><td class=\"num\">~22 GiB/$</td><td>Training-class</td></tr><tr><td>GCP <code>a3-highgpu-8g</code></td><td>H100 \u00d7 8</td><td class=\"num\">~$88</td><td class=\"num\">640 GiB</td><td class=\"num\">~7 GiB/$</td><td>NVLink within node</td></tr><tr><td>AWS <code>p5.48xlarge</code></td><td>H100 \u00d7 8</td><td class=\"num\">~$98</td><td class=\"num\">640 GiB</td><td class=\"num\">~6.5 GiB/$</td><td>EFA scale-out</td></tr><tr><td>AWS <code>trn2.48xlarge</code></td><td>Trainium2 \u00d7 16</td><td class=\"num\">~$30\u201340</td><td class=\"num\">~1.5 TiB</td><td class=\"num\">~40+ GiB/$</td><td>AWS-only stack</td></tr><tr><td>Azure <code>ND-MI300X-v5</code></td><td>MI300X \u00d7 8</td><td class=\"num\">~$48</td><td class=\"num\">1.5 TiB</td><td class=\"num\">~32 GiB/$</td><td>Best HBM/$ on a 192GB chip</td></tr></tbody></table><svg class=\"dd-mini\" viewBox=\"0 0 760 220\" xmlns=\"http://www.w3.org/2000/svg\" style=\"background:#0d1117;border:1px solid #30363d;border-radius:6px;margin-top:10px\"><text x=\"380\" y=\"18\" text-anchor=\"middle\" fill=\"#c9d1d9\" font-size=\"12\" font-weight=\"700\">Illustrative throughput per dollar \u2014 Llama-3-70B inference (representative)</text><text x=\"380\" y=\"33\" text-anchor=\"middle\" fill=\"#6e7681\" font-size=\"9\">Relative tokens/sec/$, normalized to H100 = 1.0. Public benchmarks vary widely; this is a mental model, not a leaderboard.</text>" +
+            (function(){
+              var bars=[{n:'TPU v5e',v:1.6,c:'#79c0ff'},{n:'TPU v5p',v:1.3,c:'#58a6ff'},{n:'H100 (TRT-LLM)',v:1.0,c:'#7ee787'},{n:'B200 (TRT-LLM)',v:1.7,c:'#3fb950'},{n:'MI300X (vLLM)',v:1.2,c:'#ff7b72'},{n:'Trainium2',v:1.8,c:'#ffa657'}];
+              var s='', ox=170, oy=55, bw=410, bh=20, gp=6;
+              for (var i=0;i<bars.length;i++){
+                var b=bars[i], y=oy+i*(bh+gp), W=(b.v/2.0)*bw;
+                s+='<text x="'+(ox-8)+'" y="'+(y+14)+'" text-anchor="end" fill="#c9d1d9" font-size="10">'+b.n+'</text>';
+                s+='<rect x="'+ox+'" y="'+y+'" width="'+W+'" height="'+bh+'" rx="3" fill="'+b.c+'" opacity="0.85"/>';
+                s+='<text x="'+(ox+W+6)+'" y="'+(y+14)+'" fill="#c9d1d9" font-size="10">'+b.v.toFixed(1)+'\u00d7</text>';
+              }
+              s+='<line x1="'+(ox+bw/2)+'" y1="'+oy+'" x2="'+(ox+bw/2)+'" y2="'+(oy+bars.length*(bh+gp))+'" stroke="#30363d" stroke-dasharray="2,2"/>';
+              s+='<text x="'+(ox+bw/2)+'" y="'+(oy+bars.length*(bh+gp)+12)+'" text-anchor="middle" fill="#6e7681" font-size="9">1.0\u00d7 (H100 baseline)</text>';
+              return s;
+            })() + "</svg>" },
+        { title: "Inference-engine portability matrix", text: "Which serving stacks run where. \u2705 production-ready, \u26a0\ufe0f partial / experimental, \u274c no support.<table class=\"dd-table\"><thead><tr><th>Engine</th><th>TPU</th><th>NVIDIA</th><th>AMD</th><th>AWS Neuron</th><th>Intel Gaudi</th></tr></thead><tbody><tr><td><b>vLLM</b></td><td>\u2705 vllm-tpu</td><td>\u2705 native</td><td>\u2705 ROCm fork</td><td>\u26a0\ufe0f vllm-neuron</td><td>\u26a0\ufe0f vllm-hpu</td></tr><tr><td><b>JetStream</b></td><td>\u2705 native</td><td>\u274c</td><td>\u274c</td><td>\u274c</td><td>\u274c</td></tr><tr><td><b>Triton + TRT-LLM</b></td><td>\u274c</td><td>\u2705 native</td><td>\u274c</td><td>\u274c</td><td>\u274c</td></tr><tr><td><b>SGLang</b></td><td>\u26a0\ufe0f early</td><td>\u2705</td><td>\u2705 ROCm</td><td>\u274c</td><td>\u274c</td></tr><tr><td><b>TGI</b></td><td>\u26a0\ufe0f optimum-tpu</td><td>\u2705</td><td>\u2705</td><td>\u26a0\ufe0f optimum-neuron</td><td>\u2705 optimum-habana</td></tr><tr><td><b>Saxml</b></td><td>\u2705 native</td><td>\u26a0\ufe0f limited</td><td>\u274c</td><td>\u274c</td><td>\u274c</td></tr></tbody></table><div class=\"dd-callout\"><span class=\"dd-callout-icon\">\ud83d\udd0c</span><span><b>vLLM is the cross-platform lingua franca</b> \u2014 it\u2019s the only engine with credible support across all five backends. If portability matters more than peak perf, write to vLLM.</span></div>" },
+        { title: "Scale-up topology comparison", text: "<b>Scale-up</b> = chips inside a single coherent fabric (NVLink / ICI / IF) where collectives are cheap. <b>Scale-out</b> = racks connected by InfiniBand / Ethernet, where every all-reduce hurts. For LLMs, the larger the scale-up domain, the bigger the model that fits before you pay scale-out latency on every decode step.<svg class=\"dd-mini\" viewBox=\"0 0 880 200\" xmlns=\"http://www.w3.org/2000/svg\" style=\"background:#0d1117;border:1px solid #30363d;border-radius:6px\"><text x=\"440\" y=\"16\" text-anchor=\"middle\" fill=\"#c9d1d9\" font-size=\"12\" font-weight=\"700\">Largest scale-up (coherent) domains</text>" +
+            (function(){
+              var panels=[
+                {x:20,t:'NVIDIA NVL72',c:'#3fb950',rows:8,cols:9,lbl:'72 GPUs \u00b7 NVLink 5 \u00b7 1.8 TB/s/GPU'},
+                {x:230,t:'TPU v5p slice',c:'#79c0ff',rows:8,cols:8,lbl:'4096 chips (16\u00b716\u00b716 torus) \u00b7 ICI 3D'},
+                {x:440,t:'AMD MI300X node',c:'#ff7b72',rows:2,cols:4,lbl:'8 GPUs \u00b7 IF 896 GB/s/GPU'},
+                {x:650,t:'AWS Trn2 UltraServer',c:'#ffa657',rows:8,cols:8,lbl:'64 chips \u00b7 NeuronLink'}
+              ];
+              var s='';
+              for (var p=0;p<panels.length;p++){
+                var P=panels[p], baseX=P.x, baseY=42, sz=14, gp=2;
+                s+='<text x="'+(baseX+P.cols*(sz+gp)/2)+'" y="38" text-anchor="middle" fill="'+P.c+'" font-size="11" font-weight="700">'+P.t+'</text>';
+                for (var r=0;r<P.rows;r++) for (var c=0;c<P.cols;c++){
+                  s+='<rect x="'+(baseX+c*(sz+gp))+'" y="'+(baseY+r*(sz+gp))+'" width="'+sz+'" height="'+sz+'" rx="1.5" fill="'+P.c+'" opacity="0.7"/>';
+                }
+                s+='<text x="'+(baseX+P.cols*(sz+gp)/2)+'" y="'+(baseY+P.rows*(sz+gp)+14)+'" text-anchor="middle" fill="#8b949e" font-size="9">'+P.lbl+'</text>';
+              }
+              return s;
+            })() + "</svg><div class=\"dd-callout\"><span class=\"dd-callout-icon\">\ud83d\udcd0</span><span><b>Bigger scale-up domain = larger model fits without slow scale-out collectives.</b> A 70B model fits in a single MI300X node (1.5 TiB HBM) or one NVL72 rack; a 1T+ model needs a TPU pod or stitched NVL72 racks via InfiniBand.</span></div>" },
+        { title: "When to pick which", text: "<table class=\"dd-table\"><thead><tr><th>Workload</th><th>Best fit</th><th>Why</th></tr></thead><tbody><tr><td>Frontier LLM training (>1T params)</td><td><b style=\"color:#79c0ff\">TPU v5p / Ironwood pod</b> or <b style=\"color:#3fb950\">NVIDIA GB200 NVL72</b></td><td>Massive scale-up + dense fabric for collectives</td></tr><tr><td>Latency-sensitive serving (chat)</td><td><b style=\"color:#7ee787\">NVIDIA H100/B200 + TRT-LLM</b> or <b style=\"color:#79c0ff\">TPU + JetStream</b></td><td>Mature kernels, low TTFT, paged attention</td></tr><tr><td>Cost-efficient batch inference</td><td><b style=\"color:#79c0ff\">TPU v5e</b>, <b style=\"color:#ffa657\">AWS Inferentia2</b>, <b style=\"color:#ff7b72\">AMD MI300X</b></td><td>Lower $/token; HBM-rich chips</td></tr><tr><td>JAX-first research</td><td><b style=\"color:#79c0ff\">TPU (any)</b></td><td>Native XLA stack; GSPMD baked in</td></tr><tr><td>On-prem deployment</td><td><b style=\"color:#7ee787\">NVIDIA</b>, <b style=\"color:#ff7b72\">AMD</b>, <b style=\"color:#d2a8ff\">Intel</b></td><td>TPU is GCP-only; no on-prem option</td></tr><tr><td>AWS-native pipeline</td><td><b style=\"color:#ffa657\">Trainium2 / Inferentia2</b></td><td>Tight S3/EFA/Bedrock integration</td></tr></tbody></table><div class=\"dd-links\"><a href=\"https://www.nvidia.com/en-us/data-center/h100/\" target=\"_blank\">NVIDIA H100 datasheet</a><a href=\"https://www.nvidia.com/en-us/data-center/dgx-b200/\" target=\"_blank\">NVIDIA B200 / DGX</a><a href=\"https://www.amd.com/en/products/accelerators/instinct/mi300/mi300x.html\" target=\"_blank\">AMD MI300X spec</a><a href=\"https://aws.amazon.com/ai/machine-learning/trainium/\" target=\"_blank\">AWS Trainium2</a><a href=\"https://www.intel.com/content/www/us/en/products/details/processors/ai-accelerators/gaudi.html\" target=\"_blank\">Intel Gaudi 3</a><a href=\"https://mlcommons.org/benchmarks/inference-datacenter/\" target=\"_blank\">MLPerf Inference</a><a href=\"https://cloud.google.com/tpu/pricing\" target=\"_blank\">GCP TPU pricing</a></div>" },
+        { title: "Open questions / what to watch", text: "<ul style=\"margin:6px 0 0 20px;font-size:12px;color:#c9d1d9;line-height:1.8\"><li><b style=\"color:#79c0ff\">NVLink Fusion / open NVLink</b> \u2014 will third-party accelerators get into the NVLink domain, eroding NVIDIA\u2019s scale-up moat?</li><li><b style=\"color:#ff7b72\">AMD MI355X (CDNA 4)</b> \u2014 HBM3e + FP4 support; the first AMD chip likely to threaten B200 perf/$ at scale.</li><li><b style=\"color:#79c0ff\">TPU availability outside GCP</b> \u2014 rumored deals with third-party clouds; if real, it breaks the GCP-only constraint.</li><li><b style=\"color:#d2a8ff\">Microsoft Maia / Meta MTIA / OpenAI custom silicon</b> \u2014 every hyperscaler is building their own; will any reach external availability?</li><li><b style=\"color:#ffa657\">Trainium3</b> \u2014 AWS\u2019s next-gen, expected to close the FP8 perf gap with B200.</li><li><b style=\"color:#7ee787\">Rubin (NVIDIA next-gen)</b> \u2014 announced for 2026; HBM4 + new NVLink generation.</li></ul>" }
+      ],
+      keypoints: [
+        { title: "TPU is vertically integrated, GCP-only", text: "Google designs chip + ICI + XLA + serving + cloud as one stack \u2014 unbeatable co-design, but you can\u2019t buy a TPU or run it on-prem." },
+        { title: "NVIDIA owns ecosystem breadth", text: "CUDA, cuDNN, TensorRT-LLM, Triton, vLLM, NeMo, Megatron \u2014 every framework targets NVIDIA first. Community gravity is the real moat." },
+        { title: "AMD MI300X = best HBM-per-chip in 2024", text: "192 GiB HBM3 (256 GiB on MI325X) lets a single 8-GPU node hold a 70B model entirely in coherent memory \u2014 a price/perf sweet spot for cost-sensitive inference." },
+        { title: "AWS Trainium2 wins on $/token inside AWS", text: "If your data, pipeline, and Bedrock endpoints are AWS-native, Trainium2 UltraServer offers the best HBM/$ \u2014 but the Neuron stack is narrow." },
+        { title: "Scale-up domain matters more than peak TFLOPS", text: "For 100B+ models, the size of the coherent NVLink/ICI/IF domain decides whether collectives stay fast. NVL72 (72 GPUs) and TPU pods (1000s) are the only true \u2018big-LLM\u2019 fabrics." },
+        { title: "vLLM is the cross-platform serving lingua franca", text: "Only engine with credible support across TPU, NVIDIA, AMD, AWS Neuron, and Intel Gaudi. Write to vLLM if portability matters more than peak per-platform perf." },
+        { title: "Compiler maturity differs sharply", text: "XLA (TPU) and TensorRT-LLM (NVIDIA) are mature; ROCm and Neuron are catching up; SynapseAI is workable but smaller. Compiler quality often beats raw chip specs in real deployments." }
       ]
     }
   ],
@@ -2235,43 +2650,450 @@ if (typeof switchTab === 'function') {
      ============================================================ -->
 <script id="quiz-data" type="application/json">
 [
-  { "topic": "Systolic Arrays", "q": "In a weight-stationary systolic array, which data flows horizontally through the PE grid?", "options": ["Weights", "Activations (inputs)", "Partial sums (outputs)", "Intermediate gradients"], "answer": 1, "explain": "Weight-stationary systolic arrays hold weights at each PE. Activations flow horizontally, while partial sums accumulate vertically. This dataflow minimizes weight reloading from memory." },
-  { "topic": "Systolic Arrays", "q": "For a 256×256 systolic array performing FP16 matrix multiplication at 700 MHz, what is the peak compute throughput?", "options": ["179 TFLOPS", "358 TFLOPS", "716 TFLOPS", "1.4 PFLOPS"], "answer": 0, "explain": "Peak = 256×256 MACs/cycle × 2 (MAC=2 ops) × 700M cycles/sec = 256²×2×700M = 91.7B × 2 ops = ~179 TFLOPS for FP16." },
-  { "topic": "Systolic Arrays", "q": "What is the main benefit of systolic arrays for matrix multiplication compared to naive GPU approaches?", "options": ["Lower latency per operation", "Reduced memory bandwidth requirements through data reuse", "Simpler instruction set", "Better cache locality"], "answer": 1, "explain": "Each operand is reused O(N) times within the systolic array before returning to memory. This massive data reuse dramatically reduces bandwidth requirements—the key efficiency advantage." },
-  { "topic": "Systolic Arrays", "q": "In a systolic array, what determines the pipeline depth and thus the latency for a single matrix multiply operation?", "options": ["Total PE count", "Array dimensions (rows + columns)", "Memory access latency", "Operating frequency"], "answer": 1, "explain": "Data takes 2N-1 cycles to flow through an N×N systolic array (N cycles in one direction, N in perpendicular, minus 1 overlap). This is deterministic and known at design time." },
-  { "topic": "Matrix Multiplication Units (MXU)", "q": "What is the primary function of the TPU's Matrix Multiply Unit (MXU)?", "options": ["Cache data in HBM", "Perform element-wise operations", "Perform large matrix multiplications efficiently", "Compile XLA graphs"], "answer": 2, "explain": "The MXU is the core computation engine—it performs matrix multiplications using the systolic array architecture, handling operations like (batch_size, seq_len, hidden_dim) @ (hidden_dim, output_dim)." },
-  { "topic": "Matrix Multiplication Units (MXU)", "q": "What input shapes can a TPU v4 MXU typically handle for matrix multiplication?", "options": ["Only square matrices", "Only powers of 2", "Flexible shapes including batched, but most efficient on multiples of 128", "Only up to 1024×1024"], "answer": 2, "explain": "TPU MXUs are most efficient with operands whose dimensions are multiples of 128 (to fill systolic arrays), but can handle flexible shapes through tiling and padding." },
-  { "topic": "HBM and Memory", "q": "What does HBM stand for in TPU systems?", "options": ["High-Bandwidth Memory", "High-Bit Multiplication", "Hardware-Based Monitoring", "Hierarchical Buffer Memory"], "answer": 0, "explain": "HBM (High-Bandwidth Memory) provides ~1.2-1.6 TB/s bandwidth for TPU systolic arrays. It's stacked memory that feeds data to the MXU with extremely high throughput." },
-  { "topic": "HBM and Memory", "q": "A TPU v4 has approximately how much HBM bandwidth compared to GPU GDDR6?", "options": ["Similar (400-500 GB/s)", "2× higher (800-1000 GB/s)", "5-10× higher (1.2-1.6 TB/s)", "100× higher (100+ TB/s)"], "answer": 2, "explain": "TPU v4 HBM: ~1.2 TB/s. GPU GDDR6: ~400 GB/s. The 3× difference is crucial for feeding wide systolic arrays without stalling compute." },
-  { "topic": "HBM and Memory", "q": "In a TPU pod, what interconnects multiple TPU chips for communication?", "options": ["NVLINK-style direct PCIe", "Inter-Chip Interconnect (ICI) mesh", "Shared memory bus", "Ethernet switches"], "answer": 1, "explain": "TPU pods use an Inter-Chip Interconnect (ICI) mesh topology for chip-to-chip communication, enabling collective operations like all-reduce without going through host memory." },
-  { "topic": "Precision Formats", "q": "What is the bit layout of bfloat16?", "options": ["1 sign + 5 exponent + 10 mantissa", "1 sign + 8 exponent + 7 mantissa", "1 sign + 10 exponent + 5 mantissa", "2 sign bits + 7 exponent + 7 mantissa"], "answer": 1, "explain": "bfloat16 = 1 (sign) + 8 (exponent) + 7 (mantissa) bits. The 8-bit exponent matches FP32, giving range ±3.4×10³⁸, while 7-bit mantissa provides ~3 decimal digits of precision." },
-  { "topic": "Precision Formats", "q": "Why does bfloat16 work better than FP16 for deep learning training?", "options": ["It has more mantissa precision", "It has the same exponent range as FP32, preventing overflow", "It's faster to compute on CPUs", "It requires less storage"], "answer": 1, "explain": "DL gradients span huge dynamic ranges (±10⁻⁸ to 10¹ in some cases). FP16's 5-bit exponent (max ~±65k) overflows. bfloat16's 8-bit exponent (±10³⁸) matches FP32's range, making it a drop-in replacement." },
-  { "topic": "Precision Formats", "q": "Converting from FP32 to bfloat16 in hardware is typically done by:", "options": ["Rounding to nearest value", "Truncating the last 16 bits of the mantissa", "Using a lookup table", "Expensive logarithmic scaling"], "answer": 1, "explain": "bfloat16 is simply the upper 16 bits of FP32 (1+8+7 bits). Hardware just truncates the lower 16 bits—no rounding needed. This makes it trivially cheap to implement." },
-  { "topic": "XLA Compiler", "q": "What does XLA stand for?", "options": ["eXtended Linear Algebra", "Accelerated Linear Algebra", "eXecutive Logic Accelerator", "XML Algorithm"], "answer": 1, "explain": "XLA = Accelerated Linear Algebra. It's Google's compiler that optimizes computation graphs for TPUs and other hardware by fusing operations, reducing memory traffic, and specializing kernels." },
-  { "topic": "XLA Compiler", "q": "Which of these optimizations does XLA NOT typically perform?", "options": ["Operation fusion (combining multiple ops into one kernel)", "Dead code elimination", "Memory access pattern rewriting", "Dynamic shape handling at compile time"], "answer": 3, "explain": "XLA requires static shapes at compile time. Dynamic shapes require XlaCallModule or other dynamic shape handling, not XLA's standard optimization flow. All other options are core XLA optimizations." },
-  { "topic": "XLA Compiler", "q": "When using JAX with XLA compilation (jax.jit), what happens?", "options": ["Code is interpreted line-by-line", "The operation graph is traced, fused, and compiled to machine code for the device", "Only the numpy operations are optimized", "Functions are cached without compilation"], "answer": 1, "explain": "jax.jit traces the Python function, builds a computation graph, passes it through XLA, and compiles optimized machine code for TPU/GPU. Subsequent calls execute the compiled version." },
-  { "topic": "TPU Generations", "q": "What was the primary design constraint of TPU v1 (2016)?", "options": ["High-latency inference", "Inference-only, 8-bit integer operations", "Training language models", "Desktop deployment"], "answer": 1, "explain": "TPU v1 was purpose-built for inference in Google datacenters. It used INT8 (8-bit integer) for AlexNet-class models, achieving 50-80 TFLOPS at low latency. Training came later (v2)." },
-  { "topic": "TPU Generations", "q": "TPU v2 introduced which major capability compared to v1?", "options": ["Larger systolic array", "Training support (bfloat16)", "Optical interconnects", "CPU co-processor"], "answer": 1, "explain": "TPU v2 (2017) added training support with bfloat16 precision. v1 was inference-only INT8. This opened TPU for end-to-end ML workflows, not just serving." },
-  { "topic": "TPU Generations", "q": "What is a key feature of TPU v4?", "options": ["First to support inference", "Increased systolic array from 256×256 to 512×512 with optical circuit switches", "Removal of HBM memory", "Integration into desktop GPUs"], "answer": 1, "explain": "TPU v4 doubled the systolic array to 512×512, added optical ICI for pod-level communication (vs electrical mesh in v3), and introduced Sparsecores for sparse workloads." },
-  { "topic": "TPU Generations", "q": "How many TPU chips are typically in a single TPU Pod slice?", "options": ["2", "8", "64 or 128 (configurable)", "1024"], "answer": 2, "explain": "Pod slices come in various sizes: 8-chip, 32-chip, 64-chip, 128-chip, etc. Organizations typically rent multiples of 8 on TPU v4. The largest installations scale to thousands." },
-  { "topic": "TPU Generations", "q": "TPU v5's primary innovation over v4 is expected to be:", "options": ["Lower cost only", "Increased memory bandwidth, denser interconnect, and improved sparsity support", "Support for FP64 precision", "Desktop-class deployment"], "answer": 1, "explain": "v5 improvements focus on bandwidth (HBM and ICI), sparsity efficiency, and reducing cost per FLOP through better utilization and interconnect technologies." },
-  { "topic": "TPU vs GPU", "q": "For training a 1B-parameter Transformer model, when is TPU generally preferred over GPU?", "options": ["Never; GPU is always better", "For batch sizes >128 and sequences >512, where systolic arrays and HBM shine", "Only for inference", "Only on Google Cloud"], "answer": 1, "explain": "TPU excels at large batch, sequence-heavy workloads (e.g., batch 512, seq 2048). The wide systolic array keeps compute busy. GPUs dominate small batches and latency-sensitive tasks." },
-  { "topic": "TPU vs GPU", "q": "What is a major disadvantage of TPU compared to GPU?", "options": ["No support for custom operations", "Limited to Google Cloud / Colab", "Cannot run arbitrary code easily (less flexible)", "Lower precision only"], "answer": 2, "explain": "TPUs are specialized for linear algebra. Custom ops, complex control flow, and dynamic shapes are cumbersome vs GPUs. GPUs offer far more programming flexibility at the cost of lower peak throughput." },
-  { "topic": "TPU vs GPU", "q": "For batch size = 1 inference (e.g., real-time API), which is typically better?", "options": ["TPU (more compute)", "GPU (lower latency, better utilization at small batch)", "They're equivalent", "CPU is better"], "answer": 1, "explain": "At batch=1, TPU's systolic arrays are massively underutilized (only 1/256th of compute used for a 256×256 array). GPUs with smaller warp sizes handle small batches more efficiently." },
-  { "topic": "Software Stack — JAX", "q": "What does JAX enable that TensorFlow doesn't easily provide?", "options": ["GPU acceleration", "Functional transformations (jit, grad, vmap, pmap) as composable primitives", "Data loading pipelines", "Built-in serving"], "answer": 1, "explain": "JAX's strength is composable transformations: jit (JIT compile), grad (differentiate), vmap (vectorize), pmap (parallel map). These combine in ways TensorFlow's imperative API struggles with." },
-  { "topic": "Software Stack — JAX", "q": "What does pmap in JAX do?", "options": ["Maps a function over Python lists", "Compiles a function with pipelining", "Maps a function across multiple TPU devices in parallel", "Profiles memory usage"], "answer": 2, "explain": "pmap (parallel map) replicates a function across TPU cores/chips. For an 8-chip TPU, pmap(fn, axis_name='i') runs fn on each chip with different slices of the batch dimension." },
-  { "topic": "Software Stack — JAX", "q": "In JAX, what does jax.jit guarantee about the compiled function?", "options": ["It will run faster (sometimes)", "It compiles to optimized machine code and expects static shapes", "It parallelizes across all devices automatically", "It never modifies external state"], "answer": 1, "explain": "jax.jit requires static shapes (no shape changes mid-execution). It compiles via XLA to highly optimized code. If shapes change, it recompiles (COMPilation cache miss)." },
-  { "topic": "Software Stack — TensorFlow", "q": "What is tf.function in TensorFlow?", "options": ["A random utility function", "TensorFlow's equivalent to JAX's jax.jit for graph compilation", "A function that runs only on CPU", "A deprecated API"], "answer": 1, "explain": "@tf.function decorator traces Python code into a computation graph (similar to jax.jit), enabling optimization and deployment. It's TF's answer to functional JIT compilation." },
-  { "topic": "Software Stack — TensorFlow", "q": "For TPU training with TensorFlow, what distribution strategy is most common?", "options": ["tf.distribute.OneDeviceStrategy", "tf.distribute.TPUStrategy (or tf.distribute.experimental.TPUStrategy)", "tf.distribute.MirroredStrategy", "No strategy needed"], "answer": 1, "explain": "TPUStrategy handles data sharding across TPU cores/chips, all-reduce for gradients, and checkpoint management. TF automatically distributes your training loop." },
-  { "topic": "TPU Pods and Scaling", "q": "What is the primary communication topology in a TPU pod?", "options": ["Bus (all-to-all)", "Ring (sequential)", "Mesh (local neighbors) via ICI, optical in v4+", "Star (hub-and-spoke)"], "answer": 2, "explain": "Pod slices arrange TPUs in a logical mesh. v3 uses electrical ICI mesh. v4 upgrades to optical circuit switches for higher bandwidth and lower latency cross-pod all-reduce." },
-  { "topic": "TPU Pods and Scaling", "q": "For a 2D all-reduce across a 4×8 TPU pod, which communication pattern is most efficient?", "options": ["Sequential (O(N))", "Tree reduction (O(log N))", "2D mesh reduction along dimensions", "Fully connected crossbar (broadcast then reduce)"], "answer": 2, "explain": "2D mesh topology enables all-reduce in O(sqrt(N) + sqrt(N)) = O(sqrt(N)) time by reducing along rows, then columns. This beats linear O(N) and matches 3D reduction in higher-dim pods." },
-  { "topic": "TPU Pods and Scaling", "q": "What is a 'pod slice' in Google Cloud TPU?", "options": ["A single TPU chip", "A rental unit of 8 (or 32/64/128) TPUs addressable as one cluster", "A software partition of a single TPU", "A cooling subsystem"], "answer": 1, "explain": "Pod slices are billing + management units. A customer rents an 8-chip, 32-chip, or 64-chip slice. Multiple slices can form a larger pod. This simplifies provisioning and multi-tenant isolation." },
-  { "topic": "Applications", "q": "Which LLM was famously trained on TPU clusters?", "options": ["GPT-2 (on GPU)", "PaLM (540B parameter)", "LLaMA (on GPU)", "BERT (on GPU)"], "answer": 1, "explain": "Google's PaLM (540B), Gemini, and Chinchilla-style models were trained on TPU v4 pods. The scale (trillions of tokens) and sequence length (2048+) play to TPU's strengths." },
-  { "topic": "Applications", "q": "Why is TPU well-suited for diffusion model training?", "options": ["Faster random number generation", "Large batches × high resolution images × many steps per loss", "Better floating-point precision", "Simpler code"], "answer": 1, "explain": "Diffusion training: batch 256+, image 512×512+, ~1000 steps (which TPU can exploit with pipelined stages). The memory and compute demands fit TPU's design perfectly." },
-  { "topic": "Applications", "q": "For scientific computing (e.g., AlphaFold, climate modeling), what TPU strength matters most?", "options": ["Raw FLOPS count", "Reduced memory bandwidth relative to compute", "Precision (bfloat16)", "Easy debugging"], "answer": 0, "explain": "Scientific workloads (AlphaFold structure prediction, climate simulation) need massive FLOPS. TPU v4: 191 PFLOPS (peak). The extreme compute throughput at competitive cost drives adoption." },
-  { "topic": "Comparisons & Efficiency", "q": "What metric best captures TPU efficiency for a given workload?", "options": ["Peak FLOPS", "Memory bandwidth utilization", "Percentage of peak throughput (useful FLOPS / peak FLOPS)", "Cost per gigabyte of VRAM"], "answer": 2, "explain": "Percentage of peak throughput = (useful FLOPS achieved) / (peak FLOPS possible). If a model runs at 40% of peak, the TPU spends 60% idle or memory-bound. This reveals true efficiency." },
-  { "topic": "Comparisons & Efficiency", "q": "Why might a 256×256 systolic array achieve only 20% utilization for a small model?", "options": ["Memory bandwidth limit", "Model layers don't fill the array; computation is too small", "Operating frequency is throttled", "Precision is too low"], "answer": 1, "explain": "Small models (e.g., layer 64→64) can't fill a 256×256 array. Most compute units sit idle. Pod slices are over-provisioned for small workloads; TPU shines at scale (billions+ parameters)." },
-  { "topic": "Custom Hardware", "q": "What is OpenTPU?", "options": ["Official Google TPU documentation", "An open-source FPGA implementation of TPU architecture for learning", "A cloud service competing with GCP TPU", "A Python library for TPU programming"], "answer": 1, "explain": "OpenTPU is an educational FPGA design that implements the systolic array, data flow, and control logic of TPU v1. It demonstrates core concepts without needing actual TPU hardware." }
+  {
+    "topic": "Systolic Arrays",
+    "q": "In a weight-stationary systolic array, which data flows horizontally through the PE grid?",
+    "options": [
+      "Weights",
+      "Activations (inputs)",
+      "Partial sums (outputs)",
+      "Intermediate gradients"
+    ],
+    "answer": 1,
+    "explain": "Weight-stationary systolic arrays hold weights at each PE while activations flow horizontally and partial sums accumulate vertically—this is the correct dataflow pattern. Each PE receives a new activation each cycle from the left and outputs the result downward, minimizing weight reloading from HBM. The other options incorrectly swap or confuse data flow directions. This architecture pattern applies consistently across TPU v2–v5's systolic array design."
+  },
+  {
+    "topic": "Systolic Arrays",
+    "q": "For a 256×256 systolic array performing FP16 matrix multiplication at 700 MHz, what is the peak compute throughput?",
+    "options": [
+      "179 TFLOPS",
+      "358 TFLOPS",
+      "716 TFLOPS",
+      "1.4 PFLOPS"
+    ],
+    "answer": 0,
+    "explain": "Peak throughput = 256×256 MACs/cycle × 2 ops/MAC × 700M cycles/sec = 179 TFLOPS for FP16. The systolic array's dimensions determine compute capacity at a given frequency. This matches TPU v3 specifications; v4 scales to 512×512, doubling capacity. The other options represent incorrect frequency scalings or dimensional assumptions."
+  },
+  {
+    "topic": "Systolic Arrays",
+    "q": "What is the main benefit of systolic arrays for matrix multiplication compared to naive GPU approaches?",
+    "options": [
+      "Lower latency per operation",
+      "Reduced memory bandwidth requirements through data reuse",
+      "Simpler instruction set",
+      "Better cache locality"
+    ],
+    "answer": 1,
+    "explain": "Each operand in a systolic array is reused O(N) times on-chip before returning to HBM, dramatically reducing bandwidth requirements. This data reuse is systolic arrays' fundamental advantage over naive GPU approaches where each operand must be fetched once. Memory bandwidth efficiency, not latency reduction, drives TPU superiority for large matrix operations. This reuse principle defines TPU's efficiency across all generations."
+  },
+  {
+    "topic": "Systolic Arrays",
+    "q": "In a systolic array, what determines the pipeline depth and thus the latency for a single matrix multiply operation?",
+    "options": [
+      "Total PE count",
+      "Array dimensions (rows + columns)",
+      "Memory access latency",
+      "Operating frequency"
+    ],
+    "answer": 1,
+    "explain": "Pipeline latency through an N×N systolic array is 2N−1 cycles (N cycles to traverse one direction, N in perpendicular, minus 1 overlap). Total PE count and operating frequency don't determine pipeline depth—only array geometry does. This predictable latency is known at design time and applies uniformly across TPU generations, enabling deterministic scheduling."
+  },
+  {
+    "topic": "Matrix Multiplication Units (MXU)",
+    "q": "What is the primary function of the TPU's Matrix Multiply Unit (MXU)?",
+    "options": [
+      "Cache data in HBM",
+      "Perform element-wise operations",
+      "Perform large matrix multiplications efficiently",
+      "Compile XLA graphs"
+    ],
+    "answer": 2,
+    "explain": "The MXU (Matrix Multiply Unit) is TPU's core compute engine, performing large matrix multiplications via the systolic array. It handles batched operations like (batch, seq_len, hidden) @ (hidden, output_dim) for Transformer layers. Element-wise operations and compilation happen elsewhere (scalar units, XLA). This MXU architecture is common to all TPU generations."
+  },
+  {
+    "topic": "Matrix Multiplication Units (MXU)",
+    "q": "What input shapes can a TPU v4 MXU typically handle for matrix multiplication?",
+    "options": [
+      "Only square matrices",
+      "Only powers of 2",
+      "Flexible shapes including batched, but most efficient on multiples of 128",
+      "Only up to 1024×1024"
+    ],
+    "answer": 2,
+    "explain": "TPU v4 MXUs are most efficient when operand dimensions are multiples of 128 to fully fill the systolic array. However, flexible shapes work through automatic tiling and zero-padding—the compiler handles this. Only powers of 2 or square matrices are unnecessary constraints. Pod-scale efficiency depends on keeping MXUs saturated; small workloads underutilize the array."
+  },
+  {
+    "topic": "HBM and Memory",
+    "q": "What does HBM stand for in TPU systems?",
+    "options": [
+      "High-Bandwidth Memory",
+      "High-Bit Multiplication",
+      "Hardware-Based Monitoring",
+      "Hierarchical Buffer Memory"
+    ],
+    "answer": 0,
+    "explain": "HBM (High-Bandwidth Memory) provides ~1.2–1.6 TB/s bandwidth via stacked DRAM technology. It feeds the systolic array with continuous data streams at speeds traditional GDDR6 cannot match. High-Bit Multiplication and Hardware-Based Monitoring are incorrect expansions. HBM bandwidth is the critical resource preventing compute stalls during dense matrix operations."
+  },
+  {
+    "topic": "HBM and Memory",
+    "q": "A TPU v4 has approximately how much HBM bandwidth compared to GPU GDDR6?",
+    "options": [
+      "Similar (400-500 GB/s)",
+      "2× higher (800-1000 GB/s)",
+      "5-10× higher (1.2-1.6 TB/s)",
+      "100× higher (100+ TB/s)"
+    ],
+    "answer": 2,
+    "explain": "TPU v4 HBM delivers ~1.2 TB/s; GPU GDDR6 delivers ~400 GB/s—a 3× advantage crucial for feeding wide systolic arrays. Both GPU GDDR and shared memory bus options are orders of magnitude lower. This bandwidth advantage is why TPU excels at large batches and long sequences where data throughput dominates. Ethernet switches lack the latency/bandwidth TPU workloads require."
+  },
+  {
+    "topic": "HBM and Memory",
+    "q": "In a TPU pod, what interconnects multiple TPU chips for communication?",
+    "options": [
+      "NVLINK-style direct PCIe",
+      "Inter-Chip Interconnect (ICI) mesh",
+      "Shared memory bus",
+      "Ethernet switches"
+    ],
+    "answer": 1,
+    "explain": "TPU pods use an Inter-Chip Interconnect (ICI) mesh topology for chip-to-chip communication, enabling all-reduce and collective ops without host memory involvement. v3 uses electrical mesh; v4 adds optical circuit switches. PCIe and shared buses are too slow for pod-scale collective operations. This mesh enables model parallelism across 128+ TPU chips seamlessly."
+  },
+  {
+    "topic": "Precision Formats",
+    "q": "What is the bit layout of bfloat16?",
+    "options": [
+      "1 sign + 5 exponent + 10 mantissa",
+      "1 sign + 8 exponent + 7 mantissa",
+      "1 sign + 10 exponent + 5 mantissa",
+      "2 sign bits + 7 exponent + 7 mantissa"
+    ],
+    "answer": 1,
+    "explain": "bfloat16 has 1 sign + 8 exponent + 7 mantissa bits, matching FP32's exponent range (±3.4×10³⁸) but truncating the mantissa. Its 8-bit exponent is why it works for DL training despite fewer mantissa bits; it prevents underflow/overflow in gradient computation. Other bit layouts would lose dynamic range or reduce efficiency. TPU v2 onward standardizes bfloat16 for training."
+  },
+  {
+    "topic": "Precision Formats",
+    "q": "Why does bfloat16 work better than FP16 for deep learning training?",
+    "options": [
+      "It has more mantissa precision",
+      "It has the same exponent range as FP32, preventing overflow",
+      "It's faster to compute on CPUs",
+      "It requires less storage"
+    ],
+    "answer": 1,
+    "explain": "bfloat16's 8-bit exponent matches FP32, preventing overflow in gradient ranges (±10⁻⁸ to 10¹). FP16's 5-bit exponent (max ~±65k) causes gradient overflow/underflow during backprop. More mantissa precision doesn't compensate for lost range; GPU memory isn't the bottleneck here. bfloat16 became TPU v2's standard because it solved this specific gradient range problem."
+  },
+  {
+    "topic": "Precision Formats",
+    "q": "Converting from FP32 to bfloat16 in hardware is typically done by:",
+    "options": [
+      "Rounding to nearest value",
+      "Truncating the last 16 bits of the mantissa",
+      "Using a lookup table",
+      "Expensive logarithmic scaling"
+    ],
+    "answer": 1,
+    "explain": "Converting FP32 to bfloat16 simply truncates the lower 16 bits of the mantissa—no rounding or lookup table needed. Expensive logarithmic scaling is unnecessary. This trivial hardware cost is why bfloat16 became practical for high-throughput TPU designs. The truncation trades minimal precision loss against massive implementation simplicity."
+  },
+  {
+    "topic": "XLA Compiler",
+    "q": "What does XLA stand for?",
+    "options": [
+      "eXtended Linear Algebra",
+      "Accelerated Linear Algebra",
+      "eXecutive Logic Accelerator",
+      "XML Algorithm"
+    ],
+    "answer": 1,
+    "explain": "XLA (Accelerated Linear Algebra) is Google's compiler that optimizes computation graphs for TPUs by fusing operations, eliminating redundant memory writes, and specializing kernels. eXtended Linear Algebra and Executive Logic Accelerator are incorrect expansions. XLA is essential for TPU efficiency—it transforms high-level code into systolic-array-friendly machine code."
+  },
+  {
+    "topic": "XLA Compiler",
+    "q": "Which of these optimizations does XLA NOT typically perform?",
+    "options": [
+      "Operation fusion (combining multiple ops into one kernel)",
+      "Dead code elimination",
+      "Memory access pattern rewriting",
+      "Dynamic shape handling at compile time"
+    ],
+    "answer": 3,
+    "explain": "XLA requires static shapes at compile time for full optimization. Dynamic shapes mandate XlaCallModule or graph mode workarounds, bypassing key optimizations. Operation fusion, dead code elimination, and memory rewriting are core XLA capabilities that all require known shapes. Static-shape limitation is a trade-off for extreme compile-time optimization."
+  },
+  {
+    "topic": "XLA Compiler",
+    "q": "When using JAX with XLA compilation (jax.jit), what happens?",
+    "options": [
+      "Code is interpreted line-by-line",
+      "The operation graph is traced, fused, and compiled to machine code for the device",
+      "Only the numpy operations are optimized",
+      "Functions are cached without compilation"
+    ],
+    "answer": 1,
+    "explain": "jax.jit traces Python code into a computation graph, passes it through XLA optimization, and compiles machine code for TPU/GPU. Subsequent calls execute pre-compiled code at native speed. Interpreted execution, cached functions without compilation, and CPU-only execution all misunderstand jax.jit's purpose. JAX's functional design makes jit a composable, lightweight transformation."
+  },
+  {
+    "topic": "TPU Generations",
+    "q": "What was the primary design constraint of TPU v1 (2016)?",
+    "options": [
+      "High-latency inference",
+      "Inference-only, 8-bit integer operations",
+      "Training language models",
+      "Desktop deployment"
+    ],
+    "answer": 1,
+    "explain": "TPU v1 (2016) was inference-only, built for AlexNet-scale models with INT8 quantization in Google datacenters, achieving 50–80 TFLOPS. High-latency inference and desktop deployment are contradictory—v1 prioritized throughput. Training capability came with TPU v2 (2017). v1 established the systolic array foundation for all subsequent generations."
+  },
+  {
+    "topic": "TPU Generations",
+    "q": "TPU v2 introduced which major capability compared to v1?",
+    "options": [
+      "Larger systolic array",
+      "Training support (bfloat16)",
+      "Optical interconnects",
+      "CPU co-processor"
+    ],
+    "answer": 1,
+    "explain": "TPU v2 (2017) added training support with bfloat16 precision, enabling end-to-end ML workflows instead of v1's inference-only architecture. Larger systolic arrays (512×512) came in v4, optical interconnects in v4, and CPU co-processors aren't standard. v2's bfloat16 training capability was the transformative shift unlocking LLM training at Google scale."
+  },
+  {
+    "topic": "TPU Generations",
+    "q": "What is a key feature of TPU v4?",
+    "options": [
+      "First to support inference",
+      "Increased systolic array from 256×256 to 512×512 with optical circuit switches",
+      "Removal of HBM memory",
+      "Integration into desktop GPUs"
+    ],
+    "answer": 1,
+    "explain": "TPU v4 doubled the systolic array from 256×256 to 512×512 and added optical circuit switches for pod-level ICI communication (vs v3's electrical mesh) and Sparsecores for sparse workloads. Removal of HBM and desktop GPU integration didn't happen. These v4 upgrades enable higher utilization and communication efficiency for massive scale."
+  },
+  {
+    "topic": "TPU Generations",
+    "q": "How many TPU chips are typically in a single TPU Pod slice?",
+    "options": [
+      "2",
+      "8",
+      "64 or 128 (configurable)",
+      "1024"
+    ],
+    "answer": 2,
+    "explain": "TPU pod slices come in 8-chip, 32-chip, 64-chip, or 128-chip units—billing + management units that customers rent. Multiple slices can form larger pods scaling to thousands of chips. Single chips and software partitions are too granular; cooling subsystems don't define slices. Pod slice granularity simplifies provisioning, billing, and multi-tenant isolation."
+  },
+  {
+    "topic": "TPU Generations",
+    "q": "TPU v5's primary innovation over v4 is expected to be:",
+    "options": [
+      "Lower cost only",
+      "Increased memory bandwidth, denser interconnect, and improved sparsity support",
+      "Support for FP64 precision",
+      "Desktop-class deployment"
+    ],
+    "answer": 1,
+    "explain": "TPU v5 improvements focus on HBM and ICI bandwidth increases, denser interconnects, and improved sparsity handling to reduce cost per FLOP. Lower cost alone (without efficiency gains) is insufficient motivation; FP64 precision isn't v5's focus; desktop deployment conflicts with datacenter design. v5's strategy targets trillion-parameter model training at Google scale."
+  },
+  {
+    "topic": "TPU vs GPU",
+    "q": "For training a 1B-parameter Transformer model, when is TPU generally preferred over GPU?",
+    "options": [
+      "Never; GPU is always better",
+      "For batch sizes >128 and sequences >512, where systolic arrays and HBM shine",
+      "Only for inference",
+      "Only on Google Cloud"
+    ],
+    "answer": 1,
+    "explain": "TPU excels at batch-heavy, sequence-heavy workloads (e.g., batch 512, seq 2048+) where systolic arrays stay fully utilized and HBM bandwidth feeds continuous compute. GPU dominates small batches (b=1–32) and latency-sensitive inference where TPU arrays are underutilized. This workload split reflects fundamental hardware specialization—never for TPU and always for GPU are both wrong."
+  },
+  {
+    "topic": "TPU vs GPU",
+    "q": "What is a major disadvantage of TPU compared to GPU?",
+    "options": [
+      "No support for custom operations",
+      "Limited to Google Cloud / Colab",
+      "Cannot run arbitrary code easily (less flexible)",
+      "Lower precision only"
+    ],
+    "answer": 2,
+    "explain": "TPU specializes in linear algebra; custom operations, complex control flow, and dynamic shapes are cumbersome vs GPUs' general-purpose design. GPU's lower peak throughput is offset by programming flexibility for diverse workloads. TPU's inability to run arbitrary code easily is an architectural consequence, not a bug. This trade-off defines accelerator choice."
+  },
+  {
+    "topic": "TPU vs GPU",
+    "q": "For batch size = 1 inference (e.g., real-time API), which is typically better?",
+    "options": [
+      "TPU (more compute)",
+      "GPU (lower latency, better utilization at small batch)",
+      "They're equivalent",
+      "CPU is better"
+    ],
+    "answer": 1,
+    "explain": "At batch=1 inference, TPU's 256×256 array is 256× underutilized—only 1/256 of compute is used. GPUs with smaller warp sizes (32–64 threads) handle single-sample inference more efficiently. Random number generation and floating-point precision don't explain batch-size performance differences. Real-time API responses favor GPU's lower-latency, better-scaling architecture."
+  },
+  {
+    "topic": "Software Stack — JAX",
+    "q": "What does JAX enable that TensorFlow doesn't easily provide?",
+    "options": [
+      "GPU acceleration",
+      "Functional transformations (jit, grad, vmap, pmap) as composable primitives",
+      "Data loading pipelines",
+      "Built-in serving"
+    ],
+    "answer": 1,
+    "explain": "JAX's composable transformations (jit, grad, vmap, pmap) are primitive functions that combine freely—jit after vmap after grad works seamlessly. TensorFlow's imperative API struggles with this functional composition. Data loading and serving are separate concerns. JAX's functional purity and automatic differentiation enable research agility beyond TensorFlow's static graph patterns."
+  },
+  {
+    "topic": "Software Stack — JAX",
+    "q": "What does pmap in JAX do?",
+    "options": [
+      "Maps a function over Python lists",
+      "Compiles a function with pipelining",
+      "Maps a function across multiple TPU devices in parallel",
+      "Profiles memory usage"
+    ],
+    "answer": 2,
+    "explain": "pmap (parallel map) replicates a function across TPU cores/chips; on an 8-chip pod, pmap(fn, axis_name='i') runs fn on each chip with different batch slices. This enables data parallelism transparently across the pod. Mapping over Python lists (plain map), software pipelining (not pmap's purpose), and memory profiling aren't what pmap does."
+  },
+  {
+    "topic": "Software Stack — JAX",
+    "q": "In JAX, what does jax.jit guarantee about the compiled function?",
+    "options": [
+      "It will run faster (sometimes)",
+      "It compiles to optimized machine code and expects static shapes",
+      "It parallelizes across all devices automatically",
+      "It never modifies external state"
+    ],
+    "answer": 1,
+    "explain": "jax.jit requires static shapes at compile time; if shapes change, XLA recompiles (cache miss, not an error). Static shape constraints enable XLA's aggressive optimizations. Vectorization (vmap) and automatic parallelization occur independently. This static-shape requirement is why Flax and other JAX frameworks pre-process dynamic input into static sizes."
+  },
+  {
+    "topic": "Software Stack — TensorFlow",
+    "q": "What is tf.function in TensorFlow?",
+    "options": [
+      "A random utility function",
+      "TensorFlow's equivalent to JAX's jax.jit for graph compilation",
+      "A function that runs only on CPU",
+      "A deprecated API"
+    ],
+    "answer": 1,
+    "explain": "@tf.function traces Python code into a TensorFlow computation graph (similar to jax.jit), optimizes it, and deploys as compiled code. TensorFlow's graph-mode answer to functional JIT. Only CPU execution, deprecated APIs, and random caching misunderstand tf.function's role. tf.function enables TensorFlow XLA compilation on TPU."
+  },
+  {
+    "topic": "Software Stack — TensorFlow",
+    "q": "For TPU training with TensorFlow, what distribution strategy is most common?",
+    "options": [
+      "tf.distribute.OneDeviceStrategy",
+      "tf.distribute.TPUStrategy (or tf.distribute.experimental.TPUStrategy)",
+      "tf.distribute.MirroredStrategy",
+      "No strategy needed"
+    ],
+    "answer": 1,
+    "explain": "TPUStrategy handles data sharding across TPU cores/chips, all-reduce for distributed gradient averaging, and checkpoint/restore. TensorFlow automatically distributes your training loop with TPUStrategy—no manual synchronization needed. OneDeviceStrategy and MirroredStrategy apply to single-device and multi-GPU scenarios. TPUStrategy is essential for multi-chip TPU training."
+  },
+  {
+    "topic": "TPU Pods and Scaling",
+    "q": "What is the primary communication topology in a TPU pod?",
+    "options": [
+      "Bus (all-to-all)",
+      "Ring (sequential)",
+      "Mesh (local neighbors) via ICI, optical in v4+",
+      "Star (hub-and-spoke)"
+    ],
+    "answer": 2,
+    "explain": "TPU pod slices arrange TPUs in a logical mesh topology. v3 uses electrical ICI; v4 upgrades to optical circuit switches for higher bandwidth and lower collective-operation latency. Bus, ring, and star topologies are not mesh. This 2D/3D mesh enables pod-scale gradient all-reduce at speeds necessary for trillion-parameter model training."
+  },
+  {
+    "topic": "TPU Pods and Scaling",
+    "q": "For a 2D all-reduce across a 4×8 TPU pod, which communication pattern is most efficient?",
+    "options": [
+      "Sequential (O(N))",
+      "Tree reduction (O(log N))",
+      "2D mesh reduction along dimensions",
+      "Fully connected crossbar (broadcast then reduce)"
+    ],
+    "answer": 2,
+    "explain": "2D mesh all-reduce completes in O(√N + √N) = O(√N) time by reducing along dimensions; e.g., 8×8 mesh reduces in ~16 steps vs 64 for linear topology. Sequential (linear) is O(N), tree reduction is O(log N) for small N but doesn't exploit local structure. 2D topology efficiency is why pod slices are arranged in 2D/3D torus, not trees."
+  },
+  {
+    "topic": "TPU Pods and Scaling",
+    "q": "What is a 'pod slice' in Google Cloud TPU?",
+    "options": [
+      "A single TPU chip",
+      "A rental unit of 8 (or 32/64/128) TPUs addressable as one cluster",
+      "A software partition of a single TPU",
+      "A cooling subsystem"
+    ],
+    "answer": 1,
+    "explain": "Pod slices are customer-facing billing units: 8, 32, 64, 128 chips, etc. Multiple slices connect to form larger pods. Single TPU chips lack provisioning abstractions; software partitions don't isolate hardware. This slice granularity standardizes pricing and simplifies multi-tenant resource allocation—crucial for Google Cloud TPU's commercial model."
+  },
+  {
+    "topic": "Applications",
+    "q": "Which LLM was famously trained on TPU clusters?",
+    "options": [
+      "GPT-2 (on GPU)",
+      "PaLM (540B parameter)",
+      "LLaMA (on GPU)",
+      "BERT (on GPU)"
+    ],
+    "answer": 1,
+    "explain": "Google trained PaLM (540B), Gemini, and Chinchilla-scale models on TPU v4 pods. Trillions of training tokens and 2048+ sequence lengths exploit TPU's systolic arrays and HBM bandwidth. GPT-2 and BERT used GPUs; LLaMA is GPU-based. Real Google workloads drive TPU architecture—PaLM's success proved TPU's value for frontier model training."
+  },
+  {
+    "topic": "Applications",
+    "q": "Why is TPU well-suited for diffusion model training?",
+    "options": [
+      "Faster random number generation",
+      "Large batches × high resolution images × many steps per loss",
+      "Better floating-point precision",
+      "Simpler code"
+    ],
+    "answer": 1,
+    "explain": "Diffusion training: batches 256+, images 512×512+, ~1000 timesteps, each with forward+backward passes. TPU's systolic arrays and HBM handle this compute density efficiently. Faster random number generation and simpler code don't explain diffusion's TPU fit. Real workload: Imagen at Google was diffusion-based and trained on TPU."
+  },
+  {
+    "topic": "Applications",
+    "q": "For scientific computing (e.g., AlphaFold, climate modeling), what TPU strength matters most?",
+    "options": [
+      "Raw FLOPS count",
+      "Reduced memory bandwidth relative to compute",
+      "Precision (bfloat16)",
+      "Easy debugging"
+    ],
+    "answer": 0,
+    "explain": "Scientific computing (AlphaFold structure prediction, climate modeling) demands massive FLOPS: TPU v4 achieves 191 PFLOPS peak. Memory bandwidth utilization and bfloat16 precision are secondary; raw compute throughput drives adoption. Cost-per-FLOP efficiency makes TPU economically viable for multi-petaflop scientific simulations."
+  },
+  {
+    "topic": "Comparisons & Efficiency",
+    "q": "What metric best captures TPU efficiency for a given workload?",
+    "options": [
+      "Peak FLOPS",
+      "Memory bandwidth utilization",
+      "Percentage of peak throughput (useful FLOPS / peak FLOPS)",
+      "Cost per gigabyte of VRAM"
+    ],
+    "answer": 2,
+    "explain": "Utilization % = useful FLOPS achieved / peak FLOPS possible. A model at 40% utilization means 60% of compute is idle or memory-stalled. Peak FLOPS alone is meaningless; utilization reveals whether you're bottlenecked on compute, memory, or both. This metric guides optimization and hardware choice for real workloads."
+  },
+  {
+    "topic": "Comparisons & Efficiency",
+    "q": "Why might a 256×256 systolic array achieve only 20% utilization for a small model?",
+    "options": [
+      "Memory bandwidth limit",
+      "Model layers don't fill the array; computation is too small",
+      "Operating frequency is throttled",
+      "Precision is too low"
+    ],
+    "answer": 1,
+    "explain": "Small model layers (e.g., 64→64 matmul) cannot fill a 256×256 systolic array; most PEs sit idle. Pod slices are over-provisioned for small workloads; TPU efficiency requires billions of parameters. Small batch also underutilizes arrays. This explains why TPU excels at large-scale training (LLMs, recommendations) and why GPUs suit smaller models."
+  },
+  {
+    "topic": "Custom Hardware",
+    "q": "What is OpenTPU?",
+    "options": [
+      "Official Google TPU documentation",
+      "An open-source FPGA implementation of TPU architecture for learning",
+      "A cloud service competing with GCP TPU",
+      "A Python library for TPU programming"
+    ],
+    "answer": 1,
+    "explain": "OpenTPU is an educational FPGA design implementing TPU v1's systolic array, data flow control, and HLO-to-hardware mapping. It's not official Google documentation, a commercial cloud service, or just a Python library—it's a learning tool. OpenTPU enables researchers to study systolic array concepts without access to real TPU hardware."
+  }
 ]
 </script>
 <script>
