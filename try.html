@@ -4,6 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>📚 Study Hub — Daily Plan</title>
+<meta name="theme-color" content="#0d1117">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
 <style>
   *{margin:0;padding:0;box-sizing:border-box}
   body{background:#0d1117;color:#e6edf3;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;min-height:100vh;padding:32px 20px 110px;display:flex;flex-direction:column;align-items:center}
@@ -141,6 +144,20 @@
   .m-msg.ok{color:#7ee787}
   .m-msg.err{color:#f85149}
   .m-idle{font-size:.78rem;color:#ffa657;min-height:18px;margin-top:4px}
+  /* ----- MOBILE: stack day-grid + simplify pomo-bar ----- */
+  @media (max-width:600px){
+    body{padding:20px 12px 130px}
+    .day-grid{grid-template-columns:1fr;overflow-x:visible}
+    .grid{grid-template-columns:1fr}
+    .pomo-bar{flex-wrap:wrap;gap:8px;padding:8px 10px}
+    .pomo-info{order:2;flex-basis:100%;max-width:none}
+    .pomo-tree{order:1}
+    .pomo-timer{order:3;font-size:1.2rem;min-width:64px}
+    .pomo-btn{order:4;padding:6px 10px;font-size:.78rem}
+    .companions a{font-size:.72rem;padding:5px 10px}
+    h1{font-size:1.5rem}
+    h3{font-size:1.15rem;margin:28px 0 12px}
+  }
   /* ----- COMPANION LINKS ----- */
   .companions{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:10px}
   .companions a{text-decoration:none;font-size:.78rem;padding:6px 14px;border-radius:14px;background:#161b22;border:1px solid #30363d;color:#c9d1d9;display:inline-flex;align-items:center;gap:6px;transition:all .15s}
@@ -168,11 +185,11 @@
     <span title="Dead trees">🥀 <span class="v" id="pill-dead">0</span></span>
   </div>
   <div class="companions" title="Companion plans &amp; checklists">
-    <a href="dayview.html"  style="--hc:#f778ba" title="22 daily habits with time-blocked schedule, timeline, and streak heatmap">📅 dayview.html <span class="tag">22 habits · streak</span></a>
-    <a href="studyday.html" style="--hc:#58a6ff" title="30-day checklist for the 15 study subfolders">📚 studyday.html <span class="tag">30-day · study</span></a>
-    <a href="daily.html"    style="--hc:#7ee787" title="30-day upskill plan: networking, perf, security, AI, code reading, tech trends">🚀 daily.html <span class="tag">30-day · upskill</span></a>
-    <a href="upskill.html"  style="--hc:#d2a8ff" title="Full upskill reference: courses, books, blogs, tools">📖 upskill.html <span class="tag">reference</span></a>
-    <a href="dailylearning/arithmetic/index.html" style="--hc:#ffa657" title="Machine Arithmetic — from transistors to tensor cores">🔢 arithmetic <span class="tag">transistors → tensors</span></a>
+    <a href="planner/dayview.html"  style="--hc:#f778ba" title="22 daily habits with time-blocked schedule, timeline, and streak heatmap">📅 dayview.html <span class="tag">22 habits · streak</span></a>
+    <a href="planner/studyday.html" style="--hc:#58a6ff" title="30-day checklist for the 15 study subfolders">📚 studyday.html <span class="tag">30-day · study</span></a>
+    <a href="planner/daily.html"    style="--hc:#7ee787" title="30-day upskill plan: networking, perf, security, AI, code reading, tech trends">🚀 daily.html <span class="tag">30-day · upskill</span></a>
+    <a href="planner/upskill.html"  style="--hc:#d2a8ff" title="Full upskill reference: courses, books, blogs, tools">📖 upskill.html <span class="tag">reference</span></a>
+    <a href="study/arithmetic/index.html" style="--hc:#ffa657" title="Machine Arithmetic — from transistors to tensor cores">🔢 arithmetic <span class="tag">transistors → tensors</span></a>
   </div>
 </div>
 
@@ -250,144 +267,38 @@
 <!-- MIND MAPS / STUDY TOOLS GRID -->
 <h3>🗺️ Mind Maps &amp; Tools</h3>
 <div class="grid">
-  <a class="card" href="algo/index.html" style="--accent:#f778ba">
+  <a class="card" href="study/algo/index.html" style="--accent:#f778ba">
     <span class="card-icon">⚡</span>
     <span class="card-title">CP4 — Competitive Programming</span>
-    <span class="card-folder">algo/</span>
-    <span class="card-desc">algo/ &mdash; 106 KB</span>
+    <span class="card-folder">study/algo/</span>
+    <span class="card-desc">study/algo/ &mdash; 106 KB</span>
     <span class="tag" style="background:#f778ba20;color:#f778ba">Study Tool</span>
   </a>
-  <a class="card" href="maths/index.html" style="--accent:#d2a8ff">
+  <a class="card" href="study/maths/index.html" style="--accent:#d2a8ff">
     <span class="card-icon">📐</span>
     <span class="card-title">Mathematics Study Tool</span>
-    <span class="card-folder">maths/</span>
-    <span class="card-desc">maths/ &mdash; 107 KB</span>
+    <span class="card-folder">study/maths/</span>
+    <span class="card-desc">study/maths/ &mdash; 107 KB</span>
     <span class="tag" style="background:#d2a8ff20;color:#d2a8ff">Study Tool</span>
   </a>
-  <a class="card" href="networking/index.html" style="--accent:#ffa657">
+  <a class="card" href="study/networking/index.html" style="--accent:#ffa657">
     <span class="card-icon">🌐</span>
     <span class="card-title">CS 144 — Interactive Mind Map</span>
-    <span class="card-folder">networking/</span>
-    <span class="card-desc">networking/ &mdash; 212 KB</span>
+    <span class="card-folder">study/networking/</span>
+    <span class="card-desc">study/networking/ &mdash; 212 KB</span>
     <span class="tag" style="background:#ffa65720;color:#ffa657">Mind Map</span>
   </a>
-  <a class="card" href="security/index.html" style="--accent:#f0883e">
+  <a class="card" href="study/security/index.html" style="--accent:#f0883e">
     <span class="card-icon">🛡️</span>
     <span class="card-title">CS 161 — Computer Security</span>
-    <span class="card-folder">security/</span>
-    <span class="card-desc">security/ &mdash; 143 KB</span>
+    <span class="card-folder">study/security/</span>
+    <span class="card-desc">study/security/ &mdash; 143 KB</span>
     <span class="tag" style="background:#f0883e20;color:#f0883e">Study Tool</span>
   </a>
 </div>
 
 <h3>📖 Study Planner Courses</h3>
-<div class="grid">
-  <a class="card" href="study/mit-distributed-systems/index.html" style="--accent:#58a6ff" data-topic="mit-distributed-systems">
-    <span class="card-icon">🖥️</span>
-    <span class="card-title">MIT 6.824 — Distributed Systems</span>
-    <span class="card-folder">study/mit-distributed-systems/</span>
-    <span class="card-desc">Raft, MapReduce, GFS, Spanner, fault tolerance &amp; consensus</span>
-    <span class="tag" style="background:#58a6ff20;color:#58a6ff">Study Tool</span>
-  </a>
-  <a class="card" href="study/rocket-engineering/index.html" style="--accent:#f778ba" data-topic="rocket-engineering">
-    <span class="card-icon">🚀</span>
-    <span class="card-title">NPTEL — Rocket Propulsion</span>
-    <span class="card-folder">study/rocket-engineering/</span>
-    <span class="card-desc">Nozzle theory, solid/liquid engines, electric propulsion, thermodynamics</span>
-    <span class="tag" style="background:#f778ba20;color:#f778ba">Study Tool</span>
-  </a>
-  <a class="card" href="study/radar-engineering/index.html" style="--accent:#7ee787" data-topic="radar-engineering">
-    <span class="card-icon">📡</span>
-    <span class="card-title">MIT Lincoln Lab — Radar Systems</span>
-    <span class="card-folder">study/radar-engineering/</span>
-    <span class="card-desc">Radar equation, waveforms, Doppler, SAR, detection theory</span>
-    <span class="tag" style="background:#7ee78720;color:#7ee787">Study Tool</span>
-  </a>
-  <a class="card" href="study/satellite-imaging/index.html" style="--accent:#d2a8ff" data-topic="satellite-imaging">
-    <span class="card-icon">🛰️</span>
-    <span class="card-title">NPTEL — Remote Sensing &amp; Satellite Imaging</span>
-    <span class="card-folder">study/satellite-imaging/</span>
-    <span class="card-desc">EMR, sensors, image processing, classification, NDVI</span>
-    <span class="tag" style="background:#d2a8ff20;color:#d2a8ff">Study Tool</span>
-  </a>
-  <a class="card" href="study/biogas-plant/index.html" style="--accent:#ffa657" data-topic="biogas-plant">
-    <span class="card-icon">🦠</span>
-    <span class="card-title">NPTEL — Biomass Conversion &amp; Biogas</span>
-    <span class="card-folder">study/biogas-plant/</span>
-    <span class="card-desc">Anaerobic digestion, digester design, biorefinery, purification</span>
-    <span class="tag" style="background:#ffa65720;color:#ffa657">Study Tool</span>
-  </a>
-  <a class="card" href="study/nuclear-physics/index.html" style="--accent:#f0883e" data-topic="nuclear-physics">
-    <span class="card-icon">⚛️</span>
-    <span class="card-title">MIT 8.701 — Nuclear &amp; Particle Physics</span>
-    <span class="card-folder">study/nuclear-physics/</span>
-    <span class="card-desc">Standard Model, QCD, Feynman diagrams, fission, fusion</span>
-    <span class="tag" style="background:#f0883e20;color:#f0883e">Study Tool</span>
-  </a>
-  <a class="card" href="study/differential-geometry/index.html" style="--accent:#79c0ff" data-topic="differential-geometry">
-    <span class="card-icon">🌐</span>
-    <span class="card-title">NPTEL — Differential Geometry</span>
-    <span class="card-folder">study/differential-geometry/</span>
-    <span class="card-desc">Curves, surfaces, Frenet frame, Gaussian curvature, Gauss-Bonnet</span>
-    <span class="tag" style="background:#79c0ff20;color:#79c0ff">Study Tool</span>
-  </a>
-  <a class="card" href="study/gold-extraction/index.html" style="--accent:#ff9bce" data-topic="gold-extraction">
-    <span class="card-icon">🥇</span>
-    <span class="card-title">NPTEL — Gold Extraction &amp; E-Waste Recycling</span>
-    <span class="card-folder">study/gold-extraction/</span>
-    <span class="card-desc">Hydrometallurgy, aqua regia, bioleaching, green extraction</span>
-    <span class="tag" style="background:#ff9bce20;color:#ff9bce">Study Tool</span>
-  </a>
-  <a class="card" href="study/battery-storage/index.html" style="--accent:#58a6ff" data-topic="battery-storage">
-    <span class="card-icon">🔋</span>
-    <span class="card-title">NPTEL — Electrochemical Energy Storage</span>
-    <span class="card-folder">study/battery-storage/</span>
-    <span class="card-desc">Li-ion, Na-ion, BMS, supercapacitors, fuel cells, grid storage</span>
-    <span class="tag" style="background:#58a6ff20;color:#58a6ff">Study Tool</span>
-  </a>
-  <a class="card" href="study/sanskrit-learning/index.html" style="--accent:#f778ba" data-topic="sanskrit-learning">
-    <span class="card-icon">🕉️</span>
-    <span class="card-title">Sanskrit — 120 Lectures</span>
-    <span class="card-folder">study/sanskrit-learning/</span>
-    <span class="card-desc">Devanagari, vibhakti, sandhi, samasa, classical literature</span>
-    <span class="tag" style="background:#f778ba20;color:#f778ba">Study Tool</span>
-  </a>
-  <a class="card" href="study/tpu/index.html" style="--accent:#7ee787" data-topic="tpu">
-    <span class="card-icon">🔲</span>
-    <span class="card-title">TPU — Architecture &amp; Applications</span>
-    <span class="card-folder">study/tpu/</span>
-    <span class="card-desc">Systolic arrays, bfloat16, XLA, JAX, TPU v1–v4, pod architecture</span>
-    <span class="tag" style="background:#7ee78720;color:#7ee787">Study Tool</span>
-  </a>
-  <a class="card" href="study/security-ug/index.html" style="--accent:#d2a8ff" data-topic="security-ug">
-    <span class="card-icon">🔐</span>
-    <span class="card-title">Harvard CS50 — Cybersecurity (UG)</span>
-    <span class="card-folder">study/security-ug/</span>
-    <span class="card-desc">Encryption, passwords, web security, SQL injection, privacy</span>
-    <span class="tag" style="background:#d2a8ff20;color:#d2a8ff">Study Tool</span>
-  </a>
-  <a class="card" href="study/security-pg/index.html" style="--accent:#ffa657" data-topic="security-pg">
-    <span class="card-icon">🛡️</span>
-    <span class="card-title">MIT 6.858 — Systems Security (PG)</span>
-    <span class="card-folder">study/security-pg/</span>
-    <span class="card-desc">Buffer overflows, ROP, Spectre, Tor, sandboxing, formal verification</span>
-    <span class="tag" style="background:#ffa65720;color:#ffa657">Study Tool</span>
-  </a>
-  <a class="card" href="study/compilers/index.html" style="--accent:#f0883e" data-topic="compilers">
-    <span class="card-icon">⚙️</span>
-    <span class="card-title">Stanford CS143 — Compilers</span>
-    <span class="card-folder">study/compilers/</span>
-    <span class="card-desc">Lexing, parsing, type checking, SSA, optimization, code gen</span>
-    <span class="tag" style="background:#f0883e20;color:#f0883e">Study Tool</span>
-  </a>
-  <a class="card" href="study/programming-languages/index.html" style="--accent:#79c0ff" data-topic="programming-languages">
-    <span class="card-icon">λ</span>
-    <span class="card-title">UW CSE 341 — Programming Languages</span>
-    <span class="card-folder">study/programming-languages/</span>
-    <span class="card-desc">Closures, type inference, pattern matching, FP vs OOP, subtyping</span>
-    <span class="tag" style="background:#79c0ff20;color:#79c0ff">Study Tool</span>
-  </a>
-</div>
+<div class="grid" id="study-grid"><!-- rendered from TOPICS --></div>
 
 <h3>🌿 Lifestyle</h3>
 <div class="grid">
@@ -407,7 +318,7 @@
   </a>
 </div>
 
-<footer>20 projects · C:\src<br><span>Auto-generated 2026-04-17 · run update-hub to refresh</span></footer>
+<footer>17 study sites · 4 mind-map tools · 2 lifestyle · planner suite<br><span>Hub for C:\code · edit TOPICS in &lt;script&gt; to add courses</span></footer>
 
 </div><!-- /.wrap -->
 
@@ -454,21 +365,21 @@
 <script>
 /* ================== TOPICS (with sub-topics) ================== */
 const TOPICS = [
-  {id:'mit-distributed-systems', name:'MIT 6.824 Distributed Systems', icon:'🖥️', color:'#58a6ff', subs:['Raft consensus','MapReduce','GFS & replication','Linearizability','Two-phase commit','Chain replication','Spanner TrueTime','Bitcoin consensus','Fault tolerance','RPC & networking','CAP theorem','Memcached scaling']},
-  {id:'rocket-engineering',      name:'NPTEL Rocket Propulsion',       icon:'🚀', color:'#f778ba', subs:['Tsiolkovsky equation','Nozzle flow & Isp','Combustion instability','Solid propellants','Liquid engines','Electric propulsion','Staging & delta-v','Thermodynamic cycles','Turbopumps','Ignition systems']},
-  {id:'radar-engineering',       name:'MIT Radar Systems',             icon:'📡', color:'#7ee787', subs:['Radar equation','Pulse waveforms','Doppler processing','SAR imaging','AESA arrays','Detection theory','Tracking & Kalman','Electronic warfare','Antenna patterns','Clutter suppression']},
-  {id:'satellite-imaging',       name:'NPTEL Remote Sensing',          icon:'🛰️', color:'#d2a8ff', subs:['EMR spectrum','Passive sensors','Active sensors','Image preprocessing','Classification','NDVI & indices','Deep learning','Change detection','Atmospheric correction','Geometric correction']},
-  {id:'biogas-plant',            name:'NPTEL Biomass & Biogas',        icon:'🦠', color:'#ffa657', subs:['Anaerobic digestion','Feedstock selection','Digester design','Gas purification','Pyrolysis & gasification','Biorefinery','Methane yield','GHG accounting','Scale-up','Economics']},
-  {id:'nuclear-physics',         name:'MIT 8.701 Nuclear Physics',     icon:'⚛️', color:'#f0883e', subs:['Standard Model','Feynman diagrams','QCD & quarks','Weak interactions','Nuclear fission','Nuclear fusion','Particle detectors','Cross sections','Decay chains','Neutrino physics','Dark matter','Cosmic rays']},
-  {id:'differential-geometry',   name:'NPTEL Differential Geometry',   icon:'🌐', color:'#79c0ff', subs:['Curves & Frenet frame','Curvature & torsion','First fundamental form','Second fundamental form','Gaussian curvature','Gauss-Bonnet theorem','Geodesics','Manifolds','Tensor calculus','Covariant derivative']},
-  {id:'gold-extraction',         name:'NPTEL Gold Extraction',         icon:'🥇', color:'#ff9bce', subs:['Hydrometallurgy','Pyrometallurgy','Aqua regia leaching','Cyanide process','Bioleaching','E-waste feedstock','Recovery & refining','Green extraction','Emerging techniques','Economics & policy']},
-  {id:'battery-storage',         name:'NPTEL Energy Storage',          icon:'🔋', color:'#58a6ff', subs:['Electrochemistry basics','Li-ion cells','Na-ion cells','Lead-acid','Battery management systems','Supercapacitors','Fuel cells','Grid storage','Thermal management','Safety & failure modes']},
-  {id:'sanskrit-learning',       name:'Sanskrit 120 Lectures',         icon:'🕉️', color:'#f778ba', subs:['Devanagari script','Vibhakti (cases)','Sandhi rules','Samasa (compounds)','Verb conjugation','Noun declension','Kaarak relations','Classical texts','Metre & prosody','Panini grammar']},
-  {id:'tpu',                     name:'TPU Architecture',              icon:'🔲', color:'#7ee787', subs:['Systolic arrays','Matrix multiply units','bfloat16 precision','XLA compiler','JAX programming','TPU v1–v4 evolution','Pod interconnect','Memory hierarchy','Quantization','Performance profiling']},
-  {id:'security-ug',             name:'CS50 Cybersecurity UG',         icon:'🔐', color:'#d2a8ff', subs:['Symmetric encryption','Public-key crypto','Password hashing','Web security basics','SQL injection','XSS & CSRF','Network security','Privacy principles','Social engineering','Secure coding','Authentication','HTTPS & TLS']},
-  {id:'security-pg',             name:'MIT 6.858 Systems Security',    icon:'🛡️', color:'#ffa657', subs:['Buffer overflows','Return-oriented programming','Spectre & Meltdown','Sandboxing','Tor & anonymity','Formal verification','Capability systems','Information flow','Side channels','Secure enclaves','Symbolic execution','Fuzzing']},
-  {id:'compilers',               name:'Stanford CS143 Compilers',      icon:'⚙️', color:'#f0883e', subs:['Lexical analysis','LL/LR parsing','AST construction','Type checking','Semantic analysis','SSA form','Dataflow analysis','Loop optimization','Register allocation','Code generation']},
-  {id:'programming-languages',   name:'UW CSE 341 PL',                 icon:'λ',  color:'#79c0ff', subs:['Closures & scope','Type inference','Pattern matching','Algebraic data types','Higher-order functions','Mutation & state','FP vs OOP','Subtyping','Polymorphism','Language semantics','Lazy evaluation','Modules']},
+  {id:'mit-distributed-systems', name:'MIT 6.824 Distributed Systems', title:'MIT 6.824 — Distributed Systems',           desc:'Raft, MapReduce, GFS, Spanner, fault tolerance & consensus',          icon:'🖥️', color:'#58a6ff', subs:['Raft consensus','MapReduce','GFS & replication','Linearizability','Two-phase commit','Chain replication','Spanner TrueTime','Bitcoin consensus','Fault tolerance','RPC & networking','CAP theorem','Memcached scaling']},
+  {id:'rocket-engineering',      name:'NPTEL Rocket Propulsion',       title:'NPTEL — Rocket Propulsion',                  desc:'Nozzle theory, solid/liquid engines, electric propulsion, thermodynamics', icon:'🚀', color:'#f778ba', subs:['Tsiolkovsky equation','Nozzle flow & Isp','Combustion instability','Solid propellants','Liquid engines','Electric propulsion','Staging & delta-v','Thermodynamic cycles','Turbopumps','Ignition systems']},
+  {id:'radar-engineering',       name:'MIT Radar Systems',             title:'MIT Lincoln Lab — Radar Systems',            desc:'Radar equation, waveforms, Doppler, SAR, detection theory',           icon:'📡', color:'#7ee787', subs:['Radar equation','Pulse waveforms','Doppler processing','SAR imaging','AESA arrays','Detection theory','Tracking & Kalman','Electronic warfare','Antenna patterns','Clutter suppression']},
+  {id:'satellite-imaging',       name:'NPTEL Remote Sensing',          title:'NPTEL — Remote Sensing & Satellite Imaging', desc:'EMR, sensors, image processing, classification, NDVI',                icon:'🛰️', color:'#d2a8ff', subs:['EMR spectrum','Passive sensors','Active sensors','Image preprocessing','Classification','NDVI & indices','Deep learning','Change detection','Atmospheric correction','Geometric correction']},
+  {id:'biogas-plant',            name:'NPTEL Biomass & Biogas',        title:'NPTEL — Biomass Conversion & Biogas',        desc:'Anaerobic digestion, digester design, biorefinery, purification',     icon:'🦠', color:'#ffa657', subs:['Anaerobic digestion','Feedstock selection','Digester design','Gas purification','Pyrolysis & gasification','Biorefinery','Methane yield','GHG accounting','Scale-up','Economics']},
+  {id:'nuclear-physics',         name:'MIT 8.701 Nuclear Physics',     title:'MIT 8.701 — Nuclear & Particle Physics',     desc:'Standard Model, QCD, Feynman diagrams, fission, fusion',              icon:'⚛️', color:'#f0883e', subs:['Standard Model','Feynman diagrams','QCD & quarks','Weak interactions','Nuclear fission','Nuclear fusion','Particle detectors','Cross sections','Decay chains','Neutrino physics','Dark matter','Cosmic rays']},
+  {id:'differential-geometry',   name:'NPTEL Differential Geometry',   title:'NPTEL — Differential Geometry',              desc:'Curves, surfaces, Frenet frame, Gaussian curvature, Gauss-Bonnet',    icon:'🌐', color:'#79c0ff', subs:['Curves & Frenet frame','Curvature & torsion','First fundamental form','Second fundamental form','Gaussian curvature','Gauss-Bonnet theorem','Geodesics','Manifolds','Tensor calculus','Covariant derivative']},
+  {id:'gold-extraction',         name:'NPTEL Gold Extraction',         title:'NPTEL — Gold Extraction & E-Waste Recycling', desc:'Hydrometallurgy, aqua regia, bioleaching, green extraction',         icon:'🥇', color:'#ff9bce', subs:['Hydrometallurgy','Pyrometallurgy','Aqua regia leaching','Cyanide process','Bioleaching','E-waste feedstock','Recovery & refining','Green extraction','Emerging techniques','Economics & policy']},
+  {id:'battery-storage',         name:'NPTEL Energy Storage',          title:'NPTEL — Electrochemical Energy Storage',     desc:'Li-ion, Na-ion, BMS, supercapacitors, fuel cells, grid storage',      icon:'🔋', color:'#58a6ff', subs:['Electrochemistry basics','Li-ion cells','Na-ion cells','Lead-acid','Battery management systems','Supercapacitors','Fuel cells','Grid storage','Thermal management','Safety & failure modes']},
+  {id:'sanskrit-learning',       name:'Sanskrit 120 Lectures',         title:'Sanskrit — 120 Lectures',                    desc:'Devanagari, vibhakti, sandhi, samasa, classical literature',          icon:'🕉️', color:'#f778ba', subs:['Devanagari script','Vibhakti (cases)','Sandhi rules','Samasa (compounds)','Verb conjugation','Noun declension','Kaarak relations','Classical texts','Metre & prosody','Panini grammar']},
+  {id:'tpu',                     name:'TPU Architecture',              title:'TPU — Architecture & Applications',          desc:'Systolic arrays, bfloat16, XLA, JAX, TPU v1–v4, pod architecture',    icon:'🔲', color:'#7ee787', subs:['Systolic arrays','Matrix multiply units','bfloat16 precision','XLA compiler','JAX programming','TPU v1–v4 evolution','Pod interconnect','Memory hierarchy','Quantization','Performance profiling']},
+  {id:'security-ug',             name:'CS50 Cybersecurity UG',         title:'Harvard CS50 — Cybersecurity (UG)',          desc:'Encryption, passwords, web security, SQL injection, privacy',         icon:'🔐', color:'#d2a8ff', subs:['Symmetric encryption','Public-key crypto','Password hashing','Web security basics','SQL injection','XSS & CSRF','Network security','Privacy principles','Social engineering','Secure coding','Authentication','HTTPS & TLS']},
+  {id:'security-pg',             name:'MIT 6.858 Systems Security',    title:'MIT 6.858 — Systems Security (PG)',          desc:'Buffer overflows, ROP, Spectre, Tor, sandboxing, formal verification', icon:'🛡️', color:'#ffa657', subs:['Buffer overflows','Return-oriented programming','Spectre & Meltdown','Sandboxing','Tor & anonymity','Formal verification','Capability systems','Information flow','Side channels','Secure enclaves','Symbolic execution','Fuzzing']},
+  {id:'compilers',               name:'Stanford CS143 Compilers',      title:'Stanford CS143 — Compilers',                 desc:'Lexing, parsing, type checking, SSA, optimization, code gen',         icon:'⚙️', color:'#f0883e', subs:['Lexical analysis','LL/LR parsing','AST construction','Type checking','Semantic analysis','SSA form','Dataflow analysis','Loop optimization','Register allocation','Code generation']},
+  {id:'programming-languages',   name:'UW CSE 341 PL',                 title:'UW CSE 341 — Programming Languages',         desc:'Closures, type inference, pattern matching, FP vs OOP, subtyping',    icon:'λ',  color:'#79c0ff', subs:['Closures & scope','Type inference','Pattern matching','Algebraic data types','Higher-order functions','Mutation & state','FP vs OOP','Subtyping','Polymorphism','Language semantics','Lazy evaluation','Modules']},
 ];
 const TARGET_SECONDS = 20*3600;
 const DAY_QUOTA = 5;
@@ -949,6 +860,28 @@ function renderDailyPlan(){
 }
 
 /* ================== TOP STATS ================== */
+function renderStudyCards(){
+  const grid = document.getElementById('study-grid');
+  if(!grid || grid.dataset.rendered === '1') return;
+  const frag = document.createDocumentFragment();
+  TOPICS.forEach(t=>{
+    const a = document.createElement('a');
+    a.className = 'card';
+    a.href = `study/${t.id}/index.html`;
+    a.style.setProperty('--accent', t.color);
+    a.dataset.topic = t.id;
+    a.innerHTML = `
+      <span class="card-icon">${t.icon}</span>
+      <span class="card-title">${t.title || t.name}</span>
+      <span class="card-folder">study/${t.id}/</span>
+      <span class="card-desc">${t.desc || (t.subs||[]).slice(0,5).join(', ')}</span>
+      <span class="tag" style="background:${t.color}20;color:${t.color}">Study Tool</span>`;
+    frag.appendChild(a);
+  });
+  grid.appendChild(frag);
+  grid.dataset.rendered = '1';
+}
+
 function renderStats(){
   const s = get(K.streak,{current:0,longest:0,lastActive:null,history:{}});
   const t = today();
@@ -994,6 +927,7 @@ function renderMasteryBars(){
 /* ================== RENDER ================== */
 function render(){
   try {
+    renderStudyCards();
     renderStats();
     renderDailyPlan();
     renderMasteryBars();
@@ -1045,6 +979,10 @@ window.addEventListener('beforeunload', e=>{
 
 expireStreakIfNeeded();
 render();
+
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('./sw.js').catch(()=>{});
+}
 </script>
 
 </body>
