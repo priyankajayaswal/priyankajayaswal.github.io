@@ -168,6 +168,83 @@
 
   /* ── Deep Dives ── */
   #view-deepdive { overflow-y: auto; margin-top: 50px; height: calc(100vh - 50px); }
+  #view-usecase { overflow-y: auto; margin-top: 50px; height: calc(100vh - 50px); }
+  .uc-flow { max-width: 960px; margin: 0 auto; padding: 32px; }
+  .uc-flow h2 { font-size: 22px; color: #58a6ff; margin-bottom: 4px; }
+  .uc-flow .uc-subtitle { font-size: 13px; color: #8b949e; margin-bottom: 20px; }
+  .uc-step {
+    display: flex; gap: 14px; padding: 16px; border-radius: 10px; border: 1px solid #30363d;
+    background: #161b22; cursor: pointer; transition: all .3s; opacity: 0.3;
+  }
+  .uc-step.active { opacity: 1; border-color: #58a6ff; box-shadow: 0 0 20px rgba(88,166,255,0.15); }
+  .uc-step.done { opacity: 0.8; border-color: #3fb950; }
+  .uc-step .uc-badge {
+    width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 700; background: #30363d; color: #8b949e; flex-shrink: 0;
+  }
+  .uc-step.active .uc-badge { background: #58a6ff; color: #fff; }
+  .uc-step.done .uc-badge { background: #3fb950; color: #fff; }
+  .uc-step .uc-body { flex: 1; min-width: 0; overflow: hidden; }
+  .uc-step .uc-title { font-weight: 600; color: #c9d1d9; font-size: 14px; }
+  .uc-step .uc-component { font-size: 11px; color: #8b949e; margin-top: 2px; }
+  .uc-step .uc-detail { display: none; margin-top: 10px; font-size: 12px; color: #c9d1d9; line-height: 1.6; }
+  .uc-step.active .uc-detail { display: block; }
+  .uc-step .uc-proto { display: inline-block; background: #0d1117; border: 1px solid #30363d; border-radius: 4px; padding: 2px 8px; font-size: 10px; color: #79c0ff; margin-top: 8px; }
+  .uc-connector { width: 2px; height: 24px; background: #30363d; margin-left: 31px; transition: background .3s; }
+  .uc-connector.done { background: #3fb950; }
+  .uc-flow-controls { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
+  .uc-flow-controls button {
+    padding: 8px 18px; border-radius: 8px; border: 1px solid #30363d; background: #161b22;
+    color: #c9d1d9; cursor: pointer; font-size: 13px; transition: all .2s;
+  }
+  .uc-flow-controls button:hover { border-color: #58a6ff; color: #58a6ff; }
+  .uc-flow-controls button.primary { background: #1f6feb; border-color: #58a6ff; color: #fff; }
+  .uc-legend { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 16px; padding: 12px 16px;
+    background: #0d1117; border: 1px solid #30363d; border-radius: 8px; font-size: 11px; }
+  .uc-legend span { display: flex; align-items: center; gap: 6px; color: #8b949e; }
+  .uc-legend .dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+  .uc-back-btn { background: none; border: 1px solid #30363d; color: #58a6ff; padding: 8px 16px;
+    border-radius: 8px; cursor: pointer; font-size: 13px; margin-bottom: 16px; transition: all 0.2s; }
+  .uc-back-btn:hover { background: #161b22; border-color: #58a6ff; }
+  .uc-code { margin-top: 10px; padding: 10px 14px; background: #0d1117; border: 1px solid #30363d;
+    border-radius: 6px; font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+    font-size: 11px; color: #7ee787; line-height: 1.5; overflow-x: auto; white-space: pre;
+    max-width: 100%; box-sizing: border-box; }
+  .uc-refs { margin-top: 8px; display: flex; flex-wrap: wrap; gap: 6px; }
+  .uc-refs a { display: inline-block; padding: 3px 10px; background: #161b22; border: 1px solid #30363d;
+    border-radius: 4px; font-size: 10px; color: #79c0ff; text-decoration: none; transition: all .2s; }
+  .uc-refs a:hover { border-color: #58a6ff; color: #58a6ff; background: #0d1117; }
+  /* ── Use-case enrichment v2 ── */
+  .uc-overview { background: linear-gradient(135deg, #0d1117 0%, #161b22 100%); border: 1px solid #30363d;
+    border-left: 3px solid #58a6ff; border-radius: 10px; padding: 16px 18px; margin: 16px 0 20px; }
+  .uc-overview .uc-summary { font-size: 13px; color: #c9d1d9; line-height: 1.7; }
+  .uc-overview .uc-summary strong { color: #79c0ff; }
+  .uc-pipeline { margin-top: 14px; padding: 10px 12px; background: #0d1117; border: 1px solid #30363d;
+    border-radius: 6px; font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+    font-size: 11px; color: #7ee787; line-height: 1.6; white-space: pre-wrap; overflow-x: auto; }
+  .uc-metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 10px; margin-top: 14px; }
+  .uc-metric { background: #0d1117; border: 1px solid #30363d; border-radius: 8px; padding: 10px 12px; }
+  .uc-metric .uc-metric-label { font-size: 10px; color: #8b949e; text-transform: uppercase; letter-spacing: 0.5px; }
+  .uc-metric .uc-metric-value { font-size: 14px; color: #ffa657; font-weight: 600; margin-top: 4px; line-height: 1.4; }
+  .uc-extensions { margin-top: 14px; padding: 10px 12px; background: rgba(210, 168, 255, 0.06);
+    border: 1px solid rgba(210, 168, 255, 0.25); border-radius: 6px; font-size: 12px; color: #c9d1d9; line-height: 1.6; }
+  .uc-extensions strong { color: #d2a8ff; }
+  /* per-step enrichment chips & boxes */
+  .uc-step .uc-intuition { margin-top: 8px; padding: 8px 10px; background: rgba(126, 231, 135, 0.08);
+    border-left: 2px solid #3fb950; border-radius: 4px; font-size: 12px; color: #c9d1d9; line-height: 1.55; display: none; }
+  .uc-step.active .uc-intuition { display: block; }
+  .uc-step .uc-intuition strong { color: #7ee787; }
+  .uc-step .uc-complexity { display: inline-block; margin-top: 8px; margin-right: 6px;
+    background: rgba(31, 111, 235, 0.15); border: 1px solid rgba(88, 166, 255, 0.35); border-radius: 4px;
+    padding: 2px 8px; font-size: 10px; color: #79c0ff; font-family: 'Cascadia Code', 'Consolas', monospace; }
+  .uc-step .uc-pitfall { margin-top: 8px; padding: 8px 10px; background: rgba(255, 123, 114, 0.08);
+    border-left: 2px solid #ff7b72; border-radius: 4px; font-size: 12px; color: #c9d1d9; line-height: 1.55; display: none; }
+  .uc-step.active .uc-pitfall { display: block; }
+  .uc-step .uc-pitfall strong { color: #ff7b72; }
+  .uc-step .uc-example { margin-top: 8px; padding: 8px 10px; background: rgba(255, 166, 87, 0.06);
+    border-left: 2px solid #ffa657; border-radius: 4px; font-size: 12px; color: #c9d1d9; line-height: 1.55; display: none; }
+  .uc-step.active .uc-example { display: block; }
+  .uc-step .uc-example strong { color: #ffa657; }
   .dd-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 20px; padding: 24px 32px; max-width: 1400px; margin: 0 auto; }
   .dd-card { background: #161b22; border: 1px solid #30363d; border-radius: 12px; cursor: pointer; overflow: hidden; transition: all .25s; }
   .dd-card:hover { border-color: #58a6ff; transform: translateY(-3px); box-shadow: 0 8px 30px rgba(0,0,0,.4); }
@@ -265,6 +342,19 @@
     .toolbar-sep { display: none; }
     .canvas-controls { top: auto; bottom: 56px; right: 12px; }
     #view-deepdive { margin-top: 48px; height: calc(100vh - 48px); }
+    #view-usecase { margin-top: 48px; height: calc(100vh - 48px); }
+    .uc-flow { padding: 16px; }
+    .uc-flow h2 { font-size: 18px; }
+    .uc-step { padding: 12px; gap: 10px; }
+    .uc-step .uc-badge { width: 28px; height: 28px; font-size: 12px; }
+    .uc-connector { margin-left: 25px; }
+    .uc-flow-controls { flex-wrap: wrap; }
+    .uc-flow-controls button { font-size: 12px; padding: 6px 14px; }
+    .uc-legend { font-size: 10px; gap: 10px; }
+    .uc-code { font-size: 10px; white-space: pre-wrap; word-break: break-all; padding: 8px 10px; }
+    .uc-refs { gap: 4px; }
+    .uc-refs a { font-size: 9px; padding: 2px 8px; }
+    .uc-step .uc-detail { max-width: 100%; overflow-x: hidden; }
     .dd-grid { grid-template-columns: 1fr; padding: 12px 10px; }
     #view-appendix { margin-top: 48px; height: calc(100vh - 48px); }
     #tracker-panel { width: 100%; top: 48px; }
@@ -279,6 +369,322 @@
     .dd-card-img { height: 120px; }
     .dd-keypoints { grid-template-columns: 1fr; }
   }
+  /* ── Practice Problems (Problem-First) ── */
+  #problems-container { position: relative; top: 0; width: 100%; max-width: 1100px; margin: 0 auto; padding: 24px 16px 60px; }
+  #view-problems { overflow-y: auto; height: calc(100vh - 50px); margin-top: 50px; }
+  .prob-intro { background: #161b22; border: 1px solid #30363d; border-left: 3px solid #7ee787; border-radius: 6px; padding: 14px 18px; margin-bottom: 18px; color: #c9d1d9; font-size: 14px; line-height: 1.6; }
+  .prob-intro strong { color: #7ee787; }
+  /* Toolbar */
+  .prob-toolbar { position: sticky; top: 0; z-index: 5; background: rgba(13,17,23,0.95); backdrop-filter: blur(6px); padding: 10px 0 12px; margin-bottom: 14px; border-bottom: 1px solid #21262d; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  .prob-search { flex: 1 1 200px; min-width: 180px; background: #0d1117; border: 1px solid #30363d; border-radius: 6px; padding: 7px 12px; color: #c9d1d9; font-size: 13px; outline: none; }
+  .prob-search:focus { border-color: #58a6ff; }
+  .prob-filter-row { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+  .prob-chip { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 12px; cursor: pointer; background: #161b22; border: 1px solid #30363d; color: #8b949e; text-transform: uppercase; letter-spacing: .4px; transition: all .15s; user-select: none; }
+  .prob-chip:hover { border-color: #58a6ff; color: #c9d1d9; }
+  .prob-chip.active { background: #1f6feb22; border-color: #58a6ff; color: #58a6ff; }
+  .prob-chip.design.active  { background: #58a6ff22; border-color: #58a6ff; color: #58a6ff; }
+  .prob-chip.derive.active  { background: #ffa65722; border-color: #ffa657; color: #ffa657; }
+  .prob-chip.debug.active   { background: #f8514922; border-color: #f85149; color: #f85149; }
+  .prob-chip.code.active    { background: #7ee78722; border-color: #7ee787; color: #7ee787; }
+  .prob-chip.paper.active   { background: #d2a8ff22; border-color: #d2a8ff; color: #d2a8ff; }
+  .prob-chip .count { font-size: 9px; opacity: .7; font-weight: 500; }
+  .prob-actbtn { background: #161b22; border: 1px solid #30363d; color: #c9d1d9; padding: 6px 12px; border-radius: 6px; font-size: 12px; cursor: pointer; transition: all .15s; }
+  .prob-actbtn:hover { border-color: #58a6ff; color: #58a6ff; }
+  .prob-actbtn.primary { background: #1f6feb; border-color: #58a6ff; color: #fff; }
+  .prob-actbtn.primary:hover { background: #388bfd; }
+  .prob-progress { display: flex; align-items: center; gap: 10px; flex: 0 0 auto; font-size: 11px; color: #8b949e; margin-left: auto; }
+  .prob-progress-bar { width: 100px; height: 6px; background: #21262d; border-radius: 3px; overflow: hidden; }
+  .prob-progress-fill { height: 100%; background: linear-gradient(90deg, #7ee787, #58a6ff); transition: width .3s; }
+  /* Sections */
+  .prob-section { margin-bottom: 16px; border: 1px solid #30363d; border-radius: 8px; background: #161b22; overflow: hidden; }
+  .prob-section > summary { padding: 13px 18px; font-size: 14px; font-weight: 600; color: #e6edf3; cursor: pointer; list-style: none; display: flex; align-items: center; gap: 10px; user-select: none; transition: background .15s; flex-wrap: wrap; }
+  .prob-section > summary::-webkit-details-marker { display: none; }
+  .prob-section > summary::before { content: '▸'; color: #8b949e; font-size: 11px; transition: transform .2s; }
+  .prob-section[open] > summary::before { transform: rotate(90deg); }
+  .prob-section > summary:hover { background: rgba(88,166,255,0.04); }
+  .prob-section .wk { color: #8b949e; font-size: 11px; font-weight: 500; background: #0d1117; padding: 2px 8px; border-radius: 10px; border: 1px solid #30363d; }
+  .prob-section .sec-meta { margin-left: auto; font-size: 11px; color: #6e7681; font-weight: 500; }
+  .prob-section .sec-meta .done-count { color: #7ee787; font-weight: 600; }
+  .prob-hook { background: #0d1117; border-bottom: 1px solid #21262d; padding: 12px 22px; font-size: 13px; color: #d2a8ff; font-style: italic; line-height: 1.6; display: flex; gap: 8px; align-items: flex-start; }
+  .prob-hook::before { content: '🪝'; font-style: normal; flex-shrink: 0; }
+  .prob-body { padding: 12px 18px 16px; display: flex; flex-direction: column; gap: 10px; }
+  /* Problem cards */
+  .prob-card { background: #0d1117; border: 1px solid #21262d; border-radius: 8px; padding: 12px 14px; transition: all .15s; position: relative; }
+  .prob-card:hover { border-color: #30363d; }
+  .prob-card.status-thinking { border-left: 3px solid #d2a8ff; }
+  .prob-card.status-got      { border-left: 3px solid #7ee787; opacity: .75; }
+  .prob-card.status-stuck    { border-left: 3px solid #f85149; }
+  .prob-card.hidden          { display: none; }
+  .prob-card .pc-head { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 4px; }
+  .prob-card .pc-num { color: #6e7681; font-size: 11px; font-weight: 600; font-family: 'Cascadia Code', monospace; }
+  .prob-card .pc-star { color: #ffa657; font-size: 13px; }
+  .prob-tag { display: inline-block; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 8px; text-transform: uppercase; letter-spacing: .4px; }
+  .prob-tag.design { background: #58a6ff20; color: #58a6ff; }
+  .prob-tag.debug  { background: #f8514920; color: #f85149; }
+  .prob-tag.paper  { background: #d2a8ff20; color: #d2a8ff; }
+  .prob-tag.code   { background: #7ee78720; color: #7ee787; }
+  .prob-tag.derive { background: #ffa65720; color: #ffa657; }
+  .prob-card .pc-text { color: #c9d1d9; font-size: 13.5px; line-height: 1.6; margin: 2px 0 6px; }
+  .prob-card .pc-actions { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; margin-top: 6px; }
+  .prob-revealbtn { background: transparent; border: 1px dashed #30363d; color: #8b949e; padding: 3px 10px; border-radius: 12px; font-size: 11px; cursor: pointer; transition: all .15s; }
+  .prob-revealbtn:hover { border-color: #d2a8ff; color: #d2a8ff; border-style: solid; }
+  .prob-revealbtn.approach:hover { border-color: #79c0ff; color: #79c0ff; }
+  .prob-revealbtn.answer:hover   { border-color: #7ee787; color: #7ee787; }
+  .prob-reveal-panel { display: none; margin-top: 8px; padding: 10px 14px; background: #161b22; border-radius: 4px; color: #c9d1d9; font-size: 12.5px; line-height: 1.65; }
+  .prob-reveal-panel.shown { display: block; }
+  .prob-reveal-panel ul, .prob-reveal-panel ol { margin: 4px 0 4px 18px; padding: 0; }
+  .prob-reveal-panel li { margin: 3px 0; }
+  .prob-reveal-panel code { background: #0d1117; padding: 1px 5px; border-radius: 3px; font-size: 11.5px; color: #79c0ff; font-family: 'Cascadia Code', 'Consolas', monospace; }
+  .prob-reveal-panel strong { color: #e6edf3; }
+  .prob-reveal-panel .rh-label { display: inline-block; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .6px; margin-right: 8px; padding: 1px 6px; border-radius: 4px; vertical-align: middle; }
+  .prob-hint     { border-left: 2px solid #d2a8ff; }
+  .prob-hint     .rh-label { background: #d2a8ff22; color: #d2a8ff; }
+  .prob-approach { border-left: 2px solid #79c0ff; }
+  .prob-approach .rh-label { background: #79c0ff22; color: #79c0ff; }
+  .prob-answer   { border-left: 2px solid #7ee787; background: #0d1f17; }
+  .prob-answer   .rh-label { background: #7ee78722; color: #7ee787; }
+  .prob-status-btns { display: flex; gap: 4px; margin-left: auto; }
+  .prob-statbtn { background: transparent; border: 1px solid #30363d; color: #6e7681; padding: 3px 9px; border-radius: 12px; font-size: 11px; cursor: pointer; transition: all .15s; }
+  .prob-statbtn:hover { border-color: #58a6ff; color: #c9d1d9; }
+  .prob-statbtn.active.thinking { background: #d2a8ff22; border-color: #d2a8ff; color: #d2a8ff; }
+  .prob-statbtn.active.got      { background: #7ee78722; border-color: #7ee787; color: #7ee787; }
+  .prob-statbtn.active.stuck    { background: #f8514922; border-color: #f85149; color: #f85149; }
+  .prob-empty { text-align: center; padding: 40px 20px; color: #6e7681; font-size: 13px; }
+  /* Modal for surprise-me */
+  .prob-spotlight { position: fixed; inset: 0; background: rgba(13,17,23,0.85); backdrop-filter: blur(4px); display: none; align-items: center; justify-content: center; z-index: 100; padding: 20px; }
+  .prob-spotlight.open { display: flex; }
+  .prob-spotlight-card { background: #161b22; border: 1px solid #58a6ff; border-radius: 12px; max-width: 600px; width: 100%; padding: 24px 28px; box-shadow: 0 12px 60px rgba(88,166,255,0.3); }
+  .prob-spotlight-card h3 { color: #58a6ff; font-size: 14px; margin: 0 0 4px; text-transform: uppercase; letter-spacing: 1px; }
+  .prob-spotlight-card .pc-text { font-size: 16px; line-height: 1.55; color: #e6edf3; margin: 10px 0; }
+  .prob-spotlight-card .sl-close { background: transparent; border: none; color: #8b949e; font-size: 22px; cursor: pointer; float: right; line-height: 1; }
+  .prob-spotlight-card .sl-close:hover { color: #c9d1d9; }
+
+/* === BEGIN glossary v1 css === */
+  /* dd-nav sticky top */
+  .dd-nav.dd-nav-top {
+    position: sticky; top: 0; z-index: 5;
+    margin: -4px -4px 14px; padding: 10px 8px;
+    background: linear-gradient(180deg, rgba(13,17,23,0.96) 75%, rgba(13,17,23,0));
+    backdrop-filter: blur(4px);
+    border-bottom: 1px solid #21262d;
+  }
+  /* ── Glossary ── */
+  .gloss-intro { background: #161b22; border: 1px solid #30363d; border-left: 3px solid #d2a8ff; border-radius: 6px; padding: 14px 18px; margin-bottom: 14px; color: #c9d1d9; font-size: 14px; line-height: 1.6; }
+  .gloss-intro strong { color: #d2a8ff; }
+  #view-glossary { overflow-y: auto; height: calc(100vh - 50px); margin-top: 50px; padding: 20px; box-sizing: border-box; }
+  @media (max-width: 768px) { #view-glossary { margin-top: 48px; padding: 12px; } }
+  .glossary-controls { position: sticky; top: 0; z-index: 5; background: rgba(13,17,23,0.95); backdrop-filter: blur(6px); padding: 10px 0 12px; margin: -8px 0 14px; border-bottom: 1px solid #21262d; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  #glossary-search { flex: 1 1 240px; min-width: 200px; background: #0d1117; border: 1px solid #30363d; border-radius: 6px; padding: 7px 12px; color: #c9d1d9; font-size: 13px; outline: none; }
+  #glossary-search:focus { border-color: #58a6ff; }
+  .glossary-cat-pills { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+  .glossary-cat-pills button { background: #161b22; border: 1px solid #30363d; color: #8b949e; padding: 4px 10px; border-radius: 12px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .4px; cursor: pointer; transition: all .15s; }
+  .glossary-cat-pills button:hover { border-color: #58a6ff; color: #c9d1d9; }
+  .glossary-cat-pills button.active { background: var(--pill-bg, #1f6feb22); border-color: var(--pill-color, #58a6ff); color: var(--pill-color, #58a6ff); }
+  .glossary-count { font-size: 11px; color: #8b949e; margin-left: auto; }
+  .glossary-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 14px; max-width: 1400px; margin: 0 auto; }
+  .glossary-card { background: #161b22; border: 1px solid #30363d; border-radius: 10px; padding: 14px; transition: border-color .15s, box-shadow .15s, transform .15s; }
+  .glossary-card:hover { border-color: var(--cat-color, #58a6ff); box-shadow: 0 4px 14px rgba(0,0,0,0.35); }
+  .glossary-card.flash {
+    animation: glossary-flash 2.6s cubic-bezier(.4,0,.2,1) 1 forwards;
+    position: relative;
+    z-index: 2;
+  }
+  @keyframes glossary-flash {
+    0% {
+      background: #161b22;
+      border-color: #30363d;
+      box-shadow: 0 0 0 rgba(0,0,0,0);
+      transform: scale(1);
+    }
+    8% {
+      background: color-mix(in srgb, var(--cat-color, #58a6ff) 55%, #161b22);
+      border-color: var(--cat-color, #58a6ff);
+      box-shadow:
+        0 0 0 4px var(--cat-color, #58a6ff),
+        0 0 28px 6px color-mix(in srgb, var(--cat-color, #58a6ff) 70%, transparent),
+        0 14px 36px rgba(0,0,0,0.55);
+      transform: scale(1.045);
+    }
+    22% {
+      background: color-mix(in srgb, var(--cat-color, #58a6ff) 30%, #161b22);
+      border-color: var(--cat-color, #58a6ff);
+      box-shadow:
+        0 0 0 3px var(--cat-color, #58a6ff),
+        0 0 22px 4px color-mix(in srgb, var(--cat-color, #58a6ff) 55%, transparent),
+        0 10px 28px rgba(0,0,0,0.5);
+      transform: scale(1.03);
+    }
+    45% {
+      background: color-mix(in srgb, var(--cat-color, #58a6ff) 45%, #161b22);
+      border-color: var(--cat-color, #58a6ff);
+      box-shadow:
+        0 0 0 3px var(--cat-color, #58a6ff),
+        0 0 26px 5px color-mix(in srgb, var(--cat-color, #58a6ff) 60%, transparent),
+        0 12px 32px rgba(0,0,0,0.5);
+      transform: scale(1.035);
+    }
+    70% {
+      background: color-mix(in srgb, var(--cat-color, #58a6ff) 22%, #161b22);
+      border-color: color-mix(in srgb, var(--cat-color, #58a6ff) 80%, #30363d);
+      box-shadow:
+        0 0 0 2px color-mix(in srgb, var(--cat-color, #58a6ff) 70%, transparent),
+        0 0 18px 3px color-mix(in srgb, var(--cat-color, #58a6ff) 40%, transparent);
+      transform: scale(1.015);
+    }
+    100% {
+      background: #161b22;
+      border-color: #30363d;
+      box-shadow: 0 0 0 rgba(0,0,0,0);
+      transform: scale(1);
+    }
+  }
+  /* Fallback for browsers without color-mix: solid tinted backgrounds */
+  @supports not (background: color-mix(in srgb, red, blue)) {
+    @keyframes glossary-flash {
+      0%,100% { background: #161b22; border-color: #30363d; box-shadow: none; transform: scale(1); }
+      8%, 45% {
+        background: rgba(88,166,255,0.32);
+        border-color: var(--cat-color, #58a6ff);
+        box-shadow: 0 0 0 4px var(--cat-color, #58a6ff), 0 0 28px var(--cat-color, #58a6ff);
+        transform: scale(1.04);
+      }
+    }
+  }
+  .glossary-term-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .glossary-term { font-size: 16px; font-weight: 700; color: #e6edf3; }
+  .glossary-cat-badge { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; padding: 2px 7px; border-radius: 10px; border: 1px solid var(--cat-color, #58a6ff); color: var(--cat-color, #58a6ff); background: rgba(0,0,0,0.2); }
+  .glossary-aka { font-size: 11px; color: #8b949e; font-style: italic; margin-top: 3px; }
+  .glossary-short { font-size: 13px; color: #c9d1d9; margin-top: 8px; line-height: 1.5; }
+  .glossary-long { font-size: 13px; color: #8b949e; margin-top: 8px; line-height: 1.55; display: none; }
+  .glossary-long code { background: #0d1117; border: 1px solid #21262d; border-radius: 4px; padding: 1px 5px; font-family: 'Cascadia Code', monospace; font-size: 12px; color: #d2a8ff; }
+  .glossary-card.expanded .glossary-long { display: block; }
+  .glossary-toggle { background: none; border: none; color: #58a6ff; font-size: 11px; cursor: pointer; padding: 6px 0 0; }
+  .glossary-toggle:hover { text-decoration: underline; }
+  .glossary-links { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+  .glossary-links button { background: #0d1117; border: 1px solid #30363d; color: #c9d1d9; padding: 3px 9px; border-radius: 10px; font-size: 11px; cursor: pointer; transition: all .15s; }
+  .glossary-links button:hover { border-color: #58a6ff; color: #58a6ff; }
+  /* graph-node pulse when jumped to from glossary */
+  @keyframes glossary-pulse {
+    0%   { stroke-opacity: 1; stroke-width: 14; }
+    100% { stroke-opacity: 0.55; stroke-width: 5; }
+  }
+  @keyframes glossary-halo-pulse {
+    0%   { r: 16;  stroke-opacity: 1;    stroke-width: 10; }
+    60%  { r: 90;  stroke-opacity: 0.55; stroke-width: 5; }
+    100% { r: 140; stroke-opacity: 0;    stroke-width: 2; }
+  }
+  @keyframes glossary-halo-pulse-2 {
+    0%   { r: 16;  stroke-opacity: 0.9; stroke-width: 6; }
+    60%  { r: 110; stroke-opacity: 0.4; stroke-width: 3; }
+    100% { r: 170; stroke-opacity: 0;   stroke-width: 1.5; }
+  }
+  @keyframes glossary-fill-pulse {
+    0%, 100% { fill-opacity: 0.85; }
+    50%      { fill-opacity: 1; }
+  }
+  @keyframes glossary-dim-others {
+    0%   { opacity: 1; }
+    20%  { opacity: 0.15; }
+    100% { opacity: 0.15; }
+  }
+  /* Dim everything in the graph except the highlighted node + its halos */
+  #canvas-graph.glossary-spotlight g.graph-node:not(.glossary-highlight),
+  #canvas-graph.glossary-spotlight line.graph-link,
+  #canvas-graph.glossary-spotlight text.graph-link-label {
+    animation: glossary-dim-others 0.4s ease-out forwards;
+  }
+  #canvas-graph.glossary-spotlight g.graph-node.glossary-highlight {
+    opacity: 1 !important;
+  }
+  g.graph-node.glossary-highlight circle:not(.glossary-halo):not(.glossary-halo-outer) {
+    animation:
+      glossary-pulse 0.45s ease-in-out 10 alternate,
+      glossary-fill-pulse 0.45s ease-in-out 10 alternate;
+    stroke: #ffd13b !important;
+    fill: #ffd13b !important;
+    filter:
+      drop-shadow(0 0 10px #ffd13b)
+      drop-shadow(0 0 24px #ffd13baa)
+      drop-shadow(0 0 40px #ffd13b66);
+  }
+  g.graph-node.glossary-highlight text {
+    fill: #fff !important;
+    font-weight: 900 !important;
+    font-size: 15px !important;
+    paint-order: stroke fill;
+    stroke: #5a3a00;
+    stroke-width: 4px;
+    stroke-linejoin: round;
+    filter:
+      drop-shadow(0 0 6px #000)
+      drop-shadow(0 0 12px #ffd13b)
+      drop-shadow(0 0 20px #ffd13bcc);
+  }
+  circle.glossary-halo {
+    fill: none;
+    stroke: #ffd13b;
+    pointer-events: none;
+    animation: glossary-halo-pulse 1.1s ease-out 5;
+    filter: drop-shadow(0 0 8px #ffd13baa);
+  }
+  circle.glossary-halo-outer {
+    fill: none;
+    stroke: #ffae00;
+    pointer-events: none;
+    animation: glossary-halo-pulse-2 1.4s ease-out 5;
+    animation-delay: 0.18s;
+    filter: drop-shadow(0 0 12px #ffae0099);
+  }
+  /* mindmap pulse (uses a <circle> appended) */
+  circle.glossary-mm-halo {
+    fill: none;
+    stroke: #ffd13b;
+    pointer-events: none;
+    animation: glossary-halo-pulse 1.1s ease-out 5;
+    filter: drop-shadow(0 0 8px #ffd13baa);
+  }
+  circle.glossary-mm-halo-outer {
+    fill: none;
+    stroke: #ffae00;
+    pointer-events: none;
+    animation: glossary-halo-pulse-2 1.4s ease-out 5;
+    animation-delay: 0.18s;
+    filter: drop-shadow(0 0 12px #ffae0099);
+  }
+  /* toast banner shown when jumping from glossary */
+  #glossary-toast {
+    position: fixed; top: 60px; left: 50%; transform: translateX(-50%) translateY(-30px) scale(0.92);
+    background: linear-gradient(180deg, #2a1f0a, #1a1308);
+    border: 2px solid #ffd13b; border-left: 6px solid #ffd13b;
+    color: #fff5d6; padding: 12px 22px; border-radius: 10px;
+    font-size: 15px; font-weight: 700;
+    box-shadow:
+      0 10px 32px rgba(0,0,0,0.6),
+      0 0 36px rgba(255,209,59,0.45),
+      0 0 64px rgba(255,209,59,0.25);
+    opacity: 0; pointer-events: none;
+    transition: opacity .22s ease, transform .28s cubic-bezier(.2,1.2,.4,1);
+    z-index: 10000;
+    display: flex; align-items: center; gap: 12px;
+    max-width: 90vw;
+    text-shadow: 0 0 8px rgba(255,209,59,0.5);
+  }
+  #glossary-toast.show { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+  #glossary-toast .gt-icon { font-size: 22px; filter: drop-shadow(0 0 6px #ffd13b); }
+  #glossary-toast .gt-sub { color: #c9b88c; font-weight: 500; font-size: 12.5px; margin-left: 4px; }
+  #glossary-toast strong { color: #ffd13b; text-shadow: 0 0 10px rgba(255,209,59,0.6); }
+  @media (max-width: 768px) { #glossary-toast { top: 56px; font-size: 13px; padding: 10px 16px; } }
+  /* tooltip glossary footer link */
+  #tooltip .tt-glossary { margin-top: 6px; padding-top: 5px; border-top: 1px solid #30363d; }
+  #tooltip .tt-glossary:empty { display: none; }
+  #tooltip .tt-glossary a {
+    display: inline-block; padding: 2px 8px; border-radius: 4px;
+    background: rgba(210,168,255,0.10); color: #d2a8ff; text-decoration: none;
+    font-size: 11px; font-weight: 500; cursor: pointer; border: 1px solid rgba(210,168,255,0.25);
+  }
+  #tooltip .tt-glossary a:hover { background: rgba(210,168,255,0.22); border-color: #d2a8ff; }
+  #tooltip.has-glossary { pointer-events: auto; }
+/* === END glossary v1 css === */
 </style>
 </head>
 <body>
@@ -323,9 +729,35 @@
   </div>
 </div>
 
+
+<div id="view-usecase" class="view">
+  <div id="uc-card-grid" class="dd-grid"></div>
+  <div id="uc-detail-container" style="display:none"></div>
+  <div class="canvas-controls" id="usecase-controls" style="display:none">
+    <button class="cbtn" id="btn-back-uc" onclick="showUseCaseGrid()">← Back to All</button>
+  </div>
+</div>
 <div id="view-appendix" class="view">
   <div id="appendix-container"></div>
 </div>
+<div id="view-problems" class="view">
+  <div id="problems-container"></div>
+</div>
+<!-- BEGIN glossary v1 view -->
+<div id="view-glossary" class="view">
+  <div class="gloss-intro">
+    <strong>📖 Glossary.</strong> Every acronym, jargon term, and unit-of-art used across <em>Use Cases</em> and <em>Deep Dives</em> — defined here, cross-linked to the <strong>Topic Graph</strong> and <strong>Mind Map</strong> so you can jump from definition → diagram in one click.
+    <br><br>
+    <span style="color:#8b949e">Tip: click a related term to flash-jump to it. Click the 🌐 graph or 🧭 mindmap links to spotlight that node on its tab.</span>
+  </div>
+  <div class="glossary-controls">
+    <input type="text" id="glossary-search" placeholder="🔍 Search terms, acronyms, or definitions…" />
+    <div class="glossary-cat-pills" id="glossary-cat-pills"></div>
+    <span class="glossary-count" id="glossary-count"></span>
+  </div>
+  <div id="glossary-list" class="glossary-list"></div>
+</div>
+<!-- END glossary v1 view -->
 
 <!-- ═══════════════ SHARED OVERLAYS ═══════════════ -->
 <div id="tooltip"><div class="tt-title"></div><div class="tt-body"></div><div class="tt-slides"></div></div>
@@ -699,32 +1131,49 @@ const C = {
   deepDives: [
     {
       id: "dd-dp", num: "1 of 6", title: "Dynamic Programming",
-      desc: "The most important paradigm in competitive programming — master the art of breaking problems into overlapping subproblems.", color: "#f778ba", icon: "🧩",
+      desc: "The most important paradigm in competitive programming — break problems into overlapping subproblems and assemble optimal solutions from smaller ones.", color: "#f778ba", icon: "🧩",
       svg: function(w, h) {
         var s = '<svg viewBox="0 0 '+w+' '+h+'" xmlns="http://www.w3.org/2000/svg" style="background:#0d1117">';
-        // DP table grid
-        var cols = 6, rows = 4, cw = (w-80)/cols, rh = (h-80)/rows;
+        s += '<defs><marker id="dpArr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#f778ba"/></marker></defs>';
+        // LCS-style DP table for "ABC" vs "AC"
+        var rowsLbl = [' ','A','B','C'], colsLbl = [' ','A','C'];
+        var rows = rowsLbl.length, cols = colsLbl.length;
+        var cw = Math.min(48, (w-100)/(cols+1)), rh = Math.min(38, (h-80)/(rows+1));
+        var ox = (w - cols*cw)/2, oy = 30;
+        // Header labels
+        for(var c=0;c<cols;c++) s += '<text x="'+(ox+c*cw+cw/2)+'" y="'+(oy-8)+'" text-anchor="middle" fill="#f778ba" font-size="11" font-weight="600">'+colsLbl[c]+'</text>';
+        for(var r=0;r<rows;r++) s += '<text x="'+(ox-12)+'" y="'+(oy+r*rh+rh/2+4)+'" text-anchor="middle" fill="#f778ba" font-size="11" font-weight="600">'+rowsLbl[r]+'</text>';
+        // dp values for LCS("ABC","AC")
+        var dp = [[0,0,0],[0,1,1],[0,1,1],[0,1,2]];
         for(var r=0;r<rows;r++) for(var c=0;c<cols;c++) {
-          var x=40+c*cw, y=40+r*rh, fill = (r+c)%3===0 ? '#f778ba30' : '#161b22';
+          var x=ox+c*cw, y=oy+r*rh;
+          var match = (r>0 && c>0 && rowsLbl[r]===colsLbl[c]);
+          var fill = (r===rows-1 && c===cols-1) ? '#f778ba50' : (match ? '#f778ba25' : '#161b22');
           s += '<rect x="'+x+'" y="'+y+'" width="'+cw+'" height="'+rh+'" fill="'+fill+'" stroke="#30363d" stroke-width="1"/>';
-          if((r+c)%3===0) s += '<text x="'+(x+cw/2)+'" y="'+(y+rh/2+4)+'" text-anchor="middle" fill="#f778ba" font-size="10">opt</text>';
+          s += '<text x="'+(x+cw/2)+'" y="'+(y+rh/2+4)+'" text-anchor="middle" fill="#c9d1d9" font-size="12">'+dp[r][c]+'</text>';
         }
-        // Arrow showing fill direction
-        s += '<line x1="60" y1="'+(h-20)+'" x2="'+(w-60)+'" y2="'+(h-20)+'" stroke="#f778ba" stroke-width="1.5" marker-end="url(#arr)"/>';
-        s += '<defs><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#f778ba"/></marker></defs>';
-        s += '<text x="'+(w/2)+'" y="'+(h-6)+'" text-anchor="middle" fill="#f778ba88" font-size="9">Fill direction →</text>';
+        // Dependency arrows into the answer cell from (i-1,j-1), (i-1,j), (i,j-1)
+        var ax = ox+(cols-1)*cw+cw/2, ay = oy+(rows-1)*rh+rh/2;
+        s += '<line x1="'+(ax-cw)+'" y1="'+(ay-rh)+'" x2="'+(ax-4)+'" y2="'+(ay-4)+'" stroke="#f778ba" stroke-width="1.4" marker-end="url(#dpArr)"/>';
+        s += '<line x1="'+ax+'" y1="'+(ay-rh)+'" x2="'+ax+'" y2="'+(ay-6)+'" stroke="#f778ba88" stroke-width="1.2" marker-end="url(#dpArr)"/>';
+        s += '<line x1="'+(ax-cw)+'" y1="'+ay+'" x2="'+(ax-6)+'" y2="'+ay+'" stroke="#f778ba88" stroke-width="1.2" marker-end="url(#dpArr)"/>';
+        s += '<text x="'+(w/2)+'" y="'+(h-22)+'" text-anchor="middle" fill="#f778ba" font-size="11">dp[i][j] = dp[i-1][j-1]+1  if  s[i]=t[j]   else  max(dp[i-1][j], dp[i][j-1])</text>';
+        s += '<text x="'+(w/2)+'" y="'+(h-6)+'" text-anchor="middle" fill="#f778ba88" font-size="9">LCS("ABC","AC") = 2  →  fill table left→right, top→bottom</text>';
         return s + '</svg>';
       },
       sections: [
-        { title: "Core Idea", text: "DP solves problems by combining solutions to overlapping subproblems. Define state, write recurrence, add memoization or build bottom-up." },
-        { title: "Classic Problems", text: "Knapsack (0/1, unbounded), LCS, LIS (O(n log k) with patience sorting), Edit Distance, Coin Change, Matrix Chain Multiplication." },
-        { title: "Bitmask DP", text: "When n ≤ 18-20, use bitmask to represent subsets. Classic example: TSP in O(2ⁿ · n²)." },
-        { title: "Key Formula", formula: "dp[i] = min/max over all valid transitions from dp[j] + cost(j→i)" }
+        { title: "Core Idea", text: "DP turns exponential brute force into polynomial work by remembering each subproblem's answer exactly once. The recipe is always the same: (1) define a state — the smallest tuple of variables that fully describes a subproblem; (2) write a recurrence that expresses the answer in terms of strictly smaller states; (3) prove a base case; (4) decide between top-down memoization or bottom-up tabulation. If you can't articulate the state in one English sentence, you don't yet have a DP." },
+        { title: "Worked Example — Coin Change", text: "Given coins {1,3,4} and target 6, find the fewest coins that sum to 6. State: dp[v] = min coins to make value v. Recurrence: dp[v] = 1 + min(dp[v-c]) over coins c ≤ v, with dp[0]=0. Filling left to right: dp = [0,1,2,1,1,2,2]. Answer dp[6]=2 (3+3 or 2 + 4). Notice the overlap — dp[3] is reused by dp[4], dp[6], and dp[7]; that reuse is what makes DP an order-of-magnitude faster than the recursive enumeration." },
+        { title: "Bitmask DP", text: "When n ≤ 20, an entire subset can be packed into one integer. State dp[mask][i] = best cost having visited exactly the cities in mask and currently sitting at i. Travelling Salesman becomes O(2ⁿ·n²) — for n=20 that is ~400 million ops, comfortably under a second in C++. Common patterns: assignment problems, smallest set cover, count Hamiltonian paths, profile DP on a 1×n strip. Pitfall: iterating subsets of a mask m must use the trick `for(s=m; s; s=(s-1)&m)` for O(3ⁿ) total." },
+        { title: "Key Recurrence Shape", formula: "dp[state] = OP over transitions { f(dp[prev_state]) + cost(prev → state) }" },
+        { title: "Common Pitfalls", text: "(1) Wrong state — leaving out a dimension you actually depend on (e.g., last item taken in knapsack with constraints). (2) Iteration order — for 0/1 knapsack you must loop weight downward, otherwise you double-count items. (3) Off-by-one base cases that flip the whole table. (4) Forgetting modular arithmetic — counting DPs explode and need % 10⁹+7 every addition. Always sanity-check by computing the brute force answer for n ≤ 5." }
       ],
       keypoints: [
-        { title: "Identify Subproblems", text: "State = minimum info needed to make future decisions." },
-        { title: "Bottom-Up vs Top-Down", text: "Bottom-up avoids recursion overhead; top-down is easier to write." },
-        { title: "Space Optimization", text: "Many 2D DPs can be reduced to 1D by processing in the right order." }
+        { title: "State Definition is 80%", text: "Once the state is right, the recurrence usually writes itself. State must capture only the information that future decisions depend on — nothing more, nothing less." },
+        { title: "Top-Down vs Bottom-Up", text: "Top-down (recursion+memo) is easier to derive from the recurrence. Bottom-up wins on speed (no stack frames) and lets you reuse rows for O(W) → O(1) row space. In contests, code top-down first, optimize only if needed." },
+        { title: "Space Optimization", text: "If dp[i] depends only on dp[i-1] you need 2 rows; if only on dp[i-1] for the same column, 1 row reading right-to-left. Knapsack and LCS both have this form." },
+        { title: "Complexity Heuristic", text: "Number of states × work per transition. For n=10⁴ and one O(1) transition per state you have headroom; for n=10⁵ you must compress states or amortize transitions." },
+        { title: "When DP Fails", text: "If subproblems overlap heavily but don't share an optimal substructure (longest simple path in a general graph, NP-hard), DP gives wrong answers — fall back to branch-and-bound or meet-in-the-middle." }
       ]
     },
     {
@@ -732,157 +1181,795 @@ const C = {
       desc: "Traversal, shortest paths, spanning trees, and connected components — the backbone of competitive programming.", color: "#7ee787", icon: "🌐",
       svg: function(w, h) {
         var s = '<svg viewBox="0 0 '+w+' '+h+'" xmlns="http://www.w3.org/2000/svg" style="background:#0d1117">';
-        var pts = [[w*0.2,h*0.3],[w*0.5,h*0.15],[w*0.8,h*0.3],[w*0.3,h*0.7],[w*0.7,h*0.7],[w*0.5,h*0.5]];
-        var edges = [[0,1],[1,2],[0,3],[3,4],[2,4],[1,5],[5,3],[5,4]];
-        for(var i=0;i<edges.length;i++) {
-          var a=pts[edges[i][0]], b=pts[edges[i][1]];
-          s += '<line x1="'+a[0]+'" y1="'+a[1]+'" x2="'+b[0]+'" y2="'+b[1]+'" stroke="#7ee78755" stroke-width="1.5"/>';
+        s += '<defs><marker id="gArr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#7ee787aa"/></marker></defs>';
+        // Layered BFS visualization: source at left, layers expand to right
+        var pts = [
+          {id:'S', x:w*0.10, y:h*0.50, d:0, layer:0},
+          {id:'A', x:w*0.32, y:h*0.25, d:1, layer:1},
+          {id:'B', x:w*0.32, y:h*0.75, d:1, layer:1},
+          {id:'C', x:w*0.55, y:h*0.15, d:2, layer:2},
+          {id:'D', x:w*0.55, y:h*0.50, d:2, layer:2},
+          {id:'E', x:w*0.55, y:h*0.85, d:2, layer:2},
+          {id:'F', x:w*0.80, y:h*0.30, d:3, layer:3},
+          {id:'G', x:w*0.80, y:h*0.70, d:3, layer:3}
+        ];
+        // BFS-tree edges (solid) and cross/non-tree edges (dashed)
+        var tree = [['S','A'],['S','B'],['A','C'],['A','D'],['B','E'],['C','F'],['E','G']];
+        var cross = [['B','D'],['D','G'],['C','D']];
+        function P(id){ for(var i=0;i<pts.length;i++) if(pts[i].id===id) return pts[i]; }
+        // Layer bands
+        for(var L=0;L<4;L++) {
+          var bx = w*0.10 + L*(w*0.23) - 22;
+          s += '<rect x="'+bx+'" y="20" width="44" height="'+(h-50)+'" fill="#7ee78708" stroke="#7ee78722" stroke-dasharray="3,3"/>';
+          s += '<text x="'+(bx+22)+'" y="14" text-anchor="middle" fill="#7ee787aa" font-size="10">d='+L+'</text>';
+        }
+        for(var i=0;i<cross.length;i++) {
+          var a=P(cross[i][0]), b=P(cross[i][1]);
+          s += '<line x1="'+a.x+'" y1="'+a.y+'" x2="'+b.x+'" y2="'+b.y+'" stroke="#7ee78744" stroke-width="1" stroke-dasharray="4,4"/>';
+        }
+        for(var i=0;i<tree.length;i++) {
+          var a=P(tree[i][0]), b=P(tree[i][1]);
+          s += '<line x1="'+a.x+'" y1="'+a.y+'" x2="'+b.x+'" y2="'+b.y+'" stroke="#7ee787" stroke-width="1.8" marker-end="url(#gArr)"/>';
         }
         for(var i=0;i<pts.length;i++) {
-          s += '<circle cx="'+pts[i][0]+'" cy="'+pts[i][1]+'" r="12" fill="#7ee78720" stroke="#7ee787" stroke-width="1.5"/>';
-          s += '<text x="'+pts[i][0]+'" y="'+(pts[i][1]+4)+'" text-anchor="middle" fill="#7ee787" font-size="10">'+i+'</text>';
+          var p=pts[i], col=(p.id==='S')?'#7ee787':'#7ee78720';
+          s += '<circle cx="'+p.x+'" cy="'+p.y+'" r="14" fill="'+col+'" stroke="#7ee787" stroke-width="1.5"/>';
+          s += '<text x="'+p.x+'" y="'+(p.y+4)+'" text-anchor="middle" fill="'+(p.id==='S'?'#0d1117':'#7ee787')+'" font-size="11" font-weight="700">'+p.id+'</text>';
         }
+        s += '<text x="'+(w/2)+'" y="'+(h-6)+'" text-anchor="middle" fill="#7ee78788" font-size="10">BFS layers from S — solid: tree edges, dashed: same/next-layer cross edges</text>';
         return s + '</svg>';
       },
       sections: [
-        { title: "Traversal", text: "DFS finds bridges, articulation points, SCC. BFS finds shortest unweighted paths. Both are O(V+E)." },
-        { title: "Shortest Paths", text: "Dijkstra O((V+E)log V) for non-negative. Bellman-Ford O(VE) for negative. Floyd-Warshall O(V³) for all-pairs." },
-        { title: "MST", text: "Kruskal's (sort edges + UFDS) or Prim's (priority queue). Both O(E log V)." },
-        { title: "SCC", text: "Kosaraju's: two DFS passes — one on original, one on transposed graph." }
+        { title: "Traversal — DFS & BFS", text: "Both run in O(V+E) on adjacency lists. DFS recurses deep, producing a DFS tree whose tree/back/cross edges classify the graph: a back edge means a cycle, two children of the root mean an articulation point. BFS expands layer by layer and gives the shortest path in unweighted graphs (each edge has cost 1) because the first time a vertex is dequeued is via a minimum-edge-count path. Use BFS when you care about distances, DFS when you care about structure (components, bridges, SCC, topological order, Euler tour for LCA)." },
+        { title: "Shortest Paths Cheat Sheet", text: "Pick the lightest tool that handles your edge weights: Dijkstra with a binary heap is O((V+E) log V) for non-negative weights — the workhorse. 0/1-BFS with a deque does the same in O(V+E) when weights are only 0 or 1. Bellman-Ford is O(VE), tolerates negative edges, and detects negative cycles (V-th relaxation still improves). Floyd-Warshall is O(V³) all-pairs, fits in ~5 lines, and is the right hammer for V ≤ 400. SPFA is Bellman-Ford with a queue — fast on average, but adversarial graphs make it TLE." },
+        { title: "MST — Kruskal vs Prim", text: "Both build a minimum spanning tree in O(E log V). Kruskal sorts edges and adds the lightest one that doesn't form a cycle (Union-Find as the cycle oracle); it is dead simple to code and the right choice when edges are given as a list. Prim grows a tree from one vertex using a priority queue of frontier edges; it wins when the graph is dense or already in adjacency-list form. Both are greedy and rely on the cut property: for any cut, the lightest crossing edge belongs to some MST." },
+        { title: "Strongly Connected Components", text: "Kosaraju: run DFS on G recording finish times; reverse the graph; run DFS again in decreasing finish-time order — each DFS tree in the second pass is one SCC. Tarjan does the same in one pass using a stack and lowlink values, which is faster in practice and also yields biconnected components and bridges with small tweaks. Use SCCs to condense G into a DAG, then run DP on it for problems like 'maximum profit cycle of websites'." },
+        { title: "Master Recurrence", formula: "Dijkstra(v) = min over neighbours u of  dist(u) + w(u,v),   with dist(source)=0" }
       ],
       keypoints: [
-        { title: "Graph Representation", text: "Adjacency list is almost always preferred over matrix in CP." },
-        { title: "When to BFS vs DFS", text: "BFS for shortest paths (unweighted); DFS for connected components, back edges." },
-        { title: "Negative Cycles", text: "Bellman-Ford detects them; Dijkstra fails silently on negative edges." }
+        { title: "Always Use Adjacency Lists", text: "An adjacency matrix costs O(V²) memory; for V=10⁵ that's 10¹⁰ entries — out of the question. Lists give O(V+E) space and O(deg) iteration." },
+        { title: "BFS vs DFS Decision Tree", text: "Need shortest distance? BFS. Need to detect cycles or build a topological order? DFS. Need a tree-recursive DP on the tree? DFS. Need bipartite check? Either, with 2-coloring." },
+        { title: "Negative Edges Trap", text: "Dijkstra silently returns wrong answers on negative edges (a popped vertex can later be improved). If edges can be negative, use Bellman-Ford or Johnson's algorithm." },
+        { title: "Priority Queue Discipline", text: "Lazy Dijkstra (`if(d > dist[v]) continue;`) avoids the cost of decrease-key and runs faster than Fibonacci-heap variants in practice — this is what every competitive-programming template does." },
+        { title: "Path Reconstruction", text: "Store parent[v] = u during relaxation; walk parents back from target to recover the path. Forgetting this is the #1 reason 'shortest path' submissions get partial credit." }
       ]
     },
     {
       id: "dd-segtree", num: "3 of 6", title: "Segment Tree & Fenwick",
-      desc: "Powerful data structures for range queries and point/range updates in O(log n).", color: "#58a6ff", icon: "🌲",
+      desc: "Range-query data structures that turn O(n) per query into O(log n) — the difference between TLE and AC on 10⁵+ queries.", color: "#58a6ff", icon: "🌲",
       svg: function(w, h) {
         var s = '<svg viewBox="0 0 '+w+' '+h+'" xmlns="http://www.w3.org/2000/svg" style="background:#0d1117">';
-        // Binary tree shape
-        var levels = [[w/2, 30]], nw = 18;
-        var allNodes = [[w/2,30]];
-        for(var lv=1;lv<4;lv++) {
-          var prev = [];
-          for(var i=0;i<Math.pow(2,lv);i++) prev.push([40 + i*(w-80)/(Math.pow(2,lv)-1||1), 30+lv*((h-60)/3)]);
-          for(var i=0;i<prev.length;i++) allNodes.push(prev[i]);
-          levels.push(prev);
+        // Segment tree over array of size 8 with sums; query [2,6] highlighted
+        var leaves = [3,1,4,1,5,9,2,6];
+        var nodes = [
+          {lbl:'31', range:'[0,7]', x:w*0.50, y:30,    lvl:0, hi:false},
+          {lbl:'9',  range:'[0,3]', x:w*0.25, y:80,    lvl:1, hi:false},
+          {lbl:'22', range:'[4,7]', x:w*0.75, y:80,    lvl:1, hi:false},
+          {lbl:'4',  range:'[0,1]', x:w*0.125,y:130,   lvl:2, hi:false},
+          {lbl:'5',  range:'[2,3]', x:w*0.375,y:130,   lvl:2, hi:true },
+          {lbl:'14', range:'[4,5]', x:w*0.625,y:130,   lvl:2, hi:true },
+          {lbl:'8',  range:'[6,7]', x:w*0.875,y:130,   lvl:2, hi:false}
+        ];
+        // edges
+        var edges = [[0,1],[0,2],[1,3],[1,4],[2,5],[2,6]];
+        for(var i=0;i<edges.length;i++) {
+          var a=nodes[edges[i][0]], b=nodes[edges[i][1]];
+          s += '<line x1="'+a.x+'" y1="'+a.y+'" x2="'+b.x+'" y2="'+b.y+'" stroke="#58a6ff55" stroke-width="1.2"/>';
         }
-        // Edges
-        for(var lv=1;lv<levels.length;lv++) for(var i=0;i<levels[lv].length;i++) {
-          var p = levels[lv-1][Math.floor(i/2)], c = levels[lv][i];
-          s += '<line x1="'+p[0]+'" y1="'+p[1]+'" x2="'+c[0]+'" y2="'+c[1]+'" stroke="#58a6ff44" stroke-width="1"/>';
+        // nodes
+        for(var i=0;i<nodes.length;i++) {
+          var n=nodes[i], col = n.hi ? '#58a6ff' : '#58a6ff20';
+          s += '<rect x="'+(n.x-26)+'" y="'+(n.y-14)+'" width="52" height="28" rx="4" fill="'+col+'" stroke="#58a6ff" stroke-width="1.4"/>';
+          s += '<text x="'+n.x+'" y="'+(n.y-2)+'" text-anchor="middle" fill="'+(n.hi?'#0d1117':'#58a6ff')+'" font-size="11" font-weight="700">'+n.lbl+'</text>';
+          s += '<text x="'+n.x+'" y="'+(n.y+10)+'" text-anchor="middle" fill="'+(n.hi?'#0d1117':'#58a6ffaa')+'" font-size="8">'+n.range+'</text>';
         }
-        // Nodes
-        for(var i=0;i<allNodes.length;i++) {
-          s += '<circle cx="'+allNodes[i][0]+'" cy="'+allNodes[i][1]+'" r="'+nw/2+'" fill="#58a6ff20" stroke="#58a6ff" stroke-width="1"/>';
+        // leaf array
+        var ay = h-50, lw = (w-40)/leaves.length;
+        for(var i=0;i<leaves.length;i++) {
+          var x = 20+i*lw, hi = (i>=2 && i<=5);
+          s += '<rect x="'+x+'" y="'+ay+'" width="'+(lw-2)+'" height="26" fill="'+(hi?'#58a6ff30':'#161b22')+'" stroke="#58a6ff66"/>';
+          s += '<text x="'+(x+lw/2)+'" y="'+(ay+17)+'" text-anchor="middle" fill="#c9d1d9" font-size="11">'+leaves[i]+'</text>';
+          s += '<text x="'+(x+lw/2)+'" y="'+(ay+38)+'" text-anchor="middle" fill="#58a6ff66" font-size="9">'+i+'</text>';
         }
-        s += '<text x="'+(w/2)+'" y="'+(h-8)+'" text-anchor="middle" fill="#58a6ff88" font-size="9">Segment Tree structure</text>';
+        s += '<text x="'+(w/2)+'" y="20" text-anchor="middle" fill="#58a6ff" font-size="11" font-weight="600">sum query [2,6]  →  visit two highlighted nodes  →  5 + 14 + a[6]=2  =  21</text>';
         return s + '</svg>';
       },
       sections: [
-        { title: "Fenwick Tree (BIT)", text: "Uses binary representation of indices. Supports point update + prefix query in O(log n). Can extend to RUPQ and RURQ." },
-        { title: "Segment Tree", text: "Full binary tree over array. Supports range queries (sum, min, max, GCD) and updates. Lazy propagation enables range updates in O(log n)." },
-        { title: "Key Comparison", formula: "Fenwick: simpler, less memory | Segment Tree: more flexible, supports lazy propagation" }
+        { title: "Why Range Structures Exist", text: "A naïve loop answers 'sum of a[l..r]' in O(n) per query. With 10⁵ queries on n=10⁵ that's 10¹⁰ operations — minutes, not seconds. Both Fenwick and Segment Trees compress those queries to O(log n) by precomputing partial answers over carefully chosen sub-intervals; the array of 8 above answers any of the 36 possible ranges by combining at most 4 precomputed nodes." },
+        { title: "Fenwick Tree (BIT)", text: "Stores partial sums indexed by the lowest set bit: tree[i] covers (i - lowbit(i), i]. Update and prefix-sum are 5-line loops using `i += i & -i` and `i -= i & -i`. Memory is exactly n+1 ints — half a Segment Tree. Use it whenever the operation is invertible (sum, XOR), so a range query becomes prefix(r) − prefix(l−1). Two BITs in parallel give range-update + range-query for sum problems." },
+        { title: "Segment Tree", text: "A complete binary tree of size ~4n where each node stores the merged value of its interval. It supports any associative operation (min, max, sum, GCD, matrix product) and arbitrary point updates. Range updates need lazy propagation: store a pending tag at internal nodes, push it down only when the children are visited. With lazy, both range-update and range-query stay O(log n). Iterative bottom-up segment trees are 2-3× faster than recursive ones and worth learning for tight time limits." },
+        { title: "Lazy Propagation Example", text: "Add v to every a[l..r]. At each visited node fully inside [l,r], set node.sum += v · len(node) and node.lazy += v, then return without recursing. When you later visit that node's child, first push: child.sum += node.lazy · len(child), child.lazy += node.lazy, then node.lazy = 0. Forgetting to push before recursion is the most common bug — the test 'add 1 to [1,3] twice, then query [2,2]' usually catches it." },
+        { title: "Comparison", formula: "Fenwick: ~n memory, only invertible ops, ~10 lines  |  Segment Tree: ~4n memory, any associative op + lazy, ~80 lines" }
       ],
       keypoints: [
-        { title: "When to Use", text: "Any problem with repeated range queries and updates on an array." },
-        { title: "Lazy Propagation", text: "Defer updates to children until needed — essential for range update range query." },
-        { title: "Coordinate Compression", text: "When values are large but count is small, compress coordinates first." }
+        { title: "Pick the Lighter Tool", text: "If the operation is sum/XOR and you only need point updates — Fenwick. If you need min/max/range-update or non-invertible merges — Segment Tree." },
+        { title: "Coordinate Compression", text: "When values can be 10⁹ but you only see 10⁵ distinct ones (e.g., interval endpoints), map them to 0..k−1 first. Segment Trees then need O(k) memory, not O(10⁹)." },
+        { title: "Persistent Variants", text: "Persistent Segment Trees keep every historical version in O(log n) extra memory per update — the standard solution for 'k-th smallest in [l,r]' queries." },
+        { title: "Iterative Layout", text: "Allocate `seg[2*N]` and store leaves at indices N..2N−1; parent of i is i/2. Updates and queries become two while-loops with no recursion stack." },
+        { title: "Sanity Test", text: "Always brute-force check on n=20 against a naïve loop — Segment Tree bugs (off-by-one, missing push) often look correct on small cases without lazy stress." }
       ]
     },
     {
       id: "dd-strings", num: "4 of 6", title: "String Algorithms",
-      desc: "Efficient pattern matching and string analysis using suffix arrays, KMP, and tries.", color: "#d2a8ff", icon: "📝",
+      desc: "Pattern matching, substring queries, and prefix structures — turn O(nm) text-search into O(n+m).", color: "#d2a8ff", icon: "📝",
       svg: function(w, h) {
         var s = '<svg viewBox="0 0 '+w+' '+h+'" xmlns="http://www.w3.org/2000/svg" style="background:#0d1117">';
-        var word = "ABCABD";
-        var cw = Math.min(50, (w-40)/word.length);
-        var startX = (w - word.length*cw)/2;
-        for(var i=0;i<word.length;i++) {
+        // KMP failure-function table for "ABABC"
+        var pat = "ABABC";
+        var fail = [0,0,1,2,0]; // standard KMP π values
+        var cw = Math.min(56, (w-80)/pat.length);
+        var startX = (w - pat.length*cw)/2;
+        var topY = 40;
+        // Header
+        s += '<text x="'+(w/2)+'" y="22" text-anchor="middle" fill="#d2a8ff" font-size="12" font-weight="700">KMP failure function π for pattern  "ABABC"</text>';
+        // Index row
+        for(var i=0;i<pat.length;i++) s += '<text x="'+(startX+i*cw+cw/2)+'" y="'+(topY-6)+'" text-anchor="middle" fill="#d2a8ff88" font-size="9">i='+i+'</text>';
+        // Char cells
+        for(var i=0;i<pat.length;i++) {
           var x = startX + i*cw;
-          s += '<rect x="'+x+'" y="'+(h/2-20)+'" width="'+cw+'" height="40" fill="'+(i<3?'#d2a8ff20':'#d2a8ff10')+'" stroke="#d2a8ff" stroke-width="1"/>';
-          s += '<text x="'+(x+cw/2)+'" y="'+(h/2+5)+'" text-anchor="middle" fill="#d2a8ff" font-size="14" font-weight="600">'+word[i]+'</text>';
+          s += '<rect x="'+x+'" y="'+topY+'" width="'+(cw-2)+'" height="40" fill="#d2a8ff15" stroke="#d2a8ff" stroke-width="1.2"/>';
+          s += '<text x="'+(x+cw/2)+'" y="'+(topY+26)+'" text-anchor="middle" fill="#d2a8ff" font-size="18" font-weight="700">'+pat[i]+'</text>';
         }
-        // KMP failure function arrow
-        s += '<path d="M'+(startX+cw*4.5)+','+(h/2+30)+' Q'+(startX+cw*2.25)+','+(h/2+55)+' '+(startX+cw*0.5)+','+(h/2+30)+'" fill="none" stroke="#d2a8ff88" stroke-width="1" marker-end="url(#sa)"/>';
-        s += '<defs><marker id="sa" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#d2a8ff88"/></marker></defs>';
-        s += '<text x="'+(w/2)+'" y="'+(h/2+65)+'" text-anchor="middle" fill="#d2a8ff66" font-size="9">KMP failure function fallback</text>';
+        // Failure values cell
+        var fy = topY+50;
+        for(var i=0;i<pat.length;i++) {
+          var x = startX + i*cw;
+          s += '<rect x="'+x+'" y="'+fy+'" width="'+(cw-2)+'" height="32" fill="#161b22" stroke="#d2a8ff66"/>';
+          s += '<text x="'+(x+cw/2)+'" y="'+(fy+22)+'" text-anchor="middle" fill="#d2a8ff" font-size="14">π='+fail[i]+'</text>';
+        }
+        // Mismatch fallback arrow: from index 4 back to π=2
+        s += '<defs><marker id="kArr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#d2a8ff"/></marker></defs>';
+        var ax1 = startX + 4*cw + cw/2, ax2 = startX + 2*cw + cw/2, ay = fy+50;
+        s += '<path d="M'+ax1+','+(fy+34)+' Q'+((ax1+ax2)/2)+','+(ay+30)+' '+ax2+','+(fy+34)+'" fill="none" stroke="#d2a8ff" stroke-width="1.6" marker-end="url(#kArr)"/>';
+        s += '<text x="'+(w/2)+'" y="'+(ay+22)+'" text-anchor="middle" fill="#d2a8ff" font-size="10">on mismatch at i, jump to compare pattern[π[i-1]]  →  no rescanning of text</text>';
+        s += '<text x="'+(w/2)+'" y="'+(ay+38)+'" text-anchor="middle" fill="#d2a8ffaa" font-size="9">e.g. matched "ABAB" then text differs from C  →  resume from "AB" (length 2)</text>';
         return s + '</svg>';
       },
       sections: [
-        { title: "KMP Algorithm", text: "Precompute failure function (longest proper prefix that's also suffix). Match in O(n+m) time." },
-        { title: "Suffix Array", text: "Sort all suffixes of a string. Combined with LCP array, solves: longest repeated substring, number of distinct substrings, pattern matching." },
-        { title: "Trie", text: "Tree of characters for prefix-based lookups. Used in auto-complete, XOR maximization, and dictionary problems." },
-        { title: "String Hashing", text: "Polynomial hash: H(s) = Σ s[i]·p^i mod M. Compare substrings in O(1) after O(n) preprocessing." }
+        { title: "KMP — Pattern Matching in O(n+m)", text: "Naïve matching restarts the pattern at every text position, costing O(nm). KMP precomputes π[i] = length of the longest proper prefix of pattern[0..i] that is also a suffix. On a mismatch at pattern position j the algorithm jumps to position π[j-1] without ever moving the text pointer backwards. The whole match runs in O(n+m). The same π array unlocks 'longest border', 'minimal period', and the Z-function (its symmetric cousin)." },
+        { title: "Suffix Array + LCP", text: "Sort all n suffixes of S lexicographically; the result is an int[n]. Built naively in O(n² log n), but DC3 / SA-IS / O(n log n) with radix sort make it tractable for n=10⁶. Pair it with the LCP array (longest common prefix of adjacent sorted suffixes, built in O(n) via Kasai's algorithm) and you can answer: number of distinct substrings = n(n+1)/2 − Σ LCP[i], longest repeated substring = max LCP, and pattern occurrence by binary search in O(m log n). Suffix Arrays use ~5n memory vs ~20n for Suffix Trees." },
+        { title: "Trie & Aho-Corasick", text: "A trie stores k strings of total length L in O(L) memory. Walk character by character to do prefix lookup, autocomplete, or 'maximum XOR pair' (binary trie of 30-bit numbers). Aho-Corasick adds 'failure links' to a trie — the multi-pattern KMP. After O(L) build, you scan a text of length n once and report every occurrence of every pattern in O(n + matches) total. Used by virus scanners, dictionary highlighters, and CP problems with thousands of patterns." },
+        { title: "Polynomial String Hashing", text: "H(s) = Σ s[i]·pⁱ mod M. Precompute prefix hashes prefH[i] and powers of p, then any substring hash is (prefH[r] − prefH[l-1]·p^(r-l+1)) mod M in O(1). Use two moduli (e.g., 10⁹+7 and 10⁹+9) and random base p to make collisions astronomically unlikely (~10⁻¹⁸). Powerful for: substring equality, longest common substring (binary search the length + hash), Rabin-Karp matching, and palindrome counting in O(n log n)." },
+        { title: "Pattern-Match Recurrence", formula: "π[i] = max k < i+1  such that  P[0..k-1] = P[i-k+1..i]" }
       ],
       keypoints: [
-        { title: "Choose Wisely", text: "KMP for single pattern; Aho-Corasick for multiple patterns; Suffix Array for substring queries." },
-        { title: "Hash Collisions", text: "Use double hashing (two different mods) to minimize collision probability." },
-        { title: "Digit DP", text: "Count numbers in [L,R] satisfying digit constraints using DP on digits." }
+        { title: "Pick the Right Hammer", text: "Single pattern → KMP / Z-function. Many patterns → Aho-Corasick. Substring queries on one fixed text → Suffix Array + LCP. Online text and many patterns added dynamically → suffix automaton." },
+        { title: "Hash Discipline", text: "Always use two hashes with random bases chosen per run. The classic 'one hash, base 31, mod 2^64' hash is breakable — judges have crafted adversarial test cases that produce collisions." },
+        { title: "Suffix Automaton", text: "An O(n)-state DFA recognising every substring of S — handles 'count occurrences of pattern P' in O(|P|) and 'k-th distinct substring' in O(n). Worth learning after KMP and SA." },
+        { title: "Manacher for Palindromes", text: "Computes the longest palindromic substring (and all palindrome radii) in O(n). Avoids the O(n²) DP and is the canonical answer to 'longest palindrome' problems." },
+        { title: "Memory Watch", text: "A trie over 26 lowercase letters uses up to 26·L pointers; switch to a hash map at each node when alphabet is large or use ternary search trees." }
       ]
     },
     {
       id: "dd-flow", num: "5 of 6", title: "Network Flow",
-      desc: "Model optimization problems as flow networks — max flow, min cut, matching, and assignment.", color: "#ff7b72", icon: "🔀",
+      desc: "Model optimization problems as flow networks — max flow, min cut, bipartite matching, and project selection.", color: "#ff7b72", icon: "🔀",
       svg: function(w, h) {
         var s = '<svg viewBox="0 0 '+w+' '+h+'" xmlns="http://www.w3.org/2000/svg" style="background:#0d1117">';
-        var pts = {s:[40,h/2], a:[w*0.33,h*0.25], b:[w*0.33,h*0.75], c:[w*0.66,h*0.25], d:[w*0.66,h*0.75], t:[w-40,h/2]};
-        var edges = [['s','a',10],['s','b',8],['a','c',6],['a','d',4],['b','d',5],['c','t',7],['d','t',9],['b','c',3]];
+        s += '<defs><marker id="fArr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#ff7b72"/></marker></defs>';
+        var pts = {S:[40,h/2], A:[w*0.33,h*0.30], B:[w*0.33,h*0.70], C:[w*0.66,h*0.30], D:[w*0.66,h*0.70], T:[w-40,h/2]};
+        // edges: capacity / current flow; bold edges are part of min-cut (S-side vs T-side)
+        var edges = [
+          ['S','A',10,10,false], ['S','B',8,5,false],
+          ['A','C',6,6,false],  ['A','D',4,4,false],
+          ['B','D',5,1,false],  ['B','C',3,0,false],
+          ['C','T',7,6,true ],  ['D','T',9,9,true ]
+        ];
+        // Min-cut indication: nodes on S-side
+        var sSide = {S:1, A:1, B:1, D:1};
         for(var i=0;i<edges.length;i++) {
-          var a=pts[edges[i][0]], b=pts[edges[i][1]];
-          s += '<line x1="'+a[0]+'" y1="'+a[1]+'" x2="'+b[0]+'" y2="'+b[1]+'" stroke="#ff7b7244" stroke-width="2"/>';
-          s += '<text x="'+((a[0]+b[0])/2)+'" y="'+((a[1]+b[1])/2-5)+'" text-anchor="middle" fill="#ff7b72aa" font-size="9">'+edges[i][2]+'</text>';
+          var e=edges[i], a=pts[e[0]], b=pts[e[1]];
+          var cut = e[4];
+          var col = cut ? '#ff7b72' : '#ff7b7255';
+          var wd  = cut ? 3 : 1.6;
+          s += '<line x1="'+a[0]+'" y1="'+a[1]+'" x2="'+b[0]+'" y2="'+b[1]+'" stroke="'+col+'" stroke-width="'+wd+'" marker-end="url(#fArr)"/>';
+          var mx = (a[0]+b[0])/2, my = (a[1]+b[1])/2;
+          s += '<rect x="'+(mx-22)+'" y="'+(my-12)+'" width="44" height="16" rx="3" fill="#0d1117" stroke="#ff7b7244"/>';
+          s += '<text x="'+mx+'" y="'+(my-1)+'" text-anchor="middle" fill="#ff7b72" font-size="10" font-weight="600">'+e[3]+'/'+e[2]+'</text>';
         }
-        var labels = {s:'S',a:'A',b:'B',c:'C',d:'D',t:'T'};
+        // Min-cut dashed line
+        s += '<path d="M '+(w*0.45)+' 20 Q '+(w*0.55)+' '+(h/2)+' '+(w*0.45)+' '+(h-20)+'" fill="none" stroke="#ff7b72" stroke-width="1.5" stroke-dasharray="6,5" opacity="0.55"/>';
         for(var k in pts) {
-          s += '<circle cx="'+pts[k][0]+'" cy="'+pts[k][1]+'" r="14" fill="'+(k==='s'||k==='t'?'#ff7b7230':'#ff7b7215')+'" stroke="#ff7b72" stroke-width="1.5"/>';
-          s += '<text x="'+pts[k][0]+'" y="'+(pts[k][1]+4)+'" text-anchor="middle" fill="#ff7b72" font-size="11" font-weight="600">'+labels[k]+'</text>';
+          var col = sSide[k] ? '#ff7b7245' : '#7ee78745';
+          var bord = sSide[k] ? '#ff7b72' : '#7ee787';
+          s += '<circle cx="'+pts[k][0]+'" cy="'+pts[k][1]+'" r="16" fill="'+col+'" stroke="'+bord+'" stroke-width="1.8"/>';
+          s += '<text x="'+pts[k][0]+'" y="'+(pts[k][1]+5)+'" text-anchor="middle" fill="#0d1117" font-size="12" font-weight="700">'+k+'</text>';
         }
+        s += '<text x="'+(w/2)+'" y="14" text-anchor="middle" fill="#ff7b72" font-size="11" font-weight="700">max flow = 15  =  min cut  ({S,A,B,D} | {C,T})  =  cap(C→T) + cap(D→T) − cap(B→C reverse, none)</text>';
+        s += '<text x="'+(w/2)+'" y="'+(h-6)+'" text-anchor="middle" fill="#ff7b7288" font-size="9">labels show flow/capacity — bold edges = saturated edges crossing the cut</text>';
         return s + '</svg>';
       },
       sections: [
-        { title: "Max-Flow Min-Cut", text: "Max flow from source to sink equals min cut capacity. Ford-Fulkerson framework with BFS (Edmonds-Karp) or blocking flows (Dinic's)." },
-        { title: "Dinic's Algorithm", text: "Build level graph with BFS, find blocking flows with DFS. O(V²E) general, O(E√V) for unit-capacity graphs." },
-        { title: "Applications", text: "Bipartite matching, assignment problem, minimum path cover, maximum independent set (on bipartite), project selection." }
+        { title: "Max-Flow ≡ Min-Cut", text: "The cornerstone theorem: in any directed weighted graph, the maximum amount of flow from source S to sink T equals the minimum total capacity over all S-T cuts. So every max-flow algorithm doubles as a min-cut solver — once flow is maximal, the set of vertices reachable from S in the residual graph is the S-side of the min cut. This duality unlocks problems that don't look like flow: minimum number of edges/vertices whose removal disconnects S from T, image segmentation, project-selection profit maximization, and many bipartite-matching style assignments." },
+        { title: "Algorithms — Pick by Density", text: "Edmonds-Karp (BFS for shortest augmenting path) is O(V·E²) — fine up to ~5000 edges. Dinic's algorithm builds a level graph with BFS then finds blocking flows with DFS, giving O(V²·E) worst case but O(E·√V) on unit-capacity graphs (perfect for bipartite matching). For dense graphs and large capacities, push-relabel runs in O(V²·√E) and is what most production solvers use. In contests, a 60-line Dinic template covers 95% of problems." },
+        { title: "Reduction Patterns", text: "Bipartite matching: split into left/right sets, add S→left (cap 1), right→T (cap 1), left→right (cap 1) for each compatible pair; max flow = max matching. Vertex capacities: split v into vᵢₙ and v_out connected by an edge with that capacity. Multiple sources/sinks: super-source S' with infinite-capacity edges to each real source. Project selection: assign +profit projects S→project, −cost machines machine→T, project→machine ∞ for prerequisites; min cut = jobs not selected, total profit − min cut = answer." },
+        { title: "Min-Cost Max-Flow", text: "When edges carry both capacity and cost, you want the maximum flow whose total cost is minimum. Replace the BFS in Edmonds-Karp with Bellman-Ford / SPFA / Johnson's (to allow negative costs that come from residual edges) and augment along the cheapest path. Complexity is roughly O(F·V·E) where F is the max flow value. Used for transportation problems, optimal assignment with weighted preferences, and Hungarian-algorithm style problems." },
+        { title: "König's Theorem", formula: "in any bipartite graph:  size(max matching)  =  size(min vertex cover)  =  V − size(max independent set)" }
       ],
       keypoints: [
-        { title: "Model as Flow", text: "The hardest part is modeling the problem as a flow network. Practice many examples." },
-        { title: "Min-Cost Max-Flow", text: "Extends max-flow with edge costs. Use SPFA to find shortest augmenting paths." },
-        { title: "König's Theorem", text: "In bipartite graphs: max matching = min vertex cover." }
+        { title: "Modelling > Coding", text: "The hard part is recognising that a problem 'is flow'. Tell-tale signs: pairing/assignment, capacities or rate limits, 'split into two sets' constraints, or 'remove minimum to disconnect'." },
+        { title: "Always Add Reverse Edges", text: "Every forward edge u→v with capacity c must have a paired reverse edge v→u with capacity 0 to allow flow cancellation. Forgetting this gives wrong answers on graphs with multiple augmenting paths." },
+        { title: "Integer Capacities Stay Integer", text: "If all edge capacities are integers, every step of every standard algorithm produces integer flows — no need for floating point." },
+        { title: "Lower Bounds Trick", text: "Edges with min-flow constraint (l ≤ f ≤ c) are handled by replacing with a (c−l) edge plus correction sources/sinks. Used for circulation feasibility problems." },
+        { title: "When Not to Use Flow", text: "If your graph has 10⁶ edges or you need many queries, flow is usually too slow — look for greedy, matroid, or DP structure instead." }
       ]
     },
     {
       id: "dd-math", num: "6 of 6", title: "Number Theory & Combinatorics",
-      desc: "Essential mathematical tools: primes, modular arithmetic, counting, and matrix exponentiation.", color: "#ffa657", icon: "🔢",
+      desc: "Primes, modular arithmetic, counting, and matrix exponentiation — the math toolkit for CP.", color: "#ffa657", icon: "🔢",
       svg: function(w, h) {
         var s = '<svg viewBox="0 0 '+w+' '+h+'" xmlns="http://www.w3.org/2000/svg" style="background:#0d1117">';
-        // Sieve visualization
-        var nums = [2,3,4,5,6,7,8,9,10,11,12,13];
-        var primes = [2,3,5,7,11,13];
-        var cw = Math.min(40, (w-40)/nums.length);
-        var sx = (w - nums.length*cw)/2;
+        // Sieve animation: 2..30, after marking 2,3,5
+        var nums = []; for(var i=2;i<=30;i++) nums.push(i);
+        var primes = [2,3,5,7,11,13,17,19,23,29];
+        var primesSet = {}; for(var i=0;i<primes.length;i++) primesSet[primes[i]]=1;
+        var perRow = 10, cw = Math.min(50, (w-40)/perRow), rh = 36;
+        var rows = Math.ceil(nums.length/perRow);
+        var sx = (w - perRow*cw)/2, sy = 30;
+        s += '<text x="'+(w/2)+'" y="20" text-anchor="middle" fill="#ffa657" font-size="12" font-weight="700">Sieve of Eratosthenes — n=30, complexity O(n log log n)</text>';
         for(var i=0;i<nums.length;i++) {
-          var isPrime = primes.indexOf(nums[i]) >= 0;
-          s += '<rect x="'+(sx+i*cw)+'" y="'+(h/2-15)+'" width="'+cw+'" height="30" fill="'+(isPrime?'#ffa65720':'#ff7b7210')+'" stroke="'+(isPrime?'#ffa657':'#ff7b7244')+'" stroke-width="1"/>';
-          s += '<text x="'+(sx+i*cw+cw/2)+'" y="'+(h/2+5)+'" text-anchor="middle" fill="'+(isPrime?'#ffa657':'#ff7b7266')+'" font-size="11"'+(isPrime?'':' text-decoration="line-through"')+'>'+nums[i]+'</text>';
+          var r = Math.floor(i/perRow), c = i%perRow;
+          var x = sx+c*cw, y = sy+r*rh;
+          var isPrime = !!primesSet[nums[i]];
+          var isMult2 = nums[i]%2===0 && nums[i]!==2;
+          var isMult3 = nums[i]%3===0 && nums[i]!==3 && !isMult2;
+          var isMult5 = nums[i]%5===0 && nums[i]!==5 && !isMult2 && !isMult3;
+          var fill, stroke, txt='#c9d1d9', deco='';
+          if(isPrime) { fill='#ffa65730'; stroke='#ffa657'; txt='#ffa657'; }
+          else if(isMult2) { fill='#ff7b7215'; stroke='#ff7b7244'; txt='#ff7b7299'; deco=' text-decoration="line-through"'; }
+          else if(isMult3) { fill='#d2a8ff15'; stroke='#d2a8ff44'; txt='#d2a8ff99'; deco=' text-decoration="line-through"'; }
+          else if(isMult5) { fill='#58a6ff15'; stroke='#58a6ff44'; txt='#58a6ff99'; deco=' text-decoration="line-through"'; }
+          else { fill='#161b22'; stroke='#30363d'; }
+          s += '<rect x="'+x+'" y="'+y+'" width="'+(cw-2)+'" height="'+(rh-4)+'" fill="'+fill+'" stroke="'+stroke+'" stroke-width="1"/>';
+          s += '<text x="'+(x+cw/2)+'" y="'+(y+(rh-4)/2+4)+'" text-anchor="middle" fill="'+txt+'" font-size="12" font-weight="600"'+deco+'>'+nums[i]+'</text>';
         }
-        s += '<text x="'+(w/2)+'" y="'+(h/2-25)+'" text-anchor="middle" fill="#ffa65788" font-size="9">Sieve of Eratosthenes</text>';
-        s += '<text x="'+(w/2)+'" y="'+(h/2+35)+'" text-anchor="middle" fill="#ffa65766" font-size="9">■ prime  ■ composite</text>';
+        var ly = sy + rows*rh + 14;
+        s += '<text x="'+(w/2)+'" y="'+ly+'" text-anchor="middle" fill="#c9d1d9" font-size="10">'+
+             '<tspan fill="#ffa657">■ prime</tspan>   '+
+             '<tspan fill="#ff7b72">■ ×2</tspan>   '+
+             '<tspan fill="#d2a8ff">■ ×3</tspan>   '+
+             '<tspan fill="#58a6ff">■ ×5</tspan></text>';
         return s + '</svg>';
       },
       sections: [
-        { title: "Primes", text: "Sieve of Eratosthenes O(n log log n). Miller-Rabin for primality testing of large numbers." },
-        { title: "Modular Arithmetic", text: "a^(-1) mod p = a^(p-2) mod p (Fermat). Extended Euclid for general modular inverse. All CP math is done mod 10^9+7." },
-        { title: "Combinatorics", text: "Precompute factorials and inverse factorials for O(1) nCr queries. Catalan numbers, Stirling numbers, inclusion-exclusion." },
-        { title: "Key Formula", formula: "a^(-1) mod p ≡ a^(p-2) mod p  (when p is prime)" }
+        { title: "Primes & Sieves", text: "The classic Sieve of Eratosthenes runs in O(n log log n) and finds every prime up to n=10⁷ in well under a second. For one-off primality testing of huge numbers (up to 10¹⁸) use deterministic Miller-Rabin with the seven witnesses {2,3,5,7,11,13,17,19,23,29,31,37} — proven correct in this range. To factor large semiprimes use Pollard's ρ with Brent's improvement, expected O(n^¼). For prime counting up to 10¹¹, the Meissel-Mertens-Lehmer algorithm is the standard CP weapon." },
+        { title: "Modular Arithmetic", text: "Almost every counting problem asks for the answer modulo a large prime (typically 10⁹+7 or 998244353). Closure: (a±b)%M and (a·b)%M behave like normal arithmetic; division does not — instead multiply by the modular inverse. Two ways to compute the inverse: Fermat's little theorem a⁻¹ ≡ a^(p−2) (mod p) when p is prime (one fast power, O(log p)), or extended Euclid for general moduli. Always reduce intermediate products to avoid 64-bit overflow." },
+        { title: "Combinatorics Toolkit", text: "Precompute factorials fact[0..N] and inverse factorials invFact[0..N] in O(N). Then nCk = fact[n] · invFact[k] · invFact[n-k] in O(1) per query. Catalan numbers Cₙ = C(2n,n)/(n+1) count balanced parentheses, binary trees, and lattice paths under the diagonal. Stirling numbers count partitions; Bell numbers sum them. Inclusion-exclusion is the catch-all: |A₁∪…∪Aₙ| = Σ|Aᵢ| − Σ|Aᵢ∩Aⱼ| + … — used for derangements and 'count integers coprime to set'." },
+        { title: "Matrix Exponentiation", text: "Any linear recurrence aₙ = c₁aₙ₋₁ + … + cₖaₙ₋ₖ can be written as a vector update Vₙ = M · Vₙ₋₁. By fast exponentiation Mⁿ takes O(k³ log n), so the n-th Fibonacci number mod p comes back in microseconds even for n = 10¹⁸. Generalises to count walks of length n in a graph (powers of the adjacency matrix), DPs over a small state space evolving in time, and tilings of fixed-width strips." },
+        { title: "Cornerstone Identity", formula: "a^(p−1) ≡ 1 (mod p)   ⇒   a^(−1) ≡ a^(p−2) (mod p)   for prime p" }
       ],
       keypoints: [
-        { title: "Overflow Prevention", text: "Always mod after multiplication: (a*b) % M. Use long long in C++." },
-        { title: "Matrix Exponentiation", text: "Compute n-th term of linear recurrence in O(k³ log n) where k is matrix size." },
-        { title: "Chinese Remainder", text: "Solve system of congruences x ≡ aᵢ (mod mᵢ) when moduli are coprime." }
+        { title: "Mod Every Step", text: "Compute (a · b) % M, not (a · b) and then % M at the end — int64 holds at most ~9.2·10¹⁸, so two values near 10⁹ already get close. Make a `mul`, `add`, `pw` helper and use them religiously." },
+        { title: "Linear Sieve Bonus", text: "A linear-time sieve also yields the smallest prime factor of every n, the Möbius function, and Euler's totient — three different competition staples for the price of one." },
+        { title: "Chinese Remainder Theorem", text: "Solve x ≡ aᵢ (mod mᵢ) for pairwise coprime mᵢ; the unique solution mod ∏mᵢ is x = Σ aᵢ · Mᵢ · Mᵢ⁻¹ where Mᵢ = ∏/mᵢ. Useful for combining results modulo small primes." },
+        { title: "Lucas's Theorem", text: "Compute nCk mod p for huge n (10¹⁸) and small prime p by writing n and k in base p and multiplying digit-wise binomials. Indispensable when N exceeds the precomputed factorial array size." },
+        { title: "FFT/NTT for Convolutions", text: "Multiplying two degree-n polynomials takes O(n log n) via FFT; over a prime modulus use NTT to avoid floating-point error. Triggered by problems counting (i+j) sums or convolving frequency arrays." }
+      ]
+    }
+  ],
+
+  useCases: [
+    {
+      id: "uc-route-planner", title: "Build a Map Routing Engine",
+      desc: "Turning a road network into a fast 'fastest route' service touches almost every CP graph technique end-to-end.",
+      icon: "🗺️", color: "#7ee787",
+      summary: "Modern map routing is a <strong>layered pipeline</strong>: raw OSM data → adjacency list → Dijkstra/A* for correctness → contraction hierarchies for speed → dynamic re-routing for real-time traffic. Each layer trades off preprocessing cost vs query latency. You'll touch graphs, priority queues, heuristic search, preprocessing, and dynamic updates — exactly the toolkit Halim Chapters 4 & 8 cover.",
+      pipeline: "OSM raw XML\n   │ parse + clean\n   ▼\nAdjacency list (V≈10⁷ E≈10⁷·2)\n   │ Dijkstra (online)\n   ▼\nA* with Haversine heuristic\n   │ CH preprocessing (offline, ~hours)\n   ▼\nUpward search graph + shortcut edges\n   │ bidirectional Dijkstra query (online, µs)\n   ▼\nFinal route ← traffic-aware reweighting (live)",
+      metrics: [
+        { label: "Graph size (continental)", value: "~50M nodes" },
+        { label: "Dijkstra query", value: "~200ms" },
+        { label: "A* query", value: "~20ms" },
+        { label: "CH query (Google/OSRM)", value: "<1ms" }
+      ],
+      extensions: "ALT (A* with Landmarks), CRP (Customizable Route Planning) for fast re-weighting, Hub Labelling for sub-µs queries, and multi-modal routing combining cars + transit + walking.",
+      steps: [
+        { title: "Model the Map as a Graph", component: "Data Structures", proto: "Adjacency list",
+          intuition: "The road network is just a weighted directed graph — but at 10⁷ nodes only sparse representations are feasible.",
+          detail: "Nodes are intersections; edges are road segments weighted by travel time = length/speed-limit. Store as `vector<pair<int,int>> adj[V]`. Bidirectional roads = two directed edges (one-ways need just one). OSM XML adds metadata (lanes, surface, restrictions) used later for routing constraints.",
+          complexity: "O(V+E) space",
+          example: "Manhattan (≈55K intersections, ≈140K edges) fits in ~2 MB. Continental US ≈ 50M nodes → ~1.5 GB.",
+          pitfall: "Adjacency matrix is impossible at this scale — 10⁷ × 10⁷ × 4 bytes = 400 TB. Always adjacency list for sparse graphs." },
+        { title: "Single-Source Shortest Path (Dijkstra)", component: "Dijkstra", proto: "Binary heap (lazy)",
+          intuition: "Greedy expansion: always settle the closest unsettled node next; non-negative weights guarantee correctness.",
+          detail: "Lazy Dijkstra pushes potentially-stale entries on relaxation and skips them on pop. Avoids the implementation complexity of decrease-key. For point-to-point, terminate when the target is popped — typically 5–10× faster than full SSSP.",
+          complexity: "O((V+E) log V)",
+          code: "while(!pq.empty()){\n  auto [d,u]=pq.top(); pq.pop();\n  if(d>dist[u]) continue;     // stale\n  if(u==target) break;        // early exit\n  for(auto [v,w]:adj[u])\n    if(d+w<dist[v]){\n      dist[v]=d+w;\n      pq.push({dist[v],v});\n    }\n}",
+          example: "Manhattan point-to-point: ~3ms with lazy Dijkstra.",
+          pitfall: "Negative edges silently break Dijkstra (it commits to a popped node permanently). Use Bellman-Ford or Johnson's if any edge can be negative." },
+        { title: "Speed Up With A*", component: "Heuristic search", proto: "Manhattan / Haversine",
+          intuition: "If you know which direction the goal lies, prefer expanding nodes that look closer to it — but never overestimate.",
+          detail: "Replace Dijkstra's priority by f(v) = g(v) + h(v, target) where g is real distance so far and h is a *lower bound* on remaining travel time. With a consistent heuristic (Haversine distance ÷ max road speed), A* explores a much narrower 'cigar' of nodes from source to target.",
+          complexity: "O((V+E) log V) but with much smaller constant in practice",
+          example: "5–50× fewer node expansions vs Dijkstra on city graphs. Lisbon→Porto: Dijkstra explores ~600K nodes, A* explores ~30K.",
+          pitfall: "Inadmissible heuristics (h overestimates) break optimality silently — you get a valid but suboptimal route. Always test against Dijkstra on a sample." },
+        { title: "Precompute Contraction Hierarchies", component: "Preprocessing", proto: "Bidirectional Dijkstra",
+          intuition: "Rank vertices by 'importance' and add shortcut edges that bypass less-important ones — queries then climb to the highway, cross it, and descend.",
+          detail: "Offline: order nodes by an importance heuristic (edge-difference + hierarchy depth), contract them one by one adding shortcut edges that preserve shortest-path distances. Online: bidirectional Dijkstra restricted to edges going *upward* in the hierarchy from source and target; meet in the middle.",
+          complexity: "Preprocessing: ~hours on continental graph. Query: O(√E) or better, sub-millisecond in practice.",
+          example: "OSRM and Google Maps both use CH-style preprocessing. Continental routing query: <1ms after ~4-hour preprocessing.",
+          pitfall: "CH preprocessing must be redone if the road network changes structurally. For frequently-changing weights (traffic) use CRP or live A*, not pure CH." },
+        { title: "Live Traffic & Reweighting", component: "Maintenance", proto: "Periodic recompute / Customizable Route Planning",
+          intuition: "Edge weights change every minute; recomputing from scratch is wasteful — restrict updates to affected partitions.",
+          detail: "Partition the graph into ~1000-node cells, precompute boundary distances between cells, and only re-solve the cells whose edges changed. CRP (Delling et al.) achieves <1ms queries with 10-second weight updates. Alternative: keep CH for static structure, recompute travel times via metric-only refresh.",
+          complexity: "Weight update: O(affected cells); query unchanged.",
+          example: "Google Maps shows traffic colors updated every ~2 minutes; routes auto-re-route around new congestion in <100ms after a tap.",
+          pitfall: "Pure Dijkstra on live weights without spatial indexing scales poorly — a single highway closure can cascade to millions of relaxations." }
+      ]
+    },
+    {
+      id: "uc-spell-checker", title: "Build a Spell-Checker / Autocomplete",
+      desc: "A tiny project that exercises tries, edit distance DP, bounded BFS, and probabilistic structures — the entire 'string algorithms' chapter of Halim.",
+      icon: "📝", color: "#d2a8ff",
+      summary: "A modern spell-checker is a <strong>three-layer ranking funnel</strong>: trie for exact prefix lookups, edit-distance DP for fuzzy matches within k typos, and frequency/context scoring to pick the top suggestion. Phonetic hashing and probabilistic counters add personalization. Every layer is a different chapter of competitive programming — and the same architecture powers IDE autocomplete, search 'did you mean', and DNA-sequence error correction.",
+      pipeline: "User keystroke\n   │\n   ▼\nTrie lookup (prefix exact)\n   │ if no exact match\n   ▼\nLevenshtein DP on trie (edit-dist ≤ k)\n   │ collect candidates\n   ▼\nPhonetic index (Soundex/Metaphone)  ──┐\n   │                                    │\n   ▼                                    │\nScore by frequency (count-min sketch)◀──┘\n   │\n   ▼\nTop-k via min-heap → suggestions",
+      metrics: [
+        { label: "English dictionary", value: "~500K words" },
+        { label: "Trie memory", value: "~5–8 MB" },
+        { label: "Edit-distance-2 search", value: "~1ms" },
+        { label: "Count-min sketch", value: "~32 KB / user" }
+      ],
+      extensions: "BK-trees for metric-space search, FST (finite-state transducers) for compact lookup tables (Lucene/Tantivy), neural language models for context-aware re-ranking, and BurkhardKeller for offline corpus indexing.",
+      steps: [
+        { title: "Load Dictionary Into a Trie", component: "Trie", proto: "Map<char, Node*> or array[26]",
+          intuition: "Common prefixes share storage — the entire dictionary becomes one big merged tree.",
+          detail: "Insert all valid words; each end-of-word node carries the frequency count from a corpus (Google n-grams, COCA). For ASCII-only use `Node* children[26]` (faster, denser); for Unicode use `unordered_map<char32_t, Node*>` (sparser but flexible).",
+          complexity: "Insert O(L); lookup O(L). Memory ~5–8 MB for 500K English words.",
+          code: "struct Node { Node* ch[26]={}; int freq=0; bool end=false; };\nvoid insert(Node* r, const string& w, int f){\n  for(char c:w){\n    int i=c-'a';\n    if(!r->ch[i]) r->ch[i]=new Node();\n    r=r->ch[i];\n  }\n  r->end=true; r->freq=f;\n}",
+          pitfall: "Array-of-26 wastes memory for sparse Unicode tries — measure first." },
+        { title: "Prefix Autocomplete", component: "DFS",
+          intuition: "Walk to the prefix node, then DFS the subtree collecting top-k by frequency.",
+          detail: "After locating the prefix node, do a DFS pushing every end-of-word descendant into a size-k min-heap keyed by frequency. Stop early once the heap is full and the maximum *possible* descendant frequency (cached per node) is below the heap minimum.",
+          complexity: "O(prefix_len + |matches| log k)",
+          example: "Typing 'app' on a 500K word trie returns top-10 in <0.5ms (apple, application, apply, ...).",
+          pitfall: "Without per-node max-frequency caches, DFS can explore the entire subtree even when only top-10 are needed." },
+        { title: "Approximate Match (Edit Distance ≤ k)", component: "DP on Trie", proto: "Levenshtein",
+          intuition: "Run the Levenshtein DP row-by-row as you descend the trie; prune any branch whose row minimum already exceeds k.",
+          detail: "For each trie node, maintain the DP row against the misspelt word. When advancing to a child via character c, compute the new row using the classic insert/delete/substitute recurrence. Prune branches where min(row) > k. Returns all dictionary words within edit distance k in O(|trie| · |word|) worst-case but ~O(k·|word|·branching) in practice with aggressive pruning.",
+          complexity: "Worst case O(|trie|·|word|); practical O(k·|word|·b^k) with pruning.",
+          code: "function search(node, prefix, prevRow){\n  for(let i=0;i<26;i++){\n    const child=node.ch[i]; if(!child) continue;\n    const c=String.fromCharCode(97+i);\n    const newRow=[prevRow[0]+1];\n    for(let j=1;j<=word.length;j++){\n      newRow.push(Math.min(\n        newRow[j-1]+1,                     // insert\n        prevRow[j]+1,                      // delete\n        prevRow[j-1]+(word[j-1]!==c)));    // substitute\n    }\n    if(child.end && newRow[word.length]<=K)\n      results.push({word:prefix+c, dist:newRow[word.length], freq:child.freq});\n    if(Math.min(...newRow)<=K) search(child, prefix+c, newRow);  // prune\n  }\n}",
+          example: "Searching 'recieve' with k=2 finds 'receive' (transpose=1 edit), 'relieve' (2 edits), 'receiver' (1 edit + 1 ins).",
+          pitfall: "Forgetting to add a top sentinel row (`[0,1,2,...,|word|]`) causes off-by-one bugs that silently miss matches." },
+        { title: "Phonetic Matching", component: "Soundex / Metaphone", proto: "Hash bucket",
+          intuition: "Two words that *sound* alike often have the same phonetic code — independent of spelling errors.",
+          detail: "Build a parallel index keyed by the phonetic hash. Double-Metaphone (Lawrence Philips) outputs up to two codes per word handling silent letters, vowel collapses, and language quirks better than Soundex. Combine with edit-distance ranking: candidates from both indexes merge then re-rank by (edit-distance, frequency).",
+          complexity: "Hash lookup O(L); the hash itself is compact (~4 chars).",
+          example: "Soundex('phone')='P500', Soundex('fone')='F500' — different, so Soundex misses this. Metaphone collapses both to 'FN' and catches it.",
+          pitfall: "Pure Soundex is anglocentric — it mangles non-English names. Use Metaphone or language-aware variants for multilingual input." },
+        { title: "Persist Frequencies Online", component: "Count-min sketch", proto: "Hashing",
+          intuition: "Probabilistic counters trade exact counts for ~32KB-bounded memory that never grows.",
+          detail: "Track per-user word frequencies in a count-min sketch (d hash rows × w columns) so the suggester adapts to writing style without storing every input. Reads return max overcount = 1/w of total stream with probability ≥ 1-(1/2)^d. Used in DBMS query stats, Twitter trending, network flow telemetry.",
+          complexity: "Update O(d); query O(d); memory O(d·w) regardless of stream length.",
+          example: "32KB sketch with d=5 rows × 1024 cols handles 10M updates with <1% overcount error.",
+          pitfall: "Count-min only over-estimates, never under-estimates — but the bias can be large for rare items. For exact rare-item counts, supplement with a Misra-Gries 'heavy hitters' summary." }
+      ]
+    },
+    {
+      id: "uc-task-scheduler", title: "Schedule Jobs With Dependencies",
+      desc: "Builds, CI pipelines, and workflow engines all reduce to topological sort + critical-path DP on a DAG.",
+      icon: "⏱️", color: "#58a6ff",
+      summary: "Every build system (Make, Bazel, Gradle), CI runner (GitHub Actions, Jenkins), and workflow engine (Airflow, Temporal) reduces to the same algorithmic core: <strong>topological sort the DAG, DP for the critical path, then schedule onto workers</strong>. Cycle detection prevents deadlocks. The critical path tells you which jobs to optimize. List scheduling on a heap gives a provable 2-approximation of optimal makespan.",
+      pipeline: "Job definitions (YAML/Makefile)\n   │ parse, validate\n   ▼\nDirected graph (V=jobs, E=deps)\n   │ Kahn's algorithm\n   ▼\nTopo order  ──cycle?──▶ FAIL (circular dep)\n   │\n   ▼\nForward DP: ef[v] = max(ef[pred]) + dur[v]   (makespan)\n   │\n   ▼\nBackward DP: lf[v], slack[v]                 (critical path)\n   │\n   ▼\nList-scheduling on k workers (max-heap by critical-path length)\n   │\n   ▼\nExecution log + Gantt chart",
+      metrics: [
+        { label: "Bazel build graph", value: "~100K targets" },
+        { label: "Topo sort", value: "O(V+E) ≈ ms" },
+        { label: "List-scheduling approx ratio", value: "2 − 1/k" },
+        { label: "GitHub Actions DAG", value: "~1K jobs/workflow" }
+      ],
+      extensions: "Optimal scheduling is NP-hard (P||Cmax) so production schedulers use Coffman-Graham, HEFT, or ILP for small DAGs and list-scheduling for large. Add resource constraints → bin-packing. Add deadlines → earliest-deadline-first.",
+      steps: [
+        { title: "Express Jobs as a DAG", component: "Graph", proto: "Adjacency list + in-degree array",
+          intuition: "Every 'A must run before B' constraint is just a directed edge — the rest is graph theory.",
+          detail: "Each job is a node; an edge u → v means 'v must run after u'. Cycle = circular dependency, fail fast. Store adjacency list AND in-degree array (in-degree drives Kahn's algorithm).",
+          complexity: "O(V+E) build",
+          example: "A Bazel build of TensorFlow has ~100K nodes and ~500K edges — fits easily in a few hundred MB.",
+          pitfall: "Edge direction matters and is easy to flip. Convention: u→v means 'u runs before v' (u is the dependency of v)." },
+        { title: "Topological Sort (Kahn's Algorithm)", component: "Kahn's algorithm", proto: "BFS on in-degrees",
+          intuition: "Peel off all 'ready' nodes (in-degree 0), then peel off the next layer they unblock — repeat.",
+          detail: "Repeatedly emit any node with in-degree 0 and decrement its successors. Produces a legal serial execution order in O(V+E) and naturally serves as the cycle detector — any node never reaching in-degree 0 is part of a cycle.",
+          complexity: "O(V+E) time, O(V) space.",
+          code: "queue<int> q;\nfor(int v=0;v<n;v++) if(in[v]==0) q.push(v);\nwhile(!q.empty()){\n  int u=q.front(); q.pop();\n  order.push_back(u);\n  for(int v:adj[u])\n    if(--in[v]==0) q.push(v);\n}\nif(order.size()<n) throw \"cycle detected\";",
+          example: "Linux kernel build: ~50K compile units, Kahn's runs in <50ms.",
+          pitfall: "DFS-based topo sort also works but cycle detection requires explicit gray/black coloring — Kahn's gives you cycle detection for free." },
+        { title: "Compute Earliest Finish Times", component: "DP on DAG",
+          intuition: "Process jobs in topo order; each job's earliest finish = its duration + max of its predecessors' earliest finishes.",
+          detail: "ef[v] = duration[v] + max(ef[u] over predecessors u). Iterate in topological order so each ef[u] is computed before any ef[v] needs it. The maximum ef over all nodes is the project makespan — the absolute fastest possible completion if you had unlimited parallelism.",
+          complexity: "O(V+E) (single DAG pass)",
+          example: "Compiling Linux: project makespan computed over 50K compile units in ~10ms.",
+          pitfall: "Without topo ordering this becomes O(V²) or worse with naïve recursion. Always process in topo order." },
+        { title: "Find the Critical Path", component: "Backward DP",
+          intuition: "Jobs with zero slack are on the critical path — speeding them up shortens the project; speeding up anything else changes nothing.",
+          detail: "Compute lf[v] (latest finish without delaying makespan) in *reverse* topological order: lf[v] = min(lf[w] − duration[w] over successors w). Slack[v] = lf[v] − ef[v]. Jobs with slack=0 form the critical path(s). Used for resource leveling and 'what should I optimize?' analysis.",
+          complexity: "O(V+E) (single reverse DAG pass)",
+          example: "If your CI takes 45 min and the critical path is 'lint → test → deploy' = 38 min, then parallelizing anything off-critical-path can't beat 38 min — you must shrink the chain itself.",
+          pitfall: "Multiple critical paths can coexist — don't optimize one assuming there's a single bottleneck." },
+        { title: "Parallel Execution With Workers", component: "List scheduling", proto: "Max-heap by critical-path length",
+          intuition: "When multiple jobs are ready, always start the one whose downstream chain is longest — minimizes total makespan.",
+          detail: "Maintain a ready-queue (in-degree-0 jobs) sorted by remaining critical-path length descending. Dispatch the top job whenever a worker is free; when a job completes, decrement successors' in-degrees and push newly-ready jobs onto the heap. Achieves makespan ≤ (2 − 1/k)·OPT (Graham's bound).",
+          complexity: "O((V+E) log V) overall (heap ops dominate)",
+          code: "priority_queue<pair<int,int>> ready;  // {priority, jobId}\nint freeWorkers=k, t=0;\nfor(int v:nodes) if(in[v]==0) ready.push({criticalLen[v], v});\nwhile(/* still jobs */){\n  while(freeWorkers && !ready.empty()){\n    auto [_, u]=ready.top(); ready.pop();\n    schedule(u, t); freeWorkers--;\n  }\n  // advance time to next completion event...\n}",
+          example: "GitHub Actions with 20 concurrent runners on a 1000-job workflow: list scheduling typically within 10–20% of optimal.",
+          pitfall: "Pure FIFO scheduling (no priority) can be arbitrarily bad — a job that's a small-but-critical bottleneck might wait behind 10 fast-but-irrelevant jobs." }
+      ]
+    },
+    {
+      id: "uc-code-diff", title: "Build a Code Diff & Three-Way Merge Tool",
+      desc: "Git's diff, GitHub's merge, and every code-review tool are LCS + a tiny graph search dressed up in UI.",
+      icon: "🔀", color: "#ffa657",
+      summary: "Diff is just <strong>Longest Common Subsequence</strong> in disguise; three-way merge is a structured comparison against a common ancestor; conflict detection is a set-intersection on overlapping edit hunks. Performance comes from Myers' O((N+M)D) diff algorithm — used by Git, Mercurial, and basically every modern VCS. Suffix arrays accelerate move-detection. The 'patience' heuristic improves human-readability of diffs without affecting correctness.",
+      pipeline: "Two files A (N lines) and B (M lines)\n   │ tokenize (line / char / word)\n   ▼\nLCS or Myers diff   → edit script (delete A_i, insert B_j)\n   │\n   ▼\n(if 3-way) Compute diff(base, A) and diff(base, B)\n   │\n   ▼\nMerge hunks → emit non-overlapping changes\n   │ overlapping changes?\n   ▼\nConflict markers <<<<< ===== >>>>>\n   │\n   ▼\nRender in UI (side-by-side / inline / patience-ordered)",
+      metrics: [
+        { label: "Myers diff complexity", value: "O((N+M)·D)" },
+        { label: "Typical D (edit distance)", value: "~5% of N+M" },
+        { label: "10K-line file diff", value: "~30ms" },
+        { label: "Git's default algorithm", value: "Myers (since 2005)" }
+      ],
+      extensions: "Patience diff (Bram Cohen) for cleaner human-readable diffs, histogram diff (JGit) for performance on large files, semantic/AST diff (difftastic, GumTree) for refactoring-aware comparisons, and tree-edit-distance for structured XML/JSON.",
+      steps: [
+        { title: "Tokenize Both Files", component: "Strings", proto: "Line/word/char arrays",
+          intuition: "Choose the granularity that matches how humans read changes — lines for code, words for prose, chars for short strings.",
+          detail: "Split A and B into atomic 'tokens'. For source code, lines. For prose, words. For DNA, characters. Hash each token to an int so subsequent comparisons are O(1) rather than O(line-length).",
+          complexity: "O(N + M) hashing",
+          example: "Git: hashes each line with a 32-bit hash; collision probability negligible for typical files (<10⁴ lines).",
+          pitfall: "Whitespace differences explode the edit script for free. Most diff tools strip trailing whitespace and offer `-w` to ignore all whitespace." },
+        { title: "Compute Longest Common Subsequence", component: "DP", proto: "Hunt-McIlroy / Myers",
+          intuition: "The longest sequence of tokens appearing in both files (in order, not necessarily contiguous) gives the 'unchanged' lines; everything else is an insert or delete.",
+          detail: "Classical Wagner-Fischer DP fills an (N+1)×(M+1) table in O(NM). Myers (1986) reformulated the problem as a shortest-edit-script on a graph and achieved O((N+M)·D) where D is the edit-distance — typically D ≪ N+M for real diffs, making it dramatically faster in practice.",
+          complexity: "Wagner-Fischer O(NM); Myers O((N+M)·D)",
+          code: "// Wagner-Fischer (textbook)\nfor(int i=0;i<=N;i++) dp[i][0]=0;\nfor(int j=0;j<=M;j++) dp[0][j]=0;\nfor(int i=1;i<=N;i++)\n  for(int j=1;j<=M;j++)\n    dp[i][j]=(A[i-1]==B[j-1])\n      ? dp[i-1][j-1]+1\n      : max(dp[i-1][j], dp[i][j-1]);",
+          example: "Diffing two 10K-line files with 500 changes: Wagner-Fischer ~1s, Myers ~30ms.",
+          pitfall: "Wagner-Fischer's O(NM) memory blows up at ~5K×5K. Use Hirschberg's algorithm for O(min(N,M)) memory at the cost of a constant slowdown." },
+        { title: "Recover the Edit Script", component: "DP traceback", proto: "Backtrack through DP table",
+          intuition: "Walk backward through the DP table choosing the move (match / delete / insert) that produced each cell's value.",
+          detail: "From dp[N][M] trace back: if A[i-1]==B[j-1] step diagonally (match — no edit); else step in the direction of the larger neighbor (delete if dp[i-1][j], insert if dp[i][j-1]). Emit edit operations in reverse, then reverse the list.",
+          complexity: "O(N+M) per traceback",
+          example: "A 3-line diff between `[a,b,c]` and `[a,x,c]` yields `match a; delete b; insert x; match c`.",
+          pitfall: "Diagonal precedence matters: prefer matches to keep diffs minimal. Naïve traceback that prefers deletes/inserts produces correct but ugly diffs." },
+        { title: "Three-Way Merge", component: "Diff3", proto: "diff(base,A) ∪ diff(base,B)",
+          intuition: "Both sides edit the same ancestor; non-overlapping edits compose cleanly; overlapping edits are conflicts.",
+          detail: "Run diff(base, A) and diff(base, B) producing two edit scripts. Walk through base alignment positions; if only one side changed a region, take that change. If both sides changed overlapping regions, emit a conflict block delimited by `<<<<<<<`, `=======`, `>>>>>>>`. Resolution requires human or smarter semantic analysis.",
+          complexity: "O((N+M+B)·D) dominated by the two diffs",
+          example: "Git merges with 'recursive' strategy by default — a diff3 with virtual ancestor reconstruction when multiple merge bases exist.",
+          pitfall: "Textual diff3 is naive about meaning — renaming `foo` to `bar` in one branch and adding a `foo()` call in another doesn't produce a conflict but breaks the build." },
+        { title: "Move Detection & Patience Diff", component: "Suffix array / unique-line heuristic", proto: "Hash table + LCS on uniques",
+          intuition: "Find unambiguous anchor lines first (lines appearing exactly once in each file), then diff the gaps between anchors.",
+          detail: "Patience diff (Cohen): take the LCS of unique lines as the anchor sequence; recurse into each between-anchor region with patience again, falling back to Myers at the base case. Produces dramatically cleaner human-readable diffs especially around moved blocks. Move detection itself uses suffix arrays or rolling-hash to spot blocks that left one region and reappeared elsewhere.",
+          complexity: "Patience O((N+M) log(N+M)); move detection O((N+M) log(N+M)) with suffix array.",
+          example: "Refactoring that moves a 50-line function: default Myers shows it as 'delete 50 + insert 50'; difftastic + move-detection shows it as a single move.",
+          pitfall: "Patience can be slower than Myers on pathological inputs where almost every line is unique — most tools default to Myers and offer patience as an option." }
+      ]
+    },
+    {
+      id: "uc-leaderboard", title: "Build a Real-Time Game Leaderboard",
+      desc: "Top-k queries, rank lookups, and score updates at millions-of-players scale — a tour through order statistics, skip lists, and segment trees.",
+      icon: "🏆", color: "#ff7b72",
+      summary: "Powering a multiplayer-game leaderboard at scale requires <strong>three operations to be fast at once</strong>: insert/update a player's score, query a player's current rank, and read the top-k. Heaps only handle two of the three. The production answer is an <strong>order-statistic tree</strong> (Redis ZSET = skip list + hash map) or a Fenwick/segment tree over a bounded score domain. Sharding by region and percentile-bucketing for tail queries scales it to billions.",
+      pipeline: "Score update (player p, +Δ)\n   │\n   ▼\nOrder-statistic structure (skip list / BIT)\n   │ O(log N) update\n   ▼\nIndices: score→player, player→score, score→rank\n   │\n   ▼\nQueries:\n  ├─ top-k                  → walk left-most skip-list lane\n  ├─ rank(player)           → cumulative count of scores ≥ p.score\n  └─ percentile(player)     → rank / N\n   │\n   ▼\nShard by region (US/EU/APAC) for write-throughput;\nMerge at read time for global view.",
+      metrics: [
+        { label: "Players (AAA title)", value: "10M–100M" },
+        { label: "Score update", value: "O(log N) ≈ µs" },
+        { label: "Top-100 query", value: "<1ms" },
+        { label: "Redis ZADD throughput", value: "~100K ops/s/core" }
+      ],
+      extensions: "Approximate top-k with sketches (Misra-Gries, space-saving) when exactness can be relaxed; HyperLogLog for distinct-player counts; sliding-window leaderboards via timestamp-keyed sorted sets; CRDTs for multi-region eventual consistency.",
+      steps: [
+        { title: "Pick the Right Data Structure", component: "Order statistics", proto: "Skip list / Indexed BST / Fenwick tree",
+          intuition: "You need a structure that orders by score *and* exposes 'how many elements are ≤ x?' in O(log N). A plain heap can't do rank queries.",
+          detail: "Three viable options: (1) **Skip list** with an extra 'span' field per forward pointer (used by Redis ZSET) — O(log N) for insert/delete/rank/select. (2) **Order-statistic tree** (red-black with subtree-size augmentation) — same bounds, more code. (3) **Fenwick/BIT over discrete score domain** — O(log V) where V is score range, fastest constants but score must be bounded and integer-valued.",
+          complexity: "All three: O(log N) update / rank / select",
+          example: "Redis ZSET internally combines a skip list (for ordering) with a hash table (for O(1) lookup by member key) — covering all four query types in their fast bounds.",
+          pitfall: "A plain heap supports top-k via partial sort but cannot answer 'what's player X's rank?' without O(N) scan." },
+        { title: "Update a Player's Score", component: "Score update", proto: "Remove + insert",
+          intuition: "Updating a score = delete the old (score, player) entry and insert the new one — both are O(log N) operations.",
+          detail: "Maintain a side hash map `player → currentScore` so update is: lookup old score in hash → delete (oldScore, player) from skip list → insert (newScore, player) → update hash. Without the hash you'd have to search the skip list by player ID which is O(N).",
+          complexity: "O(log N) skip-list ops + O(1) hash ops",
+          code: "function updateScore(player, delta){\n  const old = scoreMap.get(player);\n  if(old !== undefined) skipList.remove({score: old, player});\n  const fresh = (old||0) + delta;\n  skipList.insert({score: fresh, player});\n  scoreMap.set(player, fresh);\n}",
+          example: "Fortnite/Apex: kill credits ping leaderboard every ~5 seconds. ~10K updates/sec/region, easily handled by one Redis shard.",
+          pitfall: "Forgetting to update the hash leaves an orphan skip-list entry — the player appears twice and rank queries return inflated counts." },
+        { title: "Top-K Query", component: "Range scan", proto: "Walk highest-level skip-list pointers",
+          intuition: "Top-k is just the first k items in descending-score order — a linear walk along the top lane.",
+          detail: "Skip lists keep items sorted by (score, tiebreaker). Walk from the head in descending order (or store the structure reversed) and emit the first k entries. Redis: `ZREVRANGE leaderboard 0 99 WITHSCORES`.",
+          complexity: "O(log N + k)",
+          example: "Top-100 from a 10M-player leaderboard returns in <1ms on Redis.",
+          pitfall: "Don't materialize the full sorted list — for top-100 you read 100 entries, not 10M." },
+        { title: "Player Rank Query", component: "Select / Rank", proto: "Span-augmented skip-list traversal",
+          intuition: "Rank = (count of players with strictly higher score) + 1. Skip-list span fields let you sum these counts during descent.",
+          detail: "Each forward pointer in the skip list carries a 'span' = number of elements skipped. To compute rank(player), descend the list towards the player's (score, member); on each step add the span of the pointer you follow. After arriving at the player you have the cumulative span = number of items before the player = (rank − 1).",
+          complexity: "O(log N) — proportional to skip-list height",
+          example: "`ZREVRANK leaderboard \"PlayerX\"` returns 12,485 (player is in the top ~13K of 10M).",
+          pitfall: "Rank by score alone is non-deterministic for ties. Always add a tiebreaker (member id, timestamp) to make the ordering total — otherwise ZADD/ZINCRBY can return inconsistent ranks." },
+        { title: "Sharding & Global Aggregation", component: "Distributed systems", proto: "Region-sharded ZSETs + lazy merge",
+          intuition: "Writes are easy to shard by region; the only tricky part is producing a global top-k without pulling every shard's full data.",
+          detail: "Partition by region (US/EU/APAC); each shard maintains its local ZSET. For global top-k, fan-out a top-k query to every shard and merge results — k·R candidates produces the true global top-k (R = #shards). For exact rank, you need approximate methods (percentile sketches) or O(R log N) per query — usually unacceptable for live UI, so most games show 'regional rank' only.",
+          complexity: "Local query O(log N + k); global merge O(R·k log(R·k))",
+          example: "Fortnite leaderboard: per-region ZSETs, global 'top 1000' computed by merging top-1000s from each region every minute (not live).",
+          pitfall: "Pulling every shard's full set to compute exact global rank scales poorly past R≈10. Accept approximation (percentile or rough rank) for global views." }
+      ]
+    }
+  ],
+
+  // === BEGIN glossary v1 data placeholder ===
+  glossary: [
+    {
+      id: 'dp', term: 'Dynamic Programming', aka: 'DP',
+      category: 'concepts',
+      short: 'Solve a problem by composing answers of smaller overlapping subproblems, each computed exactly once.',
+      long: "DP turns exponential brute force into polynomial work by memoising every distinct state. The craft is choosing the smallest state that fully describes a subproblem and writing a recurrence over strictly smaller states. Top-down (recursion+memo) is easier to derive; bottom-up tabulation is faster and enables row-rolling for O(1) extra space.",
+      seeAlso: ['bitmask-dp', 'greedy', 'dijkstra']
+    },
+    {
+      id: 'bitmask-dp', term: 'Bitmask DP',
+      category: 'concepts',
+      short: 'Dynamic programming whose state packs a subset of up to ~20 items into a single integer.',
+      long: "When n ≤ 20 you can index dp[mask][i] by an n-bit subset and a position, e.g. Travelling Salesman in O(2ⁿ·n²). To iterate proper subsets of a mask use the classic trick s=(s-1)&m. Common in assignment, set-cover, Hamiltonian counting, and profile DP on a 1×n strip.",
+      seeAlso: ['dp']
+    },
+    {
+      id: 'greedy', term: 'Greedy Algorithm',
+      category: 'concepts',
+      short: 'Make the locally optimal choice at each step and hope it leads to a global optimum.',
+      long: "Greedy works only when a problem has the matroid/exchange property — e.g. Kruskal's MST, Huffman coding, interval scheduling. A priority queue is the usual sidekick when the 'best' element changes as the algorithm progresses. Failed greedies are the canonical signal to switch to DP or flow.",
+      seeAlso: ['mst', 'heap', 'dp']
+    },
+    {
+      id: 'dfs-bfs', term: 'DFS / BFS',
+      aka: 'Depth-First / Breadth-First Search',
+      category: 'concepts',
+      short: 'The two canonical graph traversals, both O(V+E) on adjacency lists.',
+      long: "DFS recurses deeply and exposes structure: back-edges reveal cycles, finish-times feed Kosaraju, and lowlinks find bridges and articulation points. BFS expands in layers and gives shortest paths in unweighted graphs because each vertex is first dequeued via a minimum-edge-count path. Pick BFS for distance, DFS for structure.",
+      seeAlso: ['topo', 'scc', 'dijkstra']
+    },
+    {
+      id: 'topo', term: 'Topological Sort',
+      aka: "Kahn's Algorithm",
+      category: 'concepts',
+      short: 'Linear ordering of a DAG so every edge u → v points forward in the sequence.',
+      long: "Kahn's variant repeatedly emits any in-degree-0 vertex and decrements its successors; leftover vertices imply a cycle. Topological order is the substrate for DP on DAG, critical-path scheduling, and build-system dependency resolution. Cost is O(V+E).",
+      seeAlso: ['dfs-bfs', 'dp']
+    },
+    {
+      id: 'dijkstra', term: 'Dijkstra',
+      aka: 'SSSP with non-negative weights',
+      category: 'concepts',
+      short: "Greedy single-source shortest-path algorithm running in O((V+E) log V) with a binary heap.",
+      long: "Maintains tentative distances and repeatedly extracts the closest unsettled vertex, relaxing its outgoing edges. The 'lazy' variant skips stale heap entries (`if(d > dist[v]) continue;`) and outperforms decrease-key Fibonacci-heap versions in practice. Silently wrong on negative edges — use Bellman-Ford instead.",
+      seeAlso: ['bellman', 'floyd', 'heap']
+    },
+    {
+      id: 'bellman', term: 'Bellman-Ford',
+      category: 'concepts',
+      short: 'Single-source shortest paths that tolerates negative edges in O(V·E).',
+      long: "Relaxes every edge V−1 times; a successful V-th relaxation signals a reachable negative cycle. SPFA is a queue-based speedup that is fast on average but TLEs on adversarial graphs. Use Bellman-Ford when edge weights can be negative or when negative-cycle detection is required.",
+      seeAlso: ['dijkstra', 'floyd']
+    },
+    {
+      id: 'floyd', term: 'Floyd-Warshall',
+      category: 'concepts',
+      short: 'All-pairs shortest paths in O(V³) with a five-line triple loop.',
+      long: "Iteratively allows vertex k as an intermediate and updates dist[i][j] = min(dist[i][j], dist[i][k]+dist[k][j]). Trivial to code, handles negative edges (but not negative cycles), and is the right hammer when V ≤ ~400. Also computes transitive closure when distances are replaced by booleans.",
+      seeAlso: ['dijkstra', 'bellman']
+    },
+    {
+      id: 'mst', term: 'Minimum Spanning Tree',
+      aka: 'MST',
+      category: 'concepts',
+      short: 'Lowest-total-weight subset of edges that connects every vertex of a weighted graph.',
+      long: "Kruskal sorts edges and adds each one that doesn't form a cycle (Union-Find as the cycle oracle); Prim grows a tree from one vertex using a priority queue of frontier edges. Both run in O(E log V) and rely on the cut property — for any cut, the lightest crossing edge belongs to some MST.",
+      seeAlso: ['ufds', 'heap', 'greedy']
+    },
+    {
+      id: 'scc', term: 'Strongly Connected Components',
+      aka: 'SCC',
+      category: 'concepts',
+      short: 'Maximal subgraphs of a directed graph in which every vertex can reach every other.',
+      long: "Kosaraju runs two DFS passes (the second on the reversed graph in decreasing finish order). Tarjan does it in a single pass using lowlink values and a stack, which is faster in practice and also yields biconnected components. Condensing a graph by its SCCs always produces a DAG.",
+      seeAlso: ['dfs-bfs', 'topo']
+    },
+    {
+      id: 'netflow', term: 'Max-Flow / Min-Cut',
+      aka: 'Network Flow',
+      category: 'concepts',
+      short: 'Maximum flow from source to sink equals the minimum total capacity over all S-T cuts.',
+      long: "Edmonds-Karp uses BFS for augmenting paths in O(V·E²); Dinic builds level graphs and blocking flows for O(V²·E) — O(E·√V) on unit capacities, ideal for bipartite matching. Always pair each forward edge with a reverse edge of capacity 0 so flow can be cancelled along residuals.",
+      seeAlso: ['matching', 'bipartite']
+    },
+    {
+      id: 'matching', term: 'Bipartite Matching',
+      aka: 'Maximum Matching',
+      category: 'concepts',
+      short: 'Largest set of edges in a bipartite graph with no shared endpoint.',
+      long: "Reduce to max flow with unit capacities and solve in O(E·√V) using Dinic; or run Hopcroft-Karp directly. König's theorem links it to vertex cover and independent sets. Weighted bipartite matching (assignment problem) is solved by the Hungarian / Kuhn-Munkres algorithm.",
+      seeAlso: ['netflow']
+    },
+    {
+      id: 'kmp', term: 'Knuth-Morris-Pratt',
+      aka: 'KMP',
+      category: 'concepts',
+      short: 'Linear-time string matching using a precomputed failure-function π.',
+      long: "π[i] is the length of the longest proper prefix of P[0..i] that is also a suffix; on a mismatch the algorithm jumps to position π[j-1] without ever moving the text pointer back. Same π unlocks 'longest border', minimal period, and the symmetric Z-function. Total cost O(n+m).",
+      seeAlso: ['suffix', 'trie']
+    },
+    {
+      id: 'heap', term: 'Binary Heap',
+      aka: 'Priority Queue',
+      category: 'software',
+      short: 'Complete binary tree with the heap-order property; O(log n) push/pop, O(1) peek.',
+      long: "Stored implicitly in an array where parent(i)=i/2. Supports min-extraction or max-extraction depending on the comparator and underlies Dijkstra, Prim, K-way merge, and any greedy where the 'best' element changes. Lazy deletion (`if(d > dist[v]) continue;`) is the idiomatic way to avoid expensive decrease-key.",
+      seeAlso: ['dijkstra', 'mst', 'greedy']
+    },
+    {
+      id: 'ufds', term: 'Union-Find',
+      aka: 'DSU / Disjoint Set Union',
+      category: 'software',
+      short: 'Disjoint-set structure supporting near-O(1) find and union via path compression + union by rank.',
+      long: "Maintains a forest where each tree is one set; find walks to the root and flattens the path, union links the shorter tree under the taller one. Amortised cost is α(n), the inverse Ackermann function. Core engine of Kruskal's MST, offline connectivity queries, and 'group elements that share property X' problems.",
+      seeAlso: ['mst']
+    },
+    {
+      id: 'fenwick', term: 'Fenwick Tree',
+      aka: 'BIT / Binary Indexed Tree',
+      category: 'software',
+      short: 'Compact n+1-element array answering prefix-sum queries and point updates in O(log n).',
+      long: "tree[i] covers the range (i − lowbit(i), i], with the climb done via i += i & -i and i -= i & -i. Half the memory of a Segment Tree and only ~10 lines of code, but the operation must be invertible (sum, XOR, count). Two BITs in parallel give range-update + range-query for sum problems.",
+      seeAlso: ['segtree']
+    },
+    {
+      id: 'segtree', term: 'Segment Tree',
+      category: 'software',
+      short: 'Range-query/update tree of size ~4n supporting any associative operation in O(log n).',
+      long: "Each internal node stores the merged value over its interval (sum, min, max, GCD, matrix product). Range updates require lazy propagation: store a pending tag and push it down only when children are visited. Iterative bottom-up layouts are 2–3× faster than recursive ones; persistent variants enable historical queries like 'k-th smallest in [l,r]'.",
+      seeAlso: ['fenwick', 'hld', 'sqrt-decomp']
+    },
+    {
+      id: 'trie', term: 'Trie',
+      aka: 'Prefix Tree',
+      category: 'software',
+      short: 'Tree where each path from root spells a stored string, giving O(L) insert and prefix lookup.',
+      long: "Stores k strings of total length L in O(L) memory. The substrate for autocomplete, Aho-Corasick multi-pattern matching, and the 'maximum XOR pair' problem via a binary trie of 30-bit numbers. Array-of-26 children is fastest for ASCII; hashmap children scale to large alphabets.",
+      seeAlso: ['suffix', 'kmp']
+    },
+    {
+      id: 'suffix', term: 'Suffix Array',
+      aka: 'SA + LCP',
+      category: 'software',
+      short: 'Sorted array of all n suffixes of a string, paired with the LCP array of adjacent suffixes.',
+      long: "Built in O(n log n) with radix sort or O(n) with SA-IS / DC3; Kasai computes LCP in O(n). Enables distinct-substring counting (n(n+1)/2 − ΣLCP), longest repeated substring (max LCP), and pattern search in O(m log n). Uses ~5n memory versus ~20n for a Suffix Tree.",
+      seeAlso: ['trie', 'kmp']
+    },
+    {
+      id: 'hash', term: 'Hash Table',
+      category: 'software',
+      short: 'Associative container offering O(1) average insert and lookup via a hash function and buckets.',
+      long: "Open addressing or chained buckets distribute keys uniformly; worst case degrades to O(n) on adversarial inputs. In competitive programming, unordered_map with a custom hash avoids the well-known anti-hash test cases against std::hash<long long>. Polynomial string hashing reuses the same idea for substring equality in O(1).",
+      seeAlso: ['trie']
+    },
+    {
+      id: 'primes', term: 'Sieve of Eratosthenes',
+      aka: 'Prime Sieve',
+      category: 'numerics',
+      short: 'Marks composites by iterating multiples of each prime; finds all primes ≤ n in O(n log log n).',
+      long: "For n=10⁷ it completes in well under a second. A linear-time variant produces the smallest prime factor of every n, plus the Möbius function and Euler's totient, in one pass. For huge single numbers use deterministic Miller-Rabin (witnesses {2,3,5,7,11,13,17,19,23,29,31,37}) up to 10¹⁸.",
+      seeAlso: ['modular', 'combinatorics']
+    },
+    {
+      id: 'modular', term: 'Modular Arithmetic',
+      category: 'numerics',
+      short: 'Arithmetic where values are reduced modulo a fixed integer, typically a large prime like 10⁹+7.',
+      long: "Addition, subtraction, and multiplication commute with mod; division does not — instead multiply by the modular inverse. For prime modulus p, Fermat gives a⁻¹ ≡ a^(p−2) mod p via one fast exponentiation; for general moduli use extended Euclid. Reduce after every multiplication to avoid 64-bit overflow.",
+      seeAlso: ['primes', 'combinatorics']
+    },
+    {
+      id: 'combinatorics', term: 'Combinatorics',
+      aka: 'Counting',
+      category: 'numerics',
+      short: 'Counting structures: binomial coefficients, Catalan, Stirling, inclusion-exclusion.',
+      long: "Precompute fact[] and invFact[] in O(N) so nCk is O(1) per query under a prime modulus. Catalan Cₙ = C(2n,n)/(n+1) counts balanced parentheses, binary trees, and Dyck paths. Inclusion-exclusion is the catch-all for unions and 'count integers coprime to a set'; Lucas's theorem handles nCk for huge n and small p.",
+      seeAlso: ['modular', 'matrix']
+    },
+    {
+      id: 'matrix', term: 'Matrix Exponentiation',
+      category: 'numerics',
+      short: 'Compute Mⁿ in O(k³ log n) by binary squaring — evaluates linear recurrences in microseconds.',
+      long: "Any linear recurrence aₙ = c₁aₙ₋₁ + … + cₖaₙ₋ₖ rewrites as a vector update Vₙ = M·Vₙ₋₁, so the n-th term comes from Mⁿ·V₀. Counts walks of length n in a graph via powers of the adjacency matrix, and accelerates DPs over a small state space evolving in time (e.g. tilings of fixed-width strips).",
+      seeAlso: ['fft', 'dp']
+    },
+    {
+      id: 'fft', term: 'Fast Fourier Transform',
+      aka: 'FFT / NTT',
+      category: 'numerics',
+      short: 'Multiplies two degree-n polynomials in O(n log n) by evaluating at roots of unity.',
+      long: "FFT works in complex arithmetic; NTT (Number-Theoretic Transform) does the same modulo a prime like 998244353 and avoids floating-point error. Triggered whenever a problem convolves frequency arrays, counts (i+j)-sums, or multiplies big integers. Often pairs with DP whose transition is a convolution.",
+      seeAlso: ['modular', 'matrix']
+    },
+    {
+      id: 'sqrt-decomp', term: 'Sqrt Decomposition',
+      aka: 'Block Decomposition',
+      category: 'performance',
+      short: 'Split an array into √n blocks so range queries and updates run in O(√n).',
+      long: "Each block stores an aggregate (sum, min, count); a query touches at most two partial blocks plus √n whole blocks. Simpler than a Segment Tree, easier to extend with bespoke per-block invariants, and the foundation of Mo's algorithm for offline range queries. Picks a memory/time tradeoff coarser than O(log n) structures.",
+      seeAlso: ['segtree']
+    },
+    {
+      id: 'hld', term: 'Heavy-Light Decomposition',
+      aka: 'HLD',
+      category: 'performance',
+      short: 'Decomposes a tree into O(log n) heavy chains so any path becomes O(log n) chain segments.',
+      long: "Each vertex's heaviest child (largest subtree) is part of the same chain; light edges cap chain switches at O(log n) along any root-to-leaf path. Place a Segment Tree (or Fenwick) over the linearised chain order to answer 'sum/min on tree path u→v' or 'update subtree' in O(log² n).",
+      seeAlso: ['segtree', 'sqrt-decomp']
+    }
+  ],
+  // === END glossary v1 data placeholder ===
+
+  problems: [
+    {
+      week: "Ch 3 — Paradigms",
+      title: "Greedy, Divide & Conquer, Complete Search",
+      hook: "Greedy looks like cheating — locally optimal choices that somehow produce globally optimal answers. So which problems will it silently betray you on, and how can you tell <em>before</em> you submit?",
+      items: [
+        { tag: "design", text: "Design a greedy strategy that schedules n jobs with deadlines and profits to maximise total profit. Justify why your sort key works.", hint: "Sort by profit desc, then place each job in the latest still-free slot ≤ deadline (Union-Find for O(n α(n)))." , star: true},
+        { tag: "derive", text: "Prove that binary search on a sorted array of n distinct elements requires Θ(log n) comparisons in the worst case." },
+        { tag: "code",   text: "Implement merge sort iteratively (no recursion). Verify on random arrays of length 10⁶." },
+        { tag: "debug",  text: "A contestant's binary search returns -1 on inputs where the target equals the last element. Identify the off-by-one bug.", hint: "Inspect the loop condition `lo < hi` vs `lo <= hi` and how `mid` is computed.", star: true },
+        { tag: "paper",  text: "Halim Ch 3.4 — read the section on 'Divide & Conquer Variants' and summarise meet-in-the-middle in 5 sentences with a worked example." }
+      ]
+    },
+    {
+      week: "Ch 4 — Graphs",
+      title: "Traversal, Shortest Paths & MST",
+      hook: "Dijkstra's algorithm has been re-invented at least four times since 1959 — yet it silently breaks on a <em>single</em> negative edge. What did Dijkstra implicitly assume that you didn't?",
+      items: [
+        { tag: "design", text: "Design an algorithm to find the diameter of an unweighted tree on n nodes in O(n).", hint: "Two BFS passes: from any node u, find farthest v; from v, find farthest w. Distance v→w is the diameter.", star: true },
+        { tag: "derive", text: "Show that Dijkstra's algorithm fails on graphs with negative edges by constructing a 4-vertex counterexample.", star: true },
+        { tag: "code",   text: "Implement Bellman-Ford with negative-cycle detection. Output the cycle vertices when one exists." },
+        { tag: "debug",  text: "A submission gets WA on Kruskal MST with multi-edges between two vertices. What goes wrong if the Union-Find isn't path-compressed?", hint: "Performance degrades to O(E · V); pure correctness is fine — re-read the failing test cases for output format." },
+        { tag: "design", text: "Given an undirected graph, design an O(V+E) algorithm to find all bridges and articulation points.", hint: "DFS with low[v] = min(disc[v], low[children], disc[back-edge endpoints]); bridge iff low[v] > disc[u] for tree edge u→v." }
+      ]
+    },
+    {
+      week: "Ch 5 — Math",
+      title: "Number Theory & Combinatorics",
+      hook: "Almost every counting problem in competitive programming asks for the answer mod 10⁹+7 — not because the numbers are merely large, but because the <em>true</em> answer wouldn't fit in any computer ever built. Why this prime, and why is division suddenly the hardest operation?",
+      items: [
+        { tag: "code",   text: "Implement a linear sieve up to 10⁷ that also outputs the smallest prime factor of every integer in the range.", star: true },
+        { tag: "derive", text: "Prove that aᵖ⁻¹ ≡ 1 (mod p) for any integer a not divisible by prime p (Fermat's little theorem)." },
+        { tag: "design", text: "Design an O(log n) algorithm to compute the n-th Fibonacci number mod 10⁹+7 for n up to 10¹⁸.", hint: "Matrix exponentiation: [[1,1],[1,0]]ⁿ has Fₙ in the top-right.", star: true },
+        { tag: "paper",  text: "Read Halim Ch 5.5 on combinatorics and write a one-page note on Catalan numbers with at least three distinct combinatorial interpretations." },
+        { tag: "debug",  text: "A precomputed nCr table gives wrong answers for k > n/2. Where is the bug?", hint: "Check whether invFact[n-k] is being indexed with n-k ≥ 0 — common off-by-one when n and k are swapped." }
+      ]
+    },
+    {
+      week: "Ch 6 — Strings",
+      title: "Pattern Matching & Suffix Structures",
+      hook: "KMP looks like dark magic: a 10-line preprocessing pass lets you scan a billion-character text without ever backtracking. How can you possibly know the next mismatch position before you've seen the text?",
+      items: [
+        { tag: "code",   text: "Implement KMP, return all starting indices where the pattern occurs in the text. Test on text length 10⁶.", star: true },
+        { tag: "design", text: "Given 10⁵ patterns, total length 10⁶, find every occurrence in a 10⁷-character text. Which algorithm and why?", hint: "Aho-Corasick: trie + failure links → single O(text + matches) pass.", star: true },
+        { tag: "derive", text: "Show that the number of distinct substrings of a string of length n equals n(n+1)/2 − Σ LCP[i] over the suffix array." },
+        { tag: "debug",  text: "A polynomial hash with single mod 10⁹+7 produces collisions on a specific anti-hash testset. Why, and what's the fix?", hint: "Single random-base/prime-mod hashes are breakable; use two independent hashes (two bases, two moduli) and require both to match." },
+        { tag: "code",   text: "Use Manacher's algorithm to find the longest palindromic substring in O(n). Compare against the O(n²) DP on a 5000-char input." }
+      ]
+    },
+    {
+      week: "Ch 7-8 — Geometry & Flow",
+      title: "Convex Hull, Line Sweep, Max Flow",
+      hook: "Max-flow = min-cut sounds like duality folklore — but it lets you solve image segmentation, project selection, bipartite matching, and 'minimum edges to disconnect' with the <em>same</em> 60 lines of Dinic. How does one algorithm cover so many disguises?",
+      items: [
+        { tag: "design", text: "Design an O(n log n) algorithm for the convex hull of n points in the plane.", hint: "Andrew's monotone chain: sort by (x,y), build lower then upper hulls using cross-product turns." },
+        { tag: "code",   text: "Implement Dinic's max-flow algorithm with adjacency lists and a BFS level graph. Test on a 200-vertex bipartite matching.", star: true },
+        { tag: "derive", text: "Prove König's theorem: in any bipartite graph, max matching size equals min vertex cover size.", star: true },
+        { tag: "design", text: "Reduce 'maximum bipartite matching with vertex capacities' to standard max flow. Draw the constructed network.", hint: "Split each capacitated vertex v into v_in and v_out with an edge of that capacity between them." },
+        { tag: "debug",  text: "A max-flow solution gives an answer twice as large as expected on a directed graph. What was forgotten?", hint: "Reverse edges with capacity 0 must be added explicitly — without them, the algorithm cannot cancel flow and may double count." },
+        { tag: "paper",  text: "Read the Halim chapter on network flow and summarise three problem patterns (project selection, min-path cover, image segmentation) in 3-5 sentences each." }
+      ]
+    },
+    {
+      week: "Ch 9 — Advanced",
+      title: "Tough Topics: SQRT Decomp, HLD, FFT, Persistent DS",
+      hook: "A persistent segment tree keeps <em>every</em> historical version of itself, yet uses only O(log n) extra space per update. How does it dodge the obvious O(n) copy cost — and why does that trick suddenly make 'k-th smallest in a range' easy?",
+      items: [
+        { tag: "design", text: "Design a data structure that answers 'mode of a[l..r]' for 10⁵ queries on an array of size 10⁵.", hint: "Mo's algorithm: sort queries by (l/√n, r); maintain a frequency map and a count-of-counts array.", star: true },
+        { tag: "derive", text: "Show that FFT-based polynomial multiplication runs in O(n log n) by analysing the divide-and-conquer recurrence T(n) = 2T(n/2) + O(n)." },
+        { tag: "code",   text: "Implement Heavy-Light Decomposition on a tree of 10⁵ nodes supporting path-sum queries in O(log² n) per operation." },
+        { tag: "design", text: "Design a persistent segment tree to answer 'k-th smallest in a[l..r]' for offline queries on 10⁵ values.", hint: "Build n versions, where version i adds value a[i]; query difference between versions r and l−1 to navigate to the k-th.", star: true },
+        { tag: "paper",  text: "Pick one Halim 'Rare Topic' (e.g., DLX, Treap, Link-Cut Tree). Write a 1-page tutorial with a diagram and one solved problem." }
       ]
     }
   ]
@@ -898,7 +1985,11 @@ const tabs = [];
 if (C.mindmap)                          tabs.push({ id: 'mindmap',  label: '📐 Mind Map' });
 if (C.graph && C.graph.nodes && C.graph.nodes.length) tabs.push({ id: 'graph',    label: '🔗 Topic Graph' });
 if (C.deepDives && C.deepDives.length)  tabs.push({ id: 'deepdive', label: '📚 Deep Dives' });
+if (C.useCases && C.useCases.length)    tabs.push({ id: 'usecase',  label: '🔬 Use Cases' });
 if (C.youtube && C.youtube.videos && C.youtube.videos.length) tabs.push({ id: 'appendix', label: '📹 Appendix' });
+if (C.glossary && C.glossary.length)    tabs.push({ id: 'glossary', label: '📖 Glossary' }); /* glossary v1 tab */
+if ((window.PROBLEMS_DATA && window.PROBLEMS_DATA.length) || (C.problems && C.problems.length)) tabs.push({ id: 'problems', label: '🧠 Practice' });
+tabs.push({ id: 'quiz',     label: '🎯 Quiz' });
 
 document.getElementById('toolbar-title').textContent = '🧠 ' + C.course.code;
 document.title = C.course.code + ' — Interactive Study Tool';
@@ -945,7 +2036,8 @@ function switchTab(tab) {
   document.getElementById('mindmap-controls').style.display  = tab === 'mindmap'  ? 'flex' : 'none';
   document.getElementById('graph-controls').style.display    = tab === 'graph'    ? 'flex' : 'none';
   document.getElementById('deepdive-controls').style.display = 'none';
-  document.getElementById('btn-path').style.display = (tab === 'graph' && C.learningPath && C.learningPath.length) ? '' : 'none';
+  document.getElementById('usecase-controls').style.display  = 'none';
+  document.getElementById('btn-path').style.display= (tab === 'graph' && C.learningPath && C.learningPath.length) ? '' : 'none';
   document.querySelector('.legend-mindmap').style.display = tab === 'mindmap' ? '' : 'none';
   document.getElementById('legend-graph').style.display   = tab === 'graph'   ? '' : 'none';
 
@@ -1191,6 +2283,7 @@ function initGraph() {
   // Nodes
   const node = gGraph.selectAll("g.graph-node").data(nodes).enter().append("g")
     .attr("class", "graph-node")
+    .attr("data-id", d => d.id) /* glossary v1 data-id */
     .call(d3.drag().on("start", (evt, d) => { if (!evt.active) simul.alphaTarget(0.3).restart(); d.fx = d.x; d.fy = d.y; })
       .on("drag", (evt, d) => { d.fx = evt.x; d.fy = evt.y; })
       .on("end", (evt, d) => { if (!evt.active) simul.alphaTarget(0); d.fx = null; d.fy = null; }))
@@ -1522,6 +2615,8 @@ if (C.deepDives && C.deepDives.length) {
     // Full view
     const full = document.createElement('div'); full.className = 'dd-full'; full.id = 'dd-full-' + dd.id;
     let fhtml = `<div class="dd-infographic"><h2 style="color:${dd.color}">${dd.icon || ''} ${dd.title}</h2><div class="dd-subtitle">${dd.num} · ${dd.desc}</div>`;
+    // Navigator at the top for quick prev/grid/next without scrolling
+    fhtml += `<div class="dd-nav dd-nav-top"><button class="btn" onclick="navDD(-1)">← Prev</button><button class="btn" onclick="showCardGrid()">Grid</button><button class="btn" onclick="navDD(1)">Next →</button></div>`;
     if (dd.svg) fhtml += dd.svg(800, 300);
     (dd.sections || []).forEach(s => {
       fhtml += `<div class="dd-section"><h3>${s.title}</h3>`;
@@ -1534,7 +2629,7 @@ if (C.deepDives && C.deepDives.length) {
       dd.keypoints.forEach(kp => { fhtml += `<div class="dd-kp"><strong>${kp.title}</strong><span>${kp.text}</span></div>`; });
       fhtml += '</div>';
     }
-    fhtml += `<div class="dd-nav"><button class="btn" onclick="navDD(-1)">← Prev</button><button class="btn" onclick="showCardGrid()">Grid</button><button class="btn" onclick="navDD(1)">Next →</button></div></div>`;
+    fhtml += `</div>`; // dd-nav v1 top inserted
     full.innerHTML = fhtml;
     fullContainer.appendChild(full);
   });
@@ -1565,6 +2660,160 @@ function navDD(dir) {
 // ═══════════════════════════════════════════════════════════════════════
 // TRACKER
 // ═══════════════════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════════════════════
+// USE CASES
+// ═══════════════════════════════════════════════════════════════════════
+let ucCurrentIndex = -1;
+let ucCurrentStep = -1;
+let ucAutoPlayTimer = null;
+
+if (C.useCases && C.useCases.length) {
+  const ucGrid = document.getElementById('uc-card-grid');
+  C.useCases.forEach((uc, idx) => {
+    const card = document.createElement('div');
+    card.className = 'dd-card';
+    card.onclick = () => showUseCase(idx);
+    card.innerHTML = `
+      <div class="dd-card-img" style="background:${uc.color}11">
+        <span style="font-size:64px">${uc.icon}</span>
+      </div>
+      <div class="dd-card-body">
+        <div class="dd-card-num" style="color:${uc.color}">USE CASE ${idx + 1}</div>
+        <div class="dd-card-title">${uc.title}</div>
+        <div class="dd-card-desc">${uc.desc}</div>
+      </div>
+    `;
+    ucGrid.appendChild(card);
+  });
+}
+
+function showUseCase(idx) {
+  ucCurrentIndex = idx;
+  ucCurrentStep = 0;
+  if (ucAutoPlayTimer) { clearInterval(ucAutoPlayTimer); ucAutoPlayTimer = null; }
+  const uc = C.useCases[idx];
+  document.getElementById('uc-card-grid').style.display = 'none';
+  document.getElementById('usecase-controls').style.display = 'flex';
+  const container = document.getElementById('uc-detail-container');
+
+  let html = '<div class="uc-flow">';
+  html += '<button class="uc-back-btn" onclick="showUseCaseGrid()">← Back to All Use Cases</button>';
+  html += `<h2>${uc.icon} ${uc.title}</h2>`;
+  html += `<div class="uc-subtitle">${uc.desc}</div>`;
+  if (uc.summary || uc.pipeline || uc.metrics || uc.extensions) {
+    html += '<div class="uc-overview">';
+    if (uc.summary)   html += `<div class="uc-summary">${uc.summary}</div>`;
+    if (uc.pipeline)  html += `<div class="uc-pipeline">${uc.pipeline}</div>`;
+    if (uc.metrics && uc.metrics.length) {
+      html += '<div class="uc-metrics">';
+      uc.metrics.forEach(m => {
+        html += `<div class="uc-metric"><div class="uc-metric-label">${m.label}</div><div class="uc-metric-value">${m.value}</div></div>`;
+      });
+      html += '</div>';
+    }
+    if (uc.extensions) html += `<div class="uc-extensions"><strong>Where to go next:</strong> ${uc.extensions}</div>`;
+    html += '</div>';
+  }
+  html += '<div class="uc-flow-controls">';
+  html += '<button onclick="ucPrev()">← Previous</button>';
+  html += '<button class="primary" onclick="ucNext()">Next Step →</button>';
+  html += '<button onclick="ucAutoPlay()" id="uc-autoplay-btn">▶ Auto-Play</button>';
+  html += '<button onclick="ucReset()">↺ Reset</button>';
+  html += '</div>';
+  html += '<div class="uc-legend">';
+  html += '<span><span class="dot" style="background:#58a6ff"></span> Current step</span>';
+  html += '<span><span class="dot" style="background:#3fb950"></span> Completed</span>';
+  html += '<span><span class="dot" style="background:#30363d"></span> Upcoming</span>';
+  html += '</div>';
+  html += '<div class="uc-step-container" id="uc-steps">';
+
+  uc.steps.forEach((step, i) => {
+    if (i > 0) html += `<div class="uc-connector" id="uc-conn-${i}"></div>`;
+    html += `<div class="uc-step${i === 0 ? ' active' : ''}" id="uc-step-${i}" onclick="ucGoTo(${i})">`;
+    html += `<div class="uc-badge">${i + 1}</div>`;
+    html += '<div class="uc-body">';
+    html += `<div class="uc-title">${step.title}</div>`;
+    html += `<div class="uc-component">📍 ${step.component}</div>`;
+    let detailHtml = '';
+    if (step.intuition) detailHtml += `<div class="uc-intuition"><strong>💡 Intuition:</strong> ${step.intuition}</div>`;
+    detailHtml += `<p>${step.detail}</p>`;
+    if (step.proto) detailHtml += `<span class="uc-proto">${step.proto}</span>`;
+    if (step.complexity) detailHtml += `<span class="uc-complexity">⏱ ${step.complexity}</span>`;
+    if (step.code) detailHtml += `<pre class="uc-code">${step.code}</pre>`;
+    if (step.example) detailHtml += `<div class="uc-example"><strong>📊 In practice:</strong> ${step.example}</div>`;
+    if (step.pitfall) detailHtml += `<div class="uc-pitfall"><strong>⚠ Pitfall:</strong> ${step.pitfall}</div>`;
+    if (step.refs && step.refs.length) {
+      detailHtml += '<div class="uc-refs">' + step.refs.map(r => `<a href="${r.url}" target="_blank" rel="noopener">${r.label}</a>`).join('') + '</div>';
+    }
+    html += `<div class="uc-detail">${detailHtml}</div>`;
+    html += '</div></div>';
+  });
+
+  html += '</div></div>';
+  container.innerHTML = html;
+  container.style.display = '';
+  document.getElementById('view-usecase').scrollTop = 0;
+}
+
+function ucGoTo(step) {
+  const uc = C.useCases[ucCurrentIndex];
+  if (step < 0 || step >= uc.steps.length) return;
+  ucCurrentStep = step;
+  uc.steps.forEach((_, i) => {
+    const el = document.getElementById('uc-step-' + i);
+    el.classList.remove('active', 'done');
+    if (i < step) el.classList.add('done');
+    else if (i === step) el.classList.add('active');
+    if (i > 0) {
+      const conn = document.getElementById('uc-conn-' + i);
+      if (conn) conn.classList.toggle('done', i <= step);
+    }
+  });
+  const activeEl = document.getElementById('uc-step-' + step);
+  if (activeEl) activeEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function ucNext() {
+  const uc = C.useCases[ucCurrentIndex];
+  if (ucCurrentStep < uc.steps.length - 1) ucGoTo(ucCurrentStep + 1);
+}
+
+function ucPrev() {
+  if (ucCurrentStep > 0) ucGoTo(ucCurrentStep - 1);
+}
+
+function ucAutoPlay() {
+  const btn = document.getElementById('uc-autoplay-btn');
+  if (ucAutoPlayTimer) {
+    clearInterval(ucAutoPlayTimer);
+    ucAutoPlayTimer = null;
+    btn.textContent = '▶ Auto-Play';
+    return;
+  }
+  btn.textContent = '⏸ Pause';
+  ucAutoPlayTimer = setInterval(() => {
+    const uc = C.useCases[ucCurrentIndex];
+    if (ucCurrentStep < uc.steps.length - 1) ucNext();
+    else { clearInterval(ucAutoPlayTimer); ucAutoPlayTimer = null; btn.textContent = '▶ Auto-Play'; }
+  }, 2500);
+}
+
+function ucReset() {
+  if (ucAutoPlayTimer) { clearInterval(ucAutoPlayTimer); ucAutoPlayTimer = null; }
+  const btn = document.getElementById('uc-autoplay-btn');
+  if (btn) btn.textContent = '▶ Auto-Play';
+  ucGoTo(0);
+}
+
+function showUseCaseGrid() {
+  ucCurrentIndex = -1;
+  if (ucAutoPlayTimer) { clearInterval(ucAutoPlayTimer); ucAutoPlayTimer = null; }
+  document.getElementById('uc-detail-container').style.display = 'none';
+  document.getElementById('uc-card-grid').style.display = '';
+  document.getElementById('usecase-controls').style.display = 'none';
+}
+
+
 let trackerOpen = false;
 
 function toggleTracker() {
@@ -1754,6 +3003,691 @@ function toggleUnit(headerRow) {
   const collapsed = headerRow.classList.toggle('collapsed');
   document.querySelectorAll(`#appendix-tbody tr.vid-row[data-unit="${unit}"]`).forEach(r => { r.style.display = collapsed ? 'none' : ''; });
 }
+
+// ═══════════════════════════════════════════════════════════════════════
+// PRACTICE PROBLEMS (Problem-First learning)
+// ═══════════════════════════════════════════════════════════════════════
+const PROB_STATE_KEY = STORAGE_KEY + '-probstate';
+function probLoadState() { try { return JSON.parse(localStorage.getItem(PROB_STATE_KEY) || '{}'); } catch(e) { return {}; } }
+function probSaveState(s) { try { localStorage.setItem(PROB_STATE_KEY, JSON.stringify(s)); } catch(e) {} }
+let _probState = probLoadState();
+let _probFilters = { tags: new Set(), search: '', status: 'all' };
+let _probFlat = []; // [{si, ii, p}]
+
+function renderProblems() {
+  const container = document.getElementById('problems-container');
+  if (!container || container.dataset.rendered) return;
+  const data = (window.PROBLEMS_DATA && window.PROBLEMS_DATA.length) ? window.PROBLEMS_DATA
+             : (C.problems && C.problems.length) ? C.problems : null;
+  if (!data) { container.innerHTML = '<div class="prob-intro">No practice problems defined yet for this course.</div>'; container.dataset.rendered = '1'; return; }
+  container.dataset.rendered = '1';
+
+  // Build flat index + per-tag counts
+  _probFlat = [];
+  const tagCounts = {};
+  data.forEach((sec, si) => (sec.items||[]).forEach((p, ii) => {
+    _probFlat.push({ si, ii, p, key: si+':'+ii });
+    const t = p.tag || 'design';
+    tagCounts[t] = (tagCounts[t]||0) + 1;
+  }));
+  const TAGS = ['design','derive','debug','code','paper'];
+
+  let html = `<div class="prob-intro">
+    <strong>🧠 Problem-First Learning.</strong> Try each problem for 10 minutes <em>before</em> watching the lecture — flail, sketch, be wrong. Then watch with specific questions in mind. Your attention spikes 3–5×.
+    <br><br>
+    <strong style="color:#58a6ff">Tags:</strong>
+    <span class="prob-tag design">design</span> architect on paper &nbsp;
+    <span class="prob-tag derive">derive</span> math / proof &nbsp;
+    <span class="prob-tag debug">debug</span> find the failure mode &nbsp;
+    <span class="prob-tag code">code</span> hands-on &nbsp;
+    <span class="prob-tag paper">paper</span> predict before reading
+    <br><br>
+    <strong style="color:#ffa657">⭐ starred</strong> problems are curiosity-piquing — start there if you're new.
+    Reveals come in three layers: <strong style="color:#d2a8ff">💡 hint</strong> (nudge) · <strong style="color:#79c0ff">🔑 approach</strong> (how to attack) · <strong style="color:#7ee787">📐 answer</strong> (the result). Try the problem before peeking.
+  </div>
+  <div class="prob-toolbar">
+    <input id="prob-search" class="prob-search" type="text" placeholder="🔍 Search problems by keyword…" />
+    <div class="prob-filter-row" id="prob-tag-row">
+      ${TAGS.map(t => `<span class="prob-chip ${t}" data-tag="${t}">${t}<span class="count">${tagCounts[t]||0}</span></span>`).join('')}
+    </div>
+    <div class="prob-filter-row" id="prob-status-row">
+      <span class="prob-chip" data-status="all">All</span>
+      <span class="prob-chip" data-status="unattempted">○ New</span>
+      <span class="prob-chip" data-status="thinking">🤔 Thinking</span>
+      <span class="prob-chip" data-status="got">💡 Got it</span>
+      <span class="prob-chip" data-status="stuck">❓ Stuck</span>
+    </div>
+    <button id="prob-surprise" class="prob-actbtn primary" title="Open a random problem">🎲 Surprise me</button>
+    <button id="prob-reset" class="prob-actbtn" title="Clear all status">↺ Reset</button>
+    <div class="prob-progress" title="Problems attempted (thinking / got / stuck)">
+      <span id="prob-progress-text">0/${_probFlat.length}</span>
+      <div class="prob-progress-bar"><div id="prob-progress-fill" class="prob-progress-fill" style="width:0%"></div></div>
+    </div>
+  </div>
+  <div id="prob-sections">`;
+
+  data.forEach((sec, si) => {
+    const secTotal = (sec.items||[]).length;
+    html += `<details class="prob-section" data-si="${si}"${si < 2 ? ' open' : ''}>
+      <summary><span class="wk">${sec.week||''}</span> <span class="sec-title">${sec.title||''}</span>
+        <span class="sec-meta"><span class="done-count" data-sec-done="${si}">0</span>/<span>${secTotal}</span></span>
+      </summary>`;
+    if (sec.hook) html += `<div class="prob-hook">${sec.hook}</div>`;
+    html += `<div class="prob-body">`;
+    (sec.items||[]).forEach((p, ii) => {
+      const key = si+':'+ii;
+      const st = _probState[key] || {};
+      const tag = p.tag || 'design';
+      const statusCls = st.status ? ' status-'+st.status : '';
+      html += `<div class="prob-card${statusCls}" data-key="${key}" data-tag="${tag}" data-status="${st.status||''}">
+        <div class="pc-head">
+          <span class="pc-num">${(ii+1).toString().padStart(2,'0')}</span>
+          <span class="prob-tag ${tag}">${tag}</span>
+          ${p.star ? '<span class="pc-star" title="Curiosity pick">★</span>' : ''}
+          <div class="prob-status-btns">
+            <button class="prob-statbtn thinking${st.status==='thinking'?' active':''}" data-status="thinking" title="I'm working on this">🤔</button>
+            <button class="prob-statbtn got${st.status==='got'?' active':''}"           data-status="got"      title="Got it">💡</button>
+            <button class="prob-statbtn stuck${st.status==='stuck'?' active':''}"       data-status="stuck"    title="Stuck">❓</button>
+          </div>
+        </div>
+        <div class="pc-text">${p.text||''}</div>`;
+      const reveals = [];
+      if (p.hint)     reveals.push({ kind:'hint',     label:'💡 Reveal hint',   field:'hint',     btnCls:'',          panelCls:'prob-hint',     tag:'Hint' });
+      if (p.approach) reveals.push({ kind:'approach', label:'🔑 Show approach', field:'approach', btnCls:'approach',  panelCls:'prob-approach', tag:'Approach' });
+      if (p.answer)   reveals.push({ kind:'answer',   label:'📐 Show answer',   field:'answer',   btnCls:'answer',    panelCls:'prob-answer',   tag:'Answer' });
+      if (reveals.length) {
+        html += `<div class="pc-actions">`;
+        reveals.forEach(r => {
+          const shown = st[r.kind+'Shown'];
+          html += `<button class="prob-revealbtn ${r.btnCls}" data-action="${r.kind}" ${shown?'style="display:none"':''}>${r.label}</button>`;
+        });
+        html += `</div>`;
+        reveals.forEach(r => {
+          const shown = st[r.kind+'Shown'];
+          html += `<div class="prob-reveal-panel ${r.panelCls}${shown?' shown':''}" data-panel="${r.kind}"><span class="rh-label">${r.tag}</span>${p[r.field]}</div>`;
+        });
+      }
+      html += `</div>`;
+    });
+    html += `</div></details>`;
+  });
+  html += `</div>
+  <div class="prob-spotlight" id="prob-spotlight">
+    <div class="prob-spotlight-card">
+      <button class="sl-close" onclick="probCloseSpotlight()">×</button>
+      <h3>🎲 Surprise Problem</h3>
+      <div id="prob-spotlight-body"></div>
+    </div>
+  </div>`;
+
+  container.innerHTML = html;
+
+  // Wire interactions
+  container.querySelectorAll('#prob-tag-row .prob-chip').forEach(c => c.addEventListener('click', () => {
+    const tag = c.dataset.tag;
+    if (_probFilters.tags.has(tag)) _probFilters.tags.delete(tag); else _probFilters.tags.add(tag);
+    c.classList.toggle('active');
+    probApplyFilters();
+  }));
+  container.querySelectorAll('#prob-status-row .prob-chip').forEach(c => c.addEventListener('click', () => {
+    container.querySelectorAll('#prob-status-row .prob-chip').forEach(x => x.classList.remove('active'));
+    c.classList.add('active');
+    _probFilters.status = c.dataset.status;
+    probApplyFilters();
+  }));
+  container.querySelector('#prob-status-row .prob-chip[data-status="all"]').classList.add('active');
+
+  const searchEl = container.querySelector('#prob-search');
+  searchEl.addEventListener('input', () => { _probFilters.search = searchEl.value.toLowerCase().trim(); probApplyFilters(); });
+
+  container.querySelector('#prob-surprise').addEventListener('click', probSurpriseMe);
+  container.querySelector('#prob-reset').addEventListener('click', () => {
+    if (!confirm('Clear status on all '+_probFlat.length+' problems?')) return;
+    _probState = {}; probSaveState(_probState);
+    container.dataset.rendered = ''; container.innerHTML = ''; renderProblems();
+  });
+
+  container.querySelectorAll('.prob-card').forEach(card => {
+    card.querySelectorAll('.prob-statbtn').forEach(btn => btn.addEventListener('click', e => {
+      e.stopPropagation();
+      const key = card.dataset.key;
+      const newStatus = btn.dataset.status;
+      const st = _probState[key] || {};
+      st.status = (st.status === newStatus) ? null : newStatus;
+      _probState[key] = st; probSaveState(_probState);
+      card.classList.remove('status-thinking','status-got','status-stuck');
+      if (st.status) card.classList.add('status-'+st.status);
+      card.dataset.status = st.status || '';
+      card.querySelectorAll('.prob-statbtn').forEach(b => b.classList.toggle('active', b.dataset.status === st.status));
+      probUpdateProgress();
+      if (_probFilters.status !== 'all') probApplyFilters();
+    }));
+    const revealBtns = card.querySelectorAll('[data-action="hint"],[data-action="approach"],[data-action="answer"]');
+    revealBtns.forEach(btn => btn.addEventListener('click', () => {
+      const kind = btn.dataset.action;
+      const panel = card.querySelector(`.prob-reveal-panel[data-panel="${kind}"]`);
+      if (panel) panel.classList.add('shown');
+      btn.style.display = 'none';
+      const key = card.dataset.key;
+      const st = _probState[key] || {};
+      st[kind+'Shown'] = true; _probState[key] = st; probSaveState(_probState);
+    }));
+  });
+
+  probUpdateProgress();
+}
+
+function probApplyFilters() {
+  const container = document.getElementById('problems-container');
+  const { tags, search, status } = _probFilters;
+  container.querySelectorAll('.prob-card').forEach(card => {
+    const tag = card.dataset.tag;
+    const cardStatus = card.dataset.status || '';
+    const text = card.querySelector('.pc-text').textContent.toLowerCase();
+    let show = true;
+    if (tags.size > 0 && !tags.has(tag)) show = false;
+    if (search && !text.includes(search)) show = false;
+    if (status !== 'all') {
+      if (status === 'unattempted') { if (cardStatus) show = false; }
+      else if (cardStatus !== status) show = false;
+    }
+    card.classList.toggle('hidden', !show);
+  });
+  // Auto-open sections with visible cards; hide empty sections
+  container.querySelectorAll('.prob-section').forEach(sec => {
+    const visible = sec.querySelectorAll('.prob-card:not(.hidden)').length;
+    sec.style.display = visible === 0 ? 'none' : '';
+    if (visible > 0 && (tags.size || search || status !== 'all')) sec.open = true;
+  });
+}
+
+function probUpdateProgress() {
+  const total = _probFlat.length;
+  let attempted = 0;
+  const perSec = {};
+  _probFlat.forEach(({si, key}) => {
+    const st = _probState[key];
+    if (st && st.status) { attempted++; perSec[si] = (perSec[si]||0) + 1; }
+  });
+  const txt = document.getElementById('prob-progress-text');
+  const fill = document.getElementById('prob-progress-fill');
+  if (txt) txt.textContent = attempted + '/' + total;
+  if (fill) fill.style.width = (total ? (attempted/total*100) : 0) + '%';
+  document.querySelectorAll('[data-sec-done]').forEach(el => {
+    const si = +el.dataset.secDone;
+    el.textContent = perSec[si] || 0;
+  });
+}
+
+function probSurpriseMe() {
+  if (!_probFlat.length) return;
+  // Prefer starred & unattempted; otherwise unattempted; otherwise any
+  const starredNew = _probFlat.filter(x => x.p.star && !(_probState[x.key]||{}).status);
+  const anyNew     = _probFlat.filter(x => !(_probState[x.key]||{}).status);
+  const pool = starredNew.length ? starredNew : (anyNew.length ? anyNew : _probFlat);
+  const pick = pool[Math.floor(Math.random()*pool.length)];
+  const { p, si, ii, key } = pick;
+  const sec = (window.PROBLEMS_DATA || (C.problems||[]))[si];
+  const tag = p.tag || 'design';
+  const body = document.getElementById('prob-spotlight-body');
+  body.innerHTML = `
+    <div style="display:flex;gap:8px;align-items:center;margin-bottom:6px;flex-wrap:wrap">
+      <span class="prob-tag ${tag}">${tag}</span>
+      ${p.star ? '<span style="color:#ffa657">★</span>' : ''}
+      <span style="color:#8b949e;font-size:12px">${sec.week||''} · ${sec.title||''} · #${ii+1}</span>
+    </div>
+    <div class="pc-text">${p.text||''}</div>
+    ${(()=>{const L=[];if(p.hint)L.push({s:'💡 Reveal hint',c:'prob-hint',t:'Hint',b:p.hint});if(p.approach)L.push({s:'🔑 Show approach',c:'prob-approach',t:'Approach',b:p.approach});if(p.answer)L.push({s:'📐 Show answer',c:'prob-answer',t:'Answer',b:p.answer});return L.map(l=>`<details style="margin-top:10px"><summary style="cursor:pointer;color:#8b949e;font-size:12px;padding:4px 0">${l.s}</summary><div class="prob-reveal-panel ${l.c} shown" style="margin-top:6px"><span class="rh-label">${l.t}</span>${l.b}</div></details>`).join('');})()}
+    <div style="margin-top:14px;display:flex;gap:6px;flex-wrap:wrap">
+      <button class="prob-actbtn" onclick="probJumpTo('${key}')">↗ Jump to it</button>
+      <button class="prob-actbtn" onclick="probSurpriseMe()">🎲 Another</button>
+    </div>`;
+  document.getElementById('prob-spotlight').classList.add('open');
+}
+function probCloseSpotlight() { const el = document.getElementById('prob-spotlight'); if (el) el.classList.remove('open'); }
+function probJumpTo(key) {
+  probCloseSpotlight();
+  const card = document.querySelector(`.prob-card[data-key="${key}"]`);
+  if (!card) return;
+  const sec = card.closest('.prob-section');
+  if (sec) sec.open = true;
+  card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  card.style.transition = 'box-shadow .3s'; card.style.boxShadow = '0 0 0 2px #58a6ff';
+  setTimeout(() => { card.style.boxShadow = ''; }, 1500);
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') probCloseSpotlight(); });
+if (typeof switchTab === 'function') {
+  const _origSwitchTab_prob = switchTab;
+  switchTab = function(tab) { _origSwitchTab_prob(tab); if (tab === 'problems') renderProblems(); };
+}
+
+// === BEGIN glossary v1 js ===
+// ═══════════════════════════════════════════════════════════════════════
+// GLOSSARY — definitions + cross-references with graph & mindmap
+// ═══════════════════════════════════════════════════════════════════════
+(function initGlossaryMaps() {
+  const gloss = (C && C.glossary) || [];
+  if (!gloss.length) return;
+
+  // 1. Build id → entry maps and "label/aka" → id reverse map.
+  const byId = {};
+  const byLabel = {}; // lowercased term/aka → id
+  gloss.forEach(g => {
+    byId[g.id] = g;
+    const keys = [g.term].concat(g.aka || []);
+    keys.forEach(k => { if (k) byLabel[k.toLowerCase().trim()] = g.id; });
+  });
+
+  // 2. Patch graph node tips for any node whose id matches a glossary entry.
+  let graphMatched = 0;
+  const glossByGraphNode = {};
+  if (C.graph && Array.isArray(C.graph.nodes)) {
+    C.graph.nodes.forEach(n => {
+      if (byId[n.id]) {
+        glossByGraphNode[n.id] = n.id;
+        graphMatched++;
+        if (n.tip && n.tip.indexOf('📖') < 0) n.tip = n.tip + ' · 📖 in glossary';
+      } else {
+        // Fallback: try label/aka match
+        const k = (n.label || '').toLowerCase().trim();
+        if (byLabel[k]) {
+          glossByGraphNode[n.id] = byLabel[k];
+          graphMatched++;
+          if (n.tip && n.tip.indexOf('📖') < 0) n.tip = n.tip + ' · 📖 in glossary';
+        }
+      }
+    });
+  }
+
+  // 3. Walk mindmap and build name → glossary-id map. Match relaxed:
+  //    full name (newlines → space) OR each line.
+  let mindmapMatched = 0;
+  const glossByMindmapName = {};
+  function walkMm(node) {
+    if (!node) return;
+    if (node.name) {
+      const full = node.name.replace(/\n/g, ' ').trim();
+      const candidates = [full].concat(node.name.split(/\n+/).map(s => s.trim()).filter(Boolean));
+      for (const c of candidates) {
+        const id = byLabel[c.toLowerCase()];
+        if (id) {
+          glossByMindmapName[full] = id;
+          mindmapMatched++;
+          break;
+        }
+      }
+    }
+    (node.children || []).forEach(walkMm);
+  }
+  if (C.mindmap) walkMm(C.mindmap);
+
+  window._glossaryById = byId;
+  window._glossaryByLabel = byLabel;
+  window._glossaryIdByGraphNode = glossByGraphNode;
+  window._glossaryIdByMindmapName = glossByMindmapName;
+  window._glossaryStats = { graphMatched: graphMatched, mindmapMatched: mindmapMatched };
+
+  // 4. Monkey-patch showTooltip so it appends a "📖 Defined in glossary →" link
+  //    whenever the hovered name corresponds to a glossary entry.
+  if (typeof window.showTooltip === 'function') {
+    const _origShowTooltip = window.showTooltip;
+    const ttRoot = document.getElementById('tooltip');
+    let glossFooter = ttRoot.querySelector('.tt-glossary');
+    if (!glossFooter) {
+      glossFooter = document.createElement('div');
+      glossFooter.className = 'tt-glossary';
+      ttRoot.appendChild(glossFooter);
+    }
+    window.showTooltip = function(evt, name, tip, slides) {
+      _origShowTooltip(evt, name, tip, slides);
+      glossFooter.innerHTML = '';
+      ttRoot.classList.remove('has-glossary');
+      if (!name) return;
+      const plain = String(name).replace(/\n/g, ' ').trim();
+      const key = plain.toLowerCase();
+      let id = byLabel[key] || glossByMindmapName[plain] || null;
+      if (!id) {
+        // strip parenthetical suffix e.g. "Optical Switch (OCS)" → "Optical Switch"
+        const stripped = plain.replace(/\s*\([^)]*\)\s*$/, '').toLowerCase();
+        if (stripped !== key) id = byLabel[stripped] || null;
+      }
+      if (id) {
+        const a = document.createElement('a');
+        a.textContent = '📖 Defined in glossary →';
+        a.onclick = (e) => {
+          e.stopPropagation();
+          if (typeof window.glossaryJumpToTerm === 'function') window.glossaryJumpToTerm(id);
+        };
+        glossFooter.appendChild(a);
+        ttRoot.classList.add('has-glossary');
+      }
+    };
+  }
+})();
+
+// ─── renderGlossary ───────────────────────────────────────────────────
+let _glossSelectedCat = 'all';
+let _glossSearch = '';
+let _glossSearchTimer = null;
+let _glossBuilt = false;
+
+const GLOSS_CAT_COLORS = {
+  hardware:    '#58a6ff',
+  software:    '#7ee787',
+  numerics:    '#79c0ff',
+  systems:     '#d2a8ff',
+  performance: '#f778ba',
+  concepts:    '#ffa657'
+};
+
+function renderGlossary() {
+  const data = (C.glossary || []).slice().sort((a, b) =>
+    a.term.toLowerCase().localeCompare(b.term.toLowerCase()));
+  const list = document.getElementById('glossary-list');
+  const pillBar = document.getElementById('glossary-cat-pills');
+  const countEl = document.getElementById('glossary-count');
+  const searchEl = document.getElementById('glossary-search');
+  if (!list || !pillBar || !countEl || !searchEl) return;
+
+  // Build category pills + search input wiring once.
+  if (!_glossBuilt) {
+    const cats = ['all'].concat(
+      Array.from(new Set(data.map(d => d.category))).sort());
+    pillBar.innerHTML = '';
+    cats.forEach(cat => {
+      const btn = document.createElement('button');
+      btn.textContent = cat === 'all' ? `All (${data.length})` :
+        `${cat} (${data.filter(d => d.category === cat).length})`;
+      btn.dataset.cat = cat;
+      const color = cat === 'all' ? '#58a6ff' : (GLOSS_CAT_COLORS[cat] || '#58a6ff');
+      btn.style.setProperty('--pill-color', color);
+      btn.style.setProperty('--pill-bg', color + '22');
+      if (cat === _glossSelectedCat) btn.classList.add('active');
+      btn.onclick = () => {
+        _glossSelectedCat = cat;
+        pillBar.querySelectorAll('button').forEach(b =>
+          b.classList.toggle('active', b.dataset.cat === cat));
+        renderGlossary();
+      };
+      pillBar.appendChild(btn);
+    });
+    searchEl.addEventListener('input', () => {
+      if (_glossSearchTimer) clearTimeout(_glossSearchTimer);
+      _glossSearchTimer = setTimeout(() => {
+        _glossSearch = searchEl.value.trim().toLowerCase();
+        renderGlossary();
+      }, 120);
+    });
+    _glossBuilt = true;
+  }
+
+  // Filter
+  const q = _glossSearch;
+  const visible = data.filter(d => {
+    if (_glossSelectedCat !== 'all' && d.category !== _glossSelectedCat) return false;
+    if (!q) return true;
+    const hay = [d.term, (Array.isArray(d.aka) ? d.aka.join(' ') : (d.aka || '')), d.short, d.long || ''].join(' ').toLowerCase();
+    return hay.indexOf(q) >= 0;
+  });
+
+  countEl.textContent = `${visible.length} of ${data.length} terms`;
+
+  const graphIds = new Set();
+  if (C.graph && C.graph.nodes) C.graph.nodes.forEach(n => graphIds.add(n.id));
+  const glossIds = new Set(data.map(d => d.id));
+  const mindmapNames = window._glossaryIdByMindmapName || {};
+  const reverseMindmap = {}; // glossary-id → mindmap label
+  Object.keys(mindmapNames).forEach(name => { reverseMindmap[mindmapNames[name]] = name; });
+
+  list.innerHTML = '';
+  visible.forEach(d => {
+    const color = GLOSS_CAT_COLORS[d.category] || '#58a6ff';
+    const card = document.createElement('div');
+    card.className = 'glossary-card';
+    card.dataset.id = d.id;
+    card.style.setProperty('--cat-color', color);
+
+    const head = document.createElement('div');
+    head.className = 'glossary-term-row';
+    const term = document.createElement('span');
+    term.className = 'glossary-term';
+    term.textContent = d.term;
+    head.appendChild(term);
+    const badge = document.createElement('span');
+    badge.className = 'glossary-cat-badge';
+    badge.textContent = d.category;
+    badge.style.setProperty('--cat-color', color);
+    head.appendChild(badge);
+    card.appendChild(head);
+
+    if (d.aka && d.aka.length) {
+      const aka = document.createElement('div');
+      aka.className = 'glossary-aka';
+      aka.textContent = 'aka ' + (Array.isArray(d.aka) ? d.aka.join(', ') : d.aka);
+      card.appendChild(aka);
+    }
+
+    const shortEl = document.createElement('div');
+    shortEl.className = 'glossary-short';
+    shortEl.textContent = d.short || '';
+    card.appendChild(shortEl);
+
+    if (d.long) {
+      const longEl = document.createElement('div');
+      longEl.className = 'glossary-long';
+      longEl.innerHTML = d.long;
+      card.appendChild(longEl);
+      const toggle = document.createElement('button');
+      toggle.className = 'glossary-toggle';
+      toggle.textContent = 'Show more ▾';
+      toggle.onclick = () => {
+        const expanded = card.classList.toggle('expanded');
+        toggle.textContent = expanded ? 'Show less ▴' : 'Show more ▾';
+      };
+      card.appendChild(toggle);
+    }
+
+    const links = document.createElement('div');
+    links.className = 'glossary-links';
+    if (graphIds.has(d.id)) {
+      const b = document.createElement('button');
+      b.textContent = '🔗 Topic Graph';
+      b.onclick = () => window.glossaryJumpToGraphNode(d.id);
+      links.appendChild(b);
+    }
+    if (reverseMindmap[d.id]) {
+      const b = document.createElement('button');
+      b.textContent = '📐 Mind Map';
+      b.onclick = () => window.glossaryJumpToMindmapNode(reverseMindmap[d.id]);
+      links.appendChild(b);
+    }
+    (d.seeAlso || []).forEach(otherId => {
+      if (!glossIds.has(otherId)) return;
+      const other = (C.glossary || []).find(x => x.id === otherId);
+      if (!other) return;
+      const b = document.createElement('button');
+      b.textContent = '→ ' + other.term;
+      b.onclick = () => window.glossaryJumpToTerm(otherId);
+      links.appendChild(b);
+    });
+    if (links.children.length) card.appendChild(links);
+
+    list.appendChild(card);
+  });
+}
+
+// ─── Cross-tab jump helpers ───────────────────────────────────────────
+window.glossaryJumpToTerm = function(id) {
+  if (typeof switchTab === 'function') switchTab('glossary');
+  setTimeout(() => {
+    const card = document.querySelector('.glossary-card[data-id="' + CSS.escape(id) + '"]');
+    if (!card) return;
+    card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    card.classList.remove('flash');
+    void card.offsetWidth; // restart animation
+    card.classList.add('flash');
+    // Pull the display term from the card itself so the toast matches what the user sees
+    const labelEl = card.querySelector('.glossary-term');
+    const label = labelEl ? labelEl.textContent.trim() : id;
+    if (typeof showGlossaryToast === 'function') showGlossaryToast('Glossary', label, 'glossary');
+    setTimeout(() => card.classList.remove('flash'), 2800);
+  }, 60);
+};
+
+window.glossaryJumpToGraphNode = function(id) {
+  if (typeof switchTab === 'function') switchTab('graph');
+  const tryFlash = (attempt) => {
+    const g = document.querySelector('g.graph-node[data-id="' + CSS.escape(id) + '"]');
+    if (!g) {
+      if (attempt < 12) return setTimeout(() => tryFlash(attempt + 1), 120);
+      return;
+    }
+    // Pull the node's force-simulation position from its bound datum
+    let d = null;
+    try { d = (typeof d3 !== 'undefined') ? d3.select(g).datum() : null; } catch(_) {}
+    const label = (d && (d.label || d.id)) || id;
+
+    // 1) Pan + zoom the SVG so the node is centered and reasonably zoomed in
+    try {
+      if (d && typeof d.x === 'number' && typeof d.y === 'number' && typeof d3 !== 'undefined' && typeof graphZoom !== 'undefined') {
+        const svgEl = document.getElementById('canvas-graph');
+        const W = (svgEl && svgEl.clientWidth)  || window.innerWidth;
+        const H = (svgEl && svgEl.clientHeight) || window.innerHeight;
+        const k = 1.6;
+        const tx = W / 2 - k * d.x;
+        const ty = H / 2 - k * d.y;
+        d3.select('#canvas-graph')
+          .transition().duration(650)
+          .call(graphZoom.transform, d3.zoomIdentity.translate(tx, ty).scale(k));
+      } else {
+        g.querySelector('circle') && g.querySelector('circle').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    } catch(_) {}
+
+    // 2) Big halo ring + bold class on the node group
+    g.classList.remove('glossary-highlight');
+    void g.getBoundingClientRect();
+    g.classList.add('glossary-highlight');
+    try {
+      // remove any previous halo
+      g.querySelectorAll('circle.glossary-halo').forEach(c => c.remove());
+      const halo = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+      halo.setAttribute('class', 'glossary-halo');
+      halo.setAttribute('cx', '0');
+      halo.setAttribute('cy', '0');
+      halo.setAttribute('r', '14');
+      g.insertBefore(halo, g.firstChild); // behind the node circle
+    } catch(_) {}
+
+    // 3) Top-of-screen toast
+    showGlossaryToast('Topic Graph', label, 'graph');
+
+    setTimeout(() => {
+      g.classList.remove('glossary-highlight');
+      g.querySelectorAll('circle.glossary-halo').forEach(c => c.remove());
+    }, 4200);
+  };
+  requestAnimationFrame(() => requestAnimationFrame(() => tryFlash(0)));
+};
+
+window.glossaryJumpToMindmapNode = function(label) {
+  if (typeof switchTab === 'function') switchTab('mindmap');
+  const target = (label || '').replace(/\n/g, ' ').trim().toLowerCase();
+  const tryFlash = (attempt) => {
+    const groups = document.querySelectorAll('#canvas g');
+    let hit = null;
+    groups.forEach(g => {
+      if (hit) return;
+      const txt = (g.textContent || '').replace(/\s+/g, ' ').trim().toLowerCase();
+      if (txt === target) hit = g;
+    });
+    if (!hit) {
+      if (attempt < 10) return setTimeout(() => tryFlash(attempt + 1), 150);
+      return;
+    }
+
+    // 1) Pan the mindmap so the hit node is roughly centered
+    try {
+      if (typeof d3 !== 'undefined' && typeof mmZoom !== 'undefined') {
+        const svgEl = document.getElementById('canvas');
+        const W = (svgEl && svgEl.clientWidth)  || window.innerWidth;
+        const H = (svgEl && svgEl.clientHeight) || window.innerHeight;
+        // Read the node's local SVG position from its existing transform attribute (form: translate(x,y))
+        const tr = hit.getAttribute('transform') || '';
+        const m = tr.match(/translate\(\s*([-0-9.]+)\s*[ ,]\s*([-0-9.]+)/);
+        if (m) {
+          const x = parseFloat(m[1]), y = parseFloat(m[2]);
+          const k = 1.3;
+          const tx = W / 2 - k * x;
+          const ty = H / 2 - k * y;
+          d3.select('#canvas')
+            .transition().duration(650)
+            .call(mmZoom.transform, d3.zoomIdentity.translate(tx, ty).scale(k));
+        } else {
+          hit.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      } else {
+        hit.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    } catch(_) {}
+
+    // 2) Halo ring on the mindmap node
+    try {
+      hit.querySelectorAll('circle.glossary-mm-halo').forEach(c => c.remove());
+      const halo = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+      halo.setAttribute('class', 'glossary-mm-halo');
+      halo.setAttribute('cx', '0');
+      halo.setAttribute('cy', '0');
+      halo.setAttribute('r', '14');
+      hit.insertBefore(halo, hit.firstChild);
+      setTimeout(() => halo.remove(), 4200);
+    } catch(_) {}
+
+    // 3) Stroke flash on the shape
+    const shape = hit.querySelector('circle, rect');
+    if (shape) {
+      const prev = shape.getAttribute('stroke');
+      const prevW = shape.getAttribute('stroke-width');
+      shape.setAttribute('stroke', '#f0c000');
+      shape.setAttribute('stroke-width', '5');
+      setTimeout(() => {
+        if (prev !== null) shape.setAttribute('stroke', prev); else shape.removeAttribute('stroke');
+        if (prevW !== null) shape.setAttribute('stroke-width', prevW); else shape.removeAttribute('stroke-width');
+      }, 3000);
+    }
+
+    // 4) Toast
+    showGlossaryToast('Mind Map', (label || '').replace(/\n/g, ' '), 'mindmap');
+  };
+  requestAnimationFrame(() => requestAnimationFrame(() => tryFlash(0)));
+};
+
+// Floating toast helper — visible regardless of where the target node ended up
+function showGlossaryToast(where, label, kind) {
+  let t = document.getElementById('glossary-toast');
+  if (!t) {
+    t = document.createElement('div');
+    t.id = 'glossary-toast';
+    document.body.appendChild(t);
+  }
+  const icon = kind === 'graph' ? '🔗' : (kind === 'mindmap' ? '📐' : '📖');
+  t.innerHTML = '<span class="gt-icon">' + icon + '</span>'
+              + '<span>Jumped to: <strong>' + (label || '').replace(/[<>&]/g, '') + '</strong></span>'
+              + '<span class="gt-sub">in ' + where + '</span>';
+  // restart animation
+  t.classList.remove('show');
+  void t.offsetWidth;
+  t.classList.add('show');
+  clearTimeout(t._hideTimer);
+  t._hideTimer = setTimeout(() => t.classList.remove('show'), 3200);
+}
+
+// Lazy-render hook
+if (typeof switchTab === 'function') {
+  const _origSwitchTab_gloss = switchTab;
+  switchTab = function(tab) { _origSwitchTab_gloss(tab); if (tab === 'glossary') renderGlossary(); };
+}
+// === END glossary v1 js ===
 </script>
 <!-- BEGIN tooltip-pin (click pins, click outside closes) -->
 <style>
