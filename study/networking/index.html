@@ -344,6 +344,16 @@
   .dd-kp span { color: #8b949e; }
   .dd-nav { display: flex; gap: 10px; justify-content: center; margin-top: 20px; }
   .dd-nav button { padding: 8px 20px; }
+  /* sticky top nav for quick prev/grid/next without scrolling */
+  .dd-nav.dd-nav-top {
+    position: sticky; top: 0; z-index: 5;
+    margin: -4px -4px 14px; padding: 10px 8px;
+    background: linear-gradient(180deg, rgba(13,17,23,0.96) 75%, rgba(13,17,23,0));
+    backdrop-filter: blur(4px);
+    border-bottom: 1px solid #21262d;
+    margin-top: 0;
+  }
+  .dd-nav.dd-nav-top button[disabled] { opacity: 0.4; cursor: not-allowed; }
 
   /* ── Use Case Flow ── */
   .uc-flow { max-width: 960px; margin: 0 auto; padding: 32px; }
@@ -426,6 +436,94 @@
   }
   .legend-close:hover { color: #c9d1d9; }
 
+  /* ── Practice View ── */
+  #view-problems { overflow-y: auto; padding-top: 60px; height: 100vh; }
+  #view-problems > #problems-container { max-width: 980px; margin: 0 auto; padding: 8px 24px 80px; }
+  .prob-intro { background: #161b22; border: 1px solid #30363d; border-left: 3px solid #7ee787; border-radius: 6px; padding: 14px 18px; margin-bottom: 18px; color: #c9d1d9; font-size: 14px; line-height: 1.6; }
+  .prob-intro strong { color: #7ee787; }
+
+  .prob-toolbar { position: sticky; top: 0; z-index: 5; background: rgba(13,17,23,0.95); backdrop-filter: blur(6px); padding: 10px 0 12px; margin-bottom: 14px; border-bottom: 1px solid #21262d; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  .prob-search { flex: 1 1 200px; min-width: 180px; background: #0d1117; border: 1px solid #30363d; border-radius: 6px; padding: 7px 12px; color: #c9d1d9; font-size: 13px; outline: none; }
+  .prob-search:focus { border-color: #58a6ff; }
+  .prob-filter-row { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+  .prob-chip { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 12px; cursor: pointer; background: #161b22; border: 1px solid #30363d; color: #8b949e; text-transform: uppercase; letter-spacing: .4px; transition: all .15s; user-select: none; }
+  .prob-chip:hover { border-color: #58a6ff; color: #c9d1d9; }
+  .prob-chip.active { background: #1f6feb22; border-color: #58a6ff; color: #58a6ff; }
+  .prob-chip.design.active  { background: #58a6ff22; border-color: #58a6ff; color: #58a6ff; }
+  .prob-chip.derive.active  { background: #ffa65722; border-color: #ffa657; color: #ffa657; }
+  .prob-chip.debug.active   { background: #f8514922; border-color: #f85149; color: #f85149; }
+  .prob-chip.code.active    { background: #7ee78722; border-color: #7ee787; color: #7ee787; }
+  .prob-chip.paper.active   { background: #d2a8ff22; border-color: #d2a8ff; color: #d2a8ff; }
+  .prob-chip .count { font-size: 9px; opacity: .7; font-weight: 500; }
+  .prob-actbtn { background: #161b22; border: 1px solid #30363d; color: #c9d1d9; padding: 6px 12px; border-radius: 6px; font-size: 12px; cursor: pointer; transition: all .15s; }
+  .prob-actbtn:hover { border-color: #58a6ff; color: #58a6ff; }
+  .prob-actbtn.primary { background: #1f6feb; border-color: #58a6ff; color: #fff; }
+  .prob-actbtn.primary:hover { background: #388bfd; }
+  .prob-progress { display: flex; align-items: center; gap: 10px; flex: 0 0 auto; font-size: 11px; color: #8b949e; margin-left: auto; }
+  .prob-progress-bar { width: 100px; height: 6px; background: #21262d; border-radius: 3px; overflow: hidden; }
+  .prob-progress-fill { height: 100%; background: linear-gradient(90deg, #7ee787, #58a6ff); transition: width .3s; }
+
+  .prob-section { margin-bottom: 16px; border: 1px solid #30363d; border-radius: 8px; background: #161b22; overflow: hidden; }
+  .prob-section > summary { padding: 13px 18px; font-size: 14px; font-weight: 600; color: #e6edf3; cursor: pointer; list-style: none; display: flex; align-items: center; gap: 10px; user-select: none; transition: background .15s; flex-wrap: wrap; }
+  .prob-section > summary::-webkit-details-marker { display: none; }
+  .prob-section > summary::before { content: '▸'; color: #8b949e; font-size: 11px; transition: transform .2s; }
+  .prob-section[open] > summary::before { transform: rotate(90deg); }
+  .prob-section > summary:hover { background: rgba(88,166,255,0.04); }
+  .prob-section .wk { color: #8b949e; font-size: 11px; font-weight: 500; background: #0d1117; padding: 2px 8px; border-radius: 10px; border: 1px solid #30363d; }
+  .prob-section .sec-meta { margin-left: auto; font-size: 11px; color: #6e7681; font-weight: 500; }
+  .prob-section .sec-meta .done-count { color: #7ee787; font-weight: 600; }
+  .prob-hook { background: #0d1117; border-bottom: 1px solid #21262d; padding: 12px 22px; font-size: 13px; color: #d2a8ff; font-style: italic; line-height: 1.6; display: flex; gap: 8px; align-items: flex-start; }
+  .prob-hook::before { content: '🪝'; font-style: normal; flex-shrink: 0; }
+  .prob-body { padding: 12px 18px 16px; display: flex; flex-direction: column; gap: 10px; }
+
+  .prob-card { background: #0d1117; border: 1px solid #21262d; border-radius: 8px; padding: 12px 14px; transition: all .15s; position: relative; }
+  .prob-card:hover { border-color: #30363d; }
+  .prob-card.status-thinking { border-left: 3px solid #d2a8ff; }
+  .prob-card.status-got      { border-left: 3px solid #7ee787; opacity: .75; }
+  .prob-card.status-stuck    { border-left: 3px solid #f85149; }
+  .prob-card.hidden          { display: none; }
+  .prob-card .pc-head { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 4px; }
+  .prob-card .pc-num { color: #6e7681; font-size: 11px; font-weight: 600; font-family: 'Cascadia Code', monospace; }
+  .prob-card .pc-star { color: #ffa657; font-size: 13px; }
+  .prob-tag { display: inline-block; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 8px; text-transform: uppercase; letter-spacing: .4px; }
+  .prob-tag.design { background: #58a6ff20; color: #58a6ff; }
+  .prob-tag.debug  { background: #f8514920; color: #f85149; }
+  .prob-tag.paper  { background: #d2a8ff20; color: #d2a8ff; }
+  .prob-tag.code   { background: #7ee78720; color: #7ee787; }
+  .prob-tag.derive { background: #ffa65720; color: #ffa657; }
+  .prob-card .pc-text { color: #c9d1d9; font-size: 13.5px; line-height: 1.6; margin: 2px 0 6px; }
+  .prob-card .pc-actions { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; margin-top: 6px; }
+  .prob-revealbtn { background: transparent; border: 1px dashed #30363d; color: #8b949e; padding: 3px 10px; border-radius: 12px; font-size: 11px; cursor: pointer; transition: all .15s; }
+  .prob-revealbtn:hover { border-color: #d2a8ff; color: #d2a8ff; border-style: solid; }
+  .prob-revealbtn.approach:hover { border-color: #79c0ff; color: #79c0ff; }
+  .prob-revealbtn.answer:hover   { border-color: #7ee787; color: #7ee787; }
+  .prob-reveal-panel { display: none; margin-top: 8px; padding: 10px 14px; background: #161b22; border-radius: 4px; color: #c9d1d9; font-size: 12.5px; line-height: 1.65; }
+  .prob-reveal-panel.shown { display: block; }
+  .prob-reveal-panel ul, .prob-reveal-panel ol { margin: 4px 0 4px 18px; padding: 0; }
+  .prob-reveal-panel li { margin: 3px 0; }
+  .prob-reveal-panel code { background: #0d1117; padding: 1px 5px; border-radius: 3px; font-size: 11.5px; color: #79c0ff; font-family: 'Cascadia Code', 'Consolas', monospace; }
+  .prob-reveal-panel strong { color: #e6edf3; }
+  .prob-reveal-panel .rh-label { display: inline-block; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .6px; margin-right: 8px; padding: 1px 6px; border-radius: 4px; vertical-align: middle; }
+  .prob-hint     { border-left: 2px solid #d2a8ff; }
+  .prob-hint     .rh-label { background: #d2a8ff22; color: #d2a8ff; }
+  .prob-approach { border-left: 2px solid #79c0ff; }
+  .prob-approach .rh-label { background: #79c0ff22; color: #79c0ff; }
+  .prob-answer   { border-left: 2px solid #7ee787; background: #0d1f17; }
+  .prob-answer   .rh-label { background: #7ee78722; color: #7ee787; }
+  .prob-status-btns { display: flex; gap: 4px; margin-left: auto; }
+  .prob-statbtn { background: transparent; border: 1px solid #30363d; color: #6e7681; padding: 3px 9px; border-radius: 12px; font-size: 11px; cursor: pointer; transition: all .15s; }
+  .prob-statbtn:hover { border-color: #58a6ff; color: #c9d1d9; }
+  .prob-statbtn.active.thinking { background: #d2a8ff22; border-color: #d2a8ff; color: #d2a8ff; }
+  .prob-statbtn.active.got      { background: #7ee78722; border-color: #7ee787; color: #7ee787; }
+  .prob-statbtn.active.stuck    { background: #f8514922; border-color: #f85149; color: #f85149; }
+  .prob-empty { text-align: center; padding: 40px 20px; color: #6e7681; font-size: 13px; }
+  .prob-spotlight { position: fixed; inset: 0; background: rgba(13,17,23,0.85); backdrop-filter: blur(4px); display: none; align-items: center; justify-content: center; z-index: 100; padding: 20px; }
+  .prob-spotlight.open { display: flex; }
+  .prob-spotlight-card { background: #161b22; border: 1px solid #58a6ff; border-radius: 12px; max-width: 600px; width: 100%; padding: 24px 28px; box-shadow: 0 12px 60px rgba(88,166,255,0.3); }
+  .prob-spotlight-card h3 { color: #58a6ff; font-size: 14px; margin: 0 0 4px; text-transform: uppercase; letter-spacing: 1px; }
+  .prob-spotlight-card .pc-text { font-size: 16px; line-height: 1.55; color: #e6edf3; margin: 10px 0; }
+  .prob-spotlight-card .sl-close { background: transparent; border: none; color: #8b949e; font-size: 22px; cursor: pointer; float: right; line-height: 1; }
+  .prob-spotlight-card .sl-close:hover { color: #c9d1d9; }
   /* ── Quiz View ── */
   #view-quiz { overflow-y: auto; padding-top: 60px; height: 100vh; }
   .quiz-wrap { max-width: 880px; margin: 0 auto; padding: 24px 24px 80px; }
@@ -574,6 +672,29 @@
   .appendix-table .watch-link:hover { color: #ff0000; text-decoration: underline; }
   .appendix-table .vid-num { color: #8b949e; font-variant-numeric: tabular-nums; }
 
+  /* ── Glossary ────────────────────────────────────────────────────── */
+  #view-glossary { overflow-y: auto; height: calc(100vh - 50px); margin-top: 50px; padding: 20px; box-sizing: border-box; }
+  .gloss-intro { background: #161b22; border: 1px solid #30363d; border-left: 3px solid #d2a8ff; border-radius: 6px; padding: 14px 18px; margin: 0 auto 14px; max-width: 1400px; color: #c9d1d9; font-size: 14px; line-height: 1.6; }
+  .gloss-intro strong { color: #d2a8ff; }
+  .glossary-controls { position: sticky; top: 0; z-index: 5; background: rgba(13,17,23,0.95); backdrop-filter: blur(6px); padding: 10px 0 12px; margin: -8px auto 14px; max-width: 1400px; border-bottom: 1px solid #21262d; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  #glossary-search { flex: 1 1 240px; min-width: 200px; background: #0d1117; border: 1px solid #30363d; border-radius: 6px; padding: 7px 12px; color: #c9d1d9; font-size: 13px; outline: none; }
+  #glossary-search:focus { border-color: #58a6ff; }
+  .glossary-cat-pills { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+  .glossary-cat-pills button { background: #161b22; border: 1px solid #30363d; color: #8b949e; padding: 4px 10px; border-radius: 12px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .4px; cursor: pointer; transition: all .15s; }
+  .glossary-cat-pills button:hover { border-color: #58a6ff; color: #c9d1d9; }
+  .glossary-cat-pills button.active { background: var(--pill-bg, #1f6feb22); border-color: var(--pill-color, #58a6ff); color: var(--pill-color, #58a6ff); }
+  .glossary-count { font-size: 11px; color: #8b949e; margin-left: auto; }
+  .glossary-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 14px; max-width: 1400px; margin: 0 auto; }
+  .glossary-card { background: #161b22; border: 1px solid #30363d; border-radius: 10px; padding: 14px; transition: border-color .15s, box-shadow .15s; }
+  .glossary-card:hover { border-color: var(--cat-color, #58a6ff); box-shadow: 0 4px 14px rgba(0,0,0,0.35); }
+  .glossary-term-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 4px; }
+  .glossary-term { font-weight: 700; color: #58a6ff; font-size: 15px; }
+  .glossary-cat-badge { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .4px; padding: 2px 8px; border-radius: 10px; background: color-mix(in srgb, var(--cat-color, #58a6ff) 18%, transparent); color: var(--cat-color, #58a6ff); border: 1px solid var(--cat-color, #58a6ff); }
+  .glossary-aka { color: #8b949e; font-size: 12px; font-style: italic; margin-bottom: 6px; }
+  .glossary-short { color: #c9d1d9; font-size: 13px; line-height: 1.5; }
+  .glossary-long { color: #8b949e; font-size: 12px; line-height: 1.5; margin-top: 6px; padding-top: 6px; border-top: 1px solid #21262d; }
+  @media (max-width: 768px) { #view-glossary { margin-top: 48px; padding: 12px; } .glossary-list { grid-template-columns: 1fr; } }
+
   /* ═══════════════════════════════════════════════════════════════════
      MOBILE RESPONSIVE — Deep Dives, Appendix, Tracker, PDF viewer
      (Mind Map & Topic Graph remain desktop-only)
@@ -700,14 +821,7 @@
   <h1>🧠 CS 144</h1>
   <button id="hamburger" onclick="toggleMobileMenu()">☰</button>
   <div id="toolbar-menu">
-    <div class="tab-group">
-      <button class="tab active" data-view="mindmap" onclick="switchTab('mindmap')">📐 Mind Map</button>
-      <button class="tab" data-view="graph" onclick="switchTab('graph')">🔗 Topic Graph</button>
-      <button class="tab" data-view="deepdive" onclick="switchTab('deepdive')">📚 Deep Dives</button>
-      <button class="tab" data-view="appendix" onclick="switchTab('appendix')">📹 Appendix</button>
-      <button class="tab" data-view="usecase" onclick="switchTab('usecase')">🔬 Use Cases</button>
-      <button class="tab" data-view="quiz" onclick="switchTab('quiz')">🎯 Quiz</button>
-    </div>
+    <div class="tab-group" id="tab-group"></div>
     <div class="actions">
       <button class="btn" onclick="toggleTracker()">📊 Tracker</button>
       <button class="btn" id="btn-path" onclick="togglePathPanel()" style="display:none;background:#1f6feb;border-color:#58a6ff;color:#fff">🧭 Learning Path</button>
@@ -813,6 +927,20 @@
     <button class="cbtn" id="btn-back-uc" onclick="showUseCaseGrid()">← Back to All</button>
   </div>
 </div>
+<div id="view-problems" class="view">
+  <div id="problems-container"></div>
+</div>
+<div id="view-glossary" class="view">
+  <div class="gloss-intro">
+    <strong>📖 Glossary.</strong> Every acronym, protocol, and unit-of-art used across the CS&nbsp;144 material — defined here in one place. Search by term or definition, or filter by category.
+  </div>
+  <div class="glossary-controls">
+    <input type="text" id="glossary-search" placeholder="🔍 Search terms, acronyms, or definitions…" />
+    <div class="glossary-cat-pills" id="glossary-cat-pills"></div>
+    <span class="glossary-count" id="glossary-count"></span>
+  </div>
+  <div id="glossary-list" class="glossary-list"></div>
+</div>
 <div id="view-quiz" class="view">
   <div id="quiz-container"></div>
 </div>
@@ -891,7 +1019,33 @@ var switchTab = function(tab) {
   document.getElementById('legend-graph').style.display      = tab === 'graph'   ? '' : 'none';
 
   if (tab === 'graph' && !graphInitialized) { initGraph(); graphInitialized = true; }
-}
+};
+
+// ─── Header tabs (canonical pattern, mirrors algo/maths/etc.) ──────────
+// Built dynamically from a JS array so the header layout matches the rest
+// of the study-tool fleet. Tab order: mindmap → graph → deepdive → usecase
+// → appendix → problems → quiz. (Networking has no glossary data.)
+(function buildTabs() {
+  const tabs = [];
+  tabs.push({ id: 'mindmap',  label: '📐 Mind Map' });
+  tabs.push({ id: 'graph',    label: '🔗 Topic Graph' });
+  tabs.push({ id: 'deepdive', label: '📚 Deep Dives' });
+  tabs.push({ id: 'usecase',  label: '🔬 Use Cases' });
+  tabs.push({ id: 'appendix', label: '📹 Appendix' });
+  tabs.push({ id: 'glossary', label: '📖 Glossary' });
+  tabs.push({ id: 'problems', label: '🧠 Practice' });
+  tabs.push({ id: 'quiz',     label: '🎯 Quiz' });
+  const tabGroup = document.getElementById('tab-group');
+  if (!tabGroup) return;
+  tabs.forEach((t, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'tab' + (i === 0 ? ' active' : '');
+    btn.dataset.view = t.id;
+    btn.textContent = t.label;
+    btn.onclick = () => switchTab(t.id);
+    tabGroup.appendChild(btn);
+  });
+})();
 // ─── Data ────────────────────────────────────────────────────────────
 const data = {
   name: "CS 144\nComputer Networking\nSpring 2023",
@@ -1490,6 +1644,7 @@ const graphNodes = [
   { id: "slow_start",  label: "Slow Start",                cat: "transport",tip: "The initial phase of TCP congestion control. cwnd (Congestion Window) starts at 1 MSS (Maximum Segment Size) and doubles every RTT (Round-Trip Time) — exponential growth. Continues until cwnd reaches ssthresh (Slow Start Threshold) or a packet loss is detected, then switches to congestion avoidance.", slides: [{ label: "📄 How CC", path: "lectures/week-4-3-How congestion control.pdf" }] },
   { id: "fast_retx",   label: "Fast Retransmit\n& Recovery",cat: "transport",tip: "When 3 duplicate ACKs (Acknowledgments) arrive for the same sequence number, TCP assumes that specific segment was lost. Fast Retransmit resends it immediately without waiting for the RTO (Retransmission Timeout). Fast Recovery (TCP Reno) then halves cwnd and continues in congestion avoidance, avoiding a full slow-start reset.", slides: [{ label: "📄 How CC", path: "lectures/week-4-3-How congestion control.pdf" }] },
   { id: "tcp_variants",label: "Tahoe / Reno\nCubic / BBR", cat: "transport",tip: "The evolution of TCP congestion control: Tahoe (1988 — resets cwnd to 1 on any loss), Reno (1990 — adds fast recovery), Cubic (2006, default on Linux — uses a cubic function for aggressive yet fair window growth on high-bandwidth links), BBR (2016, Google — Bottleneck Bandwidth and RTT — models available bandwidth and delay instead of relying on packet loss as the congestion signal)." },
+  { id: "quic",        label: "QUIC",                      cat: "transport",tip: "QUIC (RFC 9000) — a user-space transport built on UDP that combines TCP-like reliable streams, TLS 1.3 encryption, and per-stream loss recovery in one protocol. Eliminates TCP's head-of-line blocking (a lost packet in stream A doesn't stall stream B), supports 0-RTT resumption, and uses Connection IDs so a session survives IP changes (Wi-Fi ↔ LTE handoff). The transport layer for HTTP/3." },
 
   // Network
   { id: "ip",          label: "IP",                        cat: "network",  tip: "Internet Protocol — the network layer's workhorse. Provides best-effort, connectionless datagram delivery with global addressing (IPv4: 32-bit addresses; IPv6: 128-bit). IP makes no guarantees about delivery, ordering, or duplication — upper layers (TCP) handle that.", slides: [{ label: "📄 Routing 1", path: "lectures/week-5-routing-lecture-1.pdf" }] },
@@ -1590,7 +1745,14 @@ const graphEdges = [
   { source: "firewall",   target: "nat",           type: "related",   label: "often combined" },
   { source: "dnssec",     target: "dns",           type: "enables",   label: "authenticates" },
   { source: "ddos",       target: "ip",            type: "related",   label: "exploits" },
-  { source: "ddos",       target: "firewall",      type: "related",   label: "mitigated by" }
+  { source: "ddos",       target: "firewall",      type: "related",   label: "mitigated by" },
+
+  // QUIC
+  { source: "quic",       target: "udp",           type: "depends",   label: "runs over" },
+  { source: "quic",       target: "tls",           type: "implements", label: "integrates" },
+  { source: "quic",       target: "cong_ctrl",     type: "implements", label: "performs" },
+  { source: "quic",       target: "reliable",      type: "implements", label: "provides" },
+  { source: "http",       target: "quic",          type: "depends",   label: "HTTP/3 over" }
 ];
 
 let showEdgeLabels = true;
@@ -2727,6 +2889,8 @@ const deepDives = [
     sections: [
       { title: '🔑 Key Insight', text: 'Each layer only talks to its peer on the remote host via headers — it doesn\'t care what\'s inside the payload. This separation of concerns is why the Internet scales.' },
       { title: '📦 Encapsulation in Action', text: 'When you send an HTTP request: the Application layer creates the HTTP message → Transport wraps it in a TCP segment (adding port numbers) → Network wraps that in an IP packet (adding addresses) → Link wraps that in an Ethernet frame (adding MAC addresses). The receiver unpacks in reverse.' },
+      { title: '🧪 Worked Example — GET https://stanford.edu/', text: 'Trace one HTTP request byte-by-byte: the browser writes ~400 B of HTTP/1.1 text. TCP prepends a 20 B segment header (ports 50123 → 443, SEQ, ACK, window). IP prepends a 20 B packet header (src 192.168.1.10 → dst 171.67.215.200, TTL 64). Ethernet prepends a 14 B frame header (src MAC → router MAC, ethertype 0x0800) and appends a 4 B FCS trailer. Total overhead on the wire: 58 B + 400 B payload = 458 B. The first-hop router strips the Ethernet wrapper, looks at the IP destination, re-frames for the next link (possibly with a different MTU), and never inspects TCP or HTTP — that\'s end-to-end in action.' },
+      { title: '🪤 Pitfall: Layer Violations & MTU Surprises', text: 'Layering is a contract you can break only at your peril. Path MTU Discovery silently fails when a middlebox drops ICMP "Fragmentation Needed" replies, leaving senders to retransmit large segments forever — a classic "PMTU black hole" debuggable only by knowing both the IP and ICMP layers. Similarly, NAT boxes that rewrite TCP ports must also rewrite the TCP checksum (because it covers a pseudo-header from IP), violating strict layering for correctness. The tie-in: layering is a guideline that simplifies reasoning, but real-world devices (NATs, load balancers, QUIC-over-UDP) routinely cross layers — recognising those exceptions is half of practical network debugging.' }
     ],
     keypoints: [
       { title: 'End-to-End Principle', text: 'Keep the network core simple; intelligence belongs at the edges (hosts).' },
@@ -2783,14 +2947,18 @@ const deepDives = [
       return s;
     },
     sections: [
-      { title: '🔑 Key Insight', text: 'TCP uses sequence numbers, cumulative ACKs, and a retransmission timer to build a reliable byte stream over IP\'s unreliable "best-effort" datagrams. The sliding window lets multiple segments be in flight simultaneously for throughput.' },
-      { title: '⏱️ Retransmission', text: 'If an ACK isn\'t received within the RTO (Retransmission Timeout, estimated from RTT samples), TCP resends. After 3 duplicate ACKs, it does a "fast retransmit" without waiting for the timer — this is much faster for recovering from single packet losses.' },
+      { title: '🔑 Key Insight', text: 'TCP layers a reliable, in-order byte stream on top of IP\'s best-effort datagram service using four ingredients: 32-bit per-byte sequence numbers, cumulative acknowledgements, a retransmission timer driven by an RTT estimator, and a sliding window that lets multiple segments be in flight simultaneously. The window is the throughput lever — at any instant the sender may have up to min(cwnd, rwnd) unacknowledged bytes outstanding, so the achievable rate is bounded by Window / RTT. With a typical 64 KiB receive window and a 50 ms RTT this caps a single connection at roughly 10 Mbit/s, which is why RFC 7323 window scaling (multiplying rwnd by up to 2¹⁴) is mandatory on modern long-fat-pipe paths.' },
+      { title: '⏱️ Retransmission Timeout (RFC 6298)', formula: 'SRTT  = (1−α)·SRTT  + α·R           (α = 1/8)\nRTTVAR = (1−β)·RTTVAR + β·|SRTT − R|  (β = 1/4)\nRTO    = SRTT + max(G, 4·RTTVAR), clamped to ≥1 s' },
+      { title: '⚡ Fast Retransmit & Fast Recovery', text: 'Waiting a full RTO (often >200 ms) for a single dropped segment wastes bandwidth, so Reno (RFC 5681) treats three duplicate ACKs as a strong loss signal and retransmits immediately — typically within 1 RTT of the loss. Selective Acknowledgments (SACK, RFC 2018) refine this further: the receiver reports up to four discontiguous byte ranges it has buffered, letting the sender retransmit only the missing holes instead of everything past the cumulative ACK. Without SACK, a single drop in a large in-flight window can trigger a "go-back-N"–style waterfall of redundant retransmits.' },
+      { title: '🪤 Pitfall: Silly Window & Nagle vs Delayed-ACK', text: 'Two classic interactions can stall a connection. The silly-window syndrome (RFC 813) appears when a slow consumer keeps advertising tiny rwnd updates, causing the sender to dribble out 1-byte segments with 40 bytes of header overhead — Clark\'s rule defers updates until at least one MSS or half the buffer is free. Nagle (RFC 896) coalesces small writes until the previous segment is ACKed; combined with Linux\'s 40 ms delayed-ACK timer this can add a 200 ms stall to interactive RPCs. The standard fix is TCP_NODELAY for latency-sensitive sockets (SSH, REST clients) while leaving Nagle on for bulk-transfer sockets that benefit from coalescing.' }
     ],
     keypoints: [
-      { title: 'Sequence Numbers', text: '32-bit counters that label each byte. The receiver uses them to reorder and detect duplicates.' },
-      { title: 'Cumulative ACKs', text: 'ACK N means "I\'ve received all bytes up to N-1." Simple but can cause head-of-line blocking.' },
-      { title: 'Sliding Window', text: 'Sender can have up to min(cwnd, rwnd) bytes unacknowledged. Window slides right as ACKs arrive.' },
-      { title: 'Flow Control', text: 'Receiver advertises rwnd (Receiver Window) to prevent buffer overflow. Sender respects this limit.' }
+      { title: 'Sequence numbers (32-bit)', text: 'Each byte (not segment) gets a sequence number; the ISN is randomized per RFC 6528 to thwart blind injection. The space wraps every 2³² bytes — at 10 Gbit/s that is ≈3.4 s, so RFC 7323 PAWS (timestamps) is required to disambiguate wrapped sequence numbers.' },
+      { title: 'Cumulative ACKs + SACK', text: 'ACK N means "I have every byte up to N−1." A single loss therefore stalls all later in-flight bytes (head-of-line blocking) until the gap is filled. SACK blocks (RFC 2018) carry up to four "I also have bytes [a,b)" ranges so the sender retransmits only the holes.' },
+      { title: 'Sliding window (cwnd ⊓ rwnd)', text: 'Bytes in flight ≤ min(cwnd, rwnd). Throughput ≈ Window / RTT. With MSS = 1460 B (Ethernet 1500 − 20 IP − 20 TCP) and the 64 KiB legacy rwnd, you cap at ≈45 segments in flight regardless of bandwidth — hence RFC 7323 window scaling.' },
+      { title: 'Flow control (rwnd)', text: 'The receiver advertises rwnd in every ACK\'s 16-bit Window field; the sender must not exceed it. Auto-tuning kernels (Linux net.ipv4.tcp_rmem) grow rwnd up to a few MB based on observed BDP so a single flow can fill a 1 Gb/s × 100 ms pipe (≈12.5 MB).' },
+      { title: 'Fast retransmit threshold', text: '3 duplicate ACKs ⇒ retransmit the segment at snd.una without waiting for the RTO. RFC 5681 then enters fast recovery: ssthresh = cwnd/2, cwnd inflated by the dupACKs already seen, exit on the recovery ACK.' },
+      { title: 'RTO floor & exponential backoff', text: 'Linux clamps RTO ≥ 200 ms (TCP_RTO_MIN). On every consecutive timeout RTO doubles up to TCP_RTO_MAX = 120 s; after net.ipv4.tcp_retries2 attempts (default 15, ≈15 min wall-clock) the connection is aborted with ETIMEDOUT.' }
     ]
   },
   {
@@ -2839,14 +3007,21 @@ const deepDives = [
       return s;
     },
     sections: [
-      { title: '🔑 Key Insight', text: 'Without congestion control, senders would flood bottleneck links causing "congestion collapse" — throughput drops to near zero while everyone retransmits. AIMD (Additive Increase, Multiplicative Decrease) probes for bandwidth by slowly increasing cwnd, then halving it on loss.' },
-      { title: '📐 The Formula', formula: 'On ACK: cwnd = cwnd + 1/cwnd (≈ +1 MSS per RTT)\nOn LOSS: cwnd = cwnd / 2 (multiplicative decrease)' },
+      { title: '🔑 Key Insight', text: 'Without end-to-end congestion control, every sender would push at link speed, queues at the bottleneck would overflow, retransmits would pile on more load, and effective throughput would collapse to near zero — the "congestion collapse" Van Jacobson observed on the NSFNET in 1986. AIMD (Additive Increase, Multiplicative Decrease) is the elegant control law that grew out of that crisis: each flow gently probes for spare capacity by adding +1 MSS per RTT and instantly backs off by halving cwnd whenever the network signals loss. Chiu & Jain (1989) proved that this rule is the unique linear controller that converges to a fair, efficient equilibrium with only binary feedback — which is why nearly every loss-based TCP variant from Reno through CUBIC inherits the same skeleton.' },
+      { title: '📐 The AIMD Update Rule', formula: 'On each ACK:  cwnd += MSS · MSS / cwnd     (≈ +1 MSS per RTT)\nOn 3 dup-ACK: ssthresh = cwnd/2, cwnd = ssthresh   (Reno fast recovery)\nOn timeout:   ssthresh = cwnd/2, cwnd = 1 MSS      (slow start restart)\nThroughput ≈ MSS · √(3/2) / (RTT · √p)             (Mathis, p = loss rate)' },
+      { title: '🌊 Variants: Reno, CUBIC, BBR', text: 'Linux\'s default since 2.6.19 is CUBIC (RFC 8312), which replaces the linear AIMD ramp with a cubic function of time-since-last-loss anchored at the previous Wmax. The cubic shape lets cwnd grow slowly near Wmax (probing politely for the same capacity) and aggressively far from it (filling fat pipes quickly), giving CUBIC much better throughput than Reno at high BDP while remaining roughly Reno-fair on short RTTs. BBR (Cardwell et al., 2016) abandons loss as the primary signal entirely: it estimates the bottleneck bandwidth (BtlBw) and minimum RTT (RTprop) by alternately probing each, then paces at BtlBw and caps inflight at BDP — so it can hold near-zero queue and deliver high throughput even on lossy wireless paths where loss-based controllers misread random loss as congestion.' },
+      { title: '🪤 Bufferbloat: when AIMD\'s loss signal arrives too late', text: 'Modern routers and home gateways often ship with megabyte-sized FIFO buffers. A loss-based sender will cheerfully fill them before seeing a single drop, inflating RTT from ms to seconds and ruining interactive traffic sharing the link — a pathology Jim Gettys named "bufferbloat" (2011). The control loop is fine; the signal is just delayed by a queue an order of magnitude larger than the BDP. Fixes operate at the AQM layer rather than the transport: CoDel (RFC 8289) and PIE (RFC 8033) drop or ECN-mark packets once they have been in the queue for more than ~5 ms, restoring AIMD\'s fast feedback. ECN (RFC 3168) lets the router set a CE bit instead of dropping, so the sender halves cwnd without losing the packet — increasingly enabled by default for L4S (RFC 9330).' },
+      { title: '📡 The CS 144 Lab Connection', text: 'In CS 144 the labs implement the loss-recovery half of this picture (RTO estimation, retransmit-on-timeout, sliding window) and leave a full congestion controller as a stretch goal. To extend Minnow into a Reno-style sender you need three pieces wired into TCPSender: an integer cwnd_ initialised to 1 MSS that grows by MSS·MSS/cwnd per ACK after slow-start exits, an ssthresh_ initialised to ∞ that you halve on loss, and a guard in fill_window() that caps bytes in flight at min(cwnd_, rwnd_). The simulator\'s pcap traces visualise the resulting sawtooth beautifully — a satisfying "the textbook diagram is real" moment.' }
     ],
     keypoints: [
-      { title: 'Slow Start', text: 'cwnd starts at 1 MSS, doubles every RTT (exponential) until ssthresh or first loss.' },
-      { title: 'Congestion Avoidance', text: 'After ssthresh, cwnd grows by ~1 MSS per RTT (linear). The "sawtooth" pattern emerges.' },
-      { title: 'Fast Recovery', text: 'On 3 dup-ACKs: halve cwnd and continue (Reno). On timeout: reset cwnd to 1 (Tahoe).' },
-      { title: 'Fairness', text: 'AIMD converges to equal share of bottleneck bandwidth between competing flows (max-min fair).' }
+      { title: 'Slow Start (exponential)', text: 'cwnd starts at IW (Linux default 10 MSS, RFC 6928) and doubles every RTT — for each ACK, cwnd += MSS. Exits when cwnd ≥ ssthresh or on first loss. With IW=10 and MSS=1460 B you can deliver ≈14 KB in the first RTT.' },
+      { title: 'Congestion Avoidance (linear)', text: 'Above ssthresh cwnd grows by ≈1 MSS per RTT (additive increase). Combined with halving on loss, this is the AIMD sawtooth — average cwnd ≈ 0.75·Wmax, and average throughput follows Mathis: rate ≈ MSS · √(1.5/p) / RTT.' },
+      { title: 'Loss recovery (Tahoe vs Reno vs NewReno)', text: 'Tahoe: any loss → cwnd = 1, slow start. Reno: 3 dup-ACKs → cwnd = ssthresh = cwnd/2, fast recovery. NewReno (RFC 6582) extends Reno across multiple losses in one window without exiting recovery prematurely.' },
+      { title: 'Fairness theorem', text: 'Chiu-Jain (1989): with synchronous loss feedback, n AIMD flows on a shared bottleneck converge to equal shares — the "fairness line" along x₁ = x₂. Multiplicative-decrease is what pulls the trajectory toward that diagonal; additive-increase keeps it efficient.' },
+      { title: 'CUBIC (Linux default)', text: 'cwnd(t) = C·(t − K)³ + Wmax with K = ∛(β·Wmax/C), β = 0.7, C = 0.4. RTT-independent growth (unlike Reno) — fairer to long-RTT flows. Reverts to Reno mode if it would underperform on small BDP.' },
+      { title: 'BBR (model-based)', text: 'Estimates BtlBw (max delivery rate over recent ACKs) and RTprop (min RTT over recent samples). Operates at BDP = BtlBw·RTprop with a small headroom; periodically probes each. Loss is not the primary signal — works well on lossy wireless and high-BDP paths.' },
+      { title: 'ECN over loss (RFC 3168)', text: 'AQM-enabled routers mark the CE codepoint in the IP header instead of dropping; the receiver echoes ECE in TCP ACKs; the sender halves cwnd as if a loss occurred. L4S (RFC 9330) reinterprets ECN as fine-grained 1-RTT congestion feedback for ultra-low-latency apps.' },
+      { title: 'Bufferbloat & AQM', text: 'A 1 MB FIFO at a 10 Mbit/s uplink adds ≈0.8 s of standing queue under load. CoDel (target 5 ms, interval 100 ms) and PIE actively drop/ECN-mark to keep the queue shallow so AIMD\'s loss feedback arrives within a few RTTs.' }
     ]
   },
   {
@@ -2898,6 +3073,8 @@ const deepDives = [
     sections: [
       { title: '🔑 Key Insight', text: 'Routing (control plane) builds the forwarding table; Forwarding (data plane) uses it to send each packet. This separation lets routers process millions of packets per second while only recomputing routes when topology changes.' },
       { title: '🔍 Longest Prefix Match', text: 'When a packet arrives, the router checks the destination IP against its table and picks the most specific (longest prefix) match. E.g., 10.1.2.0/24 beats 10.1.0.0/16 for destination 10.1.2.5. This enables hierarchical address aggregation.' },
+      { title: '🧪 Worked Example — OSPF on a 5-router LAN', text: 'Five routers R1–R5 each flood Link State Advertisements (LSAs) carrying their neighbours and link costs. After ≈40 ms every router has an identical link-state database. Each independently runs Dijkstra rooted at itself: R1 sees {R1→R2:1, R1→R3:1, R1→R4:2(via R2), R1→R5:3(via R3)}, builds the SPF tree, and writes forwarding entries. When R2-R4 fails, R2 and R4 flood new LSAs in <100 ms; everyone re-runs Dijkstra and converges in well under a second — orders of magnitude faster than RIP\'s minute-scale "count-to-infinity" recovery.' },
+      { title: '🪤 Pitfall: BGP Route Leaks & Convergence Storms', text: 'BGP picks routes by policy, not shortest path, and a misconfigured AS can advertise more-specific prefixes it doesn\'t own — the 2008 Pakistan/YouTube and 2021 Facebook outages were exactly this failure mode. Worse, BGP convergence is *exponentially* slower than IGPs because path-vector loop avoidance forces routers to explore every alternative AS path before withdrawing. The tie-in: layering applies inside routing too — OSPF/IS-IS handle intra-AS topology in seconds, BGP handles inter-AS policy in minutes, and the seams between them (route redistribution, MED, local-pref) are where the gnarliest production incidents live.' }
     ],
     keypoints: [
       { title: 'Link State (OSPF)', text: 'Every router floods its link info to all. Each computes shortest paths via Dijkstra. Fast convergence.' },
@@ -2967,6 +3144,8 @@ const deepDives = [
     sections: [
       { title: '🔑 Key Insight', text: 'DNS is a distributed, hierarchical database. No single server knows all names — the root servers point to TLD (Top-Level Domain) servers, which point to authoritative nameservers. Caching at every level makes it fast (most queries never reach the root).' },
       { title: '📝 Record Types', text: 'A (IPv4 address), AAAA (IPv6), CNAME (alias), MX (mail server), NS (nameserver), TXT (arbitrary text, used for SPF/DKIM), SOA (zone metadata). Each record has a TTL (Time To Live) controlling cache duration.' },
+      { title: '🧪 Worked Example — Resolving www.stanford.edu cold', text: 'Your stub resolver sends one UDP query (≈40 B) to 8.8.8.8. With an empty cache the recursive resolver does the heavy lifting: it asks a root server "where is .edu?" → gets a referral to a.edu-servers.net. It asks .edu "where is stanford.edu?" → gets a referral to argus.stanford.edu. It asks argus "what is www.stanford.edu?" → gets the A record 171.67.215.200 with TTL=300. Total: 3 RTTs ≈ 60 ms, plus your one RTT to the resolver. On the next query within 300 s the answer is served from cache in <1 ms — that\'s why caching, not the hierarchy, is what makes DNS fast in practice.' },
+      { title: '🪤 Pitfall: TTL Lag, Cache Poisoning & DoH', text: 'TTL is a double-edged sword. Set it too high (86400 s) and a server-migration outage drags on for a day; set it too low (30 s) and you pay resolution latency on every connection. DNS over UDP/53 was also famously spoofable until Kaminsky (2008) — short query IDs plus off-path attackers could inject forged answers; DNSSEC and source-port randomisation closed most of that. The newer tie-in: DNS-over-HTTPS (DoH, RFC 8484) tunnels queries over TLS to bypass on-path inspection, which is great for privacy but blinds enterprise security tools that relied on plaintext DNS for malware-domain blocking — yet another example of one layer (TLS) eating another (DNS) and shifting the threat model.' }
     ],
     keypoints: [
       { title: 'Recursive vs Iterative', text: 'Your stub resolver asks a recursive resolver, which does the iterative queries to root → TLD → authoritative for you.' },
@@ -3254,6 +3433,14 @@ function showDeepDive(idx) {
   document.getElementById('deepdive-controls').style.display = 'flex';
 
   let html = `<div class="dd-infographic">`;
+  // Top sticky nav for quick prev/grid/next without scrolling
+  const prevDisabled = idx === 0 ? 'disabled' : '';
+  const nextDisabled = idx >= deepDives.length - 1 ? 'disabled' : '';
+  html += `<div class="dd-nav dd-nav-top">`;
+  html += `<button class="btn" ${prevDisabled} onclick="showDeepDive(${Math.max(0, idx-1)})">← Prev</button>`;
+  html += `<button class="btn" onclick="showCardGrid()">Grid</button>`;
+  html += `<button class="btn" ${nextDisabled} onclick="showDeepDive(${Math.min(deepDives.length-1, idx+1)})">Next →</button>`;
+  html += `</div>`;
   html += `<div style="font-size:11px;color:${dd.color};font-weight:600;text-transform:uppercase;letter-spacing:1px">${dd.icon} ${dd.num}</div>`;
   html += `<h2 style="color:${dd.color}">${dd.title}</h2>`;
   html += `<div class="dd-subtitle">${dd.desc}</div>`;
@@ -3928,6 +4115,54 @@ const useCases = [
       { title: "Delivery to Mailbox (MDA)", component: "Mail Delivery Agent", detail: "The message passes all checks and the MDA delivers it to the recipient's mailbox. This may involve Sieve filters (user-defined rules), sorting into folders, flagging as important. The message is stored in the mail store (Maildir, database, or cloud storage). Server-side indexing enables search.", proto: "LMTP / Sieve Filters → Mailbox Store", refs: [{ label: "RFC 5228 — Sieve", url: "https://tools.ietf.org/html/rfc5228" }, { label: "RFC 2033 — LMTP", url: "https://tools.ietf.org/html/rfc2033" }] },
       { title: "Recipient retrieves email", component: "Mail User Agent (MUA) → IMAP/POP", detail: "The recipient's email client syncs via IMAP (port 993, TLS). IMAP allows server-side folders, flags, search — the definitive copy stays on the server. POP3 (port 995) downloads and optionally deletes from server. Webmail accesses the mailbox via internal API. Push notifications alert the user on mobile.", proto: "IMAP4 (port 993 TLS) / POP3 / Push", refs: [{ label: "RFC 9051 — IMAP4rev2", url: "https://tools.ietf.org/html/rfc9051" }, { label: "RFC 1939 — POP3", url: "https://tools.ietf.org/html/rfc1939" }], code: "# Test IMAP connection\nopenssl s_client -connect imap.gmail.com:993\n# Then type: a1 LOGIN user@gmail.com password / a2 LIST \"\" \"*\"" },
       { title: "Bounce & DSN (if delivery fails)", component: "MTA → Original Sender", detail: "If delivery fails permanently (user doesn't exist → 550), the receiving MTA sends a bounce (DSN — Delivery Status Notification) back to the envelope sender. Temporary failures (mailbox full → 452) cause retries with exponential backoff. After max retries (typically 4-5 days), a final bounce is sent.", proto: "SMTP DSN (RFC 3461) / Bounce Message", refs: [{ label: "RFC 3461 — SMTP DSN", url: "https://tools.ietf.org/html/rfc3461" }, { label: "RFC 3464 — DSN Format", url: "https://tools.ietf.org/html/rfc3464" }] }
+    ]
+  },
+  {
+    id: "cdn-anycast",
+    title: "CDN Edge Routing with BGP Anycast",
+    desc: "How a single 'IP address' like 1.1.1.1 simultaneously lives in 300+ cities — BGP anycast, DNS steering, and edge cache fill.",
+    icon: "🌍",
+    color: "#3fb950",
+    steps: [
+      { title: "Provider announces the same prefix from every PoP", component: "CDN Backbone Routers (BGP Speakers)", detail: "Cloudflare, Fastly, Google, etc. assign one /24 (e.g., 1.1.1.0/24) to a service and originate identical BGP UPDATEs from routers in every Point-of-Presence worldwide. Each PoP advertises AS_PATH = [their ASN] to its transits and peers. From the rest of the Internet's perspective the prefix has hundreds of equally-valid origins; routers naturally choose the one with the shortest AS-path / best local-pref / lowest MED — which usually happens to be topologically nearest.", proto: "BGP-4 (RFC 4271) anycast announcement", refs: [{ label: "RFC 4786 — Operation of Anycast Services", url: "https://tools.ietf.org/html/rfc4786" }, { label: "Cloudflare: A brief primer on anycast", url: "https://blog.cloudflare.com/a-brief-anycast-primer/" }], code: "# Look at the AS path you take to an anycast prefix from your vantage point\nmtr -rwbz 1.1.1.1\n# A looking-glass query to see how *other* networks reach it\n# (e.g. https://lg.he.net → 'show ip bgp 1.1.1.0/24')" },
+      { title: "Client DNS resolution picks an edge", component: "Authoritative DNS at the CDN", detail: "Many CDNs combine anycast with EDNS Client Subnet (ECS, RFC 7871) so the authoritative server returns A/AAAA records optimised for the resolver's subnet — e.g., Sydney users get an answer pointing at the Sydney PoP's anycast VIP, while London users get the London VIP. Some networks (Cloudflare 1.1.1.1 itself) use a single global VIP and rely entirely on BGP routing instead. TTLs are kept short (30–300 s) so failover after a PoP drain takes effect quickly.", proto: "DNS + EDNS-Client-Subnet (RFC 7871)", refs: [{ label: "RFC 7871 — EDNS Client Subnet", url: "https://tools.ietf.org/html/rfc7871" }], code: "# Compare answers from two different resolver subnets\ndig @1.1.1.1 www.example.cdn +subnet=8.8.8.0/24 +short\ndig @1.1.1.1 www.example.cdn +subnet=203.0.113.0/24 +short" },
+      { title: "TCP/QUIC handshake terminates at the nearest PoP", component: "Edge Load Balancer (L4 + L7)", detail: "The packet's destination IP is anycast, so the SYN naturally lands in whichever PoP BGP chose. An L4 load balancer (Maglev, Katran, IPVS) consistent-hashes the 4-tuple onto a backend in the same PoP. A reverse proxy (nginx, Envoy, Pingora) terminates TLS using the customer's certificate — typically with session-ticket keys synchronised across PoPs so resumption works even after a re-route.", proto: "TCP + TLS 1.3 / QUIC, ECMP-hashed", refs: [{ label: "Maglev (NSDI '16)", url: "https://research.google/pubs/maglev-a-fast-and-reliable-software-network-load-balancer/" }, { label: "RFC 9000 — QUIC", url: "https://tools.ietf.org/html/rfc9000" }] },
+      { title: "Edge cache lookup (HIT / MISS)", component: "Edge Cache (Varnish-like)", detail: "The edge keys responses by (Host, URL, Vary headers). On HIT it serves bytes directly from local NVMe — typical edge HIT latency 1–5 ms and millions of req/s per box. On MISS it consults a tiered cache: same-PoP peers (Cache-Cluster), then a regional hub, then origin. Cache-Control / s-maxage / stale-while-revalidate / ETag govern freshness; surrogate keys allow targeted purges.", proto: "HTTP cache semantics (RFC 9111)", refs: [{ label: "RFC 9111 — HTTP Caching", url: "https://tools.ietf.org/html/rfc9111" }], code: "# Inspect cache state via standard CDN headers\ncurl -sI https://www.example.cdn/static/main.js \\\n  | grep -iE 'age|cache-control|x-cache|cf-cache-status|x-served-by'" },
+      { title: "Origin shield & fill", component: "Regional Shield → Origin", detail: "On a global MISS the edge fetches from a single 'shield' PoP that fronts the customer's origin — collapsing what could be hundreds of simultaneous origin requests (a thundering herd after a flush) into one. Many CDNs add request collapsing at the edge so concurrent MISSes for the same key wait on a single in-flight upstream fetch. Fetched objects propagate back through the shield into local caches with a chosen TTL.", proto: "HTTP/2 over TLS to origin", refs: [{ label: "Fastly: Origin Shield", url: "https://docs.fastly.com/en/guides/shielding" }] },
+      { title: "Failover when a PoP drains", component: "BGP Withdraw / DNS Steering", detail: "Operators drain a PoP for maintenance by withdrawing its BGP announcement (`no announce` in their controller) and/or removing its VIP from authoritative DNS. The Internet reconverges in seconds (BGP MRAI ≈ 30 s default, often tuned lower) and traffic shifts to the next-nearest PoP. Because TCP state was local to the drained PoP, in-flight connections RST and clients reconnect — handled gracefully by HTTP retry semantics for idempotent methods. QUIC connection migration (RFC 9000 §9) preserves the connection across the IP path change, eliminating the stall.", proto: "BGP withdraw + GSLB", refs: [{ label: "RFC 9000 §9 — QUIC Connection Migration", url: "https://www.rfc-editor.org/rfc/rfc9000.html#name-connection-migration" }] },
+      { title: "Pitfall — anycast & stateful sessions", component: "Operator", detail: "Anycast assumes routing is stable enough that all packets of one TCP/QUIC connection land in the same PoP. Real-world reroutes (link flaps, BGP convergence storms, ECMP re-hash on a router) can split a connection mid-flight and cause RSTs. Mitigations: deploy session-state-sync between sibling PoPs, use QUIC for transparent migration, keep transactions short and idempotent, and monitor `tcp_outsegs_with_unknown_4tuple` to spot mis-routed survivors.", proto: "Operational lesson — see Cloudflare/Fastly post-mortems" }
+    ]
+  },
+  {
+    id: "quic-video",
+    title: "QUIC Video Stream with Connection Migration",
+    desc: "Watching a 4K video on a phone that switches from Wi-Fi to LTE mid-segment — why QUIC keeps playing where TCP would stall.",
+    icon: "📺",
+    color: "#d2a8ff",
+    steps: [
+      { title: "Player requests the manifest", component: "Adaptive-Bitrate Player (DASH/HLS)", detail: "The video player on the phone fetches an MPD (DASH) or .m3u8 (HLS) manifest over HTTPS. The manifest enumerates Representations at multiple bitrates (e.g., 320p/600 kbps, 1080p/4 Mbps, 4K/15 Mbps), each split into 2–6 s media segments by URL. The player's ABR algorithm (BOLA, MPC, dash.js heuristic) picks an initial bitrate based on the prior session's throughput estimate.", proto: "HTTPS GET (manifest)", refs: [{ label: "ISO/IEC 23009-1 — MPEG-DASH", url: "https://www.iso.org/standard/79329.html" }, { label: "RFC 8216 — HLS", url: "https://tools.ietf.org/html/rfc8216" }] },
+      { title: "QUIC handshake (1 RTT, or 0-RTT on resume)", component: "Transport (QUIC over UDP:443)", detail: "The client sends an Initial packet containing a TLS 1.3 ClientHello inside a CRYPTO frame. The server replies with its Initial (ServerHello + cert + Finished) and Handshake packets — completing crypto in a single round-trip. On a return visit the client can send 0-RTT data using a previously cached PSK; the first video segment ships in the same flight as the ClientHello, eliminating the handshake from time-to-first-frame.", proto: "QUIC v1 (RFC 9000) + TLS 1.3", refs: [{ label: "RFC 9000 — QUIC", url: "https://tools.ietf.org/html/rfc9000" }, { label: "RFC 9001 — Using TLS to secure QUIC", url: "https://tools.ietf.org/html/rfc9001" }, { label: "RFC 9002 — QUIC Loss Detection & Congestion Control", url: "https://tools.ietf.org/html/rfc9002" }], code: "# Peek at QUIC Initial packets (Wireshark dissector required)\ntcpdump -i any -nn 'udp port 443' -c 20\n# QUIC client implementations to experiment with\ncurl --http3 -o /dev/null -w 'tt=%{time_total}\\n' https://cloudflare-quic.com/" },
+      { title: "Multiplexed segment fetches over a single connection", component: "HTTP/3 streams", detail: "Each segment fetch (GET /1080p/seg_0042.m4s) becomes its own bidirectional QUIC stream inside the one connection. Because QUIC's loss recovery is per-stream, a dropped packet in segment 41 cannot block delivery of segment 42 — eliminating TCP's notorious head-of-line blocking, which is especially painful on lossy mobile links. Streams have integer IDs and built-in priorities (RFC 9218), so the player can boost an audio segment over a future-buffer video segment.", proto: "HTTP/3 (RFC 9114) over QUIC", refs: [{ label: "RFC 9114 — HTTP/3", url: "https://tools.ietf.org/html/rfc9114" }, { label: "RFC 9218 — Extensible Prioritization for HTTP", url: "https://tools.ietf.org/html/rfc9218" }] },
+      { title: "Wi-Fi → LTE handoff: connection migration", component: "QUIC Connection ID", detail: "Mid-playback the user walks out of Wi-Fi range. The phone's IP changes from 192.168.1.42 to 100.64.7.198 (carrier CGNAT). With TCP this would kill the connection — the 4-tuple is part of the socket identity — and the player would stall while it reconnects, redoes TLS, and refills its buffer. QUIC connections are identified by a long-lived Connection ID carried in every packet, not by the 5-tuple. The client simply continues sending on the new path; the server validates the new address with a PATH_CHALLENGE / PATH_RESPONSE exchange and continues delivering segments without buffer underrun.", proto: "QUIC §9 — Connection Migration", refs: [{ label: "RFC 9000 §9 — Connection Migration", url: "https://www.rfc-editor.org/rfc/rfc9000.html#name-connection-migration" }] },
+      { title: "Congestion control rebalances after the path change", component: "QUIC CC (CUBIC / BBR)", detail: "The new path has different bandwidth/RTT characteristics. RFC 9002 mandates resetting the congestion controller (cwnd back to the initial window, srtt re-sampled) on a confirmed migration so the sender doesn't slam the new bottleneck with stale BDP estimates. BBRv2/v3 implementations re-probe BtlBw and RTprop on the new path within a couple of RTTs.", proto: "QUIC LD/CC (RFC 9002)", refs: [{ label: "RFC 9002 — QUIC LD & CC", url: "https://tools.ietf.org/html/rfc9002" }] },
+      { title: "ABR adapts to the lower throughput", component: "Player ABR Logic", detail: "The ABR algorithm observes that segment download times have grown and the buffer is shrinking. It steps the bitrate ladder down (e.g., 4K → 1080p → 720p) for the next segment so the buffer recovers. As LTE conditions stabilise it ratchets back up. The user might see one brief 720p chunk but no rebuffer event — the visible win of QUIC migration over a TCP fallback that would have shown a spinner.", proto: "DASH/HLS ABR control loop", refs: [{ label: "BOLA paper", url: "https://arxiv.org/abs/1601.06748" }] },
+      { title: "Pitfall — middlebox ossification & UDP blocking", component: "Network Operator", detail: "Some enterprise firewalls and a small fraction of mobile carriers still block or rate-limit UDP/443. Browsers fall back to HTTP/2 over TCP, losing migration and per-stream loss isolation. QUIC also encrypts almost the entire header — including packet numbers — defeating traditional middlebox \"helpers\" that snooped TCP state. This is a deliberate ossification-resistance feature of QUIC, but it does mean operators must rely on flow-level metrics rather than deep TCP introspection.", proto: "Operational reality of UDP/443" }
+    ]
+  },
+  {
+    id: "ddos-mitigation",
+    title: "Mitigating a DDoS Reflection/Amplification Attack",
+    desc: "How a 5 Mbit/s botnet generates a 500 Gbit/s flood — and what scrubbing centres, BCP 38, RTBH, Flowspec, and SYN cookies do about it.",
+    icon: "🛡️",
+    color: "#f85149",
+    steps: [
+      { title: "The amplification primitive", component: "Open UDP Reflector (DNS / NTP / memcached)", detail: "The attacker spoofs the victim's IP as the SOURCE of small UDP queries to thousands of misconfigured Internet servers. Each server dutifully replies to the (forged) source — but the response is much larger than the query: DNS ANY ≈ 50–80×, NTP monlist ≈ 200×, and memcached UDP famously hit ≈51 000× in the 2018 GitHub attack (1.35 Tbit/s). A 5 Mbit/s spoofing botnet thus weaponises into hundreds of Gbit/s aimed at the victim — without any of the attacker's own bandwidth carrying the flood.", proto: "UDP — DNS/NTP/memcached/SSDP/CharGEN reflectors", refs: [{ label: "GitHub: Memcached DDoS post-mortem (2018)", url: "https://github.blog/news-insights/company-news/ddos-incident-report/" }, { label: "US-CERT: UDP-Based Amplification Attacks", url: "https://www.cisa.gov/news-events/alerts/2014/01/17/udp-based-amplification-attacks" }] },
+      { title: "Why it works: source-address spoofing", component: "Attacker's Upstream ISP", detail: "The whole scheme depends on the attacker's ISP letting forged source IPs leave its network. BCP 38 / RFC 2827 (\"Network Ingress Filtering\") requires every edge ISP to drop packets whose source IP isn't in the customer's allocated range, but adoption is far from universal — MANRS and the CAIDA Spoofer project measure roughly 25 %% of tested networks still permit spoofing in 2024. Without spoofing the attacker would have to absorb the reflected reply itself, defeating the amplification.", proto: "uRPF / ACLs at provider edge (BCP 38)", refs: [{ label: "BCP 38 / RFC 2827 — Ingress filtering", url: "https://tools.ietf.org/html/bcp38" }, { label: "MANRS Initiative", url: "https://www.manrs.org/" }, { label: "CAIDA Spoofer", url: "https://www.caida.org/projects/spoofer/" }] },
+      { title: "Detection at the victim's edge", component: "NetFlow / sFlow / IPFIX Collector", detail: "The victim's border routers export sampled flow records (NetFlow v9/IPFIX, RFC 7011) to a collector. A FastNetMon / Kentik / Arbor-class detector sees aggregate inbound bps for a /32 jump from the baseline (say 200 Mbit/s of normal HTTPS) to tens of Gbit/s of UDP/53 within seconds and raises an alarm with the destination prefix and dominant 5-tuple signature. SLA-grade detection windows are typically 30–60 s of sustained anomaly.", proto: "NetFlow v9 / IPFIX (RFC 7011)", refs: [{ label: "RFC 7011 — IPFIX", url: "https://tools.ietf.org/html/rfc7011" }] },
+      { title: "Diversion via BGP — into a scrubbing centre", component: "On-Demand Scrubbing (Akamai / Cloudflare / AWS Shield)", detail: "The victim (or its provider) re-announces the targeted /24 with a more-specific BGP route pointing at the scrubbing provider's anycast PoPs, often via a BGP community signalling \"scrub me.\" Because BGP picks the longest prefix, all Internet traffic for that /24 now flows into the scrubber. Inside, hardware filters drop obvious garbage (UDP/53 with malformed DNS, NTP monlist-shaped responses, traffic from known reflector lists) and pass clean traffic back to the customer over a GRE / IPsec tunnel.", proto: "BGP more-specific announcement + GRE return", refs: [{ label: "Cloudflare Magic Transit", url: "https://www.cloudflare.com/network-services/products/magic-transit/" }, { label: "AWS Shield Advanced", url: "https://aws.amazon.com/shield/" }] },
+      { title: "Surgical drops — Flowspec & RTBH", component: "Upstream Provider", detail: "If the attack is narrow — say all UDP/389 (CLDAP reflection) — the victim can ask its transits to install a BGP Flowspec rule (RFC 8955) that drops just that signature at the provider's edge, sparing legitimate traffic. For an unfiltered avalanche aimed at one /32 the nuclear option is RTBH (Remote Triggered Black Hole, RFC 7999): the victim BGP-announces the /32 tagged with the well-known community 65535:666, and every upstream blackholes traffic to that IP — sacrificing the host to save the rest of the network.", proto: "BGP Flowspec (RFC 8955) / RTBH (RFC 7999)", refs: [{ label: "RFC 7999 — Blackhole Community", url: "https://tools.ietf.org/html/rfc7999" }, { label: "RFC 8955 — BGP Flowspec", url: "https://tools.ietf.org/html/rfc8955" }] },
+      { title: "Application-layer floods (SYN flood, HTTP flood)", component: "Server / Load Balancer", detail: "Volumetric scrubbing handles bandwidth attacks; resource-exhaustion attacks need stack-level defences. SYN cookies (RFC 4987, net.ipv4.tcp_syncookies=1) eliminate the SYN-queue half-open state by encoding ISN = MAC(srcIP, srcPort, dstPort, secret, time) — the server only allocates a TCB after the spoofed-attack-incompatible 3rd-ACK round-trip completes. For HTTP floods, edge proxies issue JS or PoW challenges (Cloudflare \"managed challenge\", hCaptcha) and rate-limit per IP / ASN / fingerprint.", proto: "SYN cookies (RFC 4987) + L7 challenges", refs: [{ label: "RFC 4987 — TCP SYN Flooding Attacks and Common Mitigations", url: "https://tools.ietf.org/html/rfc4987" }], code: "# Verify SYN cookies are armed on a Linux box\nsysctl net.ipv4.tcp_syncookies\n# Watch SYN backlog under attack\nss -lntO 'sport = :443' && nstat -az TcpExtSyncookies*" },
+      { title: "Post-mortem & long-term defence", component: "SOC / Network Engineering", detail: "After the event, the team pulls flow records and scrubber logs to characterise the attack (vector mix, peak Gbit/s & Mpps, source ASN distribution, duration), updates detection thresholds, and re-validates BGP signalling with the scrubber so the next divert is faster. Strategic mitigations stack: deploy uRPF at every customer edge to honour BCP 38, register routes in IRR/RPKI to ease emergency announcements, peer richly so any single transit failure has alternates, and contract baseline always-on scrubbing for crown-jewel prefixes.", proto: "Operational playbook", refs: [{ label: "ENISA: DDoS Attacks Threat Landscape", url: "https://www.enisa.europa.eu/publications/threatlandscape" }] }
     ]
   }
 ];
@@ -5024,6 +5259,395 @@ function quizShowSummary() {
   };
 })();
 </script>
+<!-- BEGIN practice -->
+<script>
+// ═══════════════════════════════════════════════════════════════════════
+// 🧠 PRACTICE — problem-first learning for CS 144 Computer Networking
+// ═══════════════════════════════════════════════════════════════════════
+const NETWORKING_PROBLEMS = [
+  {
+    week: "Week 1",
+    title: "Layered architecture & encapsulation",
+    hook: "A 1500-byte HTTP body lands on the wire as a much bigger train of bits. Where did the extra bytes come from — and how do we keep them from drowning the payload?",
+    items: [
+      { tag: "derive", star: true,
+        text: "A client sends a 1460-byte HTTP body over TCP/IPv4/Ethernet (no VLAN, no options). Compute total bytes on the wire including the Ethernet preamble (8B), source/dest MAC + ethertype (14B), FCS (4B), and the 12-byte inter-frame gap. What is the payload efficiency?",
+        hint: "Add the per-layer header sizes plus the L1 inter-frame gap and preamble; efficiency is just payload ÷ total.",
+        approach: "Sum headers top-down: TCP=20, IPv4=20, Ethernet L2 framing=14 (header) + 4 (FCS) = 18. Add L1: 8B preamble + 12B IFG = 20. Total overhead = 20+20+18+20 = 78B. Add to the 1460B payload to get total. Divide payload by total to get efficiency.",
+        answer: "Total on-wire bytes = 1460 + 20 (TCP) + 20 (IPv4) + 18 (Eth header+FCS) + 20 (preamble+IFG) = <strong>1538 bytes</strong>. Payload efficiency = 1460 / 1538 ≈ <strong>94.9%</strong>. This is the ceiling for a single MSS-sized segment on IPv4/Ethernet; with TCP timestamps (12B) it drops to ~94.1%, and with IPv6 (40B header) to ~93.6%. Tiny segments destroy this ratio — a 1-byte payload is only ~1.3% efficient." },
+      { tag: "design",
+        text: "Draw the encapsulation pipeline for an HTTPS GET request from a browser to a remote server. Label the PDU name and the header added at each layer (L7→L1).",
+        hint: "Each layer wraps the previous PDU and renames it; the L4 PDU is a 'segment', L3 a 'packet', L2 a 'frame'.",
+        approach: "Start with the application message (HTTPS request). At L5/L6 TLS wraps it in a TLS record. At L4 TCP prepends a segment header (ports, seq, ack, flags, window). At L3 IP prepends a packet header (src/dst IP, TTL, protocol). At L2 Ethernet prepends a frame header (MAC, ethertype) and appends an FCS trailer. At L1 the NIC adds preamble/SFD and clocks bits onto copper or fibre.",
+        answer: "L7 <strong>HTTPS request</strong> → L6/5 wrapped in a <strong>TLS record</strong> (record type, version, length, MAC) → L4 <strong>TCP segment</strong> (src/dst port, seq, ack, flags, window, checksum) → L3 <strong>IPv4 packet</strong> (version, IHL, TTL=64, protocol=6, src/dst IP, header checksum) → L2 <strong>Ethernet frame</strong> (preamble+SFD on the L1 side, dst MAC, src MAC, ethertype=0x0800, payload, FCS) → L1 <strong>bits</strong>. Each header is decapsulated in reverse on the receiver — this is why the layer model maps so cleanly to a stack." },
+      { tag: "debug",
+        text: "An application calls <code>sendto()</code> with a 3000-byte UDP datagram. The link MTU is 1500. The first IP fragment arrives at the destination but the second is dropped by a stateful firewall that doesn't reassemble. What does the receiver's UDP layer see, and what should the app do?",
+        hint: "IP reassembly is all-or-nothing; UDP only delivers a complete datagram up to the socket.",
+        approach: "Compute the IP fragments first (each gets its own IP header but only fragment 0 has the UDP header). Reason about what the receiving IP stack does when fragment 2 never arrives. Then think about the application contract: did UDP deliver anything at all? Finally consider what mitigations the application has.",
+        answer: "The 3000B UDP datagram = 8B UDP header + 2992B data. IP splits it into fragments with payload sizes that are multiples of 8: typically 1480 + 1480 + 32 (each plus a 20B IP header → 1500/1500/52 byte packets). Fragment 0 carries the UDP header. If any one fragment is dropped, the receiver's IP layer holds the others in a reassembly buffer until the IP <em>fragmentation timeout</em> (default 30–60s on Linux) and then drops them all. <strong>UDP delivers nothing to the application — there is no partial delivery</strong>. Mitigations: keep UDP payloads ≤ <strong>1472 bytes</strong> (1500 − 20 IP − 8 UDP) to avoid fragmentation, do PMTUD, set the <code>DF</code> bit and let send fail loudly, or use a transport that does its own segmentation (QUIC, TCP). This is exactly why DNS over UDP switches to TCP above 512B (or uses EDNS0)." },
+      { tag: "paper",
+        text: "Skim RFC 791 §3.2 (fragmentation) and RFC 8200 §4.5 (IPv6 fragment header). Before reading too far: predict <em>why</em> IPv6 removed in-network fragmentation by routers and pushed it to the source host only.",
+        hint: "Think about what router CPUs spend cycles on at line rate, and what attackers can do with overlapping fragments.",
+        approach: "Consider three angles: (1) router performance — what work does fragmentation force a transit router to do per packet? (2) reassembly cost on the receiver and the well-known overlap/teardrop attacks; (3) end-to-end principle — who has the best knowledge of the path MTU? Then check your guess against the RFC.",
+        answer: "IPv6 routers <strong>never fragment</strong> — only the source host may, using the optional Fragment Header. Reasons: (1) <strong>line-rate forwarding</strong>: fragmenting requires copying buffers, computing new headers, and updating per-flow state; removing it lets routers be much simpler/faster ASICs. (2) <strong>Security</strong>: overlapping-fragment attacks (Teardrop, Rose, fragment-based IDS evasion) all relied on routers happily fragmenting and reassemblers being lenient — IPv6 sidesteps the whole class. (3) <strong>End-to-end PMTUD</strong>: the source has TCP/QUIC feedback to discover path MTU and is the only entity that can adapt cleanly. Trade-off: PMTUD breakage (ICMPv6 'Packet Too Big' blocked by firewalls) is now a hard failure rather than a silent fragmentation, which is why services use a conservative 1280B IPv6 floor." },
+      { tag: "code",
+        text: "Write Python (using only the standard library) that reads a raw Ethernet frame from a pcap file and prints the destination MAC, source MAC, and the ethertype as a 4-digit hex string. Don't worry about VLAN tags.",
+        hint: "First 14 bytes are dst(6) + src(6) + ethertype(2), all big-endian. Use <code>struct.unpack('!6s6sH', frame[:14])</code>.",
+        approach: "Open the pcap with <code>scapy</code> if allowed, or parse the pcap header manually (24B global header, then per-record headers of 16B). For each record extract the first 14B of the payload. Unpack into two 6-byte MAC strings and one 16-bit ethertype. Format MAC as colon-separated hex and ethertype as <code>%04x</code>.",
+        answer: "Reference:<pre style='background:#0d1117;padding:8px;border-radius:4px;font-size:11px;overflow-x:auto'>import struct\nwith open('cap.pcap','rb') as f:\n    f.read(24)                       # global header\n    while True:\n        rec = f.read(16)             # per-packet header\n        if len(rec) &lt; 16: break\n        ts_sec, ts_usec, incl_len, orig_len = struct.unpack('&lt;IIII', rec)\n        frame = f.read(incl_len)\n        dst, src, etype = struct.unpack('!6s6sH', frame[:14])\n        mac = lambda b: ':'.join(f'{x:02x}' for x in b)\n        print(mac(dst), mac(src), f'{etype:04x}')</pre>Common ethertypes you'll see: <code>0x0800</code> IPv4, <code>0x86dd</code> IPv6, <code>0x0806</code> ARP, <code>0x8100</code> 802.1Q VLAN (when present, the real ethertype is 4 bytes later)." }
+    ]
+  },
+  {
+    week: "Week 2",
+    title: "Link layer & switching",
+    hook: "Why did classic Ethernet need a minimum frame size, why do switches kill broadcast storms (usually), and how does one cable carry three departments' traffic without them seeing each other?",
+    items: [
+      { tag: "derive",
+        text: "Classic 10 Mbps half-duplex Ethernet on a 2500 m maximum collision domain (with 4 repeaters, propagation ≈ 5 µs/km plus ~2.5 µs of repeater delay). Derive the <em>minimum frame size</em> needed so the sender is still transmitting when a collision returns from the far end.",
+        hint: "Min frame duration must be ≥ 2 × one-way delay (round-trip), so collisions can be detected before the sender stops sending.",
+        approach: "Compute one-way propagation: 2500 m × 5 µs/km = 12.5 µs of cable + repeater delays ≈ ~25 µs end-to-end is the canonical figure used by 802.3. Double it for round-trip. Multiply by the bit rate (10 Mb/s = 1 bit per 0.1 µs) to get bits. Round up.",
+        answer: "Round-trip slot time ≈ 51.2 µs (the standardised value baked into 802.3). At 10 Mbps that is <strong>512 bits = 64 bytes</strong> — exactly the minimum Ethernet frame size, including 14B header + 4B FCS + ≥46B payload (padded with zeros if needed). This is why ARP and tiny ACKs all get padded to 64B on the wire. Note: at 100 Mbps the slot time stayed at 512 bits but the cable budget shrank 10×; at 1 Gbps the slot time was extended to <strong>4096 bits (512B)</strong> via 'carrier extension' to keep the same collision domain — which is one reason gigabit Ethernet is essentially always run full-duplex with switches, killing CSMA/CD entirely." },
+      { tag: "design", star: true,
+        text: "You have one 24-port managed switch and three departments (Engineering, Sales, HR) that must not see each other's broadcast traffic, but all need to reach a shared printer and a router uplink. Design the VLAN layout, the trunk configuration, and explain what tag a frame from Sales→printer carries on each link.",
+        hint: "One VLAN per department, plus a VLAN for shared services. Access ports are untagged; trunks carry 802.1Q tags.",
+        approach: "Assign VLAN IDs (say Eng=10, Sales=20, HR=30, Shared=99). Configure each end-host port as an 'access port' in the right VLAN — frames are <em>untagged</em> on those wires. Configure the printer's port and the uplink to the router as a <em>trunk</em> that carries all four VLANs with 802.1Q tags. The router does inter-VLAN routing (router-on-a-stick) and enforces the firewall between subnets.",
+        answer: "<strong>Layout:</strong> Eng=VLAN 10, Sales=VLAN 20, HR=VLAN 30, Shared=VLAN 99. <strong>Ports 1–8</strong>: access mode, VLAN 10 (Eng); <strong>9–16</strong>: VLAN 20 (Sales); <strong>17–22</strong>: VLAN 30 (HR); <strong>port 23</strong>: trunk to router carrying 10, 20, 30, 99 (tagged); <strong>port 24</strong>: printer, either access on VLAN 99 (and routed) or trunk if printer is VLAN-aware. <strong>Frame journey for Sales→printer:</strong> leaves the PC <em>untagged</em>; switch ingress classifies it into VLAN 20; if printer is on VLAN 99, switch sends to the router uplink with an 802.1Q tag of 20; router strips tag, ACLs allow Sales→printer, re-encapsulates with tag 99, returns it to the switch; switch egresses to the printer port untagged. The whole point of the design: <strong>broadcast scope = a single VLAN</strong>, so Sales' DHCP storm never touches HR." },
+      { tag: "debug",
+        text: "An L2 loop appears in a previously-stable network with STP enabled on all switches: CPU on every switch hits 100% within seconds and end users lose connectivity. STP is running. Hypothesise three concrete causes.",
+        hint: "STP only protects ports/links it sees and trusts. What links does it not see, and what BPDUs does it choose to ignore?",
+        approach: "List ways a loop can form despite STP: a port that STP doesn't run on (e.g., 'portfast' edge ports plugged together, or BPDUguard misconfigured), BPDUs being filtered/dropped along the path so a switch thinks it is root, a third-party device that doesn't speak STP, a unidirectional fibre fault, an EtherChannel/LACP misconfiguration. Then think about how each fails.",
+        answer: "Most common in the wild: (1) <strong>Two PortFast edge ports plugged into each other</strong> — both bypass STP listening/learning and instantly forward, creating a loop the spanning tree never sees (mitigation: <em>BPDU Guard</em> shuts down any edge port that receives a BPDU). (2) <strong>BPDU filter or VLAN mismatch on a trunk</strong> — BPDUs are dropped in one direction, both switches elect themselves root, both forward on what each thinks is a designated port. (3) <strong>Unidirectional link</strong> (broken fibre RX or bad SFP) — switch A sees B's BPDUs, B doesn't see A's, so B unblocks its port and the loop forms (mitigation: UDLD or LACP). Honourable mention: a dumb consumer switch with no STP plugged between two access ports, or a misconfigured EtherChannel where one side is bundled and the other is not. The CPU hits 100% because <em>broadcast / unknown-unicast traffic recirculates forever</em>, and each switch is hitting CAM-table thrashing as the same MAC appears on every port." },
+      { tag: "code",
+        text: "Implement, in pseudocode, the MAC learning table for a simple 4-port store-and-forward switch. Cover (a) on receiving a frame from port <code>p</code> with src=<code>S</code>, dst=<code>D</code>; (b) ageing entries; (c) flooding rules.",
+        hint: "On RX: learn (S → p); on TX: lookup D, forward to mapped port, else flood to all <em>other</em> ports.",
+        approach: "Maintain <code>cam = {}</code> mapping MAC → (port, last_seen). On every frame, update <code>cam[src] = (rx_port, now)</code>. Lookup <code>cam[dst]</code>: if hit, forward to that port unless it's the same as rx_port (drop — same-segment, classic split-horizon). If miss or broadcast/multicast, flood to all ports except rx_port. A background sweep evicts entries older than ~300s.",
+        answer: "<pre style='background:#0d1117;padding:8px;border-radius:4px;font-size:11px;overflow-x:auto'>cam = {}            # mac -&gt; (port, last_seen)\nAGE_OUT = 300        # seconds\n\non_frame(rx_port, src, dst, payload):\n    cam[src] = (rx_port, now())            # learn\n    if is_broadcast(dst) or is_multicast(dst):\n        flood_except(rx_port, frame)\n    elif dst in cam:\n        out_port, _ = cam[dst]\n        if out_port == rx_port:\n            drop()                         # same segment\n        else:\n            send(out_port, frame)\n    else:\n        flood_except(rx_port, frame)       # unknown unicast\n\nperiodic_age():\n    for mac, (p, ts) in list(cam.items()):\n        if now() - ts &gt; AGE_OUT: del cam[mac]</pre>Real switches add: (1) hardware-accelerated CAM/TCAM lookup in O(1); (2) per-VLAN tables; (3) MAC-move detection (same MAC appearing on a new port → relearn, but flag if flapping too fast — sign of a loop); (4) MAC limit per port to defend against CAM-overflow attacks (<code>macof</code>) that would otherwise force the switch into hub mode by flooding everything." },
+      { tag: "paper",
+        text: "Read the abstract and §3 of Radia Perlman's original STP paper ('An algorithm for distributed computation of a spanning tree in an extended LAN', 1985). Predict, before reading §4: how does the protocol handle a topology change — say, a link going down somewhere in the tree — without flooding the world?",
+        hint: "Two timers and two BPDU flavours: regular hello-BPDUs and a special TCN.",
+        approach: "Think about what each switch knows locally (its root port, designated ports, root bridge ID, root path cost) and what it needs to be told when the topology changes. Then think about how to bound the speed of relearning without invalidating the whole CAM table everywhere.",
+        answer: "When a non-root switch detects a topology change, it sends a tiny <strong>Topology Change Notification (TCN)</strong> BPDU upstream toward the root on its root port. The next switch acknowledges with the TCA bit and forwards the TCN further up. Once the root receives it, the root sets the <em>TC bit</em> in regular configuration BPDUs for <code>Forward Delay + Max Age</code> (≈35s by default). Every switch that sees TC-bit BPDUs <strong>shortens its CAM ageing timer from 300s to ~15s</strong>, causing stale MAC entries to flush quickly so traffic re-converges on the new topology. STP itself does <em>not</em> reflood frames — it just tells the data plane to forget faster. This is also why classic STP convergence is ~30–50 seconds and why RSTP (802.1w) introduced proposal/agreement handshakes that converge in &lt;1 s by skipping the listening/learning timers when it's safe to do so." }
+    ]
+  },
+  {
+    week: "Week 3",
+    title: "Network layer & routing",
+    hook: "A router sees a destination IP and has to decide, in nanoseconds, which of dozens of overlapping prefixes wins. Behind the scenes: longest-prefix match, NAT state tables, and inter-AS politics dressed up as a protocol.",
+    items: [
+      { tag: "design",
+        text: "You're given a single <code>10.20.0.0/20</code> block (4096 addresses) and asked to split it into four equally-sized subnets, one per office. Write out each subnet's CIDR, network/broadcast addresses, and usable host count.",
+        hint: "/20 has 12 host bits → 4096 addrs. Splitting into 4 → each is /22 with 1024 addrs.",
+        approach: "Move the boundary two bits to the right: /20 → /22 (adds 2 bits of subnet ID, leaves 10 host bits). The four subnets differ in the third octet by multiples of 4 (since 2^(8-6)=4 in the third octet). For each, host count = 2^10 − 2 = 1022 (subtract network and broadcast).",
+        answer: "Four /22 subnets carved from 10.20.0.0/20:<br><strong>1. 10.20.0.0/22</strong> — net 10.20.0.0, bcast 10.20.3.255, hosts 10.20.0.1–10.20.3.254 (1022 usable)<br><strong>2. 10.20.4.0/22</strong> — net 10.20.4.0, bcast 10.20.7.255, hosts 10.20.4.1–10.20.7.254<br><strong>3. 10.20.8.0/22</strong> — net 10.20.8.0, bcast 10.20.11.255, hosts 10.20.8.1–10.20.11.254<br><strong>4. 10.20.12.0/22</strong> — net 10.20.12.0, bcast 10.20.15.255, hosts 10.20.12.1–10.20.15.254<br>Memory trick: the 'step' in the third octet equals 2^(32 − prefix_len − 16) = 2^(32−22−16+8) = 4. The third octets cycle 0,4,8,12. If offices grow unevenly, prefer VLSM (e.g., /23 + /23 + /22 + /22) instead of forcing equal sizes." },
+      { tag: "derive", star: true,
+        text: "A router's forwarding table contains these IPv4 prefixes with next-hops: <code>0.0.0.0/0 → A</code>, <code>10.0.0.0/8 → B</code>, <code>10.5.0.0/16 → C</code>, <code>10.5.7.0/24 → D</code>, <code>10.5.7.128/25 → E</code>. Which next-hop does the router pick for destinations (i) 10.5.7.200, (ii) 10.5.7.50, (iii) 10.5.8.1, (iv) 192.168.1.1?",
+        hint: "For each destination, find every prefix it falls into, then pick the one with the longest mask.",
+        approach: "Test each destination against each prefix by masking. Longest-prefix-match wins because more bits = more specific = the intended route. The default route is the catch-all when no other prefix matches.",
+        answer: "(i) <strong>10.5.7.200</strong> matches /0, /8, /16, /24, and /25 — longest is /25 (10.5.7.128/25 covers .128–.255) → <strong>E</strong>. (ii) <strong>10.5.7.50</strong> matches /0, /8, /16, /24 but NOT /25 (since 50 &lt; 128) → longest is /24 → <strong>D</strong>. (iii) <strong>10.5.8.1</strong> matches /0, /8, /16 but not /24 (10.5.7.x only) → longest is /16 → <strong>C</strong>. (iv) <strong>192.168.1.1</strong> matches only the default → <strong>A</strong>. Real routers implement this in hardware using TCAMs (ternary CAM — stores 0, 1, 'don't care' bits) so the whole table is queried in a single clock cycle, or in software using tries like the Linux FIB's LC-trie / DPDK's DIR-24-8." },
+      { tag: "debug",
+        text: "Alice (behind a home NAT, public IP 203.0.113.5) wants to host a P2P game lobby. Bob, outside, can connect to her. Carol, also behind a NAT, tries to connect to Alice — fails. Trace the packets and explain why, and what mechanism (UPnP, STUN, TURN, hairpinning) fixes each potential symptom.",
+        hint: "NAT only forwards inbound packets to internal hosts if there's an existing outbound mapping.",
+        approach: "Sketch Alice's NAT state table: a 5-tuple mapping is created when she sends out. For an unsolicited inbound SYN to land on her, either (a) a static port-forward must exist, or (b) she had to send first (hole punching). Then think about double-NAT (Carol's case) and symmetric NAT subtypes.",
+        answer: "Bob → Alice succeeds because Alice <em>configured a port forward</em> (or UPnP added one): the NAT permanently maps <code>203.0.113.5:27015</code> → <code>192.168.1.10:27015</code>. Carol → Alice fails because Carol is <em>also</em> behind NAT — when Carol sends SYN it leaves with Carol's NAT'd src (e.g., 198.51.100.7:50000) and Alice's NAT correctly forwards it inward, but Alice's reply goes <code>192.168.1.10:27015 → 198.51.100.7:50000</code>, which Carol's NAT will only accept if Carol initiated outbound to <strong>that exact 5-tuple first</strong>. Cone NAT: works. Symmetric NAT: rejects — Carol's outbound went to Alice's public IP, but the inbound reply has a different (mapped) source. <strong>Fixes:</strong> (i) <strong>STUN</strong> lets both clients discover their external IP:port and try simultaneous hole-punching — works for cone-to-cone and cone-to-symmetric. (ii) <strong>UPnP/NAT-PMP</strong> on Alice's router opens a port without manual config. (iii) <strong>TURN</strong> relays through a public server when nothing else works (Carol's symmetric NAT vs Alice's). (iv) <strong>Hairpinning</strong> matters if Alice and Carol are on the <em>same</em> NAT and need to reach each other through the public IP — many routers fail this." },
+      { tag: "paper",
+        text: "Before reading RFC 4271 §9.1.2 ('Phase 2: Route Selection'), predict the tie-breaker order BGP uses when multiple candidate routes to the same prefix exist. Then check.",
+        hint: "Order goes from 'operator says so' → 'shorter is better' → 'pick the closest neighbour'. There are about a dozen rules.",
+        approach: "Reason about what each attribute is designed to express. LOCAL_PREF is an admin knob set inside your AS. AS_PATH length proxies for distance. MED is a hint from neighbours. eBGP-vs-iBGP, IGP cost, and router-ID are tiebreakers of last resort.",
+        answer: "Canonical Cisco order (the IETF spec leaves some flexibility, but everyone implements close to this):<br>1. <strong>Highest WEIGHT</strong> (Cisco-only, local to the router)<br>2. <strong>Highest LOCAL_PREF</strong> (your-AS-wide policy: 'prefer this exit')<br>3. <strong>Locally originated</strong> over learned<br>4. <strong>Shortest AS_PATH</strong><br>5. <strong>Lowest ORIGIN</strong> code (IGP &lt; EGP &lt; INCOMPLETE)<br>6. <strong>Lowest MED</strong> (only among same neighbour AS by default)<br>7. <strong>eBGP &gt; iBGP</strong> (prefer external)<br>8. <strong>Lowest IGP metric to next-hop</strong> ('hot potato')<br>9. <strong>Oldest route</strong> (eBGP stability)<br>10. <strong>Lowest router-ID</strong>, then lowest neighbour IP — pure deterministic tiebreak.<br>The interesting takeaway: <em>policy beats topology</em>. An operator can override BGP's natural preference for the shortest path just by bumping LOCAL_PREF — which is exactly how transit-vs-peer-vs-customer economics get encoded in the routing table." },
+      { tag: "code",
+        text: "Sketch a multi-path forwarding function that does ECMP across N next-hops using consistent hashing on the IPv4 5-tuple (src IP, dst IP, src port, dst port, proto). Explain why per-packet ECMP causes problems and per-flow ECMP does not.",
+        hint: "Hash the 5-tuple, modulo N. Use the result to index next_hops[].",
+        approach: "Compute a stable hash over the flow identifier (not the packet). All packets in one TCP/UDP flow share the same 5-tuple and therefore the same next-hop — preserving ordering. Per-packet ECMP varies the next-hop on every packet, which scrambles arrival order and triggers spurious TCP fast-retransmit + cwnd cuts.",
+        answer: "<pre style='background:#0d1117;padding:8px;border-radius:4px;font-size:11px;overflow-x:auto'>def forward(pkt, next_hops):\n    key = (pkt.src_ip, pkt.dst_ip, pkt.src_port,\n           pkt.dst_port, pkt.proto)\n    h = crc32(pack(key))            # cheap, hardware-friendly\n    idx = h % len(next_hops)        # or h &amp; (N-1) if N is a power of 2\n    send(next_hops[idx], pkt)</pre><strong>Why per-flow works:</strong> every segment of one TCP connection lands on the same next-hop, so packets arrive in order. <strong>Why per-packet breaks:</strong> different next-hops have different latencies/queues; even a tiny reorder causes the receiver to send duplicate ACKs, triggering TCP fast-retransmit and a congestion-window cut. Throughput on a per-packet ECMP path can be half of a single-path bottleneck. Production fixes: (1) use a consistent-hashing scheme so adding/removing a next-hop only reshuffles 1/N of flows (vs naive modulo's full reshuffle); (2) for ECMP across &gt;8 paths, hash on inner headers when tunnelling (VXLAN, GRE) or you collapse all tunnel traffic to one path; (3) flowlet switching — split a flow only at idle gaps long enough to avoid reorder, recovering some load balance." }
+    ]
+  },
+  {
+    week: "Week 4",
+    title: "Transport & congestion control",
+    hook: "TCP looks simple — three handshakes, ack and slide a window — but its silent details (TIME_WAIT, AIMD, head-of-line blocking) shape every web page load and every Netflix stream you've ever opened.",
+    items: [
+      { tag: "design",
+        text: "Draw the TCP connection-establishment state machine for the client and the server. Why does the server have a separate SYN_RECEIVED state instead of going LISTEN → ESTABLISHED directly?",
+        hint: "Think about half-open connections, SYN floods, and what the server can verify before committing real resources.",
+        approach: "List the states a client traverses (CLOSED → SYN_SENT → ESTABLISHED) and what the server traverses (CLOSED → LISTEN → SYN_RECEIVED → ESTABLISHED). The intermediate SYN_RECEIVED captures the moment after SYN+ACK is sent but before the final ACK is received — the connection is half-open. Reason about why we need a name (and a timer) for that moment.",
+        answer: "Client: <code>CLOSED → SYN_SENT (sends SYN) → ESTABLISHED (receives SYN+ACK, sends ACK)</code>. Server: <code>CLOSED → LISTEN → SYN_RECEIVED (got SYN, sent SYN+ACK) → ESTABLISHED (got final ACK)</code>. <strong>Why SYN_RECEIVED is its own state:</strong> (1) it bounds resource commitment — the kernel allocates only a tiny SYN-cookie / minimal control block, not a full socket, until the third ACK proves the client is reachable at the claimed IP. (2) It lets the server retransmit the SYN+ACK on a timer if the client's ACK is lost. (3) It is exactly the surface that <strong>SYN-flood DoS</strong> attacks exploit by sending lots of SYNs from spoofed sources — defences (SYN cookies, larger SYN queues) only exist because this state is explicit. Without SYN_RECEIVED you'd have to either commit full resources on every SYN (DoS-able) or have no way to time out half-open connections cleanly." },
+      { tag: "derive", star: true,
+        text: "Derive the classic Mathis-Semke-Mahdavi-Ott formula for steady-state throughput of TCP Reno over a path with RTT and packet loss probability p. Then evaluate it for MSS=1460B, RTT=80ms, p=10⁻⁴.",
+        hint: "Reno does AIMD: every loss halves cwnd; every RTT without loss adds 1 MSS. Between losses cwnd ramps from W/2 to W.",
+        approach: "Let W be the cwnd at the moment of loss. Between losses, cwnd grows from W/2 to W over W/2 RTTs, sending on average (3/8)W² packets per loss epoch. If loss probability per packet is p, the average packets per loss = 1/p. Solve (3/8)W² = 1/p → W = √(8/(3p)). Throughput in bytes/sec = (avg cwnd × MSS) / RTT = (3W/4 × MSS) / RTT ≈ MSS / (RTT × √(2p/3)) ≈ 1.22 × MSS / (RTT × √p).",
+        answer: "<strong>Formula:</strong> Throughput ≈ <code>(1.22 × MSS) / (RTT × √p)</code> bytes/sec (the constant comes out to 1.22 for Reno, sometimes written as √(3/2) ≈ 1.22). Plugging in MSS = 1460 B, RTT = 0.08 s, p = 10⁻⁴ = 0.0001 → √p = 0.01: throughput ≈ (1.22 × 1460) / (0.08 × 0.01) = 1781.2 / 0.0008 ≈ <strong>2.23 MB/s ≈ 17.8 Mbps</strong>. <strong>Implications:</strong> (1) Reno can't fill a high-bandwidth, high-delay 'long fat network' — a 10 Gbps × 100ms path with p=10⁻⁵ caps at ~28 Mbps. (2) Throughput drops as 1/RTT — moving farther from a server costs you bandwidth even on perfect links. (3) Throughput drops as 1/√p — even tiny loss matters. This is why every modern CC (CUBIC, BBR) tries to <em>not</em> use loss as the only congestion signal." },
+      { tag: "debug",
+        text: "A high-throughput service opens and closes ~10k short TCP connections per second to a single backend. Within minutes <code>ss -s</code> shows tens of thousands of sockets in <code>TIME-WAIT</code>, and new connections start failing with EADDRNOTAVAIL on the client. Explain why TIME_WAIT exists, why it's hitting this code path, and what the right fix is.",
+        hint: "TIME_WAIT lasts 2×MSL on the side that closed first; ephemeral port range is finite (~28k by default on Linux).",
+        approach: "Trace the lifecycle: who initiates close? Whoever sends FIN first ends up in TIME_WAIT for 2×MSL (typically 60s on Linux). With 10k closes/sec from the client and 60s of TIME_WAIT, you'll accumulate ~600k stuck sockets, far more than the ephemeral port range (~28k). Now think about the legitimate reason TIME_WAIT exists, and which mitigations actually preserve correctness.",
+        answer: "<strong>Why TIME_WAIT exists:</strong> after the active closer sends the final ACK, it must wait 2×MSL (max segment lifetime, ~30s each → 60s) before reusing the 4-tuple. This prevents two hazards: (1) a delayed duplicate segment from the old connection being misinterpreted as belonging to a new one with the same 4-tuple; (2) the peer's retransmitted FIN arriving after the local end has gone away, which would generate a spurious RST. <strong>Why it bites here:</strong> client-initiated closes pile up TIME_WAIT on the client, exhausting the 28,232 ephemeral ports (net.ipv4.ip_local_port_range). <strong>Correct fixes, in order of preference:</strong> (1) <strong>Use HTTP keep-alive / connection pooling</strong> — reuse a connection for 1000 requests instead of opening 1000. (2) Have the <em>server</em> initiate close instead of the client (move TIME_WAIT to a side that has more 4-tuple diversity). (3) Bind to multiple client IPs (linear expansion of the 4-tuple space). (4) <code>SO_REUSEADDR</code> + <code>net.ipv4.tcp_tw_reuse=1</code> lets the kernel reuse TIME_WAIT sockets <em>safely</em> for outgoing connections (timestamp-protected, RFC 6191). <strong>Wrong fixes:</strong> tcp_tw_recycle (removed in Linux 4.12 — it broke NATted clients), or just shrinking <code>tcp_fin_timeout</code> blindly (different timer, doesn't actually shorten TIME_WAIT, and creates the very hazards TIME_WAIT was designed to prevent)." },
+      { tag: "paper",
+        text: "Read the BBR paper abstract (Cardwell et al., ACM Queue 2016, 'BBR: Congestion-Based Congestion Control'). Before reading the experiments: predict on which network conditions BBR wins decisively over CUBIC, and where CUBIC may still match it.",
+        hint: "CUBIC uses loss as the signal; BBR uses an estimate of bottleneck bandwidth × min-RTT.",
+        approach: "Think about what CUBIC's loss-based control fails at: (a) bufferbloated networks where loss never happens but queueing delay explodes; (b) shallow-buffer paths where any loss is misinterpreted as congestion. Then think about where loss is actually a good signal — short, lightly-buffered paths with low BDP.",
+        answer: "<strong>BBR wins decisively when:</strong> (1) <strong>Bufferbloat</strong> — deep dumb buffers (last-mile, mobile carriers): CUBIC fills the buffer until tail-drop, BBR clamps cwnd at BDP and avoids queueing latency, often delivering 2-10× lower latency at similar throughput. (2) <strong>Long fat networks with non-congestion loss</strong> (transoceanic links, satellite, wireless): even tiny random loss collapses CUBIC's throughput (the 1/√p curve), while BBR ignores loss as a signal and tracks bandwidth directly — Google reported ~2,700× throughput improvement on a YouTube path with 1% random loss. (3) <strong>Highly-multiplexed bottlenecks</strong> where the latency-vs-throughput trade-off matters. <strong>Where CUBIC matches or wins:</strong> (1) Datacenter-style short, low-BDP paths with shallow buffers where loss really does mean congestion — both algorithms saturate the link, CUBIC may even react faster. (2) <strong>Mixed-flow fairness</strong>: BBR has been criticised (and partially fixed in BBRv2) for being unfair to loss-based flows sharing a bottleneck — a few BBR flows can starve CUBIC flows in some queue regimes. BBRv2 reintroduces loss/ECN signals to repair this." },
+      { tag: "debug", star: true,
+        text: "HTTP/1.1 famously suffers head-of-line blocking. HTTP/2 introduced multiplexing over a single TCP connection — yet HoL blocking <em>still</em> happens. Why didn't H/2 fully solve it, and why does HTTP/3 over QUIC?",
+        hint: "Multiplexing happens at the application layer. TCP is one ordered byte stream.",
+        approach: "Distinguish two HoL layers: (1) application-layer HoL (request N can't be processed until request N−1's response is sent on the same connection) — H/2's framing fixes this. (2) transport-layer HoL — one TCP connection delivers bytes in order, so a single dropped packet stalls <em>every</em> H/2 stream sharing that connection until the kernel retransmits and reorders. Then think about how QUIC sidesteps it.",
+        answer: "<strong>HTTP/1.1 HoL:</strong> the protocol is strictly request-response per connection; a slow request blocks every later one. <strong>HTTP/2 fix (application layer):</strong> frames are interleaved by stream ID over one TCP connection — concurrent requests can be sent in parallel, so request 9 doesn't wait for request 1's response. <strong>What H/2 cannot fix:</strong> TCP delivers bytes <em>in order</em>. If a packet carrying stream 1 frames is lost, the kernel will buffer all subsequent bytes (including untouched frames for streams 2, 3, …, 100) until that loss is retransmitted. From the application's perspective, one packet loss freezes every concurrent request — sometimes <em>worse</em> than H/1.1 with 6 parallel connections, because at least each H/1.1 connection had its own retransmission timeline. <strong>QUIC's fix:</strong> built on UDP, QUIC maintains per-stream sequence numbers and reorder buffers. A loss on stream 1 only blocks stream 1; streams 2..N continue delivering. QUIC also moves the loss-recovery and congestion-control logic to user space (one less kernel round-trip), bundles TLS 1.3 into the handshake (0-RTT/1-RTT instead of 3-RTT for TCP+TLS), and survives IP-address changes (connection ID, not 5-tuple). The cost: every QUIC implementation reinvents what the TCP stack spent 40 years getting right." }
+    ]
+  }
+];
+
+// State + storage (per-course key so it doesn't collide with other apps)
+const PROB_STATE_KEY = 'networking-prob-state-v1';
+function probLoadState() { try { return JSON.parse(localStorage.getItem(PROB_STATE_KEY) || '{}'); } catch(e) { return {}; } }
+function probSaveState(s) { try { localStorage.setItem(PROB_STATE_KEY, JSON.stringify(s)); } catch(e) {} }
+let _probState = probLoadState();
+let _probFilters = { tags: new Set(), search: '', status: 'all' };
+let _probFlat = [];
+
+function renderNetworkingPractice() {
+  const container = document.getElementById('problems-container');
+  if (!container || container.dataset.rendered) return;
+  const data = NETWORKING_PROBLEMS;
+  if (!data || !data.length) { container.innerHTML = '<div class="prob-intro">No practice problems defined yet.</div>'; container.dataset.rendered = '1'; return; }
+  container.dataset.rendered = '1';
+
+  _probFlat = [];
+  const tagCounts = {};
+  data.forEach((sec, si) => (sec.items||[]).forEach((p, ii) => {
+    _probFlat.push({ si, ii, p, key: si+':'+ii });
+    const t = p.tag || 'design';
+    tagCounts[t] = (tagCounts[t]||0) + 1;
+  }));
+  const TAGS = ['design','derive','debug','code','paper'];
+
+  let html = `<div class="prob-intro">
+    <strong>🧠 Problem-First Learning.</strong> Try each problem for 10 minutes <em>before</em> rewatching the lecture — flail, sketch, be wrong. Then watch with specific questions in mind. Your attention spikes 3–5×.
+    <br><br>
+    <strong style="color:#58a6ff">Tags:</strong>
+    <span class="prob-tag design">design</span> architect on paper &nbsp;
+    <span class="prob-tag derive">derive</span> math / proof &nbsp;
+    <span class="prob-tag debug">debug</span> find the failure mode &nbsp;
+    <span class="prob-tag code">code</span> hands-on &nbsp;
+    <span class="prob-tag paper">paper</span> predict before reading
+    <br><br>
+    <strong style="color:#ffa657">⭐ starred</strong> problems are curiosity-piquing — start there if you're new.
+    Reveals come in three layers: <strong style="color:#d2a8ff">💡 hint</strong> (nudge) · <strong style="color:#79c0ff">🔑 approach</strong> (how to attack) · <strong style="color:#7ee787">📐 answer</strong> (the result). Try the problem before peeking.
+  </div>
+  <div class="prob-toolbar">
+    <input id="prob-search" class="prob-search" type="text" placeholder="🔍 Search problems by keyword…" />
+    <div class="prob-filter-row" id="prob-tag-row">
+      ${TAGS.map(t => `<span class="prob-chip ${t}" data-tag="${t}">${t}<span class="count">${tagCounts[t]||0}</span></span>`).join('')}
+    </div>
+    <div class="prob-filter-row" id="prob-status-row">
+      <span class="prob-chip" data-status="all">All</span>
+      <span class="prob-chip" data-status="unattempted">○ New</span>
+      <span class="prob-chip" data-status="thinking">🤔 Thinking</span>
+      <span class="prob-chip" data-status="got">💡 Got it</span>
+      <span class="prob-chip" data-status="stuck">❓ Stuck</span>
+    </div>
+    <button id="prob-surprise" class="prob-actbtn primary" title="Open a random problem">🎲 Surprise me</button>
+    <button id="prob-reset" class="prob-actbtn" title="Clear all status">↺ Reset</button>
+    <div class="prob-progress" title="Problems attempted (thinking / got / stuck)">
+      <span id="prob-progress-text">0/${_probFlat.length}</span>
+      <div class="prob-progress-bar"><div id="prob-progress-fill" class="prob-progress-fill" style="width:0%"></div></div>
+    </div>
+  </div>
+  <div id="prob-sections">`;
+
+  data.forEach((sec, si) => {
+    const secTotal = (sec.items||[]).length;
+    html += `<details class="prob-section" data-si="${si}"${si < 2 ? ' open' : ''}>
+      <summary><span class="wk">${sec.week||''}</span> <span class="sec-title">${sec.title||''}</span>
+        <span class="sec-meta"><span class="done-count" data-sec-done="${si}">0</span>/<span>${secTotal}</span></span>
+      </summary>`;
+    if (sec.hook) html += `<div class="prob-hook">${sec.hook}</div>`;
+    html += `<div class="prob-body">`;
+    (sec.items||[]).forEach((p, ii) => {
+      const key = si+':'+ii;
+      const st = _probState[key] || {};
+      const tag = p.tag || 'design';
+      const statusCls = st.status ? ' status-'+st.status : '';
+      html += `<div class="prob-card${statusCls}" data-key="${key}" data-tag="${tag}" data-status="${st.status||''}">
+        <div class="pc-head">
+          <span class="pc-num">${(ii+1).toString().padStart(2,'0')}</span>
+          <span class="prob-tag ${tag}">${tag}</span>
+          ${p.star ? '<span class="pc-star" title="Curiosity pick">★</span>' : ''}
+          <div class="prob-status-btns">
+            <button class="prob-statbtn thinking${st.status==='thinking'?' active':''}" data-status="thinking" title="I'm working on this">🤔</button>
+            <button class="prob-statbtn got${st.status==='got'?' active':''}"           data-status="got"      title="Got it">💡</button>
+            <button class="prob-statbtn stuck${st.status==='stuck'?' active':''}"       data-status="stuck"    title="Stuck">❓</button>
+          </div>
+        </div>
+        <div class="pc-text">${p.text||''}</div>`;
+      const reveals = [];
+      if (p.hint)     reveals.push({ kind:'hint',     label:'💡 Reveal hint',   field:'hint',     btnCls:'',         panelCls:'prob-hint',     tag:'Hint' });
+      if (p.approach) reveals.push({ kind:'approach', label:'🔑 Show approach', field:'approach', btnCls:'approach', panelCls:'prob-approach', tag:'Approach' });
+      if (p.answer)   reveals.push({ kind:'answer',   label:'📐 Show answer',   field:'answer',   btnCls:'answer',   panelCls:'prob-answer',   tag:'Answer' });
+      if (reveals.length) {
+        html += `<div class="pc-actions">`;
+        reveals.forEach(r => {
+          const shown = st[r.kind+'Shown'];
+          html += `<button class="prob-revealbtn ${r.btnCls}" data-action="${r.kind}" ${shown?'style="display:none"':''}>${r.label}</button>`;
+        });
+        html += `</div>`;
+        reveals.forEach(r => {
+          const shown = st[r.kind+'Shown'];
+          html += `<div class="prob-reveal-panel ${r.panelCls}${shown?' shown':''}" data-panel="${r.kind}"><span class="rh-label">${r.tag}</span>${p[r.field]}</div>`;
+        });
+      }
+      html += `</div>`;
+    });
+    html += `</div></details>`;
+  });
+  html += `</div>
+  <div class="prob-spotlight" id="prob-spotlight">
+    <div class="prob-spotlight-card">
+      <button class="sl-close" onclick="probCloseSpotlight()">×</button>
+      <h3>🎲 Surprise Problem</h3>
+      <div id="prob-spotlight-body"></div>
+    </div>
+  </div>`;
+
+  container.innerHTML = html;
+
+  container.querySelectorAll('#prob-tag-row .prob-chip').forEach(c => c.addEventListener('click', () => {
+    const tag = c.dataset.tag;
+    if (_probFilters.tags.has(tag)) _probFilters.tags.delete(tag); else _probFilters.tags.add(tag);
+    c.classList.toggle('active');
+    probApplyFilters();
+  }));
+  container.querySelectorAll('#prob-status-row .prob-chip').forEach(c => c.addEventListener('click', () => {
+    container.querySelectorAll('#prob-status-row .prob-chip').forEach(x => x.classList.remove('active'));
+    c.classList.add('active');
+    _probFilters.status = c.dataset.status;
+    probApplyFilters();
+  }));
+  container.querySelector('#prob-status-row .prob-chip[data-status="all"]').classList.add('active');
+
+  const searchEl = container.querySelector('#prob-search');
+  searchEl.addEventListener('input', () => { _probFilters.search = searchEl.value.toLowerCase().trim(); probApplyFilters(); });
+
+  container.querySelector('#prob-surprise').addEventListener('click', probSurpriseMe);
+  container.querySelector('#prob-reset').addEventListener('click', () => {
+    if (!confirm('Clear status on all '+_probFlat.length+' problems?')) return;
+    _probState = {}; probSaveState(_probState);
+    container.dataset.rendered = ''; container.innerHTML = ''; renderNetworkingPractice();
+  });
+
+  container.querySelectorAll('.prob-card').forEach(card => {
+    card.querySelectorAll('.prob-statbtn').forEach(btn => btn.addEventListener('click', e => {
+      e.stopPropagation();
+      const key = card.dataset.key;
+      const newStatus = btn.dataset.status;
+      const st = _probState[key] || {};
+      st.status = (st.status === newStatus) ? null : newStatus;
+      _probState[key] = st; probSaveState(_probState);
+      card.classList.remove('status-thinking','status-got','status-stuck');
+      if (st.status) card.classList.add('status-'+st.status);
+      card.dataset.status = st.status || '';
+      card.querySelectorAll('.prob-statbtn').forEach(b => b.classList.toggle('active', b.dataset.status === st.status));
+      probUpdateProgress();
+      if (_probFilters.status !== 'all') probApplyFilters();
+    }));
+    const revealBtns = card.querySelectorAll('[data-action="hint"],[data-action="approach"],[data-action="answer"]');
+    revealBtns.forEach(btn => btn.addEventListener('click', () => {
+      const kind = btn.dataset.action;
+      const panel = card.querySelector(`.prob-reveal-panel[data-panel="${kind}"]`);
+      if (panel) panel.classList.add('shown');
+      btn.style.display = 'none';
+      const key = card.dataset.key;
+      const st = _probState[key] || {};
+      st[kind+'Shown'] = true; _probState[key] = st; probSaveState(_probState);
+    }));
+  });
+
+  probUpdateProgress();
+}
+
+function probApplyFilters() {
+  const container = document.getElementById('problems-container');
+  const { tags, search, status } = _probFilters;
+  container.querySelectorAll('.prob-card').forEach(card => {
+    const tag = card.dataset.tag;
+    const cardStatus = card.dataset.status || '';
+    const text = card.querySelector('.pc-text').textContent.toLowerCase();
+    let show = true;
+    if (tags.size > 0 && !tags.has(tag)) show = false;
+    if (search && !text.includes(search)) show = false;
+    if (status !== 'all') {
+      if (status === 'unattempted') { if (cardStatus) show = false; }
+      else if (cardStatus !== status) show = false;
+    }
+    card.classList.toggle('hidden', !show);
+  });
+  container.querySelectorAll('.prob-section').forEach(sec => {
+    const visible = sec.querySelectorAll('.prob-card:not(.hidden)').length;
+    sec.style.display = visible === 0 ? 'none' : '';
+    if (visible > 0 && (tags.size || search || status !== 'all')) sec.open = true;
+  });
+}
+
+function probUpdateProgress() {
+  const total = _probFlat.length;
+  let attempted = 0;
+  const perSec = {};
+  _probFlat.forEach(({si, key}) => {
+    const st = _probState[key];
+    if (st && st.status) { attempted++; perSec[si] = (perSec[si]||0) + 1; }
+  });
+  const txt = document.getElementById('prob-progress-text');
+  const fill = document.getElementById('prob-progress-fill');
+  if (txt) txt.textContent = attempted + '/' + total;
+  if (fill) fill.style.width = (total ? (attempted/total*100) : 0) + '%';
+  document.querySelectorAll('[data-sec-done]').forEach(el => {
+    const si = +el.dataset.secDone;
+    el.textContent = perSec[si] || 0;
+  });
+}
+
+function probSurpriseMe() {
+  if (!_probFlat.length) return;
+  const starredNew = _probFlat.filter(x => x.p.star && !(_probState[x.key]||{}).status);
+  const anyNew     = _probFlat.filter(x => !(_probState[x.key]||{}).status);
+  const pool = starredNew.length ? starredNew : (anyNew.length ? anyNew : _probFlat);
+  const pick = pool[Math.floor(Math.random()*pool.length)];
+  const { p, si, ii, key } = pick;
+  const sec = NETWORKING_PROBLEMS[si];
+  const tag = p.tag || 'design';
+  const body = document.getElementById('prob-spotlight-body');
+  body.innerHTML = `
+    <div style="display:flex;gap:8px;align-items:center;margin-bottom:6px;flex-wrap:wrap">
+      <span class="prob-tag ${tag}">${tag}</span>
+      ${p.star ? '<span style="color:#ffa657">★</span>' : ''}
+      <span style="color:#8b949e;font-size:12px">${sec.week||''} · ${sec.title||''} · #${ii+1}</span>
+    </div>
+    <div class="pc-text">${p.text||''}</div>
+    ${(()=>{const L=[];if(p.hint)L.push({s:'💡 Reveal hint',c:'prob-hint',t:'Hint',b:p.hint});if(p.approach)L.push({s:'🔑 Show approach',c:'prob-approach',t:'Approach',b:p.approach});if(p.answer)L.push({s:'📐 Show answer',c:'prob-answer',t:'Answer',b:p.answer});return L.map(l=>`<details style="margin-top:10px"><summary style="cursor:pointer;color:#8b949e;font-size:12px;padding:4px 0">${l.s}</summary><div class="prob-reveal-panel ${l.c} shown" style="margin-top:6px"><span class="rh-label">${l.t}</span>${l.b}</div></details>`).join('');})()}
+    <div style="margin-top:14px;display:flex;gap:6px;flex-wrap:wrap">
+      <button class="prob-actbtn" onclick="probJumpTo('${key}')">↗ Jump to it</button>
+      <button class="prob-actbtn" onclick="probSurpriseMe()">🎲 Another</button>
+    </div>`;
+  document.getElementById('prob-spotlight').classList.add('open');
+}
+function probCloseSpotlight() { const el = document.getElementById('prob-spotlight'); if (el) el.classList.remove('open'); }
+function probJumpTo(key) {
+  probCloseSpotlight();
+  const card = document.querySelector(`.prob-card[data-key="${key}"]`);
+  if (!card) return;
+  const sec = card.closest('.prob-section');
+  if (sec) sec.open = true;
+  card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  card.style.transition = 'box-shadow .3s'; card.style.boxShadow = '0 0 0 2px #58a6ff';
+  setTimeout(() => { card.style.boxShadow = ''; }, 1500);
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') probCloseSpotlight(); });
+
+if (typeof switchTab === 'function') {
+  const _origSwitchTab_prob = switchTab;
+  switchTab = function(tab) { _origSwitchTab_prob(tab); if (tab === 'problems') renderNetworkingPractice(); };
+}
+
+</script>
+<!-- END practice -->
 <!-- END quiz -->
 <!-- BEGIN tooltip-pin (click pins, click outside closes) -->
 <style>
@@ -5178,5 +5802,193 @@ function quizShowSummary() {
 })();
 </script>
 <!-- END tooltip-pin -->
+
+<!-- BEGIN glossary -->
+<script>
+(function(){
+  const CATS = {
+    protocol:   { label: 'protocol',   color: '#58a6ff' },
+    layer:      { label: 'layer',      color: '#d2a8ff' },
+    addressing: { label: 'addressing', color: '#7ee787' },
+    concept:    { label: 'concept',    color: '#ffa657' },
+    algorithm:  { label: 'algorithm',  color: '#ff7b72' },
+    security:   { label: 'security',   color: '#f0883e' },
+    infra:      { label: 'infra',      color: '#79c0ff' },
+    acronym:    { label: 'acronym',    color: '#8b949e' },
+  };
+
+  const G = [
+    // ── Layers ──
+    { id:'osi',         term:'OSI Model',           aka:'7-layer model',           category:'layer',      short:'Conceptual reference stack: Physical → Data Link → Network → Transport → Session → Presentation → Application.', long:'Standardised by ISO. Useful pedagogically but real-world stacks (TCP/IP) collapse it to 4–5 layers. Session and Presentation rarely correspond to distinct implementations.' },
+    { id:'tcpip',       term:'TCP/IP Stack',        aka:'Internet model',          category:'layer',      short:'Four-layer model: Link, Internet (IP), Transport (TCP/UDP), Application.', long:'The de facto Internet architecture. Each layer adds a header during encapsulation and the corresponding peer strips it on the receiving side.' },
+    { id:'link-layer',  term:'Link Layer',          aka:'L2 / Data Link',          category:'layer',      short:'Frames bits onto a single physical hop between adjacent nodes (e.g. Ethernet, Wi-Fi).', long:'Responsible for framing, MAC addressing, and (sometimes) error detection via CRC. Limited to a single broadcast domain.' },
+    { id:'network-layer',term:'Network Layer',      aka:'L3 / Internet',           category:'layer',      short:'Routes packets across multiple links using IP addresses; provides best-effort, connectionless delivery.', long:'IP is the narrow waist: every host speaks it. No guarantees on order, loss, or duplication — those are pushed up to transport.' },
+    { id:'transport',   term:'Transport Layer',     aka:'L4',                      category:'layer',      short:'End-to-end communication between processes: TCP (reliable, ordered) or UDP (best-effort datagrams).', long:'Identified by 16-bit port numbers. Transport is the lowest layer aware of individual application sockets.' },
+    { id:'app-layer',   term:'Application Layer',   aka:'L7',                      category:'layer',      short:'Top of the stack: HTTP, DNS, SMTP, SSH, etc. — the protocols users actually interact with.', long:'Most application protocols today layer over TCP (or QUIC over UDP) and add their own framing on top.' },
+    { id:'e2e',         term:'End-to-End Principle',aka:null,                      category:'concept',    short:'Push functionality to the endpoints; keep the network core dumb and fast.', long:'Saltzer, Reed, Clark (1984). Reliability, encryption, and ordering belong at the endpoints; routers just forward. Foundational to Internet design.' },
+
+    // ── Addressing ──
+    { id:'ip',          term:'IP Address',          aka:null,                      category:'addressing', short:'32-bit (IPv4) or 128-bit (IPv6) identifier for a network interface.', long:'Globally routable IPs are unique; private ranges (10/8, 172.16/12, 192.168/16) sit behind NAT. IPv4 exhaustion drove IPv6 adoption.' },
+    { id:'ipv6',        term:'IPv6',                aka:null,                      category:'addressing', short:'128-bit address space (~3.4×10³⁸ addresses) replacing IPv4; written as eight colon-separated hex groups.', long:'No NAT required, built-in IPsec support, simpler header. Adoption is partial; dual-stack is common.' },
+    { id:'mac',         term:'MAC Address',         aka:'hardware address',        category:'addressing', short:'48-bit link-layer identifier burned into a NIC, used only within a single LAN segment.', long:'First 24 bits identify the vendor (OUI). Switches learn MAC-to-port mappings; ARP resolves IPs to MACs.' },
+    { id:'cidr',        term:'CIDR',                aka:'Classless Inter-Domain Routing', category:'addressing', short:'Slash notation (e.g. 10.0.0.0/24) replacing the old A/B/C class system; the number is the prefix length.', long:'Enables variable-length subnet masking (VLSM) and route aggregation, vastly improving routing-table scalability.' },
+    { id:'subnet',      term:'Subnet',              aka:null,                      category:'addressing', short:'A contiguous IP range sharing a prefix; defines a single broadcast domain at L2.', long:'Hosts in the same subnet talk directly via ARP; cross-subnet traffic goes through a router (the "default gateway").' },
+    { id:'nat',         term:'NAT',                 aka:'Network Address Translation', category:'addressing', short:'Translates many private IPs to one (or a few) public IPs by rewriting headers and tracking flow state.', long:'Workaround for IPv4 exhaustion. Breaks the end-to-end principle: incoming connections require port forwarding or hole-punching.' },
+    { id:'port',        term:'Port',                aka:null,                      category:'addressing', short:'16-bit number identifying a transport-layer endpoint (process) on a host.', long:'Well-known ports (0–1023) for standardised services (80=HTTP, 443=HTTPS, 53=DNS, 22=SSH). Ephemeral ports (49152–65535) for clients.' },
+
+    // ── Protocols ──
+    { id:'tcp',         term:'TCP',                 aka:'Transmission Control Protocol', category:'protocol', short:'Reliable, ordered, byte-stream transport with flow control and congestion control.', long:'Connection-oriented: three-way handshake (SYN, SYN-ACK, ACK), bidirectional FIN-based teardown. Heavyweight but ubiquitous.' },
+    { id:'udp',         term:'UDP',                 aka:'User Datagram Protocol',  category:'protocol',   short:'Connectionless, unreliable datagram transport — basically a thin shim over IP with ports + checksum.', long:'Used where latency matters more than reliability: DNS, VoIP, gaming, QUIC. Apps must handle their own retransmission.' },
+    { id:'ip-proto',    term:'IP',                  aka:'Internet Protocol',       category:'protocol',   short:'Best-effort, connectionless packet delivery between hosts; the narrow waist of the Internet.', long:'IPv4 header is 20 bytes (no options); IPv6 is 40 bytes (fixed). No guarantees on order, loss, or duplication.' },
+    { id:'icmp',        term:'ICMP',                aka:'Internet Control Message Protocol', category:'protocol', short:'Control/diagnostic messages riding directly over IP (e.g. echo for ping, time-exceeded for traceroute).', long:'Not a transport — used by routers and hosts to report errors (Destination Unreachable, TTL expired) and probe reachability.' },
+    { id:'arp',         term:'ARP',                 aka:'Address Resolution Protocol', category:'protocol', short:'Maps an IPv4 address to the MAC address of the host on the local LAN.', long:'Broadcasts "Who has 10.0.0.5?"; the owner unicasts its MAC back. Cached in the ARP table. IPv6 uses NDP instead.' },
+    { id:'dhcp',        term:'DHCP',                aka:'Dynamic Host Configuration Protocol', category:'protocol', short:'Auto-configures hosts with IP, subnet mask, default gateway, and DNS server on boot.', long:'Discover → Offer → Request → Ack (DORA). Leases expire and must be renewed; static IPs bypass it.' },
+    { id:'http',        term:'HTTP',                aka:'Hypertext Transfer Protocol', category:'protocol', short:'Text-based request/response application protocol over TCP (or QUIC for HTTP/3).', long:'HTTP/1.1: one request per connection (or pipelined). HTTP/2: multiplexed binary frames. HTTP/3: same semantics, runs over QUIC/UDP.' },
+    { id:'https',       term:'HTTPS',               aka:'HTTP over TLS',           category:'protocol',   short:'HTTP wrapped in a TLS-encrypted, authenticated tunnel; default port 443.', long:'TLS provides confidentiality (symmetric encryption), integrity (MAC), and authentication (X.509 certs).' },
+    { id:'dns',         term:'DNS',                 aka:'Domain Name System',      category:'protocol',   short:'Hierarchical, distributed mapping of names (www.example.com) to IPs (and other records).', long:'Root → TLD → authoritative servers. Mostly over UDP/53; falls back to TCP for large responses. DoH/DoT add encryption.' },
+    { id:'smtp',        term:'SMTP',                aka:'Simple Mail Transfer Protocol', category:'protocol', short:'Push protocol for email delivery between mail servers (port 25 / 587 with submission).', long:'Plain-text command-response. Receiving clients use IMAP or POP3 instead. SPF/DKIM/DMARC layer on authentication.' },
+    { id:'ssh',         term:'SSH',                 aka:'Secure Shell',            category:'protocol',   short:'Encrypted remote-shell and tunneling protocol over TCP/22.', long:'Uses public-key auth (or password) and per-session symmetric keys derived via Diffie-Hellman.' },
+    { id:'ftp',         term:'FTP',                 aka:'File Transfer Protocol',  category:'protocol',   short:'Legacy two-connection (control + data) file-transfer protocol; largely supplanted by HTTPS and SFTP.', long:'Plaintext, NAT-unfriendly. Modern replacements: SFTP (over SSH), FTPS (over TLS), or just HTTPS.' },
+    { id:'bgp',         term:'BGP',                 aka:'Border Gateway Protocol', category:'protocol',   short:'Path-vector routing protocol exchanged between Autonomous Systems (AS) — the routing protocol of the global Internet.', long:'Policy-driven, not shortest-path. Misconfigurations (e.g. prefix hijacks) can blackhole large swaths of the Internet.' },
+    { id:'ospf',        term:'OSPF',                aka:'Open Shortest Path First',category:'protocol',   short:'Link-state intra-AS routing protocol; each router floods link info and runs Dijkstra locally.', long:'Converges faster than distance-vector protocols. Used inside enterprise/ISP networks alongside BGP at the edge.' },
+    { id:'quic',        term:'QUIC',                aka:null,                      category:'protocol',   short:'Encrypted, multiplexed transport over UDP — eliminates head-of-line blocking and provides 0-RTT resumption.', long:'Originally a Google experiment, standardised by IETF as the substrate for HTTP/3. Encrypts the transport headers too.' },
+    { id:'tls',         term:'TLS',                 aka:'Transport Layer Security; successor to SSL', category:'security', short:'Provides authenticated, confidential, integrity-protected channels over TCP (or directly in QUIC).', long:'TLS 1.3 (2018) cuts the handshake to one round-trip and removes legacy ciphers. Certificates anchored to a CA hierarchy.' },
+    { id:'websocket',   term:'WebSocket',           aka:null,                      category:'protocol',   short:'Persistent, full-duplex framed channel between browser and server, established by upgrading an HTTP/1.1 request.', long:'Avoids the overhead of repeated HTTP polling. Heavily used for chat, live dashboards, and game clients.' },
+
+    // ── Concepts ──
+    { id:'rtt',         term:'RTT',                 aka:'Round-Trip Time',         category:'concept',    short:'Time for a packet to travel to the destination and back.', long:'Drives TCP timers, congestion control, and perceived web latency. Typical LAN: < 1 ms; trans-continental: 50–100 ms; satellite: 600+ ms.' },
+    { id:'mtu',         term:'MTU',                 aka:'Maximum Transmission Unit', category:'concept',  short:'Largest L2 frame payload that can be transmitted on a link without fragmentation (Ethernet: 1500 B).', long:'Path MTU Discovery probes the smallest MTU on the route. ICMP "Fragmentation Needed" feedback is essential — broken when ICMP is firewalled (black-hole).' },
+    { id:'mss',         term:'MSS',                 aka:'Maximum Segment Size',    category:'concept',    short:'Largest TCP payload that fits in one IP packet without IP-layer fragmentation; typically MTU − 40 bytes.', long:'Announced in the SYN options. Endpoints negotiate the minimum of their advertised MSS.' },
+    { id:'bdp',         term:'Bandwidth-Delay Product', aka:null,                  category:'concept',    short:'Bandwidth × RTT — the amount of unacknowledged data needed to keep the pipe full.', long:'TCP window must be ≥ BDP for full throughput. On high-BDP "long fat networks" (satellite, transcontinental), default windows underperform.' },
+    { id:'throughput',  term:'Throughput',          aka:null,                      category:'concept',    short:'Effective rate of useful data transfer, usually bits or bytes per second.', long:'Bounded by min(sender rate, receiver window / RTT, bottleneck-link capacity, congestion window / RTT).' },
+    { id:'latency',     term:'Latency',             aka:null,                      category:'concept',    short:'One-way (or sometimes round-trip) delay between sender and receiver.', long:'Sum of propagation (speed-of-light), transmission (serialization), queueing, and processing delays.' },
+    { id:'jitter',      term:'Jitter',              aka:'delay variance',          category:'concept',    short:'Variation in packet inter-arrival times; critical for real-time media.', long:'VoIP/video apps add a play-out buffer to absorb jitter at the cost of additional latency.' },
+    { id:'handshake',   term:'Three-Way Handshake',  aka:'SYN / SYN-ACK / ACK',    category:'concept',    short:'TCP connection establishment: client SYN → server SYN-ACK → client ACK.', long:'Synchronises initial sequence numbers (ISN) in both directions. Costs one RTT before data can flow (TLS adds more).' },
+    { id:'seqack',      term:'Sequence / ACK Numbers', aka:null,                   category:'concept',    short:'TCP byte-stream offsets used to order, detect loss of, and acknowledge data.', long:'ACK is cumulative: "I have everything up to byte N-1". SACK adds out-of-order acknowledgement of specific ranges.' },
+    { id:'sliding-window', term:'Sliding Window',   aka:null,                      category:'concept',    short:'Receiver advertises the number of bytes it can still accept; sender may have that much unacked data in flight.', long:'Enables pipelining without overrunning the receiver. Zero-window probes prevent deadlock when the receiver re-opens.' },
+    { id:'flow-control',term:'Flow Control',        aka:null,                      category:'concept',    short:'Prevents a fast sender from overwhelming a slow receiver (TCP receive window).', long:'Distinct from congestion control: flow control protects the endpoint; congestion control protects the network.' },
+    { id:'encapsulation',term:'Encapsulation',      aka:null,                      category:'concept',    short:'Each layer prepends its header to the upper layer\'s payload as data descends the stack.', long:'Reversed on the way up (decapsulation). Ethernet | IP | TCP | HTTP-payload is a typical stack-up.' },
+    { id:'broadcast-domain', term:'Broadcast Domain', aka:null,                    category:'concept',    short:'Set of hosts that hear each other\'s L2 broadcasts; bounded by routers (or VLAN boundaries).', long:'Large broadcast domains cause "broadcast storms"; subnetting and VLANs limit blast radius.' },
+
+    // ── Algorithms ──
+    { id:'slow-start',  term:'Slow Start',          aka:null,                      category:'algorithm',  short:'TCP congestion-control phase: cwnd doubles each RTT until ssthresh or loss.', long:'Exponential ramp despite the name. Once ssthresh is reached, transitions to congestion-avoidance (linear growth).' },
+    { id:'aimd',        term:'AIMD',                aka:'Additive Increase Multiplicative Decrease', category:'algorithm', short:'Congestion-avoidance: +1 MSS per RTT on success, halve cwnd on loss.', long:'Provably fair when multiple flows share a bottleneck — converges to equal shares regardless of starting cwnd.' },
+    { id:'cubic',       term:'CUBIC',               aka:null,                      category:'algorithm',  short:'Default Linux TCP congestion control: cubic function of time since last loss instead of AIMD.', long:'Tuned for high-BDP networks. Reaches saturation faster than Reno while remaining fair to it.' },
+    { id:'fast-retr',   term:'Fast Retransmit',     aka:null,                      category:'algorithm',  short:'On 3 duplicate ACKs, retransmit the missing segment immediately without waiting for the RTO timer.', long:'Combined with fast recovery: halve cwnd and resume from there instead of going back to slow start.' },
+    { id:'dijkstra-rt', term:'Dijkstra (Link-State Routing)', aka:null,             category:'algorithm',  short:'Each OSPF/IS-IS router runs Dijkstra on the global link-state DB to compute shortest paths.', long:'Polynomial time in node count. Requires flooding to disseminate link-state advertisements (LSAs) before convergence.' },
+    { id:'bellman-ford',term:'Bellman-Ford (Distance Vector)', aka:null,            category:'algorithm', short:'Each router shares its routing table with neighbours; over rounds, distances converge to the optimum.', long:'Used in RIP. Simple but slow to converge and prone to "count-to-infinity" without poisoned reverse / split horizon.' },
+
+    // ── Security ──
+    { id:'tls-handshake',term:'TLS Handshake',      aka:null,                      category:'security',   short:'Negotiates cipher suite, exchanges keys (typically via ECDHE), and authenticates the server via its certificate.', long:'TLS 1.2 = 2 RTTs; TLS 1.3 = 1 RTT (or 0-RTT for resumed sessions, at the cost of replay risk).' },
+    { id:'cert',        term:'X.509 Certificate',   aka:null,                      category:'security',   short:'Signed binding of a public key to an identity (e.g. hostname), issued by a CA.', long:'Chain validated up to a trusted root in the OS/browser store. Let\'s Encrypt automated free issuance at scale.' },
+    { id:'mitm',        term:'MITM',                aka:'Man-In-The-Middle',       category:'security',   short:'Attacker sits between two parties, intercepting or altering traffic, often by spoofing identities.', long:'Defeated by mutual authentication (TLS certs, SSH host keys, certificate pinning).' },
+    { id:'firewall',    term:'Firewall',            aka:null,                      category:'security',   short:'Filters traffic based on rules (5-tuple, application signatures, or stateful flow context).', long:'Stateful firewalls track connection state so return traffic is allowed without explicit reverse rules.' },
+
+    // ── Infrastructure ──
+    { id:'router',      term:'Router',              aka:null,                      category:'infra',      short:'L3 device forwarding packets between subnets based on the destination IP and a routing table.', long:'Each interface sits in a different broadcast domain. Builds routes via static config, OSPF, BGP, etc.' },
+    { id:'switch',      term:'Switch',              aka:'L2 switch / bridge',      category:'infra',      short:'Forwards Ethernet frames within a single LAN using learned MAC-to-port mappings.', long:'Unknown destinations are flooded. VLANs partition a physical switch into multiple logical broadcast domains.' },
+    { id:'gateway',     term:'Default Gateway',     aka:null,                      category:'infra',      short:'The router a host sends packets to when the destination is outside its own subnet.', long:'Learned via DHCP or static config. Hosts ARP for the gateway\'s MAC to send the frame.' },
+    { id:'cdn',         term:'CDN',                 aka:'Content Delivery Network',category:'infra',      short:'Geographically distributed caches that serve content from a node near the user.', long:'Reduces latency and origin load. DNS or anycast directs clients to the nearest healthy POP.' },
+    { id:'load-balancer',term:'Load Balancer',      aka:null,                      category:'infra',      short:'Distributes incoming connections across a pool of backend servers.', long:'L4 (TCP) balancers proxy raw connections; L7 balancers terminate HTTP and can route by URL/header.' },
+  ];
+
+  let activeCat = null;
+  let searchQ = '';
+  let searchTimer = null;
+
+  function fuzzy(q, hay) { return hay.toLowerCase().indexOf(q.toLowerCase()) !== -1; }
+
+  function match(item) {
+    if (activeCat && item.category !== activeCat) return false;
+    if (!searchQ) return true;
+    return [item.term, item.aka, item.short, item.long, item.category]
+      .filter(Boolean)
+      .some(s => fuzzy(searchQ, s));
+  }
+
+  function buildPills() {
+    const host = document.getElementById('glossary-cat-pills');
+    if (!host || host.dataset.built === '1') return;
+    host.dataset.built = '1';
+    const allBtn = document.createElement('button');
+    allBtn.textContent = 'All';
+    allBtn.dataset.cat = '';
+    allBtn.classList.add('active');
+    host.appendChild(allBtn);
+    Object.keys(CATS).forEach(key => {
+      const btn = document.createElement('button');
+      btn.textContent = CATS[key].label;
+      btn.dataset.cat = key;
+      btn.style.setProperty('--pill-color', CATS[key].color);
+      btn.style.setProperty('--pill-bg', CATS[key].color + '22');
+      host.appendChild(btn);
+    });
+    host.addEventListener('click', e => {
+      const b = e.target.closest('button'); if (!b) return;
+      activeCat = b.dataset.cat || null;
+      host.querySelectorAll('button').forEach(x => x.classList.toggle('active', x === b));
+      render();
+    });
+  }
+
+  function render() {
+    const list = document.getElementById('glossary-list');
+    const count = document.getElementById('glossary-count');
+    if (!list) return;
+    const items = G.filter(match).sort((a,b) => a.term.localeCompare(b.term));
+    list.innerHTML = items.map(it => {
+      const cat = CATS[it.category] || { label: it.category, color: '#8b949e' };
+      return `<div class="glossary-card" style="--cat-color:${cat.color}">
+        <div class="glossary-term-row">
+          <span class="glossary-term">${escapeHtml(it.term)}</span>
+          <span class="glossary-cat-badge" style="--cat-color:${cat.color}">${cat.label}</span>
+        </div>
+        ${it.aka ? `<div class="glossary-aka">aka ${escapeHtml(it.aka)}</div>` : ''}
+        <div class="glossary-short">${escapeHtml(it.short)}</div>
+        ${it.long ? `<div class="glossary-long">${escapeHtml(it.long)}</div>` : ''}
+      </div>`;
+    }).join('');
+    if (count) count.textContent = `${items.length} / ${G.length} terms`;
+  }
+
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  }
+
+  function init() {
+    buildPills();
+    const search = document.getElementById('glossary-search');
+    if (search) {
+      search.addEventListener('input', e => {
+        clearTimeout(searchTimer);
+        searchTimer = setTimeout(() => { searchQ = e.target.value.trim(); render(); }, 120);
+      });
+    }
+    render();
+  }
+
+  // Lazy render on first switch to glossary tab
+  let inited = false;
+  function ensure() { if (!inited) { inited = true; init(); } }
+
+  if (typeof window.switchTab === 'function') {
+    const _orig = window.switchTab;
+    window.switchTab = function(tab) {
+      const r = _orig.apply(this, arguments);
+      if (tab === 'glossary') ensure();
+      return r;
+    };
+  }
+
+  // Also build pills on DOMContentLoaded so the static structure is present
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', buildPills);
+  } else {
+    buildPills();
+  }
+})();
+</script>
+<!-- END glossary -->
+
 </body>
 </html>
