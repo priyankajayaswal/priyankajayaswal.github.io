@@ -1,1 +1,2252 @@
-Hello
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CP4 — Competitive Programming</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background: #0d1117; color: #c9d1d9; overflow: hidden; }
+
+  /* ── Toolbar ── */
+  #toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 10;
+    background: rgba(13,17,23,0.92); backdrop-filter: blur(8px);
+    padding: 0 24px; display: flex; align-items: stretch; gap: 0;
+    border-bottom: 1px solid #30363d; height: 50px;
+  }
+  #toolbar h1 { font-size: 18px; font-weight: 600; color: #58a6ff; white-space: nowrap; display: flex; align-items: center; margin-right: 24px; }
+  .tab-group { display: flex; gap: 0; align-items: stretch; margin-right: 20px; }
+  .tab {
+    background: none; border: none; border-bottom: 2px solid transparent;
+    color: #8b949e; padding: 0 16px; font-size: 13px; font-weight: 500;
+    cursor: pointer; transition: all .2s; display: flex; align-items: center;
+  }
+  .tab:hover { color: #c9d1d9; }
+  .tab.active { color: #58a6ff; border-bottom-color: #58a6ff; }
+  .actions { display: flex; align-items: center; gap: 8px; }
+  .btn { background: #21262d; border: 1px solid #30363d; color: #c9d1d9; padding: 5px 12px; border-radius: 6px; cursor: pointer; font-size: 12px; }
+  .btn:hover { background: #30363d; border-color: #58a6ff; }
+  .toolbar-sep { width: 1px; height: 24px; background: #30363d; align-self: center; margin: 0 6px; flex-shrink: 0; }
+  .hint { font-size: 12px; color: #8b949e; margin-left: auto; display: flex; align-items: center; }
+  #toolbar-menu { display: contents; }
+  #hamburger {
+    display: none; background: none; border: 1px solid #30363d; color: #c9d1d9;
+    font-size: 20px; padding: 4px 10px; border-radius: 6px; cursor: pointer; line-height: 1;
+  }
+  #hamburger:hover { border-color: #58a6ff; color: #58a6ff; }
+
+  /* ── Floating Controls ── */
+  .canvas-controls {
+    position: fixed; top: 62px; right: 16px; z-index: 8;
+    display: flex; flex-direction: column; gap: 4px;
+  }
+  .canvas-controls .cbtn {
+    background: rgba(22,27,34,0.85); backdrop-filter: blur(8px);
+    border: 1px solid #30363d; color: #8b949e; padding: 6px 12px;
+    border-radius: 8px; cursor: pointer; font-size: 11px; text-align: left;
+    transition: all 0.2s; white-space: nowrap;
+  }
+  .canvas-controls .cbtn:hover { background: rgba(33,38,45,0.95); color: #c9d1d9; border-color: #58a6ff; }
+
+  /* ── Views ── */
+  #canvas, #canvas-graph { width: 100vw; height: 100vh; }
+  .view { display: none; }
+  .view.active { display: block; }
+
+  /* Mindmap */
+  path.link { pointer-events: stroke; cursor: pointer; }
+  path.link:hover { stroke-opacity: 0.7 !important; stroke-width: 3 !important; }
+
+  /* ── Tooltip ── */
+  #tooltip {
+    position: fixed; pointer-events: none; opacity: 0;
+    background: #161b22; border: 1px solid #30363d; border-radius: 8px;
+    padding: 10px 14px; max-width: 380px; font-size: 13px; line-height: 1.5;
+    box-shadow: 0 8px 24px rgba(0,0,0,.4); transition: opacity .15s; z-index: 20;
+  }
+  #tooltip.has-slides { pointer-events: auto; }
+  #tooltip .tt-title { color: #58a6ff; font-weight: 600; margin-bottom: 4px; }
+  #tooltip .tt-body  { color: #8b949e; }
+  #tooltip .tt-slides { margin-top: 6px; padding-top: 5px; border-top: 1px solid #30363d; }
+  #tooltip .tt-slides:empty { display: none; }
+  #tooltip .tt-slides a {
+    display: inline-block; margin: 2px 4px 2px 0; padding: 2px 8px; border-radius: 4px;
+    background: rgba(88,166,255,0.1); color: #58a6ff; text-decoration: none;
+    font-size: 11px; font-weight: 500; cursor: pointer; border: 1px solid rgba(88,166,255,0.2);
+  }
+  #tooltip .tt-slides a:hover { background: rgba(88,166,255,0.2); border-color: #58a6ff; }
+
+  #source-link {
+    position: fixed; bottom: 16px; right: 16px; z-index: 10;
+    background: rgba(22,27,34,0.92); border: 1px solid #30363d; border-radius: 8px;
+    padding: 8px 14px; font-size: 12px; font-weight: 600;
+    color: #ff0000; text-decoration: none;
+  }
+  #source-link:hover { background: rgba(255,0,0,0.1); border-color: #ff0000; }
+
+  /* ── Legend ── */
+  #legend {
+    position: fixed; bottom: 16px; left: 16px; z-index: 10;
+    background: rgba(22,27,34,0.92); border: 1px solid #30363d; border-radius: 8px;
+    padding: 12px 16px; font-size: 12px;
+  }
+  #legend div { display: flex; align-items: center; gap: 8px; margin: 4px 0; }
+  #legend span.swatch { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
+  #legend .swatch-line { width: 20px; height: 3px; border-radius: 2px; display: inline-block; }
+  .legend-item:hover { background: rgba(88,166,255,0.1); }
+  .legend-item.active-filter { background: rgba(88,166,255,0.18); outline: 1px solid #58a6ff; }
+
+  /* ── Graph ── */
+  .graph-link { fill: none; stroke-opacity: 0.45; }
+  .graph-link:hover { stroke-opacity: 0.9; }
+  .graph-node-label { font-size: 11px; fill: #c9d1d9; pointer-events: none; paint-order: stroke; stroke: #0d1117; stroke-width: 3.5px; }
+  .graph-link-label { font-size: 9.5px; fill: #8b949e; pointer-events: auto; cursor: pointer; paint-order: stroke; stroke: #0d1117; stroke-width: 3px; }
+  .graph-link-label:hover { fill: #58a6ff; }
+  .graph-link-hit { fill: none; stroke: transparent; stroke-width: 16; pointer-events: stroke; cursor: pointer; }
+
+  /* ── Learning Path Panel ── */
+  #path-panel {
+    position: fixed; top: 56px; right: 0; bottom: 0; width: 340px; z-index: 10;
+    background: rgba(13,17,23,0.95); border-left: 1px solid #30363d;
+    overflow-y: auto; padding: 20px; display: none; backdrop-filter: blur(8px);
+  }
+  #path-panel.open { display: block; }
+  #path-panel h2 { font-size: 15px; color: #58a6ff; margin-bottom: 4px; }
+  #path-panel .subtitle { font-size: 12px; color: #8b949e; margin-bottom: 16px; }
+  .path-step { display: flex; gap: 12px; padding: 10px; border-radius: 8px; cursor: pointer; transition: background .2s; margin-bottom: 2px; position: relative; }
+  .path-step:hover { background: rgba(88,166,255,0.08); }
+  .path-step.active { background: rgba(88,166,255,0.14); }
+  .step-badge { flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%; border: 2px solid #30363d; background: #161b22; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: #c9d1d9; }
+  .path-step.active .step-badge { border-color: #58a6ff; background: #58a6ff; color: #0d1117; }
+  .path-step.completed .step-badge { background: #238636; border-color: #238636; color: #fff; }
+  .path-step.completed .step-connector { background: #238636; }
+  .path-step.active .step-connector { background: #58a6ff; }
+  .step-content { flex: 1; min-width: 0; }
+  .step-title { font-size: 13px; font-weight: 600; color: #c9d1d9; }
+  .step-desc  { font-size: 11px; color: #8b949e; margin-top: 2px; line-height: 1.4; }
+  .step-connector { position: absolute; left: 33px; top: 38px; bottom: -4px; width: 2px; background: #30363d; }
+  .path-step:last-child .step-connector { display: none; }
+  .path-controls { display: flex; gap: 8px; margin-bottom: 14px; }
+  .path-btn { flex: 1; padding: 7px 10px; border-radius: 6px; border: 1px solid #30363d; background: #21262d; color: #c9d1d9; font-size: 12px; cursor: pointer; text-align: center; }
+  .path-btn:hover { background: #30363d; border-color: #58a6ff; }
+
+  /* ── Command Panel (Comments/Tags) ── */
+  #cmd-panel {
+    position: fixed; top: 56px; right: 0; bottom: 0; width: 380px; z-index: 15;
+    background: rgba(13,17,23,0.97); border-left: 1px solid #30363d;
+    display: none; flex-direction: column; backdrop-filter: blur(10px);
+  }
+  #cmd-panel.open { display: flex; }
+  #cmd-panel-header { padding: 16px 18px 12px; border-bottom: 1px solid #30363d; display: flex; align-items: flex-start; gap: 12px; }
+  #cmd-panel-header .cp-title { flex: 1; }
+  #cmd-panel-header .cp-name { font-size: 15px; font-weight: 600; color: #c9d1d9; }
+  #cmd-panel-header .cp-tip  { font-size: 11px; color: #8b949e; margin-top: 3px; line-height: 1.4; }
+  #cmd-panel-close { background: none; border: none; color: #8b949e; font-size: 20px; cursor: pointer; padding: 0 4px; line-height: 1; }
+  #cmd-panel-close:hover { color: #c9d1d9; }
+  #cmd-tags { padding: 8px 18px; display: flex; flex-wrap: wrap; gap: 6px; min-height: 20px; }
+  .cmd-tag { display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: 500; }
+  .cmd-tag.tag-done     { background: #23863633; color: #7ee787; border: 1px solid #23863666; }
+  .cmd-tag.tag-todo     { background: #1f6feb33; color: #79c0ff; border: 1px solid #1f6feb66; }
+  .cmd-tag.tag-confused  { background: #da363333; color: #ff7b72; border: 1px solid #da363366; }
+  .cmd-tag.tag-important { background: #9e6a0333; color: #ffa657; border: 1px solid #9e6a0366; }
+  .cmd-tag.tag-custom    { background: #30363d; color: #c9d1d9; border: 1px solid #484f58; }
+  #cmd-comments { flex: 1; overflow-y: auto; padding: 10px 18px; }
+  .cmd-comment { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 10px 12px; margin-bottom: 8px; position: relative; }
+  .cmd-comment .cc-text { font-size: 13px; color: #c9d1d9; line-height: 1.5; white-space: pre-wrap; }
+  .cmd-comment .cc-time { font-size: 10px; color: #484f58; margin-top: 4px; }
+  .cmd-comment .cc-del { position: absolute; top: 6px; right: 8px; background: none; border: none; color: #484f58; cursor: pointer; font-size: 14px; }
+  .cmd-comment .cc-del:hover { color: #ff7b72; }
+  .cmd-empty { color: #484f58; font-size: 12px; font-style: italic; text-align: center; padding: 20px; }
+  #cmd-input-area { padding: 12px 18px; border-top: 1px solid #30363d; }
+  #cmd-input { width: 100%; background: #0d1117; border: 1px solid #30363d; border-radius: 8px; color: #c9d1d9; padding: 10px 12px; font-size: 13px; font-family: inherit; resize: none; outline: none; min-height: 60px; }
+  #cmd-input:focus { border-color: #58a6ff; }
+  #cmd-input-hint { font-size: 10px; color: #484f58; margin-top: 6px; line-height: 1.5; }
+  #cmd-input-hint code { background: #161b22; padding: 1px 4px; border-radius: 3px; color: #8b949e; }
+  .comment-badge { font-size: 9px; fill: #0d1117; pointer-events: none; }
+  .has-comment-ring { fill: none; stroke: #ffa657; stroke-width: 2; stroke-dasharray: 3 2; }
+
+  /* ── Deep Dives ── */
+  #view-deepdive { overflow-y: auto; margin-top: 50px; height: calc(100vh - 50px); }
+  .dd-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 20px; padding: 24px 32px; max-width: 1400px; margin: 0 auto; }
+  .dd-card { background: #161b22; border: 1px solid #30363d; border-radius: 12px; cursor: pointer; overflow: hidden; transition: all .25s; }
+  .dd-card:hover { border-color: #58a6ff; transform: translateY(-3px); box-shadow: 0 8px 30px rgba(0,0,0,.4); }
+  .dd-card-img { width: 100%; height: 200px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+  .dd-card-img svg { width: 100%; height: 100%; display: block; }
+  .dd-card-body { padding: 16px; }
+  .dd-card-num { font-size: 11px; color: #58a6ff; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+  .dd-card-title { font-size: 17px; font-weight: 700; color: #c9d1d9; margin: 4px 0 6px; }
+  .dd-card-desc { font-size: 12px; color: #8b949e; line-height: 1.5; }
+  .dd-full { display: none; padding: 20px 0 40px; overflow-y: auto; }
+  .dd-full.active { display: block; }
+  .dd-infographic { max-width: 900px; margin: 0 auto; padding: 32px; background: #161b22; border: 1px solid #30363d; border-radius: 16px; }
+  .dd-infographic h2 { font-size: 24px; color: #58a6ff; margin-bottom: 4px; }
+  .dd-infographic .dd-subtitle { font-size: 13px; color: #8b949e; margin-bottom: 24px; }
+  .dd-section { margin-top: 24px; }
+  .dd-section h3 { font-size: 15px; color: #ffa657; margin-bottom: 8px; }
+  .dd-section p { font-size: 13px; color: #c9d1d9; line-height: 1.7; }
+  .dd-section .dd-formula { background: #0d1117; border: 1px solid #30363d; border-radius: 8px; padding: 12px 16px; font-family: 'Courier New', monospace; font-size: 14px; color: #7ee787; margin: 10px 0; text-align: center; }
+  .dd-keypoints { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 12px; }
+  .dd-kp { background: #0d1117; border: 1px solid #30363d; border-radius: 8px; padding: 12px; font-size: 12px; }
+  .dd-kp strong { color: #58a6ff; display: block; margin-bottom: 4px; }
+  .dd-kp span { color: #8b949e; }
+  .dd-nav { display: flex; gap: 10px; justify-content: center; margin-top: 20px; }
+  .dd-nav button { padding: 8px 20px; }
+
+  /* ── Tracker Panel ── */
+  #tracker-panel {
+    position: fixed; top: 56px; left: 0; bottom: 0; width: 320px; z-index: 12;
+    background: rgba(13,17,23,0.97); border-right: 1px solid #30363d;
+    display: none; flex-direction: column; backdrop-filter: blur(10px); overflow: hidden;
+  }
+  #tracker-panel.open { display: flex; }
+  #tracker-header { padding: 16px 18px 10px; border-bottom: 1px solid #30363d; display: flex; align-items: center; justify-content: space-between; }
+  #tracker-header h3 { font-size: 14px; color: #58a6ff; font-weight: 600; }
+  #tracker-header button { background: none; border: none; color: #8b949e; font-size: 18px; cursor: pointer; }
+  #tracker-stats { padding: 10px 18px; display: flex; gap: 10px; border-bottom: 1px solid #21262d; }
+  .tracker-stat { flex: 1; background: #0d1117; border-radius: 8px; padding: 8px 10px; text-align: center; }
+  .tracker-stat .ts-num { font-size: 20px; font-weight: 700; }
+  .tracker-stat .ts-label { font-size: 10px; color: #8b949e; }
+  #tracker-list { flex: 1; overflow-y: auto; padding: 8px 12px; }
+  .tracker-item { display: flex; align-items: flex-start; gap: 10px; padding: 8px 10px; border-radius: 8px; cursor: pointer; margin-bottom: 2px; }
+  .tracker-item:hover { background: rgba(88,166,255,0.08); }
+  .tracker-filter { padding: 8px 18px; border-bottom: 1px solid #21262d; display: flex; gap: 6px; flex-wrap: wrap; }
+  .tf-chip { padding: 3px 10px; border-radius: 12px; font-size: 11px; cursor: pointer; border: 1px solid #30363d; background: #21262d; color: #8b949e; }
+  .tf-chip:hover, .tf-chip.active { border-color: #58a6ff; color: #58a6ff; background: rgba(88,166,255,0.1); }
+
+  /* ── PDF Viewer ── */
+  #pdf-viewer {
+    display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+    z-index: 50; background: #0d1117; flex-direction: column;
+  }
+  #pdf-viewer.open { display: flex; }
+  #pdf-toolbar { display: flex; align-items: center; gap: 10px; padding: 8px 16px; background: #161b22; border-bottom: 1px solid #30363d; flex-shrink: 0; }
+  #pdf-toolbar .pdf-title { flex: 1; color: #c9d1d9; font-size: 13px; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  #pdf-iframe { width: 100%; height: 100%; border: none; background: #1e1e1e; }
+  #scribble-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; cursor: crosshair; z-index: 2; display: none; }
+  #scribble-canvas.active { display: block; }
+  #pdf-body { position: relative; flex: 1; overflow: hidden; }
+  .scribble-tools { display: flex; align-items: center; gap: 6px; margin-left: 8px; border-left: 1px solid #30363d; padding-left: 10px; }
+  .scribble-tools .btn { font-size: 11px; padding: 3px 8px; }
+  .scribble-tools .btn.active-tool { background: #58a6ff; color: #0d1117; }
+  .scribble-color { width: 20px; height: 20px; border-radius: 50%; border: 2px solid #30363d; cursor: pointer; display: inline-block; }
+  .scribble-color.sel { border-color: #c9d1d9; }
+  .scribble-size { width: 50px; accent-color: #58a6ff; }
+
+  /* ── Appendix ── */
+  #appendix-container { position: relative; top: 0; width: 100%; max-width: 1100px; margin: 0 auto; padding: 24px 16px 60px; }
+  #view-appendix { overflow-y: auto; height: calc(100vh - 50px); margin-top: 50px; }
+  .appendix-stats { color: #8b949e; font-size: 13px; margin-bottom: 12px; display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; }
+  .appendix-stats .stat-pill { background: #21262d; border: 1px solid #30363d; border-radius: 12px; padding: 2px 10px; font-size: 12px; }
+  .appendix-filter { width: 100%; max-width: 400px; padding: 8px 12px; margin-bottom: 16px; background: #0d1117; border: 1px solid #30363d; border-radius: 6px; color: #c9d1d9; font-size: 14px; outline: none; }
+  .appendix-filter:focus { border-color: #58a6ff; }
+  .appendix-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .appendix-table thead th { position: sticky; top: 0; background: #161b22; color: #8b949e; text-align: left; padding: 8px 12px; border-bottom: 2px solid #30363d; font-weight: 600; z-index: 2; }
+  .appendix-table tbody tr { border-bottom: 1px solid #21262d; }
+  .appendix-table tbody tr:hover { background: rgba(88,166,255,0.06); }
+  .appendix-table tbody td { padding: 7px 12px; color: #c9d1d9; }
+  .appendix-table .unit-group { background: #161b22; }
+  .appendix-table .unit-group td { padding: 10px 12px; font-weight: 700; font-size: 14px; border-bottom: 2px solid #30363d; cursor: pointer; user-select: none; }
+  .appendix-table .unit-group:hover td { background: rgba(88,166,255,0.04); }
+  .unit-toggle { display: inline-block; width: 18px; transition: transform 0.2s; font-size: 12px; }
+  .unit-group.collapsed .unit-toggle { transform: rotate(-90deg); }
+  .appendix-table .watch-link { color: #ff4444; text-decoration: none; font-weight: 600; }
+  .appendix-table .watch-link:hover { color: #ff0000; text-decoration: underline; }
+
+  /* ── Mobile ── */
+  @media (max-width: 768px) {
+    #toolbar { flex-wrap: nowrap; height: 48px; padding: 0 10px; }
+    #toolbar h1 { font-size: 15px; margin-right: auto; }
+    #hamburger { display: block; }
+    .tab-group { display: none; position: fixed; top: 48px; left: 0; right: 0; flex-direction: column; background: rgba(13,17,23,0.97); backdrop-filter: blur(12px); border-bottom: 1px solid #30363d; z-index: 20; padding: 8px 0; }
+    .tab-group.open { display: flex; }
+    .tab { padding: 12px 20px; font-size: 14px; border-bottom: none; border-left: 3px solid transparent; justify-content: flex-start; }
+    .tab.active { border-left-color: #58a6ff; border-bottom: none; }
+    .toolbar-sep { display: none; }
+    .canvas-controls { top: auto; bottom: 56px; right: 12px; }
+    #view-deepdive { margin-top: 48px; height: calc(100vh - 48px); }
+    .dd-grid { grid-template-columns: 1fr; padding: 12px 10px; }
+    #view-appendix { margin-top: 48px; height: calc(100vh - 48px); }
+    #tracker-panel { width: 100%; top: 48px; }
+    #cmd-panel { width: 100% !important; right: 0 !important; }
+    #legend, #legend-graph { display: none !important; }
+    #source-link { bottom: 8px; right: 8px; font-size: 10px; padding: 5px 10px; }
+    #pdf-toolbar { flex-wrap: wrap; padding: 6px 8px; }
+    .scribble-tools { margin-left: 0; border-left: none; padding-left: 0; flex-wrap: wrap; width: 100%; border-top: 1px solid #30363d; padding-top: 6px; }
+  }
+  @media (max-width: 480px) {
+    #toolbar h1 { font-size: 13px; }
+    .dd-card-img { height: 120px; }
+    .dd-keypoints { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════ TOOLBAR ═══════════════ -->
+<div id="toolbar">
+  <h1 id="toolbar-title"></h1>
+  <button id="hamburger" onclick="toggleMobileMenu()">☰</button>
+  <div id="toolbar-menu">
+    <div class="tab-group" id="tab-group"></div>
+    <div class="actions">
+      <button class="btn" onclick="toggleTracker()">📊 Tracker</button>
+      <button class="btn" id="btn-path" onclick="togglePathPanel()" style="display:none;background:#1f6feb;border-color:#58a6ff;color:#fff">🧭 Learning Path</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ VIEWS ═══════════════ -->
+<div id="view-mindmap" class="view">
+  <svg id="canvas"></svg>
+  <div class="canvas-controls" id="mindmap-controls">
+    <button class="cbtn" onclick="expandAll()">⊞ Expand All</button>
+    <button class="cbtn" onclick="collapseAll()">⊟ Collapse All</button>
+    <button class="cbtn" onclick="resetView()">↻ Reset View</button>
+  </div>
+</div>
+
+<div id="view-graph" class="view">
+  <svg id="canvas-graph"></svg>
+  <div class="canvas-controls" id="graph-controls" style="display:none">
+    <button class="cbtn" onclick="resetGraphView()">↻ Reset View</button>
+    <button class="cbtn" onclick="toggleLabels()">🏷️ Toggle Labels</button>
+    <button class="cbtn" onclick="highlightReset()">✕ Clear Highlight</button>
+  </div>
+</div>
+
+<div id="view-deepdive" class="view">
+  <div id="dd-card-grid" class="dd-grid"></div>
+  <div id="dd-full-container"></div>
+  <div class="canvas-controls" id="deepdive-controls" style="display:none">
+    <button class="cbtn" id="btn-back-cards" onclick="showCardGrid()">← Back to All</button>
+  </div>
+</div>
+
+<div id="view-appendix" class="view">
+  <div id="appendix-container"></div>
+</div>
+
+<!-- ═══════════════ SHARED OVERLAYS ═══════════════ -->
+<div id="tooltip"><div class="tt-title"></div><div class="tt-body"></div><div class="tt-slides"></div></div>
+<a id="source-link" href="#" target="_blank" style="display:none"></a>
+
+<!-- Legends (populated by JS) -->
+<div id="legend" class="legend-mindmap" style="display:none"></div>
+<div id="legend-graph" style="display:none; position:fixed; bottom:16px; left:16px; z-index:10; background:rgba(22,27,34,0.92); border:1px solid #30363d; border-radius:8px; padding:12px 16px; font-size:12px;"></div>
+
+<!-- PDF Viewer -->
+<div id="pdf-viewer">
+  <div id="pdf-toolbar">
+    <button class="btn" onclick="closePdfViewer()">← Back</button>
+    <span class="pdf-title" id="pdf-title"></span>
+    <div class="scribble-tools">
+      <button class="btn" id="scribble-toggle" onclick="toggleScribble()">✏️ Scribble</button>
+      <span class="scribble-color sel" style="background:#ff6b6b" onclick="setScribbleColor(this,'#ff6b6b')"></span>
+      <span class="scribble-color" style="background:#58a6ff" onclick="setScribbleColor(this,'#58a6ff')"></span>
+      <span class="scribble-color" style="background:#7ee787" onclick="setScribbleColor(this,'#7ee787')"></span>
+      <span class="scribble-color" style="background:#ffa657" onclick="setScribbleColor(this,'#ffa657')"></span>
+      <span class="scribble-color" style="background:#ffffff" onclick="setScribbleColor(this,'#ffffff')"></span>
+      <input type="range" class="scribble-size" min="1" max="12" value="3" oninput="scribbleCtx.lineWidth=+this.value" title="Pen size">
+      <button class="btn" onclick="undoScribble()">↩</button>
+      <button class="btn" onclick="clearScribble()">🗑️</button>
+    </div>
+    <button class="btn" id="pdf-open-ext" onclick="openPdfExternal()">↗ Open</button>
+  </div>
+  <div id="pdf-body">
+    <iframe id="pdf-iframe"></iframe>
+    <canvas id="scribble-canvas"></canvas>
+  </div>
+</div>
+
+<!-- Tracker Panel -->
+<div id="tracker-panel">
+  <div id="tracker-header">
+    <h3>📊 Comment Tracker</h3>
+    <button onclick="toggleTracker()">✕</button>
+  </div>
+  <div id="tracker-stats"></div>
+  <div class="tracker-filter" id="tracker-filter"></div>
+  <div id="tracker-list"></div>
+</div>
+
+<!-- Learning Path Panel -->
+<div id="path-panel">
+  <div style="display:flex;justify-content:space-between;align-items:flex-start">
+    <h2>🧭 Recommended Learning Path</h2>
+    <button onclick="togglePathPanel()" style="background:none;border:none;color:#8b949e;font-size:18px;cursor:pointer">✕</button>
+  </div>
+  <div class="subtitle">Follow this sequence to build understanding layer by layer.</div>
+  <div class="path-controls">
+    <button class="path-btn" id="btn-autoplay" onclick="autoPlay()">▶ Auto-Play</button>
+    <button class="path-btn" onclick="resetPath()">↺ Reset</button>
+  </div>
+  <div id="path-steps"></div>
+</div>
+
+<!-- Command Panel (Comments/Tags) -->
+<div id="cmd-panel">
+  <div id="cmd-panel-header">
+    <div class="cp-title">
+      <div class="cp-name" id="cp-name"></div>
+      <div class="cp-tip" id="cp-tip"></div>
+    </div>
+    <button id="cmd-panel-close" onclick="closeCmdPanel()">✕</button>
+  </div>
+  <div id="cmd-tags"></div>
+  <div id="cmd-comments"></div>
+  <div id="cmd-input-area">
+    <textarea id="cmd-input" placeholder="Add a comment or type a / command…" rows="2"></textarea>
+    <div id="cmd-input-hint">
+      Press <code>Enter</code> to submit · <code>Shift+Enter</code> for newline<br>
+      <code>/done</code> <code>/todo</code> <code>/confused</code> <code>/important</code> <code>/tag name</code><br>
+      <code>/color #hex</code> <code>/rename New Name</code> <code>/clear</code> <code>/reset</code>
+    </div>
+  </div>
+</div>
+
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script>
+// ═══════════════════════════════════════════════════════════════════════
+// COURSE_CONFIG — Replace this block with your course data.
+// Omit any section (mindmap, graph, deepDives, youtube) to hide that tab.
+// ═══════════════════════════════════════════════════════════════════════
+const C = {
+  schemaVersion: 1,
+  course: { code: "CP4", title: "Competitive Programming 4", term: "Steven & Felix Halim" },
+  storageKey: "cp4",
+  sourceLink: { url: "https://cpbook.net/", label: "📖 cpbook.net" },
+  depthColors: ["#58a6ff","#f778ba","#7ee787","#ffa657","#d2a8ff","#79c0ff","#ff7b72"],
+
+  mindmap: {
+    name: "CP4\nCompetitive\nProgramming",
+    tooltip: "Competitive Programming 4 by Steven & Felix Halim — covers algorithms, data structures, and problem solving for IOI & ICPC.",
+    children: [
+      {
+        name: "Ch 1\nIntroduction",
+        tooltip: "Getting started with competitive programming: tips, ad hoc problems, and basic I/O.",
+        slides: [{ label: "📄 Textbook", path: "Steven-Halim.pdf" }],
+        children: [
+          { name: "Getting Started", tooltip: "Setting up your environment, choosing a language (C++/Java/Python).", children: [
+            { name: "C++ 17 STL", tooltip: "Key C++ standard library features for CP." },
+            { name: "Java 11", tooltip: "Java essentials for competitive programming." },
+            { name: "Python 3", tooltip: "Python tricks and pitfalls for CP." }
+          ]},
+          { name: "Ad Hoc Problems", tooltip: "Problems with no standard algorithm — requires creative thinking.", children: [
+            { name: "Simulation", tooltip: "Problems requiring step-by-step simulation." },
+            { name: "String I/O", tooltip: "Parsing and formatting string problems." }
+          ]},
+          { name: "Tips to be\nCompetitive", tooltip: "Strategies for IOI/ICPC: time management, testing, debugging." }
+        ]
+      },
+      {
+        name: "Ch 2\nData Structures",
+        tooltip: "Linear and non-linear data structures, plus custom implementations.",
+        slides: [{ label: "📄 Textbook", path: "Steven-Halim.pdf" }],
+        children: [
+          { name: "Linear DS", tooltip: "Arrays, linked lists, stacks, queues, deques.", children: [
+            { name: "Stack / Queue", tooltip: "LIFO and FIFO structures." },
+            { name: "Deque", tooltip: "Double-ended queue operations." },
+            { name: "Big Integer", tooltip: "Handling arbitrarily large numbers." }
+          ]},
+          { name: "Non-Linear DS", tooltip: "BST, priority queues, hash tables.", children: [
+            { name: "Priority Queue\n(Heap)", tooltip: "Binary heap for fast min/max extraction." },
+            { name: "Hash Table", tooltip: "O(1) average lookup with unordered_map/set." },
+            { name: "Balanced BST", tooltip: "Self-balancing trees (Red-Black, AVL) and Order Statistics." }
+          ]},
+          { name: "Custom DS", tooltip: "Data structures you build yourself.", children: [
+            { name: "Union-Find\n(UFDS)", tooltip: "Disjoint set with union by rank and path compression." },
+            { name: "Fenwick Tree\n(BIT)", tooltip: "Binary Indexed Tree for prefix sum queries and updates." },
+            { name: "Segment Tree", tooltip: "Range queries and updates with lazy propagation." }
+          ]}
+        ]
+      },
+      {
+        name: "Ch 3\nProblem Solving\nParadigms",
+        tooltip: "Major algorithmic paradigms: search, divide & conquer, greedy, DP.",
+        slides: [{ label: "📄 Textbook", path: "Steven-Halim.pdf" }],
+        children: [
+          { name: "Complete Search", tooltip: "Exhaustive search: iterative and recursive backtracking.", children: [
+            { name: "Iterative", tooltip: "Loops, permutations, subsets." },
+            { name: "Recursive\nBacktracking", tooltip: "Pruned search trees (e.g., N-Queens)." }
+          ]},
+          { name: "Divide &\nConquer", tooltip: "Break problem into subproblems: merge sort, binary search.", children: [
+            { name: "Binary Search\nthe Answer", tooltip: "BSTA: binary search on the solution space." },
+            { name: "Ternary Search", tooltip: "Finding unimodal function extrema." }
+          ]},
+          { name: "Greedy", tooltip: "Locally optimal choices leading to global optimum.", children: [
+            { name: "Classic Greedy", tooltip: "Coin change, interval scheduling, Huffman." },
+            { name: "Greedy + PQ", tooltip: "Priority-queue-based greedy for dynamic ordering." }
+          ]},
+          { name: "Dynamic\nProgramming", tooltip: "Overlapping subproblems + optimal substructure.", children: [
+            { name: "Classic DP", tooltip: "Knapsack, LCS, LIS, coin change." },
+            { name: "Bitmask DP", tooltip: "DP with bitmask states (e.g., TSP with n≤18)." },
+            { name: "DP on DAG", tooltip: "Shortest/longest paths on directed acyclic graphs." }
+          ]}
+        ]
+      },
+      {
+        name: "Ch 4\nGraph",
+        tooltip: "Graph traversal, shortest paths, spanning trees, and special graphs.",
+        slides: [{ label: "📄 Textbook", path: "Steven-Halim.pdf" }],
+        children: [
+          { name: "Traversal", tooltip: "BFS and DFS on graphs.", children: [
+            { name: "DFS", tooltip: "Depth-first search and its applications." },
+            { name: "BFS", tooltip: "Breadth-first search for shortest unweighted paths." },
+            { name: "Topological\nSort", tooltip: "Linear ordering of DAG vertices." }
+          ]},
+          { name: "Shortest Paths", tooltip: "Single-source and all-pairs shortest paths.", children: [
+            { name: "Dijkstra", tooltip: "Greedy SSSP for non-negative weights." },
+            { name: "Bellman-Ford", tooltip: "SSSP with negative weights; negative cycle detection." },
+            { name: "Floyd-Warshall", tooltip: "All-pairs shortest paths in O(V³)." }
+          ]},
+          { name: "MST", tooltip: "Minimum Spanning Tree algorithms.", children: [
+            { name: "Kruskal", tooltip: "Edge-sorted MST with Union-Find." },
+            { name: "Prim", tooltip: "Vertex-based MST with priority queue." }
+          ]},
+          { name: "Special Graphs", tooltip: "Bipartite graphs, DAGs, Euler/Hamilton paths.", children: [
+            { name: "SCC", tooltip: "Strongly Connected Components (Kosaraju's)." },
+            { name: "Bridges &\nArt. Points", tooltip: "Cut edges and cut vertices." },
+            { name: "Bipartite\nMatching", tooltip: "Maximum matching in bipartite graphs." }
+          ]}
+        ]
+      },
+      {
+        name: "Ch 5\nMathematics",
+        tooltip: "Number theory, combinatorics, probability, and game theory.",
+        slides: [{ label: "📄 Textbook", path: "Steven-Halim.pdf" }],
+        children: [
+          { name: "Number Theory", tooltip: "Primes, GCD, modular arithmetic.", children: [
+            { name: "Sieve of\nEratosthenes", tooltip: "Finding all primes up to N." },
+            { name: "Modular\nArithmetic", tooltip: "Modular inverse, Fermat's little theorem." },
+            { name: "Extended Euclid", tooltip: "Solving ax + by = gcd(a,b)." }
+          ]},
+          { name: "Combinatorics", tooltip: "Counting, permutations, combinations.", children: [
+            { name: "nCr / nPr", tooltip: "Binomial coefficients with modular arithmetic." },
+            { name: "Catalan Numbers", tooltip: "Counting balanced parentheses, BST shapes, etc." }
+          ]},
+          { name: "Probability &\nGame Theory", tooltip: "Expected value, combinatorial games.", children: [
+            { name: "Expected Value", tooltip: "Linearity of expectation." },
+            { name: "Cycle Finding", tooltip: "Floyd's tortoise and hare algorithm." }
+          ]},
+          { name: "Matrix Power", tooltip: "Matrix exponentiation for recurrence relations." }
+        ]
+      },
+      {
+        name: "Ch 6\nString\nProcessing",
+        tooltip: "String matching, suffix structures, and string DP.",
+        slides: [{ label: "📄 Textbook", path: "Steven-Halim.pdf" }],
+        children: [
+          { name: "String\nMatching", tooltip: "KMP, Rabin-Karp, Z-algorithm.", children: [
+            { name: "KMP", tooltip: "Knuth-Morris-Pratt linear pattern matching." },
+            { name: "String Hashing", tooltip: "Polynomial hashing for fast comparisons." }
+          ]},
+          { name: "Suffix\nStructures", tooltip: "Suffix Array, Suffix Tree, Trie.", children: [
+            { name: "Suffix Array", tooltip: "Sorted array of all suffixes + LCP." },
+            { name: "Trie", tooltip: "Prefix tree for string dictionaries." }
+          ]},
+          { name: "Digit DP", tooltip: "DP technique for counting numbers with digit constraints." }
+        ]
+      },
+      {
+        name: "Ch 7\nGeometry",
+        tooltip: "Computational geometry: points, lines, polygons, convex hull.",
+        slides: [{ label: "📄 Textbook", path: "Steven-Halim.pdf" }],
+        children: [
+          { name: "Points &\nLines", tooltip: "Distance, angle, intersection, collinearity." },
+          { name: "Polygons", tooltip: "Area, point-in-polygon, polygon clipping.", children: [
+            { name: "Convex Hull", tooltip: "Andrew's Monotone Chain algorithm." },
+            { name: "Area / Centroid", tooltip: "Shoelace formula, polygon centroid." }
+          ]},
+          { name: "Circles &\nTriangles", tooltip: "Circumscribed/inscribed circles, triangle properties." }
+        ]
+      },
+      {
+        name: "Ch 8\nAdvanced\nTopics",
+        tooltip: "Network flow, matching, NP-hard problems, problem decomposition.",
+        slides: [{ label: "📄 Textbook", path: "Steven-Halim.pdf" }],
+        children: [
+          { name: "Network Flow", tooltip: "Maximum flow and minimum cut.", children: [
+            { name: "Dinic's", tooltip: "Dinic's blocking flow algorithm (preferred over Edmonds-Karp)." },
+            { name: "Min-Cost\nMax-Flow", tooltip: "MCMF with SPFA/Bellman-Ford." }
+          ]},
+          { name: "Matching", tooltip: "Advanced bipartite and general matching.", children: [
+            { name: "Weighted MCBM", tooltip: "Kuhn-Munkres (Hungarian) algorithm." },
+            { name: "General MCM", tooltip: "Edmonds' blossom algorithm." }
+          ]},
+          { name: "NP-Hard\nProblems", tooltip: "Recognizing and solving NP-complete/hard problems in CP.", children: [
+            { name: "Bitmask\nBrute Force", tooltip: "Exponential search with pruning." },
+            { name: "Approximation", tooltip: "Heuristic and approximation approaches." }
+          ]}
+        ]
+      },
+      {
+        name: "Ch 9\nRare Topics",
+        tooltip: "Exotic algorithms and data structures rarely seen in contests.",
+        slides: [{ label: "📄 Textbook", path: "Steven-Halim.pdf" }],
+        children: [
+          { name: "Sqrt\nDecomposition", tooltip: "Block decomposition for O(√N) queries." },
+          { name: "Heavy-Light\nDecomposition", tooltip: "Decomposing trees for path queries." },
+          { name: "FFT", tooltip: "Fast Fourier Transform for polynomial multiplication." },
+          { name: "CRT", tooltip: "Chinese Remainder Theorem." },
+          { name: "Constructive\nProblems", tooltip: "Building valid solutions rather than finding them." },
+          { name: "Interactive\nProblems", tooltip: "Problems requiring back-and-forth with a judge." }
+        ]
+      }
+    ]
+  },
+
+  graph: {
+    categories: {
+      foundation: "#58a6ff",
+      paradigm: "#f778ba",
+      graph: "#7ee787",
+      math: "#ffa657",
+      string: "#d2a8ff",
+      geometry: "#79c0ff",
+      advanced: "#ff7b72"
+    },
+    edgeColors: {
+      prerequisite: "#58a6ff",
+      uses: "#f778ba",
+      extends: "#7ee787",
+      related: "#ffa657"
+    },
+    nodes: [
+      { id: "arrays",       label: "Arrays & Sorting",  cat: "foundation", tip: "Linear data structures and sorting algorithms." },
+      { id: "stack-queue",   label: "Stack / Queue",     cat: "foundation", tip: "LIFO and FIFO data structures." },
+      { id: "heap",          label: "Priority Queue",    cat: "foundation", tip: "Binary heap for efficient min/max." },
+      { id: "bst",           label: "Balanced BST",      cat: "foundation", tip: "Self-balancing binary search trees." },
+      { id: "hash",          label: "Hash Table",        cat: "foundation", tip: "O(1) average-case lookups." },
+      { id: "ufds",          label: "Union-Find",        cat: "foundation", tip: "Disjoint set with union by rank." },
+      { id: "fenwick",       label: "Fenwick Tree",      cat: "foundation", tip: "BIT for prefix sums and updates." },
+      { id: "segtree",       label: "Segment Tree",      cat: "foundation", tip: "Range query/update with lazy propagation." },
+      { id: "search",        label: "Complete Search",   cat: "paradigm",   tip: "Brute force + backtracking." },
+      { id: "dnc",           label: "Divide & Conquer",  cat: "paradigm",   tip: "Binary search, merge sort, BSTA." },
+      { id: "greedy",        label: "Greedy",            cat: "paradigm",   tip: "Locally optimal → globally optimal." },
+      { id: "dp",            label: "Dynamic Prog.",     cat: "paradigm",   tip: "Overlapping subproblems + optimal substructure." },
+      { id: "bitmask-dp",    label: "Bitmask DP",        cat: "paradigm",   tip: "DP with bitmask states (TSP, etc.)." },
+      { id: "dfs-bfs",       label: "DFS / BFS",         cat: "graph",      tip: "Graph traversal fundamentals." },
+      { id: "topo",          label: "Topological Sort",  cat: "graph",      tip: "Linear ordering of DAG." },
+      { id: "dijkstra",      label: "Dijkstra",          cat: "graph",      tip: "SSSP for non-negative weights." },
+      { id: "bellman",       label: "Bellman-Ford",      cat: "graph",      tip: "SSSP with negative weights." },
+      { id: "floyd",         label: "Floyd-Warshall",    cat: "graph",      tip: "All-pairs shortest paths." },
+      { id: "mst",           label: "MST",               cat: "graph",      tip: "Kruskal's / Prim's MST algorithms." },
+      { id: "scc",           label: "SCC",               cat: "graph",      tip: "Strongly Connected Components." },
+      { id: "bipartite",     label: "Bipartite Match",   cat: "graph",      tip: "Maximum matching in bipartite graphs." },
+      { id: "primes",        label: "Primes & Sieve",    cat: "math",       tip: "Sieve of Eratosthenes, prime testing." },
+      { id: "modular",       label: "Modular Arith.",    cat: "math",       tip: "Modular inverse, Fermat's theorem." },
+      { id: "combinatorics", label: "Combinatorics",     cat: "math",       tip: "nCr, Catalan, inclusion-exclusion." },
+      { id: "matrix",        label: "Matrix Power",      cat: "math",       tip: "Matrix exponentiation for recurrences." },
+      { id: "kmp",           label: "KMP / Z-algo",      cat: "string",     tip: "Linear-time pattern matching." },
+      { id: "suffix",        label: "Suffix Array",      cat: "string",     tip: "Sorted suffixes + LCP array." },
+      { id: "trie",          label: "Trie",              cat: "string",     tip: "Prefix tree for string lookups." },
+      { id: "convex-hull",   label: "Convex Hull",       cat: "geometry",   tip: "Andrew's Monotone Chain algorithm." },
+      { id: "netflow",       label: "Network Flow",      cat: "advanced",   tip: "Dinic's max flow / min cut." },
+      { id: "matching",      label: "Adv. Matching",     cat: "advanced",   tip: "Hungarian, Edmonds' blossom." },
+      { id: "fft",           label: "FFT",               cat: "advanced",   tip: "Fast polynomial multiplication." },
+      { id: "sqrt-decomp",   label: "Sqrt Decomp.",      cat: "advanced",   tip: "Block decomposition for O(√N)." },
+      { id: "hld",           label: "HLD",               cat: "advanced",   tip: "Heavy-Light Decomposition for tree paths." }
+    ],
+    edges: [
+      { source: "arrays",     target: "stack-queue",  type: "prerequisite", label: "builds on" },
+      { source: "arrays",     target: "heap",         type: "prerequisite", label: "builds on" },
+      { source: "arrays",     target: "hash",         type: "prerequisite", label: "builds on" },
+      { source: "arrays",     target: "fenwick",      type: "prerequisite", label: "builds on" },
+      { source: "fenwick",    target: "segtree",      type: "extends",      label: "extends" },
+      { source: "heap",       target: "bst",          type: "extends",      label: "extends" },
+      { source: "heap",       target: "dijkstra",     type: "uses",         label: "uses" },
+      { source: "heap",       target: "greedy",       type: "uses",         label: "PQ-greedy" },
+      { source: "ufds",       target: "mst",          type: "uses",         label: "Kruskal uses" },
+      { source: "search",     target: "dp",           type: "extends",      label: "memoize" },
+      { source: "search",     target: "dnc",          type: "related",      label: "related" },
+      { source: "dp",         target: "bitmask-dp",   type: "extends",      label: "extends" },
+      { source: "dnc",        target: "arrays",       type: "uses",         label: "merge sort" },
+      { source: "dfs-bfs",    target: "topo",         type: "extends",      label: "DFS-based" },
+      { source: "dfs-bfs",    target: "scc",          type: "extends",      label: "Kosaraju" },
+      { source: "dfs-bfs",    target: "bipartite",    type: "uses",         label: "augmenting" },
+      { source: "dijkstra",   target: "bellman",      type: "related",      label: "SSSP variants" },
+      { source: "bellman",    target: "floyd",        type: "related",      label: "all-pairs" },
+      { source: "bipartite",  target: "netflow",      type: "extends",      label: "flow-based" },
+      { source: "netflow",    target: "matching",     type: "extends",      label: "extends" },
+      { source: "primes",     target: "modular",      type: "prerequisite", label: "needs" },
+      { source: "modular",    target: "combinatorics",type: "uses",         label: "mod nCr" },
+      { source: "modular",    target: "matrix",       type: "uses",         label: "mod matrix" },
+      { source: "kmp",        target: "suffix",       type: "extends",      label: "extends" },
+      { source: "trie",       target: "suffix",       type: "related",      label: "related" },
+      { source: "segtree",    target: "hld",          type: "uses",         label: "tree paths" },
+      { source: "segtree",    target: "sqrt-decomp",  type: "related",      label: "alternative" },
+      { source: "dp",         target: "fft",          type: "related",      label: "convolution" },
+      { source: "greedy",     target: "mst",          type: "uses",         label: "greedy MST" },
+      { source: "dp",         target: "dijkstra",     type: "related",      label: "relax" },
+      { source: "dfs-bfs",    target: "mst",          type: "related",      label: "Prim (BFS-like)" }
+    ]
+  },
+
+  learningPath: [
+    { title: "Step 1 — Foundations",         desc: "Arrays, sorting, basic I/O, and ad hoc problems.",                nodes: ["arrays","stack-queue","hash"],                  week: "Ch 1-2" },
+    { title: "Step 2 — Core Data Structures", desc: "Heaps, BSTs, Union-Find, Fenwick & Segment Trees.",             nodes: ["heap","bst","ufds","fenwick","segtree"],         week: "Ch 2" },
+    { title: "Step 3 — Search & Greedy",      desc: "Complete search, backtracking, and greedy strategies.",          nodes: ["search","greedy"],                               week: "Ch 3" },
+    { title: "Step 4 — Divide & Conquer + DP",desc: "Binary search the answer, classic DP, bitmask DP.",             nodes: ["dnc","dp","bitmask-dp"],                         week: "Ch 3" },
+    { title: "Step 5 — Graph Traversal",       desc: "DFS, BFS, topological sort, SCC, bridges.",                    nodes: ["dfs-bfs","topo","scc"],                          week: "Ch 4" },
+    { title: "Step 6 — Shortest Paths & MST",  desc: "Dijkstra, Bellman-Ford, Floyd-Warshall, Kruskal, Prim.",       nodes: ["dijkstra","bellman","floyd","mst"],               week: "Ch 4" },
+    { title: "Step 7 — Mathematics",            desc: "Number theory, modular arithmetic, combinatorics.",            nodes: ["primes","modular","combinatorics","matrix"],      week: "Ch 5" },
+    { title: "Step 8 — Strings",                desc: "KMP, suffix arrays, tries, string hashing.",                   nodes: ["kmp","suffix","trie"],                           week: "Ch 6" },
+    { title: "Step 9 — Geometry",               desc: "Convex hull, polygon operations, line intersection.",          nodes: ["convex-hull"],                                   week: "Ch 7" },
+    { title: "Step 10 — Advanced",              desc: "Network flow, matching, FFT, sqrt decomp, HLD.",              nodes: ["netflow","matching","bipartite","fft","sqrt-decomp","hld"], week: "Ch 8-9" }
+  ],
+
+  deepDives: [
+    {
+      id: "dd-dp", num: "1 of 6", title: "Dynamic Programming",
+      desc: "The most important paradigm in competitive programming — master the art of breaking problems into overlapping subproblems.", color: "#f778ba", icon: "🧩",
+      svg: function(w, h) {
+        var s = '<svg viewBox="0 0 '+w+' '+h+'" xmlns="http://www.w3.org/2000/svg" style="background:#0d1117">';
+        // DP table grid
+        var cols = 6, rows = 4, cw = (w-80)/cols, rh = (h-80)/rows;
+        for(var r=0;r<rows;r++) for(var c=0;c<cols;c++) {
+          var x=40+c*cw, y=40+r*rh, fill = (r+c)%3===0 ? '#f778ba30' : '#161b22';
+          s += '<rect x="'+x+'" y="'+y+'" width="'+cw+'" height="'+rh+'" fill="'+fill+'" stroke="#30363d" stroke-width="1"/>';
+          if((r+c)%3===0) s += '<text x="'+(x+cw/2)+'" y="'+(y+rh/2+4)+'" text-anchor="middle" fill="#f778ba" font-size="10">opt</text>';
+        }
+        // Arrow showing fill direction
+        s += '<line x1="60" y1="'+(h-20)+'" x2="'+(w-60)+'" y2="'+(h-20)+'" stroke="#f778ba" stroke-width="1.5" marker-end="url(#arr)"/>';
+        s += '<defs><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#f778ba"/></marker></defs>';
+        s += '<text x="'+(w/2)+'" y="'+(h-6)+'" text-anchor="middle" fill="#f778ba88" font-size="9">Fill direction →</text>';
+        return s + '</svg>';
+      },
+      sections: [
+        { title: "Core Idea", text: "DP solves problems by combining solutions to overlapping subproblems. Define state, write recurrence, add memoization or build bottom-up." },
+        { title: "Classic Problems", text: "Knapsack (0/1, unbounded), LCS, LIS (O(n log k) with patience sorting), Edit Distance, Coin Change, Matrix Chain Multiplication." },
+        { title: "Bitmask DP", text: "When n ≤ 18-20, use bitmask to represent subsets. Classic example: TSP in O(2ⁿ · n²)." },
+        { title: "Key Formula", formula: "dp[i] = min/max over all valid transitions from dp[j] + cost(j→i)" }
+      ],
+      keypoints: [
+        { title: "Identify Subproblems", text: "State = minimum info needed to make future decisions." },
+        { title: "Bottom-Up vs Top-Down", text: "Bottom-up avoids recursion overhead; top-down is easier to write." },
+        { title: "Space Optimization", text: "Many 2D DPs can be reduced to 1D by processing in the right order." }
+      ]
+    },
+    {
+      id: "dd-graph", num: "2 of 6", title: "Graph Algorithms",
+      desc: "Traversal, shortest paths, spanning trees, and connected components — the backbone of competitive programming.", color: "#7ee787", icon: "🌐",
+      svg: function(w, h) {
+        var s = '<svg viewBox="0 0 '+w+' '+h+'" xmlns="http://www.w3.org/2000/svg" style="background:#0d1117">';
+        var pts = [[w*0.2,h*0.3],[w*0.5,h*0.15],[w*0.8,h*0.3],[w*0.3,h*0.7],[w*0.7,h*0.7],[w*0.5,h*0.5]];
+        var edges = [[0,1],[1,2],[0,3],[3,4],[2,4],[1,5],[5,3],[5,4]];
+        for(var i=0;i<edges.length;i++) {
+          var a=pts[edges[i][0]], b=pts[edges[i][1]];
+          s += '<line x1="'+a[0]+'" y1="'+a[1]+'" x2="'+b[0]+'" y2="'+b[1]+'" stroke="#7ee78755" stroke-width="1.5"/>';
+        }
+        for(var i=0;i<pts.length;i++) {
+          s += '<circle cx="'+pts[i][0]+'" cy="'+pts[i][1]+'" r="12" fill="#7ee78720" stroke="#7ee787" stroke-width="1.5"/>';
+          s += '<text x="'+pts[i][0]+'" y="'+(pts[i][1]+4)+'" text-anchor="middle" fill="#7ee787" font-size="10">'+i+'</text>';
+        }
+        return s + '</svg>';
+      },
+      sections: [
+        { title: "Traversal", text: "DFS finds bridges, articulation points, SCC. BFS finds shortest unweighted paths. Both are O(V+E)." },
+        { title: "Shortest Paths", text: "Dijkstra O((V+E)log V) for non-negative. Bellman-Ford O(VE) for negative. Floyd-Warshall O(V³) for all-pairs." },
+        { title: "MST", text: "Kruskal's (sort edges + UFDS) or Prim's (priority queue). Both O(E log V)." },
+        { title: "SCC", text: "Kosaraju's: two DFS passes — one on original, one on transposed graph." }
+      ],
+      keypoints: [
+        { title: "Graph Representation", text: "Adjacency list is almost always preferred over matrix in CP." },
+        { title: "When to BFS vs DFS", text: "BFS for shortest paths (unweighted); DFS for connected components, back edges." },
+        { title: "Negative Cycles", text: "Bellman-Ford detects them; Dijkstra fails silently on negative edges." }
+      ]
+    },
+    {
+      id: "dd-segtree", num: "3 of 6", title: "Segment Tree & Fenwick",
+      desc: "Powerful data structures for range queries and point/range updates in O(log n).", color: "#58a6ff", icon: "🌲",
+      svg: function(w, h) {
+        var s = '<svg viewBox="0 0 '+w+' '+h+'" xmlns="http://www.w3.org/2000/svg" style="background:#0d1117">';
+        // Binary tree shape
+        var levels = [[w/2, 30]], nw = 18;
+        var allNodes = [[w/2,30]];
+        for(var lv=1;lv<4;lv++) {
+          var prev = [];
+          for(var i=0;i<Math.pow(2,lv);i++) prev.push([40 + i*(w-80)/(Math.pow(2,lv)-1||1), 30+lv*((h-60)/3)]);
+          for(var i=0;i<prev.length;i++) allNodes.push(prev[i]);
+          levels.push(prev);
+        }
+        // Edges
+        for(var lv=1;lv<levels.length;lv++) for(var i=0;i<levels[lv].length;i++) {
+          var p = levels[lv-1][Math.floor(i/2)], c = levels[lv][i];
+          s += '<line x1="'+p[0]+'" y1="'+p[1]+'" x2="'+c[0]+'" y2="'+c[1]+'" stroke="#58a6ff44" stroke-width="1"/>';
+        }
+        // Nodes
+        for(var i=0;i<allNodes.length;i++) {
+          s += '<circle cx="'+allNodes[i][0]+'" cy="'+allNodes[i][1]+'" r="'+nw/2+'" fill="#58a6ff20" stroke="#58a6ff" stroke-width="1"/>';
+        }
+        s += '<text x="'+(w/2)+'" y="'+(h-8)+'" text-anchor="middle" fill="#58a6ff88" font-size="9">Segment Tree structure</text>';
+        return s + '</svg>';
+      },
+      sections: [
+        { title: "Fenwick Tree (BIT)", text: "Uses binary representation of indices. Supports point update + prefix query in O(log n). Can extend to RUPQ and RURQ." },
+        { title: "Segment Tree", text: "Full binary tree over array. Supports range queries (sum, min, max, GCD) and updates. Lazy propagation enables range updates in O(log n)." },
+        { title: "Key Comparison", formula: "Fenwick: simpler, less memory | Segment Tree: more flexible, supports lazy propagation" }
+      ],
+      keypoints: [
+        { title: "When to Use", text: "Any problem with repeated range queries and updates on an array." },
+        { title: "Lazy Propagation", text: "Defer updates to children until needed — essential for range update range query." },
+        { title: "Coordinate Compression", text: "When values are large but count is small, compress coordinates first." }
+      ]
+    },
+    {
+      id: "dd-strings", num: "4 of 6", title: "String Algorithms",
+      desc: "Efficient pattern matching and string analysis using suffix arrays, KMP, and tries.", color: "#d2a8ff", icon: "📝",
+      svg: function(w, h) {
+        var s = '<svg viewBox="0 0 '+w+' '+h+'" xmlns="http://www.w3.org/2000/svg" style="background:#0d1117">';
+        var word = "ABCABD";
+        var cw = Math.min(50, (w-40)/word.length);
+        var startX = (w - word.length*cw)/2;
+        for(var i=0;i<word.length;i++) {
+          var x = startX + i*cw;
+          s += '<rect x="'+x+'" y="'+(h/2-20)+'" width="'+cw+'" height="40" fill="'+(i<3?'#d2a8ff20':'#d2a8ff10')+'" stroke="#d2a8ff" stroke-width="1"/>';
+          s += '<text x="'+(x+cw/2)+'" y="'+(h/2+5)+'" text-anchor="middle" fill="#d2a8ff" font-size="14" font-weight="600">'+word[i]+'</text>';
+        }
+        // KMP failure function arrow
+        s += '<path d="M'+(startX+cw*4.5)+','+(h/2+30)+' Q'+(startX+cw*2.25)+','+(h/2+55)+' '+(startX+cw*0.5)+','+(h/2+30)+'" fill="none" stroke="#d2a8ff88" stroke-width="1" marker-end="url(#sa)"/>';
+        s += '<defs><marker id="sa" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#d2a8ff88"/></marker></defs>';
+        s += '<text x="'+(w/2)+'" y="'+(h/2+65)+'" text-anchor="middle" fill="#d2a8ff66" font-size="9">KMP failure function fallback</text>';
+        return s + '</svg>';
+      },
+      sections: [
+        { title: "KMP Algorithm", text: "Precompute failure function (longest proper prefix that's also suffix). Match in O(n+m) time." },
+        { title: "Suffix Array", text: "Sort all suffixes of a string. Combined with LCP array, solves: longest repeated substring, number of distinct substrings, pattern matching." },
+        { title: "Trie", text: "Tree of characters for prefix-based lookups. Used in auto-complete, XOR maximization, and dictionary problems." },
+        { title: "String Hashing", text: "Polynomial hash: H(s) = Σ s[i]·p^i mod M. Compare substrings in O(1) after O(n) preprocessing." }
+      ],
+      keypoints: [
+        { title: "Choose Wisely", text: "KMP for single pattern; Aho-Corasick for multiple patterns; Suffix Array for substring queries." },
+        { title: "Hash Collisions", text: "Use double hashing (two different mods) to minimize collision probability." },
+        { title: "Digit DP", text: "Count numbers in [L,R] satisfying digit constraints using DP on digits." }
+      ]
+    },
+    {
+      id: "dd-flow", num: "5 of 6", title: "Network Flow",
+      desc: "Model optimization problems as flow networks — max flow, min cut, matching, and assignment.", color: "#ff7b72", icon: "🔀",
+      svg: function(w, h) {
+        var s = '<svg viewBox="0 0 '+w+' '+h+'" xmlns="http://www.w3.org/2000/svg" style="background:#0d1117">';
+        var pts = {s:[40,h/2], a:[w*0.33,h*0.25], b:[w*0.33,h*0.75], c:[w*0.66,h*0.25], d:[w*0.66,h*0.75], t:[w-40,h/2]};
+        var edges = [['s','a',10],['s','b',8],['a','c',6],['a','d',4],['b','d',5],['c','t',7],['d','t',9],['b','c',3]];
+        for(var i=0;i<edges.length;i++) {
+          var a=pts[edges[i][0]], b=pts[edges[i][1]];
+          s += '<line x1="'+a[0]+'" y1="'+a[1]+'" x2="'+b[0]+'" y2="'+b[1]+'" stroke="#ff7b7244" stroke-width="2"/>';
+          s += '<text x="'+((a[0]+b[0])/2)+'" y="'+((a[1]+b[1])/2-5)+'" text-anchor="middle" fill="#ff7b72aa" font-size="9">'+edges[i][2]+'</text>';
+        }
+        var labels = {s:'S',a:'A',b:'B',c:'C',d:'D',t:'T'};
+        for(var k in pts) {
+          s += '<circle cx="'+pts[k][0]+'" cy="'+pts[k][1]+'" r="14" fill="'+(k==='s'||k==='t'?'#ff7b7230':'#ff7b7215')+'" stroke="#ff7b72" stroke-width="1.5"/>';
+          s += '<text x="'+pts[k][0]+'" y="'+(pts[k][1]+4)+'" text-anchor="middle" fill="#ff7b72" font-size="11" font-weight="600">'+labels[k]+'</text>';
+        }
+        return s + '</svg>';
+      },
+      sections: [
+        { title: "Max-Flow Min-Cut", text: "Max flow from source to sink equals min cut capacity. Ford-Fulkerson framework with BFS (Edmonds-Karp) or blocking flows (Dinic's)." },
+        { title: "Dinic's Algorithm", text: "Build level graph with BFS, find blocking flows with DFS. O(V²E) general, O(E√V) for unit-capacity graphs." },
+        { title: "Applications", text: "Bipartite matching, assignment problem, minimum path cover, maximum independent set (on bipartite), project selection." }
+      ],
+      keypoints: [
+        { title: "Model as Flow", text: "The hardest part is modeling the problem as a flow network. Practice many examples." },
+        { title: "Min-Cost Max-Flow", text: "Extends max-flow with edge costs. Use SPFA to find shortest augmenting paths." },
+        { title: "König's Theorem", text: "In bipartite graphs: max matching = min vertex cover." }
+      ]
+    },
+    {
+      id: "dd-math", num: "6 of 6", title: "Number Theory & Combinatorics",
+      desc: "Essential mathematical tools: primes, modular arithmetic, counting, and matrix exponentiation.", color: "#ffa657", icon: "🔢",
+      svg: function(w, h) {
+        var s = '<svg viewBox="0 0 '+w+' '+h+'" xmlns="http://www.w3.org/2000/svg" style="background:#0d1117">';
+        // Sieve visualization
+        var nums = [2,3,4,5,6,7,8,9,10,11,12,13];
+        var primes = [2,3,5,7,11,13];
+        var cw = Math.min(40, (w-40)/nums.length);
+        var sx = (w - nums.length*cw)/2;
+        for(var i=0;i<nums.length;i++) {
+          var isPrime = primes.indexOf(nums[i]) >= 0;
+          s += '<rect x="'+(sx+i*cw)+'" y="'+(h/2-15)+'" width="'+cw+'" height="30" fill="'+(isPrime?'#ffa65720':'#ff7b7210')+'" stroke="'+(isPrime?'#ffa657':'#ff7b7244')+'" stroke-width="1"/>';
+          s += '<text x="'+(sx+i*cw+cw/2)+'" y="'+(h/2+5)+'" text-anchor="middle" fill="'+(isPrime?'#ffa657':'#ff7b7266')+'" font-size="11"'+(isPrime?'':' text-decoration="line-through"')+'>'+nums[i]+'</text>';
+        }
+        s += '<text x="'+(w/2)+'" y="'+(h/2-25)+'" text-anchor="middle" fill="#ffa65788" font-size="9">Sieve of Eratosthenes</text>';
+        s += '<text x="'+(w/2)+'" y="'+(h/2+35)+'" text-anchor="middle" fill="#ffa65766" font-size="9">■ prime  ■ composite</text>';
+        return s + '</svg>';
+      },
+      sections: [
+        { title: "Primes", text: "Sieve of Eratosthenes O(n log log n). Miller-Rabin for primality testing of large numbers." },
+        { title: "Modular Arithmetic", text: "a^(-1) mod p = a^(p-2) mod p (Fermat). Extended Euclid for general modular inverse. All CP math is done mod 10^9+7." },
+        { title: "Combinatorics", text: "Precompute factorials and inverse factorials for O(1) nCr queries. Catalan numbers, Stirling numbers, inclusion-exclusion." },
+        { title: "Key Formula", formula: "a^(-1) mod p ≡ a^(p-2) mod p  (when p is prime)" }
+      ],
+      keypoints: [
+        { title: "Overflow Prevention", text: "Always mod after multiplication: (a*b) % M. Use long long in C++." },
+        { title: "Matrix Exponentiation", text: "Compute n-th term of linear recurrence in O(k³ log n) where k is matrix size." },
+        { title: "Chinese Remainder", text: "Solve system of congruences x ≡ aᵢ (mod mᵢ) when moduli are coprime." }
+      ]
+    }
+  ]
+};
+
+// ═══════════════════════════════════════════════════════════════════════
+// INIT — Build tabs, toolbar, feature toggles
+// ═══════════════════════════════════════════════════════════════════════
+const STORAGE_KEY = C.storageKey || 'studytool';
+const depthColors = C.depthColors || ["#58a6ff","#f778ba","#7ee787","#ffa657","#d2a8ff","#79c0ff"];
+
+const tabs = [];
+if (C.mindmap)                          tabs.push({ id: 'mindmap',  label: '📐 Mind Map' });
+if (C.graph && C.graph.nodes && C.graph.nodes.length) tabs.push({ id: 'graph',    label: '🔗 Topic Graph' });
+if (C.deepDives && C.deepDives.length)  tabs.push({ id: 'deepdive', label: '📚 Deep Dives' });
+if (C.youtube && C.youtube.videos && C.youtube.videos.length) tabs.push({ id: 'appendix', label: '📹 Appendix' });
+
+document.getElementById('toolbar-title').textContent = '🧠 ' + C.course.code;
+document.title = C.course.code + ' — Interactive Study Tool';
+
+// Build tab buttons
+const tabGroup = document.getElementById('tab-group');
+tabs.forEach((t, i) => {
+  const btn = document.createElement('button');
+  btn.className = 'tab' + (i === 0 ? ' active' : '');
+  btn.dataset.view = t.id;
+  btn.textContent = t.label;
+  btn.onclick = () => switchTab(t.id);
+  tabGroup.appendChild(btn);
+});
+
+// Source link
+if (C.sourceLink) {
+  const sl = document.getElementById('source-link');
+  sl.href = C.sourceLink.url;
+  sl.textContent = C.sourceLink.label;
+  sl.style.display = '';
+}
+
+// Learning path button visibility
+if (C.learningPath && C.learningPath.length) {
+  document.getElementById('btn-path').style.display = '';
+}
+
+// Show first tab
+let currentTab = tabs.length ? tabs[0].id : null;
+if (currentTab) document.getElementById('view-' + currentTab).classList.add('active');
+
+// ═══════════════════════════════════════════════════════════════════════
+// TAB SWITCHING
+// ═══════════════════════════════════════════════════════════════════════
+let graphInitialized = false;
+
+function switchTab(tab) {
+  currentTab = tab;
+  document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.view === tab));
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.getElementById('view-' + tab).classList.add('active');
+
+  document.getElementById('mindmap-controls').style.display  = tab === 'mindmap'  ? 'flex' : 'none';
+  document.getElementById('graph-controls').style.display    = tab === 'graph'    ? 'flex' : 'none';
+  document.getElementById('deepdive-controls').style.display = 'none';
+  document.getElementById('btn-path').style.display = (tab === 'graph' && C.learningPath && C.learningPath.length) ? '' : 'none';
+  document.querySelector('.legend-mindmap').style.display = tab === 'mindmap' ? '' : 'none';
+  document.getElementById('legend-graph').style.display   = tab === 'graph'   ? '' : 'none';
+
+  if (tab === 'graph' && !graphInitialized) { initGraph(); graphInitialized = true; }
+  // Close mobile menu
+  document.querySelector('.tab-group').classList.remove('open');
+}
+
+function toggleMobileMenu() {
+  document.querySelector('.tab-group').classList.toggle('open');
+}
+
+// ═══════════════════════════════════════════════════════════════════════
+// localStorage helpers
+// ═══════════════════════════════════════════════════════════════════════
+function loadStore() { try { return JSON.parse(localStorage.getItem(STORAGE_KEY + '-comments') || '{}'); } catch(e) { return {}; } }
+function saveStore(s) { try { localStorage.setItem(STORAGE_KEY + '-comments', JSON.stringify(s)); } catch(e) {} }
+function nodeKey(name) { return name.replace(/\n/g, ' ').trim(); }
+
+// ═══════════════════════════════════════════════════════════════════════
+// TOOLTIP
+// ═══════════════════════════════════════════════════════════════════════
+const tooltip = document.getElementById('tooltip');
+
+function showTooltip(evt, name, tip, slides) {
+  tooltip.querySelector('.tt-title').textContent = name.replace(/\n/g, ' ');
+  tooltip.querySelector('.tt-body').textContent = tip || '';
+  const sc = tooltip.querySelector('.tt-slides');
+  sc.innerHTML = '';
+  if (slides && slides.length) {
+    sc.innerHTML = '<span class="slides-label">📎 Linked Materials</span>';
+    slides.forEach(s => {
+      const a = document.createElement('a');
+      a.textContent = s.label;
+      a.onclick = (e) => { e.stopPropagation(); openPdfViewer(s.path, s.label); };
+      sc.appendChild(a);
+    });
+    tooltip.classList.add('has-slides');
+  } else {
+    tooltip.classList.remove('has-slides');
+  }
+  tooltip.style.opacity = 1;
+  positionTooltip(evt);
+}
+
+function positionTooltip(evt) {
+  let x = evt.pageX + 16, y = evt.pageY - 10;
+  if (x + 400 > window.innerWidth) x = evt.pageX - 400;
+  if (y + 200 > window.innerHeight) y = evt.pageY - 200;
+  tooltip.style.left = x + 'px';
+  tooltip.style.top = y + 'px';
+}
+
+function hideTooltip() {
+  setTimeout(() => { if (!tooltip.matches(':hover')) tooltip.style.opacity = 0; }, 200);
+}
+tooltip.addEventListener('mouseleave', () => { tooltip.style.opacity = 0; });
+
+// ═══════════════════════════════════════════════════════════════════════
+// MIND MAP (D3 collapsible tree)
+// ═══════════════════════════════════════════════════════════════════════
+let g, root, treeLayout, mmZoom;
+
+if (C.mindmap) {
+  const W = window.innerWidth, H = window.innerHeight;
+  const svg = d3.select("#canvas");
+  g = svg.append("g");
+  mmZoom = d3.zoom().scaleExtent([0.1, 4]).on("zoom", e => g.attr("transform", e.transform));
+  svg.call(mmZoom);
+  // Sync zoom internal state with initial position so resetView works correctly
+  const mmInitialTransform = d3.zoomIdentity.translate(W/3, H/2);
+  svg.call(mmZoom.transform, mmInitialTransform);
+
+  root = d3.hierarchy(C.mindmap);
+  root.x0 = 0; root.y0 = 0;
+
+  // Collapse children beyond depth 1
+  root.descendants().forEach(d => { if (d.depth > 1 && d.children) { d._children = d.children; d.children = null; } });
+
+  treeLayout = d3.tree().nodeSize([28, 220]);
+  updateMindmap(root);
+
+  // Build legend
+  buildMindmapLegend();
+}
+
+function updateMindmap(source) {
+  const duration = 400;
+  treeLayout(root);
+  const nodes = root.descendants();
+  const links = root.links();
+
+  // Links
+  const link = g.selectAll("path.link").data(links, d => d.target.data.name);
+  link.enter().insert("path", "g")
+    .attr("class", "link")
+    .attr("fill", "none")
+    .attr("stroke", d => depthColors[Math.min(d.target.depth, depthColors.length-1)])
+    .attr("stroke-opacity", 0.25)
+    .attr("stroke-width", 2)
+    .attr("d", () => {
+      const o = { x: source.x0, y: source.y0 };
+      return diagonal({ source: o, target: o });
+    })
+    .on("mouseover", function(evt, d) { showTooltip(evt, d.target.data.name, d.target.data.tooltip, d.target.data.slides); })
+    .on("mousemove", positionTooltip)
+    .on("mouseout", hideTooltip)
+    .transition().duration(duration)
+    .attr("d", diagonal);
+
+  link.transition().duration(duration).attr("d", diagonal);
+  link.exit().transition().duration(duration)
+    .attr("d", () => { const o = { x: source.x, y: source.y }; return diagonal({ source: o, target: o }); })
+    .remove();
+
+  // Nodes
+  const node = g.selectAll("g.node").data(nodes, d => d.data.name);
+  const nodeEnter = node.enter().append("g")
+    .attr("class", "node")
+    .attr("transform", `translate(${source.y0},${source.x0})`)
+    .on("click", (evt, d) => { if (d.children) { d._children = d.children; d.children = null; } else if (d._children) { d.children = d._children; d._children = null; } updateMindmap(d); })
+    .on("dblclick", (evt, d) => openCmdPanel(d.data.name, d.data.tooltip))
+    .on("mouseover", (evt, d) => showTooltip(evt, d.data.name, d.data.tooltip, d.data.slides))
+    .on("mousemove", positionTooltip)
+    .on("mouseout", hideTooltip);
+
+  nodeEnter.append("circle")
+    .attr("r", d => d.depth === 0 ? 14 : d.data._lab ? 9 : 10)
+    .attr("fill", d => depthColors[Math.min(d.depth, depthColors.length-1)])
+    .attr("fill-opacity", d => d.data._lab ? 0.5 : 0.85)
+    .attr("stroke", d => depthColors[Math.min(d.depth, depthColors.length-1)])
+    .attr("stroke-width", d => d.depth === 0 ? 3 : 2)
+    .attr("stroke-opacity", 0.4);
+
+  nodeEnter.each(function(d) {
+    const lines = d.data.name.split("\n");
+    const t = d3.select(this).append("text")
+      .attr("fill", "#c9d1d9").attr("font-size", d.depth === 0 ? "13px" : "11px")
+      .attr("font-weight", d.depth <= 1 ? "600" : "400")
+      .attr("dy", lines.length > 1 ? `${-(lines.length-1)*0.3}em` : ".35em")
+      .attr("x", d.children || d._children ? -16 : 16)
+      .attr("text-anchor", d.children || d._children ? "end" : "start")
+      .style("paint-order", "stroke").style("stroke", "#0d1117").style("stroke-width", "3px");
+    lines.forEach((line, i) => {
+      t.append("tspan")
+        .attr("x", d.children || d._children ? -16 : 16)
+        .attr("dy", i === 0 ? 0 : "1.2em")
+        .text(line);
+    });
+  });
+
+  // Update positions
+  const nodeUpdate = nodeEnter.merge(node);
+  nodeUpdate.transition().duration(duration).attr("transform", d => `translate(${d.y},${d.x})`);
+  node.exit().transition().duration(duration).attr("transform", `translate(${source.y},${source.x})`).remove();
+
+  nodes.forEach(d => { d.x0 = d.x; d.y0 = d.y; });
+}
+
+function diagonal(d) {
+  return `M${d.source.y},${d.source.x}C${(d.source.y+d.target.y)/2},${d.source.x} ${(d.source.y+d.target.y)/2},${d.target.x} ${d.target.y},${d.target.x}`;
+}
+
+function expandAll()   { root.descendants().forEach(d => { if (d._children) { d.children = d._children; d._children = null; } }); updateMindmap(root); }
+function collapseAll() { root.descendants().forEach(d => { if (d.depth > 1 && d.children) { d._children = d.children; d.children = null; } }); updateMindmap(root); }
+function resetView()   { collapseAll(); const W = window.innerWidth, H = window.innerHeight; d3.select("#canvas").transition().duration(600).call(mmZoom.transform, d3.zoomIdentity.translate(W/3, H/2)); }
+
+function buildMindmapLegend() {
+  const legend = document.getElementById('legend');
+  legend.style.display = '';
+  const labels = ['Course Root', 'Weekly Topics', 'Sub-Topics', 'Key Concepts', 'Labs'];
+  let html = '<div style="font-weight:600;color:#58a6ff;margin-bottom:6px;font-size:12px">Node Depth <span style="font-weight:400;color:#8b949e;font-size:10px">— click to filter</span></div>';
+  labels.forEach((l, i) => {
+    html += `<div class="legend-item" data-mm="depth-${i}" style="display:flex;align-items:center;gap:8px;margin:4px 0;cursor:pointer;padding:2px 4px;border-radius:4px"><span class="swatch" style="background:${depthColors[i]}"></span> ${l}</div>`;
+  });
+  html += '<div style="margin-top:6px;border-top:1px solid #30363d;padding-top:6px"><div class="legend-item" data-mm="reset" style="display:flex;align-items:center;gap:8px;cursor:pointer;padding:2px 4px;border-radius:4px;color:#8b949e"><span style="font-size:14px">✕</span> Clear filter</div></div>';
+  legend.innerHTML = html;
+
+  // Legend click filtering
+  legend.querySelectorAll('.legend-item').forEach(item => {
+    item.addEventListener('click', () => {
+      const mmKey = item.dataset.mm;
+      legend.querySelectorAll('.legend-item').forEach(i => i.classList.remove('active-filter'));
+      if (mmKey === 'reset') {
+        g.selectAll("g.node").style("opacity", 1);
+        g.selectAll("path.link").style("opacity", 1);
+        return;
+      }
+      item.classList.add('active-filter');
+      const depth = mmKey === 'depth-4' ? -1 : parseInt(mmKey.split('-')[1]);
+      g.selectAll("g.node").style("opacity", d => {
+        if (depth === -1) return d.data._lab ? 1 : 0.15;
+        return d.depth === depth ? 1 : 0.15;
+      });
+      g.selectAll("path.link").style("opacity", 0.1);
+    });
+  });
+}
+
+// ═══════════════════════════════════════════════════════════════════════
+// TOPIC GRAPH (D3 force-directed)
+// ═══════════════════════════════════════════════════════════════════════
+let graphZoom, showEdgeLabels = true;
+
+function initGraph() {
+  if (!C.graph) return;
+  const W = window.innerWidth, H = window.innerHeight;
+  const svg = d3.select("#canvas-graph");
+  const graphCategories = C.graph.categories;
+  const edgeColors = C.graph.edgeColors;
+  const nodes = C.graph.nodes.map(d => ({...d}));
+  const edges = C.graph.edges.map(d => ({...d}));
+
+  graphZoom = d3.zoom().scaleExtent([0.2, 5]).on("zoom", e => gGraph.attr("transform", e.transform));
+  svg.call(graphZoom);
+  const gGraph = svg.append("g").attr("transform", `translate(${W/2},${H/2})`);
+
+  const simul = d3.forceSimulation(nodes)
+    .force("link", d3.forceLink(edges).id(d => d.id).distance(120))
+    .force("charge", d3.forceManyBody().strength(-300))
+    .force("center", d3.forceCenter(0, 0))
+    .force("collision", d3.forceCollide().radius(30));
+
+  // Edges
+  const link = gGraph.selectAll("line.graph-link").data(edges).enter().append("line")
+    .attr("class", "graph-link")
+    .attr("stroke", d => edgeColors[d.type] || "#8b949e")
+    .attr("stroke-width", 2)
+    .attr("marker-end", "url(#arrow)");
+
+  // Arrow marker
+  svg.append("defs").append("marker").attr("id", "arrow").attr("viewBox", "0 -4 8 8").attr("refX", 20)
+    .attr("markerWidth", 6).attr("markerHeight", 6).attr("orient", "auto")
+    .append("path").attr("d", "M0,-4L8,0L0,4").attr("fill", "#484f58");
+
+  // Edge labels
+  const edgeLabel = gGraph.selectAll("text.graph-link-label").data(edges).enter().append("text")
+    .attr("class", "graph-link-label")
+    .text(d => d.label || d.type)
+    .on("mouseover", function(evt, d) { showTooltip(evt, d.label || d.type, `${d.source.label || d.source} → ${d.target.label || d.target}`); })
+    .on("mouseout", hideTooltip);
+
+  // Nodes
+  const node = gGraph.selectAll("g.graph-node").data(nodes).enter().append("g")
+    .attr("class", "graph-node")
+    .call(d3.drag().on("start", (evt, d) => { if (!evt.active) simul.alphaTarget(0.3).restart(); d.fx = d.x; d.fy = d.y; })
+      .on("drag", (evt, d) => { d.fx = evt.x; d.fy = evt.y; })
+      .on("end", (evt, d) => { if (!evt.active) simul.alphaTarget(0); d.fx = null; d.fy = null; }))
+    .on("click", (evt, d) => highlightNode(d, nodes, edges, link, node, edgeLabel))
+    .on("dblclick", (evt, d) => openCmdPanel(d.label, d.tip))
+    .on("mouseover", (evt, d) => showTooltip(evt, d.label, d.tip, d.slides))
+    .on("mousemove", positionTooltip)
+    .on("mouseout", hideTooltip);
+
+  node.append("circle")
+    .attr("r", d => { const c = edges.filter(e => (e.source.id||e.source)===d.id||(e.target.id||e.target)===d.id).length; return Math.max(10, 6+c*1.5); })
+    .attr("fill", d => graphCategories[d.cat])
+    .attr("fill-opacity", 0.85).attr("stroke", d => graphCategories[d.cat]).attr("stroke-width", 2).attr("stroke-opacity", 0.4);
+
+  node.each(function(d) {
+    const lines = d.label.split("\n");
+    const t = d3.select(this).append("text").attr("class", "graph-node-label").attr("text-anchor", "middle")
+      .attr("dy", lines.length > 1 ? `-${(lines.length-1)*0.3}em` : ".35em")
+      .attr("y", () => { const c = edges.filter(e => (e.source.id||e.source)===d.id||(e.target.id||e.target)===d.id).length; return Math.max(10, 6+c*1.5)+14; });
+    lines.forEach((line, i) => { t.append("tspan").attr("x", 0).attr("dy", i===0?0:"1.15em").text(line); });
+  });
+
+  window._graphRefs = { link, node, edgeLabel, nodes, edges };
+
+  simul.on("tick", () => {
+    link.attr("x1",d=>d.source.x).attr("y1",d=>d.source.y).attr("x2",d=>d.target.x).attr("y2",d=>d.target.y);
+    edgeLabel.attr("x",d=>(d.source.x+d.target.x)/2).attr("y",d=>(d.source.y+d.target.y)/2-6).style("display", showEdgeLabels ? "" : "none");
+    node.attr("transform", d => `translate(${d.x},${d.y})`);
+  });
+
+  // Build graph legend
+  buildGraphLegend();
+  setTimeout(() => refreshGraphBadges(loadStore()), 300);
+}
+
+function highlightNode(d, nodes, edges, link, node, edgeLabel) {
+  const connected = new Set([d.id]);
+  edges.forEach(e => { const s=e.source.id||e.source, t=e.target.id||e.target; if(s===d.id) connected.add(t); if(t===d.id) connected.add(s); });
+  node.select("circle").transition().duration(300).attr("fill-opacity", n => connected.has(n.id)?1:0.12);
+  node.selectAll("text").transition().duration(300).style("opacity", n => connected.has(n.id)?1:0.15);
+  link.transition().duration(300).attr("stroke-opacity", e => { const s=e.source.id||e.source, t=e.target.id||e.target; return (s===d.id||t===d.id)?0.85:0.04; });
+  edgeLabel.transition().duration(300).style("opacity", e => { const s=e.source.id||e.source, t=e.target.id||e.target; return (s===d.id||t===d.id)?1:0.05; });
+}
+
+function highlightReset() {
+  if (!window._graphRefs) return;
+  const { link, node, edgeLabel } = window._graphRefs;
+  node.select("circle").transition().duration(300).attr("fill-opacity",0.85).attr("stroke-opacity",0.4);
+  node.selectAll("text").transition().duration(300).style("opacity",1);
+  link.transition().duration(300).attr("stroke-opacity",0.45).attr("stroke-width",2);
+  edgeLabel.transition().duration(300).style("opacity",1);
+}
+function toggleLabels() { showEdgeLabels=!showEdgeLabels; if(window._graphRefs) window._graphRefs.edgeLabel.style("display", showEdgeLabels?"":"none"); }
+function resetGraphView() { highlightReset(); d3.select("#canvas-graph").transition().duration(600).call(graphZoom.transform, d3.zoomIdentity); }
+
+function buildGraphLegend() {
+  const lg = document.getElementById('legend-graph');
+  let html = '<div style="font-weight:600;color:#58a6ff;margin-bottom:6px">Node Categories <span style="font-weight:400;color:#8b949e;font-size:10px">— click to filter</span></div>';
+  Object.entries(C.graph.categories).forEach(([cat, color]) => {
+    html += `<div class="legend-item" data-cat="${cat}" style="display:flex;align-items:center;gap:8px;margin:4px 0;cursor:pointer;padding:2px 4px;border-radius:4px"><span class="swatch" style="background:${color}"></span> ${cat}</div>`;
+  });
+  html += '<div style="margin-top:8px;font-weight:600;color:#58a6ff;margin-bottom:4px">Edge Types</div>';
+  Object.entries(C.graph.edgeColors).forEach(([type, color]) => {
+    html += `<div class="legend-item" data-edge="${type}" style="display:flex;align-items:center;gap:8px;margin:4px 0;cursor:pointer;padding:2px 4px;border-radius:4px"><span class="swatch-line" style="background:${color}"></span> ${type}</div>`;
+  });
+  html += '<div style="margin-top:6px;border-top:1px solid #30363d;padding-top:6px"><div class="legend-item" data-action="reset" style="display:flex;align-items:center;gap:8px;cursor:pointer;padding:2px 4px;border-radius:4px;color:#8b949e"><span style="font-size:14px">✕</span> Clear filter</div></div>';
+  lg.innerHTML = html;
+
+  // Attach click handlers for graph legend filtering
+  const { link, node, edgeLabel, nodes, edges } = window._graphRefs;
+  lg.querySelectorAll('.legend-item').forEach(item => {
+    item.addEventListener('click', () => {
+      lg.querySelectorAll('.legend-item').forEach(i => i.classList.remove('active-filter'));
+
+      // Reset filter
+      if (item.dataset.action === 'reset') {
+        node.select("circle").transition().duration(300).attr("fill-opacity", 0.85).attr("stroke-opacity", 0.4);
+        node.selectAll("text").transition().duration(300).style("opacity", 1);
+        link.transition().duration(300).attr("stroke-opacity", 0.45).attr("stroke-width", 2);
+        edgeLabel.transition().duration(300).style("opacity", 1);
+        return;
+      }
+
+      item.classList.add('active-filter');
+
+      // Filter by node category
+      if (item.dataset.cat) {
+        const cat = item.dataset.cat;
+        node.select("circle").transition().duration(300)
+          .attr("fill-opacity", d => d.cat === cat ? 1 : 0.08)
+          .attr("stroke-opacity", d => d.cat === cat ? 0.8 : 0.05);
+        node.selectAll("text").transition().duration(300)
+          .style("opacity", d => d.cat === cat ? 1 : 0.1);
+        link.transition().duration(300)
+          .attr("stroke-opacity", e => {
+            const scat = nodes.find(n => n.id === (e.source.id||e.source));
+            const tcat = nodes.find(n => n.id === (e.target.id||e.target));
+            return (scat && scat.cat === cat) || (tcat && tcat.cat === cat) ? 0.7 : 0.03;
+          });
+        edgeLabel.transition().duration(300)
+          .style("opacity", e => {
+            const scat = nodes.find(n => n.id === (e.source.id||e.source));
+            const tcat = nodes.find(n => n.id === (e.target.id||e.target));
+            return (scat && scat.cat === cat) || (tcat && tcat.cat === cat) ? 1 : 0.05;
+          });
+      }
+
+      // Filter by edge type
+      if (item.dataset.edge) {
+        const etype = item.dataset.edge;
+        link.transition().duration(300)
+          .attr("stroke-opacity", e => e.type === etype ? 0.85 : 0.03)
+          .attr("stroke-width", e => e.type === etype ? 3.5 : 1.5);
+        edgeLabel.transition().duration(300)
+          .style("opacity", e => e.type === etype ? 1 : 0.05);
+        // Dim nodes not connected by this edge type
+        const connected = new Set();
+        edges.forEach(e => { if (e.type === etype) { connected.add(e.source.id||e.source); connected.add(e.target.id||e.target); } });
+        node.select("circle").transition().duration(300)
+          .attr("fill-opacity", d => connected.has(d.id) ? 1 : 0.08);
+        node.selectAll("text").transition().duration(300)
+          .style("opacity", d => connected.has(d.id) ? 1 : 0.1);
+      }
+    });
+  });
+}
+
+// ═══════════════════════════════════════════════════════════════════════
+// LEARNING PATH
+// ═══════════════════════════════════════════════════════════════════════
+let pathPanelOpen = false, currentStep = -1, autoPlayTimer = null;
+
+function togglePathPanel() {
+  pathPanelOpen = !pathPanelOpen;
+  document.getElementById('path-panel').classList.toggle('open', pathPanelOpen);
+  if (pathPanelOpen && !document.getElementById('path-steps').children.length) buildPathUI();
+}
+
+function buildPathUI() {
+  if (!C.learningPath) return;
+  const container = document.getElementById('path-steps');
+  C.learningPath.forEach((step, idx) => {
+    const el = document.createElement('div');
+    el.className = 'path-step';
+    el.innerHTML = `<div class="step-connector"></div><div class="step-badge">${idx+1}</div><div class="step-content"><div class="step-title">${step.title}</div><div class="step-desc">${step.desc}</div><div class="step-nodes" style="font-size:10px;color:#58a6ff;margin-top:3px">${step.week || ''}</div></div>`;
+    el.onclick = () => activateStep(idx);
+    container.appendChild(el);
+  });
+}
+
+function activateStep(idx) {
+  currentStep = idx;
+  document.querySelectorAll('.path-step').forEach((el, i) => {
+    el.classList.remove('active', 'completed');
+    if (i < idx) el.classList.add('completed');
+    else if (i === idx) el.classList.add('active');
+  });
+  // Highlight corresponding graph nodes
+  if (window._graphRefs && C.learningPath[idx]) {
+    highlightReset();
+    const stepNodes = new Set(C.learningPath[idx].nodes);
+    const { node, link, edgeLabel } = window._graphRefs;
+    node.select("circle").transition().duration(300).attr("fill-opacity", n => stepNodes.has(n.id) ? 1 : 0.12);
+    node.selectAll("text").transition().duration(300).style("opacity", n => stepNodes.has(n.id) ? 1 : 0.15);
+    link.transition().duration(300).attr("stroke-opacity", 0.05);
+    edgeLabel.transition().duration(300).style("opacity", 0.05);
+  }
+}
+
+function resetPath() { currentStep = -1; document.querySelectorAll('.path-step').forEach(el => el.classList.remove('active', 'completed')); highlightReset(); }
+function autoPlay() {
+  if (autoPlayTimer) { clearInterval(autoPlayTimer); autoPlayTimer = null; document.getElementById('btn-autoplay').textContent = '▶ Auto-Play'; return; }
+  document.getElementById('btn-autoplay').textContent = '⏸ Pause';
+  let idx = currentStep < 0 ? 0 : currentStep;
+  activateStep(idx);
+  autoPlayTimer = setInterval(() => {
+    idx++;
+    if (idx >= (C.learningPath||[]).length) { clearInterval(autoPlayTimer); autoPlayTimer = null; document.getElementById('btn-autoplay').textContent = '▶ Auto-Play'; return; }
+    activateStep(idx);
+  }, 3000);
+}
+
+// ═══════════════════════════════════════════════════════════════════════
+// COMMAND PANEL (Comments / Tags)
+// ═══════════════════════════════════════════════════════════════════════
+let cmdPanelNodeKey = null;
+
+function openCmdPanel(name, tip) {
+  cmdPanelNodeKey = nodeKey(name);
+  document.getElementById('cp-name').textContent = name.replace(/\n/g, ' ');
+  document.getElementById('cp-tip').textContent = tip || '';
+  document.getElementById('cmd-panel').classList.add('open');
+  renderTags(); renderComments();
+}
+
+function closeCmdPanel() { document.getElementById('cmd-panel').classList.remove('open'); cmdPanelNodeKey = null; }
+
+function renderTags() {
+  const store = loadStore(); const nd = store[cmdPanelNodeKey] || {}; const tags = nd.tags || [];
+  const container = document.getElementById('cmd-tags'); container.innerHTML = '';
+  const builtinTags = ['done','todo','confused','important'];
+  tags.forEach(tag => {
+    const cls = builtinTags.includes(tag) ? 'tag-'+tag : 'tag-custom';
+    const el = document.createElement('span'); el.className = 'cmd-tag ' + cls;
+    el.innerHTML = `${tagIcon(tag)} ${tag} <span style="cursor:pointer;margin-left:2px" onclick="removeTag('${tag}')">&times;</span>`;
+    container.appendChild(el);
+  });
+}
+
+function renderComments() {
+  const store = loadStore(); const nd = store[cmdPanelNodeKey] || {}; const comments = nd.comments || [];
+  const container = document.getElementById('cmd-comments');
+  if (!comments.length) { container.innerHTML = '<div class="cmd-empty">No comments yet. Type below to add one.</div>'; return; }
+  container.innerHTML = '';
+  comments.forEach((c, idx) => {
+    const el = document.createElement('div'); el.className = 'cmd-comment';
+    el.innerHTML = `<div class="cc-text">${escHtml(c.text)}</div><div class="cc-time">${new Date(c.time).toLocaleString()}</div><button class="cc-del" onclick="deleteComment(${idx})">✕</button>`;
+    container.appendChild(el);
+  });
+  container.scrollTop = container.scrollHeight;
+}
+
+function escHtml(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function tagIcon(tag) { return {done:'✅',todo:'📋',confused:'❓',important:'⭐'}[tag] || '🏷️'; }
+
+function deleteComment(idx) {
+  const store = loadStore(); const nd = store[cmdPanelNodeKey] || {};
+  if (nd.comments) { nd.comments.splice(idx, 1); store[cmdPanelNodeKey] = nd; saveStore(store); }
+  renderComments(); refreshAllBadges();
+}
+
+function removeTag(tag) {
+  const store = loadStore(); const nd = store[cmdPanelNodeKey] || {};
+  nd.tags = (nd.tags || []).filter(t => t !== tag); store[cmdPanelNodeKey] = nd; saveStore(store);
+  renderTags(); refreshAllBadges();
+}
+
+document.getElementById('cmd-input').addEventListener('keydown', (e) => {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); const val = e.target.value.trim(); if (!val) return; processInput(val); e.target.value = ''; }
+});
+
+function processInput(input) {
+  if (!cmdPanelNodeKey) return;
+  const store = loadStore();
+  if (!store[cmdPanelNodeKey]) store[cmdPanelNodeKey] = { comments: [], tags: [] };
+  const nd = store[cmdPanelNodeKey]; if (!nd.comments) nd.comments = []; if (!nd.tags) nd.tags = [];
+  if (input.startsWith('/')) {
+    const parts = input.slice(1).split(/\s+/); const cmd = parts[0].toLowerCase(); const arg = parts.slice(1).join(' ').trim();
+    switch(cmd) {
+      case 'done': case 'todo': case 'confused': case 'important': toggleTag(nd, cmd); break;
+      case 'tag': if (arg) toggleTag(nd, arg); break;
+      case 'color': if (arg) nd.color = arg; else delete nd.color; break;
+      case 'clear': nd.comments = []; break;
+      case 'reset': delete store[cmdPanelNodeKey]; saveStore(store); renderTags(); renderComments(); refreshAllBadges(); return;
+      default: nd.comments.push({ text: input, time: Date.now() });
+    }
+    store[cmdPanelNodeKey] = nd; saveStore(store); renderTags(); renderComments(); refreshAllBadges(); return;
+  }
+  nd.comments.push({ text: input, time: Date.now() }); store[cmdPanelNodeKey] = nd; saveStore(store); renderComments(); refreshAllBadges();
+}
+
+function toggleTag(nd, tag) { const idx = nd.tags.indexOf(tag); if (idx >= 0) nd.tags.splice(idx, 1); else nd.tags.push(tag); }
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && cmdPanelNodeKey) closeCmdPanel(); });
+
+// ═══════════════════════════════════════════════════════════════════════
+// BADGES (visual indicators on nodes)
+// ═══════════════════════════════════════════════════════════════════════
+function refreshAllBadges() { const store = loadStore(); refreshMindmapBadges(store); refreshGraphBadges(store); }
+
+function refreshMindmapBadges(store) {
+  if (!g) return;
+  g.selectAll("g.node").each(function(d) {
+    const key = nodeKey(d.data.name); const nd = store[key]; const el = d3.select(this);
+    el.selectAll(".comment-badge,.comment-badge-bg,.has-comment-ring,.tag-icon-badge").remove();
+    if (!nd) return;
+    if (nd.color) el.select("circle").style("stroke", nd.color); else el.select("circle").style("stroke", null);
+    if (nd.comments && nd.comments.length) {
+      const r = d.depth===0?16:d.data._lab?11:12;
+      el.insert("circle","circle").attr("class","has-comment-ring").attr("r",r);
+      el.append("circle").attr("class","comment-badge-bg").attr("cx",-10).attr("cy",10).attr("r",7).attr("fill","#ffa657");
+      el.append("text").attr("class","comment-badge").attr("x",-10).attr("y",10).attr("text-anchor","middle").attr("dominant-baseline","central").style("font-size","8px").style("font-weight","700").text(nd.comments.length);
+    }
+    if (nd.tags && nd.tags.length) {
+      el.append("text").attr("class","tag-icon-badge").attr("x",10).attr("y",-12).style("font-size","10px").style("pointer-events","none").text(nd.tags.slice(0,3).map(t=>tagIcon(t)).join(''));
+    }
+  });
+}
+
+function refreshGraphBadges(store) {
+  if (!window._graphRefs) return;
+  window._graphRefs.node.each(function(d) {
+    const key = nodeKey(d.label); const nd = store[key]; const el = d3.select(this);
+    el.selectAll(".comment-badge,.comment-badge-bg,.has-comment-ring,.tag-icon-badge").remove();
+    if (!nd) return;
+    if (nd.color) el.select("circle").attr("fill",nd.color).attr("stroke",nd.color);
+    if (nd.comments && nd.comments.length) {
+      el.insert("circle",":first-child").attr("class","has-comment-ring").attr("r",18);
+      el.append("circle").attr("class","comment-badge-bg").attr("cx",-14).attr("cy",14).attr("r",7).attr("fill","#ffa657");
+      el.append("text").attr("class","comment-badge").attr("x",-14).attr("y",14).attr("text-anchor","middle").attr("dominant-baseline","central").style("font-size","8px").style("font-weight","700").text(nd.comments.length);
+    }
+    if (nd.tags && nd.tags.length) {
+      el.append("text").attr("class","tag-icon-badge").attr("x",14).attr("y",-14).style("font-size","10px").style("pointer-events","none").text(nd.tags.slice(0,3).map(t=>tagIcon(t)).join(''));
+    }
+  });
+}
+
+setTimeout(() => refreshAllBadges(), 600);
+
+// ═══════════════════════════════════════════════════════════════════════
+// DEEP DIVES
+// ═══════════════════════════════════════════════════════════════════════
+let currentDDIndex = -1;
+
+if (C.deepDives && C.deepDives.length) {
+  const grid = document.getElementById('dd-card-grid');
+  const fullContainer = document.getElementById('dd-full-container');
+
+  C.deepDives.forEach((dd, idx) => {
+    // Card
+    const card = document.createElement('div'); card.className = 'dd-card'; card.onclick = () => showDeepDive(idx);
+    const imgDiv = document.createElement('div'); imgDiv.className = 'dd-card-img'; imgDiv.style.background = dd.color + '10';
+    if (dd.svg) imgDiv.innerHTML = dd.svg(360, 200);
+    else imgDiv.innerHTML = `<span style="font-size:64px">${dd.icon || '📘'}</span>`;
+    const body = document.createElement('div'); body.className = 'dd-card-body';
+    body.innerHTML = `<div class="dd-card-num" style="color:${dd.color}">${dd.num}</div><div class="dd-card-title">${dd.title}</div><div class="dd-card-desc">${dd.desc}</div>`;
+    card.appendChild(imgDiv); card.appendChild(body); grid.appendChild(card);
+
+    // Full view
+    const full = document.createElement('div'); full.className = 'dd-full'; full.id = 'dd-full-' + dd.id;
+    let fhtml = `<div class="dd-infographic"><h2 style="color:${dd.color}">${dd.icon || ''} ${dd.title}</h2><div class="dd-subtitle">${dd.num} · ${dd.desc}</div>`;
+    if (dd.svg) fhtml += dd.svg(800, 300);
+    (dd.sections || []).forEach(s => {
+      fhtml += `<div class="dd-section"><h3>${s.title}</h3>`;
+      if (s.formula) fhtml += `<div class="dd-formula">${s.formula}</div>`;
+      else fhtml += `<p>${s.text}</p>`;
+      fhtml += '</div>';
+    });
+    if (dd.keypoints && dd.keypoints.length) {
+      fhtml += '<div class="dd-keypoints">';
+      dd.keypoints.forEach(kp => { fhtml += `<div class="dd-kp"><strong>${kp.title}</strong><span>${kp.text}</span></div>`; });
+      fhtml += '</div>';
+    }
+    fhtml += `<div class="dd-nav"><button class="btn" onclick="navDD(-1)">← Prev</button><button class="btn" onclick="showCardGrid()">Grid</button><button class="btn" onclick="navDD(1)">Next →</button></div></div>`;
+    full.innerHTML = fhtml;
+    fullContainer.appendChild(full);
+  });
+}
+
+function showDeepDive(idx) {
+  currentDDIndex = idx;
+  document.getElementById('dd-card-grid').style.display = 'none';
+  document.querySelectorAll('.dd-full').forEach(f => f.classList.remove('active'));
+  document.getElementById('dd-full-' + C.deepDives[idx].id).classList.add('active');
+  document.getElementById('deepdive-controls').style.display = 'flex';
+}
+
+function showCardGrid() {
+  currentDDIndex = -1;
+  document.querySelectorAll('.dd-full').forEach(f => f.classList.remove('active'));
+  document.getElementById('dd-card-grid').style.display = '';
+  document.getElementById('deepdive-controls').style.display = 'none';
+}
+
+function navDD(dir) {
+  const n = (C.deepDives || []).length;
+  if (!n) return;
+  currentDDIndex = (currentDDIndex + dir + n) % n;
+  showDeepDive(currentDDIndex);
+}
+
+// ═══════════════════════════════════════════════════════════════════════
+// TRACKER
+// ═══════════════════════════════════════════════════════════════════════
+let trackerOpen = false;
+
+function toggleTracker() {
+  trackerOpen = !trackerOpen;
+  document.getElementById('tracker-panel').classList.toggle('open', trackerOpen);
+  if (trackerOpen) buildTracker();
+}
+
+function buildTracker() {
+  const store = loadStore();
+  const entries = Object.entries(store).filter(([k,v]) => (v.comments && v.comments.length) || (v.tags && v.tags.length));
+
+  const totalNodes = entries.length;
+  const totalComments = entries.reduce((a,[k,v]) => a + (v.comments||[]).length, 0);
+  const totalTags = entries.reduce((a,[k,v]) => a + (v.tags||[]).length, 0);
+
+  document.getElementById('tracker-stats').innerHTML =
+    `<div class="tracker-stat"><div class="ts-num" style="color:#58a6ff">${totalNodes}</div><div class="ts-label">Nodes</div></div>`
+    + `<div class="tracker-stat"><div class="ts-num" style="color:#ffa657">${totalComments}</div><div class="ts-label">Comments</div></div>`
+    + `<div class="tracker-stat"><div class="ts-num" style="color:#7ee787">${totalTags}</div><div class="ts-label">Tags</div></div>`;
+
+  const list = document.getElementById('tracker-list');
+  if (!entries.length) { list.innerHTML = '<div id="tracker-empty">No comments or tags yet. Double-click any node to add some!</div>'; return; }
+  list.innerHTML = '';
+  entries.forEach(([key, val]) => {
+    const el = document.createElement('div'); el.className = 'tracker-item';
+    const icons = (val.tags || []).slice(0,3).map(t => tagIcon(t)).join('');
+    el.innerHTML = `<div class="ti-icon">${icons || '💬'}</div><div><div class="ti-name">${key}</div><div class="ti-tags">${(val.tags||[]).join(', ')}</div><div class="ti-count">${(val.comments||[]).length} comment(s)</div></div>`;
+    el.onclick = () => openCmdPanel(key, '');
+    list.appendChild(el);
+  });
+}
+
+// ═══════════════════════════════════════════════════════════════════════
+// PDF VIEWER + SCRIBBLE
+// ═══════════════════════════════════════════════════════════════════════
+let _pdfCurrentPath = null;
+let scribbleCanvas, scribbleCtx, scribbleActive = false, scribbleStrokes = [], currentStroke = null;
+
+function openPdfViewer(path, label) {
+  _pdfCurrentPath = path;
+  document.getElementById('pdf-title').textContent = label || path;
+  document.getElementById('pdf-iframe').src = path;
+  document.getElementById('pdf-viewer').classList.add('open');
+  tooltip.style.opacity = 0;
+  initScribbleCanvas();
+  loadScribble(path);
+}
+
+function closePdfViewer() {
+  document.getElementById('pdf-viewer').classList.remove('open');
+  document.getElementById('pdf-iframe').src = '';
+  scribbleActive = false;
+  const c = document.getElementById('scribble-canvas'); if (c) c.classList.remove('active');
+}
+
+function openPdfExternal() { if (_pdfCurrentPath) window.open(_pdfCurrentPath, '_blank'); }
+
+function initScribbleCanvas() {
+  scribbleCanvas = document.getElementById('scribble-canvas');
+  const body = document.getElementById('pdf-body');
+  scribbleCanvas.width = body.offsetWidth; scribbleCanvas.height = body.offsetHeight;
+  scribbleCtx = scribbleCanvas.getContext('2d');
+  scribbleCtx.lineCap = 'round'; scribbleCtx.lineJoin = 'round'; scribbleCtx.lineWidth = 3; scribbleCtx.strokeStyle = '#ff6b6b';
+}
+
+function toggleScribble() {
+  scribbleActive = !scribbleActive;
+  document.getElementById('scribble-canvas').classList.toggle('active', scribbleActive);
+  document.getElementById('scribble-toggle').classList.toggle('active-tool', scribbleActive);
+}
+
+function setScribbleColor(el, color) {
+  scribbleCtx.strokeStyle = color;
+  document.querySelectorAll('.scribble-color').forEach(c => c.classList.remove('sel'));
+  el.classList.add('sel');
+}
+
+// Scribble drawing
+document.getElementById('scribble-canvas').addEventListener('pointerdown', e => {
+  if (!scribbleActive) return;
+  currentStroke = { color: scribbleCtx.strokeStyle, width: scribbleCtx.lineWidth, points: [{ x: e.offsetX, y: e.offsetY }] };
+  scribbleCtx.beginPath(); scribbleCtx.moveTo(e.offsetX, e.offsetY);
+});
+
+document.getElementById('scribble-canvas').addEventListener('pointermove', e => {
+  if (!currentStroke) return;
+  currentStroke.points.push({ x: e.offsetX, y: e.offsetY });
+  scribbleCtx.lineTo(e.offsetX, e.offsetY); scribbleCtx.stroke(); scribbleCtx.beginPath(); scribbleCtx.moveTo(e.offsetX, e.offsetY);
+});
+
+window.addEventListener('pointerup', () => {
+  if (currentStroke) { scribbleStrokes.push(currentStroke); currentStroke = null; saveScribble(); }
+});
+
+function redrawScribble() {
+  scribbleCtx.clearRect(0, 0, scribbleCanvas.width, scribbleCanvas.height);
+  scribbleStrokes.forEach(stroke => {
+    scribbleCtx.strokeStyle = stroke.color; scribbleCtx.lineWidth = stroke.width;
+    scribbleCtx.beginPath(); scribbleCtx.moveTo(stroke.points[0].x, stroke.points[0].y);
+    for (let i = 1; i < stroke.points.length; i++) scribbleCtx.lineTo(stroke.points[i].x, stroke.points[i].y);
+    scribbleCtx.stroke();
+  });
+}
+
+function undoScribble() { if (scribbleStrokes.length) { scribbleStrokes.pop(); redrawScribble(); saveScribble(); } }
+function clearScribble() { scribbleStrokes = []; scribbleCtx.clearRect(0,0,scribbleCanvas.width,scribbleCanvas.height); saveScribble(); }
+
+function saveScribble() {
+  if (!_pdfCurrentPath) return;
+  try { const all = JSON.parse(localStorage.getItem(STORAGE_KEY+'-scribbles')||'{}'); all[_pdfCurrentPath] = scribbleStrokes; localStorage.setItem(STORAGE_KEY+'-scribbles', JSON.stringify(all)); } catch(e) {}
+}
+
+function loadScribble(path) {
+  scribbleStrokes = [];
+  try { const all = JSON.parse(localStorage.getItem(STORAGE_KEY+'-scribbles')||'{}'); if (all[path]) scribbleStrokes = all[path]; } catch(e) {}
+  if (scribbleCtx) redrawScribble();
+}
+
+window.addEventListener('resize', () => {
+  if (!scribbleCanvas) return;
+  const body = document.getElementById('pdf-body');
+  scribbleCanvas.width = body.offsetWidth; scribbleCanvas.height = body.offsetHeight;
+  redrawScribble();
+});
+
+// ═══════════════════════════════════════════════════════════════════════
+// APPENDIX (YouTube Videos)
+// ═══════════════════════════════════════════════════════════════════════
+if (C.youtube && C.youtube.videos && C.youtube.videos.length) {
+  buildAppendix();
+}
+
+function buildAppendix() {
+  const container = document.getElementById('appendix-container');
+  const videos = C.youtube.videos;
+  const unitNames = C.youtube.unitNames || {};
+  const unitColors = ["","#58a6ff","#f778ba","#7ee787","#ffa657","#d2a8ff","#7ee787","#ffa657","#ff7b72","#c9d1d9"];
+
+  const unitCounts = {};
+  videos.forEach(v => { unitCounts[v.unit] = (unitCounts[v.unit]||0) + 1; });
+
+  let html = `<div class="appendix-stats"><strong style="color:#c9d1d9">${videos.length} videos</strong>`;
+  Object.keys(unitCounts).forEach(u => {
+    const color = unitColors[u] || '#8b949e';
+    html += `<span class="stat-pill" style="border-color:${color}40"><span style="color:${color}">${unitNames[u] || 'Unit '+u}</span>: ${unitCounts[u]}</span>`;
+  });
+  html += '</div>';
+  html += '<input type="text" class="appendix-filter" id="appendix-filter-input" placeholder="🔍 Filter videos by title..." oninput="filterAppendix()">';
+  html += '<table class="appendix-table"><thead><tr><th style="width:40px">#</th><th>Video Title</th><th style="width:160px">Unit</th><th style="width:80px">Watch</th></tr></thead><tbody id="appendix-tbody">';
+
+  let num = 0, curUnit = 0;
+  videos.forEach(v => {
+    if (v.unit !== curUnit) {
+      curUnit = v.unit;
+      const color = unitColors[v.unit] || '#8b949e';
+      html += `<tr class="unit-group" data-unit="${v.unit}" onclick="toggleUnit(this)"><td colspan="4" style="color:${color};border-bottom-color:${color}40"><span class="unit-toggle">▾</span> ${unitNames[v.unit]||'Unit '+v.unit} <span style="color:#8b949e;font-weight:400;font-size:12px">(${unitCounts[v.unit]} videos)</span></td></tr>`;
+    }
+    num++;
+    const url = `https://www.youtube.com/watch?v=${v.id}`;
+    html += `<tr class="vid-row" data-unit="${v.unit}" data-topic="${v.topic.toLowerCase()}"><td class="vid-num">${num}</td><td>${v.topic}</td><td style="color:${unitColors[v.unit]||'#8b949e'};font-size:12px">${unitNames[v.unit]||'Unit '+v.unit}</td><td><a class="watch-link" href="${url}" target="_blank">▶ Watch</a></td></tr>`;
+  });
+
+  html += '</tbody></table>';
+  container.innerHTML = html;
+}
+
+function filterAppendix() {
+  const q = document.getElementById('appendix-filter-input').value.toLowerCase();
+  const rows = document.querySelectorAll('#appendix-tbody tr');
+  const visibleUnits = {};
+  rows.forEach(row => {
+    if (row.classList.contains('unit-group')) return;
+    if (!q) { row.style.display = ''; visibleUnits[row.dataset.unit] = true; return; }
+    const match = row.dataset.topic.indexOf(q) !== -1;
+    row.style.display = match ? '' : 'none';
+    if (match) visibleUnits[row.dataset.unit] = true;
+  });
+  rows.forEach(row => {
+    if (!row.classList.contains('unit-group')) return;
+    row.style.display = (!q || visibleUnits[row.dataset.unit]) ? '' : 'none';
+  });
+}
+
+function toggleUnit(headerRow) {
+  const unit = headerRow.dataset.unit;
+  const collapsed = headerRow.classList.toggle('collapsed');
+  document.querySelectorAll(`#appendix-tbody tr.vid-row[data-unit="${unit}"]`).forEach(r => { r.style.display = collapsed ? 'none' : ''; });
+}
+</script>
+<!-- BEGIN tooltip-pin (click pins, click outside closes) -->
+<style>
+  #tooltip.pinned {
+    pointer-events: auto !important;
+    box-shadow: 0 0 0 2px #58a6ff, 0 10px 28px rgba(0,0,0,0.55) !important;
+    cursor: default;
+  }
+  #tooltip.pinned::after {
+    content: "📌 pinned · click outside to close";
+    display: block;
+    margin-top: 8px;
+    padding-top: 6px;
+    border-top: 1px dashed #30363d;
+    font-size: 10px;
+    color: #58a6ff;
+    opacity: 0.85;
+  }
+  #tooltip .tt-close {
+    position: absolute; top: 4px; right: 6px;
+    background: transparent; border: 0;
+    color: #8b949e; cursor: pointer;
+    font-size: 14px; line-height: 1;
+    padding: 2px 6px; border-radius: 4px;
+    display: none;
+  }
+  #tooltip.pinned .tt-close { display: block; }
+  #tooltip .tt-close:hover { color: #f85149; background: rgba(248,81,73,0.1); }
+</style>
+<script>
+(function(){
+  const tt = document.getElementById('tooltip');
+  if (!tt) return;
+  let pinned = false;
+  let lastTarget = null;
+
+  // Inject close button
+  if (!tt.querySelector('.tt-close')) {
+    const btn = document.createElement('button');
+    btn.className = 'tt-close';
+    btn.type = 'button';
+    btn.textContent = '✕';
+    btn.title = 'Close';
+    btn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      unpin();
+    });
+    tt.appendChild(btn);
+  }
+
+  function pin() {
+    pinned = true;
+    tt.classList.add('pinned');
+    tt.style.setProperty('opacity', '1', 'important');
+  }
+  function unpin() {
+    pinned = false;
+    tt.classList.remove('pinned');
+    tt.style.removeProperty('opacity');
+    tt.style.opacity = 0;
+  }
+
+  // Keep opacity at 1 while pinned (defends against any code that sets opacity:0)
+  const obs = new MutationObserver(function() {
+    if (pinned && tt.style.opacity !== '1') {
+      tt.style.setProperty('opacity', '1', 'important');
+    }
+  });
+  obs.observe(tt, { attributes: true, attributeFilter: ['style'] });
+
+  // While pinned, freeze position: block mousemove repositioning at capture phase
+  document.addEventListener('mousemove', function(e) {
+    if (pinned) e.stopImmediatePropagation();
+  }, true);
+
+  // Selectors that identify clickable graph/mindmap elements with tooltip data
+  const SEL = [
+    'g.node', 'g.node *',
+    'line.graph-link', 'line.graph-link-hit', 'path.graph-link',
+    'text.graph-link-label',
+    'path.link', 'path.link-hit',
+    'circle.node', 'circle'
+  ].join(', ');
+
+  function getDatum(el) {
+    if (!el || typeof d3 === 'undefined') return null;
+    let cur = el;
+    while (cur && cur !== document) {
+      try {
+        const d = d3.select(cur).datum();
+        if (d) return { d: d, node: cur };
+      } catch(_) {}
+      cur = cur.parentNode;
+    }
+    return null;
+  }
+
+  function extract(d) {
+    let name, tip, slides;
+    if (d.data && (d.data.name || d.data.tooltip)) {
+      name = d.data.name; tip = d.data.tooltip; slides = d.data.slides;
+    } else if (d.source && d.target) {
+      name = d.label || d.type || 'connection';
+      const s = d.source, t = d.target;
+      const sn = (s.data && s.data.name) || s.label || (typeof s === 'string' ? s : '');
+      const tn = (t.data && t.data.name) || t.label || (typeof t === 'string' ? t : '');
+      tip = String(sn).replace(/\n/g, ' ') + ' → ' + String(tn).replace(/\n/g, ' ');
+    } else if (d.label !== undefined || d.tip !== undefined || d.name !== undefined) {
+      name = d.label || d.name; tip = d.tip || d.tooltip; slides = d.slides;
+    }
+    return name ? { name: name, tip: tip, slides: slides } : null;
+  }
+
+  document.addEventListener('click', function(e) {
+    // Click inside tooltip → ignore (preserve link clicks etc.)
+    if (tt.contains(e.target)) return;
+
+    const hit = getDatum(e.target.closest && e.target.closest(SEL));
+    if (!hit) {
+      if (pinned) unpin();
+      return;
+    }
+    const info = extract(hit.d);
+    if (!info) {
+      if (pinned) unpin();
+      return;
+    }
+
+    // Try the file's own renderer first so slides/icons/etc. render correctly
+    let rendered = false;
+    if (typeof window.showTooltip === 'function') {
+      try { window.showTooltip(e, info.name, info.tip, info.slides); rendered = true; } catch(_) {}
+    }
+    if (!rendered && typeof window.showTip === 'function') {
+      try { window.showTip(e, hit.d); rendered = true; } catch(_) {}
+    }
+    if (!rendered) {
+      const ttl = tt.querySelector('.tt-title');
+      const tbd = tt.querySelector('.tt-body');
+      if (ttl) ttl.textContent = String(info.name).replace(/\n/g, ' ');
+      if (tbd) tbd.textContent = info.tip || '';
+    }
+
+    lastTarget = hit.node;
+    pin();
+  });
+
+  // Esc key unpins
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && pinned) unpin();
+  });
+})();
+</script>
+<!-- END tooltip-pin -->
+<!-- Quiz Module: Domain Algorithm Questions -->
+<script id='quiz-data' type='application/json'>
+[
+{"topic":"Complexity","q":"Which Big O notation best describes an algorithm that divides the input in half repeatedly?","options":["O(n)","O(log n)","O(n^2)","O(2^n)"],"answer":1,"explain":"Algorithms that divide input in half each step achieve O(log n) because they complete in log₂(n) iterations. Each level halves the problem: n → n/2 → n/4 → ... → 1, requiring exactly log(n) steps. This recurrence T(n) = T(n/2) + 1 solves to O(log n) by the Master theorem. Binary search exemplifies this pattern; algorithms checking only part of data per iteration follow this. O(n) would scan everything, and O(n²) iterates with nested loops."},
+{"topic":"Complexity","q":"What is the time complexity of reading all elements from an array of size n?","options":["O(1)","O(log n)","O(n)","O(n log n)"],"answer":2,"explain":"Accessing every element in an array requires O(n) operations since each element must be read once. Linear iteration is fundamental: a single loop over n items completes in n steps, with constant work per step. This is why operations like summing array elements, finding max, or linear search are O(n). O(log n) assumes discarding half the data per step (like binary search), and O(n log n) involves sorting or merging; both faster than O(n²)."},
+{"topic":"Complexity","q":"A nested loop with outer loop n times and inner loop m times has complexity:","options":["O(n + m)","O(n * m)","O(max(n, m))","O(n^2)"],"answer":1,"explain":"Nested loops multiply their iteration counts: if an outer loop runs n times and each iteration performs m operations, total work is n × m. This is fundamental: the inner loop executes m times for each outer iteration. When both loops iterate over the same data (n = m), complexity becomes O(n²). Sequential loops add (O(n) + O(m)); nested loops multiply. Matrix traversal (n × m grid) exemplifies this, requiring Θ(nm) to visit all cells."},
+{"topic":"Complexity","q":"What is the space complexity of an algorithm that uses k recursive call stack depth?","options":["O(1)","O(k)","O(k^2)","O(2^k)"],"answer":1,"explain":"Recursion depth of k consumes O(k) stack frames; each recursive call pushes a frame onto the call stack, storing local variables and return addresses. For depth k, at most k frames exist simultaneously, yielding O(k) space. Tree traversal with depth k (e.g., DFS on a balanced binary tree of height k = O(log n)) uses O(k) space. Tail recursion depth increases linearly: T(n-1) + O(1). O(k²) or O(2^k) would require exponentially growing or multiplying stack frames, which doesn't occur in linear recursion."},
+{"topic":"Complexity","q":"Which operation(s) take O(1) time in a hash table (average case)?","options":["Search only","Insert and search","Insert, search, and delete","All operations with rehashing"],"answer":2,"explain":"Hash tables achieve O(1) average-case insertion, search, and deletion via direct hashing: compute hash(key), access bucket in constant time, and operate on the entry. The key insight is that hash collisions are expected to be rare with a good hash function and reasonable load factor. Rehashing (rebuilding the table when full) is amortized O(1) per insertion across many operations. Option \"All operations with rehashing\" is misleading—rehashing itself is O(n), but amortized over many insertions. Worst case (all keys hash to one bucket) is O(n), but typical operations achieve near-constant time."},
+{"topic":"Sorting","q":"Which sorting algorithm is NOT a comparison-based sort?","options":["Merge Sort","Quick Sort","Counting Sort","Heap Sort"],"answer":2,"explain":"Counting Sort bypasses element comparisons by counting value frequencies, storing counts in a temporary array, then reconstructing the sorted output. This achieves O(n + k) where k is the range of values. Merge, Quick, and Heap sorts all compare pairs of elements, with complexity bounds of O(n log n). Comparison-based sorts cannot do better than O(n log n) by information theory. Counting Sort excels when value ranges are small (k ≤ n), while Radix Sort generalizes this to multi-digit numbers."},
+{"topic":"Sorting","q":"What is the worst-case time complexity of Quick Sort?","options":["O(n log n)","O(n^2)","O(n)","O(log n)"],"answer":1,"explain":"Quick Sort degrades to O(n²) in the worst case when pivot selection is extremely poor, consistently picking the smallest or largest element, making partitions unbalanced (n-1 elements on one side, 0 on the other). This turns the algorithm into iterative selection, with recurrence T(n) = T(n-1) + O(n) = O(n²). Average case remains O(n log n) with good pivot choices. Randomized pivot selection mitigates this risk in practice. Selecting the median-of-three improves practical performance, though worst-case complexity remains O(n²)."},
+{"topic":"Sorting","q":"Which sorting algorithm is stable and uses divide-and-conquer?","options":["Quick Sort","Heap Sort","Merge Sort","Selection Sort"],"answer":2,"explain":"Merge Sort divides the array in half, recursively sorts each half, then merges them while preserving the relative order of equal elements, maintaining stability. The merge step is key: when both subarrays have equal elements, taking from the left subarray first maintains original order. Recurrence T(n) = 2T(n/2) + O(n) solves to O(n log n) time; space is O(n) for temporary arrays. Quick Sort is in-place but unstable; Heap Sort is unstable; Selection Sort is unstable and O(n²). Merge Sort is the classic stable, comparison-based sort."},
+{"topic":"Sorting","q":"In Bubble Sort, after k passes, the last k elements are in their final sorted position. Why?","options":["They form a sorted subarray","Larger elements bubble to the end","Smaller elements bubble to the beginning","Pivots divide the array"],"answer":1,"explain":"Each Bubble Sort pass compares adjacent elements and swaps if needed, causing the largest unsorted element to \"bubble\" to the end. After pass 1, the largest element settles in its final position; after pass 2, the second-largest is correct; and so on. After k passes, the k largest elements occupy their final positions in sorted order. This invariant ensures that after n passes, the entire array is sorted. Time complexity is O(n²) due to n passes × n comparisons, but early termination improves the practical average. Bubble Sort is stable but rarely used due to poor cache locality and high constant factors."},
+{"topic":"Data Structures","q":"A stack with push/pop operations and a queue with enqueue/dequeue differ in:","options":["Stack is O(n), queue is O(1)","Stack uses LIFO, queue uses FIFO","Queue uses recursion","Stack stores more data"],"answer":1,"explain":"Stacks and queues differ fundamentally in access order: Stack is Last-In-First-Out (LIFO), where the most recent element is removed first, matching function call semantics. Queue is First-In-First-Out (FIFO), where the oldest element departs first, modeling real-world queues. Both support push/enqueue and pop/dequeue in O(1) amortized time with arrays or linked lists. Stacks power recursion and undo/redo mechanisms; queues enable BFS and task scheduling. The choice depends on problem semantics, not performance; both achieve constant-time operations efficiently."},
+{"topic":"Data Structures","q":"What property must hold for a min-heap?","options":["Parent >= all children","Parent <= all children","All levels full","Sorted by value"],"answer":1,"explain":"A min-heap enforces the heap property: each parent node's value is ≤ all its children's values, ensuring the minimum element sits at the root. This property is maintained during insert (bubble-up) and delete (bubble-down) operations, both O(log n). The heap structure is a complete binary tree stored in an array for efficient access. Min-heaps power Dijkstra's algorithm and priority queues. Max-heaps (reverse property) provide maximum-first access. The heap property is weaker than full sorting—siblings and grandchildren are unordered—allowing efficient O(1) min-retrieval without full sort cost."},
+{"topic":"Data Structures","q":"Which data structure is best for frequent min/max queries with insertions and deletions?","options":["Sorted array","Hash table","Heap","Linked list"],"answer":2,"explain":"Heaps are ideal for min/max tracking: they provide O(1) min/max retrieval (root), O(log n) insertion, and O(log n) deletion. Sorted arrays offer O(1) min/max access but O(n) insertion/deletion (must shift elements); hash tables offer O(1) insertion/deletion but O(n) min/max queries (must scan). Heaps balance all three operations efficiently, making them perfect for priority queues, Dijkstra's algorithm, and heap sort. Fibonacci heaps improve amortized deletion and decrease-key to O(1), further accelerating some algorithms. Heaps are the go-to structure when priority ordering matters more than arbitrary element access."},
+{"topic":"Data Structures","q":"In a hash table, what causes collision?","options":["Two elements have the same key","Two elements have different keys but hash to same bucket","A key is longer than expected","Memory is full"],"answer":1,"explain":"A collision occurs when two distinct keys hash to the same bucket index, which is inevitable with finite buckets and large keyspaces by the Pigeonhole Principle. Collisions are resolved via chaining (linked list per bucket) or open addressing (probe to next empty slot). Good hash functions minimize collisions through distribution (spreading hashes uniformly), but perfect collision-free hashing is impossible. Load factor α = n / num_buckets should stay low (often α < 0.75) to minimize collisions. Most hash table operations assume O(1) bucket access, with collision resolution adding O(1 + α) on average."},
+{"topic":"Data Structures","q":"A balanced binary search tree maintains O(log n) for search/insert/delete by:","options":["Sorting after each operation","Rotating branches to keep height ~log(n)","Using only n/2 nodes","Removing duplicates"],"answer":1,"explain":"Balanced BSTs (AVL trees, Red-Black trees) maintain the invariant that tree height is O(log n), ensuring O(log n) search path length. When insertion or deletion would cause imbalance (e.g., height difference > 1 in AVL), tree rotations rebalance the structure. Rotations are local and O(1), preserving the BST property and balance. Without balancing, a sorted insertion sequence degrades to O(n) height (essentially a linked list). Red-Black trees allow height up to 2*log(n), relaxing balance strictness for fewer rebalancing operations while maintaining amortized O(log n) performance."},
+{"topic":"Advanced DS","q":"Union-Find with path compression and union by rank achieves amortized complexity of:","options":["O(1)","O(log n)","O(α(n))","O(n)"],"answer":2,"explain":"Union-Find with both path compression (flattening trees on find) and union by rank (attaching shorter trees to taller ones) achieves O(α(n)) amortized time per operation, where α is the inverse Ackermann function—practically constant for all realistic n (α(n) < 5 for n < 10^600). Without optimizations, union-find is O(n) per operation; with only one optimization, it's O(log n). The two-optimization variant is nearly optimal. This efficiency powers Kruskal's MST algorithm and connectivity queries. A simple union-find implementation (without optimizations) remains O(n), but these tweaks provide orders-of-magnitude speedup."},
+{"topic":"Advanced DS","q":"A Fenwick Tree (Binary Indexed Tree) optimizes:","options":["Sorting large arrays","Prefix sum queries and updates","Graph traversal","String matching"],"answer":1,"explain":"Fenwick Trees provide O(log n) for both prefix sum queries (sum of elements 0 to i) and point updates (increment element at index i). Traditional arrays require O(n) for prefix sums or O(1) updates but not both; Fenwick Trees balance the tradeoff via bit manipulation. A Fenwick Tree is a conceptual overlay on an array where index i manages a range ending at i, determined by the lowest set bit. This structure is space-efficient and cache-friendly, making it preferable to Segment Trees for 1D problems. Range sum queries and weighted cumulative frequency are typical applications."},
+{"topic":"Advanced DS","q":"Segment Tree with lazy propagation allows range updates in:","options":["O(n)","O(log^2 n)","O(log n)","O(1)"],"answer":2,"explain":"Lazy propagation defers range update operations, storing the update in nodes without immediately applying it to all children. This delays work until necessary (e.g., on query or child access), reducing range update cost from O(n log n) to O(log n). A lazy tag at each node marks it as \"dirty\"; during queries, nodes are flushed as needed. Combined with Segment Trees, lazy propagation enables O(log n) range min/max/sum queries, point updates, and range updates. Without lazy propagation, range updates require O(n log n); this optimization is essential for competitive programming problems with frequent bulk updates."},
+{"topic":"Advanced DS","q":"When building a Segment Tree for range minimum queries, each node stores:","options":["The minimum of its range","All values in its range","Only leaf values","Sorted values"],"answer":0,"explain":"Each Segment Tree node represents a contiguous range [L, R] and stores the minimum value within that range. Leaf nodes store individual array elements; internal nodes store the minimum of their children's ranges. Queries and updates traverse the tree in O(log n), combining range minimums from overlapping segments. Point updates (change element at index i) propagate upward, updating ancestors in O(log n). Range minimum query with segment trees is efficient and elegant compared to naive O(n) scanning. Applications extend to range maximum, sum, GCD, and other associative operations."},
+{"topic":"Advanced DS","q":"Path compression in Union-Find speeds up future finds by:","options":["Rebuilding the tree","Making all nodes point directly to root","Sorting find operations","Using hash tables"],"answer":1,"explain":"Path compression modifies the find(x) operation to make every node on the path from x to the root point directly to the root. This flattens the tree structure, reducing future find(x) calls from O(height) to O(1) (or close to O(α(n)) with rank optimization). Without path compression, a sequential union-find degrades to height O(n); with it, height stays nearly flat. Path compression is a simple modification: after finding the root via recursion, update each node's parent to the root on the way back down. This \"collapsing\" is the source of the near-constant amortized complexity. Ackermann's inverse function formalizes the speedup."},
+{"topic":"Complete Search","q":"Backtracking prunes search branches by:","options":["Removing all nodes","Detecting invalid states early and avoiding exploration","Sorting candidates first","Using memoization"],"answer":1,"explain":"Backtracking detects constraint violations (invalid states) early and halts exploration of that branch, avoiding the exponential search of infeasible subtrees. When a constraint is violated (e.g., two queens threaten each other in N-Queens), backtracking unwinds and tries alternatives instead of exploring deeper. This pruning reduces the search space from potentially n! to a manageable fraction. Memoization caches subproblem results (used in DP); backtracking is eager pruning. Combined, backtracking + pruning solves N-Queens in O(n!) worst-case but often much faster in practice. Without pruning, the algorithm explores all states, making large instances infeasible."},
+{"topic":"Complete Search","q":"An N-Queens solution uses backtracking because:","options":["It's the only approach","Queens can be placed in many combinations, and invalid states are detected early","It requires no recursion","It sorts the board"],"answer":1,"explain":"N-Queens has n! possible placements; brute force checking all is infeasible for n ≥ 10. Backtracking places queens row-by-row and checks conflicts immediately (queen threatens existing queens?). If conflict found, backtrack and try next column; otherwise, recurse to the next row. This prunes vast subtrees where conflicts are guaranteed, reducing complexity dramatically. Without pruning, even n=8 would require scanning 8! = 40,320 permutations; backtracking solves it in ~2 seconds. Constraint propagation techniques (e.g., eliminating threatened squares) enhance backtracking further. N-Queens exemplifies how backtracking transforms infeasible brute force into practical algorithms."},
+{"topic":"Complete Search","q":"What is the worst-case time complexity of complete search over all permutations of n elements?","options":["O(n!)","O(n^2)","O(n log n)","O(2^n)"],"answer":0,"explain":"There are exactly n! permutations of n distinct elements (n choices for first, n-1 for second, ..., 1 for last). Enumerating or checking all permutations requires at least O(n!) time. For n=10, 10! ≈ 3.6 million; for n=12, ≈ 479 million. Complete search over permutations is feasible only for small n (roughly n ≤ 10). This is why the Travelling Salesman Problem (TSP) is NP-hard—no known algorithm beats exponential time for arbitrary inputs. Dynamic programming with bitmask (TSP in O(n² · 2^n)) is faster than O(n!), showing how algorithmic improvements matter."},
+{"topic":"Complete Search","q":"When can backtracking with pruning be faster than complete search?","options":["Never","Only for small n","When constraints eliminate most branches early","With sorted input"],"answer":2,"explain":"Backtracking with pruning can be exponentially faster than complete search because pruning eliminates entire subtrees of infeasible solutions. If constraints (e.g., board conflicts, value bounds) reject many branches early, fewer nodes are explored. Best case: pruning reduces O(n!) to polynomial time. Worst case (no prunable constraints): still O(n!). The gap demonstrates pruning's power: N-Queens with pruning solves n=8 in milliseconds; without pruning, it'd take longer. Sorted input alone doesn't guarantee speedup; it enables better pruning strategies (e.g., branch-and-bound). Problem structure and constraint quality determine pruning effectiveness. When domain-specific pruning is weak, complete search remains slow."},
+{"topic":"Divide & Conquer","q":"Binary Search on the Answer (BSTA) works when:","options":["The array is sorted","A property is monotonic (all 'no's followed by 'yes's or vice versa)","The target is at index 0","Only for unique elements"],"answer":1,"explain":"Binary Search on the Answer assumes a monotonic property: as the answer increases, the property transitions from always-false to always-true (or vice versa). This allows binary search to find the boundary in O(log n) checks. Example: \"minimum time to complete all tasks\"—check if time T is sufficient (O(n) validation), search for the smallest valid T. BSTA is not limited to sorted arrays; it applies to any searchable range with a monotonic property. Unique elements aren't required; duplicate answers are fine. Constructing the validation function is key; bad validation breaks the algorithm. BSTA powers many competitive programming problems."},
+{"topic":"Divide & Conquer","q":"Merge Sort divides the array in half and sorts recursively. Its recurrence is:","options":["T(n) = n^2","T(n) = 2T(n/2) + n","T(n) = T(n-1) + n","T(n) = T(n/2) + 1"],"answer":1,"explain":"Merge Sort's recurrence T(n) = 2T(n/2) + O(n) reflects: divide into two halves (2 subproblems of size n/2), recursively sort each (T(n/2) each), then merge in O(n) time. By the Master theorem (a=2, b=2, log_b(a)=1), T(n) = O(n log n). The merge step is crucial—combining sorted subarrays in linear time maintains overall efficiency. Without efficient merging, Merge Sort would degrade. This recurrence is fundamental; T(n) = T(n-1) + n (linear recursion) yields O(n²). Merge Sort is optimal for comparison-based sorting."},
+{"topic":"Divide & Conquer","q":"Ternary Search finds the max of a unimodal function in:","options":["O(n)","O(log n)","O(log^2 n)","O(n^2)"],"answer":1,"explain":"Ternary Search divides a range into thirds and eliminates one third based on function values: if f(mid1) < f(mid2), the max can't be in the left third. This narrows the range by 2/3 each iteration, yielding O(log_{3/2} n) = O(log n) iterations. Unlike binary search (halves the range), ternary search uses three-way comparisons for unimodal (single peak) functions. Continuous optimization uses ternary search similarly. The key is the unimodal property: one peak. Without it, ternary search fails. Ternary search is elegant but rarely faster than binary search in practice; it illustrates divide-and-conquer on continuous domains."},
+{"topic":"Greedy","q":"The Greedy algorithm for coin change (using max denominations first) fails when:","options":["Coins are sorted","Denominations don't form a 'canonical' system","Only one coin exists","Coins are worth 1"],"answer":1,"explain":"Greedy coin change fails on non-canonical coin systems. Example: coins {1, 3, 4} for amount 6—greedy picks 4, then 1, 1 (three coins), but optimal is 3, 3 (two coins). Canonical systems (like US coins {1, 5, 10, 25}) guarantee greedy's optimality through a property: no combination of smaller coins beats larger coins for any target. Greedy works by always taking the largest coin possible; canonical systems ensure this is never suboptimal. The fail case shows greedy's fundamental limitation: it makes locally optimal choices without considering global structure. Dynamic programming solves non-canonical coin change optimally in O(n × amount) time."},
+{"topic":"Greedy","q":"Huffman Coding is a greedy algorithm that optimizes:","options":["Sorting speed","Prefix-free code length (minimizing average bits per character)","Memory usage","Parsing time"],"answer":1,"explain":"Huffman Coding greedily builds a binary tree by repeatedly merging the two lowest-frequency nodes, assigning shorter bit-codes to frequent characters. This minimizes the average code length: Σ(frequency × code_length). The greedy choice (merge smallest frequencies) is optimal by exchange argument: swapping a frequent and infrequent character's codes always increases total length. Huffman codes are prefix-free (no code is a prefix of another), enabling unambiguous decoding. Huffman is provably optimal; no lossless prefix-free code achieves shorter average length. Applications include .zip compression and JPEG encoding."},
+{"topic":"Greedy","q":"Interval Scheduling Maximization: to select the most non-overlapping intervals, greedy sorts by:","options":["Start time ascending","End time ascending","Interval length","Reverse start time"],"answer":1,"explain":"Sorting by end time (ascending) and greedily selecting intervals with earliest end times maximizes the count of non-overlapping intervals. Intuition: finishing earliest leaves most room for future intervals. Proof: any optimal solution can be exchanged to match greedy's choice, preserving optimality. Counter-example: sorting by start time fails—an early-starting long interval blocks many later intervals. Greedy end-time selection leaves the most \"slot space\" for subsequent intervals. This is a classic greedy algorithm with formal optimality proof via exchange argument. The problem models resource scheduling: assign maximum tasks to a facility."},
+{"topic":"Greedy","q":"Dijkstra's algorithm is greedy because it:","options":["Picks arbitrary edges","Always picks the unvisited node with smallest known distance","Sorts all edges first","Uses priority queues only for fun"],"answer":1,"explain":"Dijkstra's greedy choice: always process the unvisited node with the smallest distance from source. This is optimal for non-negative weights because once a node is visited, its shortest path is finalized—no future edge can improve it. Proof relies on non-negative weights: a later path can't be shorter than the currently shortest known path. With a priority queue, Dijkstra runs in O((V + E) log V). Without greedy selection (e.g., BFS-style level-by-level), shortest paths aren't guaranteed. The algorithm fails on negative weights (Bellman-Ford handles those). Dijkstra is foundational for GPS navigation and network routing."},
+{"topic":"DP","q":"Dynamic Programming applies when a problem has:","options":["Only one solution","Overlapping subproblems and optimal substructure","Linear structure","Unique elements"],"answer":1,"explain":"Dynamic Programming requires two properties: (1) Overlapping subproblems: solving the full problem repeatedly solves the same smaller subproblems; (2) Optimal substructure: an optimal solution combines optimal solutions to subproblems. Memoization (cache subproblem results) avoids recomputation. Example: Fibonacci—fib(n) calls fib(n-1) and fib(n-2), which call fib(n-2) again (overlapping). Optimal substructure: optimal path to node i uses optimal paths to neighbors. Without overlapping subproblems, DP offers no speedup over recursion. Without optimal substructure, subproblem optimality doesn't guarantee full solution optimality (e.g., some NP-hard problems)."},
+{"topic":"DP","q":"The 0-1 Knapsack problem uses DP with state dp[i][w] representing:","options":["The i-th item's weight","Max value using first i items and capacity w","Whether item i fits","The weight of item i"],"answer":1,"explain":"dp[i][w] = maximum value using items 0 to i-1 with weight capacity w. Recurrence: dp[i][w] = max(dp[i-1][w], dp[i-1][w-weight[i]] + value[i]): either skip item i or include it. Base: dp[0][w] = 0 (no items → zero value). Final answer: dp[n][W]. This DP table is O(n × W) time and space. The \"0-1\" denotes that each item is used 0 or 1 times (no multiples). Greedy fails here: taking items by value/weight ratio doesn't guarantee optimality. Unbounded knapsack (unlimited copies) uses dp[w] = max(dp[w], dp[w-weight[i]] + value[i]) with a different recurrence."},
+{"topic":"DP","q":"Longest Increasing Subsequence (LIS) can be solved in O(n log n) using:","options":["Nested loops","Memoization only","Binary search with a DP array","Greedy"],"answer":2,"explain":"The O(n log n) LIS algorithm maintains an array `tail` where tail[i] = smallest ending value of an increasing subsequence of length i. For each element, binary search finds its position in `tail` and updates it. This works because tail[] is sorted (end values of LIS of increasing lengths are increasing). Naive DP is O(n²): dp[i] = max(dp[j] + 1) for all j < i with arr[j] < arr[i]. Binary search replaces the inner loop, reducing it to O(log n). The insight is leveraging tail[i]'s monotonicity for binary search. This O(n log n) solution is near-optimal and elegant, showcasing how data structure properties (sorted tail[]) enable algorithmic optimization."},
+{"topic":"DP","q":"Bitmask DP for the Travelling Salesman Problem uses state dp[mask][i]:","options":["Mask = visited cities, i = current city; stores min distance","Mask = city indices, i = iterations","Mask = weights, i = distance","Mask = priorities, i = next city"],"answer":0,"explain":"dp[mask][i] = minimum distance to visit all cities in mask and currently at city i. Mask is a bitmask: bit j is 1 if city j is visited. Recurrence: dp[mask][i] = min(dp[mask without i][j] + dist[j][i]) for all j in mask with j ≠ i. Base: dp[1<<i][i] = 0 (start at city i with only i visited). Answer: min(dp[(1<<n)-1][i] + dist[i][start]) for all i. Time: O(n² × 2^n) because there are n × 2^n states, each updating O(n) transitions. This DP is optimal for small n (≤ 20); TSP is NP-hard, so exponential is expected. The bitmask elegantly encodes visited sets."},
+{"topic":"DP","q":"DP on DAG (Directed Acyclic Graph) computes longest paths by:","options":["BFS from all nodes","Topological sort then DP","Storing all paths","Using Dijkstra"],"answer":1,"explain":"DP on DAG: (1) Compute topological sort to order nodes; (2) Process nodes in topological order, updating neighbors' DP values. This ensures when processing node i, all predecessors of i are already computed. Recurrence: dp[i] = max(dp[j] + weight[j][i]) for all j → i (where j comes before i in topological order). This avoids cycles (present in DAGs) and ensures DP correctness. Time: O(V + E). DAG-based DP powers problems like longest path in weighted DAGs, best path with constraints (e.g., exact edges used), and some scheduling problems. BFS or Dijkstra don't respect the ordering needed for DP correctness."},
+{"topic":"Graph","q":"DFS is best for finding:","options":["Shortest path in unweighted graphs","Connected components and cycles","MST","Shortest unweighted paths"],"answer":1,"explain":"DFS explores deeply, visiting all reachable nodes from a source without prioritizing distance. It naturally finds connected components (restart DFS from unvisited nodes) and detects cycles (back edge during traversal). For shortest paths, DFS doesn't guarantee optimality in unweighted graphs (use BFS instead). DFS is O(V + E) and uses stack-based recursion or explicit stack. Applications: topological sort (post-order), SCC (Kosaraju's algorithm), cycle detection, and DFS tree structure analysis. DFS excels in problems requiring deep exploration or identifying structural properties (e.g., bridges, articulation points) not just distances."},
+{"topic":"Graph","q":"BFS guarantees the shortest path in:","options":["All graphs","Weighted graphs only","Unweighted graphs (all edges weight 1)","DAGs only"],"answer":2,"explain":"BFS explores level-by-level (distance-based): all nodes at distance 1, then distance 2, etc. First time BFS reaches a node is via a shortest path in unweighted graphs (each edge counts as 1). In weighted graphs, later paths might be shorter if earlier edges are heavy, violating BFS's guarantee; Dijkstra solves weighted shortest paths. BFS time: O(V + E); space: O(V) queue size. BFS discovers nodes in order of distance from source, making it ideal for \"find minimum steps\" problems. DFS doesn't preserve distance order, so it can't find shortest paths. BFS is a foundational algorithm for unweighted shortest paths and level-by-level traversal."},
+{"topic":"Graph","q":"Topological Sort is only valid for:","options":["All graphs","Weighted graphs","Directed Acyclic Graphs (DAGs)","Bipartite graphs"],"answer":2,"explain":"Topological sort orders vertices such that all edges point from earlier to later vertices in the order. This is only possible in DAGs (acyclic). A cycle would require node A to precede B, B to precede C, and C to precede A—impossible to satisfy linearly. Kahn's algorithm: start with in-degree 0 nodes, emit them, decrement neighbors' in-degrees, repeat. If all nodes are emitted, no cycle; otherwise, cycle detected. Time: O(V + E). Applications: task scheduling (prerequisites), package installation order, and any dependency-ordered processing. Detecting cycles in directed graphs is a common use: if topological sort is impossible, a cycle exists."},
+{"topic":"Graph","q":"In topological sort, nodes with no incoming edges are processed:","options":["Last","First (via queue/stack)","Randomly","Not at all"],"answer":1,"explain":"Topological sort processes nodes in dependency order. Nodes with in-degree 0 (no prerequisites) are processed first—they have no dependencies blocking them. Kahn's algorithm initializes a queue with all in-degree 0 nodes, then iteratively processes them, updating neighbors' in-degrees. This ensures dependencies are satisfied before processing dependents. Post-order DFS is an alternative: emit nodes after visiting all descendants, yielding a topological order (in reverse if reversed). The key insight: a node can't be emitted until all its incoming edges (dependencies) are satisfied. Nodes with in-degree 0 satisfy this immediately."},
+{"topic":"Shortest Paths","q":"Dijkstra's algorithm fails on graphs with:","options":["Multiple sources","Negative edge weights","Cycles","Many edges"],"answer":1,"explain":"Dijkstra assumes non-negative edge weights. With negative weights, the greedy choice (always processing the nearest unvisited node) fails: a later path with a negative edge can \"reach back\" and improve a previously finalized distance. Example: nodes A → B (weight -10), A → C (weight 1), C → B (weight 1). Dijkstra visits B via C first (distance 2), then can't improve it to 1 via direct negative-weight edge (-10 + something). Bellman-Ford handles negative weights in O(VE) by relaxing all edges V-1 times. Negative cycles (total negative weight cycles reachable from source) are detected by running a V-th iteration; any improvement indicates a negative cycle."},
+{"topic":"Shortest Paths","q":"Bellman-Ford detects negative cycles by:","options":["Checking heap validity","Running relaxation V times, then checking for further improvements","BFS only","Sorting edges"],"answer":1,"explain":"Bellman-Ford relaxes all E edges V-1 times to find shortest paths (correct because shortest paths in acyclic graphs have ≤ V-1 edges). On iteration V, if any distance improves, a negative cycle is reachable. Negative cycles allow infinite improvements (going around the cycle decreases distance). The algorithm's correctness relies on this: after V-1 iterations, all shortest paths are correct unless negative cycles exist. Running one more iteration exposes them. This detection is efficient (just one more iteration) and forms the basis of negative cycle detection in various algorithms. Time: O(VE); practical for sparse graphs or when negative edges are rare."},
+{"topic":"Shortest Paths","q":"Floyd-Warshall computes all-pairs shortest paths in:","options":["O(V^2 log V)","O(V^3)","O(V * E)","O(V^2)"],"answer":1,"explain":"Floyd-Warshall uses three nested loops over vertices (i, j, k), computing dist[i][j] = min(dist[i][j], dist[i][k] + dist[k][j]). It considers each vertex k as an intermediate point, updating distances through k. Three loops yield O(V³) time; space is O(V²) for distance matrix. It works on directed graphs with negative weights but not negative cycles. Example: n=1000 requires ~10^9 operations (feasible). Floyd-Warshall is elegant and simple to code but slow for large graphs; Dijkstra from each source is faster for sparse graphs (O(V(E log V))). Floyd-Warshall is practical for n ≤ 500."},
+{"topic":"Shortest Paths","q":"When should you use Dijkstra over Floyd-Warshall for single-source shortest paths?","options":["Never","Always","When edges are non-negative and V is large","When the graph is dense"],"answer":2,"explain":"For single-source shortest paths with non-negative weights: Dijkstra is O((V + E) log V) with a priority queue; Floyd-Warshall is O(V³) for all pairs but can compute one source in O(V²) (single source, ignore the outer loop). For sparse graphs (E << V²), Dijkstra is significantly faster: O(E log V) vs O(V²). For dense graphs (E ≈ V²), both are O(V² log V) and O(V³), respectively—Dijkstra might be slower due to log factor. Floyd-Warshall's advantage: computes all pairs efficiently for dense graphs or small V. Choice: Dijkstra for single-source on sparse graphs; Floyd-Warshall for all pairs or dense graphs."},
+{"topic":"MST","q":"Kruskal's MST algorithm works by:","options":["Starting from a node and growing a tree","Sorting edges and adding them if they don't create a cycle","Removing the heaviest edge","Using DFS"],"answer":1,"explain":"Kruskal's sorts edges by weight (ascending) and greedily adds each edge if it connects two previously unconnected components (checked via Union-Find). This builds an MST with exactly V-1 edges and total minimum weight. Correctness: any MST includes some edges; swapping heavy edges for lighter ones within cuts maintains the MST property by exchange argument. Time: O(E log E) for sorting + O(E α(V)) for Union-Find ≈ O(E log E). Kruskal excels on sparse graphs. Prim's is O(E + V log V) with Fibonacci heaps (often better for dense graphs). Both produce MSTs; Kruskal's simplicity and edge-centric view are its strength."},
+{"topic":"MST","q":"Prim's MST algorithm is similar to:","options":["DFS","BFS","Dijkstra","Topological sort"],"answer":2,"explain":"Prim's grows a tree from a starting vertex, repeatedly adding the minimum-weight edge connecting the current tree to a new vertex. This is structurally similar to Dijkstra's greedy selection of the nearest unvisited node. Both use priority queues and build solutions incrementally. Key difference: Dijkstra tracks shortest distances; Prim's tracks minimum edge weights to reach new vertices. Time: O(E + V log V) with a Fibonacci heap or O(E log V) with a binary heap. Prim's is better on dense graphs; Kruskal's on sparse graphs. Both produce MSTs; Prim's is node-centric, growing from a source."},
+{"topic":"MST","q":"For a graph with V vertices, an MST has exactly:","options":["V edges","V - 1 edges","V + 1 edges","V^2 edges"],"answer":1,"explain":"A tree on V vertices has exactly V-1 edges and is acyclic and connected. An MST is a spanning tree of minimum total weight, connecting all V vertices with V-1 edges. Adding any edge creates a cycle; removing any edge disconnects the tree. This property holds for all trees regardless of weight. If a graph is disconnected, it has no spanning tree (and thus no MST); multiple MSTs may exist (equal-weight edges). The MST property (minimum weight) is achieved by Kruskal's or Prim's algorithms. This formula (V-1 edges) is fundamental: a connected acyclic graph must have exactly V-1 edges."},
+{"topic":"Graph","q":"Strongly Connected Components (SCC) are maximal subgraphs where:","options":["All nodes are connected","Every node reaches every other node","Nodes form a cycle","One path connects all nodes"],"answer":1,"explain":"An SCC is a maximal set of vertices where every vertex can reach every other vertex via directed paths. This is stronger than connectivity: in undirected graphs, connectivity means a path exists; in directed graphs, SCC requires bidirectional reachability. Kosaraju's algorithm: (1) DFS on original graph, emit in post-order; (2) DFS on reverse graph in reverse post-order. Each DFS tree in step 2 is an SCC. Time: O(V + E). Tarjan's algorithm achieves this in a single DFS pass. Finding SCCs helps identify strongly connected subgraphs (e.g., mutual dependencies), condensing the graph to a DAG of meta-nodes."},
+{"topic":"Graph","q":"A bipartite graph has:","options":["No cycles","Only two nodes","Vertices partitionable into two sets with edges only between sets","All vertices connected"],"answer":2,"explain":"Bipartite graphs can be partitioned into two disjoint sets X and Y such that every edge connects a vertex in X to a vertex in Y; no edges exist within X or within Y. Examples: chessboards (black and white squares), matching problems (students and projects). Bipartite graphs have a key property: they contain no odd-length cycles. Testing: 2-coloring via BFS/DFS (assign alternating colors to adjacent vertices). If successful, it's bipartite; if a conflict arises, it's not. Complete bipartite graph K_{m,n} has m vertices in X, n in Y, and all m×n possible edges. Bipartite graphs are common in matching, flow, and scheduling problems."},
+{"topic":"Graph","q":"To check if a graph is bipartite, use:","options":["DFS with 2-coloring","Topological sort","MST algorithm","Dijkstra"],"answer":0,"explain":"2-coloring via BFS or DFS: assign colors (0 and 1) to vertices such that adjacent vertices have different colors. If successful, it's bipartite; if a conflict occurs (adjacent vertices with same color), it's not. Algorithm: start with an arbitrary unvisited vertex, color it 0, explore neighbors coloring them 1, and recurse. Time: O(V + E), single traversal. Intuition: bipartite graphs have no odd cycles; 2-coloring ensures alternating colors along any path, preventing odd cycles. Example: cycle of length 4 is bipartite; cycle of length 3 is not. Bipartite detection is fundamental for matching and flow problems."},
+{"topic":"Number Theory","q":"The Sieve of Eratosthenes finds all primes up to n in:","options":["O(n log log n)","O(n log n)","O(n^2)","O(n)"],"answer":0,"explain":"The Sieve iteratively marks multiples of each prime as composite, starting with 2. For each unmarked number i ≤ √n, mark all multiples 2i, 3i, ... as composite. Time analysis: marking multiples of p takes O(n/p) steps; summing over all primes: Σ n/p ≈ O(n log log n). Space: O(n). This is the fastest deterministic algorithm for finding all primes up to n. Limitations: requires O(n) memory; for extremely large n (> 10^8), segmented sieves exist. Applications: prime-based problems, cryptography, and frequency analysis. Optimizations: sieve only odd numbers (halve space), use bitsets instead of arrays."},
+{"topic":"Number Theory","q":"To compute (a^b) mod p efficiently for large b, use:","options":["Repeated multiplication","Binary exponentiation","Fermat's little theorem only","Sequential loop"],"answer":1,"explain":"Binary exponentiation (fast exponentiation) represents b in binary and computes a^b by combining squared terms. If b = 1101₂ = 8 + 4 + 1, then a^b = a^8 · a^4 · a^1, computed by iteratively squaring and multiplying. Time: O(log b) multiplications (modular arithmetic prevents overflow). Example: compute 2^1000000 mod 10^9+7 via binary exponentiation in ~20 steps instead of 1 million. Fermat's little theorem (a^(p-1) ≡ 1 mod p for prime p) can optimize specific cases but doesn't replace the general algorithm. Modular arithmetic (taking mod p after each operation) keeps numbers bounded and prevents overflow."},
+{"topic":"Number Theory","q":"The Extended Euclidean Algorithm finds integers x, y such that:","options":["x + y = gcd(a, b)","a*x + b*y = gcd(a, b)","x*y = a*b","x = a, y = b"],"answer":1,"explain":"Extended GCD computes gcd(a, b) and finds integers x, y satisfying ax + by = gcd(a, b). It extends Euclidean algorithm with backward substitution: express gcd as a linear combination of inputs. Recurrence: gcd(a, b) = gcd(b, a mod b); track coefficients during recursion. Example: gcd(10, 6) = 2, and 10·(−1) + 6·(2) = 2. Applications: finding modular inverses (if gcd(a, m) = 1, then a·x ≡ 1 mod m by setting y·m = 1 − a·x). Time: O(log min(a,b)). Extended GCD is fundamental for cryptography, Diophantine equations, and number-theoretic algorithms."},
+{"topic":"Combinatorics","q":"Catalan numbers count:","options":["Permutations of n elements","Binary strings with n zeros","Balanced parentheses sequences, BST shapes, and non-crossing partitions","Subsets of size k"],"answer":2,"explain":"Catalan numbers C(n) = (2n)! / ((n+1)! · n!) count structures including balanced parenthesis sequences of length 2n, BST shapes with n nodes, and non-crossing partitions of n+1 elements. Recurrence: C(n) = Σ C(i)·C(n-1-i) for i=0 to n-1 (combinatorial breakdown). Values: C(0)=1, C(1)=1, C(2)=2, C(3)=5, C(4)=14. Catalan numbers grow exponentially (~4^n / n^1.5), appearing surprisingly often in combinatorics. Applications: polygon triangulation, matrix chain multiplication, and dyck paths. Recognizing Catalan structures (often involving recursive partitioning) is useful for competitive programming."},
+{"topic":"Combinatorics","q":"To compute nCk (n choose k) under modulo p, use:","options":["Direct multiplication","Factorial with modular inverse","Pascal's triangle","Stirling's approximation"],"answer":1,"explain":"Compute nCk = n! / (k! · (n-k)!) under mod p by computing factorials modulo p, then using modular multiplicative inverse. If p is prime and gcd(k!(n-k)!, p) = 1, then (k!(n-k)!)^(−1) ≡ (k!(n-k)!)^(p-2) mod p via Fermat's little theorem. Precompute all factorials and inverse factorials in O(n), then answer nCk queries in O(1). For small n, Pascal's triangle (dp[i][j] = dp[i-1][j-1] + dp[i-1][j]) is simpler. Direct multiplication overflows; modular inverse avoids division. This technique is standard in competitive programming for counting problems."},
+{"topic":"String Matching","q":"The KMP (Knuth-Morris-Pratt) algorithm avoids re-scanning by using:","options":["A hash table","Failure function to skip characters","Sorting","Binary search"],"answer":1,"explain":"KMP's failure function (or lps array, longest proper prefix suffix) records, for each position, the longest prefix of the pattern that matches a suffix ending at that position. On mismatch at position j, jump to lps[j-1] instead of restarting from position 0, avoiding redundant comparisons. Time: O(n + m) (linear in text + pattern). Example: pattern \"AAAB\" has lps = [0, 1, 2, 0]—after mismatch at position 2, jump to position 1. KMP is elegant and optimal. Rabin-Karp uses hashing (faster average case but potential collisions); KMP is deterministic and optimal worst-case. Building the failure function itself uses KMP's logic recursively."},
+{"topic":"String Matching","q":"Rabin-Karp uses hashing to find patterns in:","options":["O(n * m) always","O(n + m) best case, O((n - m + 1) * m) worst case","O(n) always","O(n^2)"],"answer":1,"explain":"Rabin-Karp computes a rolling hash for each substring of length m in O(1) amortized (after O(n) preprocessing). Hash matches are checked first (O(1)), but collisions require character-by-character verification (O(m)). Best case (few collisions): O(n + m). Worst case (many collisions): O((n - m + 1) · m). Rabin-Karp shines for multiple pattern matching (search k patterns in one pass: O(n + m·k) expected). Rolling hash allows efficient update: new_hash = (old_hash - first_char) · base + new_char, enabling O(1) transition. Despite worst-case, Rabin-Karp is practical with good hash functions and competitive in practice."},
+{"topic":"String Matching","q":"A Suffix Array is a sorted array of all:","options":["Prefixes of a string","Suffixes of a string","Substrings","Characters"],"answer":1,"explain":"A Suffix Array stores indices of all suffixes sorted lexicographically, enabling efficient substring queries and pattern matching. For string S = \"banana\", suffixes are \"banana\", \"anana\", \"nana\", \"ana\", \"na\", \"a\"; sorted indices are [5, 3, 1, 0, 4, 2]. Constructing a suffix array naively (sorting) is O(n² log n) due to string comparisons; advanced algorithms (SA-IS) achieve O(n). Combined with an LCP (Longest Common Prefix) array, suffix arrays enable: finding all occurrences of a pattern (binary search + range query: O(log n + k)), longest repeated substring, and other advanced string problems. Suffix arrays are more space-efficient than suffix trees and simpler to implement."},
+{"topic":"Geometry","q":"Convex Hull (via Andrew's Monotone Chain) sorts points by:","options":["Angle from origin","x-coordinate (then y-coordinate as tiebreak), builds lower then upper hull","Distance from origin","Random order"],"answer":1,"explain":"Andrew's algorithm sorts points lexicographically by (x, y), then builds the lower hull left-to-right (greedily adding points while maintaining left turns), then the upper hull right-to-left. Left turn is checked via cross product: if cross(a→b, b→c) > 0, it's a left turn. Time: O(n log n) for sorting + O(n) for hull construction = O(n log n). The convex hull is the sequence of points forming the smallest convex polygon containing all input points. Applications: collision detection, diameter of point set, and geometric optimization. Andrew's is elegant and robust, handling collinear points naturally."},
+{"topic":"Geometry","q":"The Shoelace Formula computes a polygon's area using:","options":["Sum of side lengths","Sum of coordinate products and differences","Perimeter and apothem","Distance to origin"],"answer":1,"explain":"Shoelace Formula (Gauss's area formula): Area = 0.5 · |Σ(x_i · y_{i+1} − x_{i+1} · y_i)| for vertices listed in order. The sum alternates cross products of consecutive coordinate pairs, yielding twice the signed area. Vertices listed counterclockwise produce positive area; clockwise produce negative (hence absolute value). Time: O(n) for n vertices. Shoelace works for non-convex polygons too. Applications: polygon area computation, checking orientation (clockwise vs counterclockwise), and geometric problems. The formula elegantly handles arbitrary polygons without triangulation."},
+{"topic":"Advanced","q":"Network Flow's max-flow min-cut theorem states:","options":["Max flow equals bottleneck capacity","Max flow equals min cut capacity","All edges carry max flow","Flow is unique"],"answer":1,"explain":"Max-Flow Min-Cut Theorem: the maximum value of flow from source s to sink t equals the minimum capacity of a cut separating s and t. A cut is a partition of vertices into two sets (s in one, t in the other); capacity is the sum of edge capacities crossing the cut. This equivalence is fundamental: finding max flow solves the dual problem of finding min cut. Proof uses Ford-Fulkerson: flow converges to max when no augmenting paths exist; the residual graph at termination defines a saturated cut. Applications: min cut for reliability, vertex connectivity, bipartite matching (as flow), and resource optimization."},
+{"topic":"Advanced","q":"Dinic's algorithm for max flow achieves:","options":["O(V^2 * E)","O(V * E^2)","O(V^2 * E) for unit capacities; O(V * E * log(max_cap)) otherwise","O(V^3)"],"answer":2,"explain":"Dinic's algorithm builds level graphs (BFS-based distance levels) and finds blocking flows (maximal flows in the level graph) repeatedly. Time: O(V² · E) worst-case; for unit capacities, O(E · √E) ≈ O(E^1.5); for general capacities with scaling, O(E · log(max_cap)). Dinic's is faster than Ford-Fulkerson (O(E · max_flow)) and practical for competitive programming. Implementation: BFS to build levels, DFS to find blocking flows (with pruning). Variants: capacity scaling (process large capacities first) and other optimizations. Dinic's is a staple for max-flow problems."},
+{"topic":"Advanced","q":"FFT (Fast Fourier Transform) multiplies polynomials of degree n in:","options":["O(n^2)","O(n log n)","O(n^3)","O(n)"],"answer":1,"explain":"FFT-based polynomial multiplication: (1) Convert polynomials to frequency domain via FFT (O(n log n)); (2) Multiply component-wise in frequency domain (O(n)); (3) Inverse FFT back to coefficient domain (O(n log n)). Total: O(n log n). Naive polynomial multiplication is O(n²). FFT leverages divide-and-conquer on roots of unity: computing values at roots (DFT) and inverse. FFT is complex but foundational for fast convolution, signal processing, and integer multiplication (Schönhage-Strassen). NTT (Number Theoretic Transform) replaces complex numbers with modular arithmetic for integer FFT, avoiding floating-point errors. Advanced competitive programming uses FFT for problems involving convolution or fast polynomial operations."}
+]
+
+</script>
+<script>
+(function() {
+  const dataEl = document.getElementById('quiz-data');
+  if (!dataEl) return;
+  let questions;
+  try { questions = JSON.parse(dataEl.textContent); } catch(e) { console.error('Quiz JSON parse error', e); return; }
+  if (!Array.isArray(questions) || !questions.length) return;
+
+  // ── Inject CSS ──
+  const css = `
+  #view-quiz { overflow-y: auto; padding-top: 60px; height: 100vh; }
+  .quiz-wrap { max-width: 880px; margin: 0 auto; padding: 24px 24px 80px; }
+  .quiz-header { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; margin-bottom: 12px; }
+  .quiz-header h2 { font-size: 22px; color: #58a6ff; }
+  .quiz-header .quiz-sub { font-size: 12px; color: #8b949e; margin-top: 2px; }
+  .quiz-stats { display:flex; gap:10px; flex-wrap:wrap; }
+  .quiz-stat { background:#161b22; border:1px solid #30363d; border-radius:8px; padding:8px 14px; font-size:12px; color:#8b949e; }
+  .quiz-stat b { color:#c9d1d9; font-size:15px; display:block; }
+  .quiz-stat.ok b { color:#7ee787; }
+  .quiz-stat.bad b { color:#ff7b72; }
+  .quiz-filters { display:flex; flex-wrap:wrap; gap:6px; margin: 12px 0 16px; }
+  .quiz-chip { background:#0d1117; border:1px solid #30363d; color:#8b949e; padding:5px 12px; border-radius:16px; cursor:pointer; font-size:12px; transition:all .15s; }
+  .quiz-chip:hover { color:#c9d1d9; border-color:#58a6ff; }
+  .quiz-chip.active { background:#1f6feb; color:#fff; border-color:#58a6ff; }
+  .quiz-actions { display:flex; gap:8px; flex-wrap:wrap; margin-bottom: 14px; }
+  .quiz-actions .qbtn { background:#21262d; border:1px solid #30363d; color:#c9d1d9; padding:6px 14px; border-radius:6px; cursor:pointer; font-size:12px; }
+  .quiz-actions .qbtn:hover { background:#30363d; border-color:#58a6ff; }
+  .quiz-progress { height:6px; background:#161b22; border-radius:4px; overflow:hidden; margin-bottom:16px; border:1px solid #30363d; }
+  .quiz-progress > div { height:100%; background:linear-gradient(90deg,#1f6feb,#58a6ff); transition:width .3s; }
+  .quiz-card { background:#161b22; border:1px solid #30363d; border-radius:12px; padding:22px 26px; box-shadow:0 4px 18px rgba(0,0,0,.3); }
+  .quiz-card .qc-meta { font-size:11px; color:#58a6ff; font-weight:600; text-transform:uppercase; letter-spacing:.5px; margin-bottom:8px; display:flex; justify-content:space-between; }
+  .quiz-card .qc-meta .qc-num { color:#8b949e; }
+  .quiz-card .qc-q { font-size:16px; color:#c9d1d9; line-height:1.55; font-weight:600; margin-bottom:16px; }
+  .quiz-options { display:flex; flex-direction:column; gap:8px; }
+  .quiz-opt { background:#0d1117; border:1px solid #30363d; color:#c9d1d9; padding:11px 16px; border-radius:8px; cursor:pointer; text-align:left; font-size:14px; transition:all .15s; line-height:1.4; display:flex; align-items:flex-start; gap:10px; }
+  .quiz-opt:hover:not(.disabled) { border-color:#58a6ff; background:#161b22; }
+  .quiz-opt .opt-letter { flex-shrink:0; width:22px; height:22px; border-radius:50%; background:#21262d; color:#8b949e; font-size:11px; font-weight:600; display:inline-flex; align-items:center; justify-content:center; }
+  .quiz-opt.correct { border-color:#3fb950; background:rgba(63,185,80,.08); }
+  .quiz-opt.correct .opt-letter { background:#3fb950; color:#fff; }
+  .quiz-opt.wrong { border-color:#f85149; background:rgba(248,81,73,.08); }
+  .quiz-opt.wrong .opt-letter { background:#f85149; color:#fff; }
+  .quiz-opt.disabled { cursor:default; }
+  .quiz-explain { margin-top:14px; padding:12px 16px; background:#0d1117; border-left:3px solid #58a6ff; border-radius:6px; font-size:13px; color:#8b949e; line-height:1.6; }
+  .quiz-explain b { color:#58a6ff; }
+  .quiz-nav { display:flex; justify-content:space-between; gap:10px; margin-top:18px; }
+  .quiz-nav .qbtn { padding:8px 18px; font-size:13px; background:#21262d; border:1px solid #30363d; color:#c9d1d9; border-radius:6px; cursor:pointer; }
+  .quiz-nav .qbtn:hover { background:#30363d; border-color:#58a6ff; }
+  .quiz-nav .qbtn.primary { background:#1f6feb; border-color:#58a6ff; color:#fff; }
+  .quiz-nav .qbtn.primary:hover { background:#388bfd; }
+  .quiz-nav .qbtn:disabled { opacity:.4; cursor:not-allowed; }
+  .quiz-empty { text-align:center; color:#484f58; padding:60px 20px; font-style:italic; }
+  .quiz-summary { background:#161b22; border:1px solid #30363d; border-radius:12px; padding:32px; text-align:center; }
+  .quiz-summary h3 { color:#58a6ff; font-size:22px; margin-bottom:6px; }
+  .quiz-summary .qs-score { font-size:56px; font-weight:700; color:#7ee787; margin:12px 0; }
+  .quiz-summary .qs-pct { color:#8b949e; font-size:14px; margin-bottom:16px; }
+  .quiz-summary .qs-breakdown { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:8px; margin:20px 0; text-align:left; }
+  .quiz-summary .qs-row { background:#0d1117; border:1px solid #30363d; border-radius:8px; padding:8px 12px; font-size:12px; color:#8b949e; }
+  .quiz-summary .qs-row b { display:block; color:#c9d1d9; font-size:14px; margin-bottom:2px; }
+  @media (max-width: 600px) {
+    .quiz-wrap { padding:14px 12px 80px; }
+    .quiz-card { padding:16px; }
+    .quiz-card .qc-q { font-size:15px; }
+    .quiz-opt { font-size:13px; padding:10px 12px; }
+  }`;
+  const styleEl = document.createElement('style');
+  styleEl.textContent = css;
+  document.head.appendChild(styleEl);
+
+  // ── Inject view container ──
+  function ensureView() {
+    let view = document.getElementById('view-quiz');
+    if (!view) {
+      view = document.createElement('div');
+      view.id = 'view-quiz';
+      view.className = 'view';
+      view.innerHTML = '<div id="quiz-container"></div>';
+      document.body.appendChild(view);
+    }
+    return view;
+  }
+  const viewEl = ensureView();
+
+  // ── State ──
+  const state = { filter: 'ALL', order: [], cursor: 0, answers: {}, built: false };
+
+  function shuffleArr(a) { for (let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} }
+  function escapeHtml(s) { return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+  function topics() { return ['ALL', ...Array.from(new Set(questions.map(q => q.topic || 'General')))]; }
+  function pool() { return state.order.map(i => ({i, q: questions[i]})).filter(x => state.filter === 'ALL' || (x.q.topic||'General') === state.filter); }
+
+  function build() {
+    state.order = questions.map((_, i) => i);
+    shuffleArr(state.order);
+    const root = document.getElementById('quiz-container');
+    root.innerHTML = `
+      <div class="quiz-wrap">
+        <div class="quiz-header">
+          <div>
+            <h2>🎯 Knowledge Quiz</h2>
+            <div class="quiz-sub">${questions.length} questions across ${topics().length - 1} topics — pick a topic or take it all.</div>
+          </div>
+          <div class="quiz-stats" id="quiz-stats"></div>
+        </div>
+        <div class="quiz-filters" id="quiz-filters"></div>
+        <div class="quiz-actions">
+          <button class="qbtn" data-act="shuffle">🔀 Shuffle</button>
+          <button class="qbtn" data-act="reset">↺ Reset Answers</button>
+          <button class="qbtn" data-act="next-unans">⏭ Next Unanswered</button>
+          <button class="qbtn" data-act="summary">📊 Summary</button>
+        </div>
+        <div class="quiz-progress"><div id="quiz-progress-bar" style="width:0%"></div></div>
+        <div id="quiz-body"></div>
+      </div>`;
+    root.querySelectorAll('.qbtn[data-act]').forEach(b => b.addEventListener('click', () => {
+      const a = b.getAttribute('data-act');
+      if (a === 'shuffle') { shuffleArr(state.order); state.cursor = 0; renderQ(); }
+      else if (a === 'reset') { if (confirm('Reset all answers?')) { state.answers = {}; renderQ(); } }
+      else if (a === 'next-unans') { const p = pool(); const n = p.findIndex(x => state.answers[x.i] === undefined); if (n >= 0) { state.cursor = n; renderQ(); } }
+      else if (a === 'summary') { showSummary(); }
+    }));
+    renderFilters();
+    renderQ();
+    state.built = true;
+  }
+
+  function renderFilters() {
+    const el = document.getElementById('quiz-filters');
+    el.innerHTML = '';
+    topics().forEach(t => {
+      const count = t === 'ALL' ? questions.length : questions.filter(q => (q.topic || 'General') === t).length;
+      const chip = document.createElement('button');
+      chip.className = 'quiz-chip' + (t === state.filter ? ' active' : '');
+      chip.textContent = t === 'ALL' ? `All (${count})` : `${t} (${count})`;
+      chip.addEventListener('click', () => { state.filter = t; state.cursor = 0; renderFilters(); renderQ(); });
+      el.appendChild(chip);
+    });
+  }
+
+  function renderStats() {
+    const p = pool();
+    const answered = p.filter(x => state.answers[x.i] !== undefined);
+    const correct = answered.filter(x => state.answers[x.i] === x.q.answer).length;
+    const wrong = answered.length - correct;
+    const el = document.getElementById('quiz-stats');
+    if (el) el.innerHTML = `
+      <div class="quiz-stat"><b>${p.length}</b>Questions</div>
+      <div class="quiz-stat ok"><b>${correct}</b>Correct</div>
+      <div class="quiz-stat bad"><b>${wrong}</b>Wrong</div>
+      <div class="quiz-stat"><b>${answered.length}/${p.length}</b>Done</div>`;
+    const pct = p.length ? Math.round(100 * answered.length / p.length) : 0;
+    const bar = document.getElementById('quiz-progress-bar');
+    if (bar) bar.style.width = pct + '%';
+  }
+
+  function renderQ() {
+    const p = pool();
+    const body = document.getElementById('quiz-body');
+    if (!p.length) { body.innerHTML = '<div class="quiz-empty">No questions for this filter.</div>'; renderStats(); return; }
+    if (state.cursor >= p.length) state.cursor = p.length - 1;
+    if (state.cursor < 0) state.cursor = 0;
+    const cur = p[state.cursor];
+    const q = cur.q;
+    const selected = state.answers[cur.i];
+    const answered = selected !== undefined;
+    const optsHtml = q.options.map((opt, i) => {
+      let cls = '';
+      if (answered) { if (i === q.answer) cls = 'correct'; else if (i === selected) cls = 'wrong'; cls += ' disabled'; }
+      const letter = String.fromCharCode(65 + i);
+      return `<button class="quiz-opt ${cls}" data-opt="${i}" ${answered ? 'disabled' : ''}>
+        <span class="opt-letter">${letter}</span><span>${escapeHtml(opt)}</span>
+      </button>`;
+    }).join('');
+    body.innerHTML = `
+      <div class="quiz-card">
+        <div class="qc-meta"><span>${escapeHtml(q.topic || 'General')}</span><span class="qc-num">${state.cursor + 1} / ${p.length}</span></div>
+        <div class="qc-q">${escapeHtml(q.q)}</div>
+        <div class="quiz-options">${optsHtml}</div>
+        ${answered ? `<div class="quiz-explain"><b>${selected === q.answer ? '✓ Correct.' : '✗ Not quite.'}</b> ${escapeHtml(q.explain || '')}</div>` : ''}
+        <div class="quiz-nav">
+          <button class="qbtn" data-nav="prev" ${state.cursor === 0 ? 'disabled' : ''}>← Previous</button>
+          <button class="qbtn primary" data-nav="next" ${state.cursor === p.length - 1 ? 'disabled' : ''}>Next →</button>
+        </div>
+      </div>`;
+    body.querySelectorAll('.quiz-opt[data-opt]').forEach(b => b.addEventListener('click', () => {
+      const idx = cur.i;
+      if (state.answers[idx] !== undefined) return;
+      state.answers[idx] = +b.getAttribute('data-opt');
+      renderQ();
+    }));
+    body.querySelectorAll('[data-nav]').forEach(b => b.addEventListener('click', () => {
+      const dir = b.getAttribute('data-nav');
+      const pp = pool();
+      if (dir === 'next' && state.cursor < pp.length - 1) { state.cursor++; renderQ(); }
+      else if (dir === 'prev' && state.cursor > 0) { state.cursor--; renderQ(); }
+    }));
+    renderStats();
+  }
+
+  function showSummary() {
+    const p = pool();
+    const answered = p.filter(x => state.answers[x.i] !== undefined);
+    const correct = answered.filter(x => state.answers[x.i] === x.q.answer).length;
+    const pct = answered.length ? Math.round(100 * correct / answered.length) : 0;
+    const topicStats = {};
+    p.forEach(x => {
+      const t = x.q.topic || 'General';
+      if (!topicStats[t]) topicStats[t] = { total: 0, answered: 0, correct: 0 };
+      topicStats[t].total++;
+      if (state.answers[x.i] !== undefined) {
+        topicStats[t].answered++;
+        if (state.answers[x.i] === x.q.answer) topicStats[t].correct++;
+      }
+    });
+    const rows = Object.entries(topicStats).map(([t,s]) =>
+      `<div class="qs-row"><b>${escapeHtml(t)}</b>${s.correct}/${s.answered} correct · ${s.total} total</div>`).join('');
+    document.getElementById('quiz-body').innerHTML = `
+      <div class="quiz-summary">
+        <h3>Summary</h3>
+        <div class="qs-score">${correct} / ${answered.length || p.length}</div>
+        <div class="qs-pct">${pct}% correct · ${answered.length} of ${p.length} answered</div>
+        <div class="qs-breakdown">${rows}</div>
+        <div class="quiz-nav" style="justify-content:center">
+          <button class="qbtn primary" id="qs-back">Back to Questions</button>
+          <button class="qbtn" id="qs-reset">Reset Answers</button>
+        </div>
+      </div>`;
+    document.getElementById('qs-back').addEventListener('click', renderQ);
+    document.getElementById('qs-reset').addEventListener('click', () => { if (confirm('Reset all answers?')) { state.answers = {}; renderQ(); } });
+  }
+
+  // ── Activate when the quiz tab is shown ──
+  function activate() {
+    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+    viewEl.classList.add('active');
+    document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.view === 'quiz'));
+    document.querySelectorAll('.canvas-controls').forEach(c => { if (c.id !== 'quiz-controls') c.style.display = 'none'; });
+    if (!state.built) build();
+  }
+
+  // ── Bootstrap on DOM ready: add tab button, hook switchTab ──
+  function boot() {
+    const tg = document.querySelector('#tab-group') || document.querySelector('.tab-group');
+    if (tg) {
+      if (!tg.querySelector('[data-view="quiz"]')) {
+        const btn = document.createElement('button');
+        btn.className = 'tab';
+        btn.dataset.view = 'quiz';
+        btn.textContent = '🎯 Quiz';
+        btn.addEventListener('click', () => {
+          if (typeof window.switchTab === 'function') {
+            try { window.switchTab('quiz'); } catch(e) { activate(); }
+            activate();
+          } else {
+            activate();
+          }
+        });
+        tg.appendChild(btn);
+      }
+    }
+    if (typeof window.switchTab === 'function') {
+      const orig = window.switchTab;
+      window.switchTab = function(tab) {
+        if (tab === 'quiz') { activate(); return; }
+        try { orig(tab); } catch(e) {}
+      };
+    }
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
+  else boot();
+})();
+</script>
+
+</body>
