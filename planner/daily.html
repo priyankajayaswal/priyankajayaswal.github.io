@@ -67,7 +67,7 @@
 <body>
 <div class="wrap">
   <h1>🚀 Daily Upskill — 30-Day Plan</h1>
-  <div class="subtitle">Networking · Performance · Code Reading · Tech Trends · Security · AI Tools · Launch <span id="launch-date"></span> · Companion: <a href="studyday.html">studyday.html</a> · <a href="upskill.html">upskill.html</a></div>
+  <div class="subtitle">Networking · Performance · Code Reading · Tech Trends · Security · AI Tools · Launch <span id="launch-date" title="Click to reset launch date to today" style="cursor:pointer;text-decoration:underline dotted;text-underline-offset:3px" onclick="resetLaunchDate()"></span> <span style="opacity:.5">↻</span> · Companion: <a href="studyday.html">studyday.html</a> · <a href="upskill.html">upskill.html</a></div>
 
   <div class="topbar">
     <div class="stat"><span class="v" id="day-n">—</span><span class="l">Today (Day)</span></div>
@@ -299,13 +299,26 @@ const PLAN = [
 ];
 
 /* ============ CONFIG ============ */
-const LAUNCH_DATE = '2026-04-20';
+const LAUNCH_DATE_DEFAULT = '2026-05-16';
 const STORE_KEY = 'daily_plan_v1';
+const LAUNCH_KEY = STORE_KEY + '_launch';
+let LAUNCH_DATE = localStorage.getItem(LAUNCH_KEY) || LAUNCH_DATE_DEFAULT;
 
 /* ============ LOGIC ============ */
 const $ = q => document.querySelector(q);
 const state = JSON.parse(localStorage.getItem(STORE_KEY) || '{}');
 const save = () => localStorage.setItem(STORE_KEY, JSON.stringify(state));
+
+function resetLaunchDate(){
+  if(!confirm('Reset launch date to today? Day 1 will start now.')) return;
+  LAUNCH_DATE = new Date().toISOString().slice(0,10);
+  localStorage.setItem(LAUNCH_KEY, LAUNCH_DATE);
+  if(confirm('Also clear progress checkmarks?')){
+    for(const k of Object.keys(state)) delete state[k];
+    save();
+  }
+  render();
+}
 
 const daysSince = () => {
   const ms = Date.now() - new Date(LAUNCH_DATE+'T00:00:00').getTime();

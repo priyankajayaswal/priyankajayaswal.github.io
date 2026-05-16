@@ -69,7 +69,7 @@
 <body>
 <div class="wrap">
   <h1>📚 Study Day — 30-Day Plan</h1>
-  <div class="subtitle">Study subfolders (distributed, radar, compilers, crypto, sanskrit…) · 15 topics rotated every 6 days · Launch <span id="launch-date"></span> · Companion: <a href="daily.html">daily.html</a> · <a href="../try.html">try.html</a></div>
+  <div class="subtitle">Study subfolders (distributed, radar, compilers, crypto, sanskrit…) · 15 topics rotated every 6 days · Launch <span id="launch-date" title="Click to reset launch date to today" style="cursor:pointer;text-decoration:underline dotted;text-underline-offset:3px" onclick="resetLaunchDate()"></span> <span style="opacity:.5">↻</span> · Companion: <a href="daily.html">daily.html</a> · <a href="../try.html">try.html</a></div>
 
   <div class="topbar">
     <div class="stat"><span class="v" id="day-n">—</span><span class="l">Today (Day)</span></div>
@@ -94,21 +94,21 @@
 <script>
 /* ============ TOPICS METADATA (aligned with try.html) ============ */
 const T = {
-  'dist':   {name:'MIT Distributed',     icon:'🖥️', c:'#58a6ff', link:'study/mit-distributed-systems/index.html'},
-  'rkt':    {name:'Rocket Propulsion',   icon:'🚀', c:'#f778ba', link:'study/rocket-engineering/index.html'},
-  'rdr':    {name:'Radar Systems',       icon:'📡', c:'#7ee787', link:'study/radar-engineering/index.html'},
-  'sat':    {name:'Remote Sensing',      icon:'🛰️', c:'#d2a8ff', link:'study/satellite-imaging/index.html'},
-  'bio':    {name:'Biogas',              icon:'🦠', c:'#ffa657', link:'study/biogas-plant/index.html'},
-  'nuc':    {name:'Nuclear Physics',     icon:'⚛️', c:'#f0883e', link:'study/nuclear-physics/index.html'},
-  'dg':     {name:'Diff. Geometry',      icon:'🌐', c:'#79c0ff', link:'study/differential-geometry/index.html'},
-  'gold':   {name:'Gold Extraction',     icon:'🥇', c:'#ff9bce', link:'study/gold-extraction/index.html'},
-  'bat':    {name:'Battery Storage',     icon:'🔋', c:'#58a6ff', link:'study/battery-storage/index.html'},
-  'skt':    {name:'Sanskrit',            icon:'🕉️', c:'#f778ba', link:'study/sanskrit-learning/index.html'},
-  'tpu':    {name:'TPU Architecture',    icon:'🔲', c:'#7ee787', link:'study/tpu/index.html'},
-  'sec-ug': {name:'Security UG',         icon:'🔐', c:'#d2a8ff', link:'study/security-ug/index.html'},
-  'sec-pg': {name:'Security PG',         icon:'🛡️', c:'#ffa657', link:'study/security-pg/index.html'},
-  'cmp':    {name:'Compilers',           icon:'⚙️', c:'#f0883e', link:'study/compilers/index.html'},
-  'pl':     {name:'Programming Langs',   icon:'λ',  c:'#79c0ff', link:'study/programming-languages/index.html'},
+  'dist':   {name:'MIT Distributed',     icon:'🖥️', c:'#58a6ff', link:'study/mit-distributed-systems.html'},
+  'rkt':    {name:'Rocket Propulsion',   icon:'🚀', c:'#f778ba', link:'study/rocket-engineering.html'},
+  'rdr':    {name:'Radar Systems',       icon:'📡', c:'#7ee787', link:'study/radar-engineering.html'},
+  'sat':    {name:'Remote Sensing',      icon:'🛰️', c:'#d2a8ff', link:'study/satellite-imaging.html'},
+  'bio':    {name:'Biogas',              icon:'🦠', c:'#ffa657', link:'study/biogas-plant.html'},
+  'nuc':    {name:'Nuclear Physics',     icon:'⚛️', c:'#f0883e', link:'study/nuclear-physics.html'},
+  'dg':     {name:'Diff. Geometry',      icon:'🌐', c:'#79c0ff', link:'study/differential-geometry.html'},
+  'gold':   {name:'Gold Extraction',     icon:'🥇', c:'#ff9bce', link:'study/gold-extraction.html'},
+  'bat':    {name:'Battery Storage',     icon:'🔋', c:'#58a6ff', link:'study/battery-storage.html'},
+  'skt':    {name:'Sanskrit',            icon:'🕉️', c:'#f778ba', link:'study/sanskrit-learning.html'},
+  'tpu':    {name:'TPU Architecture',    icon:'🔲', c:'#7ee787', link:'study/tpu.html'},
+  'sec-ug': {name:'Security UG',         icon:'🔐', c:'#d2a8ff', link:'study/security-ug.html'},
+  'sec-pg': {name:'Security PG',         icon:'🛡️', c:'#ffa657', link:'study/security-pg.html'},
+  'cmp':    {name:'Compilers',           icon:'⚙️', c:'#f0883e', link:'study/compilers.html'},
+  'pl':     {name:'Programming Langs',   icon:'λ',  c:'#79c0ff', link:'study/programming-languages.html'},
 };
 
 /* ============ 30-DAY PLAN ============ */
@@ -310,13 +310,26 @@ const PLAN = [
 ];
 
 /* ============ CONFIG ============ */
-const LAUNCH_DATE = '2026-04-20'; // today
+const LAUNCH_DATE_DEFAULT = '2026-05-16';
 const STORE_KEY = 'studyday_plan_v1';
+const LAUNCH_KEY = STORE_KEY + '_launch';
+let LAUNCH_DATE = localStorage.getItem(LAUNCH_KEY) || LAUNCH_DATE_DEFAULT;
 
 /* ============ LOGIC ============ */
 const $ = q => document.querySelector(q);
 const state = JSON.parse(localStorage.getItem(STORE_KEY) || '{}');
 const save = () => localStorage.setItem(STORE_KEY, JSON.stringify(state));
+
+function resetLaunchDate(){
+  if(!confirm('Reset launch date to today? Day 1 will start now.')) return;
+  LAUNCH_DATE = new Date().toISOString().slice(0,10);
+  localStorage.setItem(LAUNCH_KEY, LAUNCH_DATE);
+  if(confirm('Also clear progress checkmarks?')){
+    for(const k of Object.keys(state)) delete state[k];
+    save();
+  }
+  render();
+}
 
 const daysSince = () => {
   const ms = Date.now() - new Date(LAUNCH_DATE+'T00:00:00').getTime();
