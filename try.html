@@ -55,6 +55,24 @@
   .day-card .actions button:hover, .day-card .actions a:hover{border-color:var(--c);color:var(--c)}
   .day-card .actions .primary{background:var(--c);color:#0d1117;border-color:var(--c);font-weight:600}
   .day-card .actions .primary:hover{filter:brightness(1.1)}
+  /* ----- TODAY'S PLAN — small enhancements (opener pill + start-here marker) ----- */
+  .day-card .start-here{font-size:.62rem;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--c);padding:0;margin:-4px 0 -4px}
+  .day-card .opener-pill{font-size:.7rem;color:#c9d1d9;background:#0d1117;border:1px solid #30363d;border-left:2px solid #d2a8ff;padding:5px 8px;border-radius:3px;line-height:1.4;display:flex;flex-direction:column;gap:2px}
+  .day-card .opener-pill .pin{color:#d2a8ff;font-weight:600;font-size:.62rem;letter-spacing:.4px;text-transform:uppercase}
+  .day-card .opener-pill .body{color:#c9d1d9;font-size:.74rem;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .day-card .recall-pct{color:#ffa657;font-weight:600}
+  /* ----- POMODORO MODAL: opener capture form ----- */
+  .opener-form{background:#0d1117;border:1px solid #30363d;border-radius:8px;padding:14px;margin-top:14px;text-align:left;display:none}
+  .opener-form.show{display:block}
+  .opener-form label{display:block;font-size:.78rem;color:#8b949e;margin-bottom:6px}
+  .opener-form label strong{color:#d2a8ff}
+  .opener-form textarea{width:100%;background:#161b22;border:1px solid #30363d;border-radius:6px;padding:8px 10px;color:#e6edf3;font-family:inherit;font-size:.85rem;resize:vertical;min-height:54px;outline:none;line-height:1.4}
+  .opener-form textarea:focus{border-color:#d2a8ff;box-shadow:0 0 0 2px #d2a8ff22}
+  .opener-form .opener-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:8px}
+  .opener-form button{padding:6px 14px;border-radius:5px;border:1px solid #30363d;background:#161b22;color:#c9d1d9;cursor:pointer;font-size:.78rem;font-family:inherit}
+  .opener-form button.save{background:#d2a8ff;color:#0d1117;border-color:#d2a8ff;font-weight:600}
+  .opener-form button.save:hover{filter:brightness(1.1)}
+  .opener-form button.skip:hover{color:#f85149;border-color:#f85149}
   /* ----- PROJECT GRIDS ----- */
   .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:20px;width:100%}
   a.card{text-decoration:none;color:inherit;background:#161b22;border:1px solid #30363d;border-radius:12px;padding:24px;transition:transform .18s,border-color .18s,box-shadow .18s;display:flex;flex-direction:column;gap:10px}
@@ -67,6 +85,55 @@
   .mastery-track{height:4px;background:#21262d;border-radius:2px;overflow:hidden;margin-top:8px}
   .mastery-track .fill{height:100%;transition:width .4s}
   .mastery-meta{display:flex;justify-content:space-between;font-size:.7rem;color:#8b949e;margin-top:4px;font-family:"SFMono-Regular",Consolas,monospace}
+  /* ----- COMPACT ROW LAYOUT (for Mind Maps / Study Planner / Lifestyle) ----- */
+  .compact-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(440px,1fr));gap:8px;width:100%;margin-bottom:10px}
+  a.compact-row{display:grid;grid-template-columns:32px 1fr auto;align-items:center;gap:12px;padding:10px 14px;background:#161b22;border:1px solid #30363d;border-left:3px solid var(--accent);border-radius:8px;text-decoration:none;color:inherit;transition:border-color .15s,background .15s,transform .15s}
+  a.compact-row:hover{border-color:var(--accent);background:#1c2128;transform:translateX(2px)}
+  .compact-row .ci{font-size:1.4rem;text-align:center;line-height:1}
+  .compact-row .cmain{display:flex;flex-direction:column;gap:2px;min-width:0}
+  .compact-row .ct{font-size:.95rem;font-weight:600;color:#e6edf3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .compact-row .cm{font-size:.72rem;color:#8b949e;display:flex;gap:8px;align-items:center;min-width:0}
+  .compact-row .cm .folder{font-family:"SFMono-Regular",Consolas,monospace;background:#21262d;padding:1px 6px;border-radius:3px;color:#8b949e;flex-shrink:0}
+  .compact-row .cm .desc{color:#8b949e;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+  .compact-row .cright{display:flex;flex-direction:column;align-items:flex-end;gap:3px;flex-shrink:0}
+  .compact-row .tag{font-size:.65rem;padding:1px 7px;margin-top:0}
+  .compact-row .mastery-track{width:90px;height:3px;margin:0}
+  .compact-row .mastery-meta{font-size:.62rem;gap:6px;margin:0;justify-content:flex-end;width:90px}
+  /* ----- STUDY PLANNER (flat, with category chip per card) ----- */
+  #study-grid{grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:6px}
+  #study-grid .compact-row .cm{display:none}
+  #study-grid .compact-row .ct{font-size:.9rem;white-space:normal;line-height:1.25}
+  #study-grid .compact-row{padding:9px 12px;align-items:center}
+  #study-grid .compact-row .cright{gap:5px}
+  #study-grid .compact-row .tag{display:none}
+  #study-grid .compact-row .mastery-track{width:80px}
+  #study-grid .compact-row .mastery-meta{width:80px}
+  .cat-chip{font-size:.62rem;padding:2px 8px;border-radius:10px;font-weight:600;letter-spacing:.4px;text-transform:uppercase;color:var(--cc,#c9d1d9);background:color-mix(in srgb,var(--cc,#30363d) 14%,transparent);border:1px solid color-mix(in srgb,var(--cc,#30363d) 35%,transparent);white-space:nowrap}
+  .kind-badge{font-size:.58rem;padding:1px 6px;border-radius:8px;font-weight:600;letter-spacing:.5px;color:#8b949e;background:#0d1117;border:1px dashed #30363d;white-space:nowrap}
+  #study-grid .compact-row.is-tool .ct{color:#c9d1d9}
+  /* ----- LIBRARY SEARCH ----- */
+  .lib-search{width:100%;display:flex;align-items:center;gap:10px;margin:24px 0 12px;padding:0 2px}
+  .lib-search-box{flex:1;position:relative;display:flex;align-items:center}
+  .lib-search-box .lib-icon{position:absolute;left:12px;color:#6e7681;font-size:.9rem;pointer-events:none}
+  .lib-search-box input{width:100%;background:#0d1117;border:1px solid #30363d;border-radius:8px;padding:10px 36px 10px 34px;color:#e6edf3;font-size:.9rem;font-family:inherit;outline:none;transition:border-color .15s,box-shadow .15s}
+  .lib-search-box input:focus{border-color:#58a6ff;box-shadow:0 0 0 3px #58a6ff22}
+  .lib-search-box input::placeholder{color:#6e7681}
+  .lib-search-box .lib-clear{position:absolute;right:8px;background:none;border:none;color:#6e7681;font-size:1rem;cursor:pointer;padding:4px 8px;border-radius:4px;display:none}
+  .lib-search-box .lib-clear:hover{color:#f85149;background:#21262d}
+  .lib-search-box.has-query .lib-clear{display:block}
+  .lib-count{font-size:.74rem;color:#8b949e;font-family:"SFMono-Regular",Consolas,monospace;white-space:nowrap;min-width:70px;text-align:right}
+  .lib-kbd{font-size:.66rem;color:#6e7681;background:#161b22;border:1px solid #30363d;padding:1px 5px;border-radius:3px;font-family:"SFMono-Regular",Consolas,monospace}
+  #study-grid .compact-row.hidden{display:none}
+  #study-grid .empty-state{grid-column:1/-1;text-align:center;color:#6e7681;font-size:.85rem;padding:24px;display:none}
+  #study-grid.no-results .empty-state{display:block}
+  /* ----- LIBRARY CATEGORY FILTERS ----- */
+  .lib-filters{width:100%;display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:-4px 0 14px;padding:0 2px}
+  .lib-fchip{font-size:.72rem;padding:5px 10px;border-radius:14px;background:#0d1117;border:1px solid #30363d;color:#8b949e;cursor:pointer;display:inline-flex;align-items:center;gap:5px;transition:all .12s;font-family:inherit;line-height:1;white-space:nowrap}
+  .lib-fchip:hover{color:#e6edf3;border-color:#484f58}
+  .lib-fchip.active{color:var(--cc,#e6edf3);border-color:var(--cc,#58a6ff);background:color-mix(in srgb,var(--cc,#58a6ff) 14%,transparent);font-weight:600}
+  .lib-fchip .fcount{font-size:.62rem;color:#6e7681;font-family:"SFMono-Regular",Consolas,monospace}
+  .lib-fchip.active .fcount{color:var(--cc,#8b949e);opacity:.85}
+  .lib-fchip.all{--cc:#c9d1d9}
   footer{margin-top:40px;color:#484f58;font-size:.8rem;text-align:center;line-height:1.6}
   footer span{color:#6e7681}
   /* ----- LEARNING TIPS ----- */
@@ -189,7 +256,7 @@
     <a href="planner/studyday.html" style="--hc:#58a6ff" title="30-day checklist for the 15 study subfolders">📚 studyday.html <span class="tag">30-day · study</span></a>
     <a href="planner/daily.html"    style="--hc:#7ee787" title="30-day upskill plan: networking, perf, security, AI, code reading, tech trends">🚀 daily.html <span class="tag">30-day · upskill</span></a>
     <a href="planner/upskill.html"  style="--hc:#d2a8ff" title="Full upskill reference: courses, books, blogs, tools">📖 upskill.html <span class="tag">reference</span></a>
-    <a href="study/arithmetic/index.html" style="--hc:#ffa657" title="Machine Arithmetic — from transistors to tensor cores">🔢 arithmetic <span class="tag">transistors → tensors</span></a>
+    <a href="study/arithmetic.html" style="--hc:#ffa657" title="Machine Arithmetic — from transistors to tensor cores">🔢 arithmetic <span class="tag">transistors → tensors</span></a>
   </div>
 </div>
 
@@ -264,68 +331,40 @@
   </div>
 </details>
 
-<!-- MIND MAPS / STUDY TOOLS GRID -->
-<h3>🗺️ Mind Maps &amp; Tools</h3>
-<div class="grid">
-  <a class="card" href="study/algo/index.html" style="--accent:#f778ba">
-    <span class="card-icon">⚡</span>
-    <span class="card-title">CP4 — Competitive Programming</span>
-    <span class="card-folder">study/algo/</span>
-    <span class="card-desc">study/algo/ &mdash; 106 KB</span>
-    <span class="tag" style="background:#f778ba20;color:#f778ba">Study Tool</span>
-  </a>
-  <a class="card" href="study/maths/index.html" style="--accent:#d2a8ff">
-    <span class="card-icon">📐</span>
-    <span class="card-title">Mathematics Study Tool</span>
-    <span class="card-folder">study/maths/</span>
-    <span class="card-desc">study/maths/ &mdash; 107 KB</span>
-    <span class="tag" style="background:#d2a8ff20;color:#d2a8ff">Study Tool</span>
-  </a>
-  <a class="card" href="study/networking/index.html" style="--accent:#ffa657">
-    <span class="card-icon">🌐</span>
-    <span class="card-title">CS 144 — Interactive Mind Map</span>
-    <span class="card-folder">study/networking/</span>
-    <span class="card-desc">study/networking/ &mdash; 212 KB</span>
-    <span class="tag" style="background:#ffa65720;color:#ffa657">Mind Map</span>
-  </a>
-  <a class="card" href="study/security/index.html" style="--accent:#f0883e">
-    <span class="card-icon">🛡️</span>
-    <span class="card-title">CS 161 — Computer Security</span>
-    <span class="card-folder">study/security/</span>
-    <span class="card-desc">study/security/ &mdash; 143 KB</span>
-    <span class="tag" style="background:#f0883e20;color:#f0883e">Study Tool</span>
-  </a>
-  <a class="card" href="study/pmpp/index.html" style="--accent:#58a6ff">
-    <span class="card-icon">🧮</span>
-    <span class="card-title">PMPP 4e — Programming Massively Parallel Processors</span>
-    <span class="card-folder">study/pmpp/</span>
-    <span class="card-desc">Hwu · Kirk · El Hajj &mdash; CUDA, GPU patterns, deep dives</span>
-    <span class="tag" style="background:#58a6ff20;color:#58a6ff">Study Tool</span>
-  </a>
+<!-- COMBINED STUDY LIBRARY (courses + mind-map tools) -->
+<h3>📚 Study Library</h3>
+<div class="lib-search">
+  <div class="lib-search-box" id="lib-search-box">
+    <span class="lib-icon">🔍</span>
+    <input type="search" id="lib-search" placeholder="Search courses, tools, categories, subtopics… (press / to focus)" autocomplete="off" spellcheck="false">
+    <button class="lib-clear" id="lib-clear" title="Clear (Esc)">✕</button>
+  </div>
+  <span class="lib-count" id="lib-count">20 items</span>
 </div>
-
-<h3>📖 Study Planner Courses</h3>
-<div class="grid" id="study-grid"><!-- rendered from TOPICS --></div>
+<div class="lib-filters" id="lib-filters"><!-- category chips rendered from CATEGORIES --></div>
+<div class="compact-grid" id="study-grid"><!-- rendered from TOPICS + TOOLS --><div class="empty-state">No matches. Try a different keyword or press <span class="lib-kbd">Esc</span>.</div></div>
 
 <h3>🌿 Lifestyle</h3>
-<div class="grid">
-  <a class="card" href="health/index.html" style="--accent:#7ee787">
-    <span class="card-icon">🧬</span>
-    <span class="card-title">Dr. Rhonda Patrick — Health Optimization Mind Map</span>
-    <span class="card-folder">health/</span>
-    <span class="card-desc">Sleep, nutrition, exercise, supplements, longevity</span>
-    <span class="tag" style="background:#7ee78720;color:#7ee787">Mind Map</span>
+<div class="compact-grid">
+  <a class="compact-row" href="health/index.html" style="--accent:#7ee787">
+    <span class="ci">🧬</span>
+    <span class="cmain">
+      <span class="ct">Dr. Rhonda Patrick — Health Optimization Mind Map</span>
+      <span class="cm"><span class="folder">health/</span><span class="desc">Sleep, nutrition, exercise, supplements, longevity</span></span>
+    </span>
+    <span class="cright"><span class="tag" style="background:#7ee78720;color:#7ee787">Mind Map</span></span>
   </a>
-  <a class="card" href="food/index.html" style="--accent:#58a6ff">
-    <span class="card-icon">🥗</span>
-    <span class="card-title">VegHealth — Bengali &amp; Bihari Meal Planner</span>
-    <span class="card-folder">food/</span>
-    <span class="card-desc">Weekly vegetarian meal plans, macros, regional cuisines</span>
-    <span class="tag" style="background:#58a6ff20;color:#58a6ff">Mind Map</span>
+  <a class="compact-row" href="food/index.html" style="--accent:#58a6ff">
+    <span class="ci">🥗</span>
+    <span class="cmain">
+      <span class="ct">VegHealth — Bengali &amp; Bihari Meal Planner</span>
+      <span class="cm"><span class="folder">food/</span><span class="desc">Weekly vegetarian meal plans, macros, regional cuisines</span></span>
+    </span>
+    <span class="cright"><span class="tag" style="background:#58a6ff20;color:#58a6ff">Mind Map</span></span>
   </a>
 </div>
 
-<footer>17 study sites · 4 mind-map tools · 2 lifestyle · planner suite<br><span>Hub for C:\code · edit TOPICS in &lt;script&gt; to add courses</span></footer>
+<footer>20 study items · 2 lifestyle · planner suite<br><span>Hub for C:\code · edit TOPICS / TOOLS in &lt;script&gt; to add items</span></footer>
 
 </div><!-- /.wrap -->
 
@@ -366,37 +405,62 @@
     <div class="m-timer idle" id="m-timer">25:00</div>
     <div class="m-msg" id="m-msg">Click any topic to begin. Tree only dies after 10 min of no mouse/keyboard input.</div>
     <div class="m-idle" id="m-idle"></div>
+    <div class="opener-form" id="opener-form">
+      <label>📌 <strong>Leave a breadcrumb</strong> for tomorrow's you — what stumped you, or what's the next step?</label>
+      <textarea id="opener-text" placeholder="e.g., Stuck on Raft leader election timeout… revisit fig 4 in paper"></textarea>
+      <div class="opener-actions">
+        <button class="skip" id="opener-skip">Skip</button>
+        <button class="save" id="opener-save">Save breadcrumb</button>
+      </div>
+    </div>
   </div>
 </div>
 
 <script>
 /* ================== TOPICS (with sub-topics) ================== */
 const TOPICS = [
-  {id:'mit-distributed-systems', name:'MIT 6.824 Distributed Systems', title:'MIT 6.824 — Distributed Systems',           desc:'Raft, MapReduce, GFS, Spanner, fault tolerance & consensus',          icon:'🖥️', color:'#58a6ff', subs:['Raft consensus','MapReduce','GFS & replication','Linearizability','Two-phase commit','Chain replication','Spanner TrueTime','Bitcoin consensus','Fault tolerance','RPC & networking','CAP theorem','Memcached scaling']},
-  {id:'rocket-engineering',      name:'NPTEL Rocket Propulsion',       title:'NPTEL — Rocket Propulsion',                  desc:'Nozzle theory, solid/liquid engines, electric propulsion, thermodynamics', icon:'🚀', color:'#f778ba', subs:['Tsiolkovsky equation','Nozzle flow & Isp','Combustion instability','Solid propellants','Liquid engines','Electric propulsion','Staging & delta-v','Thermodynamic cycles','Turbopumps','Ignition systems']},
-  {id:'radar-engineering',       name:'MIT Radar Systems',             title:'MIT Lincoln Lab — Radar Systems',            desc:'Radar equation, waveforms, Doppler, SAR, detection theory',           icon:'📡', color:'#7ee787', subs:['Radar equation','Pulse waveforms','Doppler processing','SAR imaging','AESA arrays','Detection theory','Tracking & Kalman','Electronic warfare','Antenna patterns','Clutter suppression']},
-  {id:'satellite-imaging',       name:'NPTEL Remote Sensing',          title:'NPTEL — Remote Sensing & Satellite Imaging', desc:'EMR, sensors, image processing, classification, NDVI',                icon:'🛰️', color:'#d2a8ff', subs:['EMR spectrum','Passive sensors','Active sensors','Image preprocessing','Classification','NDVI & indices','Deep learning','Change detection','Atmospheric correction','Geometric correction']},
-  {id:'biogas-plant',            name:'NPTEL Biomass & Biogas',        title:'NPTEL — Biomass Conversion & Biogas',        desc:'Anaerobic digestion, digester design, biorefinery, purification',     icon:'🦠', color:'#ffa657', subs:['Anaerobic digestion','Feedstock selection','Digester design','Gas purification','Pyrolysis & gasification','Biorefinery','Methane yield','GHG accounting','Scale-up','Economics']},
-  {id:'nuclear-physics',         name:'MIT 8.701 Nuclear Physics',     title:'MIT 8.701 — Nuclear & Particle Physics',     desc:'Standard Model, QCD, Feynman diagrams, fission, fusion',              icon:'⚛️', color:'#f0883e', subs:['Standard Model','Feynman diagrams','QCD & quarks','Weak interactions','Nuclear fission','Nuclear fusion','Particle detectors','Cross sections','Decay chains','Neutrino physics','Dark matter','Cosmic rays']},
-  {id:'differential-geometry',   name:'NPTEL Differential Geometry',   title:'NPTEL — Differential Geometry',              desc:'Curves, surfaces, Frenet frame, Gaussian curvature, Gauss-Bonnet',    icon:'🌐', color:'#79c0ff', subs:['Curves & Frenet frame','Curvature & torsion','First fundamental form','Second fundamental form','Gaussian curvature','Gauss-Bonnet theorem','Geodesics','Manifolds','Tensor calculus','Covariant derivative']},
-  {id:'gold-extraction',         name:'NPTEL Gold Extraction',         title:'NPTEL — Gold Extraction & E-Waste Recycling', desc:'Hydrometallurgy, aqua regia, bioleaching, green extraction',         icon:'🥇', color:'#ff9bce', subs:['Hydrometallurgy','Pyrometallurgy','Aqua regia leaching','Cyanide process','Bioleaching','E-waste feedstock','Recovery & refining','Green extraction','Emerging techniques','Economics & policy']},
-  {id:'battery-storage',         name:'NPTEL Energy Storage',          title:'NPTEL — Electrochemical Energy Storage',     desc:'Li-ion, Na-ion, BMS, supercapacitors, fuel cells, grid storage',      icon:'🔋', color:'#58a6ff', subs:['Electrochemistry basics','Li-ion cells','Na-ion cells','Lead-acid','Battery management systems','Supercapacitors','Fuel cells','Grid storage','Thermal management','Safety & failure modes']},
-  {id:'sanskrit-learning',       name:'Sanskrit 120 Lectures',         title:'Sanskrit — 120 Lectures',                    desc:'Devanagari, vibhakti, sandhi, samasa, classical literature',          icon:'🕉️', color:'#f778ba', subs:['Devanagari script','Vibhakti (cases)','Sandhi rules','Samasa (compounds)','Verb conjugation','Noun declension','Kaarak relations','Classical texts','Metre & prosody','Panini grammar']},
-  {id:'tpu',                     name:'TPU Architecture',              title:'TPU — Architecture & Applications',          desc:'Systolic arrays, bfloat16, XLA, JAX, TPU v1–v4, pod architecture',    icon:'🔲', color:'#7ee787', subs:['Systolic arrays','Matrix multiply units','bfloat16 precision','XLA compiler','JAX programming','TPU v1–v4 evolution','Pod interconnect','Memory hierarchy','Quantization','Performance profiling']},
-  {id:'security-ug',             name:'CS50 Cybersecurity UG',         title:'Harvard CS50 — Cybersecurity (UG)',          desc:'Encryption, passwords, web security, SQL injection, privacy',         icon:'🔐', color:'#d2a8ff', subs:['Symmetric encryption','Public-key crypto','Password hashing','Web security basics','SQL injection','XSS & CSRF','Network security','Privacy principles','Social engineering','Secure coding','Authentication','HTTPS & TLS']},
-  {id:'security-pg',             name:'MIT 6.858 Systems Security',    title:'MIT 6.858 — Systems Security (PG)',          desc:'Buffer overflows, ROP, Spectre, Tor, sandboxing, formal verification', icon:'🛡️', color:'#ffa657', subs:['Buffer overflows','Return-oriented programming','Spectre & Meltdown','Sandboxing','Tor & anonymity','Formal verification','Capability systems','Information flow','Side channels','Secure enclaves','Symbolic execution','Fuzzing']},
-  {id:'compilers',               name:'Stanford CS143 Compilers',      title:'Stanford CS143 — Compilers',                 desc:'Lexing, parsing, type checking, SSA, optimization, code gen',         icon:'⚙️', color:'#f0883e', subs:['Lexical analysis','LL/LR parsing','AST construction','Type checking','Semantic analysis','SSA form','Dataflow analysis','Loop optimization','Register allocation','Code generation']},
-  {id:'programming-languages',   name:'UW CSE 341 PL',                 title:'UW CSE 341 — Programming Languages',         desc:'Closures, type inference, pattern matching, FP vs OOP, subtyping',    icon:'λ',  color:'#79c0ff', subs:['Closures & scope','Type inference','Pattern matching','Algebraic data types','Higher-order functions','Mutation & state','FP vs OOP','Subtyping','Polymorphism','Language semantics','Lazy evaluation','Modules']},
+  {id:'mit-distributed-systems', category:'cs-systems',   name:'MIT 6.824 Distributed Systems', title:'MIT 6.824 — Distributed Systems',           desc:'Raft, MapReduce, GFS, Spanner, fault tolerance & consensus',          icon:'🖥️', color:'#58a6ff', subs:['Raft consensus','MapReduce','GFS & replication','Linearizability','Two-phase commit','Chain replication','Spanner TrueTime','Bitcoin consensus','Fault tolerance','RPC & networking','CAP theorem','Memcached scaling']},
+  {id:'tpu',                     category:'cs-systems',   name:'TPU Architecture',              title:'TPU — Architecture & Applications',          desc:'Systolic arrays, bfloat16, XLA, JAX, TPU v1–v4, pod architecture',    icon:'🔲', color:'#7ee787', subs:['Systolic arrays','Matrix multiply units','bfloat16 precision','XLA compiler','JAX programming','TPU v1–v4 evolution','Pod interconnect','Memory hierarchy','Quantization','Performance profiling']},
+  {id:'compilers',               category:'cs-langs',     name:'Stanford CS143 Compilers',      title:'Stanford CS143 — Compilers',                 desc:'Lexing, parsing, type checking, SSA, optimization, code gen',         icon:'⚙️', color:'#f0883e', subs:['Lexical analysis','LL/LR parsing','AST construction','Type checking','Semantic analysis','SSA form','Dataflow analysis','Loop optimization','Register allocation','Code generation']},
+  {id:'programming-languages',   category:'cs-langs',     name:'UW CSE 341 PL',                 title:'UW CSE 341 — Programming Languages',         desc:'Closures, type inference, pattern matching, FP vs OOP, subtyping',    icon:'λ',  color:'#79c0ff', subs:['Closures & scope','Type inference','Pattern matching','Algebraic data types','Higher-order functions','Mutation & state','FP vs OOP','Subtyping','Polymorphism','Language semantics','Lazy evaluation','Modules']},
+  {id:'security-ug',             category:'cs-security',  name:'CS50 Cybersecurity UG',         title:'Harvard CS50 — Cybersecurity (UG)',          desc:'Encryption, passwords, web security, SQL injection, privacy',         icon:'🔐', color:'#d2a8ff', subs:['Symmetric encryption','Public-key crypto','Password hashing','Web security basics','SQL injection','XSS & CSRF','Network security','Privacy principles','Social engineering','Secure coding','Authentication','HTTPS & TLS']},
+  {id:'security-pg',             category:'cs-security',  name:'MIT 6.858 Systems Security',    title:'MIT 6.858 — Systems Security (PG)',          desc:'Buffer overflows, ROP, Spectre, Tor, sandboxing, formal verification', icon:'🛡️', color:'#ffa657', subs:['Buffer overflows','Return-oriented programming','Spectre & Meltdown','Sandboxing','Tor & anonymity','Formal verification','Capability systems','Information flow','Side channels','Secure enclaves','Symbolic execution','Fuzzing']},
+  {id:'radar-engineering',       category:'signals',      name:'MIT Radar Systems',             title:'MIT Lincoln Lab — Radar Systems',            desc:'Radar equation, waveforms, Doppler, SAR, detection theory',           icon:'📡', color:'#7ee787', subs:['Radar equation','Pulse waveforms','Doppler processing','SAR imaging','AESA arrays','Detection theory','Tracking & Kalman','Electronic warfare','Antenna patterns','Clutter suppression']},
+  {id:'satellite-imaging',       category:'signals',      name:'NPTEL Remote Sensing',          title:'NPTEL — Remote Sensing & Satellite Imaging', desc:'EMR, sensors, image processing, classification, NDVI',                icon:'🛰️', color:'#d2a8ff', subs:['EMR spectrum','Passive sensors','Active sensors','Image preprocessing','Classification','NDVI & indices','Deep learning','Change detection','Atmospheric correction','Geometric correction']},
+  {id:'rocket-engineering',      category:'aero-nuclear', name:'NPTEL Rocket Propulsion',       title:'NPTEL — Rocket Propulsion',                  desc:'Nozzle theory, solid/liquid engines, electric propulsion, thermodynamics', icon:'🚀', color:'#f778ba', subs:['Tsiolkovsky equation','Nozzle flow & Isp','Combustion instability','Solid propellants','Liquid engines','Electric propulsion','Staging & delta-v','Thermodynamic cycles','Turbopumps','Ignition systems']},
+  {id:'nuclear-physics',         category:'aero-nuclear', name:'MIT 8.701 Nuclear Physics',     title:'MIT 8.701 — Nuclear & Particle Physics',     desc:'Standard Model, QCD, Feynman diagrams, fission, fusion',              icon:'⚛️', color:'#f0883e', subs:['Standard Model','Feynman diagrams','QCD & quarks','Weak interactions','Nuclear fission','Nuclear fusion','Particle detectors','Cross sections','Decay chains','Neutrino physics','Dark matter','Cosmic rays']},
+  {id:'biogas-plant',            category:'energy-chem',  name:'NPTEL Biomass & Biogas',        title:'NPTEL — Biomass Conversion & Biogas',        desc:'Anaerobic digestion, digester design, biorefinery, purification',     icon:'🦠', color:'#ffa657', subs:['Anaerobic digestion','Feedstock selection','Digester design','Gas purification','Pyrolysis & gasification','Biorefinery','Methane yield','GHG accounting','Scale-up','Economics']},
+  {id:'battery-storage',         category:'energy-chem',  name:'NPTEL Energy Storage',          title:'NPTEL — Electrochemical Energy Storage',     desc:'Li-ion, Na-ion, BMS, supercapacitors, fuel cells, grid storage',      icon:'🔋', color:'#58a6ff', subs:['Electrochemistry basics','Li-ion cells','Na-ion cells','Lead-acid','Battery management systems','Supercapacitors','Fuel cells','Grid storage','Thermal management','Safety & failure modes']},
+  {id:'gold-extraction',         category:'energy-chem',  name:'NPTEL Gold Extraction',         title:'NPTEL — Gold Extraction & E-Waste Recycling', desc:'Hydrometallurgy, aqua regia, bioleaching, green extraction',         icon:'🥇', color:'#ff9bce', subs:['Hydrometallurgy','Pyrometallurgy','Aqua regia leaching','Cyanide process','Bioleaching','E-waste feedstock','Recovery & refining','Green extraction','Emerging techniques','Economics & policy']},
+  {id:'differential-geometry',   category:'math',         name:'NPTEL Differential Geometry',   title:'NPTEL — Differential Geometry',              desc:'Curves, surfaces, Frenet frame, Gaussian curvature, Gauss-Bonnet',    icon:'🌐', color:'#79c0ff', subs:['Curves & Frenet frame','Curvature & torsion','First fundamental form','Second fundamental form','Gaussian curvature','Gauss-Bonnet theorem','Geodesics','Manifolds','Tensor calculus','Covariant derivative']},
+  {id:'sanskrit-learning',       category:'humanities',   name:'Sanskrit 120 Lectures',         title:'Sanskrit — 120 Lectures',                    desc:'Devanagari, vibhakti, sandhi, samasa, classical literature',          icon:'🕉️', color:'#f778ba', subs:['Devanagari script','Vibhakti (cases)','Sandhi rules','Samasa (compounds)','Verb conjugation','Noun declension','Kaarak relations','Classical texts','Metre & prosody','Panini grammar']},
+];
+const TOOLS = [
+  {id:'algo',       href:'study/algo.html',       category:'cs-langs',    name:'CP4 — Competitive Programming',                       title:'CP4 — Competitive Programming',                desc:'Data structures, algorithms, graph theory, DP — Steven Halim',                icon:'⚡', color:'#f778ba', kind:'tool'},
+  {id:'maths',      href:'study/maths.html',      category:'math',        name:'Mathematics Study Tool',                              title:'Mathematics — Interactive Study Tool',         desc:'Linear algebra, calculus, probability — interactive mind map',                icon:'📐', color:'#d2a8ff', kind:'tool'},
+  {id:'networking', href:'study/networking.html', category:'cs-systems',  name:'CS 144 — Networking Mind Map',                        title:'Stanford CS 144 — Networking',                 desc:'TCP/IP, congestion control, routing — interactive mind map',                  icon:'🌐', color:'#ffa657', kind:'tool'},
+  {id:'security-ucb',href:'study/security.html',  category:'cs-security', name:'CS 161 — Computer Security (Berkeley)',               title:'UC Berkeley CS 161 — Computer Security',       desc:'Cryptography, web security, network security — Berkeley undergrad',           icon:'🛡️', color:'#f0883e', kind:'tool'},
+  {id:'pmpp',       href:'study/pmpp.html',       category:'cs-systems',  name:'PMPP 4e — Programming Massively Parallel Processors', title:'PMPP 4e — Hwu · Kirk · El Hajj',               desc:'CUDA, GPU patterns — programming massively parallel processors',              icon:'🧮', color:'#58a6ff', kind:'tool'},
+];
+const CATEGORIES = [
+  {id:'cs-systems',   short:'Systems',   label:'Computer Systems',           icon:'🖥️', color:'#58a6ff', blurb:'Parallelism, memory hierarchy, system co-design'},
+  {id:'cs-langs',     short:'Compilers', label:'Languages & Compilers',      icon:'⚙️', color:'#f0883e', blurb:'Type systems, IR, semantics, parsing'},
+  {id:'cs-security',  short:'Security',  label:'Security',                   icon:'🛡️', color:'#ffa657', blurb:'Threat models, crypto, exploitation'},
+  {id:'signals',      short:'Signals',   label:'Signals & Remote Sensing',   icon:'📡', color:'#7ee787', blurb:'EM spectrum, sensors, image & signal processing'},
+  {id:'aero-nuclear', short:'Physics',   label:'Aerospace & Nuclear Physics',icon:'🚀', color:'#f778ba', blurb:'Thermodynamics, energy release, particle & fluid physics'},
+  {id:'energy-chem',  short:'Energy',    label:'Energy & Materials Chemistry',icon:'🔋', color:'#ffa657', blurb:'Electrochem, reaction kinetics, scale-up & economics'},
+  {id:'math',         short:'Math',      label:'Pure Math',                  icon:'📐', color:'#79c0ff', blurb:'Manifolds, curvature, tensor calculus'},
+  {id:'humanities',   short:'Language',  label:'Language & Humanities',      icon:'🕉️', color:'#f778ba', blurb:'Daily-drip language acquisition'},
 ];
 const TARGET_SECONDS = 20*3600;
 const DAY_QUOTA = 5;
-const LAUNCH_DATE = '2026-04-17';
+const LAUNCH_DATE = '2026-05-16';
 const IDLE_WARN_SEC = 300;
 const IDLE_DEAD_SEC = 600;
 const MAX_PAUSES = 3;
 
 /* ================== STORAGE ================== */
-const K = {streak:'learn_streak', topic:'learn_topicTime', pomos:'learn_pomos', forest:'learn_forest', settings:'learn_settings'};
+const K = {streak:'learn_streak', topic:'learn_topicTime', pomos:'learn_pomos', forest:'learn_forest', settings:'learn_settings', openers:'learn_openers'};
 const today = () => new Date().toISOString().slice(0,10);
 function get(k,d){ try{const v=JSON.parse(localStorage.getItem(k)); return v===null||v===undefined?d:v}catch{return d} }
 function set(k,v){ localStorage.setItem(k,JSON.stringify(v)) }
@@ -682,8 +746,30 @@ function completeSession(){
   const status = document.getElementById('pomo-status');
   status.innerHTML = `+${session.lengthMin}m · 🎉`;
   status.className = 'pomo-status';
+  // Capture context for opener form, then clear session
+  const justFinished = {topic: session.topic, subtopic: session.subtopic || null};
   session = null;
+  showOpenerForm(justFinished.topic, justFinished.subtopic);
   render();
+}
+
+function showOpenerForm(topicId, subtopic){
+  const form = document.getElementById('opener-form');
+  const ta = document.getElementById('opener-text');
+  if(!form || !ta) return;
+  const existing = getOpener(topicId);
+  ta.value = (existing && existing.date === today()) ? existing.note : '';
+  form.classList.add('show');
+  setTimeout(()=>ta.focus(), 100);
+  document.getElementById('opener-save').onclick = ()=>{
+    saveOpener(topicId, ta.value, subtopic);
+    form.classList.remove('show');
+    flashStatus('📌 Breadcrumb saved', 'ok');
+    render();
+  };
+  document.getElementById('opener-skip').onclick = ()=>{
+    form.classList.remove('show');
+  };
 }
 
 function abandonSession(){
@@ -766,7 +852,10 @@ function openModal(){
   const prog = session ? Math.min(1, elapsedMs()/(session.lengthMin*60*1000)) : 0;
   drawTreeBig('tree-big', prog, session?.dead);
 }
-function closeModal(){ document.getElementById('pomo-modal').style.display = 'none'; }
+function closeModal(){
+  document.getElementById('pomo-modal').style.display = 'none';
+  const f = document.getElementById('opener-form'); if(f) f.classList.remove('show');
+}
 
 /* ================== DAILY PLAN ================== */
 function daysSince(dstr){
@@ -785,27 +874,49 @@ function pickDailyTopics(dateStr, reshuffleN){
     const secs = topicTime[t.id] || 0;
     const last = lastVisitedDate(t.id, forest);
     const gap = last ? daysSince(last) : 999;
-    return {...t, secs, last, gap};
+    const recall = recallProb(gap, secs/3600);
+    return {...t, secs, last, gap, recall};
   });
   const untouched = enriched.filter(x=>x.secs===0);
   const inProgress = enriched.filter(x=>x.secs>0 && x.secs<TARGET_SECONDS);
-  const dueReview = enriched.filter(x=>x.secs>0 && x.gap>=7);
+  // Spaced-repetition: pick topics whose recall has decayed into the optimal review zone
+  const dueReview = enriched.filter(x=>x.secs>0 && x.last && x.recall<0.6).sort((a,b)=>a.recall-b.recall);
 
   const picks = [];
   const used = new Set();
-  const take = (pool, reason, cbg) => {
+  const take = (pool, reason, cbg, sorted=false) => {
     const avail = pool.filter(x=>!used.has(x.id));
     if(!avail.length) return null;
-    const c = shuffleSeeded(avail, rand)[0];
+    const c = sorted ? avail[0] : shuffleSeeded(avail, rand)[0];
     used.add(c.id); picks.push({...c, reason, cbg}); return c;
   };
   take(untouched.length ? untouched : enriched.slice().sort((a,b)=>a.secs-b.secs), 'New', '#7ee78720');
   take(inProgress, 'In Progress', '#58a6ff20');
   take(inProgress, 'In Progress', '#58a6ff20');
-  take(dueReview, 'Review', '#ffa65720');
+  take(dueReview, '🧠 Review', '#ffa65720', true);
   take(enriched, 'Wildcard', '#d2a8ff20');
   while(picks.length < DAY_QUOTA){ if(!take(enriched, 'Bonus', '#8b949e20')) break; }
   return picks.slice(0, DAY_QUOTA);
+}
+
+/* ================== OPENERS (per-topic "where you left off" notes) ================== */
+function recallProb(gapDays, hoursStudied){
+  if(hoursStudied <= 0 || gapDays >= 999) return 0;
+  const stability = 2 + hoursStudied * 1.5; // days; grows with cumulative study
+  return Math.exp(-gapDays / stability);
+}
+function getOpener(topicId){ return get(K.openers,{})[topicId] || null; }
+function saveOpener(topicId, note, subtopic){
+  const all = get(K.openers,{});
+  const trimmed = (note||'').trim();
+  if(!trimmed){ delete all[topicId]; }
+  else { all[topicId] = {note: trimmed, subtopic: subtopic||null, date: today()}; }
+  set(K.openers, all);
+}
+function lastSubtopicFor(topicId){
+  const f = get(K.forest,{trees:[]});
+  const ts = f.trees.filter(x=>x.topic===topicId && x.subtopic).sort((a,b)=>(b.ts||0)-(a.ts||0));
+  return ts[0]?.subtopic || null;
 }
 
 function renderDailyPlan(){
@@ -824,7 +935,7 @@ function renderDailyPlan(){
   const grid = document.getElementById('day-grid');
   grid.innerHTML = '';
   let done = 0;
-  picks.forEach(p=>{
+  picks.forEach((p, idx)=>{
     const isDone = touchedToday.has(p.id);
     if(isDone) done++;
     const hrs = (p.secs/3600).toFixed(1);
@@ -841,7 +952,20 @@ function renderDailyPlan(){
       const isSubDone = subsDoneToday.has(p.id+'::'+s);
       return `<span class="sub-chip${isSubDone?' done':''}" data-topic="${p.id}" data-sub="${s.replace(/"/g,'&quot;')}">${isSubDone?'✓ ':''}${s}</span>`;
     }).join('');
+    const opener = getOpener(p.id);
+    const showOpener = opener && opener.date < t; // only show if from a previous day
+    const openerHtml = showOpener ? `
+      <div class="opener-pill" title="${opener.note.replace(/"/g,'&quot;')}">
+        <span class="pin">📌 Where you left off${opener.subtopic?' — '+opener.subtopic:''}</span>
+        <span class="body">${opener.note.replace(/</g,'&lt;')}</span>
+      </div>` : '';
+    const startHere = idx===0 ? `<div class="start-here">🎯 Start here</div>` : '';
+    const recallStr = (p.last && p.recall>0) ? ` · <span class="recall-pct">${Math.round(p.recall*100)}%</span>` : '';
+    const btnLabel = opener
+      ? `▶ Resume${opener.subtopic ? ' — '+opener.subtopic.slice(0,18) : ''}`
+      : '▶ Focus';
     card.innerHTML = `
+      ${startHere}
       <div class="day-card-head">
         <span class="icon">${p.icon}</span>
         <span class="name">${p.name}</span>
@@ -849,15 +973,16 @@ function renderDailyPlan(){
       </div>
       <div class="meta">
         <span class="reason">${p.reason}</span>
-        <span class="gap-info">${gapStr}</span>
+        <span class="gap-info">${gapStr}${recallStr}</span>
       </div>
+      ${openerHtml}
       <div class="subs">${subChips}</div>
       <div class="mastery"><span>${hrs}h / 20h</span><span>${pct}%</span></div>
       <div class="actions">
-        <button class="primary" data-topic="${p.id}">▶ Focus</button>
-        <a href="study/${p.id}/index.html">📖 Open</a>
+        <button class="primary" data-topic="${p.id}">${btnLabel}</button>
+        <a href="study/${p.id}.html">📖 Open</a>
       </div>`;
-    card.querySelector('.primary').onclick = ()=>selectTopic(p.id);
+    card.querySelector('.primary').onclick = ()=>selectTopic(p.id, opener?.subtopic || null);
     card.querySelectorAll('.sub-chip').forEach(chip=>{
       chip.onclick = ()=>selectTopic(chip.dataset.topic, chip.dataset.sub);
     });
@@ -870,23 +995,104 @@ function renderDailyPlan(){
 function renderStudyCards(){
   const grid = document.getElementById('study-grid');
   if(!grid || grid.dataset.rendered === '1') return;
+  const catById = Object.fromEntries(CATEGORIES.map(c=>[c.id,c]));
+  const catOrder = Object.fromEntries(CATEGORIES.map((c,i)=>[c.id,i]));
+  const items = TOPICS.concat(TOOLS);
+  items.sort((a,b)=>{
+    const oa = catOrder[a.category] ?? 99, ob = catOrder[b.category] ?? 99;
+    if(oa !== ob) return oa - ob;
+    const ka = a.kind==='tool' ? 1 : 0, kb = b.kind==='tool' ? 1 : 0;
+    return ka - kb;
+  });
+  const empty = grid.querySelector('.empty-state');
   const frag = document.createDocumentFragment();
-  TOPICS.forEach(t=>{
+  items.forEach(t=>{
+    const cat = catById[t.category] || {icon:'📚', short:'Other', label:'Other', color:'#8b949e', blurb:''};
+    const isTool = t.kind === 'tool';
     const a = document.createElement('a');
-    a.className = 'card';
-    a.href = `study/${t.id}/index.html`;
-    a.style.setProperty('--accent', t.color);
-    a.dataset.topic = t.id;
+    a.className = 'compact-row' + (isTool ? ' is-tool' : '');
+    a.href = t.href || `study/${t.id}.html`;
+    a.style.setProperty('--accent', cat.color);
+    if(!isTool) a.dataset.topic = t.id;
+    a.dataset.cat = t.category;
+    a.title = `${t.desc || ''}\n${t.href || 'study/'+t.id+'/'}`;
+    const haystack = [t.name, t.title, t.desc, cat.label, cat.short, cat.blurb, isTool?'tool mind map':'course', t.id, ...(t.subs||[])].filter(Boolean).join(' ').toLowerCase();
+    a.dataset.search = haystack;
+    const kindBadge = isTool ? `<span class="kind-badge" title="Interactive mind map / study tool">🗺️ TOOL</span>` : '';
     a.innerHTML = `
-      <span class="card-icon">${t.icon}</span>
-      <span class="card-title">${t.title || t.name}</span>
-      <span class="card-folder">study/${t.id}/</span>
-      <span class="card-desc">${t.desc || (t.subs||[]).slice(0,5).join(', ')}</span>
-      <span class="tag" style="background:${t.color}20;color:${t.color}">Study Tool</span>`;
+      <span class="ci">${t.icon}</span>
+      <span class="cmain">
+        <span class="ct">${t.title || t.name}</span>
+      </span>
+      <span class="cright">
+        ${kindBadge}
+        <span class="cat-chip" style="--cc:${cat.color}" title="${cat.label}${cat.blurb?' — '+cat.blurb:''}">${cat.icon} ${cat.short}</span>
+      </span>`;
     frag.appendChild(a);
   });
-  grid.appendChild(frag);
+  if(empty) grid.insertBefore(frag, empty); else grid.appendChild(frag);
   grid.dataset.rendered = '1';
+  initLibrarySearch();
+}
+
+function initLibrarySearch(){
+  const input = document.getElementById('lib-search');
+  const grid  = document.getElementById('study-grid');
+  if(!input || !grid || input.dataset.bound==='1') return;
+  const box    = document.getElementById('lib-search-box');
+  const clear  = document.getElementById('lib-clear');
+  const count  = document.getElementById('lib-count');
+  const filterBar = document.getElementById('lib-filters');
+  const rows  = () => grid.querySelectorAll('a.compact-row');
+  const total = rows().length;
+
+  // Build category filter chips
+  let activeCat = 'all';
+  const items = TOPICS.concat(TOOLS);
+  const counts = {all: items.length};
+  items.forEach(t=>{ counts[t.category] = (counts[t.category]||0) + 1; });
+  filterBar.innerHTML = '';
+  const mkChip = (id, icon, label, color)=>{
+    const btn = document.createElement('button');
+    btn.className = 'lib-fchip' + (id==='all'?' all':'') + (id===activeCat?' active':'');
+    btn.dataset.cat = id;
+    btn.style.setProperty('--cc', color);
+    btn.innerHTML = `${icon} ${label} <span class="fcount">${counts[id]||0}</span>`;
+    btn.addEventListener('click', ()=>{
+      activeCat = (activeCat === id && id !== 'all') ? 'all' : id;
+      filterBar.querySelectorAll('.lib-fchip').forEach(c=>c.classList.toggle('active', c.dataset.cat===activeCat));
+      apply();
+    });
+    filterBar.appendChild(btn);
+  };
+  mkChip('all', '✦', 'All', '#c9d1d9');
+  CATEGORIES.forEach(c=>{ if(counts[c.id]) mkChip(c.id, c.icon, c.short, c.color); });
+
+  function apply(){
+    const q = input.value.trim().toLowerCase();
+    box.classList.toggle('has-query', q.length > 0);
+    let shown = 0;
+    rows().forEach(r=>{
+      const matchQ = !q || (r.dataset.search || '').includes(q);
+      const matchC = activeCat==='all' || r.dataset.cat === activeCat;
+      const match = matchQ && matchC;
+      r.classList.toggle('hidden', !match);
+      if(match) shown++;
+    });
+    grid.classList.toggle('no-results', shown === 0);
+    const filtered = q || activeCat !== 'all';
+    count.textContent = filtered ? `${shown} / ${total}` : `${total} items`;
+  }
+  input.addEventListener('input', apply);
+  input.addEventListener('keydown', e=>{ if(e.key==='Escape'){ input.value=''; apply(); input.blur(); } });
+  clear.addEventListener('click', ()=>{ input.value=''; apply(); input.focus(); });
+  document.addEventListener('keydown', e=>{
+    if(e.key==='/' && document.activeElement !== input && !/input|textarea/i.test(document.activeElement?.tagName||'')){
+      e.preventDefault(); input.focus(); input.select();
+    }
+  });
+  input.dataset.bound = '1';
+  apply();
 }
 
 function renderStats(){
@@ -905,9 +1111,10 @@ function renderStats(){
 function renderMasteryBars(){
   const TARGET = 20*3600;
   const topicTime = get(K.topic,{});
-  document.querySelectorAll('a.card[data-topic]').forEach(card=>{
+  document.querySelectorAll('a.compact-row[data-topic], a.card[data-topic]').forEach(card=>{
+    const host = card.querySelector('.cright') || card;
     // remove any prior injection so re-renders stay consistent
-    card.querySelectorAll(':scope > .mastery-track, :scope > .mastery-meta').forEach(n=>n.remove());
+    host.querySelectorAll(':scope > .mastery-track, :scope > .mastery-meta').forEach(n=>n.remove());
     const id = card.dataset.topic;
     const secs = topicTime[id] || 0;
     const pct = Math.min(100, (secs/TARGET)*100);
@@ -924,10 +1131,10 @@ function renderMasteryBars(){
     track.innerHTML = `<div class="fill" style="width:${pct}%;background:${accent}"></div>`;
     const meta = document.createElement('div');
     meta.className = 'mastery-meta';
-    meta.innerHTML = `<span>${tier} ${hrs}h / 20h</span><span>${Math.round(pct)}%</span>`;
-    const tag = card.querySelector('.tag');
-    card.insertBefore(track, tag);
-    card.insertBefore(meta, tag);
+    meta.innerHTML = `<span>${tier} ${hrs}h/20h</span><span>${Math.round(pct)}%</span>`;
+    const tag = host.querySelector('.tag');
+    host.insertBefore(track, tag);
+    host.insertBefore(meta, tag);
   });
 }
 
