@@ -899,29 +899,29 @@ const COURSE_CONFIG = {
       {
         name: "Part I —\nFundamentals",
         tooltip: "Execution model, memory model, and performance considerations.",
-        slides: [{ label: "📄 Part I", path: "_references/pmpp/Programming Massively Parallel Processors (Fourth Edition) - Wen-mei W. Hwu, David B. Kirk, Izzat El Hajj.pdf#page=21" }],
+        slides: [{ label: "📄 Part I", path: "references/pmpp/Programming Massively Parallel Processors (Fourth Edition) - Wen-mei W. Hwu, David B. Kirk, Izzat El Hajj.pdf#page=21" }],
         children: [
-          { name: "Ch1 Introduction", tooltip: "Heterogeneous computing: latency-oriented CPU + throughput-oriented GPU.", slides:[{label:"📄 Ch1", path: "_references/pmpp/Programming Massively Parallel Processors (Fourth Edition) - Wen-mei W. Hwu, David B. Kirk, Izzat El Hajj.pdf#page=23"}],
+          { name: "Ch1 Introduction", tooltip: "Heterogeneous computing: latency-oriented CPU + throughput-oriented GPU.", slides:[{label:"📄 Ch1", path: "references/pmpp/Programming Massively Parallel Processors (Fourth Edition) - Wen-mei W. Hwu, David B. Kirk, Izzat El Hajj.pdf#page=23"}],
             children: [
               { name: "Heterogeneous Computing", tooltip: "CPU optimized for latency (big caches, OOO); GPU optimized for throughput (many small cores)." },
               { name: "Why Parallelism", tooltip: "End of Dennard scaling; transistor budget spent on parallel cores instead of frequency." },
               { name: "Speedup & Amdahl", tooltip: "Sequential portion bounds maximum speedup; aim to parallelize the dominant fraction." }
             ] },
-          { name: "Ch2 Data Parallelism", tooltip: "vecAdd: kernel, host code, device memory, cudaMemcpy, kernel launch <<<grid,block>>>.", slides:[{label:"📄 Ch2", path: "_references/pmpp/Programming Massively Parallel Processors (Fourth Edition) - Wen-mei W. Hwu, David B. Kirk, Izzat El Hajj.pdf#page=41"}],
+          { name: "Ch2 Data Parallelism", tooltip: "vecAdd: kernel, host code, device memory, cudaMemcpy, kernel launch <<<grid,block>>>.", slides:[{label:"📄 Ch2", path: "references/pmpp/Programming Massively Parallel Processors (Fourth Edition) - Wen-mei W. Hwu, David B. Kirk, Izzat El Hajj.pdf#page=41"}],
             children: [
               { name: "Kernel & Launch", tooltip: "__global__ functions; blockIdx, blockDim, threadIdx; SPMD model." },
               { name: "Device Memory", tooltip: "cudaMalloc, cudaFree, cudaMemcpy H2D/D2H." },
               { name: "vecAdd Walkthrough", tooltip: "End-to-end: allocate, copy in, launch, copy out, free." },
               { name: "Error Checking", tooltip: "cudaGetLastError, cudaDeviceSynchronize; CUDA_CHECK macro pattern." }
             ] },
-          { name: "Ch3 Multidim Grids", tooltip: "2D/3D grids and blocks; image blur; matrix multiply on row-major data.", slides:[{label:"📄 Ch3", path: "_references/pmpp/Programming Massively Parallel Processors (Fourth Edition) - Wen-mei W. Hwu, David B. Kirk, Izzat El Hajj.pdf#page=61"}],
+          { name: "Ch3 Multidim Grids", tooltip: "2D/3D grids and blocks; image blur; matrix multiply on row-major data.", slides:[{label:"📄 Ch3", path: "references/pmpp/Programming Massively Parallel Processors (Fourth Edition) - Wen-mei W. Hwu, David B. Kirk, Izzat El Hajj.pdf#page=61"}],
             children: [
               { name: "dim3 & Indexing", tooltip: "row = blockIdx.y*blockDim.y + threadIdx.y; same for col; bounds-check on width/height." },
               { name: "Image Processing", tooltip: "Color→grayscale and blur: one thread per pixel." },
               { name: "MatMul Naive", tooltip: "C[i,j] = Σ A[i,k]·B[k,j]; one thread per output element." },
               { name: "Row-Major Layout", tooltip: "1D backing with index = row*width + col; matches C arrays." }
             ] },
-          { name: "Ch4 Compute Arch & Scheduling", tooltip: "SM, warps, SIMD execution, divergence, latency hiding.", slides:[{label:"📄 Ch4", path: "_references/pmpp/Programming Massively Parallel Processors (Fourth Edition) - Wen-mei W. Hwu, David B. Kirk, Izzat El Hajj.pdf#page=87"}],
+          { name: "Ch4 Compute Arch & Scheduling", tooltip: "SM, warps, SIMD execution, divergence, latency hiding.", slides:[{label:"📄 Ch4", path: "references/pmpp/Programming Massively Parallel Processors (Fourth Edition) - Wen-mei W. Hwu, David B. Kirk, Izzat El Hajj.pdf#page=87"}],
             children: [
               { name: "Streaming Multiprocessor", tooltip: "SM contains scheduler, warp slots, register file, shared memory, L1." },
               { name: "Warps & SIMT", tooltip: "32-thread warps execute in lock-step; predicated divergent paths." },
@@ -929,7 +929,7 @@ const COURSE_CONFIG = {
               { name: "Occupancy", tooltip: "Active warps / max warps per SM; bounded by registers, shared mem, block size." },
               { name: "Latency Hiding", tooltip: "Many warps in flight mask DRAM stalls; throughput-oriented design." }
             ] },
-          { name: "Ch5 Memory Arch & Locality", tooltip: "Global, shared, registers, constant; tiled matrix multiply.", slides:[{label:"📄 Ch5", path: "_references/pmpp/Programming Massively Parallel Processors (Fourth Edition) - Wen-mei W. Hwu, David B. Kirk, Izzat El Hajj.pdf#page=115"}],
+          { name: "Ch5 Memory Arch & Locality", tooltip: "Global, shared, registers, constant; tiled matrix multiply.", slides:[{label:"📄 Ch5", path: "references/pmpp/Programming Massively Parallel Processors (Fourth Edition) - Wen-mei W. Hwu, David B. Kirk, Izzat El Hajj.pdf#page=115"}],
             children: [
               { name: "Memory Hierarchy", tooltip: "Registers > shared > L1/L2 > global; per-thread/block/device scopes." },
               { name: "Tiled MatMul", tooltip: "Shared-memory tiles reduce global traffic by factor TILE_WIDTH." },
@@ -937,7 +937,7 @@ const COURSE_CONFIG = {
               { name: "Constant Memory", tooltip: "Read-only, broadcast-friendly cache for small kernels." },
               { name: "Boundary Handling", tooltip: "Guard out-of-range loads/stores when matrix isn't multiple of tile size." }
             ] },
-          { name: "Ch6 Performance", tooltip: "Coalescing, latency hiding, thread granularity, arithmetic intensity, roofline.", slides:[{label:"📄 Ch6", path: "_references/pmpp/Programming Massively Parallel Processors (Fourth Edition) - Wen-mei W. Hwu, David B. Kirk, Izzat El Hajj.pdf#page=145"}],
+          { name: "Ch6 Performance", tooltip: "Coalescing, latency hiding, thread granularity, arithmetic intensity, roofline.", slides:[{label:"📄 Ch6", path: "references/pmpp/Programming Massively Parallel Processors (Fourth Edition) - Wen-mei W. Hwu, David B. Kirk, Izzat El Hajj.pdf#page=145"}],
             children: [
               { name: "Memory Coalescing", tooltip: "Warp's 32 threads → single 128B transaction when accesses are contiguous and aligned." },
               { name: "Arithmetic Intensity", tooltip: "FLOPs per byte; high AI moves point above memory roof in roofline plot." },
@@ -950,41 +950,41 @@ const COURSE_CONFIG = {
       {
         name: "Part II —\nParallel Patterns",
         tooltip: "Building blocks: convolution, stencil, histogram, reduction, scan, merge.",
-        slides: [{label:"📄 Part II", path: "_references/pmpp/Programming Massively Parallel Processors (Fourth Edition) - Wen-mei W. Hwu, David B. Kirk, Izzat El Hajj.pdf#page=179"}],
+        slides: [{label:"📄 Part II", path: "references/pmpp/Programming Massively Parallel Processors (Fourth Edition) - Wen-mei W. Hwu, David B. Kirk, Izzat El Hajj.pdf#page=179"}],
         children: [
-          { name: "Ch7 Convolution", tooltip: "1D/2D convolution, constant memory for mask, tiled with halos.", slides:[{label:"📄 Ch7", path: "_references/pmpp/Programming Massively Parallel Processors (Fourth Edition) - Wen-mei W. Hwu, David B. Kirk, Izzat El Hajj.pdf#page=181"}],
+          { name: "Ch7 Convolution", tooltip: "1D/2D convolution, constant memory for mask, tiled with halos.", slides:[{label:"📄 Ch7", path: "references/pmpp/Programming Massively Parallel Processors (Fourth Edition) - Wen-mei W. Hwu, David B. Kirk, Izzat El Hajj.pdf#page=181"}],
             children: [
               { name: "Mask in Constant Memory", tooltip: "Small read-only filter benefits from broadcast cache." },
               { name: "Halo / Ghost Cells", tooltip: "Tile loads extra border elements so interior threads can stencil locally." },
               { name: "Tiled 2D Convolution", tooltip: "Output tile + halo loaded into shared memory; compute per-output sum." }
             ] },
-          { name: "Ch8 Stencil", tooltip: "PDE solvers: 3D Jacobi; thread coarsening and register tiling.", slides:[{label:"📄 Ch8", path: "_references/pmpp/Programming Massively Parallel Processors (Fourth Edition) - Wen-mei W. Hwu, David B. Kirk, Izzat El Hajj.pdf#page=211"}],
+          { name: "Ch8 Stencil", tooltip: "PDE solvers: 3D Jacobi; thread coarsening and register tiling.", slides:[{label:"📄 Ch8", path: "references/pmpp/Programming Massively Parallel Processors (Fourth Edition) - Wen-mei W. Hwu, David B. Kirk, Izzat El Hajj.pdf#page=211"}],
             children: [
               { name: "3D Jacobi", tooltip: "Iterative update of grid points from neighbors; PDE solver template." },
               { name: "Register Tiling", tooltip: "Cache a Z-plane in registers, sweep through Z to amortize loads." },
               { name: "Tile + Halo (3D)", tooltip: "Cooperative shared-memory load of XY plane plus boundary planes." }
             ] },
-          { name: "Ch9 Histogram", tooltip: "Atomic ops, privatization in shared memory, aggregation.", slides:[{label:"📄 Ch9", path: "_references/pmpp/Programming Massively Parallel Processors (Fourth Edition) - Wen-mei W. Hwu, David B. Kirk, Izzat El Hajj.pdf#page=233"}],
+          { name: "Ch9 Histogram", tooltip: "Atomic ops, privatization in shared memory, aggregation.", slides:[{label:"📄 Ch9", path: "references/pmpp/Programming Massively Parallel Processors (Fourth Edition) - Wen-mei W. Hwu, David B. Kirk, Izzat El Hajj.pdf#page=233"}],
             children: [
               { name: "atomicAdd Basics", tooltip: "Serializes contending updates; correct but slow under heavy contention." },
               { name: "Privatization", tooltip: "Per-block bins in shared memory; merge to global at the end." },
               { name: "Aggregation", tooltip: "Coalesce runs of identical inputs to reduce atomic frequency." }
             ] },
-          { name: "Ch10 Reduction", tooltip: "Tree reduction, control-divergence-free, segmented reduction, multi-block.", slides:[{label:"📄 Ch10", path: "_references/pmpp/Programming Massively Parallel Processors (Fourth Edition) - Wen-mei W. Hwu, David B. Kirk, Izzat El Hajj.pdf#page=255"}],
+          { name: "Ch10 Reduction", tooltip: "Tree reduction, control-divergence-free, segmented reduction, multi-block.", slides:[{label:"📄 Ch10", path: "references/pmpp/Programming Massively Parallel Processors (Fourth Edition) - Wen-mei W. Hwu, David B. Kirk, Izzat El Hajj.pdf#page=255"}],
             children: [
               { name: "Tree Reduction", tooltip: "log₂N steps; pair-wise combine; halve active threads each step." },
               { name: "Divergence-Free Layout", tooltip: "Reorder so active threads are contiguous within a warp." },
               { name: "Multi-Block Reduction", tooltip: "Per-block partial sums + a second kernel (or atomicAdd) to combine." },
               { name: "Segmented Reduction", tooltip: "Reduce subsequences delimited by flags — basis for grouped aggregates." }
             ] },
-          { name: "Ch11 Prefix Sum (Scan)", tooltip: "Kogge-Stone (work-inefficient, low latency) vs Brent-Kung (work-efficient).", slides:[{label:"📄 Ch11", path: "_references/pmpp/Programming Massively Parallel Processors (Fourth Edition) - Wen-mei W. Hwu, David B. Kirk, Izzat El Hajj.pdf#page=279"}],
+          { name: "Ch11 Prefix Sum (Scan)", tooltip: "Kogge-Stone (work-inefficient, low latency) vs Brent-Kung (work-efficient).", slides:[{label:"📄 Ch11", path: "references/pmpp/Programming Massively Parallel Processors (Fourth Edition) - Wen-mei W. Hwu, David B. Kirk, Izzat El Hajj.pdf#page=279"}],
             children: [
               { name: "Kogge-Stone", tooltip: "O(N log N) work, O(log N) depth — fast for small N." },
               { name: "Brent-Kung", tooltip: "O(N) work, O(log N) depth — work-efficient up-sweep + down-sweep." },
               { name: "Segmented Scan", tooltip: "Carry resets at segment boundaries — building block for sparse ops." },
               { name: "Stream Compaction", tooltip: "Scan a predicate to get write offsets; scatter to compact output." }
             ] },
-          { name: "Ch12 Merge", tooltip: "Co-rank function; parallel merge of sorted arrays; circular buffering.", slides:[{label:"📄 Ch12", path: "_references/pmpp/Programming Massively Parallel Processors (Fourth Edition) - Wen-mei W. Hwu, David B. Kirk, Izzat El Hajj.pdf#page=311"}],
+          { name: "Ch12 Merge", tooltip: "Co-rank function; parallel merge of sorted arrays; circular buffering.", slides:[{label:"📄 Ch12", path: "references/pmpp/Programming Massively Parallel Processors (Fourth Edition) - Wen-mei W. Hwu, David B. Kirk, Izzat El Hajj.pdf#page=311"}],
             children: [
               { name: "Co-rank Function", tooltip: "Binary search to partition output range into independent merge slices." },
               { name: "Tiled Merge", tooltip: "Each block merges a co-rank-defined slice into shared memory." },
@@ -995,47 +995,47 @@ const COURSE_CONFIG = {
       {
         name: "Part III —\nAdvanced Patterns & Apps",
         tooltip: "Sorting, sparse, graphs, deep learning, MRI, electrostatics.",
-        slides: [{label:"📄 Part III", path: "_references/pmpp/Programming Massively Parallel Processors (Fourth Edition) - Wen-mei W. Hwu, David B. Kirk, Izzat El Hajj.pdf#page=335"}],
+        slides: [{label:"📄 Part III", path: "references/pmpp/Programming Massively Parallel Processors (Fourth Edition) - Wen-mei W. Hwu, David B. Kirk, Izzat El Hajj.pdf#page=335"}],
         children: [
-          { name: "Ch13 Sorting", tooltip: "Radix sort, merge sort; bitonic networks; load balance.", slides:[{label:"📄 Ch13", path: "_references/pmpp/Programming Massively Parallel Processors (Fourth Edition) - Wen-mei W. Hwu, David B. Kirk, Izzat El Hajj.pdf#page=337"}],
+          { name: "Ch13 Sorting", tooltip: "Radix sort, merge sort; bitonic networks; load balance.", slides:[{label:"📄 Ch13", path: "references/pmpp/Programming Massively Parallel Processors (Fourth Edition) - Wen-mei W. Hwu, David B. Kirk, Izzat El Hajj.pdf#page=337"}],
             children: [
               { name: "Radix Sort", tooltip: "Per-digit: split by bit, scan, scatter; uses scan as a primitive." },
               { name: "Parallel Merge Sort", tooltip: "Bottom-up: merge pairs at each level using co-rank merge." },
               { name: "Bitonic Sort", tooltip: "Network-style sort; predictable access patterns, O(N log²N) work." }
             ] },
-          { name: "Ch14 Sparse MatMul (SpMV)", tooltip: "COO, CSR, ELL, JDS; padding vs hybrid formats.", slides:[{label:"📄 Ch14", path: "_references/pmpp/Programming Massively Parallel Processors (Fourth Edition) - Wen-mei W. Hwu, David B. Kirk, Izzat El Hajj.pdf#page=361"}],
+          { name: "Ch14 Sparse MatMul (SpMV)", tooltip: "COO, CSR, ELL, JDS; padding vs hybrid formats.", slides:[{label:"📄 Ch14", path: "references/pmpp/Programming Massively Parallel Processors (Fourth Edition) - Wen-mei W. Hwu, David B. Kirk, Izzat El Hajj.pdf#page=361"}],
             children: [
               { name: "COO Format", tooltip: "Triples (row, col, val) — simple but no row locality." },
               { name: "CSR Format", tooltip: "row_ptr + col_idx + val — compact, one thread per row." },
               { name: "ELL Format", tooltip: "Pad rows to max nnz; great for uniform rows, wasteful otherwise." },
               { name: "Hybrid ELL+COO", tooltip: "ELL for typical rows + COO overflow for irregular tails." }
             ] },
-          { name: "Ch15 Graph Traversal (BFS)", tooltip: "Frontier-based BFS; vertex- vs edge-centric; load balance with privatization.", slides:[{label:"📄 Ch15", path: "_references/pmpp/Programming Massively Parallel Processors (Fourth Edition) - Wen-mei W. Hwu, David B. Kirk, Izzat El Hajj.pdf#page=383"}],
+          { name: "Ch15 Graph Traversal (BFS)", tooltip: "Frontier-based BFS; vertex- vs edge-centric; load balance with privatization.", slides:[{label:"📄 Ch15", path: "references/pmpp/Programming Massively Parallel Processors (Fourth Edition) - Wen-mei W. Hwu, David B. Kirk, Izzat El Hajj.pdf#page=383"}],
             children: [
               { name: "Frontier-Based BFS", tooltip: "Process current frontier in parallel; build next frontier." },
               { name: "Vertex- vs Edge-Centric", tooltip: "Per-vertex vs per-edge threads — load balance trade-offs." },
               { name: "Privatized Frontier", tooltip: "Per-block queues + scan-based merge to avoid global atomics." }
             ] },
-          { name: "Ch16 Deep Learning", tooltip: "im2col + GEMM, convolution algorithms, training vs inference.", slides:[{label:"📄 Ch16", path: "_references/pmpp/Programming Massively Parallel Processors (Fourth Edition) - Wen-mei W. Hwu, David B. Kirk, Izzat El Hajj.pdf#page=409"}],
+          { name: "Ch16 Deep Learning", tooltip: "im2col + GEMM, convolution algorithms, training vs inference.", slides:[{label:"📄 Ch16", path: "references/pmpp/Programming Massively Parallel Processors (Fourth Edition) - Wen-mei W. Hwu, David B. Kirk, Izzat El Hajj.pdf#page=409"}],
             children: [
               { name: "im2col + GEMM", tooltip: "Lower conv to matrix multiply by unrolling patches into columns." },
               { name: "Direct Convolution", tooltip: "Avoid memory blow-up of im2col; tiled in shared memory." },
               { name: "Training vs Inference", tooltip: "Forward + backward + weight update vs forward-only; precision differs." },
               { name: "Tensor Cores", tooltip: "Hardware GEMM units for mixed-precision matrix multiply-accumulate." }
             ] },
-          { name: "Ch17 MRI Reconstruction", tooltip: "Non-Cartesian k-space; FHd computation; constant + texture memory.", slides:[{label:"📄 Ch17", path: "_references/pmpp/Programming Massively Parallel Processors (Fourth Edition) - Wen-mei W. Hwu, David B. Kirk, Izzat El Hajj.pdf#page=433"}],
+          { name: "Ch17 MRI Reconstruction", tooltip: "Non-Cartesian k-space; FHd computation; constant + texture memory.", slides:[{label:"📄 Ch17", path: "references/pmpp/Programming Massively Parallel Processors (Fourth Edition) - Wen-mei W. Hwu, David B. Kirk, Izzat El Hajj.pdf#page=433"}],
             children: [
               { name: "Non-Cartesian k-space", tooltip: "Spiral/radial trajectories — needs gridding or iterative recon." },
               { name: "FHd Computation", tooltip: "Pre-computed matrix-vector for iterative reconstruction." },
               { name: "Constant + Texture Memory", tooltip: "Cached, broadcast-friendly access for read-only sample tables." }
             ] },
-          { name: "Ch18 Electrostatic Potential", tooltip: "DCS algorithm; coarsening + constant memory for atoms.", slides:[{label:"📄 Ch18", path: "_references/pmpp/Programming Massively Parallel Processors (Fourth Edition) - Wen-mei W. Hwu, David B. Kirk, Izzat El Hajj.pdf#page=455"}],
+          { name: "Ch18 Electrostatic Potential", tooltip: "DCS algorithm; coarsening + constant memory for atoms.", slides:[{label:"📄 Ch18", path: "references/pmpp/Programming Massively Parallel Processors (Fourth Edition) - Wen-mei W. Hwu, David B. Kirk, Izzat El Hajj.pdf#page=455"}],
             children: [
               { name: "DCS Algorithm", tooltip: "Direct Coulomb Summation across a grid of evaluation points." },
               { name: "Atoms in Constant Memory", tooltip: "Broadcast atom coordinates to all threads in a warp." },
               { name: "Thread Coarsening", tooltip: "Each thread computes multiple grid points to amortize atom loads." }
             ] },
-          { name: "Ch19 Computational Thinking", tooltip: "Problem decomposition; data-parallel vs task-parallel; algorithm selection.", slides:[{label:"📄 Ch19", path: "_references/pmpp/Programming Massively Parallel Processors (Fourth Edition) - Wen-mei W. Hwu, David B. Kirk, Izzat El Hajj.pdf#page=477"}],
+          { name: "Ch19 Computational Thinking", tooltip: "Problem decomposition; data-parallel vs task-parallel; algorithm selection.", slides:[{label:"📄 Ch19", path: "references/pmpp/Programming Massively Parallel Processors (Fourth Edition) - Wen-mei W. Hwu, David B. Kirk, Izzat El Hajj.pdf#page=477"}],
             children: [
               { name: "Problem Decomposition", tooltip: "Identify independent work units; minimize dependencies." },
               { name: "Data- vs Task-Parallel", tooltip: "SIMD-friendly loops vs heterogeneous tasks across streams." },
@@ -1046,28 +1046,28 @@ const COURSE_CONFIG = {
       {
         name: "Part IV —\nAdvanced Practice",
         tooltip: "Multi-GPU/MPI, dynamic parallelism, advanced features, conclusion.",
-        slides: [{label:"📄 Part IV", path: "_references/pmpp/Programming Massively Parallel Processors (Fourth Edition) - Wen-mei W. Hwu, David B. Kirk, Izzat El Hajj.pdf#page=491"}],
+        slides: [{label:"📄 Part IV", path: "references/pmpp/Programming Massively Parallel Processors (Fourth Edition) - Wen-mei W. Hwu, David B. Kirk, Izzat El Hajj.pdf#page=491"}],
         children: [
-          { name: "Ch20 Heterogeneous Cluster", tooltip: "MPI + CUDA; overlap compute with halo exchange via streams.", slides:[{label:"📄 Ch20", path: "_references/pmpp/Programming Massively Parallel Processors (Fourth Edition) - Wen-mei W. Hwu, David B. Kirk, Izzat El Hajj.pdf#page=493"}],
+          { name: "Ch20 Heterogeneous Cluster", tooltip: "MPI + CUDA; overlap compute with halo exchange via streams.", slides:[{label:"📄 Ch20", path: "references/pmpp/Programming Massively Parallel Processors (Fourth Edition) - Wen-mei W. Hwu, David B. Kirk, Izzat El Hajj.pdf#page=493"}],
             children: [
               { name: "MPI + CUDA", tooltip: "Rank per GPU; cudaMemcpy + MPI_Sendrecv for halo exchange." },
               { name: "Stream Overlap", tooltip: "Issue compute on interior while async-copying halos at boundary." },
               { name: "GPUDirect RDMA", tooltip: "NIC reads/writes GPU memory directly, bypassing host bounce buffer." }
             ] },
-          { name: "Ch21 Dynamic Parallelism", tooltip: "Kernels launching kernels; recursive Bezier; pitfalls and overhead.", slides:[{label:"📄 Ch21", path: "_references/pmpp/Programming Massively Parallel Processors (Fourth Edition) - Wen-mei W. Hwu, David B. Kirk, Izzat El Hajj.pdf#page=515"}],
+          { name: "Ch21 Dynamic Parallelism", tooltip: "Kernels launching kernels; recursive Bezier; pitfalls and overhead.", slides:[{label:"📄 Ch21", path: "references/pmpp/Programming Massively Parallel Processors (Fourth Edition) - Wen-mei W. Hwu, David B. Kirk, Izzat El Hajj.pdf#page=515"}],
             children: [
               { name: "Child Kernel Launch", tooltip: "Device-side <<<>>> calls; pitched for irregular nested parallelism." },
               { name: "Recursive Bezier", tooltip: "Adaptive subdivision: parent decides depth, child draws sub-curves." },
               { name: "Overhead & Pitfalls", tooltip: "Launch latency, queue depth limits; flatten if possible." }
             ] },
-          { name: "Ch22 Advanced Practices", tooltip: "Streams, events, unified memory, async memcpy, cooperative groups.", slides:[{label:"📄 Ch22", path: "_references/pmpp/Programming Massively Parallel Processors (Fourth Edition) - Wen-mei W. Hwu, David B. Kirk, Izzat El Hajj.pdf#page=539"}],
+          { name: "Ch22 Advanced Practices", tooltip: "Streams, events, unified memory, async memcpy, cooperative groups.", slides:[{label:"📄 Ch22", path: "references/pmpp/Programming Massively Parallel Processors (Fourth Edition) - Wen-mei W. Hwu, David B. Kirk, Izzat El Hajj.pdf#page=539"}],
             children: [
               { name: "Streams & Events", tooltip: "Concurrent kernel + copy queues; events for fine-grained sync." },
               { name: "Unified Memory", tooltip: "cudaMallocManaged — driver handles page migration on demand." },
               { name: "Async Memcpy", tooltip: "cuda::memcpy_async — overlap shared-memory loads with compute." },
               { name: "Cooperative Groups", tooltip: "Tile partitions and grid-wide sync for flexible synchronization." }
             ] },
-          { name: "Ch23 Conclusion & Outlook", tooltip: "Trends: tensor cores, NVLink, multi-instance GPU, programming abstractions.", slides:[{label:"📄 Ch23", path: "_references/pmpp/Programming Massively Parallel Processors (Fourth Edition) - Wen-mei W. Hwu, David B. Kirk, Izzat El Hajj.pdf#page=559"}],
+          { name: "Ch23 Conclusion & Outlook", tooltip: "Trends: tensor cores, NVLink, multi-instance GPU, programming abstractions.", slides:[{label:"📄 Ch23", path: "references/pmpp/Programming Massively Parallel Processors (Fourth Edition) - Wen-mei W. Hwu, David B. Kirk, Izzat El Hajj.pdf#page=559"}],
             children: [
               { name: "Tensor Cores", tooltip: "Specialized matrix-multiply units for AI workloads." },
               { name: "NVLink & MIG", tooltip: "High-bandwidth GPU interconnect; multi-instance GPU partitioning." },
@@ -2497,7 +2497,7 @@ const SAMPLE_CONFIG = {
       {
         name: "Week 1\nIntroduction",
         tooltip: "Overview of the course and fundamental concepts.",
-        slides: [{ label: "📄 Lecture Slides", path: "_references/pmpp/lectures/sample1.pdf" }],
+        slides: [{ label: "📄 Lecture Slides", path: "references/pmpp/lectures/sample1.pdf" }],
         children: [
           { name: "Sample Topic A", tooltip: "Description of sample topic A.", children: [
             { name: "Sub-topic A1", tooltip: "Details about sub-topic A1." },
@@ -2511,8 +2511,8 @@ const SAMPLE_CONFIG = {
         name: "Week 2\nCore Concepts",
         tooltip: "Deeper dive into the core material.",
         slides: [
-          { label: "📄 Lecture Slides", path: "_references/pmpp/lectures/sample2.pdf" },
-          { label: "📝 Notes", path: "_references/pmpp/lecture-notes/sample2-notes.pdf" }
+          { label: "📄 Lecture Slides", path: "references/pmpp/lectures/sample2.pdf" },
+          { label: "📝 Notes", path: "references/pmpp/lecture-notes/sample2-notes.pdf" }
         ],
         children: [
           { name: "Sample Topic C", tooltip: "Description of sample topic C.", children: [
