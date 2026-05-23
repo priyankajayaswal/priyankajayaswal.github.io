@@ -1,1 +1,1046 @@
-HEllo
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Async/Await: Compiler State Machines vs .NET 11 Runtime Async</title>
+<style>
+  :root, [data-theme="dark"] {
+    --bg: #0f1115;
+    --panel: #161a22;
+    --panel2: #1c2230;
+    --ink: #e6e6e6;
+    --muted: #9aa3b2;
+    --accent: #4ec9b0;
+    --accent2: #c586c0;
+    --warn: #ffcc66;
+    --danger: #f48771;
+    --rule: #2a3142;
+    --link: #7ec0ee;
+    --code-kw: #569cd6;
+    --code-type: #4ec9b0;
+    --code-method: #dcdcaa;
+    --code-str: #ce9178;
+    --code-cmt: #6a9955;
+    --code-num: #b5cea8;
+    --tag-bg: #2a3142;
+    --callout-bg: #1a2230;
+    --shadow: 0 1px 0 rgba(255,255,255,0.02);
+  }
+  [data-theme="light"] {
+    --bg: #fafbfc;
+    --panel: #ffffff;
+    --panel2: #f3f5f8;
+    --ink: #1d2330;
+    --muted: #5b6573;
+    --accent: #0a7b65;
+    --accent2: #8a2d8a;
+    --warn: #a0660b;
+    --danger: #b8331c;
+    --rule: #dde2ea;
+    --link: #1257b0;
+    --code-kw: #1257b0;
+    --code-type: #0a7b65;
+    --code-method: #7a5b00;
+    --code-str: #a3331b;
+    --code-cmt: #2a7339;
+    --code-num: #4a6b1a;
+    --tag-bg: #e6ebf2;
+    --callout-bg: #fff8e6;
+    --shadow: 0 1px 2px rgba(15,17,21,0.04);
+  }
+  * { box-sizing: border-box; }
+  html, body { background: var(--bg); color: var(--ink); font-family: -apple-system, Segoe UI, Roboto, sans-serif; margin: 0; transition: background 0.2s, color 0.2s; }
+  body { max-width: 1100px; margin: 0 auto; padding: 32px 24px 80px; line-height: 1.55; }
+  h1 { font-size: 28px; margin: 0 0 4px; }
+  h2 { font-size: 20px; margin: 0; padding: 12px 0; color: var(--accent); user-select: none; }
+  h3 { font-size: 16px; margin: 20px 0 6px; color: var(--accent2); }
+  p, li { color: var(--ink); }
+  a { color: var(--link); }
+  .sub { color: var(--muted); font-size: 13px; margin-top: 0; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 12px 0; }
+  .card { background: var(--panel); border: 1px solid var(--rule); border-radius: 8px; padding: 14px 16px; box-shadow: var(--shadow); }
+  .card.old { border-top: 3px solid var(--danger); }
+  .card.new { border-top: 3px solid var(--accent); }
+  .card h3 { margin-top: 0; }
+  pre { background: var(--panel2); border: 1px solid var(--rule); border-radius: 6px; padding: 12px; overflow-x: auto; font-size: 12.5px; line-height: 1.45; color: var(--ink); }
+  code { font-family: Consolas, "SF Mono", Menlo, monospace; }
+  .tag { display: inline-block; font-size: 11px; padding: 2px 6px; border-radius: 4px; background: var(--tag-bg); color: var(--muted); margin-right: 4px; }
+  .tag.opt { background: var(--tag-bg); color: var(--accent2); }
+  .tag.warn { background: var(--tag-bg); color: var(--warn); }
+  .callout { background: var(--callout-bg); border-left: 3px solid var(--warn); padding: 10px 14px; margin: 12px 0; border-radius: 4px; }
+  .callout.danger { border-left-color: var(--danger); }
+  table { border-collapse: collapse; width: 100%; margin: 12px 0; font-size: 14px; }
+  th, td { text-align: left; border-bottom: 1px solid var(--rule); padding: 8px 10px; vertical-align: top; }
+  th { color: var(--accent); font-weight: 600; }
+  td.old { color: var(--danger); }
+  td.new { color: var(--accent); }
+  .keyword { color: var(--code-kw); }
+  .type { color: var(--code-type); }
+  .method { color: var(--code-method); }
+  .str { color: var(--code-str); }
+  .cmt { color: var(--code-cmt); }
+  .num { color: var(--code-num); }
+  hr { border: none; border-top: 1px solid var(--rule); margin: 28px 0; }
+  footer { color: var(--muted); font-size: 12px; margin-top: 40px; }
+
+  /* ===== Topbar ===== */
+  .topbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 8px; }
+  .topbar-actions { display: flex; gap: 8px; }
+  .btn {
+    background: var(--panel); color: var(--ink); border: 1px solid var(--rule);
+    border-radius: 6px; padding: 6px 12px; font-size: 13px; cursor: pointer;
+    font-family: inherit; transition: background 0.15s, border-color 0.15s;
+    box-shadow: var(--shadow);
+  }
+  .btn:hover { border-color: var(--accent); }
+  .btn .icon { display: inline-block; margin-right: 6px; }
+
+  /* ===== TOC ===== */
+  .toc {
+    background: var(--panel); border: 1px solid var(--rule); border-radius: 10px;
+    padding: 16px 18px; margin: 20px 0 28px; box-shadow: var(--shadow);
+  }
+  .toc-title { font-size: 12px; text-transform: uppercase; letter-spacing: 1px;
+    color: var(--muted); margin-bottom: 12px; font-weight: 600; }
+  .toc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; }
+  .toc-item {
+    display: flex; align-items: flex-start; gap: 10px; padding: 10px 12px;
+    background: var(--panel2); border: 1px solid var(--rule); border-radius: 8px;
+    text-decoration: none; color: var(--ink); transition: transform 0.1s, border-color 0.15s;
+    cursor: pointer;
+  }
+  .toc-item:hover { border-color: var(--accent); transform: translateY(-1px); }
+  .toc-num {
+    flex: 0 0 26px; height: 26px; border-radius: 6px;
+    background: var(--accent); color: var(--bg);
+    display: inline-flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 13px;
+  }
+  .toc-text { font-size: 13px; line-height: 1.35; flex: 1; }
+  .toc-text .toc-sub { display: block; color: var(--muted); font-size: 11px; margin-top: 2px; }
+
+  /* ===== Collapsible sections ===== */
+  .section { border: 1px solid var(--rule); border-radius: 8px; margin: 12px 0;
+    background: var(--panel); box-shadow: var(--shadow); overflow: hidden; }
+  .section-header {
+    display: flex; align-items: center; gap: 10px; cursor: pointer;
+    padding: 6px 14px; border-bottom: 1px solid transparent;
+    transition: background 0.15s;
+  }
+  .section-header:hover { background: var(--panel2); }
+  .section.open .section-header { border-bottom-color: var(--rule); }
+  .chev {
+    display: inline-block; width: 14px; height: 14px; flex: 0 0 14px;
+    transition: transform 0.2s; color: var(--muted);
+  }
+  .section.open .chev { transform: rotate(90deg); }
+  .section-body { display: none; padding: 4px 18px 18px; }
+  .section.open .section-body { display: block; }
+  .section-header h2 { flex: 1; border: none; padding: 12px 0; }
+
+  /* Print: always expanded */
+  @media print {
+    .section-body { display: block !important; }
+    .topbar, .toc { display: none; }
+  }
+</style>
+</head>
+<body data-theme="dark">
+
+<div class="topbar">
+  <div>
+    <h1>Async/Await Under the Hood</h1>
+    <p class="sub">Comparing today's compiler-generated state machines vs .NET 11 Preview 4's runtime async &mdash; a walkthrough for our sync major service.</p>
+  </div>
+  <div class="topbar-actions">
+    <button class="btn" id="toggleAll" title="Expand or collapse all sections"><span class="icon">⤢</span><span id="toggleAllLabel">Expand all</span></button>
+    <button class="btn" id="themeBtn" title="Toggle day/night mode"><span class="icon" id="themeIcon">☀️</span><span id="themeLabel">Light</span></button>
+  </div>
+</div>
+
+<nav class="toc" id="toc" aria-label="Table of contents">
+  <div class="toc-title">Contents</div>
+  <div class="toc-grid" id="tocGrid"></div>
+</nav>
+
+<h2>1. Primer: what is a state machine?</h2>
+<p>Before we look at <code>async</code>/<code>await</code> specifically, it helps to be clear on what a <strong>state machine</strong> is and why compilers reach for one.</p>
+
+<h3>The idea in one sentence</h3>
+<p>A state machine is a piece of code that remembers <em>where it is</em> across multiple calls &mdash; an explicit <code>state</code> variable, plus a single entry point (e.g., <code>MoveNext()</code>) that branches on that state to do the next chunk of work and then returns.</p>
+
+<h3>A tiny example: iterators (<code>yield return</code>)</h3>
+<p>You've already used a compiler-built state machine if you've ever written <code>yield return</code>. This source:</p>
+<pre><code><span class="keyword">IEnumerable</span>&lt;<span class="type">int</span>&gt; <span class="method">Count</span>()
+{
+    <span class="keyword">yield return</span> <span class="num">1</span>;
+    <span class="keyword">yield return</span> <span class="num">2</span>;
+    <span class="keyword">yield return</span> <span class="num">3</span>;
+}</code></pre>
+<p>...is lowered by the C# compiler into something like:</p>
+<pre><code><span class="keyword">class</span> <span class="type">&lt;Count&gt;d__0</span> : <span class="type">IEnumerator</span>&lt;<span class="type">int</span>&gt;
+{
+    <span class="keyword">int</span> state;       <span class="cmt">// where am I?</span>
+    <span class="keyword">int</span> Current;     <span class="cmt">// what's the value right now?</span>
+
+    <span class="keyword">bool</span> <span class="method">MoveNext</span>()
+    {
+        <span class="keyword">switch</span> (state)
+        {
+            <span class="keyword">case</span> <span class="num">0</span>: Current = <span class="num">1</span>; state = <span class="num">1</span>; <span class="keyword">return true</span>;
+            <span class="keyword">case</span> <span class="num">1</span>: Current = <span class="num">2</span>; state = <span class="num">2</span>; <span class="keyword">return true</span>;
+            <span class="keyword">case</span> <span class="num">2</span>: Current = <span class="num">3</span>; state = <span class="num">3</span>; <span class="keyword">return true</span>;
+            <span class="keyword">default</span>:               <span class="keyword">return false</span>;
+        }
+    }
+}</code></pre>
+<p>Each call to <code>MoveNext()</code> picks up where the previous one left off, produces the next value, advances <code>state</code>, and returns. The "execution" of the original method is now spread across many short calls into the same object.</p>
+
+<h3>Why compilers love state machines</h3>
+<ul>
+  <li><strong>Suspension and resumption.</strong> Code that "pauses" and resumes later (iterators, async, generators in other languages) can't fit on a normal call stack &mdash; the stack frame would be destroyed on return. A state machine moves that frame onto the heap as fields of an object.</li>
+  <li><strong>Linear source, non-linear execution.</strong> You write a straight method body. The compiler chops it at the suspension points, numbers the chunks, and turns the body into a <code>switch(state)</code>.</li>
+  <li><strong>Local variables become fields.</strong> Any local that needs to survive a suspension is "lifted" to a field on the state machine object, so it persists between <code>MoveNext()</code> calls.</li>
+</ul>
+
+<h3>From iterators to async</h3>
+<p><code>async</code>/<code>await</code> uses the same trick, with two twists:</p>
+<ol>
+  <li>The "suspension trigger" is an <strong>awaitable that isn't done yet</strong> (a <code>Task</code> still in flight) instead of <code>yield return</code>.</li>
+  <li>Resumption is driven by a <strong>callback</strong> &mdash; when the awaited operation completes, it calls <code>MoveNext()</code> again on the same state machine.</li>
+</ol>
+
+<div class="callout">
+  <strong>Key intuition:</strong> "async method" really means "method whose execution is sliced into pieces at <code>await</code> points, with a state machine stitching the pieces back together over time." The only open question is <em>who builds and runs that state machine</em> &mdash; the compiler (today) or the runtime (.NET 11).
+</div>
+
+<h3>Compiler-built vs runtime-built &mdash; the headline difference</h3>
+<table>
+  <tr><th>&nbsp;</th><th>Compiler-built (iterators, async today)</th><th>Runtime-built (.NET 11 async)</th></tr>
+  <tr><td>Who emits the state machine?</td><td>Roslyn, at build time, as a generated class/struct in your assembly</td><td>The JIT, at compile time, as internal CLR data structures</td></tr>
+  <tr><td>Visible in IL?</td><td>Yes &mdash; <code>&lt;MethodName&gt;d__N</code> types you can see in ILSpy</td><td>No &mdash; your method body stays as you wrote it; the JIT recognizes await points</td></tr>
+  <tr><td>Cost shape</td><td>Fixed-size struct/box for the whole method</td><td>Sized to JIT liveness; only what's actually live at the await</td></tr>
+  <tr><td>Tooling impact</td><td>Profilers/debuggers see <code>MoveNext</code> frames</td><td>Profilers/debuggers see your real method (with runtime-aware tooling)</td></tr>
+</table>
+
+<p>With that mental model in place, the next sections look at the <em>specific</em> state machine Roslyn emits for an async method today, and what changes when the runtime takes over.</p>
+
+<h2>2. Compiler &amp; runtime pipeline: how source becomes machine code</h2>
+<p>To understand what changes in .NET 11, it helps to see the full path source code takes. Every mainstream compiler &mdash; including Roslyn &mdash; runs the same conceptual stages, even when the boundaries blur.</p>
+
+<h3>The pipeline at a glance</h3>
+
+<svg viewBox="0 0 1080 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Compiler and runtime pipeline">
+  <defs>
+    <marker id="pArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="var(--accent)"/>
+    </marker>
+    <marker id="pArrowMute" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="var(--muted)"/>
+    </marker>
+    <style>
+      .pTitle { font: bold 14px -apple-system, "Segoe UI", Roboto, sans-serif; fill: var(--ink); }
+      .pSub   { font: 11px -apple-system, "Segoe UI", Roboto, sans-serif; fill: var(--muted); }
+      .pCode  { font: 11px Consolas, monospace; fill: var(--code-method); }
+      .pBox   { fill: var(--panel2); stroke: var(--rule); stroke-width: 1.2; }
+      .pStage { stroke: var(--accent); stroke-width: 1.6; fill: var(--panel2); }
+      .pBand  { font: bold 11px -apple-system, sans-serif; fill: var(--muted); letter-spacing: 1.5px; }
+      .pLine  { stroke: var(--accent); stroke-width: 1.6; fill: none; }
+      .pDash  { stroke: var(--muted); stroke-width: 1; stroke-dasharray: 4 4; fill: none; }
+      .pTag   { font: 10px Consolas, monospace; fill: var(--accent2); }
+    </style>
+  </defs>
+
+  <!-- Band labels -->
+  <text x="20" y="30" class="pBand">FRONT END (Roslyn)</text>
+  <text x="540" y="30" class="pBand">BACK END (Roslyn + CLR JIT)</text>
+
+  <line x1="525" y1="40" x2="525" y2="370" class="pDash"/>
+
+  <!-- Source -->
+  <rect x="20" y="50" width="140" height="60" rx="6" class="pStage"/>
+  <text x="90" y="73" text-anchor="middle" class="pTitle">Source (.cs)</text>
+  <text x="90" y="92" text-anchor="middle" class="pSub">human-written C#</text>
+  <text x="90" y="105" text-anchor="middle" class="pCode">await _store.Read()</text>
+
+  <!-- Lexer -->
+  <rect x="180" y="50" width="140" height="60" rx="6" class="pStage"/>
+  <text x="250" y="73" text-anchor="middle" class="pTitle">Lexer</text>
+  <text x="250" y="92" text-anchor="middle" class="pSub">source &rarr; tokens</text>
+  <text x="250" y="105" text-anchor="middle" class="pCode">AWAIT IDENT DOT IDENT</text>
+
+  <!-- Parser/AST -->
+  <rect x="340" y="50" width="160" height="60" rx="6" class="pStage"/>
+  <text x="420" y="73" text-anchor="middle" class="pTitle">Parser &rarr; AST</text>
+  <text x="420" y="92" text-anchor="middle" class="pSub">tokens &rarr; syntax tree</text>
+  <text x="420" y="105" text-anchor="middle" class="pCode">AwaitExpression(...)</text>
+
+  <!-- Semantic -->
+  <rect x="540" y="50" width="160" height="60" rx="6" class="pStage"/>
+  <text x="620" y="73" text-anchor="middle" class="pTitle">Semantic analysis</text>
+  <text x="620" y="92" text-anchor="middle" class="pSub">bind symbols, check types</text>
+  <text x="620" y="105" text-anchor="middle" class="pCode">await Task&lt;string&gt;</text>
+
+  <!-- Lowering / IR -->
+  <rect x="720" y="50" width="170" height="60" rx="6" class="pStage"/>
+  <text x="805" y="73" text-anchor="middle" class="pTitle">Lowering &rarr; IR (IL)</text>
+  <text x="805" y="92" text-anchor="middle" class="pSub">desugar async to state machine</text>
+  <text x="805" y="105" text-anchor="middle" class="pCode">.method MoveNext ldarg.0 ...</text>
+
+  <!-- Assembly DLL -->
+  <rect x="910" y="50" width="150" height="60" rx="6" class="pStage"/>
+  <text x="985" y="73" text-anchor="middle" class="pTitle">Assembly (.dll)</text>
+  <text x="985" y="92" text-anchor="middle" class="pSub">IL + metadata on disk</text>
+  <text x="985" y="105" text-anchor="middle" class="pCode">MyService.dll</text>
+
+  <!-- Pipeline arrows -->
+  <line x1="160" y1="80" x2="180" y2="80" class="pLine" marker-end="url(#pArrow)"/>
+  <line x1="320" y1="80" x2="340" y2="80" class="pLine" marker-end="url(#pArrow)"/>
+  <line x1="500" y1="80" x2="540" y2="80" class="pLine" marker-end="url(#pArrow)"/>
+  <line x1="700" y1="80" x2="720" y2="80" class="pLine" marker-end="url(#pArrow)"/>
+  <line x1="890" y1="80" x2="910" y2="80" class="pLine" marker-end="url(#pArrow)"/>
+
+  <!-- Vertical drop to runtime band -->
+  <line x1="985" y1="110" x2="985" y2="180" class="pLine" marker-end="url(#pArrow)"/>
+
+  <!-- Runtime band label -->
+  <text x="20" y="170" class="pBand">RUNTIME (CLR / CoreCLR)</text>
+
+  <!-- Loader -->
+  <rect x="910" y="180" width="150" height="60" rx="6" class="pStage"/>
+  <text x="985" y="203" text-anchor="middle" class="pTitle">Assembly loader</text>
+  <text x="985" y="222" text-anchor="middle" class="pSub">reads IL on first use</text>
+
+  <!-- JIT -->
+  <rect x="720" y="180" width="170" height="60" rx="6" class="pStage"/>
+  <text x="805" y="203" text-anchor="middle" class="pTitle">JIT compiler</text>
+  <text x="805" y="222" text-anchor="middle" class="pSub">IL &rarr; native, per method</text>
+  <text x="805" y="235" text-anchor="middle" class="pTag">intrinsics, liveness, inlining</text>
+
+  <!-- Machine code -->
+  <rect x="540" y="180" width="160" height="60" rx="6" class="pStage"/>
+  <text x="620" y="203" text-anchor="middle" class="pTitle">Machine code</text>
+  <text x="620" y="222" text-anchor="middle" class="pSub">x64 / arm64 in memory</text>
+  <text x="620" y="235" text-anchor="middle" class="pCode">mov rcx, [rsp+20h]; call ...</text>
+
+  <!-- CPU -->
+  <rect x="340" y="180" width="160" height="60" rx="6" class="pStage"/>
+  <text x="420" y="203" text-anchor="middle" class="pTitle">CPU executes</text>
+  <text x="420" y="222" text-anchor="middle" class="pSub">decoder, pipeline, caches</text>
+
+  <line x1="910" y1="210" x2="890" y2="210" class="pLine" marker-end="url(#pArrow)"/>
+  <line x1="720" y1="210" x2="700" y2="210" class="pLine" marker-end="url(#pArrow)"/>
+  <line x1="540" y1="210" x2="500" y2="210" class="pLine" marker-end="url(#pArrow)"/>
+
+  <!-- Where async changes happen highlights -->
+  <rect x="715" y="45" width="180" height="70" rx="8" fill="none" stroke="var(--danger)" stroke-width="1.4" stroke-dasharray="5 3"/>
+  <text x="805" y="35" text-anchor="middle" class="pTag" fill="var(--danger)">today: state machine built HERE</text>
+
+  <rect x="715" y="175" width="180" height="70" rx="8" fill="none" stroke="var(--accent)" stroke-width="1.4" stroke-dasharray="5 3"/>
+  <text x="805" y="262" text-anchor="middle" class="pTag" fill="var(--accent)">.NET 11: state machine built HERE</text>
+
+  <!-- Interpreter alternative band -->
+  <text x="20" y="320" class="pBand">INTERPRETERS skip back-end codegen</text>
+  <rect x="180" y="335" width="160" height="60" rx="6" class="pBox"/>
+  <text x="260" y="358" text-anchor="middle" class="pTitle">Tree-walking interp.</text>
+  <text x="260" y="377" text-anchor="middle" class="pSub">runs straight off AST</text>
+
+  <rect x="360" y="335" width="160" height="60" rx="6" class="pBox"/>
+  <text x="440" y="358" text-anchor="middle" class="pTitle">Bytecode interp.</text>
+  <text x="440" y="377" text-anchor="middle" class="pSub">e.g., CPython, JS w/o JIT</text>
+
+  <rect x="540" y="335" width="160" height="60" rx="6" class="pBox"/>
+  <text x="620" y="358" text-anchor="middle" class="pTitle">JIT (mixed)</text>
+  <text x="620" y="377" text-anchor="middle" class="pSub">interp + selective compile</text>
+  <text x="620" y="390" text-anchor="middle" class="pTag">V8, HotSpot, .NET</text>
+
+  <rect x="720" y="335" width="160" height="60" rx="6" class="pBox"/>
+  <text x="800" y="358" text-anchor="middle" class="pTitle">AOT compiler</text>
+  <text x="800" y="377" text-anchor="middle" class="pSub">no runtime codegen</text>
+  <text x="800" y="390" text-anchor="middle" class="pTag">NativeAOT, Go, Rust</text>
+
+  <line x1="340" y1="365" x2="360" y2="365" class="pDash" marker-end="url(#pArrowMute)"/>
+  <line x1="520" y1="365" x2="540" y2="365" class="pDash" marker-end="url(#pArrowMute)"/>
+  <line x1="700" y1="365" x2="720" y2="365" class="pDash" marker-end="url(#pArrowMute)"/>
+
+  <text x="540" y="430" text-anchor="middle" class="pSub">.NET sits in the JIT bucket: front-end produces IL ahead of time; back-end (machine code) is produced at runtime, per method, on first call.</text>
+</svg>
+
+<h3>What each stage actually does</h3>
+<ul>
+  <li><strong>Lexer (tokenizer):</strong> chops the raw source text into atomic tokens &mdash; keywords, identifiers, punctuation, literals. No knowledge of meaning.</li>
+  <li><strong>Parser &rarr; AST (abstract syntax tree):</strong> turns the linear token stream into a tree that mirrors the grammar &mdash; <code>MethodDeclaration</code> contains a <code>Block</code> containing an <code>AwaitExpression</code> etc.</li>
+  <li><strong>Semantic analysis:</strong> walks the AST and <em>binds</em> names to symbols (which <code>ReadAsync</code>? defined where?), infers types, runs type checking, evaluates overload resolution, applies attribute rules. Output is a <em>bound tree</em> &mdash; the AST plus a symbol table.</li>
+  <li><strong>Lowering &rarr; IR:</strong> the compiler desugars high-level constructs into simpler primitives. This is where <code>async</code>/<code>await</code>, <code>yield</code>, <code>foreach</code>, <code>using</code>, pattern matching, and LINQ query syntax all get rewritten into method calls, loops, and (for async/iterators) explicit state machines. In .NET, the IR is <strong>CIL/IL</strong> (Common Intermediate Language). In LLVM-based toolchains it would be LLVM IR.</li>
+  <li><strong>Assembly:</strong> IL plus type metadata is serialized into a portable file (<code>.dll</code> or <code>.exe</code>). This is what NuGet ships.</li>
+  <li><strong>JIT (Just-In-Time) compiler:</strong> at runtime, the first time a method is called, the CLR reads its IL and emits native machine code for the current CPU/OS into executable memory. Subsequent calls jump straight to that native code.</li>
+  <li><strong>CPU executes machine code:</strong> the literal bytes the JIT wrote (e.g., <code>48 8B 4C 24 20</code> = <code>mov rcx, [rsp+20h]</code> on x64) flow through the decoder, pipeline, branch predictor, and caches.</li>
+</ul>
+
+<h3>Interpreter vs compiler &mdash; a quick aside</h3>
+<p>The diagram's lower band shows the alternatives. An <strong>interpreter</strong> stops the pipeline early &mdash; either walking the AST directly (slow but simple, like a calculator) or interpreting a custom bytecode (CPython, classic JavaScript engines). A <strong>JIT</strong> mixes the two: interpret hot code only long enough to discover what to specialize, then compile that to native. A pure <strong>AOT compiler</strong> (Go, Rust, .NET NativeAOT) does <em>all</em> the back-end work before the program ever runs &mdash; no JIT at runtime, no IL files, just a native binary.</p>
+
+<h3>Two terms that show up in the rest of the doc</h3>
+
+<div class="callout">
+  <strong>JIT intrinsic.</strong>
+  An intrinsic is a method (or operator) whose name and shape the JIT <em>recognizes specially</em> &mdash; instead of emitting a normal call to the method body, the JIT substitutes a hand-tuned native code sequence. Familiar examples in .NET: <code>Unsafe.As&lt;T,U&gt;</code> (becomes a no-op cast), <code>Sse2.Add</code> (becomes a single <code>paddd</code> instruction), <code>Math.Abs</code> on a hot path (often a sign-bit mask, no call). For runtime async, calls like <code>RuntimeHelpers.Await(task)</code> are intrinsics: the JIT sees them in the IL and, rather than calling a method, <em>splits the surrounding code</em> at that point and weaves in suspension/resumption plumbing. Intrinsics let the runtime team add capabilities (like async suspension) without changing the C# language or the IL spec.
+</div>
+
+<div class="callout">
+  <strong>Liveness analysis.</strong>
+  A standard dataflow analysis: for each program point, determine which local variables hold values that <em>will be read again</em> before being overwritten. A variable is "live" at point P if there's a path from P to a later read with no intervening write. The JIT uses this constantly &mdash; for register allocation (only live values need a register), for dead-code elimination (assignments to never-read locals can be deleted), and now for runtime async (only locals live <em>across an await point</em> need to be captured into the continuation). Classic compiler async pays for all locals that <em>might</em> be live (the lifted-field shape baked at compile time); runtime async pays only for the ones that actually are live at this specific await &mdash; usually a much smaller set.
+</div>
+
+<h3>Tracing our async example through every stage</h3>
+<p>Same method as before, walked through the pipeline:</p>
+
+<pre><code><span class="cmt">// (1) Source</span>
+<span class="keyword">public async</span> <span class="type">Task</span>&lt;<span class="type">int</span>&gt; <span class="method">GetUserCountAsync</span>(<span class="type">string</span> tenant)
+{
+    <span class="keyword">var</span> raw  = <span class="keyword">await</span> _store.<span class="method">ReadAsync</span>(tenant);
+    <span class="keyword">var</span> rows = <span class="keyword">await</span> _parser.<span class="method">ParseAsync</span>(raw);
+    <span class="keyword">return</span> rows.Count;
+}</code></pre>
+
+<pre><code><span class="cmt">// (2) Tokens (lexer output, abridged)</span>
+PUBLIC  ASYNC  IDENT("Task")  LT  IDENT("int")  GT
+IDENT("GetUserCountAsync")  LPAREN  IDENT("string")  IDENT("tenant")  RPAREN
+LBRACE
+  VAR  IDENT("raw")  EQ  AWAIT  IDENT("_store") DOT IDENT("ReadAsync")
+       LPAREN IDENT("tenant") RPAREN  SEMI
+  ...
+RBRACE</code></pre>
+
+<pre><code><span class="cmt">// (3) AST (parser output, sketched)</span>
+MethodDeclaration
+  modifiers: [public, async]
+  returnType: GenericName(Task, [int])
+  identifier: GetUserCountAsync
+  parameterList: [ Parameter(string tenant) ]
+  body: Block
+    LocalDeclaration(var raw = AwaitExpression(
+        Invocation(MemberAccess(_store, ReadAsync), [tenant])))
+    LocalDeclaration(var rows = AwaitExpression(
+        Invocation(MemberAccess(_parser, ParseAsync), [raw])))
+    ReturnStatement(MemberAccess(rows, Count))</code></pre>
+
+<pre><code><span class="cmt">// (4) Bound tree after semantic analysis (types + symbols resolved)</span>
+MethodSymbol GetUserCountAsync : (string) -&gt; Task&lt;int&gt;   [async]
+  raw  : string         &larr; await Task&lt;string&gt; from IStore.ReadAsync(string)
+  rows : List&lt;Row&gt;      &larr; await Task&lt;List&lt;Row&gt;&gt; from IParser.ParseAsync(string)
+  return: int           &larr; List&lt;Row&gt;.Count getter</code></pre>
+
+<pre><code><span class="cmt">// (5) Lowering &rarr; IL  (classic path: state-machine struct)</span>
+.method public hidebysig instance class Task`1&lt;int32&gt; GetUserCountAsync(string tenant)
+{
+    .locals init ([0] valuetype MyService/'&lt;GetUserCountAsync&gt;d__7' sm)
+    ldloca.s    sm
+    ldarg.0
+    stfld       MyService/'&lt;GetUserCountAsync&gt;d__7'::'&lt;&gt;4__this'
+    ldloca.s    sm
+    ldarg.1
+    stfld       MyService/'&lt;GetUserCountAsync&gt;d__7'::tenant
+    ldloca.s    sm
+    call        valuetype AsyncTaskMethodBuilder`1&lt;int32&gt;::Create()
+    stfld       MyService/'&lt;GetUserCountAsync&gt;d__7'::'&lt;&gt;t__builder'
+    ldloca.s    sm
+    ldc.i4.m1
+    stfld       MyService/'&lt;GetUserCountAsync&gt;d__7'::'&lt;&gt;1__state'
+    ldloca.s    sm
+    ldflda      ...::'&lt;&gt;t__builder'
+    ldloca.s    sm
+    call        ...AsyncTaskMethodBuilder`1::Start&lt;...&gt;(!!0&amp;)
+    ldloca.s    sm
+    ldflda      ...::'&lt;&gt;t__builder'
+    call        ...AsyncTaskMethodBuilder`1::get_Task()
+    ret
+}
+<span class="cmt">// + a separate auto-generated `&lt;GetUserCountAsync&gt;d__7::MoveNext` body
+// containing the switch(state) state machine.</span></code></pre>
+
+<pre><code><span class="cmt">// (5b) Lowering &rarr; IL  (.NET 11 runtime-async path)</span>
+.method public hidebysig instance class Task`1&lt;int32&gt;
+        GetUserCountAsync(string tenant) <span class="keyword">runtimeasync</span>
+{
+    ldarg.0
+    ldfld       MyService::_store
+    ldarg.1
+    callvirt    IStore::ReadAsync(string)         <span class="cmt">// returns Task&lt;string&gt;</span>
+    call        <span class="type">System.Runtime.CompilerServices.RuntimeHelpers</span>::Await&lt;string&gt;
+    stloc.0     <span class="cmt">// raw</span>
+    ldarg.0
+    ldfld       MyService::_parser
+    ldloc.0
+    callvirt    IParser::ParseAsync(string)
+    call        <span class="type">RuntimeHelpers</span>::Await&lt;List`1&lt;Row&gt;&gt;
+    callvirt    List`1&lt;Row&gt;::get_Count()
+    ret
+}
+<span class="cmt">// No state-machine type. The `runtimeasync` flag + the `Await` intrinsic calls
+// are the signal to the JIT to insert suspension/resumption.</span></code></pre>
+
+<pre><code><span class="cmt">// (6) JIT &rarr; x64 (today, MoveNext fast-path entry &mdash; heavily abridged)</span>
+MyService_d__7_MoveNext:
+  push    rbp
+  mov     rbp, rsp
+  sub     rsp, 30h
+  mov     [rbp-08h], rcx          ; this (state machine)
+  mov     eax, [rcx + offset_state]
+  test    eax, eax
+  jne     .resume_path             ; state != 0 ? jump
+  ; --- first entry ---
+  mov     rdx, [rcx + offset_this]
+  mov     rdx, [rdx + offset_store]
+  mov     r8,  [rcx + offset_tenant]
+  call    IStore_ReadAsync_stub
+  ; ... IsCompleted check, AwaitUnsafeOnCompleted, etc.
+  ret
+.resume_path:
+  ; switch on state, restore awaiter, GetResult, etc.</code></pre>
+
+<pre><code><span class="cmt">// (6b) JIT &rarr; x64 (.NET 11 runtime async &mdash; fast sync path)</span>
+MyService_GetUserCountAsync:
+  push    rbp
+  mov     rbp, rsp
+  sub     rsp, 20h
+  ; raw = _store.ReadAsync(tenant) -- returns a Task; JIT inlines the
+  ; "is it already completed?" check that RuntimeHelpers.Await would do.
+  mov     rdx, [rcx + offset_store]
+  mov     r8,  rsi                 ; tenant in rsi
+  call    IStore_ReadAsync
+  ; rax = Task&lt;string&gt;; test the cached-completed marker
+  test    byte ptr [rax + status], COMPLETED_FLAG
+  je      .suspend_1               ; rare path: capture live set, build continuation
+  mov     rdi, [rax + result_offset]   ; raw = result, kept in rdi
+  ; ... same shape for the second await ...
+  mov     eax, [rdi + count_offset]    ; rows.Count
+  add     rsp, 20h
+  pop     rbp
+  ret
+.suspend_1:
+  ; cold: capture only locals that are live past this point
+  ; (here: nothing &mdash; raw isn't assigned yet, tenant is dead after the call)
+  ; allocate small continuation, return in-flight Task to caller.</code></pre>
+
+<pre><code><span class="cmt">// (7) Raw machine code is just the bytes of (6) / (6b).</span>
+<span class="cmt">// `48 8B 4C 24 20` &harr; `mov rcx, [rsp+20h]`
+// `E8 ?? ?? ?? ??` &harr; `call rel32`
+// `C3`             &harr; `ret`</span></code></pre>
+
+<p>The shift from compile-time to runtime-time state machine isn&rsquo;t a wholesale rewrite of the toolchain &mdash; it&rsquo;s a redistribution of work between stage (5) and stage (6). The IL gets simpler; the JIT gets smarter; the machine code at the bottom gets tighter on the hot path because the JIT can use facts (like "this <code>Task</code> already completed synchronously") that Roslyn couldn&rsquo;t know at build time.</p>
+
+<h2>3. The starting point: a trivial async method</h2>
+<p>Imagine this innocent piece of code we'd write today:</p>
+<pre><code><span class="keyword">public async</span> <span class="type">Task</span>&lt;<span class="type">int</span>&gt; <span class="method">GetUserCountAsync</span>(<span class="type">string</span> tenant)
+{
+    <span class="keyword">var</span> raw  = <span class="keyword">await</span> _store.<span class="method">ReadAsync</span>(tenant);
+    <span class="keyword">var</span> rows = <span class="keyword">await</span> _parser.<span class="method">ParseAsync</span>(raw);
+    <span class="keyword">return</span> rows.Count;
+}</code></pre>
+<p>It <em>looks</em> sequential. What the compiler &mdash; and runtime &mdash; do with it is very different in the two worlds.</p>
+
+<div class="grid">
+  <div class="card old">
+    <h3><span class="tag">Today</span> Compiler-generated state machine</h3>
+    <p>Roslyn rewrites the method into a <code>struct</code> (or class on Debug) implementing <code>IAsyncStateMachine</code>. The method body becomes a giant <code>switch</code> on a <code>state</code> field driven by <code>MoveNext()</code>.</p>
+  </div>
+  <div class="card new">
+    <h3><span class="tag opt">.NET 11</span> Runtime async</h3>
+    <p>The method body stays the method body. The <em>runtime</em> (JIT + VM) knows how to suspend and resume it at <code>await</code> points by capturing the necessary frame state directly.</p>
+  </div>
+</div>
+
+<h2>4. What the compiler emits today</h2>
+<p>Conceptually, after Roslyn lowering, our 3-line method becomes something like this (simplified, but accurate in shape):</p>
+
+<pre><code><span class="cmt">// 1. The outer "stub" replaces the body you wrote.</span>
+<span class="keyword">public</span> <span class="type">Task</span>&lt;<span class="type">int</span>&gt; <span class="method">GetUserCountAsync</span>(<span class="type">string</span> tenant)
+{
+    <span class="keyword">var</span> sm = <span class="keyword">new</span> <span class="type">&lt;GetUserCountAsync&gt;d__7</span>();
+    sm.&lt;&gt;t__builder = <span class="type">AsyncTaskMethodBuilder</span>&lt;<span class="type">int</span>&gt;.<span class="method">Create</span>();
+    sm.&lt;&gt;4__this   = <span class="keyword">this</span>;
+    sm.tenant      = tenant;
+    sm.&lt;&gt;1__state  = -<span class="num">1</span>;
+    sm.&lt;&gt;t__builder.<span class="method">Start</span>(<span class="keyword">ref</span> sm);  <span class="cmt">// calls MoveNext() the first time</span>
+    <span class="keyword">return</span> sm.&lt;&gt;t__builder.Task;
+}
+
+<span class="cmt">// 2. The state machine itself.</span>
+[<span class="type">CompilerGenerated</span>]
+<span class="keyword">private struct</span> <span class="type">&lt;GetUserCountAsync&gt;d__7</span> : <span class="type">IAsyncStateMachine</span>
+{
+    <span class="keyword">public int</span> &lt;&gt;1__state;
+    <span class="keyword">public</span> <span class="type">AsyncTaskMethodBuilder</span>&lt;<span class="type">int</span>&gt; &lt;&gt;t__builder;
+    <span class="keyword">public</span> MyService &lt;&gt;4__this;
+    <span class="keyword">public</span> <span class="type">string</span> tenant;
+
+    <span class="cmt">// Locals lifted to fields so they survive across awaits:</span>
+    <span class="keyword">private</span> <span class="type">string</span> &lt;raw&gt;5__1;
+    <span class="keyword">private</span> <span class="type">List</span>&lt;<span class="type">Row</span>&gt; &lt;rows&gt;5__2;
+
+    <span class="cmt">// Awaiter slots, one per distinct await:</span>
+    <span class="keyword">private</span> <span class="type">TaskAwaiter</span>&lt;<span class="type">string</span>&gt;        &lt;&gt;u__1;
+    <span class="keyword">private</span> <span class="type">TaskAwaiter</span>&lt;<span class="type">List</span>&lt;<span class="type">Row</span>&gt;&gt;  &lt;&gt;u__2;
+
+    <span class="keyword">void</span> <span class="type">IAsyncStateMachine</span>.<span class="method">MoveNext</span>()
+    {
+        <span class="keyword">int</span> state = &lt;&gt;1__state;
+        <span class="keyword">int</span> result;
+        <span class="keyword">try</span>
+        {
+            <span class="type">TaskAwaiter</span>&lt;<span class="type">string</span>&gt; aw1;
+            <span class="type">TaskAwaiter</span>&lt;<span class="type">List</span>&lt;<span class="type">Row</span>&gt;&gt; aw2;
+            <span class="keyword">switch</span> (state)
+            {
+                <span class="keyword">default</span>:
+                    aw1 = &lt;&gt;4__this._store.<span class="method">ReadAsync</span>(tenant).<span class="method">GetAwaiter</span>();
+                    <span class="keyword">if</span> (!aw1.IsCompleted)
+                    {
+                        &lt;&gt;1__state = <span class="num">0</span>;
+                        &lt;&gt;u__1     = aw1;
+                        &lt;&gt;t__builder.<span class="method">AwaitUnsafeOnCompleted</span>(<span class="keyword">ref</span> aw1, <span class="keyword">ref this</span>);
+                        <span class="keyword">return</span>;       <span class="cmt">// suspend</span>
+                    }
+                    <span class="keyword">goto</span> resume1;
+
+                <span class="keyword">case</span> <span class="num">0</span>:
+                    aw1 = &lt;&gt;u__1;
+                    &lt;&gt;u__1 = <span class="keyword">default</span>;
+                    &lt;&gt;1__state = -<span class="num">1</span>;
+                    resume1:
+                    &lt;raw&gt;5__1 = aw1.<span class="method">GetResult</span>();
+
+                    aw2 = &lt;&gt;4__this._parser.<span class="method">ParseAsync</span>(&lt;raw&gt;5__1).<span class="method">GetAwaiter</span>();
+                    <span class="keyword">if</span> (!aw2.IsCompleted)
+                    {
+                        &lt;&gt;1__state = <span class="num">1</span>;
+                        &lt;&gt;u__2     = aw2;
+                        &lt;&gt;t__builder.<span class="method">AwaitUnsafeOnCompleted</span>(<span class="keyword">ref</span> aw2, <span class="keyword">ref this</span>);
+                        <span class="keyword">return</span>;       <span class="cmt">// suspend</span>
+                    }
+                    <span class="keyword">goto</span> resume2;
+
+                <span class="keyword">case</span> <span class="num">1</span>:
+                    aw2 = &lt;&gt;u__2;
+                    &lt;&gt;u__2 = <span class="keyword">default</span>;
+                    &lt;&gt;1__state = -<span class="num">1</span>;
+                    resume2:
+                    &lt;rows&gt;5__2 = aw2.<span class="method">GetResult</span>();
+
+                    result = &lt;rows&gt;5__2.Count;
+                    <span class="keyword">break</span>;
+            }
+        }
+        <span class="keyword">catch</span> (<span class="type">Exception</span> ex)
+        {
+            &lt;&gt;1__state = -<span class="num">2</span>;
+            &lt;&gt;t__builder.<span class="method">SetException</span>(ex);
+            <span class="keyword">return</span>;
+        }
+        &lt;&gt;1__state = -<span class="num">2</span>;
+        &lt;&gt;t__builder.<span class="method">SetResult</span>(result);
+    }
+}</code></pre>
+
+<h3>What this costs us</h3>
+<ul>
+  <li><strong>Allocations on first suspension:</strong> the struct gets boxed onto the heap, the <code>Task&lt;int&gt;</code> is allocated, and the <code>MoveNextRunner</code> delegate is created. Cold-path-with-occasional-await methods pay this every time they actually suspend.</li>
+  <li><strong>Lifted locals:</strong> every local that crosses an <code>await</code> becomes a field on the heap-allocated state machine &mdash; including large structs, which can balloon the box.</li>
+  <li><strong>Stack noise:</strong> in profilers and exceptions you see <code>MoveNext</code> frames and <code>AsyncMethodBuilderCore.Start</code> instead of your real call chain.</li>
+  <li><strong>Two-method shape:</strong> the stub + the <code>MoveNext</code> can&apos;t be inlined and the JIT has to treat them as separate units.</li>
+</ul>
+
+<h2>5. What the runtime does in .NET 11</h2>
+<p>With <code>DOTNET_RuntimeAsync=1</code>, Roslyn emits a much simpler signature, and the JIT does the suspension plumbing. Conceptually the IL looks like:</p>
+
+<pre><code><span class="cmt">// Marked with a new flag in metadata: this method is "runtime-async".</span>
+[<span class="type">RuntimeAsyncMethod</span>]
+<span class="keyword">public</span> <span class="type">Task</span>&lt;<span class="type">int</span>&gt; <span class="method">GetUserCountAsync</span>(<span class="type">string</span> tenant)
+{
+    <span class="cmt">// The body is essentially the source as written.</span>
+    <span class="keyword">string</span>      raw  = <span class="method">RuntimeHelpers.Await</span>(_store.<span class="method">ReadAsync</span>(tenant));
+    <span class="type">List</span>&lt;<span class="type">Row</span>&gt; rows = <span class="method">RuntimeHelpers.Await</span>(_parser.<span class="method">ParseAsync</span>(raw));
+    <span class="keyword">return</span> <span class="method">RuntimeHelpers.AsyncReturn</span>(rows.Count);
+}</code></pre>
+
+<p>The <code>RuntimeHelpers.Await</code> call is a JIT intrinsic. When the JIT compiles the method, at each await point it knows how to:</p>
+<ol>
+  <li>Check if the awaited operation already completed (fast path: continue inline, no allocations).</li>
+  <li>If not, capture only the live state at this exact point (think: the values of locals that are actually used after the await &mdash; the JIT does liveness analysis).</li>
+  <li>Park that captured state somewhere efficient (often a small heap object sized to the live set, not to all locals).</li>
+  <li>Return a <code>Task</code> to the caller.</li>
+  <li>On completion, jump back to the resume point with the captured locals restored.</li>
+</ol>
+
+<div class="callout">
+  <strong>Key idea:</strong> the state machine still exists conceptually, but it's now an <em>internal runtime detail</em> &mdash; sized by JIT liveness analysis rather than a struct shape baked at compile time. That's where most of the wins come from.
+</div>
+
+<h2>6. Visual: how a single <code>await</code> flows in each model</h2>
+<p class="sub">Same source method, same suspension point &mdash; two very different machines underneath.</p>
+
+<svg viewBox="0 0 1080 560" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Diagram comparing compiler state machine to runtime async">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#9aa3b2"/>
+    </marker>
+    <marker id="arrowAccent" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#4ec9b0"/>
+    </marker>
+    <marker id="arrowDanger" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#f48771"/>
+    </marker>
+    <style>
+      .t      { font: 13px -apple-system, "Segoe UI", Roboto, sans-serif; fill: var(--ink); }
+      .tb     { font: bold 14px -apple-system, "Segoe UI", Roboto, sans-serif; fill: var(--ink); }
+      .small  { font: 11px -apple-system, "Segoe UI", Roboto, sans-serif; fill: var(--muted); }
+      .title  { font: bold 16px -apple-system, "Segoe UI", Roboto, sans-serif; }
+      .titleOld { fill: var(--danger); }
+      .titleNew { fill: var(--accent); }
+      .box    { fill: var(--panel2); stroke: var(--rule); stroke-width: 1; rx: 6; ry: 6; }
+      .boxOld { fill: var(--panel2); stroke: var(--danger); }
+      .boxNew { fill: var(--panel2); stroke: var(--accent); }
+      .heap   { fill: var(--panel2); stroke: var(--accent2); stroke-dasharray: 4 3; }
+      .stack  { fill: var(--panel); stroke: var(--rule); }
+      .label  { font: 11px Consolas, monospace; fill: var(--accent2); }
+      .line   { stroke: var(--muted); stroke-width: 1.4; fill: none; }
+      .lineNew{ stroke: var(--accent); stroke-width: 1.6; fill: none; }
+      .lineOld{ stroke: var(--danger); stroke-width: 1.4; fill: none; stroke-dasharray: 5 3; }
+      .alloc  { font: bold 11px monospace; fill: var(--danger); }
+      .free   { font: bold 11px monospace; fill: var(--accent); }
+      .code   { font: 12px Consolas, monospace; fill: var(--code-method); }
+    </style>
+  </defs>
+
+  <!-- Divider -->
+  <line x1="540" y1="20" x2="540" y2="540" stroke="#2a3142" stroke-width="1" stroke-dasharray="3 4"/>
+
+  <!-- ===== LEFT: Compiler state machine ===== -->
+  <text x="20" y="30" class="title titleOld">Compiler state machine (today)</text>
+  <text x="20" y="48" class="small">Roslyn rewrites your method at build time</text>
+
+  <!-- Caller stack -->
+  <rect x="20" y="65" width="220" height="55" class="box stack"/>
+  <text x="32" y="84" class="tb">Caller</text>
+  <text x="32" y="102" class="code">var t = svc.GetUserCountAsync(...)</text>
+  <text x="32" y="115" class="small">stack frame</text>
+
+  <!-- Stub method -->
+  <rect x="20" y="140" width="220" height="70" class="box boxOld"/>
+  <text x="32" y="159" class="tb">GetUserCountAsync (stub)</text>
+  <text x="32" y="177" class="code">new &lt;...&gt;d__7();</text>
+  <text x="32" y="193" class="code">builder.Start(ref sm);</text>
+  <text x="32" y="206" class="small">returns Task to caller</text>
+
+  <!-- Heap box: state machine -->
+  <rect x="280" y="140" width="240" height="200" class="box heap"/>
+  <text x="292" y="159" class="tb">Heap-boxed state machine</text>
+  <text x="292" y="174" class="label">&lt;GetUserCountAsync&gt;d__7</text>
+  <text x="292" y="194" class="t">• &lt;&gt;1__state : int</text>
+  <text x="292" y="210" class="t">• &lt;&gt;t__builder</text>
+  <text x="292" y="226" class="t">• tenant, &lt;raw&gt;5__1, &lt;rows&gt;5__2</text>
+  <text x="292" y="242" class="t">• &lt;&gt;u__1, &lt;&gt;u__2  (awaiter slots)</text>
+  <text x="292" y="258" class="t">• &lt;&gt;4__this</text>
+  <text x="292" y="282" class="tb">MoveNext()</text>
+  <text x="292" y="298" class="t">switch (state) { ... }</text>
+  <text x="292" y="316" class="alloc">+ Task&lt;int&gt; alloc</text>
+  <text x="292" y="330" class="alloc">+ MoveNextRunner delegate alloc</text>
+
+  <!-- Arrow stub -> state machine -->
+  <path d="M240,175 C260,175 260,200 280,200" class="lineOld" marker-end="url(#arrowDanger)"/>
+  <text x="248" y="170" class="alloc">box + alloc</text>
+
+  <!-- MoveNext loop arrow -->
+  <path d="M400,340 C400,380 280,380 280,310" class="lineOld" marker-end="url(#arrowDanger)"/>
+  <text x="300" y="375" class="small">re-entered on each await completion</text>
+
+  <!-- Profiler stack panel -->
+  <rect x="20" y="400" width="500" height="135" class="box"/>
+  <text x="32" y="420" class="tb">Profiler / exception stack</text>
+  <text x="32" y="440" class="code" fill="var(--muted)">at MyService.&lt;GetUserCountAsync&gt;d__7.MoveNext()</text>
+  <text x="32" y="456" class="code" fill="var(--muted)">--- End of stack trace from previous location ---</text>
+  <text x="32" y="472" class="code" fill="var(--muted)">at System.Runtime.CompilerServices.</text>
+  <text x="32" y="486" class="code" fill="var(--muted)">    AsyncMethodBuilderCore.Start[TStateMachine](...)</text>
+  <text x="32" y="502" class="code" fill="var(--muted)">at MyService.GetUserCountAsync(...)</text>
+  <text x="32" y="522" class="small">noisy, stitched, hides the real caller chain</text>
+
+  <!-- ===== RIGHT: Runtime async ===== -->
+  <text x="560" y="30" class="title titleNew">Runtime async (.NET 11, opt-in)</text>
+  <text x="560" y="48" class="small">JIT + VM handle suspend/resume directly</text>
+
+  <!-- Caller stack -->
+  <rect x="560" y="65" width="220" height="55" class="box stack"/>
+  <text x="572" y="84" class="tb">Caller</text>
+  <text x="572" y="102" class="code">var t = svc.GetUserCountAsync(...)</text>
+  <text x="572" y="115" class="small">stack frame</text>
+
+  <!-- Method body (no rewrite) -->
+  <rect x="560" y="140" width="240" height="120" class="box boxNew"/>
+  <text x="572" y="159" class="tb">GetUserCountAsync (your code)</text>
+  <text x="572" y="178" class="code">var raw  = await _store.Read(..);</text>
+  <text x="572" y="195" class="code">var rows = await _parser.Parse(..);</text>
+  <text x="572" y="212" class="code">return rows.Count;</text>
+  <text x="572" y="234" class="small">JIT intrinsics at each `await`</text>
+  <text x="572" y="250" class="free">sync path: zero alloc, inlined</text>
+
+  <!-- JIT/VM block -->
+  <rect x="830" y="140" width="230" height="120" class="box boxNew"/>
+  <text x="842" y="159" class="tb">JIT + Runtime</text>
+  <text x="842" y="178" class="t">• liveness analysis at await</text>
+  <text x="842" y="194" class="t">• captures only live locals</text>
+  <text x="842" y="210" class="t">• pooled continuation object</text>
+  <text x="842" y="226" class="t">• logical async stack tracked</text>
+  <text x="842" y="246" class="free">no state-machine struct</text>
+
+  <!-- Suspension continuation -->
+  <rect x="830" y="280" width="230" height="80" class="box heap"/>
+  <text x="842" y="299" class="tb">Continuation (only if suspended)</text>
+  <text x="842" y="316" class="t">small object sized to live set</text>
+  <text x="842" y="332" class="t">(e.g., just `tenant`, `raw`)</text>
+  <text x="842" y="350" class="free">often pooled / reused</text>
+
+  <!-- Arrows -->
+  <path d="M800,200 L830,200" class="lineNew" marker-end="url(#arrowAccent)"/>
+  <text x="803" y="194" class="small">compile</text>
+
+  <path d="M945,260 L945,280" class="lineNew" marker-end="url(#arrowAccent)"/>
+  <text x="950" y="275" class="small">on suspend</text>
+
+  <!-- Profiler stack panel -->
+  <rect x="560" y="400" width="500" height="135" class="box"/>
+  <text x="572" y="420" class="tb">Profiler / exception stack</text>
+  <text x="572" y="440" class="code" fill="var(--code-method)">at MyService.GetUserCountAsync(string tenant)</text>
+  <text x="572" y="456" class="code" fill="var(--code-method)">at OrderProcessor.HandleAsync(Order o)</text>
+  <text x="572" y="472" class="code" fill="var(--code-method)">at RequestHandler.Run(HttpContext ctx)</text>
+  <text x="572" y="495" class="small">reads like sync code &mdash; no MoveNext, no stitching</text>
+  <text x="572" y="515" class="small">suspension recorded as a distinct trace event</text>
+
+</svg>
+
+<div class="grid" style="margin-top:8px">
+  <div class="card old">
+    <h3>Read the left diagram as:</h3>
+    <p>Every async method becomes a stub + a heap-boxed state machine. Even a single suspension allocates the box, a <code>Task</code>, and a continuation delegate. The profiler sees <code>MoveNext</code> and builder frames instead of your call chain.</p>
+  </div>
+  <div class="card new">
+    <h3>Read the right diagram as:</h3>
+    <p>Your method stays your method. The JIT picks the await points, captures only the locals that are actually live there, and parks a pooled continuation <em>only when suspension really happens</em>. Sync completions allocate nothing; stacks stay clean.</p>
+  </div>
+</div>
+
+<h2>7. Side-by-side: what changes in practice</h2>
+
+<table>
+  <tr><th>Aspect</th><th>Compiler state machine (today)</th><th>Runtime async (.NET 11)</th></tr>
+  <tr>
+    <td>Allocation on suspension</td>
+    <td class="old">Box of full state machine + Task + delegate</td>
+    <td class="new">Single object sized to JIT-live locals; pooled where possible</td>
+  </tr>
+  <tr>
+    <td>Allocation on sync completion</td>
+    <td class="old">None (if all awaits hit IsCompleted), but ValueTask still needed to avoid Task alloc</td>
+    <td class="new">None &mdash; the JIT recognizes the fully-sync path and never builds heap state</td>
+  </tr>
+  <tr>
+    <td>Stack traces in exceptions</td>
+    <td class="old"><code>MoveNext</code> frames + <code>"--- End of stack trace from previous location ---"</code> stitches</td>
+    <td class="new">Logical async stack reconstructed by the runtime; reads like sync code</td>
+  </tr>
+  <tr>
+    <td>Profiler stacks (PerfView, dotnet-trace)</td>
+    <td class="old">Noisy: <code>AsyncTaskMethodBuilder.Start</code> &rarr; <code>MoveNext</code> &rarr; user code</td>
+    <td class="new">Clean: user frame directly; suspensions visible as a distinct event</td>
+  </tr>
+  <tr>
+    <td>Locals across awaits</td>
+    <td class="old">Every "maybe-live" local is lifted to a field</td>
+    <td class="new">Only locals actually live at the await point are captured</td>
+  </tr>
+  <tr>
+    <td>Inlining</td>
+    <td class="old">Stub and MoveNext are separate methods; very limited inlining</td>
+    <td class="new">JIT can inline across awaits when the awaited result is known sync</td>
+  </tr>
+  <tr>
+    <td>Debugger step-through</td>
+    <td class="old">Step Over an await often lands in framework code</td>
+    <td class="new">Step semantics map closer to source order; resume is a single logical step</td>
+  </tr>
+  <tr>
+    <td><code>AsyncLocal&lt;T&gt;</code> propagation</td>
+    <td class="old">Via <code>ExecutionContext</code> copy-on-write; caller never sees callee&rsquo;s writes</td>
+    <td class="new">Writes propagate along the logical async call (more thread-local-like); see callout below</td>
+  </tr>
+</table>
+
+<div class="callout danger">
+  <strong>The AsyncLocal change is the big behavioral footgun.</strong> Today, if a callee sets <code>AsyncLocal&lt;T&gt;.Value = x</code>, the caller will <em>not</em> observe that change after the call returns &mdash; <code>ExecutionContext</code> is copy-on-write. In runtime async, the propagation model lets those writes flow back along the logical call. Code that depends on the old "isolation" behavior (e.g., scoped overrides via <code>using var _ = new AsyncLocalScope(...)</code>) needs to be audited before flipping the switch.
+</div>
+
+<h2>8. Why this matters for our sync major service</h2>
+<ul>
+  <li><strong>Today we&rsquo;re mostly sync.</strong> Immediate wins are small &mdash; we don&rsquo;t pay the state-machine tax on code we never made async.</li>
+  <li><strong>The <em>future</em> cost of going async drops sharply.</strong> One reason hot paths stay sync is the allocation/stack tax on rare-suspension paths. Runtime async makes "occasional await" close to free.</li>
+  <li><strong>Diagnostics get better.</strong> When we do hit issues in async paths (e.g., I/O, retries), cleaner profiler stacks and coherent exception traces save real time during livesite.</li>
+  <li>
+    <strong>Watch for tooling lag &mdash; APM agents.</strong>
+    "APM agents" are <em>Application Performance Monitoring</em> agents: in-process libraries (Application Insights / OpenTelemetry .NET / Dynatrace / AppDynamics / New Relic, etc.) that hook into the CLR via the <code>ICorProfiler</code> profiling API, <code>System.Diagnostics.DiagnosticSource</code>, or EventPipe to capture spans, dependency calls, exceptions, and metrics. They typically <em>rewrite IL or attach to method-enter/exit events</em> to time async operations &mdash; including walking the <code>&lt;...&gt;d__N</code> state-machine struct to follow continuations. With runtime async, that struct doesn't exist as the agent expects, and method-enter/leave timing doesn't map cleanly to suspension. Until each vendor ships a runtime-async-aware build, traces from runtime-async code can show missing spans, mis-correlated parent/child relationships, or zero-duration outer operations.
+  </li>
+  <li>
+    <strong>Mixed-mode and "thunk overhead at the boundary."</strong>
+    Mixed-mode means: some assemblies in the process compiled against the new runtime-async ABI (the JIT-managed shape), others still using classic Roslyn state machines. When a classic-async caller awaits a runtime-async callee (or vice versa), the runtime can't pass continuations directly &mdash; the two sides expect different calling conventions for suspension/resumption. The CLR inserts a small auto-generated stub at the boundary &mdash; a <strong>thunk</strong> &mdash; that adapts between the two. A thunk is just a tiny piece of generated machine code: "translate the args/return shape, possibly allocate a classic-style <code>Task</code> wrapper, invoke the other side, and translate the result back on the way out." Each crossing is fast (a handful of instructions plus possibly one allocation for the wrapper Task), but in a hot loop that does <em>many</em> crossings (e.g., a sync-major-service path calling into a classic-async logger or telemetry library on every request), those costs add up. The pragmatic answer is to enable runtime async <em>process-wide</em> once your full dependency closure supports it, so boundary thunks vanish.
+  </li>
+</ul>
+
+<h2>9. How to try it</h2>
+<pre><code><span class="cmt"># Per-process opt-in:</span>
+$env:DOTNET_RuntimeAsync = <span class="str">"1"</span>
+dotnet run -c Release
+
+<span class="cmt"># Or via runtimeconfig.template.json:</span>
+{
+  <span class="str">"configProperties"</span>: {
+    <span class="str">"System.Runtime.Async.Enabled"</span>: <span class="keyword">true</span>
+  }
+}</code></pre>
+<p>Good first experiment: take one of our async-ish helpers, enable the flag, capture an allocation profile with <code>dotnet-counters</code> + <code>dotnet-trace</code>, and diff against the baseline. Then deliberately throw an exception across two awaits and compare the stack traces.</p>
+
+<hr/>
+<footer>
+  Based on the .NET 11 runtime release notes &mdash;
+  <a href="https://learn.microsoft.com/en-us/dotnet/core/whats-new/dotnet-11/runtime#runtime-async" style="color:#7ec0ee">learn.microsoft.com/dotnet/core/whats-new/dotnet-11/runtime</a>.
+  Code shapes simplified for clarity; real Roslyn output differs in naming and edge cases.
+</footer>
+
+<script>
+(function() {
+  // ===== Wrap each <h2>...up to next <h2> in a collapsible .section =====
+  var body = document.body;
+  var nodes = Array.prototype.slice.call(body.children);
+  var headings = [];
+  var sections = [];
+
+  for (var i = 0; i < nodes.length; i++) {
+    var n = nodes[i];
+    if (n.tagName === 'H2') {
+      var section = document.createElement('section');
+      section.className = 'section';
+      var headerWrap = document.createElement('div');
+      headerWrap.className = 'section-header';
+      var chev = document.createElement('span');
+      chev.className = 'chev';
+      chev.innerHTML = '\u25B6'; // ▶
+      headerWrap.appendChild(chev);
+      var h2 = n.cloneNode(true);
+      headerWrap.appendChild(h2);
+      section.appendChild(headerWrap);
+
+      var bodyDiv = document.createElement('div');
+      bodyDiv.className = 'section-body';
+      section.appendChild(bodyDiv);
+
+      // Move following siblings until next H2 (or HR/footer) into bodyDiv
+      var sib = n.nextElementSibling;
+      while (sib && sib.tagName !== 'H2' && sib.tagName !== 'HR' && sib.tagName !== 'FOOTER' && sib.tagName !== 'SCRIPT') {
+        var next = sib.nextElementSibling;
+        bodyDiv.appendChild(sib);
+        sib = next;
+      }
+
+      var idText = (h2.textContent || '').trim();
+      var slug = idText.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+      section.id = 'sec-' + slug;
+      headings.push({ id: section.id, text: idText, section: section });
+      sections.push(section);
+
+      n.parentNode.replaceChild(section, n);
+
+      headerWrap.addEventListener('click', (function(s) {
+        return function() { s.classList.toggle('open'); updateToggleAllLabel(); };
+      })(section));
+    }
+  }
+
+  // ===== Build the TOC =====
+  var tocGrid = document.getElementById('tocGrid');
+  headings.forEach(function(h) {
+    var parts = h.text.match(/^(\d+)\.\s*(.*)$/);
+    var num = parts ? parts[1] : '•';
+    var label = parts ? parts[2] : h.text;
+    var a = document.createElement('a');
+    a.className = 'toc-item';
+    a.href = '#' + h.id;
+    a.innerHTML = '<span class="toc-num">' + num + '</span>' +
+                  '<span class="toc-text">' + label + '</span>';
+    a.addEventListener('click', function(e) {
+      // Open the target section before scrolling
+      h.section.classList.add('open');
+      updateToggleAllLabel();
+    });
+    tocGrid.appendChild(a);
+  });
+
+  // ===== Expand/Collapse all =====
+  var toggleBtn = document.getElementById('toggleAll');
+  var toggleLabel = document.getElementById('toggleAllLabel');
+  function allOpen() { return sections.every(function(s) { return s.classList.contains('open'); }); }
+  function updateToggleAllLabel() {
+    toggleLabel.textContent = allOpen() ? 'Collapse all' : 'Expand all';
+  }
+  toggleBtn.addEventListener('click', function() {
+    var open = !allOpen();
+    sections.forEach(function(s) { s.classList.toggle('open', open); });
+    updateToggleAllLabel();
+  });
+
+  // ===== Open section when navigating via hash =====
+  function openFromHash() {
+    if (location.hash && location.hash.length > 1) {
+      var el = document.getElementById(location.hash.slice(1));
+      if (el && el.classList.contains('section')) {
+        el.classList.add('open');
+        updateToggleAllLabel();
+        setTimeout(function() { el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 30);
+      }
+    }
+  }
+  window.addEventListener('hashchange', openFromHash);
+  openFromHash();
+
+  // ===== Day/night toggle =====
+  var themeBtn = document.getElementById('themeBtn');
+  var themeIcon = document.getElementById('themeIcon');
+  var themeLabel = document.getElementById('themeLabel');
+  var stored = null;
+  try { stored = localStorage.getItem('walkthrough-theme'); } catch (e) {}
+  if (stored === 'light' || stored === 'dark') {
+    document.documentElement.setAttribute('data-theme', stored);
+    document.body.setAttribute('data-theme', stored);
+  }
+  function syncThemeBtn() {
+    var t = document.documentElement.getAttribute('data-theme') || 'dark';
+    if (t === 'light') {
+      themeIcon.textContent = '🌙';
+      themeLabel.textContent = 'Dark';
+    } else {
+      themeIcon.textContent = '☀️';
+      themeLabel.textContent = 'Light';
+    }
+  }
+  syncThemeBtn();
+  themeBtn.addEventListener('click', function() {
+    var t = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme', t);
+    document.body.setAttribute('data-theme', t);
+    try { localStorage.setItem('walkthrough-theme', t); } catch (e) {}
+    syncThemeBtn();
+  });
+
+  updateToggleAllLabel();
+})();
+</script>
+
+</body>
+</html>

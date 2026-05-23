@@ -1,1 +1,2498 @@
-HELLO
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Net Walkthrough — Learn</title>
+<style>
+:root {
+  --bg: #ffffff;
+  --fg: #1f2328;
+  --muted: #57606a;
+  --link: #0969da;
+  --border: #d0d7de;
+  --code-bg: #f6f8fa;
+  --pre-bg: #0d1117;
+  --pre-fg: #c9d1d9;
+  --table-stripe: #fafbfc;
+  --nav-bg: #ffffff;
+  --blockquote-bg: #f6f8fa;
+}
+[data-theme="dark"] {
+  --bg: #0d1117;
+  --fg: #e6edf3;
+  --muted: #8b949e;
+  --link: #58a6ff;
+  --border: #30363d;
+  --code-bg: #161b22;
+  --pre-bg: #010409;
+  --pre-fg: #c9d1d9;
+  --table-stripe: #161b22;
+  --nav-bg: #0d1117;
+  --blockquote-bg: #161b22;
+}
+* { box-sizing: border-box; }
+html { color-scheme: light dark; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 6rem;
+  line-height: 1.65;
+  color: var(--fg);
+  background: var(--bg);
+  transition: background 0.2s ease, color 0.2s ease;
+}
+h1, h2, h3, h4 { font-weight: 600; line-height: 1.25; margin-top: 2rem; }
+h1 { font-size: 2rem; border-bottom: 2px solid var(--border); padding-bottom: .4em; }
+h2 { font-size: 1.5rem; border-bottom: 1px solid var(--border); padding-bottom: .3em; margin-top: 2.4rem; }
+h3 { font-size: 1.2rem; color: var(--link); }
+h4 { font-size: 1.05rem; color: var(--muted); }
+a { color: var(--link); text-decoration: none; }
+a:hover { text-decoration: underline; }
+code {
+  background: var(--code-bg);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: "Cascadia Code", "Fira Code", Consolas, "Liberation Mono", monospace;
+  font-size: 0.9em;
+}
+pre {
+  background: var(--pre-bg);
+  color: var(--pre-fg);
+  padding: 1rem 1.2rem;
+  border-radius: 8px;
+  overflow-x: auto;
+  font-size: 0.88em;
+  line-height: 1.5;
+  border: 1px solid var(--border);
+}
+pre code { background: transparent; padding: 0; color: inherit; }
+blockquote {
+  border-left: 4px solid var(--border);
+  margin: 1em 0;
+  padding: 0.4em 1em;
+  color: var(--muted);
+  background: var(--blockquote-bg);
+  border-radius: 0 6px 6px 0;
+}
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1em 0;
+  font-size: 0.95em;
+}
+th, td {
+  border: 1px solid var(--border);
+  padding: 8px 12px;
+  text-align: left;
+}
+th { background: var(--code-bg); font-weight: 600; }
+tr:nth-child(even) td { background: var(--table-stripe); }
+hr { border: none; border-top: 1px solid var(--border); margin: 2.5rem 0; }
+ul, ol { padding-left: 1.6em; }
+li { margin: 0.3em 0; }
+.toc-nav {
+  position: sticky;
+  top: 0;
+  background: var(--nav-bg);
+  padding: 0.8em 1em;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.9em;
+  z-index: 10;
+  margin: -2rem -1.5rem 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1.2em;
+}
+.toc-nav .links { flex: 1; }
+.toc-nav .links a { margin-right: 1.2em; }
+.theme-toggle {
+  background: var(--code-bg);
+  color: var(--fg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.35em 0.8em;
+  cursor: pointer;
+  font-size: 0.9em;
+  font-family: inherit;
+  transition: background 0.15s ease;
+}
+.theme-toggle:hover { background: var(--border); }
+@media (max-width: 600px) {
+  body { padding: 1rem; }
+  pre { font-size: 0.78em; }
+  .toc-nav { flex-wrap: wrap; }
+}
+/* Collapsible sections */
+details.section, details.subsection {
+  margin: 1.2rem 0;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg);
+  overflow: hidden;
+}
+details.section > summary, details.subsection > summary {
+  cursor: pointer;
+  padding: 0.6em 1em;
+  background: var(--code-bg);
+  font-weight: 600;
+  list-style: none;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 0.6em;
+  border-bottom: 1px solid transparent;
+  transition: background 0.15s ease;
+}
+details.section[open] > summary, details.subsection[open] > summary {
+  border-bottom-color: var(--border);
+}
+details.section > summary:hover, details.subsection > summary:hover { background: var(--border); }
+details.section > summary::-webkit-details-marker,
+details.subsection > summary::-webkit-details-marker { display: none; }
+details.section > summary::before, details.subsection > summary::before {
+  content: "▶";
+  font-size: 0.75em;
+  color: var(--muted);
+  transition: transform 0.15s ease;
+  display: inline-block;
+}
+details.section[open] > summary::before, details.subsection[open] > summary::before {
+  transform: rotate(90deg);
+}
+details.section > summary h2,
+details.subsection > summary h3 {
+  margin: 0;
+  border: none;
+  padding: 0;
+  display: inline;
+  font-size: inherit;
+  color: inherit;
+}
+details.section > .section-body, details.subsection > .subsection-body {
+  padding: 0.4rem 1.2rem 1rem;
+}
+.section-controls {
+  display: flex;
+  gap: 0.5em;
+  margin-left: auto;
+}
+.section-controls button {
+  background: var(--code-bg);
+  color: var(--fg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.3em 0.7em;
+  cursor: pointer;
+  font-size: 0.85em;
+  font-family: inherit;
+}
+.section-controls button:hover { background: var(--border); }
+/* SVG diagrams adapt to theme background */
+svg { max-width: 100%; height: auto; background: var(--bg); border-radius: 6px; }
+[data-theme="dark"] svg { filter: brightness(0.92) contrast(1.05); }
+
+/* Visual TOC (auto-generated mind-map) */
+.visual-toc {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1rem 1.2rem 1.2rem;
+  margin: 1.5rem 0 2rem;
+  background: linear-gradient(180deg, var(--code-bg), var(--bg));
+}
+.visual-toc-title {
+  font-weight: 600;
+  font-size: 1rem;
+  margin: 0 0 0.8rem;
+  color: var(--fg);
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
+}
+.visual-toc-title .badge {
+  font-size: 0.7em;
+  font-weight: 500;
+  color: var(--muted);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  padding: 0.15em 0.5em;
+  border-radius: 999px;
+}
+.vtoc-row {
+  display: grid;
+  grid-template-columns: 230px 1fr;
+  gap: 0.6rem;
+  align-items: start;
+  padding: 0.5rem 0;
+  border-top: 1px dashed var(--border);
+}
+.vtoc-row:first-of-type { border-top: none; }
+.vtoc-h2 {
+  display: block;
+  font-weight: 600;
+  font-size: 0.92em;
+  padding: 0.45em 0.7em;
+  background: var(--bg);
+  border: 1px solid var(--link);
+  border-left: 4px solid var(--link);
+  color: var(--fg);
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background 0.15s ease, transform 0.1s ease;
+}
+.vtoc-h2:hover { background: var(--code-bg); transform: translateX(2px); text-decoration: none; }
+.vtoc-h3-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35em;
+  align-content: flex-start;
+}
+.vtoc-h3 {
+  font-size: 0.82em;
+  padding: 0.25em 0.65em;
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  color: var(--fg);
+  border-radius: 999px;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+.vtoc-h3:hover { background: var(--link); color: #fff; border-color: var(--link); text-decoration: none; }
+.vtoc-h3.empty { color: var(--muted); font-style: italic; }
+@media (max-width: 700px) {
+  .vtoc-row { grid-template-columns: 1fr; gap: 0.3rem; }
+}
+</style>
+<script>
+(function() {
+  const KEY = 'netwalk-theme';
+  const root = document.documentElement;
+  const saved = localStorage.getItem(KEY);
+  const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const initial = saved || (prefersDark ? 'dark' : 'light');
+  root.setAttribute('data-theme', initial);
+
+  function updateButton() {
+    const btn = document.getElementById('theme-toggle');
+    if (!btn) return;
+    const cur = root.getAttribute('data-theme');
+    btn.textContent = cur === 'dark' ? '☀️ Light' : '🌙 Dark';
+  }
+
+  function expandAll(open) {
+    document.querySelectorAll('details.section, details.subsection').forEach(d => { d.open = open; });
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    updateButton();
+    const btn = document.getElementById('theme-toggle');
+    if (btn) {
+      btn.addEventListener('click', function() {
+        const cur = root.getAttribute('data-theme');
+        const next = cur === 'dark' ? 'light' : 'dark';
+        root.setAttribute('data-theme', next);
+        localStorage.setItem(KEY, next);
+        updateButton();
+      });
+    }
+    const ex = document.getElementById('expand-all');
+    const co = document.getElementById('collapse-all');
+    if (ex) ex.addEventListener('click', () => expandAll(true));
+    if (co) co.addEventListener('click', () => expandAll(false));
+
+    // Deep-link: open the section containing the hash target
+    function openHash() {
+      if (!location.hash) return;
+      const t = document.querySelector(location.hash);
+      if (!t) return;
+      let p = t.closest('details.section, details.subsection');
+      while (p) { p.open = true; p = p.parentElement.closest('details.section, details.subsection'); }
+      t.scrollIntoView({behavior:'smooth', block:'start'});
+    }
+    window.addEventListener('hashchange', openHash);
+    openHash();
+  });
+})();
+</script>
+</head>
+<body>
+<div class="toc-nav">
+  <div class="links"><a href="README.md">README</a> · <a href="learn.html">learn.md → HTML</a> · <a href="commands.html">commands.md → HTML</a></div>
+  <div class="section-controls">
+    <button id="expand-all" type="button" title="Expand all sections">⤢ Expand</button>
+    <button id="collapse-all" type="button" title="Collapse all sections">⤡ Collapse</button>
+  </div>
+  <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle dark mode">🌙 Dark</button>
+</div>
+<h1 id="learnmd-living-networking-notes">📚 learn.md — Living Networking Notes</h1>
+<nav class="visual-toc" aria-label="Visual table of contents"><div class="visual-toc-title">🗺️ Visual Table of Contents <span class="badge">18 sections · 63 subsections</span></div><div class="vtoc-row"><a class="vtoc-h2" href="#concept-map-how-everything-in-this-doc-connects">🗺️ Concept map — how everything in this doc connects</a><div class="vtoc-h3-list"><span class="vtoc-h3 empty">— no subsections —</span></div></div><div class="vtoc-row"><a class="vtoc-h2" href="#1-why-this-lab-exists-the-long-haul-replication-story">1. Why this lab exists — the long-haul replication story</a><div class="vtoc-h3-list"><span class="vtoc-h3 empty">— no subsections —</span></div></div><div class="vtoc-row"><a class="vtoc-h2" href="#2-the-networking-layer-cake">2. The networking layer cake</a><div class="vtoc-h3-list"><span class="vtoc-h3 empty">— no subsections —</span></div></div><div class="vtoc-row"><a class="vtoc-h2" href="#3-mtu-maximum-transmission-unit">3. MTU — Maximum Transmission Unit</a><div class="vtoc-h3-list"><a class="vtoc-h3" href="#common-values">Common values</a><a class="vtoc-h3" href="#mtu-vs-mss">MTU vs MSS</a><a class="vtoc-h3" href="#truck-analogy">Truck analogy 🚛</a><a class="vtoc-h3" href="#jumbo-frames-mtu-9000">Jumbo frames (MTU 9000)</a><a class="vtoc-h3" href="#fragmentation-a-numerical-walkthrough">Fragmentation — a numerical walkthrough 🔍</a><a class="vtoc-h3" href="#tying-mtu-together">Tying MTU together</a></div></div><div class="vtoc-row"><a class="vtoc-h2" href="#4-tunnels-and-their-mtu-cost">4. Tunnels and their MTU cost</a><div class="vtoc-h3-list"><a class="vtoc-h3" href="#41-pppoe-point-to-point-protocol-over-ethernet">4.1 PPPoE — Point-to-Point Protocol over Ethernet</a><a class="vtoc-h3" href="#42-ipsec-internet-protocol-security">4.2 IPSec — Internet Protocol Security</a><a class="vtoc-h3" href="#43-wireguard">4.3 WireGuard</a><a class="vtoc-h3" href="#44-vxlan-virtual-extensible-lan">4.4 VXLAN — Virtual Extensible LAN</a><a class="vtoc-h3" href="#45-gre-generic-routing-encapsulation">4.5 GRE — Generic Routing Encapsulation</a><a class="vtoc-h3" href="#46-stacked-tunnels">4.6 Stacked tunnels</a><a class="vtoc-h3" href="#tunnel-cheat-sheet">Tunnel cheat sheet</a></div></div><div class="vtoc-row"><a class="vtoc-h2" href="#5-the-df-bit-and-path-mtu-discovery">5. The DF bit and Path MTU Discovery</a><div class="vtoc-h3-list"><a class="vtoc-h3" href="#df-0-clear-fragmentation-allowed">DF = 0 (clear) — fragmentation allowed</a><a class="vtoc-h3" href="#df-1-set-fragmentation-forbidden">DF = 1 (set) — fragmentation forbidden</a><a class="vtoc-h3" href="#the-pmtu-black-hole">The PMTU Black Hole 🕳️</a><a class="vtoc-h3" href="#probing-path-mtu-yourself">Probing path MTU yourself</a></div></div><div class="vtoc-row"><a class="vtoc-h2" href="#6-tcp-the-conversation-layer">6. TCP — the conversation layer</a><div class="vtoc-h3-list"><a class="vtoc-h3" href="#61-the-3-way-handshake">6.1 The 3-way handshake</a><a class="vtoc-h3" href="#62-syn-options-mss-window-scale-sack-timestamps">6.2 SYN options: MSS, Window Scale, SACK, Timestamps</a></div></div><div class="vtoc-row"><a class="vtoc-h2" href="#7-bdp-bandwidth-delay-product">7. BDP — Bandwidth-Delay Product</a><div class="vtoc-h3-list"><a class="vtoc-h3" href="#unit-conversions-to-get-right">Unit conversions to get right</a><a class="vtoc-h3" href="#examples">Examples</a><a class="vtoc-h3" href="#the-inverse-throughput-from-a-window">The inverse — throughput from a window</a><a class="vtoc-h3" href="#mental-shortcuts">Mental shortcuts</a><a class="vtoc-h3" href="#intuition">Intuition</a></div></div><div class="vtoc-row"><a class="vtoc-h2" href="#8-long-fat-networks-and-the-bravery-to-send-insight">8. Long Fat Networks and the "bravery to send" insight</a><div class="vtoc-h3-list"><a class="vtoc-h3" href="#long-fat-network-lfn-rfc-13237323">Long Fat Network (LFN) — RFC 1323/7323</a><a class="vtoc-h3" href="#the-insight">The insight</a><a class="vtoc-h3" href="#why-brave">Why "brave"?</a></div></div><div class="vtoc-row"><a class="vtoc-h2" href="#9-the-chain-of-throughput-caps">9. The chain of throughput caps</a><div class="vtoc-h3-list"><a class="vtoc-h3" href="#how-they-differ">How they differ</a></div></div><div class="vtoc-row"><a class="vtoc-h2" href="#10-case-study-cross-region-replication-latency">10. Case study: cross-region replication latency</a><div class="vtoc-h3-list"><a class="vtoc-h3" href="#symptom">Symptom</a><a class="vtoc-h3" href="#what-the-team-checked-in-order">What the team checked, in order</a><a class="vtoc-h3" href="#the-arithmetic">The arithmetic</a><a class="vtoc-h3" href="#the-fix">The fix</a><a class="vtoc-h3" href="#why-i-wrote-this-whole-doc">Why I wrote this whole doc</a></div></div><div class="vtoc-row"><a class="vtoc-h2" href="#11-the-big-picture-relationship-diagram">11. The big picture — relationship diagram</a><div class="vtoc-h3-list"><span class="vtoc-h3 empty">— no subsections —</span></div></div><div class="vtoc-row"><a class="vtoc-h2" href="#12-pmtud-diagnostics-the-engineers-checklist">12. PMTUD diagnostics — the engineer's checklist</a><div class="vtoc-h3-list"><a class="vtoc-h3" href="#step-1-is-the-path-mtu-what-we-think-it-is">Step 1 — Is the path MTU what we think it is?</a><a class="vtoc-h3" href="#step-2-is-pmtud-actually-reaching-us">Step 2 — Is PMTUD actually reaching us?</a><a class="vtoc-h3" href="#step-25-prove-icmp-itself-isnt-broken">Step 2.5 — Prove "ICMP itself isn't broken" 🩺</a><a class="vtoc-h3" href="#step-3-is-the-sender-being-told-and-reacting">Step 3 — Is the sender being told (and reacting)?</a><a class="vtoc-h3" href="#step-4-suspect-a-black-hole-mitigate-with-mss-clamping">Step 4 — Suspect a black hole? Mitigate with MSS clamping</a><a class="vtoc-h3" href="#step-5-only-after-steps-14-clean-blame-the-sender-buffer">Step 5 — Only after Steps 1–4 clean, blame the sender buffer</a><a class="vtoc-h3" href="#flowchart-of-the-diagnosis">Flowchart of the diagnosis</a><a class="vtoc-h3" href="#common-pmtud-failure-signatures">Common PMTUD failure signatures</a></div></div><div class="vtoc-row"><a class="vtoc-h2" href="#13-maximum-protocol-stacking-the-worst-case-packet">13. Maximum protocol stacking — the worst-case packet</a><div class="vtoc-h3-list"><a class="vtoc-h3" href="#the-use-case">The use case</a><a class="vtoc-h3" href="#the-layered-stack-on-the-wire">The layered stack on the wire</a><a class="vtoc-h3" href="#header-budget-arithmetic">Header budget arithmetic</a><a class="vtoc-h3" href="#effective-mss-for-the-app">Effective MSS for the app</a><a class="vtoc-h3" href="#when-this-stack-hurts">When this stack hurts</a><a class="vtoc-h3" href="#how-to-detect-this-in-production">How to detect this in production</a><a class="vtoc-h3" href="#bound-how-deep-can-it-go">Bound: how deep can it go?</a></div></div><div class="vtoc-row"><a class="vtoc-h2" href="#14-learning-exercise-peel-the-onion">14. Learning exercise — peel the onion 🧅</a><div class="vtoc-h3-list"><a class="vtoc-h3" href="#setup_1">Setup</a><a class="vtoc-h3" href="#the-five-questions-to-ask-each-packet-top-down">The five questions to ask each packet, top-down</a><a class="vtoc-h3" href="#worked-exercise-decode-this-one-frame">Worked exercise — decode this one frame</a><a class="vtoc-h3" href="#try-it-yourself-tshark-one-liners">Try it yourself — tshark one-liners</a><a class="vtoc-h3" href="#the-mental-shortcut">The mental shortcut 🎯</a></div></div><div class="vtoc-row"><a class="vtoc-h2" href="#15-faq-clarifications-collected-along-the-way">15. FAQ — clarifications collected along the way</a><div class="vtoc-h3-list"><a class="vtoc-h3" href="#q-what-is-wpcapdll">Q: What is wpcap.dll?</a><a class="vtoc-h3" href="#q-what-does-tshark-d-do">Q: What does tshark -D do?</a><a class="vtoc-h3" href="#q-if-bdp-isnt-filled-does-data-fail-to-transmit">Q: If BDP isn't filled, does data fail to transmit?</a><a class="vtoc-h3" href="#q-example-values-for-rwnd-cwnd-so_sndbuf">Q: Example values for rwnd, cwnd, SO_SNDBUF?</a><a class="vtoc-h3" href="#q-what-is-dsl">Q: What is DSL?</a><a class="vtoc-h3" href="#q-what-does-without-flat-layer-2-mean">Q: What does "without flat Layer-2" mean?</a></div></div><div class="vtoc-row"><a class="vtoc-h2" href="#appendix-a-percentiles-and-tail-latency">Appendix A — Percentiles and tail latency</a><div class="vtoc-h3-list"><a class="vtoc-h3" href="#what-a-percentile-is">What a percentile is</a><a class="vtoc-h3" href="#why-mean-lies-the-canonical-example">Why mean lies — the canonical example</a><a class="vtoc-h3" href="#tail-amplification-the-killer-at-scale">Tail amplification (the killer at scale)</a><a class="vtoc-h3" href="#quick-reference">Quick reference</a></div></div><div class="vtoc-row"><a class="vtoc-h2" href="#appendix-b-experiment-plan-recap">Appendix B — Experiment plan recap</a><div class="vtoc-h3-list"><span class="vtoc-h3 empty">— no subsections —</span></div></div></nav>
+<blockquote>
+<p>A growing knowledge base for the <strong>Net Walkthrough</strong> lab.
+Append new sections as I learn. Cross-reference back into <a href="./README.md"><code>README.md</code></a> (the lab plan).
+For tool-specific syntax, see <a href="./commands.md"><code>commands.md</code></a>.</p>
+</blockquote>
+<hr>
+<details class="section" open><summary><h2 id="concept-map-how-everything-in-this-doc-connects">🗺️ Concept map — how everything in this doc connects</h2></summary><div class="section-body">
+<p>One picture that ties together every section below. Two <strong>orthogonal axes of trouble</strong> (Volume / Size), the <strong>layered model</strong> they sit in, and the <strong>diagnostic loop</strong> that ties them together. Click a label → jump to that section.</p>
+<svg viewBox="0 0 1180 740" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Concept map of learn.md">
+  <style>
+    .vol{fill:#dbeafe;stroke:#2563eb;stroke-width:1.5}
+    .siz{fill:#fed7aa;stroke:#c2410c;stroke-width:1.5}
+    .tun{fill:#f3e8ff;stroke:#7c3aed;stroke-width:1.5}
+    .tcp{fill:#dcfce7;stroke:#15803d;stroke-width:1.5}
+    .diag{fill:#fee2e2;stroke:#dc2626;stroke-width:1.5}
+    .lyr{fill:#fef9c3;stroke:#a16207;stroke-width:1.5}
+    .case{fill:#fce7f3;stroke:#be185d;stroke-width:2}
+    .hdr{font:700 14px -apple-system,Segoe UI,sans-serif;fill:#111}
+    .t{font:600 12px -apple-system,Segoe UI,sans-serif;fill:#111}
+    .s{font:10.5px -apple-system,Segoe UI,sans-serif;fill:#374151}
+    .ref{font:600 9.5px -apple-system,Segoe UI,sans-serif;fill:#6b7280}
+    .axis{font:700 13px -apple-system,Segoe UI,sans-serif;letter-spacing:1px;fill:#111}
+    .verdict{font:700 13px -apple-system,Segoe UI,sans-serif;fill:#111}
+    .a{stroke:#4b5563;stroke-width:1.6;fill:none;marker-end:url(#cmm)}
+    .a2{stroke:#9ca3af;stroke-width:1.3;fill:none;stroke-dasharray:5 4}
+    .link{cursor:pointer}
+    .link:hover rect{filter:brightness(0.95)}
+  </style>
+  <defs><marker id="cmm" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#4b5563"/></marker></defs>
+
+  <!-- Page title strip -->
+  <rect x="0" y="0" width="1180" height="36" fill="#f8fafc" stroke="#cbd5e1"/>
+  <text x="20" y="23" class="hdr">📚 learn.md concept map — everything fits in one of these buckets</text>
+  <text x="980" y="23" class="ref">click any label to jump</text>
+
+  <!-- Case study marker -->
+  <a class="link" href="#1-why-this-lab-exists-the-long-haul-replication-story">
+    <rect class="case" x="20" y="56" width="220" height="60" rx="8"/>
+    <text x="130" y="78" text-anchor="middle" class="hdr">🎯 Case study: long-haul</text>
+    <text x="130" y="95" text-anchor="middle" class="s">Symptom: 2.85 Mbps on a 10 Gbps link</text>
+    <text x="130" y="108" text-anchor="middle" class="ref">§1, §10</text>
+  </a>
+  <path class="a2" d="M240,86 L320,86"/>
+  <text x="335" y="80" class="s">root cause was on the…</text>
+  <text x="335" y="95" class="s" style="font-weight:600">â–¶ Volume axis â—€</text>
+
+  <!-- ============ LEFT HALF: VOLUME AXIS ============ -->
+  <text x="60" y="155" class="axis">📊 VOLUME — "how much in flight?"</text>
+  <text x="60" y="172" class="s">Throughput = effective window / RTT.  Cap stack:</text>
+
+  <a class="link" href="#15-faq-clarifications-collected-along-the-way">
+    <rect class="vol" x="40" y="185" width="220" height="50" rx="6"/>
+    <text x="150" y="207" text-anchor="middle" class="t">SO_SNDBUF (socket buffer)</text>
+    <text x="150" y="223" text-anchor="middle" class="s">app-set or auto-tuned · §15 FAQ</text>
+  </a>
+  <path class="a" d="M150,235 L150,250"/>
+  <a class="link" href="#15-faq-clarifications-collected-along-the-way">
+    <rect class="vol" x="40" y="250" width="220" height="40" rx="6"/>
+    <text x="150" y="270" text-anchor="middle" class="t">cwnd (congestion window)</text>
+    <text x="150" y="284" text-anchor="middle" class="s">sender bravery, halves on loss</text>
+  </a>
+  <path class="a" d="M150,290 L150,305"/>
+  <a class="link" href="#15-faq-clarifications-collected-along-the-way">
+    <rect class="vol" x="40" y="305" width="220" height="40" rx="6"/>
+    <text x="150" y="325" text-anchor="middle" class="t">rwnd (advertised window)</text>
+    <text x="150" y="339" text-anchor="middle" class="s">receiver buffer free space</text>
+  </a>
+  <path class="a" d="M150,345 L150,360"/>
+  <a class="link" href="#7-bdp-bandwidth-delay-product">
+    <rect class="vol" x="40" y="360" width="220" height="55" rx="6"/>
+    <text x="150" y="380" text-anchor="middle" class="t">BDP = BW × RTT</text>
+    <text x="150" y="396" text-anchor="middle" class="s">the pipe's capacity (§7)</text>
+    <text x="150" y="409" text-anchor="middle" class="s">10 Gbps × 180 ms = 225 MB</text>
+  </a>
+  <path class="a" d="M150,415 L150,440"/>
+  <!-- Verdict box -->
+  <rect class="vol" x="20" y="445" width="120" height="80" rx="6"/>
+  <text x="80" y="465" text-anchor="middle" class="verdict">✅ window ≥ BDP</text>
+  <text x="80" y="483" text-anchor="middle" class="s">LINK-BOUND</text>
+  <text x="80" y="498" text-anchor="middle" class="s">pipe full; next</text>
+  <text x="80" y="511" text-anchor="middle" class="s">cap = Size axis</text>
+  <rect class="vol" x="160" y="445" width="120" height="80" rx="6" style="stroke:#dc2626;stroke-width:2"/>
+  <text x="220" y="465" text-anchor="middle" class="verdict">⚠️ window &lt; BDP</text>
+  <text x="220" y="483" text-anchor="middle" class="s">WINDOW-BOUND</text>
+  <text x="220" y="498" text-anchor="middle" class="s">slack in pipe;</text>
+  <text x="220" y="511" text-anchor="middle" class="s">original cap lived here</text>
+  <path class="a2" d="M130,108 C 220,260 220,260 220,440"/>
+
+  <!-- LFN insight tag -->
+  <a class="link" href="#8-long-fat-networks-and-the-bravery-to-send-insight">
+    <rect class="vol" x="40" y="540" width="220" height="40" rx="6"/>
+    <text x="150" y="560" text-anchor="middle" class="t">LFN insight (§8)</text>
+    <text x="150" y="574" text-anchor="middle" class="s">"brave enough to send before ACK"</text>
+  </a>
+
+  <!-- ============ RIGHT HALF: SIZE AXIS ============ -->
+  <text x="900" y="155" class="axis" text-anchor="middle">📦 SIZE — "how big per packet?"</text>
+  <text x="900" y="172" class="s" text-anchor="middle">If consistent, fine. If not, hangs or fragments.</text>
+
+  <a class="link" href="#3-mtu-maximum-transmission-unit">
+    <rect class="siz" x="790" y="185" width="220" height="50" rx="6"/>
+    <text x="900" y="207" text-anchor="middle" class="t">MTU (Maximum Transmission Unit)</text>
+    <text x="900" y="223" text-anchor="middle" class="s">L2 size cap · 1500 default · §3</text>
+  </a>
+  <path class="a" d="M900,235 L900,250"/>
+  <a class="link" href="#3-mtu-maximum-transmission-unit">
+    <rect class="siz" x="790" y="250" width="220" height="40" rx="6"/>
+    <text x="900" y="270" text-anchor="middle" class="t">MSS = MTU − IP − TCP hdr</text>
+    <text x="900" y="284" text-anchor="middle" class="s">TCP segment payload cap</text>
+  </a>
+  <path class="a" d="M900,290 L900,305"/>
+  <a class="link" href="#5-the-df-bit-and-path-mtu-discovery">
+    <rect class="siz" x="790" y="305" width="220" height="40" rx="6"/>
+    <text x="900" y="325" text-anchor="middle" class="t">DF bit + PMTUD (§5)</text>
+    <text x="900" y="339" text-anchor="middle" class="s">discover smallest hop's MTU</text>
+  </a>
+  <path class="a" d="M900,345 L900,360"/>
+  <a class="link" href="#12-pmtud-diagnostics-the-engineers-checklist">
+    <rect class="siz" x="790" y="360" width="220" height="55" rx="6"/>
+    <text x="900" y="380" text-anchor="middle" class="t">ICMP type 3 code 4 (§12)</text>
+    <text x="900" y="396" text-anchor="middle" class="s">"Fragmentation Needed"</text>
+    <text x="900" y="409" text-anchor="middle" class="s">if blocked → black hole</text>
+  </a>
+  <path class="a" d="M900,415 L900,440"/>
+  <rect class="siz" x="780" y="445" width="120" height="80" rx="6"/>
+  <text x="840" y="465" text-anchor="middle" class="verdict">✅ MTU consistent</text>
+  <text x="840" y="483" text-anchor="middle" class="s">PMTUD works</text>
+  <text x="840" y="498" text-anchor="middle" class="s">sender shrinks</text>
+  <text x="840" y="511" text-anchor="middle" class="s">no fragmentation</text>
+  <rect class="siz" x="920" y="445" width="120" height="80" rx="6" style="stroke:#dc2626;stroke-width:2"/>
+  <text x="980" y="465" text-anchor="middle" class="verdict">⚠️ MTU mismatch</text>
+  <text x="980" y="483" text-anchor="middle" class="s">PMTU black hole</text>
+  <text x="980" y="498" text-anchor="middle" class="s">or fragmentation</text>
+  <text x="980" y="511" text-anchor="middle" class="s">→ silent hangs</text>
+
+  <!-- Fragmentation + tunnels -->
+  <a class="link" href="#3-mtu-maximum-transmission-unit">
+    <rect class="siz" x="790" y="540" width="220" height="40" rx="6"/>
+    <text x="900" y="560" text-anchor="middle" class="t">Fragmentation walkthrough (§3)</text>
+    <text x="900" y="574" text-anchor="middle" class="s">3980 B → 3 fragments, offsets</text>
+  </a>
+
+  <!-- Tunnels column (purple) — bridges Size axis -->
+  <text x="640" y="155" text-anchor="middle" class="axis">🚇 TUNNELS</text>
+  <text x="640" y="172" text-anchor="middle" class="s">eat MTU; stack arbitrarily</text>
+  <a class="link" href="#4-tunnels-and-their-mtu-cost">
+    <rect class="tun" x="530" y="185" width="220" height="230" rx="6"/>
+    <text x="640" y="207" text-anchor="middle" class="t">§4 tunnel taxonomy</text>
+    <text x="640" y="227" text-anchor="middle" class="s">4.1 PPPoE — 8 B</text>
+    <text x="640" y="244" text-anchor="middle" class="s">4.2 IPSec — 50–80 B</text>
+    <text x="640" y="261" text-anchor="middle" class="s">4.3 WireGuard — 60 B</text>
+    <text x="640" y="278" text-anchor="middle" class="s">4.4 VXLAN — 50 B (UDP)</text>
+    <text x="640" y="295" text-anchor="middle" class="s">4.5 GRE — 24 B (multicast)</text>
+    <text x="640" y="312" text-anchor="middle" class="s">4.6 Stacked: arbitrary depth</text>
+    <text x="640" y="335" text-anchor="middle" class="ref">→ each tunnel adds headers</text>
+    <text x="640" y="350" text-anchor="middle" class="ref">→ shrinks effective MSS</text>
+    <text x="640" y="370" text-anchor="middle" class="ref" style="font-weight:600">Worst-case: §13 (~200 B overhead,</text>
+    <text x="640" y="385" text-anchor="middle" class="ref" style="font-weight:600">12.4% on 1500 MTU)</text>
+    <text x="640" y="405" text-anchor="middle" class="ref">Detect each layer: §14 🧅</text>
+  </a>
+  <path class="a2" d="M750,300 L790,300"/>
+
+  <!-- ============ BOTTOM ROW: layer model, TCP, diagnostics ============ -->
+
+  <!-- Layer cake -->
+  <a class="link" href="#2-the-networking-layer-cake">
+    <rect class="lyr" x="40" y="605" width="340" height="120" rx="8"/>
+    <text x="210" y="625" text-anchor="middle" class="hdr">🍰 §2 Layer cake</text>
+    <text x="210" y="645" text-anchor="middle" class="s">L1 wire | L2 frame (MTU) | L3 IP (DF, PMTUD, tunnels)</text>
+    <text x="210" y="662" text-anchor="middle" class="s">L4 TCP/UDP (window, MSS) | L5–6 TLS</text>
+    <text x="210" y="679" text-anchor="middle" class="s">L7 app (HTTP, repl protocol)</text>
+    <text x="210" y="702" text-anchor="middle" class="s" style="font-style:italic">every concept above lives at one of these layers</text>
+    <text x="210" y="717" text-anchor="middle" class="ref">→ §2</text>
+  </a>
+
+  <!-- TCP handshake -->
+  <a class="link" href="#6-tcp-the-conversation-layer">
+    <rect class="tcp" x="400" y="605" width="360" height="120" rx="8"/>
+    <text x="580" y="625" text-anchor="middle" class="hdr">🤝 §6 TCP — the conversation</text>
+    <text x="580" y="645" text-anchor="middle" class="s">3-way handshake (§6.1): SYN → SYN-ACK → ACK</text>
+    <text x="580" y="662" text-anchor="middle" class="s">SYN options (§6.2): MSS, Wscale, SACK, TS</text>
+    <text x="580" y="680" text-anchor="middle" class="s">Window scaling unlocks rwnd beyond 64 KB</text>
+    <text x="580" y="700" text-anchor="middle" class="s" style="font-weight:600">↳ feeds the Volume axis (cwnd/rwnd/BDP)</text>
+    <text x="580" y="717" text-anchor="middle" class="ref">→ §6, §9 chain of caps</text>
+  </a>
+
+  <!-- Diagnostics -->
+  <a class="link" href="#12-pmtud-diagnostics-the-engineers-checklist">
+    <rect class="diag" x="780" y="605" width="360" height="120" rx="8"/>
+    <text x="960" y="625" text-anchor="middle" class="hdr">🩺 Diagnostic loop</text>
+    <text x="960" y="645" text-anchor="middle" class="s">§11 big-picture diagram (volume + size combined)</text>
+    <text x="960" y="662" text-anchor="middle" class="s">§12 PMTUD checklist + ICMP-isn't-broken test</text>
+    <text x="960" y="680" text-anchor="middle" class="s">§13 max protocol stack arithmetic</text>
+    <text x="960" y="698" text-anchor="middle" class="s">§14 peel-the-onion exercise (detect each layer)</text>
+    <text x="960" y="717" text-anchor="middle" class="ref">→ §11–14</text>
+  </a>
+
+  <!-- arrows from axes down into appropriate bottom cards -->
+  <path class="a2" d="M150,580 L210,605"/>
+  <path class="a2" d="M580,415 L580,605"/>
+  <path class="a2" d="M900,580 L960,605"/>
+</svg>
+<blockquote>
+<p><strong>Reading the map.</strong> Walk it top-down: the <strong>case study</strong> (top-left) sets the question. The <strong>two parallel columns</strong> in the middle are the two axes any problem lives on — <strong>Volume</strong> (windows/BDP) on the left, <strong>Size</strong> (MTU/PMTUD) on the right. <strong>Tunnels</strong> (purple, center) increase pressure on the Size axis. The <strong>bottom row</strong> is foundation (Layers, TCP) plus the diagnostic toolkit. Every section in the doc is reachable by clicking one of the colored boxes.</p>
+</blockquote>
+<hr>
+</div></details><details class="section" open><summary><h2 id="table-of-contents">Table of Contents</h2></summary><div class="section-body">
+<ol start="0">
+<li><a href="#concept-map-how-everything-in-this-doc-connects">🗺️ Concept map — how everything in this doc connects</a></li>
+<li><a href="#1-why-this-lab-exists-the-long-haul-replication-story">Why this lab exists — the long-haul replication story</a></li>
+<li><a href="#2-the-networking-layer-cake">The networking layer cake (mental model)</a></li>
+<li><a href="#3-mtu-maximum-transmission-unit">MTU — Maximum Transmission Unit</a>
+   - <a href="#jumbo-frames-mtu-9000">Jumbo frames (MTU 9000)</a>
+   - <a href="#fragmentation-a-numerical-walkthrough">Fragmentation — a numerical walkthrough 🔍</a></li>
+<li><a href="#4-tunnels-and-their-mtu-cost">Tunnels and their MTU cost</a>
+   - 4.1 <a href="#41-pppoe-point-to-point-protocol-over-ethernet">PPPoE</a>
+   - 4.2 <a href="#42-ipsec-internet-protocol-security">IPSec</a>
+   - 4.3 <a href="#43-wireguard">WireGuard</a>
+   - 4.4 <a href="#44-vxlan-virtual-extensible-lan">VXLAN</a>
+   - 4.5 <a href="#45-gre-generic-routing-encapsulation">GRE (incl. multicast, ExpressRoute, CDN/anti-DDoS)</a>
+   - 4.6 <a href="#46-stacked-tunnels">Stacked tunnels</a></li>
+<li><a href="#5-the-df-bit-and-path-mtu-discovery">The DF bit and Path MTU Discovery</a></li>
+<li><a href="#6-tcp-the-conversation-layer">TCP — the conversation layer</a>
+   - 6.1 <a href="#61-the-3-way-handshake">The 3-way handshake</a>
+   - 6.2 <a href="#62-syn-options-mss-window-scale-sack-timestamps">SYN options: MSS, Window Scale, SACK, Timestamps</a></li>
+<li><a href="#7-bdp-bandwidth-delay-product">BDP — Bandwidth-Delay Product</a></li>
+<li><a href="#8-long-fat-networks-and-the-bravery-to-send-insight">Long Fat Networks (LFN) and the "bravery to send" insight</a></li>
+<li><a href="#9-the-chain-of-throughput-caps">The chain of throughput caps</a></li>
+<li><a href="#10-case-study-cross-region-replication-latency">Case study: cross-region replication latency</a></li>
+<li><a href="#11-the-big-picture-relationship-diagram">🆕 The big picture — relationship diagram</a></li>
+<li><a href="#12-pmtud-diagnostics-the-engineers-checklist">🆕 PMTUD diagnostics — the engineer's checklist</a></li>
+<li><a href="#13-maximum-protocol-stacking-the-worst-case-packet">🆕 Maximum protocol stacking — the worst-case packet</a></li>
+<li><a href="#14-learning-exercise-peel-the-onion">🆕 Learning exercise — peel the onion 🧅</a></li>
+<li><a href="#15-faq-clarifications-collected-along-the-way">FAQ — clarifications collected along the way</a></li>
+<li><a href="#appendix-a-percentiles-and-tail-latency">Appendix A — Percentiles and tail latency</a></li>
+<li><a href="#appendix-b-experiment-plan-recap">Appendix B — Experiment plan recap</a></li>
+</ol>
+<hr>
+</div></details><details class="section" open><summary><h2 id="1-why-this-lab-exists-the-long-haul-replication-story">1. Why this lab exists — the long-haul replication story</h2></summary><div class="section-body">
+<p>A real-world ticket: a service replicating between two distant regions (a <strong>US ↔ APAC</strong> pair, roughly 180 ms RTT) was running slow. The investigation concluded:</p>
+<blockquote>
+<p><em>"The issue is indeed due to sender-side socket size not being big enough, even though TCP window scaling is working well."</em></p>
+</blockquote>
+<p>That sentence packs in a lot:
+- <em>"Sender-side socket size"</em> — the <strong>sender's send buffer</strong> (<code>SO_SNDBUF</code>).
+- <em>"TCP window scaling working well"</em> — the RFC 7323 option negotiated correctly during the SYN.
+- <em>"Not big enough"</em> — smaller than the <strong>BDP</strong> of the US↔APAC path.</p>
+<p>This lab exists to <strong>see all of that on the wire</strong>, so I can recognize it next time without anyone hand-holding me through the diagnosis.</p>
+<hr>
+</div></details><details class="section" open><summary><h2 id="2-the-networking-layer-cake">2. The networking layer cake</h2></summary><div class="section-body">
+<p>Every packet you ever send is a stack of envelopes:</p>
+<pre class="codehilite"><code>┌──────────────────────────────────────────┐
+│ L2  Ethernet frame (MAC + payload + CRC) │
+│  ┌────────────────────────────────────┐  │
+│  │ L3  IPv4 header (20B) + payload    │  │
+│  │  ┌──────────────────────────────┐  │  │
+│  │  │ L4  TCP header (20B) + data  │  │  │
+│  │  │  ┌────────────────────────┐  │  │  │
+│  │  │  │ L7  HTTP / TLS / etc.  │  │  │  │
+│  │  │  └────────────────────────┘  │  │  │
+│  │  └──────────────────────────────┘  │  │
+│  └────────────────────────────────────┘  │
+└──────────────────────────────────────────┘
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>Adds</th>
+<th>Concerned with</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>L2</strong> Ethernet</td>
+<td>14 B header + 4 B CRC</td>
+<td>Reaching the next hop on a wire</td>
+</tr>
+<tr>
+<td><strong>L3</strong> IP</td>
+<td>20 B header</td>
+<td>Reaching any host on the planet (routing)</td>
+</tr>
+<tr>
+<td><strong>L4</strong> TCP</td>
+<td>20 B header (+ options)</td>
+<td>Reliable, ordered, flow-controlled stream</td>
+</tr>
+<tr>
+<td><strong>L7</strong> HTTP/TLS</td>
+<td>Variable</td>
+<td>What the application actually wants to say</td>
+</tr>
+</tbody>
+</table>
+<p>Every concept below is one of these layers' rules being enforced.</p>
+<hr>
+</div></details><details class="section" open><summary><h2 id="3-mtu-maximum-transmission-unit">3. MTU — Maximum Transmission Unit</h2></summary><div class="section-body">
+<p><strong>MTU = biggest single packet (frame) a link can carry without chopping it up.</strong> Measured in <strong>bytes</strong>, set per interface.</p>
+<details class="subsection" open><summary><h3 id="common-values">Common values</h3></summary><div class="subsection-body">
+<table>
+<thead>
+<tr>
+<th>Link</th>
+<th>MTU</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Ethernet (default)</strong></td>
+<td><strong>1500</strong></td>
+</tr>
+<tr>
+<td>Wi-Fi</td>
+<td>1500</td>
+</tr>
+<tr>
+<td>PPPoE (DSL)</td>
+<td>1492</td>
+</tr>
+<tr>
+<td>Cloud overlay (VXLAN)</td>
+<td>1450</td>
+</tr>
+<tr>
+<td>VPN (IPSec/WireGuard)</td>
+<td>~1400</td>
+</tr>
+<tr>
+<td>IPv6 minimum</td>
+<td>1280</td>
+</tr>
+<tr>
+<td>Loopback</td>
+<td>65535</td>
+</tr>
+<tr>
+<td><strong>Jumbo frames</strong> (intra-DC)</td>
+<td><strong>9000</strong></td>
+</tr>
+</tbody>
+</table>
+</div></details><details class="subsection" open><summary><h3 id="mtu-vs-mss">MTU vs MSS</h3></summary><div class="subsection-body">
+<pre class="codehilite"><code>MTU  = 1500   (Ethernet frame payload)
+      − 20    (IP header)
+      − 20    (TCP header)
+      ──────
+MSS  = 1460   (actual TCP data per packet)
+</code></pre>
+
+<p><strong>MTU</strong> is the truck size (L2). <strong>MSS</strong> is the cargo space (L4).</p>
+</div></details><details class="subsection" open><summary><h3 id="truck-analogy">Truck analogy 🚛</h3></summary><div class="subsection-body">
+<ul>
+<li>MTU = the truck's height limit on a given road.</li>
+<li>Cargo bigger than the truck → must split across multiple trucks (fragmentation) OR be dropped.</li>
+<li>The whole journey is capped by the <strong>smallest</strong> truck along the route → <strong>Path MTU</strong>.</li>
+</ul>
+</div></details><details class="subsection" open><summary><h3 id="jumbo-frames-mtu-9000">Jumbo frames (MTU 9000)</h3></summary><div class="subsection-body">
+<p>A <strong>jumbo frame</strong> is any Ethernet frame <strong>larger than the standard 1500-byte MTU</strong> — almost always 9000 bytes in practice. It's an <em>optional</em> Ethernet feature: not in the original spec, not universally supported, but ubiquitous inside modern datacenters.</p>
+<h4 id="why-anyone-wants-them">Why anyone wants them</h4>
+<p>Headers don't get bigger when payloads do. So bigger payloads = a much smaller percentage of every byte is overhead.</p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>MTU 1500</th>
+<th>MTU 9000</th>
+<th>Improvement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TCP+IP+Eth header bytes</td>
+<td>54</td>
+<td>54</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Useful payload per frame</td>
+<td>1446</td>
+<td>8946</td>
+<td><strong>6.2×</strong></td>
+</tr>
+<tr>
+<td>Header overhead</td>
+<td>3.6%</td>
+<td>0.6%</td>
+<td>6× less waste</td>
+</tr>
+<tr>
+<td>Packets to send 1 MB</td>
+<td>~727</td>
+<td>~117</td>
+<td><strong>6.2× fewer</strong></td>
+</tr>
+<tr>
+<td>Interrupts / DMA setups per MB</td>
+<td>727</td>
+<td>117</td>
+<td>6× less CPU</td>
+</tr>
+<tr>
+<td>Context switches</td>
+<td>High</td>
+<td>Low</td>
+<td>Substantial</td>
+</tr>
+</tbody>
+</table>
+<p>For high-throughput workloads (storage replication, backup, VM live-migration, MPI/HPC), <strong>CPU is often the bottleneck</strong> before bandwidth — fewer-but-bigger packets free up cycles for the actual application.</p>
+<h4 id="when-they-help">When they help</h4>
+<p>✅ Within a single rack or datacenter.
+✅ End-to-end path entirely under your control (every switch, NIC, and host configured for 9000).
+✅ Storage-style workloads (iSCSI, SMB Direct, replication).</p>
+<h4 id="when-they-hurt">When they hurt</h4>
+<p>❌ One device in the path stuck at 1500 → ICMP "needs fragmentation" storm, or silent black hole.
+❌ Cross-region / public internet — the path almost certainly includes 1500-byte hops.
+❌ Mixed environments where some VMs/containers are configured differently.</p>
+<h4 id="the-gotcha">The gotcha</h4>
+<p>Jumbo is <strong>all-or-nothing along the path</strong>. Every hop must agree: NIC ↔ switch ↔ switch ↔ NIC. A single 1500-byte link in the middle and you're worse off than plain Ethernet — either fragments, drops, or hangs.</p>
+<h4 id="likely-relevance-to-your-service">Likely relevance to your service</h4>
+<ul>
+<li><strong>Within a DC</strong> (intra-DC replication between service replicas) → jumbo plausible.</li>
+<li><strong>Cross-region</strong> (US ↔ APAC) → almost certainly <strong>not</strong> jumbo. The public/long-haul fabric is 1500 (or smaller after VXLAN/IPSec encapsulation). That's why MSS values we'd see on the wire would be ~1380–1460, not ~8960.</li>
+</ul>
+<h4 id="how-to-spot-it-in-wireshark">How to spot it in Wireshark</h4>
+<p>Look at frame length (<code>frame.len</code>) on a sustained transfer. Capped at ~1514 → standard Ethernet. Frames in the 9000–9018 range → jumbo. The MSS in the SYN reveals the receiver's claim before any data flows.</p>
+<p>🧒 <strong>Analogy</strong>: A regular truck holds 1.5 tons. A jumbo truck holds 9 tons. Both have one driver, same paperwork, one fuel stop. If every road on the route accepts jumbo trucks, you move stuff with 6× less driver time. But if <strong>any one road</strong> has a 1.5-ton bridge, jumbo trucks have to dump cargo and split, or just turn around — and now you're worse off than if you'd used regular trucks the whole way.</p>
+<blockquote>
+<p><strong>TL;DR</strong>: Jumbo frames trade compatibility for efficiency. Datacenters love them, the internet won't tolerate them.</p>
+</blockquote>
+</div></details><details class="subsection" open><summary><h3 id="fragmentation-a-numerical-walkthrough">Fragmentation — a numerical walkthrough 🔍</h3></summary><div class="subsection-body">
+<p>Here's exactly what happens when a too-big packet meets a smaller-MTU link with <strong>DF = 0</strong> (fragmentation allowed). We'll trace the bytes.</p>
+<h4 id="setup">Setup</h4>
+<ul>
+<li>App writes <strong>3,980 bytes</strong> of payload.</li>
+<li>Becomes one IP packet: <strong>20 B IP header + 3,980 B data = 4,000 B total</strong>.</li>
+<li>Identification field (chosen by sender, random per-packet): <code>0xABCD</code>.</li>
+<li>Next-hop link MTU is <strong>1,500 B</strong>.</li>
+<li>Router must fragment.</li>
+</ul>
+<h4 id="constraints-the-router-obeys">Constraints the router obeys</h4>
+<ol>
+<li>Each fragment ≤ MTU (1,500 B).</li>
+<li>Each fragment has its own <strong>20 B IP header</strong> (so payload per fragment ≤ 1,480 B).</li>
+<li>Fragment payload size must be a <strong>multiple of 8 bytes</strong> (because the <em>fragment offset</em> field counts in 8-byte units).</li>
+<li>All fragments share the <strong>same <code>Identification</code></strong> value (so the receiver knows which pieces belong together).</li>
+<li><strong>More Fragments (MF) = 1</strong> on all but the last; MF = 0 on the last.</li>
+<li><strong>Fragment Offset</strong> = where this fragment's payload starts in the original packet, <strong>÷ 8</strong>.</li>
+</ol>
+<h4 id="how-the-router-splits-3980-bytes-of-payload">How the router splits 3,980 bytes of payload</h4>
+<p>Largest payload chunk that fits and is a multiple of 8 → <strong>1,480 B</strong> (since 1500 − 20 = 1480, and 1480 / 8 = 185 ✅).</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>IP header</th>
+<th>Payload bytes</th>
+<th>Total size</th>
+<th>Identification</th>
+<th>MF flag</th>
+<th>Offset (8-byte units)</th>
+<th>Offset (bytes)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Fragment 1</strong></td>
+<td>20 B</td>
+<td>1,480 B (bytes 0–1,479)</td>
+<td><strong>1,500 B</strong></td>
+<td>0xABCD</td>
+<td><strong>1</strong></td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td><strong>Fragment 2</strong></td>
+<td>20 B</td>
+<td>1,480 B (bytes 1,480–2,959)</td>
+<td><strong>1,500 B</strong></td>
+<td>0xABCD</td>
+<td><strong>1</strong></td>
+<td>185</td>
+<td>1,480</td>
+</tr>
+<tr>
+<td><strong>Fragment 3</strong></td>
+<td>20 B</td>
+<td>1,020 B (bytes 2,960–3,979)</td>
+<td><strong>1,040 B</strong></td>
+<td>0xABCD</td>
+<td><strong>0</strong></td>
+<td>370</td>
+<td>2,960</td>
+</tr>
+<tr>
+<td><strong>Sum</strong></td>
+<td>60 B headers</td>
+<td>3,980 B payload</td>
+<td><strong>4,040 B on wire</strong></td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p>Notice: original was 4,000 bytes. After fragmenting, we put <strong>4,040 bytes</strong> on the wire (3 IP headers × 20 B = 60 B, minus the 20 B header we'd have used anyway = +40 B overhead). Fragmentation costs ~1% in raw bytes here — but vastly more in CPU and reliability.</p>
+<h4 id="visual">Visual</h4>
+<pre class="codehilite"><code>ORIGINAL PACKET (4000 bytes total, payload = 3980)
+┌────────┬──────────────────────────────────────────────────────────┐
+│IP hdr  │   payload bytes 0 ............................. 3979     │
+└────────┴──────────────────────────────────────────────────────────┘
+                                  │
+                          router  │  link MTU = 1500
+                                  â–¼
+┌────────┬──────────────────────────┐      ID=0xABCD  MF=1  off=0
+│IP hdr  │ payload bytes 0...1479   │      (1500 B on wire)
+└────────┴──────────────────────────┘
+
+┌────────┬──────────────────────────┐      ID=0xABCD  MF=1  off=185
+│IP hdr  │ payload 1480...2959      │      (1500 B on wire)
+└────────┴──────────────────────────┘
+
+┌────────┬─────────────────┐               ID=0xABCD  MF=0  off=370
+│IP hdr  │ payload 2960..  │               (1040 B on wire)  ← last
+└────────┴─────────────────┘
+</code></pre>
+
+<h4 id="reassembly-at-the-destination">Reassembly at the destination</h4>
+<ol>
+<li>OS keeps a buffer keyed by <code>(source IP, dest IP, protocol, Identification)</code>.</li>
+<li>As each fragment arrives, OS places its bytes at <code>offset × 8</code> in the buffer.</li>
+<li>When MF=0 fragment arrives, OS knows the total length.</li>
+<li>When all bytes 0..length-1 are filled, the original packet is delivered up the stack.</li>
+<li><strong>Timer</strong>: if not all fragments arrive within ~30 seconds (or 60 s on Linux), the buffer is dropped — entire packet lost, must be retransmitted by TCP.</li>
+</ol>
+<h4 id="why-fragmentation-is-so-painful">Why fragmentation is so painful</h4>
+<ul>
+<li><strong>Lose any one fragment</strong> → the whole packet is dropped → TCP retransmits all 4,000 bytes → router fragments again → vulnerable again.</li>
+<li><strong>Firewalls/IDS</strong> often drop fragments outright (they can't see TCP headers in fragments 2 and 3, since only fragment 1 has them — security risk).</li>
+<li><strong>Routers</strong> can't fragment in hardware fast paths — kicks to slow CPU paths.</li>
+<li><strong>Reassembly attacks</strong> (overlapping fragments, tiny fragments) are classic exploits.</li>
+</ul>
+<p>That's why <strong>modern stacks set DF=1 and rely on PMTUD</strong> to discover the right size up front, then send only properly-sized packets.</p>
+</div></details><details class="subsection" open><summary><h3 id="tying-mtu-together">Tying MTU together</h3></summary><div class="subsection-body">
+<ul>
+<li><strong>MTU</strong> = the truck's height limit on one road segment.</li>
+<li><strong>Path MTU</strong> = the <em>smallest</em> truck limit along the <em>whole</em> route.</li>
+<li><strong>PMTUD</strong> = the process of <em>discovering</em> path MTU via ICMP feedback.</li>
+<li><strong>MSS</strong> = the cargo size TCP picks (= MTU − headers) based on what the peer advertised.</li>
+<li><strong>Fragmentation</strong> = the "fallback" when something didn't get the memo.</li>
+</ul>
+<hr>
+</div></details></div></details><details class="section" open><summary><h2 id="4-tunnels-and-their-mtu-cost">4. Tunnels and their MTU cost</h2></summary><div class="section-body">
+<p>Each tunnel wraps your packet in another envelope. <strong>Every wrapper steals bytes from your usable payload.</strong></p>
+<pre class="codehilite"><code>┌─ Outer envelope (transport) ────────────────┐
+│  ┌─ Tunnel header (PPP/IPSec/VXLAN/…) ────┐ │
+│  │  ┌─ YOUR ACTUAL IP+TCP+DATA ─────────┐ │ │
+│  │  └────────────────────────────────────┘ │ │
+│  └────────────────────────────────────────┘ │
+└─────────────────────────────────────────────┘
+</code></pre>
+
+<details class="subsection" open><summary><h3 id="41-pppoe-point-to-point-protocol-over-ethernet">4.1 PPPoE — Point-to-Point Protocol over Ethernet</h3></summary><div class="subsection-body">
+<ul>
+<li><strong>Where</strong>: residential DSL / fiber-to-the-home.</li>
+<li><strong>Why</strong>: ISP authentication (username/password) + dynamic IP assignment.</li>
+<li><strong>Overhead</strong>: 8 B (2 B PPP + 6 B PPPoE) → MTU <strong>1492</strong>.</li>
+<li>🧒 <em>Your house's mail goes into a special ISP envelope labeled with your account number.</em></li>
+</ul>
+</div></details><details class="subsection" open><summary><h3 id="42-ipsec-internet-protocol-security">4.2 IPSec — Internet Protocol Security</h3></summary><div class="subsection-body">
+<ul>
+<li><strong>Where</strong>: corporate VPNs, Azure VPN Gateway, AWS VPN, Cisco AnyConnect.</li>
+<li><strong>What</strong>: encrypts + authenticates IP packets.</li>
+<li><strong>Modes</strong>: <em>transport</em> (host-host) and <em>tunnel</em> (network-network, common).</li>
+<li><strong>Overhead</strong>: ~50–73 B → MTU <strong>~1438–1400</strong>.</li>
+<li>🧒 <em>Letter inside a locked steel box inside a normal envelope.</em></li>
+<li>🪤 Classic symptom: VPN connects, <code>ping</code> works, big pages hang → MTU + broken PMTUD.</li>
+</ul>
+</div></details><details class="subsection" open><summary><h3 id="43-wireguard">4.3 WireGuard</h3></summary><div class="subsection-body">
+<ul>
+<li><strong>Where</strong>: Tailscale, Mullvad, modern self-hosted VPNs.</li>
+<li><strong>What</strong>: IPSec's modern simpler cousin (~4,000 lines of code, fixed ChaCha20+Poly1305+Curve25519 crypto).</li>
+<li><strong>Overhead</strong>: 60 B → MTU <strong>1440</strong>.</li>
+<li>🧒 <em>Same locked-box idea, but the box is sleeker and there's only one model.</em></li>
+</ul>
+</div></details><details class="subsection" open><summary><h3 id="44-vxlan-virtual-extensible-lan">4.4 VXLAN — Virtual Extensible LAN</h3></summary><div class="subsection-body">
+<ul>
+<li><strong>Where</strong>: cloud datacenters (Azure VNet, AWS VPC, Kubernetes CNI like Calico/Flannel, VMware NSX).</li>
+<li><strong>What</strong>: wraps <strong>Ethernet frames</strong> inside <strong>UDP packets</strong> so VMs on different physical hosts pretend to share a LAN.</li>
+<li><strong>Why</strong>: 24-bit network ID (~16M tenants) vs classic VLAN's 12 bits (~4K), and spans routers.</li>
+<li><strong>Overhead</strong>: 50 B (20 IP + 8 UDP + 8 VXLAN + 14 inner Ethernet) → MTU <strong>1450</strong>.</li>
+<li>🧒 <em>Apartment-internal mail wrapped in a citywide UDP envelope; receiving building unwraps it.</em></li>
+</ul>
+</div></details><details class="subsection" open><summary><h3 id="45-gre-generic-routing-encapsulation">4.5 GRE — Generic Routing Encapsulation</h3></summary><div class="subsection-body">
+<ul>
+<li><strong>Where</strong>: older site-to-site tunnels, Cisco networks, <strong>Azure ExpressRoute private peering</strong>, <strong>CDN / anti-DDoS providers</strong> (Cloudflare, Akamai, Imperva Magic Transit).</li>
+<li><strong>What</strong>: generic wrapper for any L3 protocol inside IP. <strong>No encryption.</strong></li>
+<li><strong>Overhead</strong>: ~24 B → MTU <strong>~1476</strong>.</li>
+<li>Often stacked <strong>GRE + IPSec</strong> = generic tunneling + multicast + encryption (smaller MTU still).</li>
+<li>🧒 <em>Plain box with a customs declaration. Doesn't lock; just says "deliver this."</em></li>
+</ul>
+<h4 id="why-gre-provides-multicast-support">Why GRE "provides multicast support" 📡</h4>
+<p><strong>Multicast</strong> is a way of sending one packet to <em>many</em> receivers at the IP layer (vs unicast 1-to-1 or broadcast 1-to-all). Special address range <code>224.0.0.0/4</code>. Used by:
+- Routing protocols (OSPF uses <code>224.0.0.5</code>, EIGRP uses <code>224.0.0.10</code>)
+- IPTV / video streaming inside a provider's network
+- mDNS / Bonjour service discovery on a LAN
+- Stock-ticker feeds, financial market data
+- Service-discovery in datacenters</p>
+<p><strong>IPSec in transport mode cannot carry multicast natively</strong> (the security associations are unicast). So if you need to send routing protocol updates or multicast traffic across an encrypted tunnel, the canonical fix is:</p>
+<pre class="codehilite"><code>   Original multicast packet (e.g., OSPF hello to 224.0.0.5)
+        │
+        └─► Wrap in GRE        ← GRE doesn't care about the L3 payload
+                │                  (multicast, IPv6, IPX, whatever)
+                └─► Wrap in IPSec  ← Now the GRE-wrapped multicast looks
+                       │              like a normal unicast IPSec packet
+                       └─► Send across the public internet
+</code></pre>
+
+<p>That's the <strong>GRE-over-IPSec</strong> pattern. The phrase <em>"GRE provides the tunneling and multicast support"</em> means: GRE is the layer that carries the multicast packet from one site to another; IPSec is the layer that encrypts the resulting tunneled traffic.</p>
+<h4 id="why-cdn-anti-ddos-providers-use-gre">Why CDN / anti-DDoS providers use GRE</h4>
+<p>Imagine you're under attack. You point your DNS at <strong>Cloudflare</strong> instead of your origin. Cloudflare's network absorbs the attack, filters the traffic, and forwards the clean part back to your origin server through a <strong>GRE tunnel</strong>. Your real origin IP stays hidden; only Cloudflare's IPs are publicly known.</p>
+<pre class="codehilite"><code>Internet  ──▶  Cloudflare edge  ──GRE tunnel──▶  your origin server
+(attackers and    (filters,                       (sees clean
+ legit users)     terminates TLS)                  traffic only)
+</code></pre>
+
+<p>Same pattern: Akamai Prolexic, Imperva Magic Transit, Azure DDoS Protection's BGP-routed mitigation. GRE is the standard "scrubbing return path."</p>
+<h4 id="azure-expressroute-private-peering">Azure ExpressRoute private peering</h4>
+<p><strong>ExpressRoute</strong> is a dedicated private fiber connection from your on-premises datacenter into Azure, bypassing the public internet. Three "peering types":</p>
+<table>
+<thead>
+<tr>
+<th>Peering</th>
+<th>What you reach over it</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Microsoft</strong></td>
+<td>O365, Dynamics, Microsoft's PaaS public endpoints</td>
+</tr>
+<tr>
+<td><strong>Private</strong></td>
+<td>Your own Azure VNet — as if it were an extension of your datacenter</td>
+</tr>
+<tr>
+<td>Public <em>(deprecated)</em></td>
+<td>(legacy public Azure services)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Private peering</strong> is what enterprise customers use to make Azure VMs look like local servers. It often layers GRE or other tunneling under the hood for L3 reach across the carrier's backbone.</p>
+</div></details><details class="subsection" open><summary><h3 id="46-stacked-tunnels">4.6 Stacked tunnels</h3></summary><div class="subsection-body">
+<pre class="codehilite"><code>K8s pod traffic over corp VPN over home DSL:
+
+  Original packet                            1500
+    └─ VXLAN encap (pod overlay)             1450
+        └─ IPSec encrypt (corp VPN)          1400
+            └─ PPPoE (home ISP)              1392
+                └─ Real Ethernet wire        1500 ✅ fits
+</code></pre>
+
+<p>Each layer only knows its own. The original app sees MTU 1500 and <strong>doesn't know</strong> about the 100+ bytes of headers ahead. Diagnosing requires peeling layers and probing with <code>ping -f -l &lt;size&gt;</code>.</p>
+</div></details><details class="subsection" open><summary><h3 id="tunnel-cheat-sheet">Tunnel cheat sheet</h3></summary><div class="subsection-body">
+<table>
+<thead>
+<tr>
+<th>Tunnel</th>
+<th>Purpose</th>
+<th>Encrypted?</th>
+<th>Overhead</th>
+<th>MTU</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>PPPoE</strong></td>
+<td>ISP auth over DSL</td>
+<td>❌</td>
+<td>8 B</td>
+<td>1492</td>
+</tr>
+<tr>
+<td><strong>IPSec</strong></td>
+<td>Encrypted VPN</td>
+<td>✅</td>
+<td>~50–73 B</td>
+<td>~1438</td>
+</tr>
+<tr>
+<td><strong>WireGuard</strong></td>
+<td>Modern encrypted VPN</td>
+<td>✅</td>
+<td>60 B</td>
+<td>1440</td>
+</tr>
+<tr>
+<td><strong>VXLAN</strong></td>
+<td>Multi-tenant L2-over-L3</td>
+<td>❌</td>
+<td>50 B</td>
+<td>1450</td>
+</tr>
+<tr>
+<td><strong>GRE</strong></td>
+<td>Generic L3-in-IP</td>
+<td>❌</td>
+<td>24 B</td>
+<td>1476</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</div></details></div></details><details class="section" open><summary><h2 id="5-the-df-bit-and-path-mtu-discovery">5. The DF bit and Path MTU Discovery</h2></summary><div class="section-body">
+<p>A <strong>1-bit flag</strong> in the IPv4 header: <em>"may routers fragment me if I'm too big?"</em></p>
+<pre class="codehilite"><code> 0   1   2
+┌───┬───┬───┐
+│ 0 │DF │MF │
+└───┴───┴───┘
+   │   │   └─ More Fragments (1 = more pieces coming)
+   │   └───── Don't Fragment (1 = forbidden to fragment)
+   └───────── Reserved (always 0)
+</code></pre>
+
+<details class="subsection" open><summary><h3 id="df-0-clear-fragmentation-allowed">DF = 0 (clear) — fragmentation <strong>allowed</strong></h3></summary><div class="subsection-body">
+<ul>
+<li>Router splits oversized packets, receiver reassembles.</li>
+<li>❌ Slow, fragile, lose-one-lose-all retransmits, firewalls drop fragments, hardware fast-path can't fragment.</li>
+<li>The original IPv4 design. <strong>Modern networks avoid it.</strong></li>
+</ul>
+</div></details><details class="subsection" open><summary><h3 id="df-1-set-fragmentation-forbidden">DF = 1 (set) — fragmentation <strong>forbidden</strong></h3></summary><div class="subsection-body">
+<ul>
+<li>Router drops oversized packets and sends back <strong>ICMP type 3 code 4: "Fragmentation Needed, MTU = N."</strong></li>
+<li>Sender shrinks future packets to fit. This is <strong>Path MTU Discovery (PMTUD)</strong>.</li>
+<li>✅ Fast, predictable. <strong>Modern TCP default everywhere.</strong></li>
+</ul>
+</div></details><details class="subsection" open><summary><h3 id="the-pmtu-black-hole">The PMTU Black Hole 🕳️</h3></summary><div class="subsection-body">
+<p>If a firewall blocks the ICMP reply, the sender never learns the path MTU. Symptoms:
+- ✅ Small <code>ping</code> works
+- ✅ TCP handshake works
+- ❌ Big transfers hang forever
+- ❌ HTTPS connects but pages never finish loading</p>
+<p><strong>Fix</strong>: unblock ICMP type 3 code 4, <strong>or</strong> use <strong>MSS clamping</strong> at the router (rewrite the TCP MSS option during the handshake so packets stay small from the start).</p>
+</div></details><details class="subsection" open><summary><h3 id="probing-path-mtu-yourself">Probing path MTU yourself</h3></summary><div class="subsection-body">
+<pre class="codehilite"><code class="language-powershell"># DF=1, payload 1472 → total 1500 → OK on Ethernet
+ping -f -l 1472 8.8.8.8
+
+# DF=1, payload 1473 → total 1501 → fails with &quot;needs fragmentation&quot;
+ping -f -l 1473 8.8.8.8
+</code></pre>
+
+<p>Path MTU = largest size that succeeds + 28 (IP 20 + ICMP 8).</p>
+<hr>
+</div></details></div></details><details class="section" open><summary><h2 id="6-tcp-the-conversation-layer">6. TCP — the conversation layer</h2></summary><div class="section-body">
+<details class="subsection" open><summary><h3 id="61-the-3-way-handshake">6.1 The 3-way handshake</h3></summary><div class="subsection-body">
+<pre class="codehilite"><code>Client                                Server
+──┬──                                 ──┬──
+  │── SYN  ────────────────────────▶   │   &quot;Hi, here's my options&quot;
+  │  ◀──────────────────────── SYN/ACK │   &quot;Hi back, here are mine&quot;
+  │── ACK  ────────────────────────▶   │   &quot;Got it, let's go&quot;
+  │                                     │
+  │── Application Data ───────────▶    │   (TLS handshake, then HTTPS)
+  │  ◀───────────────────── More Data  │
+  │── FIN  ────────────────────────▶   │   &quot;I'm done&quot;
+  │  ◀──────────────────────── FIN/ACK │   &quot;Same, bye&quot;
+</code></pre>
+
+<p>The <strong>first ACK measures RTT</strong>. Both sides commit to the options exchanged in SYN and SYN/ACK for the lifetime of the connection.</p>
+</div></details><details class="subsection" open><summary><h3 id="62-syn-options-mss-window-scale-sack-timestamps">6.2 SYN options: MSS, Window Scale, SACK, Timestamps</h3></summary><div class="subsection-body">
+<p>The SYN is a <strong>business card</strong> announcing capabilities. Key options:</p>
+<h4 id="mss-maximum-segment-size">MSS — Maximum Segment Size</h4>
+<ul>
+<li><em>"Biggest TCP payload you can send me without fragmenting."</em></li>
+<li>Typical: <strong>1460</strong> on Ethernet (1500 MTU − 40 headers).</li>
+<li>🧒 <em>"My mailbox slot is 1460 mm wide."</em></li>
+</ul>
+<h4 id="window-scale-rfc-7323">Window Scale (RFC 7323)</h4>
+<ul>
+<li>The TCP "window size" field is <strong>16 bits → max 65,535 bytes</strong>. Too small for modern links.</li>
+<li><code>Window Scale: 8</code> means <em>multiply every window value I send by 2⁸ = 256</em>. So "1000" really means 256,000 B.</li>
+<li><strong>Only negotiated in the SYN.</strong> If either side omits it, scaling is off for the whole connection.</li>
+<li>🧒 <em>"When I say my cup is '10 big', I really mean 10 × 256 sips."</em></li>
+<li>🎯 This is the option the original ticket said <em>"is working well"</em>.</li>
+</ul>
+<h4 id="sack-selective-acknowledgment">SACK — Selective Acknowledgment</h4>
+<ul>
+<li><em>"If you drop packet 5 but I received 6, 7, 8 — I can tell you that, so you only resend 5."</em></li>
+<li>Without SACK: lose one, retransmit <em>everything after it</em> (wasteful).</li>
+<li>🧒 <em>"Brick #5 fell off the truck. Resend just #5, I've got the rest."</em></li>
+</ul>
+<h4 id="timestamps">Timestamps</h4>
+<ul>
+<li>Per-packet timestamp pair (10 B) → accurate RTT measurement + PAWS (sequence-wrap protection on fast links).</li>
+</ul>
+<h4 id="a-real-syn">A real SYN</h4>
+<pre class="codehilite"><code>TCP, Src: 53412, Dst: 443, Flags: SYN
+  Window: 65535
+  Options (28 bytes):
+    Maximum Segment Size: 1460
+    SACK Permitted
+    Window Scale: 8 (multiplier 256)
+    Timestamps: TSval 4294943, TSecr 0
+    NOP padding
+</code></pre>
+
+<p>Connection-wide rules are decided in <strong>the first two packets</strong>. Get them wrong → handicap for the connection's life.</p>
+<hr>
+</div></details></div></details><details class="section" open><summary><h2 id="7-bdp-bandwidth-delay-product">7. BDP — Bandwidth-Delay Product</h2></summary><div class="section-body">
+<p><strong>The number of bytes that can be "in flight" at any instant to keep a link 100% busy.</strong></p>
+<pre class="codehilite"><code>BDP (bytes) = Bandwidth (bytes/sec) × RTT (sec)
+</code></pre>
+
+<details class="subsection" open><summary><h3 id="unit-conversions-to-get-right">Unit conversions to get right</h3></summary><div class="subsection-body">
+<ul>
+<li>Bandwidth is sold in <strong>bits/sec</strong> (lowercase b). Buffers are in <strong>bytes</strong> (uppercase B). <strong>÷ 8</strong>.</li>
+<li>RTT is reported in <strong>ms</strong> by <code>ping</code>. <strong>÷ 1000</strong> for seconds.</li>
+</ul>
+</div></details><details class="subsection" open><summary><h3 id="examples">Examples</h3></summary><div class="subsection-body">
+<table>
+<thead>
+<tr>
+<th>Path</th>
+<th>Bandwidth</th>
+<th>RTT</th>
+<th>BDP</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Office LAN</td>
+<td>1 Gbps</td>
+<td>1 ms</td>
+<td>125 KB</td>
+</tr>
+<tr>
+<td>Same-region cloud</td>
+<td>10 Gbps</td>
+<td>1 ms</td>
+<td>1.25 MB</td>
+</tr>
+<tr>
+<td>US East ↔ US West</td>
+<td>1 Gbps</td>
+<td>70 ms</td>
+<td><strong>8.75 MB</strong></td>
+</tr>
+<tr>
+<td><strong>US ↔ APAC</strong></td>
+<td>10 Gbps</td>
+<td>180 ms</td>
+<td><strong>225 MB</strong> 🤯</td>
+</tr>
+<tr>
+<td>Starlink</td>
+<td>100 Mbps</td>
+<td>50 ms</td>
+<td>610 KB</td>
+</tr>
+</tbody>
+</table>
+</div></details><details class="subsection" open><summary><h3 id="the-inverse-throughput-from-a-window">The inverse — throughput from a window</h3></summary><div class="subsection-body">
+<pre class="codehilite"><code>Max throughput = Window size ÷ RTT
+</code></pre>
+
+<p>64 KB window across US↔APAC (180 ms):</p>
+<pre class="codehilite"><code>65,536 B / 0.180 s ≈ 364 KB/s ≈ 2.85 Mbps
+</code></pre>
+
+<p>A 10 Gbps link, throttled to <strong>2.85 Mbps</strong> by a 64 KB pitcher. That is the original ticket in one fraction.</p>
+</div></details><details class="subsection" open><summary><h3 id="mental-shortcuts">Mental shortcuts</h3></summary><div class="subsection-body">
+<ul>
+<li><strong>1 Gbps</strong>: BDP in KB ≈ <code>125 × RTT(ms)</code></li>
+<li><strong>10 Gbps</strong>: BDP in MB ≈ <code>1.25 × RTT(ms)</code></li>
+</ul>
+</div></details><details class="subsection" open><summary><h3 id="intuition">Intuition</h3></summary><div class="subsection-body">
+<p>RTT is how long until you get <em>permission</em> (the ACK) to send more.
+- Window = BDP → pipe perfectly full, max throughput. 🎯
+- Window &lt; BDP → pipe partially empty, capped at <code>window/RTT</code>.
+- Window &gt; BDP → no extra benefit (link can't carry more).</p>
+<hr>
+</div></details></div></details><details class="section" open><summary><h2 id="8-long-fat-networks-and-the-bravery-to-send-insight">8. Long Fat Networks and the "bravery to send" insight</h2></summary><div class="section-body">
+<details class="subsection" open><summary><h3 id="long-fat-network-lfn-rfc-13237323">Long Fat Network (LFN) — RFC 1323/7323</h3></summary><div class="subsection-body">
+<p>Pronounced <strong>"el-fen"</strong>. A network where <strong>BDP &gt; 64 KB</strong> — so big that the original 16-bit TCP window can't fill it.</p>
+<table>
+<thead>
+<tr>
+<th>Dimension</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Long</strong></td>
+<td>High RTT — geographic distance, satellite hops</td>
+</tr>
+<tr>
+<td><strong>Fat</strong></td>
+<td>High bandwidth — 1/10/100 Gbps</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>LAN (1 Gbps, 1 ms) = fat but short ❌</li>
+<li>Dial-up (56 kbps, 200 ms) = long but thin ❌</li>
+<li><strong>US↔APAC (10 Gbps, 180 ms) = long AND fat</strong> ✅</li>
+</ul>
+</div></details><details class="subsection" open><summary><h3 id="the-insight">The insight</h3></summary><div class="subsection-body">
+<blockquote>
+<p><em>"On long fat networks, the bottleneck isn't bandwidth — it's how much data you're brave enough to send before getting an ack."</em></p>
+</blockquote>
+<p>For short networks, slow = buy more bandwidth.
+For LFNs, you can have a dedicated empty 10 Gbps fiber and still get 2 Mbps — because TCP sends a tiny burst, waits 180 ms for the ACK, sends another tiny burst. <strong>More bandwidth changes nothing.</strong></p>
+<p>What helps: <strong>larger windows / buffers</strong> → more bytes in flight before waiting.</p>
+</div></details><details class="subsection" open><summary><h3 id="why-brave">Why "brave"?</h3></summary><div class="subsection-body">
+<p>Sending unacked data is a <strong>risk</strong>:
+- If anything along the path drops it, it all has to be retransmitted.
+- TCP starts cautiously (<strong>slow start</strong>) — doubles its window per RTT.
+- The sender's OS caps in-flight bytes at <code>SO_SNDBUF</code> no matter what the receiver advertises.
+- Bravery = how much memory the sender is willing to <strong>commit and potentially lose</strong>.</p>
+<p>Modern OSes auto-tune <code>SO_SNDBUF</code> up to ~16 MB. <strong>Some systems pin it static at 64 KB</strong> — that was the bug in the original case.</p>
+<hr>
+</div></details></div></details><details class="section" open><summary><h2 id="9-the-chain-of-throughput-caps">9. The chain of throughput caps</h2></summary><div class="section-body">
+<p>Actual throughput is the <strong>minimum of all of these</strong>:</p>
+<pre class="codehilite"><code>throughput ≤ min(
+    link_bandwidth,            ← physics (the wire itself)
+    rwnd / RTT,                ← receiver's advertised window
+    cwnd / RTT,                ← sender's congestion window (TCP self-regulation)
+    SO_SNDBUF / RTT,           ← sender's socket buffer    ← original cap lived here
+    SO_RCVBUF / RTT            ← receiver's socket buffer
+)
+</code></pre>
+
+<p>To be <strong>link-bandwidth-bound</strong> (the good case), every other term must equal or exceed BDP.</p>
+<details class="subsection" open><summary><h3 id="how-they-differ">How they differ</h3></summary><div class="subsection-body">
+<table>
+<thead>
+<tr>
+<th>Cap</th>
+<th>Set by</th>
+<th>Adjusts?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>rwnd</code></td>
+<td>Receiver app</td>
+<td>Per ACK, based on read rate</td>
+</tr>
+<tr>
+<td><code>cwnd</code></td>
+<td>TCP sender algorithm</td>
+<td>Slow start, congestion avoidance, MD on loss</td>
+</tr>
+<tr>
+<td><code>SO_SNDBUF</code></td>
+<td>Sender OS / app</td>
+<td>Static unless auto-tuning is on</td>
+</tr>
+<tr>
+<td><code>SO_RCVBUF</code></td>
+<td>Receiver OS / app</td>
+<td>Static unless auto-tuning is on</td>
+</tr>
+</tbody>
+</table>
+<p>The original ticket had: <code>rwnd</code> healthy ✅, <code>cwnd</code> healthy ✅, window scaling negotiated ✅ — but <code>SO_SNDBUF</code> was statically too small ❌.</p>
+<hr>
+</div></details></div></details><details class="section" open><summary><h2 id="10-case-study-cross-region-replication-latency">10. Case study: cross-region replication latency</h2></summary><div class="section-body">
+<details class="subsection" open><summary><h3 id="symptom">Symptom</h3></summary><div class="subsection-body">
+<p>Replication latency between two distant regions (a US ↔ APAC pair, ~180 ms RTT) was high. Livesite monitoring dashboards flagged the SLA breach.</p>
+</div></details><details class="subsection" open><summary><h3 id="what-the-team-checked-in-order">What the team checked, in order</h3></summary><div class="subsection-body">
+<ol>
+<li><strong>Link health</strong> — both endpoints reachable, no packet loss → ✅</li>
+<li><strong>MTU / PMTUD</strong> — <code>ping -f -l &lt;size&gt;</code> worked at expected sizes; no ICMP black hole → ✅</li>
+<li><strong>TCP window scaling negotiated</strong> — captured SYN/SYN-ACK showed <code>Window Scale: 8</code> on both sides → ✅</li>
+<li><strong>Receiver-side window (<code>rwnd</code>)</strong> — receiver advertising hundreds of KB at scale → ✅</li>
+<li><strong>Congestion window (<code>cwnd</code>)</strong> — no excessive retransmits or drops → ✅</li>
+<li><strong>Sender-side socket buffer (<code>SO_SNDBUF</code>)</strong> — pinned static, smaller than the 225 MB BDP → ❌ <strong>this was it</strong></li>
+</ol>
+</div></details><details class="subsection" open><summary><h3 id="the-arithmetic">The arithmetic</h3></summary><div class="subsection-body">
+<pre class="codehilite"><code>Link:           10 Gbps   = 1.25 GB/s
+RTT:            180 ms    = 0.18 s
+BDP:            225 MB
+Sender buffer:  64 KB     (static)
+Throughput cap: 65,536 / 0.180 ≈ 356 KB/s ≈ 2.85 Mbps
+% of link used: 0.03 %
+</code></pre>
+
+</div></details><details class="subsection" open><summary><h3 id="the-fix">The fix</h3></summary><div class="subsection-body">
+<p>Increase <code>SO_SNDBUF</code> (or enable OS auto-tuning) on the sender to ≥ BDP for the path. Overnight throughput goes from 2.85 Mbps to multi-Gbps. <strong>Nothing physical changed</strong> — just a number in a kernel struct.</p>
+</div></details><details class="subsection" open><summary><h3 id="why-i-wrote-this-whole-doc">Why I wrote this whole doc</h3></summary><div class="subsection-body">
+<p>So that next time I see <em>"window scaling working, throughput still bad"</em>, I can immediately think <strong>"sender buffer &lt; BDP"</strong> without re-deriving everything from scratch.</p>
+<hr>
+</div></details></div></details><details class="section" open><summary><h2 id="11-the-big-picture-relationship-diagram">11. The big picture — relationship diagram</h2></summary><div class="section-body">
+<p>The most important mental model of this whole document, in one picture:</p>
+<pre class="codehilite"><code>                                          ┌──────────────────────────────────────┐
+                                          │             USER / APPLICATION       │
+                                          └──────────────────────────────────────┘
+                                                       │  writes N bytes
+                                                       â–¼
+                                          ┌──────────────────────────────────────┐
+                                          │  SO_SNDBUF  (kernel send buffer)     │
+                                          │  Static or auto-tuned per socket     │  ◀── original cap lived here
+                                          │  Cap #1 on bytes-in-flight           │
+                                          └──────────────────────────────────────┘
+                                                       │
+                                                       â–¼
+                                          ┌──────────────────────────────────────┐
+                                          │  cwnd  (TCP congestion window)       │
+                                          │  Sender's &quot;bravery&quot; — slow start,    │
+                                          │  cuts in half on loss                │  ◀── Cap #2
+                                          └──────────────────────────────────────┘
+                                                       │
+                                                       â–¼
+                                          ┌──────────────────────────────────────┐
+                                          │  rwnd  (receiver's advertised window)│
+                                          │  In every ACK; &quot;I have this space&quot;   │  ◀── Cap #3
+                                          └──────────────────────────────────────┘
+                                                       │
+                                                       â–¼  effective window =
+                                                          min(SO_SNDBUF, cwnd, rwnd)
+                                                       │
+                                                       â–¼
+                                          ┌──────────────────────────────────────┐
+                                          │  Throughput = effective window / RTT │
+                                          │  Compare to BDP = bandwidth × RTT    │  ◀── Cap #4 (BDP)
+                                          └──────────────────────────────────────┘
+                                                       │
+                                ┌──────────────────────┴──────────────────────┐
+                                â–¼                                             â–¼
+                  ┌──────────────────────────────┐         ┌────────────────────────────────────┐
+                  │  window ≥ BDP                │         │  window &lt; BDP                      │
+                  │  → LINK-BOUND ✅             │         │  → WINDOW-BOUND ⚠️                 │
+                  │  Pipe is full; you can't go  │         │  Pipe has slack; throughput cap is │
+                  │  faster without more bw or   │         │  window/RTT, not link speed.       │
+                  │  lower RTT.                  │         │  Fix: raise SO_SNDBUF / autotuning │
+                  │  Next bottleneck = MTU/MSS.  │         │  or improve loss → larger cwnd.    │
+                  │                              │         │  ◀── original bug lived HERE            │
+                  └──────────────────────────────┘         └────────────────────────────────────┘
+                                │                                             │
+                                └──────────────────────┬──────────────────────┘
+                                                       â–¼
+                                          ┌──────────────────────────────────────┐
+                                          │  Each packet's size ≤ MSS            │
+                                          │  MSS = path MTU − IP hdr − TCP hdr   │
+                                          │  Path MTU = min(MTU on every hop)    │  ◀── Cap #5 (MTU)
+                                          │  Discovered via PMTUD using ICMP     │
+                                          │  fragmentation-needed responses.     │
+                                          └──────────────────────────────────────┘
+                                                       │
+                                                       ▼  if MTU misdetected → fragments
+                                                          or PMTU black hole → hangs
+                                                       │
+                                                       â–¼
+                                          ╔══════════════════════════════════════╗
+                                          â•'         the actual wire              â•'
+                                          â•'  (bandwidth = real link speed)       â•'
+                                          ╚══════════════════════════════════════╝
+</code></pre>
+
+<p><strong>Two orthogonal axes of trouble:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Axis</th>
+<th>Concerns</th>
+<th>Caps</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Volume</strong> ("how much in flight?")</td>
+<td><code>SO_SNDBUF</code>, <code>cwnd</code>, <code>rwnd</code>, BDP</td>
+<td>Throughput</td>
+</tr>
+<tr>
+<td><strong>Size</strong> ("how big per packet?")</td>
+<td>MTU, PMTUD, MSS, fragmentation</td>
+<td>Delivery reliability</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>The original case was <strong>Volume axis broken</strong> (SO_SNDBUF too small).
+A PMTU black hole would be <strong>Size axis broken</strong> (looks like connection hangs).
+They feel different and require different diagnoses. The diagram above makes the difference visible.</p>
+</blockquote>
+<hr>
+</div></details><details class="section" open><summary><h2 id="12-pmtud-diagnostics-the-engineers-checklist">12. PMTUD diagnostics — the engineer's checklist</h2></summary><div class="section-body">
+<p>Before blaming the sender buffer, every network engineer eliminates <strong>path MTU</strong> problems first. Here's the checklist, in order, with the actual commands.</p>
+<details class="subsection" open><summary><h3 id="step-1-is-the-path-mtu-what-we-think-it-is">Step 1 — Is the path MTU what we <em>think</em> it is?</h3></summary><div class="subsection-body">
+<pre class="codehilite"><code class="language-powershell"># DF=1, payload size + 28 = total. Largest size that succeeds = path MTU − 28.
+ping -f -l 1472 &lt;target&gt;          # 1472 + 28 = 1500 → expect OK on Ethernet
+ping -f -l 1473 &lt;target&gt;          # 1473 + 28 = 1501 → expect &quot;needs fragmentation&quot;
+
+# Binary search if 1472 fails — start lower
+ping -f -l 1400 &lt;target&gt;
+ping -f -l 1350 &lt;target&gt;
+</code></pre>
+
+<p><strong>Interpretation:</strong>
+- 1472 succeeds, 1473 fails → path MTU <strong>1500</strong> ✅ (the normal case)
+- 1400 succeeds, 1500 fails <em>without</em> error message → <strong>PMTU black hole</strong> 🕳️
+- All sizes fail → ICMP itself blocked, can't measure</p>
+</div></details><details class="subsection" open><summary><h3 id="step-2-is-pmtud-actually-reaching-us">Step 2 — Is PMTUD actually reaching us?</h3></summary><div class="subsection-body">
+<p>If a router along the path is dropping oversized packets, it should send back an <strong>ICMP type 3 code 4 ("Fragmentation Needed, DF Set")</strong> message containing the MTU it can handle.</p>
+<p>Capture that:</p>
+<pre class="codehilite"><code class="language-powershell">tshark -i &lt;iface&gt; -f &quot;icmp&quot; -w icmp.pcapng
+# In another shell, generate the failing traffic (e.g., big curl download)
+# Stop capture, then:
+tshark -r icmp.pcapng -Y &quot;icmp.type == 3 and icmp.code == 4&quot; -V
+</code></pre>
+
+<p>Look for fields:
+- <code>Length of original datagram</code> — what the router saw
+- <code>MTU of next hop</code> — what it wants you to use</p>
+<p><strong>If you see these → PMTUD is working.</strong> Sender will shrink, life continues.
+<strong>If you see no ICMP at all when probing with <code>-f -l &lt;large&gt;</code> → black hole.</strong></p>
+</div></details><details class="subsection" open><summary><h3 id="step-25-prove-icmp-itself-isnt-broken">Step 2.5 — Prove "ICMP itself isn't broken" 🩺</h3></summary><div class="subsection-body">
+<p>Before you trust <strong>any</strong> PMTUD result, prove the ICMP channel is alive end-to-end. A "no ICMP reply" only means <em>something</em> is broken — it could be the router, the path, or the firewall rules at either end. Here's the layered test ladder:</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Test</th>
+<th>Command</th>
+<th>What a pass looks like</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>ICMP Echo to nearby host</td>
+<td><code>ping &lt;local-gateway&gt;</code></td>
+<td>Reply in &lt;5 ms</td>
+</tr>
+<tr>
+<td>2</td>
+<td>ICMP Echo to remote host</td>
+<td><code>ping &lt;dest&gt;</code></td>
+<td>Reply (any latency)</td>
+</tr>
+<tr>
+<td>3</td>
+<td>ICMP Echo with payload</td>
+<td><code>ping -l 1000 &lt;dest&gt;</code></td>
+<td>Reply, no truncation</td>
+</tr>
+<tr>
+<td>4</td>
+<td>ICMP "Time Exceeded" reachable</td>
+<td><code>tracert &lt;dest&gt;</code> (Windows) / <code>traceroute -I</code> (Linux)</td>
+<td>Hops respond (not all <code>* * *</code>)</td>
+</tr>
+<tr>
+<td>5</td>
+<td>ICMP "Frag Needed" reachable</td>
+<td><code>ping -f -l 1472 &lt;dest&gt;</code> then <code>-l 1473</code></td>
+<td>At threshold you see <code>Packet needs to be fragmented but DF set.</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td>Outbound ICMP allowed</td>
+<td><code>tshark -i &lt;if&gt; -f "icmp"</code> while pinging</td>
+<td>Outgoing echo + incoming reply both visible</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Inbound type 3 allowed</td>
+<td><code>tshark -i &lt;if&gt; -f "icmp[icmptype]==3"</code> while transferring</td>
+<td>Any type-3 message at all</td>
+</tr>
+</tbody>
+</table>
+<pre class="codehilite"><code class="language-powershell"># Composite one-liner: pin down what ICMP type/code is actually arriving
+tshark -i 5 -f &quot;icmp or icmp6&quot; -T fields `
+  -e frame.time_relative -e ip.src -e icmp.type -e icmp.code
+</code></pre>
+
+<p><strong>Interpreting the matrix:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Result pattern</th>
+<th>Diagnosis</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Echo works, type-3 never seen, big transfers stall</td>
+<td>Firewall blocks <strong>only</strong> the destination-unreachable subtype → classic PMTUD black hole</td>
+</tr>
+<tr>
+<td>Echo fails entirely, traceroute also dead</td>
+<td>All ICMP blocked (corporate egress) → fix at the firewall, or use TCP-based PMTUD (RFC 4821)</td>
+</tr>
+<tr>
+<td>Echo to gateway works, echo to dest fails</td>
+<td>ICMP blocked at peer/cloud edge → ask the other side</td>
+</tr>
+<tr>
+<td>Echo intermittently fails, high loss</td>
+<td>NIC/cable/wireless issue — fix the L1/L2 layer first; PMTUD is the wrong rabbit hole</td>
+</tr>
+<tr>
+<td>Echo OK but <code>ping -f -l &lt;huge&gt;</code> returns "Reply from … bytes=…" instead of "needs fragmentation"</td>
+<td>Some middlebox is <strong>silently fragmenting</strong> despite DF — PMTUD will <em>appear</em> to work but real flows still suffer</td>
+</tr>
+</tbody>
+</table>
+<p><strong>TCP-based PMTUD fallback (RFC 4821) — when ICMP truly cannot be fixed:</strong></p>
+<p>Modern Linux and Windows can probe path MTU using <strong>TCP segments themselves</strong>, no ICMP required. Enable:</p>
+<pre class="codehilite"><code class="language-powershell"># Windows: enable MTU black hole detection
+netsh interface tcp set global pmtublackholedetect=enabled
+</code></pre>
+
+<pre class="codehilite"><code class="language-bash"># Linux: set per-route or globally
+sysctl -w net.ipv4.tcp_mtu_probing=1   # 1 = on if ICMP black hole detected, 2 = always probe
+</code></pre>
+
+<p>This makes TCP <em>itself</em> binary-search the MTU by retransmitting smaller segments on suspected loss. It's slower than ICMP-driven PMTUD but survives hostile firewalls.</p>
+</div></details><details class="subsection" open><summary><h3 id="step-3-is-the-sender-being-told-and-reacting">Step 3 — Is the sender being told (and reacting)?</h3></summary><div class="subsection-body">
+<pre class="codehilite"><code class="language-powershell"># Watch the TCP MSS negotiated in your SYN
+tshark -r capture.pcapng -Y &quot;tcp.flags.syn==1&quot; -T fields -e tcp.options.mss_val
+# Compare to what the receiver sent
+</code></pre>
+
+<p>Linux can dump the cached PMTU:</p>
+<pre class="codehilite"><code class="language-bash">ip route get &lt;dest&gt;     # shows mtu lock and current PMTU estimate
+</code></pre>
+
+<p>Windows shows it in the route table when PMTUD is on:</p>
+<pre class="codehilite"><code class="language-powershell">Get-NetIPInterface | Select-Object InterfaceAlias, NlMtu
+netsh interface ipv4 show destinationcache
+</code></pre>
+
+</div></details><details class="subsection" open><summary><h3 id="step-4-suspect-a-black-hole-mitigate-with-mss-clamping">Step 4 — Suspect a black hole? Mitigate with MSS clamping</h3></summary><div class="subsection-body">
+<p>If ICMP is blocked but you control a router on the path (firewall, VPN gateway, load balancer), make it <strong>clamp MSS</strong> at TCP handshake time so the sender never tries packets bigger than the path can carry.</p>
+<pre class="codehilite"><code class="language-bash"># Linux iptables example: clamp MSS to PMTU
+iptables -t mangle -A FORWARD -p tcp --tcp-flags SYN,RST SYN \
+         -j TCPMSS --clamp-mss-to-pmtu
+</code></pre>
+
+<p>Effect: TCP MSS option in SYN/SYN-ACK gets rewritten downward → sender sends only small enough segments from byte one → no need for PMTUD to work.</p>
+</div></details><details class="subsection" open><summary><h3 id="step-5-only-after-steps-14-clean-blame-the-sender-buffer">Step 5 — Only <strong>after</strong> Steps 1–4 clean, blame the sender buffer</h3></summary><div class="subsection-body">
+<p>By the time you reach this step:
+- ✅ Path MTU consistent and detected.
+- ✅ ICMP fragmentation messages reach us.
+- ✅ MSS in SYN is sane.
+- ✅ No reassembly errors in packet captures.
+- ❌ Throughput still bad.</p>
+<p>Now run the chain-of-caps audit (Section 9). Likely culprit: <code>SO_SNDBUF</code> clamped statically, exactly the long-haul story.</p>
+</div></details><details class="subsection" open><summary><h3 id="flowchart-of-the-diagnosis">Flowchart of the diagnosis</h3></summary><div class="subsection-body">
+<pre class="codehilite"><code>              &quot;throughput is bad&quot;
+                     │
+                     â–¼
+      ┌──────────────────────────┐
+      │ ping -f -l 1472 &lt;host&gt;   │
+      └──────────────────────────┘
+            │              │
+        succeeds         fails silently
+            │              │
+            â–¼              â–¼
+   ┌─────────────┐   ┌──────────────────────┐
+   │ MTU is fine │   │ PMTU black hole!     │
+   │ move on     │   │ → Capture ICMP       │
+   └─────────────┘   │ → MSS clamp at edge  │
+            │        │ → Unblock ICMP fw    │
+            ▼        └──────────────────────┘
+   ┌──────────────────────────┐
+   │ Check for retransmits,   │
+   │ duplicate ACKs in cap    │
+   └──────────────────────────┘
+            │
+       ┌────┴────┐
+   none         many
+       │          │
+       â–¼          â–¼
+ ┌──────────┐  ┌─────────────────────┐
+ │ Check    │  │ Suspect congestion  │
+ │ windows  │  │ or link instability │
+ │ (sec 9)  │  └─────────────────────┘
+ └──────────┘
+       │
+       â–¼
+ cwnd ≥ BDP?  rwnd ≥ BDP?  SO_SNDBUF ≥ BDP?
+       │
+   one is &quot;no&quot;
+       │
+       â–¼
+  THAT'S YOUR CAP. Fix it.
+</code></pre>
+
+</div></details><details class="subsection" open><summary><h3 id="common-pmtud-failure-signatures">Common PMTUD failure signatures</h3></summary><div class="subsection-body">
+<table>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>Likely cause</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Small <code>ping</code> works, big transfers hang</td>
+<td>Black hole — ICMP blocked somewhere</td>
+</tr>
+<tr>
+<td><code>tracert</code> works fully but SSH-then-<code>scp</code> hangs</td>
+<td>MSS clamping needed at VPN</td>
+</tr>
+<tr>
+<td>HTTPS handshake completes, page load stalls</td>
+<td>Same — TLS records hit MTU wall</td>
+</tr>
+<tr>
+<td>Lots of <code>[TCP Retransmission]</code> of the <em>same</em> segment</td>
+<td>Fragments dropped or PMTU shrinking</td>
+</tr>
+<tr>
+<td><code>[TCP Window Full]</code> markers</td>
+<td>Not MTU — go to Section 9 (buffer/window issue)</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</div></details></div></details><details class="section" open><summary><h2 id="13-maximum-protocol-stacking-the-worst-case-packet">13. Maximum protocol stacking — the worst-case packet</h2></summary><div class="section-body">
+<p>How many layers can a real-world packet have? Surprisingly many. Here's a plausible <strong>production stack</strong> from an Azure-hosted K8s workload that needs encrypted multicast across regions through a corporate VPN — basically every tunneling technology piled on at once.</p>
+<details class="subsection" open><summary><h3 id="the-use-case">The use case</h3></summary><div class="subsection-body">
+<p><strong>Hypothetical</strong>: a healthcare company's HQ in NYC runs a Kubernetes cluster in <strong>Azure US-East</strong>. They replicate a multicast-based stock-price feed from their NYC datacenter into Azure pods. Traffic flows:</p>
+<ol>
+<li><strong>NYC datacenter</strong> → multicast UDP feed</li>
+<li>→ <strong>GRE tunnel</strong> to carry multicast over IP</li>
+<li>→ <strong>IPSec ESP</strong> for encryption across the WAN</li>
+<li>→ <strong>MPLS / ExpressRoute</strong> carrier transport</li>
+<li>→ <strong>Azure VNet</strong> → <strong>VXLAN</strong> overlay between physical hosts</li>
+<li>→ <strong>K8s pod network</strong> (another encapsulation in some CNIs)</li>
+<li>→ finally, the <strong>TCP+TLS+HTTP/2</strong> the app speaks</li>
+</ol>
+</div></details><details class="subsection" open><summary><h3 id="the-layered-stack-on-the-wire">The layered stack on the wire</h3></summary><div class="subsection-body">
+<pre class="codehilite"><code>┌─ Ethernet header (14 B)                              ─┐
+│  ┌─ Outer IPv4 header (20 B)                        ─┤
+│  │  ┌─ UDP header (8 B)        ← VXLAN transport    ─┤
+│  │  │  ┌─ VXLAN header (8 B)                        ─┤
+│  │  │  │  ┌─ Inner Ethernet (14 B) ← bridged frame  ─┤
+│  │  │  │  │  ┌─ IPv4 header (20 B)                  ─┤
+│  │  │  │  │  │  ┌─ IPSec ESP header (~28 B + iv)   ─┤
+│  │  │  │  │  │  │  ┌─ IPv4 header (20 B) inner     ─┤
+│  │  │  │  │  │  │  │  ┌─ GRE header (4–8 B)        ─┤
+│  │  │  │  │  │  │  │  │  ┌─ IPv4 header (20 B) original ─┤
+│  │  │  │  │  │  │  │  │  │  ┌─ TCP header (20 B)        ─┤
+│  │  │  │  │  │  │  │  │  │  │  ┌─ TLS record (5 B)       ─┤
+│  │  │  │  │  │  │  │  │  │  │  │  ┌─ HTTP/2 frame (9 B)    │
+│  │  │  │  │  │  │  │  │  │  │  │  │  ┌─ application data    │
+│  │  │  │  │  │  │  │  │  │  │  │  │  │     payload...        │
+│  │  │  │  │  │  │  │  │  │  │  │  │  └────────────────────── │
+└──┴──┴──┴──┴──┴──┴──┴──┴──┴──┴──┴──┴───────────────────────────┘
+</code></pre>
+
+</div></details><details class="subsection" open><summary><h3 id="header-budget-arithmetic">Header budget arithmetic</h3></summary><div class="subsection-body">
+<table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>Header size</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Ethernet</td>
+<td>14 B</td>
+</tr>
+<tr>
+<td>Outer IPv4</td>
+<td>20 B</td>
+</tr>
+<tr>
+<td>Outer UDP</td>
+<td>8 B</td>
+</tr>
+<tr>
+<td>VXLAN</td>
+<td>8 B</td>
+</tr>
+<tr>
+<td>Inner Ethernet</td>
+<td>14 B</td>
+</tr>
+<tr>
+<td>IPv4 (before IPSec)</td>
+<td>20 B</td>
+</tr>
+<tr>
+<td>IPSec ESP (header + IV + ICV + trailer)</td>
+<td>~38 B</td>
+</tr>
+<tr>
+<td>IPv4 (inner, post-IPSec)</td>
+<td>20 B</td>
+</tr>
+<tr>
+<td>GRE</td>
+<td>4 B (min, 8 B with key/seq)</td>
+</tr>
+<tr>
+<td>IPv4 (original packet)</td>
+<td>20 B</td>
+</tr>
+<tr>
+<td>TCP</td>
+<td>20 B</td>
+</tr>
+<tr>
+<td>TLS record header</td>
+<td>5 B</td>
+</tr>
+<tr>
+<td>HTTP/2 frame header</td>
+<td>9 B</td>
+</tr>
+<tr>
+<td><strong>Total header overhead</strong></td>
+<td><strong>~200 bytes</strong></td>
+</tr>
+</tbody>
+</table>
+</div></details><details class="subsection" open><summary><h3 id="effective-mss-for-the-app">Effective MSS for the app</h3></summary><div class="subsection-body">
+<p>Starting from Ethernet 1500:</p>
+<pre class="codehilite"><code>1500 (MTU)
+−   8 (UDP-VXLAN-Eth = 30, but outer IP+UDP already 28, VXLAN 8, inner Eth 14 = 50)
+... (do the full subtraction)
+</code></pre>
+
+<p>Worked from the outside in:</p>
+<pre class="codehilite"><code>1500  Ethernet payload
+−  20 outer IPv4
+−   8 outer UDP
+−   8 VXLAN
+−  14 inner Ethernet
+= 1450  available for the inner IP packet
+
+1450
+−  20 inner IPv4
+−  38 IPSec ESP
+= 1392  available for the IPSec-protected payload
+
+1392
+−  20 IPv4 (post-IPSec)
+−   4 GRE
+= 1368  available for the GRE-tunneled payload
+
+1368
+−  20 IPv4 (original)
+−  20 TCP
+= 1328  effective MSS for the app
+
+1328
+−   5 TLS record
+−   9 HTTP/2 frame
+=  1314 bytes per HTTP/2 frame ← the app gets THIS much per packet
+</code></pre>
+
+<blockquote>
+<p><strong>Conclusion</strong>: the app <em>believes</em> it has 1460 bytes/segment, but on the wire, after stripping ~200 B of envelopes, only <strong>1,314 useful bytes</strong> remain. <strong>~12.4% of every packet is overhead</strong> rather than payload.</p>
+</blockquote>
+</div></details><details class="subsection" open><summary><h3 id="when-this-stack-hurts">When this stack hurts</h3></summary><div class="subsection-body">
+<ul>
+<li><strong>Throughput loss</strong>: 12% wasted directly.</li>
+<li><strong>CPU</strong>: each hop must encapsulate / decapsulate / encrypt / decrypt. At 10 Gbps, this can saturate cores.</li>
+<li><strong>MTU debugging nightmare</strong>: a 1500-byte misconfiguration anywhere along the path silently fragments at the outermost layer, and the inner application sees nothing useful.</li>
+<li><strong>PMTUD becomes a circus</strong>: the original TCP sender has no idea about VXLAN+IPSec+GRE in the middle. MSS clamping at every tunnel boundary is the only sane mitigation.</li>
+</ul>
+</div></details><details class="subsection" open><summary><h3 id="how-to-detect-this-in-production">How to detect this in production</h3></summary><div class="subsection-body">
+<p>Tshark with <code>frame.protocols</code> shows the whole stack of dissectors for any frame:</p>
+<pre class="codehilite"><code class="language-powershell">tshark -r capture.pcapng -T fields -e frame.protocols -c 1
+# Sample output:
+# eth:ethertype:ip:udp:vxlan:eth:ethertype:ip:esp:ip:gre:ip:tcp:tls:http2
+</code></pre>
+
+<p>Each colon-separated token = one envelope. Reading that string tells you exactly what stack the packet traversed.</p>
+</div></details><details class="subsection" open><summary><h3 id="bound-how-deep-can-it-go">Bound: how deep can it go?</h3></summary><div class="subsection-body">
+<p>There's no hard protocol limit, but practical bounds:
+- Many switches/routers stop processing past ~7-8 levels of header parsing (offload engines give up).
+- Each layer eats ~10–40 bytes — past ~250 B of overhead, packets become uneconomic.
+- In practice the <strong>deepest production stacks are 4–6 layers</strong>; 8+ is research/lab territory.</p>
+<hr>
+</div></details></div></details><details class="section" open><summary><h2 id="14-learning-exercise-peel-the-onion">14. Learning exercise — peel the onion 🧅</h2></summary><div class="section-body">
+<p><strong>Goal</strong>: given a <code>.pcapng</code> file from a multi-tunnel path (where any encryption has been decrypted for analysis), identify each protocol layer in a single packet.</p>
+<details class="subsection" open><summary><h3 id="setup_1">Setup</h3></summary><div class="subsection-body">
+<p>Assume we have a capture file <code>multilayer.pcapng</code> from the scenario in Section 13. Open it in Wireshark, click any data packet.</p>
+</div></details><details class="subsection" open><summary><h3 id="the-five-questions-to-ask-each-packet-top-down">The five questions to ask each packet, top-down</h3></summary><div class="subsection-body">
+<h4 id="q1-whats-the-l2-frame-type">Q1 — What's the L2 frame type?</h4>
+<p>Look at the <strong>Ethernet header → Type field</strong>.</p>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Means</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>0x0800</code></td>
+<td>IPv4 follows</td>
+</tr>
+<tr>
+<td><code>0x86DD</code></td>
+<td>IPv6 follows</td>
+</tr>
+<tr>
+<td><code>0x8100</code></td>
+<td>802.1Q VLAN tag, then another type</td>
+</tr>
+<tr>
+<td><code>0x8847</code></td>
+<td>MPLS</td>
+</tr>
+</tbody>
+</table>
+<p>Tshark filter: <code>eth.type == 0x0800</code></p>
+<h4 id="q2-inside-l3-ip-whats-the-protocol-number">Q2 — Inside L3 IP, what's the protocol number?</h4>
+<p>The <strong>IP header → Protocol field</strong> (8 bits) tells you what's next.</p>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Means</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>1</code></td>
+<td>ICMP</td>
+</tr>
+<tr>
+<td><code>4</code></td>
+<td>IPv4-in-IPv4 (IP tunnel)</td>
+</tr>
+<tr>
+<td><code>6</code></td>
+<td>TCP</td>
+</tr>
+<tr>
+<td><code>17</code></td>
+<td>UDP</td>
+</tr>
+<tr>
+<td><code>41</code></td>
+<td>IPv6-in-IPv4</td>
+</tr>
+<tr>
+<td><code>47</code></td>
+<td><strong>GRE</strong></td>
+</tr>
+<tr>
+<td><code>50</code></td>
+<td><strong>IPSec ESP</strong> (Encapsulating Security Payload)</td>
+</tr>
+<tr>
+<td><code>51</code></td>
+<td><strong>IPSec AH</strong> (Authentication Header)</td>
+</tr>
+<tr>
+<td><code>89</code></td>
+<td>OSPF</td>
+</tr>
+<tr>
+<td><code>132</code></td>
+<td>SCTP</td>
+</tr>
+</tbody>
+</table>
+<p>Tshark filter: <code>ip.proto == 47</code> (find GRE-tunneled traffic)</p>
+<h4 id="q3-if-udp-whats-the-destination-port">Q3 — If UDP, what's the destination port?</h4>
+<p>UDP just has source/dest ports. Common tunnel ports:</p>
+<table>
+<thead>
+<tr>
+<th>Port</th>
+<th>Protocol</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>4789</code></td>
+<td><strong>VXLAN</strong> (standard)</td>
+</tr>
+<tr>
+<td><code>4790</code></td>
+<td>VXLAN-GPE</td>
+</tr>
+<tr>
+<td><code>6081</code></td>
+<td>Geneve</td>
+</tr>
+<tr>
+<td><code>8472</code></td>
+<td>VXLAN (Linux/Open vSwitch default)</td>
+</tr>
+<tr>
+<td><code>500</code></td>
+<td>IKE (IPSec key exchange)</td>
+</tr>
+<tr>
+<td><code>4500</code></td>
+<td>IPSec NAT-T</td>
+</tr>
+<tr>
+<td><code>1701</code></td>
+<td>L2TP</td>
+</tr>
+</tbody>
+</table>
+<p>Tshark filter: <code>udp.port == 4789</code></p>
+<h4 id="q4-if-gre-whats-the-next-protocol-field">Q4 — If GRE, what's the next-protocol field?</h4>
+<p>GRE header includes a <code>Protocol Type</code> field (same encoding as Ethernet type).</p>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Means</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>0x0800</code></td>
+<td>IPv4 inside</td>
+</tr>
+<tr>
+<td><code>0x86DD</code></td>
+<td>IPv6 inside</td>
+</tr>
+<tr>
+<td><code>0x6558</code></td>
+<td>Transparent Ethernet bridging (NVGRE)</td>
+</tr>
+</tbody>
+</table>
+<p>Tshark filter: <code>gre.proto == 0x0800</code></p>
+<h4 id="q5-inside-tcp-whats-the-application">Q5 — Inside TCP, what's the application?</h4>
+<p>TCP destination port hints at the L7 protocol.</p>
+<table>
+<thead>
+<tr>
+<th>Port</th>
+<th>Protocol</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>80</code></td>
+<td>HTTP</td>
+</tr>
+<tr>
+<td><code>443</code></td>
+<td>HTTPS / HTTP/2 (TLS)</td>
+</tr>
+<tr>
+<td><code>22</code></td>
+<td>SSH</td>
+</tr>
+<tr>
+<td><code>3389</code></td>
+<td>RDP</td>
+</tr>
+<tr>
+<td><code>5432</code></td>
+<td>Postgres</td>
+</tr>
+<tr>
+<td><code>1433</code></td>
+<td>SQL Server</td>
+</tr>
+</tbody>
+</table>
+<p>Tshark filter: <code>tcp.port == 443</code></p>
+</div></details><details class="subsection" open><summary><h3 id="worked-exercise-decode-this-one-frame">Worked exercise — decode this one frame</h3></summary><div class="subsection-body">
+<p>Suppose <code>tshark -r multilayer.pcapng -c 1 -V</code> shows:</p>
+<pre class="codehilite"><code>Ethernet II, Src: aa:bb:cc:..., Dst: dd:ee:ff:...
+  Type: IPv4 (0x0800)                                ← Q1: L2 says IPv4 next
+Internet Protocol Version 4, Src: 10.1.1.5, Dst: 10.2.2.5
+  Protocol: UDP (17)                                 ← Q2: IP says UDP next
+User Datagram Protocol, Src Port: 54321, Dst Port: 4789
+  Destination Port: 4789                             ← Q3: UDP port = VXLAN!
+Virtual eXtensible Local Area Network
+  VXLAN Network Identifier (VNI): 1234
+Ethernet II                                          ← VXLAN unwraps to Ethernet
+  Type: IPv4 (0x0800)
+Internet Protocol Version 4, Src: 192.168.1.5, Dst: 192.168.2.5
+  Protocol: ESP (50)                                 ← IPSec!
+Encapsulating Security Payload
+  SPI: 0xabcd1234
+  [decrypted by Wireshark using keys]
+Internet Protocol Version 4
+  Protocol: GRE (47)                                 ← Q2 again, GRE
+Generic Routing Encapsulation (IP)
+  Protocol Type: IP (0x0800)                         ← Q4: GRE next is IPv4
+Internet Protocol Version 4
+  Protocol: TCP (6)                                  ← finally TCP!
+Transmission Control Protocol, Src Port: 49000, Dst Port: 443
+  Destination Port: 443                              ← Q5: HTTPS
+Transport Layer Security
+  Application Data
+HyperText Transfer Protocol 2
+</code></pre>
+
+<p><strong>Reading the path</strong>: Ethernet → IPv4 → UDP/VXLAN → inner Ethernet → IPv4 → ESP → IPv4 → GRE → IPv4 → TCP → TLS → HTTP/2.</p>
+<p>That matches the Section 13 stack exactly. <strong>Eleven layers</strong> for one byte of application data. 😅</p>
+</div></details><details class="subsection" open><summary><h3 id="try-it-yourself-tshark-one-liners">Try it yourself — tshark one-liners</h3></summary><div class="subsection-body">
+<pre class="codehilite"><code class="language-powershell"># Show full protocol stack for the first 5 frames
+tshark -r multilayer.pcapng -c 5 -T fields -e frame.number -e frame.protocols
+
+# Filter for VXLAN-encapsulated packets
+tshark -r multilayer.pcapng -Y &quot;vxlan&quot;
+
+# Filter for ESP-encrypted packets
+tshark -r multilayer.pcapng -Y &quot;esp&quot;
+
+# Show every &quot;next protocol&quot; decision per packet
+tshark -r multilayer.pcapng -T fields -e frame.number -e ip.proto -e udp.dstport -e gre.proto
+</code></pre>
+
+</div></details><details class="subsection" open><summary><h3 id="the-mental-shortcut">The mental shortcut 🎯</h3></summary><div class="subsection-body">
+<p>Reading any packet is a <strong>chain of "what comes next?" questions</strong>. Each header's "next protocol" field is a pointer to the next decoder. Wireshark just walks this chain automatically. Tshark exposes the chain as <code>frame.protocols</code>.</p>
+<blockquote>
+<p><strong>Rule of thumb</strong>: if you see <code>eth:ip:udp:vxlan:eth:ip:tcp</code> in <code>frame.protocols</code>, you have a VXLAN tunnel.
+If you see <code>eth:ip:esp:...</code>, the inside is encrypted — without keys, that's where dissection stops.
+If you see <code>eth:ip:gre:ip:tcp</code>, GRE is doing the tunneling (no encryption).</p>
+</blockquote>
+<hr>
+</div></details></div></details><details class="section" open><summary><h2 id="15-faq-clarifications-collected-along-the-way">15. FAQ — clarifications collected along the way</h2></summary><div class="section-body">
+<details class="subsection" open><summary><h3 id="q-what-is-wpcapdll">Q: What is <code>wpcap.dll</code>?</h3></summary><div class="subsection-body">
+<p>The packet-capture library Wireshark and tshark depend on to read raw frames off the NIC.</p>
+<ul>
+<li>Originally part of <strong>WinPcap</strong> (Windows port of <code>libpcap</code>).</li>
+<li>Today shipped by <strong>Npcap</strong> (WinPcap's modern successor); the file is kept named <code>wpcap.dll</code> for <em>backward compatibility</em> with apps written against the old API.</li>
+<li>It's a <strong>userspace shim</strong> — the real kernel-level capture happens in <code>npcap.sys</code>.</li>
+</ul>
+<blockquote>
+<p><strong>"Userspace shim" — what does that actually mean?</strong> 🧩</p>
+<p>Windows splits the world in two:
+- <strong>User mode (ring 3)</strong> — where your apps run. Crashes here just kill the app. No direct hardware access.
+- <strong>Kernel mode (ring 0)</strong> — where drivers live. Direct hardware access, but a crash blue-screens the whole machine.</p>
+<p>To get raw packets, you <strong>must</strong> be in kernel mode (the NIC's DMA buffer is not exposed to user mode). But you don't want every app written in kernel C — that would be catastrophic for stability and security.</p>
+<p>So Npcap splits the job in two:
+1. <strong><code>npcap.sys</code></strong> lives in the kernel, hooks the NDIS stack, copies frames into a ring buffer.
+2. <strong><code>wpcap.dll</code></strong> lives in user mode, exposes a friendly <code>pcap_*()</code> C API that apps link against. Internally each call (<code>pcap_open_live</code>, <code>pcap_loop</code>, <code>pcap_compile</code>) is translated into a <code>DeviceIoControl()</code> request sent down to the driver.</p>
+<p><strong>"Shim" = a thin translation layer that adapts one API to another with minimal logic of its own.</strong>
+- <code>wpcap.dll</code> doesn't do the capture; it's a <em>thin wrapper</em> around the kernel driver's IOCTL interface.
+- It also pretends to be the old WinPcap <code>wpcap.dll</code> for compatibility — that's another sense of "shim": <strong>a compatibility bridge</strong> so unmodified apps from the WinPcap era still work.</p>
+<p>Analogies:
+- 🚪 wpcap.dll = doorman; npcap.sys = the room. Apps talk to the doorman, the doorman fetches what's inside.
+- 📞 wpcap.dll = receptionist that translates "I want packets from NIC 3 matching <code>tcp port 443</code>" into the kernel's internal IOCTL language.
+- 🔌 wpcap.dll = electrical adapter — you plug your foreign-spec appliance (an old WinPcap-era app) into it, and the wall socket (npcap.sys) doesn't care.</p>
+<p>Without the shim, every app would need to:
+- Open <code>\\.\NPCAP_xxx</code> device handles directly
+- Speak raw IOCTL codes (<code>BIOCSETF</code> for BPF, <code>BIOCGSTATS</code> for stats…)
+- Re-implement BPF compilation</p>
+<p>With the shim, an app just calls <code>pcap_open_live("eth0", 65535, 1, 1000, errbuf)</code> and the messy translation is somebody else's problem.</p>
+</blockquote>
+<p><strong>ASCII shorthand:</strong></p>
+<pre class="codehilite"><code>Wireshark / tshark   ─┐
+nmap                  ├──▶  wpcap.dll  ─▶  npcap.sys  ─▶  NIC
+custom tools         ─┘   (userspace API)  (kernel driver)
+</code></pre>
+
+<p><strong>Full architecture diagram (SVG):</strong></p>
+<svg viewBox="0 0 720 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="wpcap.dll architecture">
+  <style>
+    .box{fill:#e7f1ff;stroke:#2563eb;stroke-width:1.5}
+    .box-k{fill:#fde8e8;stroke:#dc2626;stroke-width:1.5}
+    .box-h{fill:#fef3c7;stroke:#b45309;stroke-width:1.5}
+    .box-w{fill:#dcfce7;stroke:#15803d;stroke-width:1.5}
+    .lbl{font:600 13px -apple-system,Segoe UI,sans-serif;fill:#111}
+    .sub{font:11px -apple-system,Segoe UI,sans-serif;fill:#444}
+    .arr{stroke:#374151;stroke-width:2;fill:none;marker-end:url(#a)}
+    .ring{font:11px -apple-system,Segoe UI,sans-serif;fill:#6b7280}
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#374151"/>
+    </marker>
+  </defs>
+  <text x="10" y="20" class="ring">USER MODE (ring 3)</text>
+  <rect class="box" x="20" y="30" width="140" height="50" rx="6"/>
+  <text x="90" y="55" text-anchor="middle" class="lbl">Wireshark GUI</text>
+  <text x="90" y="70" text-anchor="middle" class="sub">dumpcap.exe child</text>
+  <rect class="box" x="180" y="30" width="140" height="50" rx="6"/>
+  <text x="250" y="55" text-anchor="middle" class="lbl">tshark.exe</text>
+  <text x="250" y="70" text-anchor="middle" class="sub">CLI front-end</text>
+  <rect class="box" x="340" y="30" width="140" height="50" rx="6"/>
+  <text x="410" y="55" text-anchor="middle" class="lbl">nmap.exe</text>
+  <text x="410" y="70" text-anchor="middle" class="sub">scanner</text>
+  <rect class="box" x="500" y="30" width="200" height="50" rx="6"/>
+  <text x="600" y="55" text-anchor="middle" class="lbl">Your custom tool</text>
+  <text x="600" y="70" text-anchor="middle" class="sub">links against libpcap API</text>
+  <path class="arr" d="M90,80 L90,150"/>
+  <path class="arr" d="M250,80 L250,150"/>
+  <path class="arr" d="M410,80 L410,150"/>
+  <path class="arr" d="M600,80 L600,150"/>
+  <rect class="box-h" x="20" y="150" width="680" height="70" rx="6"/>
+  <text x="360" y="178" text-anchor="middle" class="lbl">wpcap.dll  (userspace shim — pcap_*() API)</text>
+  <text x="360" y="198" text-anchor="middle" class="sub">Translates pcap_open_live / pcap_loop / pcap_compile (BPF) into IOCTLs to the driver.</text>
+  <text x="360" y="213" text-anchor="middle" class="sub">Also: Packet.dll (lower-level NPF API used by wpcap.dll internally).</text>
+  <path class="arr" d="M360,220 L360,265"/>
+  <text x="372" y="245" class="sub">DeviceIoControl → \Device\NPCAP_…</text>
+  <text x="10" y="285" class="ring">KERNEL MODE (ring 0)</text>
+  <rect class="box-k" x="20" y="295" width="680" height="70" rx="6"/>
+  <text x="360" y="322" text-anchor="middle" class="lbl">npcap.sys  (NDIS 6 LWF — kernel driver)</text>
+  <text x="360" y="342" text-anchor="middle" class="sub">Hooks the NDIS stack as a Lightweight Filter, copies frames into a ring buffer, applies BPF.</text>
+  <text x="360" y="357" text-anchor="middle" class="sub">Loopback support via Windows Filtering Platform (WFP) callout.</text>
+  <path class="arr" d="M360,365 L360,400"/>
+  <rect class="box-w" x="200" y="405" width="320" height="40" rx="6"/>
+  <text x="360" y="430" text-anchor="middle" class="lbl">NIC (Ethernet / Wi-Fi / vEthernet / Loopback)</text>
+</svg>
+<p><strong>Read it top-down:</strong> apps call the <code>pcap_*()</code> API → wpcap.dll translates to IOCTLs → npcap.sys hooks the NDIS filter stack → frames are copied from the NIC's ring buffer into your capture file.</p>
+<p>When tshark says <em>"Unable to load Npcap (wpcap.dll)"</em>, the userspace doorway isn't there → Npcap isn't installed. When tshark <strong>finds</strong> wpcap.dll but lists only <code>etwdump</code> → wpcap loaded but npcap.sys isn't registered as an NDIS filter (incomplete install or service stopped).</p>
+</div></details><details class="subsection" open><summary><h3 id="q-what-does-tshark-d-do">Q: What does <code>tshark -D</code> do?</h3></summary><div class="subsection-body">
+<p>Lists every capture-able interface with an index number to pass to <code>-i</code>. Sample output:</p>
+<pre class="codehilite"><code>1. \Device\NPF_{GUID}  (Wi-Fi)
+2. \Device\NPF_{GUID}  (Ethernet)
+3. \Device\NPF_{GUID}  (vEthernet (WSL))
+4. \Device\NPF_Loopback (Adapter for loopback traffic capture)
+</code></pre>
+
+<p>Then <code>tshark -i 2 -w mycapture.pcapng</code> captures on interface 2. It's the <strong>first command in any tshark workflow</strong> — you need the index before anything else.</p>
+</div></details><details class="subsection" open><summary><h3 id="q-if-bdp-isnt-filled-does-data-fail-to-transmit">Q: If BDP isn't filled, does data fail to transmit?</h3></summary><div class="subsection-body">
+<p><strong>No — data still transmits reliably; it just transmits <em>slowly</em>.</strong></p>
+<p>TCP <strong>always</strong> delivers your bytes correctly and in order. The window only affects <strong>speed</strong>.</p>
+<pre class="codehilite"><code>Window ≥ BDP:
+  [send send send send send send …]     ────▶ pipe full, max throughput
+   ◀── ACKs streaming back continuously ──
+
+Window &lt; BDP:
+  [send send send] ⏸️ wait... wait... ⏸️ [send send send] ⏸️
+   tiny burst    │  waiting for ACK         next burst
+                 ◀──────── 1 RTT ────────▶
+   pipe sits half-empty between bursts
+</code></pre>
+
+<p><strong>Worked example — 100 MB file across US ↔ APAC (10 Gbps, 180 ms RTT) with 64 KB buffer:</strong></p>
+<ol>
+<li>Sender stuffs 64 KB into the pipe (~50 µs on 10 Gbps).</li>
+<li>Sender stops — outstanding-bytes limit hit.</li>
+<li>Sender waits 180 ms for the first ACK.</li>
+<li>ACK arrives → another 64 KB.</li>
+<li>Repeat.</li>
+</ol>
+<p>Effective rate: ≈ <strong>2.85 Mbps</strong>. The 100 MB file transfers in ~280 seconds instead of ~1 second on a saturated link. <strong>All bytes arrive. None are lost.</strong> It's just glacially slow.</p>
+<p><strong>What's actually true:</strong>
+| Claim | Verdict |
+|---|---|
+| Bytes don't get sent | ❌ False — all bytes delivered |
+| Bytes get dropped | ❌ False — TCP retransmits losses anyway |
+| Throughput caps at <code>window / RTT</code> | ✅ Yes |
+| Link bandwidth becomes irrelevant beyond this point | ✅ Yes |
+| App sees timeouts/errors | ⚠️ Only if the app has a deadline; TCP is content to trickle |</p>
+<p><strong>The real-world consequence isn't lost data — it's:</strong>
+- Replication-SLA breaches (deadline missed)
+- Backpressure: producer fills queues faster than slow pipe drains → OOM
+- Application-level retries (not TCP-level) → more connections on the same slow pipe
+- One slow connection blocking other work</p>
+<p>That's why the long-haul symptom in dashboards was <em>"replication lag growing"</em>, not <em>"errors / loss"</em>.</p>
+<blockquote>
+<p><strong>30-second mental model</strong>
+```
+TCP guarantees: ✅ delivery, ✅ ordering, ✅ integrity
+TCP does NOT guarantee: ❌ speed</p>
+<p>Window &lt; BDP  → trickle (still correct, just slow)
+Window ≥ BDP  → flood (link-limited)
+Lost bytes    → retransmitted automatically
+Slow bytes    → too bad, that's between you, your buffer, and physics
+```</p>
+</blockquote>
+</div></details><details class="subsection" open><summary><h3 id="q-example-values-for-rwnd-cwnd-so_sndbuf">Q: Example values for <code>rwnd</code>, <code>cwnd</code>, <code>SO_SNDBUF</code>?</h3></summary><div class="subsection-body">
+<p>All three are in <strong>bytes</strong>, but they're observed/set in different ways.</p>
+<p><strong><code>SO_SNDBUF</code> / <code>SO_RCVBUF</code> — the static socket buffer ceiling.</strong> Set per socket by app or OS auto-tuning.</p>
+<table>
+<thead>
+<tr>
+<th>Scenario</th>
+<th>Typical value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Windows app, auto-tune on</td>
+<td>starts ~64 KB → grows to ~16 MB</td>
+</tr>
+<tr>
+<td>Linux app, auto-tune on</td>
+<td>starts ~16 KB → grows to ~4 MB</td>
+</tr>
+<tr>
+<td><code>setsockopt(SO_SNDBUF, 64*1024)</code> called</td>
+<td><strong>pinned at 64 KB</strong> ❌ — disables auto-tune</td>
+</tr>
+<tr>
+<td>Tuned for cross-region replication</td>
+<td>16–64 MB</td>
+</tr>
+<tr>
+<td>100 Gbps research nets</td>
+<td>256 MB+</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>🎯 The original culprit: explicit <code>setsockopt</code> to a small static value, killing auto-tune.</p>
+</blockquote>
+<p><strong><code>rwnd</code> — receiver's advertised window.</strong> Visible in <em>every</em> ACK ("I have this much receive buffer free"). Changes packet-to-packet.</p>
+<table>
+<thead>
+<tr>
+<th>Receiver state</th>
+<th><code>rwnd</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Empty buffer</td>
+<td>~64 KB → grows with scaling</td>
+</tr>
+<tr>
+<td>App reading fast</td>
+<td>high, close to <code>SO_RCVBUF</code></td>
+</tr>
+<tr>
+<td>App slow / sleeping</td>
+<td>shrinks as buffer fills</td>
+</tr>
+<tr>
+<td>App stalled</td>
+<td><strong>0</strong> → "zero window" → sender must pause</td>
+</tr>
+</tbody>
+</table>
+<p>Wireshark shows <code>Win=64512 [scaled: 16515072]</code> — the raw 16-bit value × the scale factor.</p>
+<p><strong><code>cwnd</code> — sender's congestion window.</strong> <em>Invisible on the wire</em> — purely a kernel variable on the sender.</p>
+<table>
+<thead>
+<tr>
+<th>State</th>
+<th><code>cwnd</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Just connected (slow start)</td>
+<td>10 × MSS ≈ 14.6 KB</td>
+</tr>
+<tr>
+<td>After 1 RTT no loss</td>
+<td>doubles → ~29 KB</td>
+</tr>
+<tr>
+<td>After 2 RTTs</td>
+<td>~58 KB</td>
+</tr>
+<tr>
+<td>... doubles each RTT until loss ...</td>
+<td></td>
+</tr>
+<tr>
+<td>On packet loss</td>
+<td><strong>halves</strong> (multiplicative decrease)</td>
+</tr>
+<tr>
+<td>Steady-state on clean network</td>
+<td>≈ BDP</td>
+</tr>
+</tbody>
+</table>
+<p>Observe on Linux: <code>ss -tin</code> shows <code>cwnd:14</code> (in MSS units, × 1460 for bytes).</p>
+<p><strong>Worked example — 1 Gbps, 70 ms RTT (BDP = 8.75 MB):</strong></p>
+<p>After ~13 RTTs of clean slow start, <code>cwnd</code> reaches ~8.75 MB → matches BDP → throughput = 1 Gbps. ✅</p>
+<p>Now pin <code>SO_SNDBUF = 64 KB</code> (the original bug):</p>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>cwnd</code></td>
+<td>grows to 8.75 MB (but no one cares)</td>
+</tr>
+<tr>
+<td><code>rwnd</code></td>
+<td>grows to 16 MB (but no one cares)</td>
+</tr>
+<tr>
+<td><strong><code>SO_SNDBUF</code></strong></td>
+<td><strong>64 KB ← the cap</strong></td>
+</tr>
+<tr>
+<td>Effective window</td>
+<td>min = 64 KB</td>
+</tr>
+<tr>
+<td>Throughput</td>
+<td>64 KB / 70 ms ≈ <strong>7.5 Mbps</strong> on a 1 Gbps link</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>Healthy <code>cwnd</code> and <code>rwnd</code> <strong>cannot rescue you</strong> when <code>SO_SNDBUF</code> clamps the sender.</p>
+</blockquote>
+</div></details><details class="subsection" open><summary><h3 id="q-what-is-dsl">Q: What is DSL?</h3></summary><div class="subsection-body">
+<p><strong>Digital Subscriber Line</strong> — internet over the same <strong>copper telephone wires</strong> that carry voice calls. 📞</p>
+<p>The trick: voice uses 0–4 kHz; DSL uses the <em>unused higher frequencies</em> (25 kHz – 1+ MHz) on the same wire. A filter splits voice and data so you can be online and on a call simultaneously.</p>
+<table>
+<thead>
+<tr>
+<th>Tech</th>
+<th>Speed</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Dial-up (predecessor)</td>
+<td>56 kbps</td>
+<td>Used voice band, tied up the line</td>
+</tr>
+<tr>
+<td><strong>ADSL</strong></td>
+<td>1–24 Mbps ↓</td>
+<td>Common home broadband, 2000s–2010s</td>
+</tr>
+<tr>
+<td><strong>VDSL/VDSL2</strong></td>
+<td>50–100 Mbps</td>
+<td>Shorter range from exchange</td>
+</tr>
+<tr>
+<td><strong>G.fast</strong></td>
+<td>~1 Gbps</td>
+<td>Hybrid copper/fiber for last few hundred meters</td>
+</tr>
+</tbody>
+</table>
+<p>DSL providers needed per-subscriber auth + dynamic IPs → wrapped PPP inside Ethernet → <strong>PPPoE</strong> → MTU drops from 1500 to 1492. That's why DSL users have famous MTU/VPN/CDN issues. DSL is being replaced by fiber and cable but still serves rural areas globally.</p>
+<p>🧒 <em>Using the unused high notes on the family piano to play extra music while someone else plays the regular notes.</em></p>
+</div></details><details class="subsection" open><summary><h3 id="q-what-does-without-flat-layer-2-mean">Q: What does "without flat Layer-2" mean?</h3></summary><div class="subsection-body">
+<p>A <strong>flat Layer-2 network</strong> = one giant broadcast domain spanning many hosts (and sometimes physical sites). Every host reaches every other host directly via MAC; every ARP/DHCP/broadcast hits everyone.</p>
+<pre class="codehilite"><code>   Server A    Server B    Server C    ...   Server Z
+      │           │           │              │
+      └───────────┴── giant L2 broadcast ────┘
+              (one VLAN, one failure domain)
+</code></pre>
+
+<p><strong>Why it's bad at scale:</strong>
+- Broadcast storms (ARP, DHCP, misbehaving NICs flood <em>everybody</em>).
+- Failure domain too large — one misconfig takes down hundreds.
+- Spanning Tree Protocol gets brittle past a few hundred ports.
+- Hard/expensive to stretch across datacenters.
+- 12-bit VLAN tag → max ~4,094 networks. Clouds need millions.</p>
+<p><strong>VXLAN's gift</strong>: wraps L2 frames inside L3 UDP packets, so VMs <em>feel</em> like they share a LAN even across routed datacenter cores. You get <strong>L2 semantics (MAC reachability, broadcast within segment) on top of L3 scalability</strong>, no actual flat-L2 spanning required.</p>
+<pre class="codehilite"><code>   L3 routed core (scalable, normal IP)
+       â–²                  â–²
+  ┌────┘                  └────┐
+  │  VXLAN tunnel (L2-in-UDP)  │
+ [VTEP]                       [VTEP]
+   │ │                          │ │
+  VM1 VM2 ← virtual LAN →     VM3 VM4
+</code></pre>
+
+<p><strong>Rephrased</strong>: VXLAN gives apps the <strong>illusion</strong> of being on the same Ethernet LAN even when they're across routers and datacenters — <strong>without</strong> anyone actually deploying one giant Ethernet broadcast domain that spans those routers and datacenters.</p>
+<hr>
+</div></details></div></details><details class="section" open><summary><h2 id="appendix-a-percentiles-and-tail-latency">Appendix A — Percentiles and tail latency</h2></summary><div class="section-body">
+<p>Came up while reading dashboards alongside the network investigation.</p>
+<details class="subsection" open><summary><h3 id="what-a-percentile-is">What a percentile is</h3></summary><div class="subsection-body">
+<p>Line up N samples sorted ascending. The <strong>Pₓ</strong> value is the one at position <code>x % × N</code>.
+- <strong>P50</strong> = median (the typical experience)
+- <strong>P95 / P99</strong> = the "bad-but-frequent" experience
+- <strong>P99.9</strong> = the catastrophic edge that, at scale, hits everyone</p>
+</div></details><details class="subsection" open><summary><h3 id="why-mean-lies-the-canonical-example">Why mean lies — the canonical example</h3></summary><div class="subsection-body">
+<p>1,000 requests:
+- 990 × 10 ms = 9,900 ms
+- 10 × 5,000 ms = 50,000 ms
+- <strong>Mean</strong> = 59,900 / 1,000 ≈ 60 ms ✅ "fine"
+- <strong>P99</strong> = 5,000 ms ❌ "10 users/sec are timing out"</p>
+<p>The mean is a number <strong>nobody experienced</strong>. The P99 is a number <strong>someone definitely did</strong>.</p>
+</div></details><details class="subsection" open><summary><h3 id="tail-amplification-the-killer-at-scale">Tail amplification (the killer at scale)</h3></summary><div class="subsection-body">
+<p>A request fanning out to 100 services, each with P99 = 1 s:
+- Prob <em>all 100</em> return faster than P99: <code>0.99¹⁰⁰ ≈ 37%</code>
+- <strong>63% of users</strong> hit at least one tail call → see ~1 s.
+- A 1% service tail becomes a 63% user tail.</p>
+<p>That's why Google/Amazon obsess over P99.9 and beyond.</p>
+</div></details><details class="subsection" open><summary><h3 id="quick-reference">Quick reference</h3></summary><div class="subsection-body">
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Tells you</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Mean</strong></td>
+<td>A blended number nobody experienced</td>
+</tr>
+<tr>
+<td><strong>P50</strong></td>
+<td>The typical experience</td>
+</tr>
+<tr>
+<td><strong>P95 / P99</strong></td>
+<td>The bad-but-frequent experience</td>
+</tr>
+<tr>
+<td><strong>P99.9+</strong></td>
+<td>The catastrophic edge (dominant at scale)</td>
+</tr>
+<tr>
+<td><strong>Max</strong></td>
+<td>One-off worst case</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><em>"The average is the lie management wants to hear. The tail is the truth users live."</em></p>
+</blockquote>
+<hr>
+</div></details></div></details><details class="section" open><summary><h2 id="appendix-b-experiment-plan-recap">Appendix B — Experiment plan recap</h2></summary><div class="section-body">
+<p>Full status table lives in <a href="./README.md"><code>README.md</code></a>. The four experiments:</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Experiment</th>
+<th>What I'll prove</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Capture HTTPS handshake to <code>example.com</code></td>
+<td>SYN options visible; RTT measured from handshake</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Download 10 MB and graph bytes-in-flight</td>
+<td>Slow start ramps, then plateaus at BDP ceiling</td>
+</tr>
+<tr>
+<td>3</td>
+<td>iperf3 with <code>-w 16K</code> vs default</td>
+<td>Sender buffer cap visible as <code>[TCP Window Full]</code> markers</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Extract per-packet <code>tcp.analysis.ack_rtt</code>, compute percentiles</td>
+<td>Mean ≪ P99 on a real capture</td>
+</tr>
+</tbody>
+</table>
+<p>Once all four are done, I should be able to read a <code>.pcapng</code> from a real incident and narrate the failure mode.</p>
+<hr>
+<p><em>Last updated: 2026-05-22 — initial consolidation from interactive Q&amp;A.</em></p></div></details>
+</body>
+</html>
