@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Indo-ExportPedia — India's Export Snapshot FY 2024-25</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+  :root{--saffron:#FF9933;--green:#138808;--navy:#000080;--ink:#1a1a2e;--muted:#5c6275;--bg:#f6f7fb;--card:#fff;--good:#138808;--bad:#c0392b;--warn:#d68910;}
+  *{box-sizing:border-box;}
+  body{margin:0;font-family:'Segoe UI',Tahoma,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55;}
+  header{background:linear-gradient(135deg,var(--saffron) 0%,#fff 50%,var(--green) 100%);padding:36px 24px;border-bottom:4px solid var(--navy);}
+  header .wrap{max-width:1200px;margin:0 auto;}
+  header h1{margin:0;font-size:2.4rem;color:var(--navy);letter-spacing:-0.5px;}
+  header p{margin:8px 0 0;color:#222;font-size:1.05rem;}
+  .badge{display:inline-block;background:var(--navy);color:#fff;padding:4px 12px;border-radius:999px;font-size:0.8rem;margin-top:10px;}
+  .navlinks{margin-top:14px;}
+  .navlinks a{display:inline-block;margin-right:10px;padding:6px 14px;background:#fff;border:2px solid var(--navy);color:var(--navy);text-decoration:none;border-radius:6px;font-weight:600;font-size:0.9rem;}
+  .navlinks a.active{background:var(--navy);color:#fff;}
+  main{max-width:1200px;margin:0 auto;padding:28px 20px 60px;}
+  section{margin-bottom:42px;}
+  h2{color:var(--navy);border-left:5px solid var(--saffron);padding-left:12px;margin:0 0 16px;}
+  h3{color:var(--ink);margin-top:0;}
+  .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:16px;}
+  .kpi{background:var(--card);border-radius:12px;padding:18px;box-shadow:0 2px 10px rgba(0,0,0,0.06);border-top:4px solid var(--saffron);}
+  .kpi.alt{border-top-color:var(--green);}
+  .kpi.warn{border-top-color:var(--bad);}
+  .kpi .num{font-size:1.8rem;font-weight:700;color:var(--navy);}
+  .kpi .lbl{font-size:0.85rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;}
+  .kpi .sub{font-size:0.85rem;margin-top:4px;}
+  .up{color:var(--good);} .down{color:var(--bad);} .flat{color:var(--warn);}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+  @media(max-width:900px){.grid2{grid-template-columns:1fr;}}
+  .card{background:var(--card);border-radius:12px;padding:20px;box-shadow:0 2px 10px rgba(0,0,0,0.06);}
+  canvas{max-height:380px;}
+  table{width:100%;border-collapse:collapse;font-size:0.92rem;}
+  th,td{padding:10px 8px;text-align:left;border-bottom:1px solid #eaecef;}
+  th{background:#f0f2f8;color:var(--navy);font-size:0.85rem;text-transform:uppercase;}
+  tr:hover td{background:#fafbff;}
+  td.num{text-align:right;font-variant-numeric:tabular-nums;}
+  .pill{display:inline-block;font-size:0.75rem;padding:2px 8px;border-radius:999px;}
+  .pill.up{background:#e6f7e9;color:var(--good);}
+  .pill.down{background:#fdecea;color:var(--bad);}
+  .pill.flat{background:#fff5e0;color:var(--warn);}
+  .pill.up_strong{background:#138808;color:#fff;}
+  ul.sources{columns:2;gap:24px;list-style:none;padding:0;}
+  ul.sources li{margin-bottom:8px;break-inside:avoid;}
+  ul.sources a{color:var(--navy);text-decoration:none;border-bottom:1px dotted var(--saffron);}
+  ul.sources a:hover{color:var(--saffron);}
+  footer{text-align:center;color:var(--muted);font-size:0.85rem;padding:20px;border-top:1px solid #eaecef;}
+  .narrative{background:#fff8ee;border-left:4px solid var(--saffron);padding:14px 18px;border-radius:6px;margin-top:14px;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <h1>🇮🇳 Indo-ExportPedia</h1>
+    <p>Sector-by-Sector Snapshot of India's <strong>Exports</strong> — Financial Year 2024-25 (Apr 2024 – Mar 2025)</p>
+    <span class="badge">Sources: DGCI&S · Dept. of Commerce · RBI · MeitY · PIB</span>
+    <div class="navlinks">
+      <a href="index.html" class="active">📤 Exports</a>
+      <a href="../indo-importpedia/index.html">📥 Imports</a>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <section>
+    <h2>Headline — Exports FY 2024-25</h2>
+    <div class="kpis">
+      <div class="kpi"><div class="lbl">Total Exports (Goods + Services)</div><div class="num">$824.9 B</div><div class="sub up">▲ 5.5% YoY · Record High</div></div>
+      <div class="kpi"><div class="lbl">Merchandise Exports</div><div class="num">$437.4 B</div><div class="sub flat">▲ 0.08% YoY</div></div>
+      <div class="kpi alt"><div class="lbl">Services Exports</div><div class="num">$387.5 B</div><div class="sub up">▲ 13.6% YoY</div></div>
+      <div class="kpi"><div class="lbl">Top Goods Sector</div><div class="num">Engg Goods</div><div class="sub">$116.7 Bn · 26.7%</div></div>
+      <div class="kpi alt"><div class="lbl">Top Services</div><div class="num">IT/Software</div><div class="sub">$204.7 Bn</div></div>
+      <div class="kpi"><div class="lbl">Top Destination</div><div class="num">USA</div><div class="sub">$86.5 Bn · 19.8%</div></div>
+    </div>
+    <div class="narrative">
+      <strong>Bottom line:</strong> India crossed the historic <strong>$800 billion</strong> total exports mark for the first time. While goods exports were nearly flat (squeezed by global commodity prices &amp; Red Sea logistics), <strong>services — led by IT &amp; GCC-driven business services — did the heavy lifting</strong>, growing at double digits.
+    </div>
+  </section>
+
+  <section>
+    <h2>Merchandise Exports — Sector-by-Sector</h2>
+    <div class="grid2">
+      <div class="card"><canvas id="merchPie"></canvas></div>
+      <div class="card"><canvas id="merchBar"></canvas></div>
+    </div>
+    <div class="card" style="margin-top:18px;">
+      <table>
+        <thead><tr><th>#</th><th>Sector</th><th class="num">Value (USD Bn)</th><th class="num">Share %</th><th>Trend</th></tr></thead>
+        <tbody id="merchRows"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>Services Exports — Sector-by-Sector</h2>
+    <div class="grid2">
+      <div class="card"><canvas id="svcDoughnut"></canvas></div>
+      <div class="card">
+        <h3>Services Composition</h3>
+        <p>India's services exports are <strong>IT-heavy</strong>: software services alone (RBI survey) clocked <strong>$204.7 Bn</strong>, of which IT Services contributed ~$131 Bn and BPO/ITES ~$58 Bn. Including foreign affiliate sales the IT footprint exceeds <strong>$218 Bn</strong>; MeitY's parliamentary estimate puts it at <strong>$224.4 Bn</strong>.</p>
+        <p>The fastest-growing segment is <strong>Business Services</strong> — driven by India's 1,700+ Global Capability Centres (GCCs) exporting R&amp;D, consulting, design, and analytics.</p>
+        <p><strong>USA</strong> accounts for ~53% of services exports; <strong>Europe</strong> ~33% (growing faster than the US at +14.3%). <strong>90.7%</strong> of software services are delivered <em>off-site</em>.</p>
+      </div>
+    </div>
+    <div class="card" style="margin-top:18px;">
+      <table>
+        <thead><tr><th>#</th><th>Service Segment</th><th class="num">Value (USD Bn)</th><th class="num">Share %</th><th>Trend</th></tr></thead>
+        <tbody id="svcRows"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>Top Export Destination Countries</h2>
+    <div class="grid2">
+      <div class="card"><canvas id="destBar"></canvas></div>
+      <div class="card">
+        <h3>Geographic Concentration</h3>
+        <p>The <strong>top 10 countries absorb ~53%</strong> of India's merchandise exports. The <strong>US is dominant</strong> (~20%). The <strong>UAE</strong> serves as both an end market and a re-export hub to GCC &amp; Africa, supported by the India-UAE CEPA. The <strong>Netherlands</strong> has risen rapidly as a European gateway, primarily for refined petroleum.</p>
+        <p>Emerging markets — <strong>Bangladesh, Singapore, Saudi Arabia</strong> — diversify risk, while <strong>China</strong> remains a small export market despite being India's largest import source.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Key Sectoral Insights</h2>
+    <div class="kpis">
+      <div class="kpi"><div class="lbl">Star Performer</div><div class="num">Electronics</div><div class="sub up">+32% YoY; smartphone exports led by Apple/Foxconn PLI</div></div>
+      <div class="kpi"><div class="lbl">Resilient Anchor</div><div class="num">Engineering</div><div class="sub up">$116.7 Bn — 1/4 of all goods exports</div></div>
+      <div class="kpi alt"><div class="lbl">Pharma</div><div class="num">$30.5 Bn</div><div class="sub up">Generics &amp; vaccines; US &amp; Africa growth</div></div>
+      <div class="kpi warn"><div class="lbl">Under Pressure</div><div class="num">Gems &amp; Jewellery</div><div class="sub down">Weak US demand &amp; lab-grown diamond shift</div></div>
+      <div class="kpi"><div class="lbl">Agri Strength</div><div class="num">Rice</div><div class="sub up">$12.5 Bn — world's #1 rice exporter</div></div>
+      <div class="kpi alt"><div class="lbl">Services Surge</div><div class="num">GCC Business Svcs</div><div class="sub up_strong">+18-20% YoY; R&amp;D, AI, design</div></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Resources &amp; Authoritative Sources</h2>
+    <div class="card">
+      <p>All data points are compiled from official Government of India publications. See <code>resources/sources.md</code> and <code>resources/sector_data.json</code>.</p>
+      <ul class="sources">
+        <li>📊 <a href="https://tradestat.commerce.gov.in/" target="_blank">Ministry of Commerce — TradeStat (DGCI&amp;S)</a></li>
+        <li>🏛️ <a href="https://commerce.gov.in/press-releases/" target="_blank">Department of Commerce — Press Releases</a></li>
+        <li>📦 <a href="https://dgft.gov.in/" target="_blank">DGFT</a></li>
+        <li>📰 <a href="https://pib.gov.in/PressReleasePage.aspx?PRID=2126119" target="_blank">PIB — FY25 Trade Data Release</a></li>
+        <li>💻 <a href="https://www.rbi.org.in/" target="_blank">RBI — Software Services Survey</a></li>
+        <li>🖥️ <a href="https://www.meity.gov.in/" target="_blank">MeitY</a></li>
+        <li>📘 <a href="https://www.indiabudget.gov.in/economicsurvey/" target="_blank">Economic Survey 2024-25</a></li>
+        <li>🌾 <a href="https://apeda.gov.in/" target="_blank">APEDA — Agri Exports</a></li>
+        <li>⚙️ <a href="https://www.eepcindia.org/" target="_blank">EEPC India</a></li>
+        <li>💎 <a href="https://gjepc.org/" target="_blank">GJEPC</a></li>
+        <li>📊 <a href="https://www.ibef.org/exports" target="_blank">IBEF</a></li>
+        <li>🌐 <a href="https://www.wto.org/english/res_e/statis_e/statis_e.htm" target="_blank">WTO Trade Statistics</a></li>
+      </ul>
+    </div>
+  </section>
+
+</main>
+
+<footer>Indo-ExportPedia · Data: FY 2024-25 · For research &amp; educational use.</footer>
+
+<script>
+  const merchSectors = [
+    {sector:"Engineering Goods", value:116.67, share:26.67, trend:"up"},
+    {sector:"Petroleum Products", value:63.34, share:14.48, trend:"down"},
+    {sector:"Electronic Goods", value:38.58, share:8.82, trend:"up_strong"},
+    {sector:"Organic & Inorganic Chemicals", value:31.36, share:7.17, trend:"up"},
+    {sector:"Drugs & Pharmaceuticals", value:30.47, share:6.97, trend:"up"},
+    {sector:"Gems & Jewellery", value:28.50, share:6.51, trend:"down"},
+    {sector:"Readymade Garments (RMG)", value:15.99, share:3.66, trend:"up"},
+    {sector:"Rice (Basmati + Non-Basmati)", value:12.47, share:2.85, trend:"up"},
+    {sector:"Cotton Yarn / Fabrics / Made-ups", value:12.06, share:2.76, trend:"up"},
+    {sector:"Plastic & Linoleum", value:8.65, share:1.98, trend:"up"},
+    {sector:"Marine Products", value:7.41, share:1.69, trend:"down"},
+    {sector:"Leather & Leather Products", value:4.79, share:1.10, trend:"up"},
+    {sector:"Spices", value:4.46, share:1.02, trend:"up"},
+    {sector:"Iron Ore", value:4.20, share:0.96, trend:"flat"},
+    {sector:"Ceramic Products & Glassware", value:3.92, share:0.90, trend:"up"},
+    {sector:"Handicrafts (excl. carpet)", value:2.16, share:0.49, trend:"up"},
+    {sector:"Coffee", value:1.81, share:0.41, trend:"up_strong"},
+    {sector:"Tea", value:0.92, share:0.21, trend:"flat"}
+  ];
+  const svcSectors = [
+    {sector:"IT/Software Services (total)", value:204.7, share:52.8, trend:"up"},
+    {sector:"Business Services (consulting/R&D/GCC)", value:102.4, share:26.4, trend:"up_strong"},
+    {sector:"Travel & Tourism", value:31.5, share:8.1, trend:"up"},
+    {sector:"Transport (shipping/aviation)", value:26.7, share:6.9, trend:"up"},
+    {sector:"Financial Services", value:7.5, share:1.9, trend:"flat"},
+    {sector:"Telecom & Info Services (other)", value:6.0, share:1.5, trend:"up"},
+    {sector:"Insurance & Pension", value:3.2, share:0.8, trend:"up"},
+    {sector:"Construction Services", value:2.8, share:0.7, trend:"flat"},
+    {sector:"Other Services", value:2.7, share:0.7, trend:"flat"}
+  ];
+  const destinations = [
+    {country:"United States", value:86.51},{country:"United Arab Emirates", value:36.64},
+    {country:"Netherlands", value:22.76},{country:"United Kingdom", value:14.55},
+    {country:"China", value:14.25},{country:"Singapore", value:13.85},
+    {country:"Saudi Arabia", value:11.56},{country:"Bangladesh", value:11.06},
+    {country:"Germany", value:10.92},{country:"Italy", value:9.46}
+  ];
+  const palette = ['#FF9933','#138808','#000080','#E63946','#F4A261','#2A9D8F','#264653','#9D4EDD','#F77F00','#06A77D','#D62828','#8338EC','#3A86FF','#FB5607','#FFBE0B','#118AB2','#073B4C','#EF476F'];
+  const trendPill = t => `<span class="pill ${t}">${t.replace('_',' ')}</span>`;
+  const fmt = n => n.toFixed(2);
+
+  document.getElementById('merchRows').innerHTML = merchSectors.map((s,i)=>`<tr><td>${i+1}</td><td>${s.sector}</td><td class="num">${fmt(s.value)}</td><td class="num">${s.share.toFixed(2)}%</td><td>${trendPill(s.trend)}</td></tr>`).join('');
+  document.getElementById('svcRows').innerHTML = svcSectors.map((s,i)=>`<tr><td>${i+1}</td><td>${s.sector}</td><td class="num">${fmt(s.value)}</td><td class="num">${s.share.toFixed(2)}%</td><td>${trendPill(s.trend)}</td></tr>`).join('');
+
+  new Chart(document.getElementById('merchPie'),{type:'pie',data:{labels:merchSectors.slice(0,10).map(s=>s.sector),datasets:[{data:merchSectors.slice(0,10).map(s=>s.value),backgroundColor:palette}]},options:{plugins:{title:{display:true,text:'Top 10 Merchandise Sectors (USD Bn)'},legend:{position:'right',labels:{font:{size:10}}}}}});
+  new Chart(document.getElementById('merchBar'),{type:'bar',data:{labels:merchSectors.map(s=>s.sector),datasets:[{label:'USD Billion',data:merchSectors.map(s=>s.value),backgroundColor:'#FF9933'}]},options:{indexAxis:'y',plugins:{title:{display:true,text:'All Major Merchandise Sectors (USD Bn)'},legend:{display:false}},scales:{x:{beginAtZero:true}}}});
+  new Chart(document.getElementById('svcDoughnut'),{type:'doughnut',data:{labels:svcSectors.map(s=>s.sector),datasets:[{data:svcSectors.map(s=>s.value),backgroundColor:palette}]},options:{plugins:{title:{display:true,text:'Services Exports Composition (USD Bn)'},legend:{position:'right',labels:{font:{size:10}}}}}});
+  new Chart(document.getElementById('destBar'),{type:'bar',data:{labels:destinations.map(d=>d.country),datasets:[{label:'Exports (USD Bn)',data:destinations.map(d=>d.value),backgroundColor:'#138808'}]},options:{plugins:{title:{display:true,text:'Top 10 Export Destinations (USD Bn)'},legend:{display:false}},scales:{y:{beginAtZero:true}}}});
+</script>
+</body>
+</html>
