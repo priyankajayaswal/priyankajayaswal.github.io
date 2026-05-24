@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Bharat Sanchar — India Government Link Curator</title>
 <meta name="description" content="Bharat Sanchar — 475 curated official Government-of-India links across states, ministries, services and newsletters.">
 <style>
@@ -257,7 +257,7 @@
 
   /* ===== Night-mode toggle (pure-CSS, no JS) ===== */
   /* Hidden checkbox drives the theme via :has(). Label below is the visible button. */
-  #nightmode{position:absolute;opacity:0;pointer-events:none;width:0;height:0;}
+  #nightmode{position:fixed;top:0;left:0;opacity:0;pointer-events:none;width:0;height:0;clip:rect(0,0,0,0);}
   .nm-toggle{position:absolute;top:8px;right:14px;z-index:11;display:inline-flex;align-items:center;gap:5px;cursor:pointer;font-size:0.72rem;font-weight:600;padding:4px 10px;background:rgba(255,255,255,0.85);border:1.5px solid var(--navy);color:var(--navy);border-radius:999px;user-select:none;line-height:1;}
   .nm-toggle:hover{background:var(--navy);color:#fff;}
   .nm-toggle .nm-ico-dark,.nm-toggle .nm-lbl-dark{display:inline;}
@@ -325,11 +325,83 @@
   :root:not(:has(#nightmode:checked)) .mchip.s{background:#fff3e0;color:#7a3a00;}
   :root:not(:has(#nightmode:checked)) .mchip.m{background:#e6f0ff;color:var(--navy);}
   :root:not(:has(#nightmode:checked)) .mchip.v{background:#f5f0ff;color:#5e35b1;}
+
+  /* ===== Responsive refinements ===== */
+  img, iframe, svg{max-width:100%;height:auto;}
+
+  /* Hamburger button — visible on mobile only */
+  #navtoggle{position:fixed;top:0;left:0;opacity:0;pointer-events:none;width:0;height:0;clip:rect(0,0,0,0);}
+  .nav-burger{display:none;}
+  .nav-burger .burger-close{display:none;}
+  :root:has(#navtoggle:checked) .nav-burger .burger-open{display:none;}
+  :root:has(#navtoggle:checked) .nav-burger .burger-close{display:inline;}
+
+  @media (max-width:768px){
+    html{scroll-padding-top:110px;}
+    body{font-size:14px;overflow-x:hidden;}
+    header.topbar{padding:6px 8px;text-align:left;display:grid;grid-template-columns:auto 1fr auto;grid-template-areas:"burger brand toggle";gap:6px 8px;align-items:center;position:sticky;}
+    .nav-burger{grid-area:burger;position:static;display:inline-flex;align-items:center;justify-content:center;font-size:1rem;line-height:1;padding:6px 10px;min-width:40px;background:rgba(255,255,255,0.85);border:1.5px solid var(--navy);color:var(--navy);border-radius:8px;cursor:pointer;user-select:none;font-weight:700;}
+    :root:has(#nightmode:checked) .nav-burger{background:rgba(255,255,255,0.08);}
+    .nm-toggle{grid-area:toggle;position:static;top:auto;right:auto;}
+    .brand-row{grid-area:brand;justify-content:flex-start;gap:6px;margin-bottom:0;line-height:1.1;min-width:0;}
+    .brand{font-size:1.05rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+    .tagline{display:none;}
+    /* Nav hidden by default on mobile; opens as overlay (does NOT push content) */
+    header.topbar nav.lens{display:none;}
+    :root:has(#navtoggle:checked) header.topbar nav.lens{display:flex;flex-direction:column;align-items:stretch;position:absolute;left:0;right:0;top:100%;width:100%;max-height:75vh;overflow-y:auto;flex-wrap:nowrap;gap:4px;padding:8px 10px 10px;margin:0;background:var(--card);border-top:1px solid var(--border);border-bottom:1px solid var(--border);box-shadow:0 10px 24px rgba(0,0,0,0.35);z-index:30;}
+    :root:has(#navtoggle:checked) header.topbar nav.lens > .lens-item,
+    :root:has(#navtoggle:checked) header.topbar nav.lens > a{width:100%;min-width:0;flex:0 0 auto;}
+    :root:has(#navtoggle:checked) header.topbar nav.lens > .lens-item > a,
+    :root:has(#navtoggle:checked) header.topbar nav.lens > a{display:block;width:100%;text-align:left;padding:9px 12px;font-size:0.85rem;min-height:0;}
+    /* In mobile hamburger, parent items just navigate — no inline sub-dropdowns */
+    .lens-drop, .lens-item:focus-within .lens-drop, .lens-item:hover .lens-drop{display:none !important;}
+    nav.lens .caret{display:none;}
+    main{padding:12px 14px 42px;max-width:100%;}
+    footer{padding:12px 14px;max-width:100%;}
+    .help{padding:8px 14px;font-size:0.78rem;}
+    .jumpbar{margin:-12px -14px 12px;padding:6px 10px;top:0;-webkit-overflow-scrolling:touch;}
+    .kpis{grid-template-columns:repeat(auto-fit,minmax(130px,1fr));}
+    .dir-grid{grid-template-columns:repeat(auto-fit,minmax(150px,1fr));}
+    .card-list{grid-template-columns:1fr;padding:6px 8px 10px;}
+    .gov-grid, .insight-grid, .lens-overview .lo-grid{grid-template-columns:1fr;}
+    .gov-block, .lens-overview, .relmap{padding:12px 14px;}
+    .insight{margin:8px 8px 12px;padding:10px 12px;}
+    .ec-btn{min-height:40px;padding:8px 12px;}
+    details > summary{align-items:flex-start;flex-wrap:wrap;}
+    .card h3 a, .hn, .dir-tile, .ld-grid a{overflow-wrap:anywhere;word-break:break-word;}
+    table, .table-responsive{display:block;max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;}
+    .nm-toggle{font-size:0.7rem;padding:4px 8px;}
+  }
+
+  @media (max-width:480px){
+    html{scroll-padding-top:96px;}
+    header.topbar{padding:6px 8px;}
+    .brand-row{gap:4px;}
+    .brand{font-size:1rem;}
+    .tagline{display:none;}
+    nav.lens > .lens-item > a, nav.lens > a{padding:4px 8px;font-size:0.72rem;}
+    main{padding:10px 10px 36px;}
+    h1{font-size:1.15rem;}
+    h2{font-size:1rem;}
+    .help{padding:8px 10px;}
+    .jumpbar{margin:-10px -10px 10px;}
+    .gov-block, .lens-overview, .relmap{padding:10px 12px;}
+    .insight{margin:8px 4px 10px;padding:10px;}
+    .ec-toggle{align-items:stretch;}
+    .ec-btn{width:100%;}
+    .ec-hint{width:100%;text-align:center;}
+    details > summary{padding:9px 10px;}
+    details details{margin-left:4px;}
+    .card{padding:9px 10px;}
+    .dir-grid, .kpis, .swot{grid-template-columns:1fr;}
+  }
 </style>
 </head>
 <body>
-<input type="checkbox" id="nightmode" aria-label="Toggle night mode">
+<input type="checkbox" id="nightmode" aria-label="Toggle night mode" tabindex="-1" checked>
+<input type="checkbox" id="navtoggle" aria-label="Toggle navigation menu" tabindex="-1">
 <header class="topbar">
+  <label for="navtoggle" class="nav-burger" title="Menu"><span class="burger-open">☰</span><span class="burger-close">✕</span></label>
   <label for="nightmode" class="nm-toggle" title="Toggle night mode (no JavaScript required)">
     <span class="nm-ico-dark" aria-hidden="true">🌙</span><span class="nm-lbl-dark">Night</span>
     <span class="nm-ico-light" aria-hidden="true">☀</span><span class="nm-lbl-light">Day</span>
@@ -339,9 +411,9 @@
     <a href="#h">🏠 Home</a>
     <a href="#gov">🏛 How India is Governed</a>
     <div class="lens-item">
-      <a href="#s">📍 States &amp; UTs <span class="caret">▾</span></a>
+      <a href="#st">📍 States &amp; UTs <span class="caret">▾</span></a>
       <div class="lens-drop">
-        <div class="ld-head"><span>States (28) &amp; UTs (8)</span><a href="#s">View lens →</a></div>
+        <div class="ld-head"><span>States (28) &amp; UTs (8)</span><a href="#st">View lens →</a></div>
         <div class="ld-head" style="border:none;padding:8px 8px 2px;font-size:0.65rem;color:var(--green);">STATES</div>
         <div class="ld-grid">
           <a class="" href="#st-AP">Andhra Pradesh<span class="c">11</span></a><a class="" href="#st-AR">Arunachal Pradesh<span class="c">10</span></a><a class="" href="#st-AS">Assam<span class="c">9</span></a><a class="" href="#st-BR">Bihar<span class="c">14</span></a><a class="" href="#st-CG">Chhattisgarh<span class="c">9</span></a><a class="" href="#st-GA">Goa<span class="c">7</span></a><a class="" href="#st-GJ">Gujarat<span class="c">12</span></a><a class="" href="#st-HR">Haryana<span class="c">10</span></a><a class="" href="#st-HP">Himachal Pradesh<span class="c">9</span></a><a class="" href="#st-JH">Jharkhand<span class="c">9</span></a><a class="" href="#st-KA">Karnataka<span class="c">14</span></a><a class="" href="#st-KL">Kerala<span class="c">12</span></a><a class="" href="#st-MP">Madhya Pradesh<span class="c">9</span></a><a class="" href="#st-MH">Maharashtra<span class="c">16</span></a><a class="" href="#st-MN">Manipur<span class="c">8</span></a><a class="" href="#st-ML">Meghalaya<span class="c">8</span></a><a class="" href="#st-MZ">Mizoram<span class="c">7</span></a><a class="" href="#st-NL">Nagaland<span class="c">7</span></a><a class="" href="#st-OD">Odisha<span class="c">9</span></a><a class="" href="#st-PB">Punjab<span class="c">8</span></a><a class="" href="#st-RJ">Rajasthan<span class="c">11</span></a><a class="" href="#st-SK">Sikkim<span class="c">7</span></a><a class="" href="#st-TN">Tamil Nadu<span class="c">13</span></a><a class="" href="#st-TS">Telangana<span class="c">11</span></a><a class="" href="#st-TR">Tripura<span class="c">8</span></a><a class="" href="#st-UP">Uttar Pradesh<span class="c">15</span></a><a class="" href="#st-UK">Uttarakhand<span class="c">9</span></a><a class="" href="#st-WB">West Bengal<span class="c">10</span></a>
@@ -362,9 +434,9 @@
       </div>
     </div>
     <div class="lens-item">
-      <a href="#m">📜 By Ministry <span class="caret">▾</span></a>
+      <a href="#mn">📜 By Ministry <span class="caret">▾</span></a>
       <div class="lens-drop">
-        <div class="ld-head"><span>Ministries (50)</span><a href="#m">View lens →</a></div>
+        <div class="ld-head"><span>Ministries (50)</span><a href="#mn">View lens →</a></div>
         <div class="ld-grid">
           <a href="#mn-agriculture">Agriculture &amp; Farmers Welfare<span class="c">1</span></a><a href="#mn-ayush">AYUSH<span class="c">1</span></a><a href="#mn-civil_aviation">Civil Aviation<span class="c">1</span></a><a href="#mn-coal">Coal<span class="c">1</span></a><a href="#mn-commerce">Commerce &amp; Industry<span class="c">4</span></a><a href="#mn-communications">Communications<span class="c">1</span></a><a href="#mn-consumer_affairs">Consumer Affairs, Food &amp; Public Distribution<span class="c">1</span></a><a href="#mn-corporate_affairs">Corporate Affairs<span class="c">2</span></a><a href="#mn-culture">Culture<span class="c">1</span></a><a href="#mn-defence">Defence<span class="c">2</span></a><a href="#mn-doner">Development of North Eastern Region<span class="c">1</span></a><a href="#mn-earth_sciences">Earth Sciences<span class="c">2</span></a><a href="#mn-education">Education<span class="c">12</span></a><a href="#mn-electronics_it">Electronics &amp; Information Technology<span class="c">10</span></a><a href="#mn-environment">Environment, Forest &amp; Climate Change<span class="c">1</span></a><a href="#mn-external_affairs">External Affairs<span class="c">5</span></a><a href="#mn-finance">Finance<span class="c">9</span></a><a href="#mn-fisheries">Fisheries, Animal Husbandry &amp; Dairying<span class="c">1</span></a><a href="#mn-food_processing">Food Processing Industries<span class="c">1</span></a><a href="#mn-health">Health &amp; Family Welfare<span class="c">4</span></a><a href="#mn-heavy_industries">Heavy Industries<span class="c">1</span></a><a href="#mn-home">Home Affairs<span class="c">11</span></a><a href="#mn-housing_urban">Housing &amp; Urban Affairs<span class="c">1</span></a><a href="#mn-ib">Information &amp; Broadcasting<span class="c">1</span></a><a href="#mn-jal_shakti">Jal Shakti<span class="c">1</span></a><a href="#mn-labour">Labour &amp; Employment<span class="c">1</span></a><a href="#mn-law">Law &amp; Justice<span class="c">8</span></a><a href="#mn-mines">Mines<span class="c">1</span></a><a href="#mn-minority">Minority Affairs<span class="c">1</span></a><a href="#mn-new_renewable">New &amp; Renewable Energy<span class="c">1</span></a><a href="#mn-panchayati_raj">Panchayati Raj<span class="c">1</span></a><a href="#mn-parliamentary">Parliamentary Affairs<span class="c">1</span></a><a href="#mn-personnel">Personnel, Public Grievances &amp; Pensions<span class="c">5</span></a><a href="#mn-petroleum">Petroleum &amp; Natural Gas<span class="c">1</span></a><a href="#mn-ports">Ports, Shipping &amp; Waterways<span class="c">1</span></a><a href="#mn-power">Power<span class="c">3</span></a><a href="#mn-railways">Railways<span class="c">1</span></a><a href="#mn-road_transport">Road Transport &amp; Highways<span class="c">1</span></a><a href="#mn-rural">Rural Development<span class="c">1</span></a><a href="#mn-science_tech">Science &amp; Technology<span class="c">3</span></a><a href="#mn-skill">Skill Development &amp; Entrepreneurship<span class="c">1</span></a><a href="#mn-social_justice">Social Justice &amp; Empowerment<span class="c">2</span></a><a href="#mn-space">Space (DoS)<span class="c">3</span></a><a href="#mn-statistics">Statistics &amp; Programme Implementation<span class="c">2</span></a><a href="#mn-steel">Steel<span class="c">1</span></a><a href="#mn-textiles">Textiles<span class="c">1</span></a><a href="#mn-tourism">Tourism<span class="c">1</span></a><a href="#mn-tribal">Tribal Affairs<span class="c">2</span></a><a href="#mn-women_child">Women &amp; Child Development<span class="c">3</span></a><a href="#mn-youth_sports">Youth Affairs &amp; Sports<span class="c">1</span></a>
         </div>
@@ -486,7 +558,7 @@
   <div class="dir-grid"><a class="dir-tile" href="#sv-identity">Identity &amp; Documents<span class="dt-c">30</span></a><a class="dir-tile" href="#sv-travel">Travel &amp; Passport<span class="dt-c">2</span></a><a class="dir-tile" href="#sv-tax">Tax &amp; Finance<span class="dt-c">2</span></a><a class="dir-tile" href="#sv-welfare">Welfare &amp; Schemes<span class="dt-c">5</span></a><a class="dir-tile" href="#sv-education">Education &amp; Scholarships<span class="dt-c">10</span></a><a class="dir-tile" href="#sv-health">Health<span class="dt-c">1</span></a><a class="dir-tile" href="#sv-employment">Jobs &amp; Employment<span class="dt-c">35</span></a><a class="dir-tile" href="#sv-business">Business &amp; Compliance<span class="dt-c">12</span></a><a class="dir-tile" href="#sv-transport">Transport &amp; Vehicles<span class="dt-c">2</span></a><a class="dir-tile" href="#sv-legal">Legal &amp; Courts<span class="dt-c">38</span></a><a class="dir-tile" href="#sv-grievance">Grievance Redressal<span class="dt-c">10</span></a><a class="dir-tile" href="#sv-information">Information &amp; RTI<span class="dt-c">8</span></a><a class="dir-tile" href="#sv-elections">Elections &amp; Voter<span class="dt-c">1</span></a></div>
 </section>
 
-<section id="s" class="lens-section">
+<section id="st" class="lens-section">
   <h1>📍 By State &amp; Union Territory</h1>
   <p style="color:var(--muted);">28 states &amp; 8 union territories · grouped by branch (Executive · Legislature · Judiciary · Law &amp; Order · Citizen Services · Oversight · Local · Districts · Reports).</p>
   <div class="ec-toggle">
@@ -5610,7 +5682,7 @@
       <div>
         <h3>📖 What's in this view</h3>
         <p>India's Union-level apparatus runs through five body types. <strong>Ministries</strong> set policy. <strong>Regulators</strong> (RBI, SEBI, TRAI…) supervise sectors. <strong>Constitutional bodies</strong> (ECI, CAG, UPSC) sit outside the executive. <strong>Statutory bodies</strong> (NHRC, AIIMS) are created by Parliament. <strong>PSUs</strong> deliver services and run public enterprises. Use this lens to find authoritative central portals.</p>
-        <p class="lo-rel"><strong>🔗 Connected to:</strong> <a href="#m">By Ministry</a> drills into specific ministry mandates · <a href="#nl">Newsletters</a> tells you when they announce changes · <a href="#v">By Service</a> shows what citizens consume.</p>
+        <p class="lo-rel"><strong>🔗 Connected to:</strong> <a href="#mn">By Ministry</a> drills into specific ministry mandates · <a href="#nl">Newsletters</a> tells you when they announce changes · <a href="#v">By Service</a> shows what citizens consume.</p>
       </div>
       <div class="lo-chart">
         <div class="lo-chart-title">Links by body type</div>
@@ -7566,7 +7638,7 @@
   </article></div></details>
 </section>
 
-<section id="m" class="lens-section">
+<section id="mn" class="lens-section">
   <h1>📜 By Ministry</h1>
   <p style="color:var(--muted);">50 central ministries with at least one curated link.</p>
   <div class="lens-overview">
@@ -7574,7 +7646,7 @@
       <div>
         <h3>📖 What's in this view</h3>
         <p>Each ministry is a Cabinet department headed by a Union Minister and run by a Secretary (IAS). Ministries <strong>own</strong> the central bodies under their administrative control, <strong>frame</strong> rules under acts of Parliament, and <strong>release</strong> schemes through DBT. The chart shows ministries with the most curated portals — these are the ones citizens interact with most.</p>
-        <p class="lo-rel"><strong>🔗 Connected to:</strong> <a href="#c">Central Bodies</a> shows the regulators &amp; PSUs each ministry oversees · <a href="#nl">Newsletters</a> includes most ministry press feeds · <a href="#s">By State</a> is mirrored at state level by state departments.</p>
+        <p class="lo-rel"><strong>🔗 Connected to:</strong> <a href="#c">Central Bodies</a> shows the regulators &amp; PSUs each ministry oversees · <a href="#nl">Newsletters</a> includes most ministry press feeds · <a href="#st">By State</a> is mirrored at state level by state departments.</p>
       </div>
       <div class="lo-chart">
         <div class="lo-chart-title">Top 12 ministries by link count</div>
@@ -9247,7 +9319,7 @@
       <div>
         <h3>📖 What's in this view</h3>
         <p>Where the other lenses are organised by <em>who runs</em> government, this lens flips it to <em>what citizens need</em>. Identity, tax, welfare, health, transport, business, legal, grievance — each category aggregates portals across multiple ministries and bodies into a single task-first view. Start here when you have a goal, not a department in mind.</p>
-        <p class="lo-rel"><strong>🔗 Connected to:</strong> Each service maps to a <a href="#m">ministry</a> (e.g. Income Tax → Finance) and is delivered by a <a href="#c">central body</a> (e.g. CBDT) · <a href="#nl">Newsletters</a> for that ministry announce changes.</p>
+        <p class="lo-rel"><strong>🔗 Connected to:</strong> Each service maps to a <a href="#mn">ministry</a> (e.g. Income Tax → Finance) and is delivered by a <a href="#c">central body</a> (e.g. CBDT) · <a href="#nl">Newsletters</a> for that ministry announce changes.</p>
       </div>
       <div class="lo-chart">
         <div class="lo-chart-title">Links by service category</div>
@@ -11522,7 +11594,7 @@
       <div>
         <h3>📖 What's in this view</h3>
         <p>Every other lens shows you <strong>what exists</strong>; this lens shows <strong>what just changed</strong>. PIB is the umbrella; ministry feeds run beneath it; statutory bodies (RBI, SEBI, ECI, CAG) publish their own bulletins; long-form magazines (Yojana, Kurukshetra) analyse the trends. Subscribe by RSS or visit weekly to stay current.</p>
-        <p class="lo-rel"><strong>🔗 Connected to:</strong> Announcements made here become updates in <a href="#c">Central Bodies</a> &amp; <a href="#m">Ministries</a>, and ultimately affect the <a href="#v">services</a> citizens use · the <a href="#gov">governance flowcharts</a> show who has authority to issue what.</p>
+        <p class="lo-rel"><strong>🔗 Connected to:</strong> Announcements made here become updates in <a href="#c">Central Bodies</a> &amp; <a href="#mn">Ministries</a>, and ultimately affect the <a href="#v">services</a> citizens use · the <a href="#gov">governance flowcharts</a> show who has authority to issue what.</p>
       </div>
       <div class="lo-chart">
         <div class="lo-chart-title">Feeds by category</div>
@@ -18982,7 +19054,7 @@
     var scope = btn.getAttribute('data-scope');
     var action = btn.getAttribute('data-ec');
     var root;
-    // Scopes 'h','s','c','m','v','all','nl' = lens-section IDs; 'st-XX' = state-group ID
+    // Scopes 'h','st','c','mn','v','all','nl' = lens-section IDs; 'st-XX' = state-group ID
     if(scope && scope.indexOf('st-')===0){
       root = document.getElementById(scope);
     } else {
@@ -18998,6 +19070,33 @@
     });
     // If root is itself a <details>, ensure it stays open when expanding
     if(root.tagName === 'DETAILS' && openVal) root.open = true;
+  });
+})();
+</script>
+<script>
+// Auto-close mobile hamburger after a nav link is tapped, then scroll target to top
+(function(){
+  var toggle = document.getElementById('navtoggle');
+  var nav = document.querySelector('header.topbar nav.lens');
+  if(!toggle || !nav) return;
+  nav.addEventListener('click', function(e){
+    var a = e.target.closest('a');
+    if(!a) return;
+    var href = a.getAttribute('href');
+    if(!href) return;
+    toggle.checked = false;
+    if(href.charAt(0) === '#' && href.length > 1){
+      requestAnimationFrame(function(){
+        requestAnimationFrame(function(){
+          var el = document.getElementById(href.slice(1));
+          if(!el) return;
+          var topbar = document.querySelector('header.topbar');
+          var offset = topbar ? topbar.getBoundingClientRect().height : 0;
+          var y = el.getBoundingClientRect().top + window.pageYOffset - offset - 4;
+          window.scrollTo({top: Math.max(0, y), behavior: 'auto'});
+        });
+      });
+    }
   });
 })();
 </script>

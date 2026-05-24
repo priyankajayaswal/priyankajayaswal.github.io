@@ -2,24 +2,26 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Indo-ImportPedia — India's Import Snapshot FY 2024-25</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <style>
   :root{--saffron:#FF9933;--green:#138808;--navy:#000080;--ink:#1a1a2e;--muted:#5c6275;--bg:#f6f7fb;--card:#fff;--good:#138808;--bad:#c0392b;--warn:#d68910;}
   *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
   body{margin:0;font-family:'Segoe UI',Tahoma,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55;}
-  header{background:linear-gradient(135deg,#c0392b 0%,#fff 50%,var(--navy) 100%);padding:14px 24px;border-bottom:3px solid var(--navy);}
-  header .wrap{max-width:1200px;margin:0 auto;}
-  header h1{margin:0;font-size:1.8rem;color:var(--navy);letter-spacing:-0.5px;display:inline-block;margin-right:14px;vertical-align:middle;}
-  header p{margin:4px 0 0;color:#222;font-size:0.92rem;display:inline-block;vertical-align:middle;}
-  .badge{display:inline-block;background:var(--navy);color:#fff;padding:2px 10px;border-radius:999px;font-size:0.72rem;margin-left:8px;vertical-align:middle;}
-  .sitenav{margin-top:8px;}
-  .sitenav a{display:inline-block;margin-right:8px;padding:4px 10px;background:#fff;border:1.5px solid var(--navy);color:var(--navy);text-decoration:none;border-radius:6px;font-weight:600;font-size:0.82rem;}
+  header{background:linear-gradient(135deg,#c0392b 0%,#fff 50%,var(--navy) 100%);padding:8px 24px;border-bottom:2px solid var(--navy);}
+  header .wrap{max-width:1200px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px;}
+  header h1{margin:0;font-size:1.25rem;color:var(--navy);letter-spacing:-0.5px;}
+  header p{margin:0;color:#222;font-size:0.82rem;}
+  .badge{display:inline-block;background:var(--navy);color:#fff;padding:2px 9px;border-radius:999px;font-size:0.66rem;}
+  .sitenav{margin-top:0;}
+  .sitenav a{display:inline-block;margin-right:6px;padding:3px 9px;background:#fff;border:1.5px solid var(--navy);color:var(--navy);text-decoration:none;border-radius:6px;font-weight:600;font-size:0.78rem;}
   .sitenav a.active{background:var(--navy);color:#fff;}
-  .toc{margin-top:8px;font-size:0.82rem;}
-  .toc a{color:var(--navy);text-decoration:none;margin-right:10px;}
+  .toc{margin:0;font-size:0.78rem;flex-basis:100%;}
+  .toc a{color:var(--navy);text-decoration:none;margin-right:8px;}
   .toc a:hover{text-decoration:underline;}
+  section[id]{scroll-margin-top:var(--sticky-offset, 64px);}
   .toc-sticky{position:sticky;top:42px;z-index:90;background:#fff;border-bottom:1px solid #eaecef;box-shadow:0 2px 6px rgba(0,0,0,0.06);padding:6px 20px;font-size:0.8rem;}
   .toc-sticky .wrap{max-width:1200px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;gap:10px;}
   .toc-sticky strong{color:var(--navy);font-size:0.75rem;text-transform:uppercase;letter-spacing:0.4px;}
@@ -118,17 +120,22 @@
 
   /* ===== Mega-menu navigation (Sectors hover → Subsectors) ===== */
   .megamenu{background:var(--navy);position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,0.25);}
-  .megamenu-inner{max-width:1280px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:stretch;}
-  .mm-brand{color:#fff;padding:10px 16px;font-weight:700;font-size:0.9rem;align-self:center;border-right:1px solid rgba(255,255,255,0.15);}
-  .mm-item{position:relative;}
-  .mm-item > button{background:transparent;border:none;color:#fff;padding:12px 12px;font-size:0.82rem;font-weight:600;cursor:pointer;height:100%;border-bottom:3px solid transparent;font-family:inherit;}
+  .megamenu-inner{max-width:1280px;margin:0 auto;display:flex;flex-wrap:nowrap;align-items:stretch;overflow-x:auto;scrollbar-width:thin;}
+  .megamenu-inner::-webkit-scrollbar{height:4px;}
+  .megamenu-inner::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.25);border-radius:2px;}
+  .mm-panel{display:contents;}
+  .mm-brand{color:#fff;padding:6px 12px;font-weight:700;font-size:0.78rem;align-self:center;border-right:1px solid rgba(255,255,255,0.15);white-space:nowrap;flex:0 0 auto;}
+  .mm-item{position:relative;flex:0 0 auto;}
+  .mm-item > button{background:transparent;border:none;color:#fff;padding:7px 10px;font-size:0.75rem;font-weight:600;cursor:pointer;height:100%;border-bottom:2px solid transparent;font-family:inherit;white-space:nowrap;}
   .mm-item:hover > button, .mm-item > button.active{background:#c0392b;border-bottom-color:#FF9933;}
-  .mm-drop{display:none;position:absolute;top:100%;left:0;min-width:300px;max-width:380px;background:#fff;border:1px solid #ddd;border-top:3px solid #c0392b;box-shadow:0 8px 24px rgba(0,0,0,0.18);z-index:200;padding:8px 0;border-radius:0 0 8px 8px;}
-  .mm-item:hover .mm-drop{display:block;}
+  .mm-drop{display:none;position:fixed;top:auto;left:0;min-width:260px;max-width:360px;background:#fff;border:1px solid #ddd;border-top:3px solid #c0392b;box-shadow:0 8px 24px rgba(0,0,0,0.18);z-index:200;padding:6px 0;border-radius:0 0 8px 8px;max-height:70vh;overflow-y:auto;}
+  .mm-item:hover .mm-drop, .mm-item.hover .mm-drop{display:block;}
   .mm-drop a{display:block;padding:7px 16px;color:var(--navy);text-decoration:none;font-size:0.84rem;border-left:3px solid transparent;}
   .mm-drop a:hover{background:#fdf3f1;border-left-color:#c0392b;color:#c0392b;}
   .mm-drop a.active{background:#fdecea;border-left-color:#c0392b;color:#c0392b;font-weight:600;}
   .mm-drop .mm-head{padding:6px 16px 8px;font-size:0.7rem;text-transform:uppercase;color:var(--muted);letter-spacing:0.5px;border-bottom:1px solid #eee;margin-bottom:6px;}
+  .mm-toggle{display:none;background:transparent;border:none;color:#fff;font-size:1.5rem;line-height:1;padding:10px 14px;cursor:pointer;margin-left:auto;font-family:inherit;}
+  .mm-toggle:focus{outline:2px solid #FF9933;outline-offset:-2px;}
 
   /* ===== Deep-dive subsector tab panel ===== */
   #deepdive{background:#fff;border-radius:12px;padding:24px;box-shadow:0 2px 10px rgba(0,0,0,0.06);}
@@ -259,6 +266,42 @@
   .nation-summary .ns{background:#fff;border:1px solid #eaecef;border-radius:6px;padding:8px 12px;display:flex;flex-direction:column;justify-content:center;gap:2px;min-height:56px;}
   .nation-summary .ns .v{font-size:1.1rem;font-weight:700;color:var(--navy);}
   .nation-summary .ns .l{font-size:0.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.4px;}
+
+  /* Header-only mobile optimization */
+  @media (max-width:768px){
+    header{padding:8px 12px;}
+    header h1{display:block;margin-right:0;font-size:1.15rem;line-height:1.2;}
+    header p{display:block;font-size:0.75rem;margin-top:2px;line-height:1.35;}
+    .badge{display:inline-block;margin-left:0;margin-top:4px;font-size:0.62rem;padding:1px 7px;}
+    .sitenav{margin-top:6px;}
+    .sitenav a{display:inline-block;margin:2px 4px 2px 0;padding:4px 8px;font-size:0.72rem;}
+    .toc{margin-top:6px;font-size:0.72rem;display:flex;flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;gap:6px;white-space:nowrap;padding-bottom:4px;}
+    .toc strong{flex:0 0 auto;}
+    .toc a{flex:0 0 auto;margin:0;padding:2px 6px;background:rgba(255,255,255,0.6);border-radius:4px;}
+    .toc-sticky{top:0;padding:4px 8px;}
+    .toc-sticky .wrap{gap:6px;}
+    .toc-sticky a{font-size:0.72rem;padding:3px 7px;}
+    /* Hamburger mega-menu */
+    .megamenu{position:sticky;}
+    .megamenu-inner{flex-wrap:nowrap;align-items:center;position:relative;overflow:visible;}
+    .mm-brand{flex:1;font-size:0.82rem;padding:8px 12px;border-right:none;}
+    .mm-toggle{display:block;}
+    .mm-panel{display:none;position:absolute;top:100%;left:0;right:0;background:var(--navy);max-height:calc(100vh - 100px);overflow-y:auto;box-shadow:0 8px 24px rgba(0,0,0,0.3);z-index:150;}
+    .megamenu.open .mm-panel{display:block;}
+    .mm-item{display:block;width:100%;}
+    .mm-item > button{width:100%;text-align:left;padding:11px 16px;display:block;font-size:0.88rem;border-bottom:none;border-top:1px solid rgba(255,255,255,0.1);}
+    .mm-item:hover .mm-drop{display:none;}
+    .mm-drop{position:static;min-width:0;max-width:none;width:100%;border-radius:0;box-shadow:none;border:none;border-top:1px solid #eee;padding:4px 0;}
+    .mm-item.open .mm-drop{display:block;}
+    .mm-item.open > button{background:#c0392b;border-bottom-color:#FF9933;}
+  }
+  @media (max-width:480px){
+    header{padding:6px 10px;}
+    header h1{font-size:1.05rem;}
+    header p{font-size:0.72rem;}
+    .badge{font-size:0.6rem;}
+    .sitenav a{font-size:0.7rem;padding:4px 7px;}
+  }
 </style>
 </head>
 <body>
@@ -286,7 +329,8 @@
 <nav class="megamenu" id="megamenu">
   <div class="megamenu-inner">
     <div class="mm-brand">🎯 Sector → Sub-sector</div>
-    <!-- mega-menu items injected by JS -->
+    <button class="mm-toggle" id="mmToggle" aria-label="Toggle sector menu" aria-expanded="false">☰</button>
+    <div class="mm-panel" id="mmPanel"><!-- mega-menu items injected by JS --></div>
   </div>
 </nav>
 
@@ -2257,14 +2301,14 @@
 
   // ===== Mega-menu rendering =====
   function renderMegaMenu(){
-    const inner = document.querySelector('.megamenu-inner');
+    const inner = document.querySelector('.mm-panel') || document.querySelector('.megamenu-inner');
     Object.entries(subsectors).forEach(([sector, data])=>{
       const sectorId = 'sec-' + sector.replace(/[^a-z0-9]/gi,'-').toLowerCase();
       const items = data.items.map(it=>{
         const subId = 'sub-' + (sector+'-'+it.name).replace(/[^a-z0-9]/gi,'-').toLowerCase();
         return `<a href="javascript:void(0)" data-sub="${subId}" data-sector="${sector}" data-item="${it.name}">${it.name} <span style="color:#999;font-size:0.75rem;">$${it.value.toFixed(1)}B</span></a>`;
       }).join('');
-      const sectorShort = sector.length>22 ? sector.substring(0,20)+'…' : sector;
+      const sectorShort = sector.length>18 ? sector.substring(0,16)+'…' : sector;
       const mm = document.createElement('div');
       mm.className = 'mm-item';
       mm.innerHTML = `<button title="${sector}">${sectorShort} ▾</button>
@@ -2280,8 +2324,68 @@
         const sector = a.dataset.sector;
         const item = a.dataset.item;
         showDeepDive(sector, item);
+        // Close mobile menu after selection
+        document.getElementById('megamenu').classList.remove('open');
+        document.querySelectorAll('.mm-item.open').forEach(x=>x.classList.remove('open'));
+        const t = document.getElementById('mmToggle'); if(t) t.setAttribute('aria-expanded','false');
       });
     });
+    // Mobile: hamburger toggles whole menu
+    const toggle = document.getElementById('mmToggle');
+    if(toggle){
+      toggle.addEventListener('click', ()=>{
+        const mm = document.getElementById('megamenu');
+        const opened = mm.classList.toggle('open');
+        toggle.setAttribute('aria-expanded', opened?'true':'false');
+        if(!opened) document.querySelectorAll('.mm-item.open').forEach(x=>x.classList.remove('open'));
+      });
+    }
+    // Mobile: click sector button to expand its dropdown (accordion)
+    inner.querySelectorAll('.mm-item > button').forEach(btn=>{
+      btn.addEventListener('click', e=>{
+        if(window.matchMedia('(max-width:768px)').matches){
+          const parent = btn.parentElement;
+          const wasOpen = parent.classList.contains('open');
+          parent.parentElement.querySelectorAll('.mm-item.open').forEach(x=>x.classList.remove('open'));
+          if(!wasOpen) parent.classList.add('open');
+        }
+      });
+    });
+    // Desktop: position fixed dropdown under its button on hover (so it escapes overflow:auto clipping)
+    inner.querySelectorAll('.mm-item').forEach(mm=>{
+      const drop = mm.querySelector('.mm-drop');
+      const btn = mm.querySelector('button');
+      if(!drop || !btn) return;
+      const place = ()=>{
+        if(window.matchMedia('(max-width:768px)').matches) return;
+        const r = btn.getBoundingClientRect();
+        drop.style.top = r.bottom + 'px';
+        let left = r.left;
+        const maxW = Math.min(360, window.innerWidth - 16);
+        if(left + maxW > window.innerWidth - 8) left = window.innerWidth - maxW - 8;
+        if(left < 8) left = 8;
+        drop.style.left = left + 'px';
+      };
+      mm.addEventListener('mouseenter', place);
+      btn.addEventListener('focus', place);
+      mm.addEventListener('mousemove', place);
+    });
+    window.addEventListener('scroll', ()=>{
+      document.querySelectorAll('.mm-item:hover .mm-drop, .mm-item.hover .mm-drop').forEach(d=>{
+        const btn = d.parentElement.querySelector('button');
+        if(btn){ d.style.top = btn.getBoundingClientRect().bottom + 'px'; }
+      });
+    }, {passive:true});
+    // Update --sticky-offset for scroll-margin-top so anchor jumps clear the sticky megamenu
+    const mm = document.getElementById('megamenu');
+    const syncStickyOffsets = ()=>{
+      if(!mm) return;
+      mm.style.top = '';
+      document.documentElement.style.setProperty('--sticky-offset', mm.offsetHeight + 'px');
+    };
+    syncStickyOffsets();
+    window.addEventListener('resize', syncStickyOffsets);
+    window.addEventListener('orientationchange', syncStickyOffsets);
   }
 
   // ===== Deep-dive renderer =====
