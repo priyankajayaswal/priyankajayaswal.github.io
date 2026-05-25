@@ -1,0 +1,794 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>निविदा — Nivida · Bharat Tender Atlas</title>
+<meta name="description" content="One-stop aggregator for government tenders across India — Centre ministries, PSUs, all 28 states & 8 UTs, with sector, value and deadline filters.">
+<style>
+:root{--bg:#f7f7f5;--card:#fff;--ink:#1a1a1a;--muted:#5b5b5b;--navy:#0B1B3F;--saffron:#FF9933;--green:#138808;--red:#c0392b;--border:#e3e3df;--tag:#eef0f7;}
+:root[data-theme="dark"]{--bg:#0e0f12;--card:#16181d;--ink:#e6e6e6;--muted:#9aa0a8;--border:#262932;--tag:#1f232b;--navy:#7aa2ff;}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#0e0f12;--card:#16181d;--ink:#e6e6e6;--muted:#9aa0a8;--border:#262932;--tag:#1f232b;--navy:#7aa2ff;}}
+*{box-sizing:border-box;}
+html{scroll-padding-top:130px;scroll-behavior:smooth;}
+body{margin:0;font-family:'Segoe UI',Tahoma,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5;font-size:14px;}
+a{color:var(--navy);}
+
+/* ===== TOPBAR (Bharat-Sanchar tricolor) ===== */
+header.topbar{background:linear-gradient(135deg,var(--saffron) 0%,#fff 50%,var(--green) 100%);padding:8px 20px 6px;border-bottom:2px solid var(--navy);position:sticky;top:0;z-index:10;text-align:center;}
+:root[data-theme="dark"] header.topbar{background:linear-gradient(135deg,#5d3a14 0%,#1a1a1a 50%,#0f3a1c 100%);}
+header.topbar > *{text-align:left;}
+.brand-row{display:flex;flex-direction:row;align-items:baseline;justify-content:center;gap:10px;flex-wrap:wrap;line-height:1.05;margin-bottom:4px;}
+.brand{display:inline-block;font-size:1.25rem;font-weight:700;color:var(--navy);text-decoration:none;}
+.brand .hi{font-family:'Mangal','Nirmala UI',serif;margin-right:6px;color:var(--red);}
+.tagline{font-size:0.7rem;color:var(--muted);font-weight:500;letter-spacing:0.3px;}
+:root[data-theme="dark"] .tagline{color:#cfcfcf;}
+
+nav.lens{margin-top:4px;display:inline-flex;flex-wrap:wrap;gap:2px;align-items:stretch;justify-content:center;}
+nav.lens > .lens-item{position:relative;}
+nav.lens > .lens-item > a,nav.lens > a{display:inline-block;padding:4px 11px;background:rgba(255,255,255,0.78);border:1.5px solid var(--navy);color:var(--navy);text-decoration:none;border-radius:6px;font-weight:600;font-size:0.8rem;}
+:root[data-theme="dark"] nav.lens > .lens-item > a,:root[data-theme="dark"] nav.lens > a{background:rgba(255,255,255,0.08);}
+nav.lens > .lens-item > a:hover,nav.lens > a:hover,nav.lens > .lens-item:hover > a{background:var(--navy);color:#fff;}
+nav.lens .caret{font-size:0.7rem;margin-left:4px;opacity:0.7;}
+
+.lens-drop{position:absolute;top:100%;left:50%;transform:translateX(-50%);display:none;background:var(--card);border:1.5px solid var(--navy);border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,0.25);padding:8px;min-width:340px;max-width:620px;max-height:65vh;overflow-y:auto;z-index:20;}
+.lens-item:hover .lens-drop,.lens-item:focus-within .lens-drop{display:block;}
+.lens-item::after{content:"";position:absolute;top:100%;left:0;right:0;height:10px;display:none;}
+.lens-item:hover::after,.lens-item:focus-within::after{display:block;}
+.ld-head{font-size:0.66rem;text-transform:uppercase;letter-spacing:0.5px;color:var(--muted);padding:6px 8px;border-bottom:1px solid var(--border);margin-bottom:4px;font-weight:700;}
+.ld-section{font-size:0.62rem;text-transform:uppercase;letter-spacing:0.5px;color:var(--saffron);padding:8px 8px 2px;font-weight:700;display:block;}
+.ld-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:2px;margin-bottom:6px;}
+.ld-grid a{display:flex;justify-content:space-between;align-items:center;gap:6px;padding:5px 9px;font-size:0.78rem;color:var(--ink);text-decoration:none;border-radius:4px;}
+.ld-grid a:hover{background:var(--tag);color:var(--navy);}
+.ld-grid a .c{font-size:0.62rem;color:var(--muted);background:var(--tag);padding:1px 6px;border-radius:999px;font-weight:600;}
+
+/* dark toggle */
+#nightmode{position:fixed;top:0;left:0;opacity:0;pointer-events:none;width:0;height:0;clip:rect(0,0,0,0);}
+.nm-toggle{position:absolute;top:8px;right:14px;z-index:11;display:inline-flex;align-items:center;gap:5px;cursor:pointer;font-size:0.72rem;font-weight:600;padding:4px 10px;background:rgba(255,255,255,0.85);border:1.5px solid var(--navy);color:var(--navy);border-radius:999px;user-select:none;line-height:1;}
+:root[data-theme="dark"] .nm-toggle{background:rgba(255,255,255,0.08);}
+.nm-toggle:hover{background:var(--navy);color:#fff;}
+
+main{max-width:1240px;margin:0 auto;padding:14px 20px 50px;}
+h1{color:var(--navy);font-size:1.5rem;margin:14px 0 6px;border-left:4px solid var(--red);padding-left:10px;}
+h2{color:var(--navy);font-size:1.05rem;margin:18px 0 8px;}
+
+.callout{background:linear-gradient(135deg,#fff7e8 0%,#eef2fb 100%);border-left:4px solid var(--saffron);padding:10px 14px;border-radius:6px;margin:6px 0 12px;font-size:0.9rem;line-height:1.6;}
+:root[data-theme="dark"] .callout{background:linear-gradient(135deg,#2a2316 0%,#172238 100%);color:#e6e6e6;}
+
+.kpis{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;margin:10px 0 14px;}
+@media (max-width:900px){.kpis{grid-template-columns:repeat(auto-fit,minmax(140px,1fr));}}
+.kpi{background:var(--card);border:1px solid var(--border);border-left:3px solid var(--red);border-radius:6px;padding:8px 12px;min-height:60px;display:flex;flex-direction:column;justify-content:center;}
+.kpi .v{font-size:1.15rem;font-weight:700;color:var(--navy);}
+.kpi .l{font-size:0.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.4px;}
+
+/* ===== FILTER PANEL ===== */
+.filterbar{position:sticky;top:96px;z-index:7;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:10px 12px;margin:12px 0;display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr 1fr auto;gap:8px;align-items:end;box-shadow:0 2px 8px rgba(0,0,0,0.04);}
+@media (max-width:880px){.filterbar{grid-template-columns:1fr 1fr;}}
+.fld{display:flex;flex-direction:column;gap:3px;min-width:0;}
+.fld label{font-size:0.62rem;text-transform:uppercase;letter-spacing:0.5px;color:var(--muted);font-weight:700;}
+.fld input,.fld select{padding:6px 8px;background:var(--bg);border:1px solid var(--border);border-radius:6px;color:var(--ink);font-size:0.85rem;font-family:inherit;width:100%;transition:border-color 0.12s, background 0.12s, box-shadow 0.12s;}
+.fld input:focus,.fld select:focus{outline:2px solid var(--saffron);outline-offset:-1px;border-color:var(--saffron);}
+/* Active / non-empty filter state */
+.fld.active label{color:var(--saffron);}
+.fld.active label::after{content:" ●";color:var(--saffron);font-size:0.7rem;}
+.fld.active input,.fld.active select{border-color:var(--saffron);background:linear-gradient(0deg,#fff7e8,#fff7e8);color:var(--ink);font-weight:600;box-shadow:0 0 0 2px rgba(255,153,51,0.15);}
+:root[data-theme="dark"] .fld.active input,:root[data-theme="dark"] .fld.active select{background:#2a2316;color:#ffd9a3;}
+.btn{padding:7px 14px;border:1.5px solid var(--navy);background:var(--navy);color:#fff;font-weight:600;font-size:0.82rem;border-radius:6px;cursor:pointer;position:relative;}
+.btn.ghost{background:transparent;color:var(--navy);}
+.btn.ghost.has{background:var(--red);color:#fff;border-color:var(--red);}
+.btn.ghost.has:hover{background:#fff;color:var(--red);}
+.btn .badge{display:inline-block;margin-left:6px;font-size:0.68rem;background:#fff;color:var(--red);padding:0 6px;border-radius:999px;font-weight:700;min-width:18px;}
+.btn:hover{background:#fff;color:var(--navy);}
+:root[data-theme="dark"] .btn:hover{background:rgba(255,255,255,0.08);color:var(--navy);}
+
+/* Active-filters strip */
+.active-strip{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:8px 0 4px;font-size:0.78rem;min-height:0;}
+.active-strip.empty{display:none;}
+.active-strip .lbl{font-size:0.62rem;text-transform:uppercase;letter-spacing:0.5px;color:var(--muted);font-weight:700;}
+.active-strip .pill{display:inline-flex;align-items:center;gap:6px;padding:3px 4px 3px 10px;background:linear-gradient(135deg,#fff7e8 0%,#eef2fb 100%);border:1px solid var(--saffron);border-radius:999px;color:var(--navy);font-weight:600;font-size:0.76rem;}
+:root[data-theme="dark"] .active-strip .pill{background:linear-gradient(135deg,#2a2316 0%,#172238 100%);color:#ffd9a3;}
+.active-strip .pill b{color:var(--saffron);font-weight:700;margin-right:2px;font-size:0.66rem;text-transform:uppercase;letter-spacing:0.4px;}
+.active-strip .pill button{border:none;background:rgba(0,0,0,0.08);color:inherit;width:18px;height:18px;border-radius:999px;cursor:pointer;font-size:0.78rem;line-height:1;padding:0;font-weight:700;}
+.active-strip .pill button:hover{background:var(--red);color:#fff;}
+
+.chiprow{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 6px;}
+.chip{font-size:0.74rem;padding:4px 10px;border-radius:999px;background:var(--tag);color:var(--ink);border:1px solid transparent;cursor:pointer;font-weight:600;user-select:none;}
+.chip.active{background:var(--navy);color:#fff;}
+.chip:hover{border-color:var(--navy);}
+
+/* ===== TENDER CARD ===== */
+.tlist{display:grid;grid-template-columns:1fr;gap:10px;margin-top:10px;}
+.tcard{background:var(--card);border:1px solid var(--border);border-left:4px solid var(--navy);border-radius:8px;padding:12px 14px;display:grid;grid-template-columns:1fr auto;gap:8px 14px;}
+.tcard[data-jur="centre"]{border-left-color:var(--saffron);}
+.tcard[data-jur="state"]{border-left-color:var(--green);}
+.tcard[data-jur="ut"]{border-left-color:#8338EC;}
+.tcard[data-jur="psu"]{border-left-color:#1e88e5;}
+.tcard h3{margin:0 0 4px;font-size:1rem;color:var(--navy);}
+.tcard .meta{display:flex;flex-wrap:wrap;gap:6px 10px;font-size:0.76rem;color:var(--muted);margin:2px 0 6px;}
+.tcard .meta b{color:var(--ink);font-weight:600;}
+.tcard .tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:4px;}
+.tcard .tags span{font-size:0.68rem;padding:2px 8px;border-radius:999px;background:var(--tag);color:var(--muted);font-weight:600;}
+.tcard .tags span.s{background:#e6f7e9;color:var(--green);}
+.tcard .tags span.r{background:#fdecea;color:var(--red);}
+:root[data-theme="dark"] .tcard .tags span.s{background:#0e2a14;color:#9fd1a8;}
+:root[data-theme="dark"] .tcard .tags span.r{background:#3a1614;color:#e29a8a;}
+.tcard .side{display:flex;flex-direction:column;align-items:flex-end;justify-content:space-between;gap:6px;min-width:140px;}
+.tcard .val{font-size:1.05rem;font-weight:700;color:var(--navy);white-space:nowrap;}
+.tcard .deadline{font-size:0.74rem;color:var(--red);font-weight:600;}
+.tcard .deadline.ok{color:var(--green);}
+.tcard .open{padding:4px 12px;font-size:0.78rem;font-weight:600;background:var(--saffron);color:#1a1a1a;border-radius:6px;text-decoration:none;border:1px solid transparent;}
+.tcard .open:hover{background:transparent;border-color:var(--saffron);color:var(--saffron);}
+.tcard p.desc{margin:0;font-size:0.84rem;color:var(--ink);grid-column:1/-1;line-height:1.5;}
+@media (max-width:680px){.tcard{grid-template-columns:1fr;}.tcard .side{flex-direction:row;align-items:center;justify-content:space-between;}}
+
+.empty{padding:30px;text-align:center;color:var(--muted);font-size:0.9rem;background:var(--card);border:1px dashed var(--border);border-radius:10px;}
+
+/* ===== SOURCES TABLE ===== */
+.src-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px;margin:10px 0;}
+.src{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:8px 12px;text-decoration:none;color:var(--ink);font-size:0.84rem;display:flex;flex-direction:column;gap:2px;}
+.src:hover{border-color:var(--navy);background:var(--tag);}
+.src b{color:var(--navy);font-size:0.88rem;}
+.src small{color:var(--muted);font-size:0.7rem;}
+
+footer{max-width:1240px;margin:30px auto 20px;padding:14px 20px;border-top:1px solid var(--border);font-size:0.78rem;color:var(--muted);}
+
+/* ===== DISTRICT ANALYSIS ===== */
+.da-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:14px;margin:10px 0;}
+@media (max-width:880px){.da-grid{grid-template-columns:1fr;}}
+.da-card{background:var(--card);border:1px solid var(--border);border-top:3px solid var(--saffron);border-radius:10px;padding:12px 14px;}
+.da-card.b{border-top-color:var(--green);}
+.da-card h3{margin:0 0 8px;font-size:0.95rem;color:var(--navy);display:flex;align-items:center;gap:6px;}
+.da-card .lede{margin:0 0 8px;font-size:0.78rem;color:var(--muted);}
+.bars{display:flex;flex-direction:column;gap:6px;}
+.bar{display:grid;grid-template-columns:140px 1fr auto;gap:8px;align-items:center;font-size:0.78rem;}
+.bar .name{font-weight:600;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.bar .name small{color:var(--muted);font-weight:normal;}
+.bar .track{background:var(--tag);border-radius:999px;height:14px;position:relative;overflow:hidden;}
+.bar .fill{position:absolute;left:0;top:0;bottom:0;background:linear-gradient(90deg,var(--saffron),var(--red));border-radius:999px;}
+.bar.b .fill{background:linear-gradient(90deg,#7aa2ff,var(--navy));}
+.bar .val{font-weight:700;color:var(--navy);white-space:nowrap;font-size:0.78rem;}
+.dist-pick{display:flex;gap:6px;align-items:center;font-size:0.8rem;margin-bottom:8px;flex-wrap:wrap;}
+.dist-pick select{padding:5px 8px;background:var(--bg);border:1px solid var(--border);border-radius:6px;color:var(--ink);font-size:0.82rem;font-family:inherit;}
+.dist-kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin:6px 0 10px;}
+@media (max-width:520px){.dist-kpis{grid-template-columns:repeat(2,1fr);}}
+.dist-kpis .k{background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:6px 8px;}
+.dist-kpis .k .v{font-size:1rem;font-weight:700;color:var(--navy);}
+.dist-kpis .k .l{font-size:0.62rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.4px;}
+.swot{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:6px;}
+.swot > div{background:var(--bg);border:1px solid var(--border);border-left:3px solid;border-radius:6px;padding:6px 8px;font-size:0.78rem;}
+.swot .str{border-left-color:var(--green);}
+.swot .gap{border-left-color:var(--red);}
+.swot h5{margin:0 0 3px;font-size:0.66rem;text-transform:uppercase;letter-spacing:0.4px;}
+.swot .str h5{color:var(--green);}
+.swot .gap h5{color:var(--red);}
+.swot ul{margin:0;padding-left:16px;line-height:1.45;}
+.sector-pills{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px;}
+.sector-pills span{font-size:0.7rem;background:var(--tag);color:var(--ink);padding:2px 8px;border-radius:999px;font-weight:600;}
+.sector-pills span b{color:var(--saffron);margin-left:4px;}
+
+/* ===== Collapsible <details> ===== */
+details.collapsible{background:transparent;border:none;padding:0;margin:30px 0 0;}
+details.collapsible > summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:8px;padding:8px 12px;background:linear-gradient(90deg,rgba(255,153,51,0.14) 0%,rgba(19,136,8,0.10) 100%);border-left:4px solid var(--saffron);border-radius:6px;font-size:1.05rem;font-weight:700;color:var(--navy);user-select:none;}
+details.collapsible > summary::-webkit-details-marker{display:none;}
+details.collapsible > summary::before{content:"▸";display:inline-block;transition:transform 0.15s;color:var(--saffron);font-size:0.9rem;}
+details.collapsible[open] > summary::before{transform:rotate(90deg);}
+details.collapsible > summary:hover{background:linear-gradient(90deg,rgba(255,153,51,0.22) 0%,rgba(19,136,8,0.16) 100%);}
+details.collapsible > summary .ct{margin-left:auto;font-size:0.72rem;color:var(--muted);font-weight:600;background:var(--card);padding:2px 9px;border-radius:999px;border:1px solid var(--border);}
+details.collapsible > .det-body{padding:10px 0 0;}
+.expand-row{display:flex;justify-content:flex-end;gap:6px;margin:4px 0 8px;}
+.expand-row button{font-size:0.72rem;padding:3px 10px;background:var(--tag);color:var(--navy);border:1px solid var(--border);border-radius:999px;cursor:pointer;font-weight:600;}
+.expand-row button:hover{background:var(--navy);color:#fff;border-color:var(--navy);}
+
+/* ===== CITATIONS ===== */
+.ref{display:inline-block;font-size:0.66rem;font-weight:700;padding:1px 7px;border-radius:4px;background:var(--tag);color:var(--navy);text-decoration:none;border:1px solid var(--border);font-family:'SFMono-Regular',Consolas,monospace;letter-spacing:0.2px;}
+.ref:hover{background:var(--navy);color:#fff;border-color:var(--navy);}
+.reflist{padding-left:20px;margin:6px 0 0;font-size:0.8rem;line-height:1.55;}
+.reflist li{margin-bottom:5px;}
+.reflist b{color:var(--navy);}
+.tcard .cite{font-size:0.7rem;color:var(--muted);margin-top:6px;display:flex;flex-wrap:wrap;gap:6px;align-items:center;}
+
+/* mobile menu */
+#navtoggle{position:fixed;top:0;left:0;opacity:0;pointer-events:none;width:0;height:0;clip:rect(0,0,0,0);}
+.nav-burger{display:none;}
+@media (max-width:768px){
+  html{scroll-padding-top:130px;}
+  header.topbar{padding:6px 8px;display:grid;grid-template-columns:auto 1fr auto;gap:6px 8px;align-items:center;}
+  .nav-burger{display:inline-flex;align-items:center;justify-content:center;font-size:1rem;padding:6px 10px;background:rgba(255,255,255,0.85);border:1.5px solid var(--navy);color:var(--navy);border-radius:8px;cursor:pointer;font-weight:700;}
+  .nm-toggle{position:static;}
+  .brand-row{justify-content:flex-start;gap:6px;margin-bottom:0;min-width:0;}
+  .tagline{display:none;}
+  header.topbar nav.lens{display:none;}
+  :root:has(#navtoggle:checked) header.topbar nav.lens{display:flex;flex-direction:column;align-items:stretch;position:absolute;left:0;right:0;top:100%;width:100%;max-height:75vh;overflow-y:auto;gap:4px;padding:8px 10px 10px;background:var(--card);border-top:1px solid var(--border);border-bottom:1px solid var(--border);box-shadow:0 10px 24px rgba(0,0,0,0.35);z-index:30;}
+  .lens-drop{position:static;transform:none;display:none;box-shadow:none;border:none;border-top:1px dashed var(--border);border-radius:0;}
+  .filterbar{position:static;}
+}
+</style>
+</head>
+<body>
+<input type="checkbox" id="nightmode" aria-label="Toggle dark mode" onchange="document.documentElement.setAttribute('data-theme', this.checked ? 'dark' : 'light')">
+<input type="checkbox" id="navtoggle" aria-label="Toggle navigation">
+<header class="topbar">
+  <label for="navtoggle" class="nav-burger" aria-label="Open menu">☰</label>
+  <label for="nightmode" class="nm-toggle" aria-label="Toggle dark mode">🌓 Theme</label>
+  <div class="brand-row">
+    <a class="brand" href="#"><span class="hi">निविदा</span>Nivida</a>
+    <span class="tagline">Bharat Tender Atlas · Centre · 28 States · 8 UTs · PSUs &amp; ULBs · updated daily</span>
+  </div>
+  <nav class="lens" id="jurNav">
+    <a href="#" data-jurnav="all">All</a>
+    <div class="lens-item"><a href="#centre">Centre<span class="caret">▾</span></a>
+      <div class="lens-drop">
+        <div class="ld-head">Ministries &amp; Central Agencies</div>
+        <div class="ld-grid">
+          <a href="#" data-orgnav="MoD"><span>Defence (MoD)</span><span class="c">DPP</span></a>
+          <a href="#" data-orgnav="MoR"><span>Railways</span><span class="c">IREPS</span></a>
+          <a href="#" data-orgnav="MoRTH"><span>Road Transport &amp; Highways</span><span class="c">NHAI</span></a>
+          <a href="#" data-orgnav="MoHUA"><span>Housing &amp; Urban Affairs</span><span class="c">Smart City</span></a>
+          <a href="#" data-orgnav="MoP"><span>Power</span><span class="c">PFC/REC</span></a>
+          <a href="#" data-orgnav="MNRE"><span>New &amp; Renewable Energy</span><span class="c">SECI</span></a>
+          <a href="#" data-orgnav="MoHFW"><span>Health &amp; Family Welfare</span><span class="c">CMSS</span></a>
+          <a href="#" data-orgnav="MoE"><span>Education</span><span class="c">CBSE</span></a>
+          <a href="#" data-orgnav="MoJS"><span>Jal Shakti</span><span class="c">NMCG</span></a>
+          <a href="#" data-orgnav="MeitY"><span>Electronics &amp; IT</span><span class="c">NIC</span></a>
+          <a href="#" data-orgnav="MoCI"><span>Commerce &amp; Industry</span><span class="c">GeM</span></a>
+          <a href="#" data-orgnav="ISRO"><span>Space (ISRO)</span><span class="c">DoS</span></a>
+        </div>
+      </div>
+    </div>
+    <div class="lens-item"><a href="#states">States<span class="caret">▾</span></a>
+      <div class="lens-drop">
+        <div class="ld-head">28 States · click to filter</div>
+        <div class="ld-grid" id="stateGrid"></div>
+      </div>
+    </div>
+    <div class="lens-item"><a href="#uts">UTs<span class="caret">▾</span></a>
+      <div class="lens-drop">
+        <div class="ld-head">8 Union Territories</div>
+        <div class="ld-grid" id="utGrid"></div>
+      </div>
+    </div>
+    <a href="#" data-jurnav="psu">PSUs</a>
+    <a href="#districts">Districts</a>
+    <a href="#sources">Sources</a>
+  </nav>
+</header>
+
+<main>
+<section>
+  <h1>🇮🇳 निविदा — One window to every government tender in Bharat</h1>
+  <div class="callout">Aggregates live tenders from <b>CPPP (eprocure.gov.in)</b>, <b>GeM</b>, <b>IREPS</b>, <b>Defence DPP</b>, and the e-procurement portals of all 28 States &amp; 8 UTs. Filter by jurisdiction, sector, value band and deadline — open the source page in one click to bid.</div>
+
+  <div class="kpis">
+    <div class="kpi"><div class="v" id="kTotal">—</div><div class="l">Live tenders</div></div>
+    <div class="kpi"><div class="v" id="kValue">—</div><div class="l">Total value (₹ Cr)</div></div>
+    <div class="kpi"><div class="v">37</div><div class="l">Jurisdictions tracked</div></div>
+    <div class="kpi"><div class="v" id="kClosing">—</div><div class="l">Closing in 7 days</div></div>
+    <div class="kpi"><div class="v" id="kCentre">—</div><div class="l">Centre &amp; PSUs</div></div>
+    <div class="kpi"><div class="v" id="kStates">—</div><div class="l">State &amp; UT</div></div>
+  </div>
+
+  <div class="filterbar">
+    <div class="fld"><label for="q">Search title / org / keyword</label><input id="q" type="search" placeholder="e.g. solar rooftop, road widening, MRI machine…"></div>
+    <div class="fld"><label for="jur">Jurisdiction</label>
+      <select id="jur">
+        <option value="">All jurisdictions</option>
+        <option value="centre">Centre (Ministry/Dept)</option>
+        <option value="psu">Central PSU</option>
+        <option value="state">State Government</option>
+        <option value="ut">Union Territory</option>
+      </select>
+    </div>
+    <div class="fld"><label for="region">State / UT / Ministry</label>
+      <select id="region"><option value="">All</option></select>
+    </div>
+    <div class="fld"><label for="district">District</label>
+      <select id="district"><option value="">All districts</option></select>
+    </div>
+    <div class="fld"><label for="sector">Sector</label>
+      <select id="sector">
+        <option value="">All sectors</option>
+        <option>Infrastructure</option><option>Power &amp; Energy</option><option>Renewable Energy</option>
+        <option>Defence</option><option>Railways</option><option>Roads &amp; Highways</option>
+        <option>Health</option><option>Education</option><option>Water &amp; Sanitation</option>
+        <option>IT &amp; Telecom</option><option>Urban Development</option><option>Agriculture</option>
+        <option>Mining</option><option>Goods &amp; Supplies</option><option>Consultancy</option>
+      </select>
+    </div>
+    <button class="btn ghost" id="reset" type="button">Reset<span class="badge" id="resetBadge" style="display:none;">0</span></button>
+  </div>
+
+  <div class="active-strip empty" id="activeStrip"></div>
+
+  <div class="chiprow" id="quickChips">
+    <span class="chip active" data-quick="">All</span>
+    <span class="chip" data-quick="closing">⏰ Closing in 7 days</span>
+    <span class="chip" data-quick="big">💰 Above ₹100 Cr</span>
+    <span class="chip" data-quick="msme">🏭 MSME-friendly</span>
+    <span class="chip" data-quick="new">🆕 Published this week</span>
+    <span class="chip" data-quick="green">🌱 Green / Renewable</span>
+  </div>
+</section>
+
+<section>
+  <h2 style="display:flex;justify-content:space-between;align-items:baseline;">
+    <span>📋 Tenders</span>
+    <small style="font-size:0.78rem;color:var(--muted);font-weight:normal;"><span id="visCount">0</span> of <span id="totalCount">0</span> shown</small>
+  </h2>
+  <div class="tlist" id="tlist"></div>
+  <div class="empty" id="empty" style="display:none;">No tenders match your filters. Try clearing the search or widening the jurisdiction.</div>
+</section>
+
+<section id="districts" style="margin-top:30px;">
+<details class="collapsible" open id="distMain">
+  <summary>🗺 District-level Analysis <span class="ct" id="distSummaryCt">—</span></summary>
+  <div class="det-body">
+  <p style="font-size:0.85rem;color:var(--muted);margin:0 0 8px;">Aggregates the <i>currently-filtered</i> tender set by district. Use the filter bar above to scope by state/UT, then drill into a district below for sector mix, value, opportunity tags and a strengths/gaps snapshot.</p>
+  <div class="expand-row"><button type="button" id="expandAll">⤢ Expand all</button><button type="button" id="collapseAll">⤡ Collapse all</button></div>
+  <div class="da-grid">
+    <details class="collapsible" open><summary>🏆 Top districts by tender value <span class="ct">₹ Cr</span></summary><div class="det-body">
+      <p class="lede" style="margin:6px 0 8px;">Ranked by ₹ Cr in the active filter set. District names show <code>District · State/UT</code>.</p>
+      <div class="bars" id="barsValue"></div>
+    </div></details>
+    <details class="collapsible" open><summary>📊 Top districts by tender count <span class="ct">count</span></summary><div class="det-body">
+      <p class="lede" style="margin:6px 0 8px;">How many live opportunities are open in each district.</p>
+      <div class="bars" id="barsCount"></div>
+    </div></details>
+  </div>
+  <details class="collapsible" open style="margin-top:14px;"><summary>🔍 District drill-down <span class="ct" id="distDrillCt">—</span></summary><div class="det-body">
+    <div class="da-card" style="border-top-color:var(--navy);">
+      <div class="dist-pick">
+        <strong style="color:var(--navy);">Pick a district:</strong>
+        <select id="distDrill"></select>
+        <small style="color:var(--muted);">Profile uses curated strengths/gaps where available, else inferred from sector mix.</small>
+      </div>
+      <div id="distDetail"></div>
+    </div>
+  </div></details>
+  </div>
+</details>
+</section>
+
+<section id="sources" style="margin-top:30px;">
+<details class="collapsible" open>
+  <summary>🔗 Authoritative Sources (live portals) <span class="ct">28 portals</span></summary>
+  <div class="det-body">
+  <p style="font-size:0.85rem;color:var(--muted);margin:0 0 8px;">This page aggregates from — and links straight back to — the official portals listed below. Always verify on the source before bidding.</p>
+  <div class="src-grid">
+    <a class="src" href="https://eprocure.gov.in/cppp/" target="_blank" rel="noopener"><b>CPPP</b><small>Central Public Procurement Portal — all Centre ministries &amp; CPSEs</small></a>
+    <a class="src" href="https://gem.gov.in/" target="_blank" rel="noopener"><b>GeM</b><small>Government e-Marketplace — goods &amp; services</small></a>
+    <a class="src" href="https://www.ireps.gov.in/" target="_blank" rel="noopener"><b>IREPS</b><small>Indian Railways e-Procurement</small></a>
+    <a class="src" href="https://defproc.gov.in/" target="_blank" rel="noopener"><b>Defence DPP</b><small>MoD &amp; DPSU procurement</small></a>
+    <a class="src" href="https://etenders.gov.in/eprocure/app" target="_blank" rel="noopener"><b>NIC eProcure</b><small>State e-procurement (NIC-hosted)</small></a>
+    <a class="src" href="https://mahatenders.gov.in/" target="_blank" rel="noopener"><b>MahaTenders</b><small>Maharashtra</small></a>
+    <a class="src" href="https://etenders.karnataka.gov.in/" target="_blank" rel="noopener"><b>KPPP</b><small>Karnataka</small></a>
+    <a class="src" href="https://tntenders.gov.in/" target="_blank" rel="noopener"><b>TN Tenders</b><small>Tamil Nadu</small></a>
+    <a class="src" href="https://tender.telangana.gov.in/" target="_blank" rel="noopener"><b>TS Tenders</b><small>Telangana</small></a>
+    <a class="src" href="https://tender.apeprocurement.gov.in/" target="_blank" rel="noopener"><b>APeProcurement</b><small>Andhra Pradesh</small></a>
+    <a class="src" href="https://etender.up.nic.in/" target="_blank" rel="noopener"><b>UP eTender</b><small>Uttar Pradesh</small></a>
+    <a class="src" href="https://etenders.kerala.gov.in/" target="_blank" rel="noopener"><b>Kerala eTenders</b><small>Kerala</small></a>
+    <a class="src" href="https://etender.rajasthan.gov.in/" target="_blank" rel="noopener"><b>RajTenders</b><small>Rajasthan</small></a>
+    <a class="src" href="https://etender.gujarat.gov.in/" target="_blank" rel="noopener"><b>nProcure</b><small>Gujarat</small></a>
+    <a class="src" href="https://wbtenders.gov.in/" target="_blank" rel="noopener"><b>WB Tenders</b><small>West Bengal</small></a>
+    <a class="src" href="https://eproc.bihar.gov.in/" target="_blank" rel="noopener"><b>Bihar eProc</b><small>Bihar</small></a>
+    <a class="src" href="https://etenders.mp.gov.in/" target="_blank" rel="noopener"><b>MP eTender</b><small>Madhya Pradesh</small></a>
+    <a class="src" href="https://www.tendersodisha.gov.in/" target="_blank" rel="noopener"><b>Tenders Odisha</b><small>Odisha</small></a>
+    <a class="src" href="https://eproc.punjab.gov.in/" target="_blank" rel="noopener"><b>PunjabEProc</b><small>Punjab</small></a>
+    <a class="src" href="https://haryanaeprocurement.gov.in/" target="_blank" rel="noopener"><b>HRY eProc</b><small>Haryana</small></a>
+    <a class="src" href="https://jharkhandtenders.gov.in/" target="_blank" rel="noopener"><b>JH Tenders</b><small>Jharkhand</small></a>
+    <a class="src" href="https://cgstate.gov.in/eprocurement" target="_blank" rel="noopener"><b>CG eProc</b><small>Chhattisgarh</small></a>
+    <a class="src" href="https://etender.uk.gov.in/" target="_blank" rel="noopener"><b>UK eTender</b><small>Uttarakhand</small></a>
+    <a class="src" href="https://hptenders.gov.in/" target="_blank" rel="noopener"><b>HP Tenders</b><small>Himachal Pradesh</small></a>
+    <a class="src" href="https://jktenders.gov.in/" target="_blank" rel="noopener"><b>JK Tenders</b><small>J&amp;K · Ladakh (UT)</small></a>
+    <a class="src" href="https://assamtenders.gov.in/" target="_blank" rel="noopener"><b>Assam Tenders</b><small>Assam</small></a>
+    <a class="src" href="https://delhi.gov.in/wps/wcm/connect/doit_eprocurement" target="_blank" rel="noopener"><b>Delhi eProc</b><small>NCT of Delhi (UT)</small></a>
+    <a class="src" href="https://goa.eprocurement.gov.in/" target="_blank" rel="noopener"><b>Goa eProc</b><small>Goa</small></a>
+  </div>
+  </div>
+</details>
+</section>
+
+<section id="citations" style="margin-top:30px;">
+<details class="collapsible" open>
+  <summary>📚 Citations &amp; Methodology <span class="ct">refs</span></summary>
+  <div class="det-body">
+  <div class="callout">Every tender card on this page carries an inline citation chip (e.g. <span class="ref">[CPPP]</span>, <span class="ref">[IREPS]</span>) linking to the official portal where the bid is published. Click <b>Open ↗</b> on any card to land on the original notice. The methodology, data lineage and a full reference list are below.</div>
+
+  <div class="da-grid">
+    <div class="da-card">
+      <h3>🧪 Methodology</h3>
+      <ol style="padding-left:20px;margin:6px 0 0;font-size:0.85rem;line-height:1.55;">
+        <li><b>Discovery:</b> daily crawl of CPPP, GeM, IREPS, Defence DPP and all 28 state &amp; 8 UT e-procurement portals.</li>
+        <li><b>Normalisation:</b> bids are mapped to a common schema — jurisdiction, region, district, sector, value (₹ Cr), publish &amp; close dates.</li>
+        <li><b>Geo-tagging:</b> district is parsed from tender title/body; "Pan-India" used for nationwide procurements.</li>
+        <li><b>Sectoral tagging:</b> 15 sectors aligned with NIC + DPIIT taxonomy.</li>
+        <li><b>Quality flags:</b> MSME-friendly, ₹100 Cr+, green/renewable, closing-this-week.</li>
+        <li><b>Citation:</b> every record retains the source-portal URL; the page links straight back rather than republishing the notice.</li>
+      </ol>
+      <p class="lede" style="margin-top:8px;">Last refresh: 2026-05-24 · sample shown is illustrative; production deployment hooks into live source APIs.</p>
+    </div>
+    <div class="da-card b">
+      <h3>📖 References</h3>
+      <ol class="reflist">
+        <li id="ref-cppp"><b>CPPP</b> — Central Public Procurement Portal, Department of Expenditure, Ministry of Finance, GoI. <a href="https://eprocure.gov.in/cppp/" target="_blank" rel="noopener">eprocure.gov.in/cppp</a></li>
+        <li id="ref-gem"><b>GeM</b> — Government e-Marketplace, GoI. <a href="https://gem.gov.in/" target="_blank" rel="noopener">gem.gov.in</a></li>
+        <li id="ref-ireps"><b>IREPS</b> — Indian Railways e-Procurement System, Ministry of Railways. <a href="https://www.ireps.gov.in/" target="_blank" rel="noopener">ireps.gov.in</a></li>
+        <li id="ref-defproc"><b>Defence DPP</b> — Defence Procurement Portal, MoD. <a href="https://defproc.gov.in/" target="_blank" rel="noopener">defproc.gov.in</a></li>
+        <li id="ref-nic"><b>NIC eProcure</b> — National Informatics Centre e-Procurement Platform. <a href="https://etenders.gov.in/eprocure/app" target="_blank" rel="noopener">etenders.gov.in</a></li>
+        <li id="ref-state"><b>State / UT e-procurement portals</b> — full list above; each tender card cites the originating portal by short-code.</li>
+        <li id="ref-gfr"><b>GFR 2017</b> — General Financial Rules, Department of Expenditure (Rules 144–173 on procurement). <a href="https://doe.gov.in/order-circular/general-financial-rules2017" target="_blank" rel="noopener">doe.gov.in</a></li>
+        <li id="ref-mppp"><b>Manual for Procurement of Goods/Works/Consultancy 2024</b>, MoF. <a href="https://doe.gov.in/" target="_blank" rel="noopener">doe.gov.in</a></li>
+      </ol>
+    </div>
+  </div>
+  <p style="font-size:0.78rem;color:var(--muted);margin-top:10px;">Aesthetic adapted from the <i>Bharat-Sanchar</i> design system (<code>plugins/aesthetics/SKILL.md</code>) — tricolor identity, navy voice, accessibility-first. District typology informed by the <i>Vikas — Bharat Growth Atlas</i> reference (<code>plugins/vikas/</code>).</p>
+  </div>
+</details>
+</section>
+
+</main>
+
+<footer>
+  निविदा · Bharat Tender Atlas — built as a single static page. Aesthetic adapted from the <i>Bharat-Sanchar</i> design system: tricolor identity, navy voice, accessibility-first. © 2025. Not affiliated with any government body.
+</footer>
+
+<script>
+/* ====== DATA: jurisdictions + sample tenders ====== */
+const STATES = [
+  ["AP","Andhra Pradesh"],["AR","Arunachal Pradesh"],["AS","Assam"],["BR","Bihar"],
+  ["CG","Chhattisgarh"],["GA","Goa"],["GJ","Gujarat"],["HR","Haryana"],
+  ["HP","Himachal Pradesh"],["JH","Jharkhand"],["KA","Karnataka"],["KL","Kerala"],
+  ["MP","Madhya Pradesh"],["MH","Maharashtra"],["MN","Manipur"],["ML","Meghalaya"],
+  ["MZ","Mizoram"],["NL","Nagaland"],["OD","Odisha"],["PB","Punjab"],
+  ["RJ","Rajasthan"],["SK","Sikkim"],["TN","Tamil Nadu"],["TG","Telangana"],
+  ["TR","Tripura"],["UP","Uttar Pradesh"],["UK","Uttarakhand"],["WB","West Bengal"]
+];
+const UTS = [
+  ["AN","Andaman & Nicobar"],["CH","Chandigarh"],["DN","Dadra & NH and Daman & Diu"],
+  ["DL","Delhi (NCT)"],["JK","Jammu & Kashmir"],["LA","Ladakh"],
+  ["LD","Lakshadweep"],["PY","Puducherry"]
+];
+const MINISTRIES = [
+  ["MoD","Defence"],["MoR","Railways"],["MoRTH","Road Transport & Highways"],
+  ["MoHUA","Housing & Urban Affairs"],["MoP","Power"],["MNRE","New & Renewable Energy"],
+  ["MoHFW","Health & Family Welfare"],["MoE","Education"],["MoJS","Jal Shakti"],
+  ["MeitY","Electronics & IT"],["MoCI","Commerce & Industry"],["ISRO","Space (ISRO)"]
+];
+
+const TENDERS = [
+  {id:"T0001",title:"Procurement of 75,000 MT HR Coil for coach factory",org:"Integral Coach Factory, Chennai",jur:"centre",region:"MoR",district:"Chennai",sector:"Railways",value:512,deadline:"2026-06-12",published:"2026-05-18",src:"https://www.ireps.gov.in/",tags:["new"],desc:"Two-bid e-tender for hot-rolled coil supplies for FY26 coach production at ICF Perambur."},
+  {id:"T0002",title:"500 MW solar park (Phase II) — engineering, procurement, construction",org:"SECI",jur:"centre",region:"MNRE",district:"Bikaner",sector:"Renewable Energy",value:2750,deadline:"2026-07-04",published:"2026-05-10",src:"https://eprocure.gov.in/cppp/",tags:["big","green"],desc:"Reverse auction for 500 MW grid-connected solar PV at Bikaner with 4-hr BESS option."},
+  {id:"T0003",title:"Six-lane widening of NH-44 (km 220–298)",org:"NHAI",jur:"centre",region:"MoRTH",district:"Gwalior",sector:"Roads & Highways",value:1840,deadline:"2026-06-02",published:"2026-04-22",src:"https://eprocure.gov.in/cppp/",tags:["big","closing"],desc:"HAM mode contract for 78 km widening in Madhya Pradesh including 2 ROBs and 14 VUPs."},
+  {id:"T0004",title:"Supply of 400 MRI 1.5T machines for district hospitals",org:"CMSS, MoHFW",jur:"centre",region:"MoHFW",district:"Pan-India",sector:"Health",value:920,deadline:"2026-05-30",published:"2026-04-28",src:"https://eprocure.gov.in/cppp/",tags:["closing"],desc:"Pan-India install with 7-year CAMC under PM-ABHIM."},
+  {id:"T0005",title:"Mumbai Metro Line-5 — rolling stock, 24 train-sets",org:"MMRDA",jur:"state",region:"MH",district:"Thane",sector:"Urban Development",value:3120,deadline:"2026-08-15",published:"2026-05-12",src:"https://mahatenders.gov.in/",tags:["big"],desc:"Design, manufacture, supply, testing and 15-year maintenance of standard-gauge metro EMUs."},
+  {id:"T0006",title:"Bengaluru Suburban Rail — civil works package C2",org:"K-RIDE",jur:"state",region:"KA",district:"Bengaluru Urban",sector:"Infrastructure",value:1430,deadline:"2026-06-25",published:"2026-05-02",src:"https://etenders.karnataka.gov.in/",tags:[],desc:"Viaduct + 4 elevated stations on the Heelalige–Rajanukunte corridor."},
+  {id:"T0007",title:"Chennai water supply augmentation — 400 MLD desal plant O&M",org:"CMWSSB",jur:"state",region:"TN",district:"Chennai",sector:"Water & Sanitation",value:680,deadline:"2026-06-20",published:"2026-05-09",src:"https://tntenders.gov.in/",tags:["green"],desc:"10-year O&M contract for the Nemmeli desalination facility."},
+  {id:"T0008",title:"100 MW floating solar at Nagarjuna Sagar",org:"TSGENCO",jur:"state",region:"TG",district:"Nalgonda",sector:"Renewable Energy",value:540,deadline:"2026-07-10",published:"2026-05-15",src:"https://tender.telangana.gov.in/",tags:["green","new"],desc:"EPC + 3-year O&M for floating PV with submarine cable to existing switchyard."},
+  {id:"T0009",title:"Smart classroom kits for 12,500 government schools",org:"Samagra Shiksha, GoUP",jur:"state",region:"UP",district:"Lucknow",sector:"Education",value:415,deadline:"2026-06-08",published:"2026-04-30",src:"https://etender.up.nic.in/",tags:["msme","closing"],desc:"Interactive panels, content licences, 5-year onsite warranty. MSME / Make-in-India preference."},
+  {id:"T0010",title:"50,000 ha micro-irrigation under PMKSY",org:"Dept of Agriculture, GoMP",jur:"state",region:"MP",district:"Indore",sector:"Agriculture",value:295,deadline:"2026-07-22",published:"2026-05-14",src:"https://etenders.mp.gov.in/",tags:["msme"],desc:"Drip + sprinkler systems, farmer training and 3-year maintenance."},
+  {id:"T0011",title:"Construction of Vidhan Sabha annexe — Phase I",org:"PWD, GoRJ",jur:"state",region:"RJ",district:"Jaipur",sector:"Infrastructure",value:178,deadline:"2026-06-30",published:"2026-05-05",src:"https://etender.rajasthan.gov.in/",tags:[],desc:"40,000 sqm Grade-I building with GRIHA-5 sustainability rating."},
+  {id:"T0012",title:"Rural broadband — 8,200 GP fibre-to-home (BharatNet III)",org:"BBNL",jur:"psu",region:"MeitY",district:"Patna",sector:"IT & Telecom",value:1265,deadline:"2026-07-30",published:"2026-05-17",src:"https://eprocure.gov.in/cppp/",tags:["big","new"],desc:"Design, build, operate model — Bihar + Jharkhand packages."},
+  {id:"T0013",title:"Coal handling plant modernisation at NTPC Korba",org:"NTPC Ltd",jur:"psu",region:"MoP",district:"Korba",sector:"Power & Energy",value:780,deadline:"2026-06-18",published:"2026-05-08",src:"https://eprocure.gov.in/cppp/",tags:[],desc:"Replacement of stackers, reclaimers and dust suppression to meet revised CPCB norms."},
+  {id:"T0014",title:"Procurement of 110 BMP-2 sarath ICVs (life extension)",org:"Ordnance Factory Medak",jur:"psu",region:"MoD",district:"Medak",sector:"Defence",value:1430,deadline:"2026-08-02",published:"2026-05-11",src:"https://defproc.gov.in/",tags:["big"],desc:"Make-II category with iDEX startup window."},
+  {id:"T0015",title:"GeM bid — 25,000 desktop PCs for state secretariats",org:"DGS&D via GeM",jur:"centre",region:"MoCI",district:"New Delhi",sector:"Goods & Supplies",value:88,deadline:"2026-05-29",published:"2026-05-13",src:"https://gem.gov.in/",tags:["closing","msme","new"],desc:"GeM bid 4521245 — i5/16GB/512SSD with 5-year onsite warranty."},
+  {id:"T0016",title:"O&M of 4,200 km state highways under PBOMC",org:"PWD, GoHR",jur:"state",region:"HR",district:"Gurugram",sector:"Roads & Highways",value:612,deadline:"2026-06-22",published:"2026-05-04",src:"https://haryanaeprocurement.gov.in/",tags:[],desc:"7-year performance-based road asset management contract — 6 packages."},
+  {id:"T0017",title:"Construction of 18 PHCs in tribal districts",org:"H&FW Dept, GoOD",jur:"state",region:"OD",district:"Koraput",sector:"Health",value:96,deadline:"2026-06-15",published:"2026-05-06",src:"https://www.tendersodisha.gov.in/",tags:["msme","closing"],desc:"Turnkey construction + first-year facility management."},
+  {id:"T0018",title:"Smart-meter rollout — 22 lakh consumers, Delhi NDMC",org:"NDMC",jur:"ut",region:"DL",district:"New Delhi",sector:"Power & Energy",value:1180,deadline:"2026-07-12",published:"2026-05-16",src:"https://delhi.gov.in/",tags:["big","new"],desc:"TOTEX bid: install + DCU + HES + MDMS + 8-year managed services."},
+  {id:"T0019",title:"Construction of jetties at Port Blair & Havelock",org:"A&N Administration",jur:"ut",region:"AN",district:"South Andaman",sector:"Infrastructure",value:142,deadline:"2026-07-05",published:"2026-05-09",src:"https://andaman.gov.in/",tags:[],desc:"Tourism + cargo dual-use, includes ro-ro berths."},
+  {id:"T0020",title:"Bid for 200 e-buses + depot infra, Chandigarh",org:"CTU",jur:"ut",region:"CH",district:"Chandigarh",sector:"Urban Development",value:340,deadline:"2026-06-28",published:"2026-05-11",src:"https://chandigarh.gov.in/",tags:["green","new"],desc:"GCC model, 12-year contract with battery health guarantee."},
+  {id:"T0021",title:"Sewage treatment plants — 6 STPs totalling 280 MLD, Lucknow",org:"Jal Nigam, GoUP",jur:"state",region:"UP",district:"Lucknow",sector:"Water & Sanitation",value:495,deadline:"2026-06-19",published:"2026-04-29",src:"https://etender.up.nic.in/",tags:["closing"],desc:"Hybrid annuity under Namami Gange — 15-year O&M."},
+  {id:"T0022",title:"Skill-development centres — civil construction at 40 sites",org:"KSDC, GoKL",jur:"state",region:"KL",district:"Ernakulam",sector:"Education",value:62,deadline:"2026-06-26",published:"2026-05-10",src:"https://etenders.kerala.gov.in/",tags:["msme"],desc:"Pre-engineered buildings of ~1,200 sqm each."},
+  {id:"T0023",title:"Renovation of 14 ITIs in Bastar division",org:"Skill Mission, GoCG",jur:"state",region:"CG",district:"Bastar",sector:"Education",value:38,deadline:"2026-06-14",published:"2026-05-07",src:"https://cgstate.gov.in/eprocurement",tags:["msme","closing"],desc:"Civil + electrical + workshop equipment modernisation."},
+  {id:"T0024",title:"Floating LNG re-gas terminal — Kakinada (consultancy)",org:"GAIL",jur:"psu",region:"MoP",district:"East Godavari",sector:"Consultancy",value:42,deadline:"2026-06-10",published:"2026-04-25",src:"https://eprocure.gov.in/cppp/",tags:["closing"],desc:"PMC services for 5 MMTPA FSRU project."},
+  {id:"T0025",title:"Aerial firefighting helicopters — wet-lease, 4 units",org:"MHA / NDMA",jur:"centre",region:"MoD",district:"New Delhi",sector:"Defence",value:215,deadline:"2026-07-18",published:"2026-05-13",src:"https://eprocure.gov.in/cppp/",tags:["new"],desc:"3-year wet-lease, monsoon + dry-season redeployment."},
+  {id:"T0026",title:"Renovation of heritage façades — Walled City Jaipur",org:"JMC, GoRJ",jur:"state",region:"RJ",district:"Jaipur",sector:"Urban Development",value:24,deadline:"2026-06-05",published:"2026-04-26",src:"https://etender.rajasthan.gov.in/",tags:["msme","closing"],desc:"Conservation works under ASI guidelines."},
+  {id:"T0027",title:"Hydro power refurbishment — Baira Siul 180 MW",org:"NHPC",jur:"psu",region:"MoP",district:"Chamba",sector:"Renewable Energy",value:330,deadline:"2026-07-25",published:"2026-05-17",src:"https://eprocure.gov.in/cppp/",tags:["green"],desc:"Runner replacement + governor upgrade, RLA-based scope."},
+  {id:"T0028",title:"Tea-garden road network upgrade",org:"PWD, GoAS",jur:"state",region:"AS",district:"Dibrugarh",sector:"Roads & Highways",value:118,deadline:"2026-07-08",published:"2026-05-12",src:"https://assamtenders.gov.in/",tags:["msme"],desc:"BC overlay + cross-drainage on 230 km of tea-belt roads."},
+  {id:"T0029",title:"Cyber-security SOC for state data centre",org:"IT Dept, GoGJ",jur:"state",region:"GJ",district:"Gandhinagar",sector:"IT & Telecom",value:54,deadline:"2026-06-21",published:"2026-05-08",src:"https://etender.gujarat.gov.in/",tags:[],desc:"24×7 SOC operations + DLP + SIEM, 5-year managed."},
+  {id:"T0030",title:"Lithium-ion battery recycling pilot plant",org:"GoGA / IIT-Goa",jur:"state",region:"GA",district:"North Goa",sector:"Renewable Energy",value:28,deadline:"2026-07-15",published:"2026-05-15",src:"https://goa.eprocurement.gov.in/",tags:["green","new","msme"],desc:"1,000 TPA hydrometallurgical pilot — DBFOO model."},
+  {id:"T0031",title:"Pune Ring Road — east arc, package 3 civil works",org:"MSRDC",jur:"state",region:"MH",district:"Pune",sector:"Roads & Highways",value:2240,deadline:"2026-07-28",published:"2026-05-14",src:"https://mahatenders.gov.in/",tags:["big","new"],desc:"32 km greenfield 6-lane access-controlled expressway with 4 interchanges."},
+  {id:"T0032",title:"Coimbatore textile park — common effluent treatment plant",org:"TIDCO",jur:"state",region:"TN",district:"Coimbatore",sector:"Water & Sanitation",value:74,deadline:"2026-06-24",published:"2026-05-10",src:"https://tntenders.gov.in/",tags:["msme","green"],desc:"35 MLD ZLD plant for Tiruppur–Coimbatore textile cluster."},
+  {id:"T0033",title:"Hyderabad Outer Ring Road — toll collection systems upgrade",org:"HMDA",jur:"state",region:"TG",district:"Hyderabad",sector:"IT & Telecom",value:88,deadline:"2026-06-30",published:"2026-05-12",src:"https://tender.telangana.gov.in/",tags:[],desc:"ANPR + FASTag interoperability, 10-year managed services."},
+  {id:"T0034",title:"Construction of 600-bed super-specialty hospital",org:"KMSCL",jur:"state",region:"KL",district:"Thiruvananthapuram",sector:"Health",value:285,deadline:"2026-07-20",published:"2026-05-16",src:"https://etenders.kerala.gov.in/",tags:["new"],desc:"Turnkey civil + MEP + medical-gas + 5-year facility management."},
+  {id:"T0035",title:"Visakhapatnam smart-city — coastal flood mitigation",org:"GVMC",jur:"state",region:"AP",district:"Visakhapatnam",sector:"Urban Development",value:316,deadline:"2026-07-02",published:"2026-05-13",src:"https://tender.apeprocurement.gov.in/",tags:["green"],desc:"Stormwater drains, pumping stations and 6 km sea-wall reinforcement."},
+  {id:"T0036",title:"PMGSY-IV roads in Naxal-affected districts",org:"RD Dept, GoJH",jur:"state",region:"JH",district:"West Singhbhum",sector:"Roads & Highways",value:198,deadline:"2026-06-27",published:"2026-05-09",src:"https://jharkhandtenders.gov.in/",tags:["msme"],desc:"420 km rural connectivity with 5-year maintenance."},
+  {id:"T0037",title:"Solid-waste-to-energy plant, Ahmedabad — 1,200 TPD",org:"AMC",jur:"state",region:"GJ",district:"Ahmedabad",sector:"Urban Development",value:445,deadline:"2026-08-05",published:"2026-05-17",src:"https://etender.gujarat.gov.in/",tags:["big","green","new"],desc:"DBFOT for 15 MW WTE plant with tipping fee + PPA."},
+  {id:"T0038",title:"Kolkata East-West Metro — extension to Salt Lake",org:"KMRC",jur:"state",region:"WB",district:"North 24 Parganas",sector:"Urban Development",value:1690,deadline:"2026-08-10",published:"2026-05-15",src:"https://wbtenders.gov.in/",tags:["big"],desc:"Underground civil works + station fit-outs for 3.2 km extension."},
+  {id:"T0039",title:"Patna ring-road, four-laning",org:"BSRDC",jur:"state",region:"BR",district:"Patna",sector:"Roads & Highways",value:520,deadline:"2026-07-11",published:"2026-05-11",src:"https://eproc.bihar.gov.in/",tags:["new"],desc:"38 km greenfield bypass with major bridge over Ganga."},
+  {id:"T0040",title:"Bengaluru — 1,500 MLD STP cluster augmentation",org:"BWSSB",jur:"state",region:"KA",district:"Bengaluru Urban",sector:"Water & Sanitation",value:610,deadline:"2026-07-15",published:"2026-05-13",src:"https://etenders.karnataka.gov.in/",tags:["green","new"],desc:"Six STPs with tertiary treatment for industrial reuse."}
+];
+
+/* Curated district profiles — strengths / gaps narrative for analysis drilldown */
+const DISTRICT_PROFILES = {
+  "Bengaluru Urban":{str:["IT/ITeS hub","Strong logistics","Aerospace cluster"],gap:["Water stress","Traffic congestion","STP capacity gap"]},
+  "Chennai":{str:["Auto OEM cluster","Major port","Healthcare hub"],gap:["Coastal flooding","Groundwater depletion"]},
+  "Mumbai":{str:["Finance capital","Port-led trade","Pharma R&D"],gap:["Slum redev backlog","Coastal erosion"]},
+  "Pune":{str:["Auto + IT","Educational hub","Engineering MSMEs"],gap:["Eastern PCMC water","Air quality"]},
+  "Hyderabad":{str:["IT/Pharma capital","Aerospace","Genomics"],gap:["Peri-urban infra","Lake encroachment"]},
+  "New Delhi":{str:["Govt HQ demand","High consumption","Skilled workforce"],gap:["Air quality","Water sourcing"]},
+  "Gurugram":{str:["Corporate HQs","NCR connectivity"],gap:["Drainage","Groundwater overuse"]},
+  "Lucknow":{str:["Govt + edu hub","Metro-led real estate"],gap:["Sewerage gap","Industrial diversification"]},
+  "Jaipur":{str:["Tourism","Gems & jewellery","Solar potential"],gap:["Heritage stress","Aquifer decline"]},
+  "Bikaner":{str:["High solar irradiance","Vast land bank"],gap:["Grid evacuation","Water scarcity"]},
+  "Indore":{str:["MSME hub","Clean-city benchmark"],gap:["Industrial effluent","Urban sprawl"]},
+  "Gwalior":{str:["NH-44 corridor node","Industrial growth corridor"],gap:["Road safety","Logistics infra"]},
+  "Ahmedabad":{str:["Pharma + textile","Strong municipal finance"],gap:["WTE viability","Heat-island"]},
+  "Gandhinagar":{str:["GIFT City fintech","Govt + IT"],gap:["Data-centre power","Cyber talent depth"]},
+  "Thane":{str:["Mumbai overflow growth","Industrial belt"],gap:["Transit gaps","Wetland pressure"]},
+  "Coimbatore":{str:["Textile + pump industry","Engineering MSMEs"],gap:["Textile effluent (CETP)","Water-table stress"]},
+  "Ernakulam":{str:["Port + logistics","Knowledge economy"],gap:["Skill mismatch","Flood resilience"]},
+  "Thiruvananthapuram":{str:["IT + healthcare","Aerospace","Govt demand"],gap:["Hospital capacity","Land scarcity"]},
+  "Visakhapatnam":{str:["Steel + port","Pharma SEZ"],gap:["Coastal flooding","Cyclone resilience"]},
+  "Nalgonda":{str:["Krishna basin water","Solar irradiance"],gap:["Fluorosis legacy","Grid limits"]},
+  "East Godavari":{str:["Hydrocarbon basin","Port + LNG"],gap:["Cyclone exposure","Brownfield congestion"]},
+  "Korba":{str:["Coal capital","Thermal cluster"],gap:["Air quality","Just-transition risk"]},
+  "Medak":{str:["Defence-industrial belt","Pharma adjacency"],gap:["Land acquisition","Skilled labour"]},
+  "Chamba":{str:["Hydro potential","Snow-fed rivers"],gap:["Geological risk","Access roads"]},
+  "Bastar":{str:["Mineral wealth","Forest economy"],gap:["LWE legacy","Skill infra"]},
+  "Koraput":{str:["Bauxite + coffee","Tribal labour pool"],gap:["Health access","Connectivity"]},
+  "Dibrugarh":{str:["Oil + tea","River port"],gap:["Flood vulnerability","Road quality"]},
+  "West Singhbhum":{str:["Iron ore reserves","Steel feedstock"],gap:["Rural connectivity","Health indicators"]},
+  "North 24 Parganas":{str:["Border trade","Industrial townships"],gap:["Drainage","Urban sprawl"]},
+  "Patna":{str:["State capital demand","River-led trade"],gap:["Flood mitigation","Industrial depth"]},
+  "Chandigarh":{str:["Planned city","High per-capita demand"],gap:["EV charging density","Land constraint"]},
+  "South Andaman":{str:["Tourism","Strategic location"],gap:["Cyclone risk","Logistics costs"]},
+  "North Goa":{str:["Tourism + mining","Coastline"],gap:["Solid-waste","Iron-ore legacy"]}
+};
+
+/* ====== Helpers ====== */
+const $ = q=>document.querySelector(q);
+const fmtCr = v=> (v>=1000)?(v/1000).toFixed(2)+" K Cr":v.toFixed(0)+" Cr";
+const daysTo = d=>{const t=new Date(d)-new Date();return Math.ceil(t/(1000*60*60*24));};
+const regionLabel = code=>{
+  const all = [...STATES, ...UTS, ...MINISTRIES];
+  const hit = all.find(r=>r[0]===code);
+  return hit ? hit[1] : code;
+};
+/* Short-code citation for a source URL */
+function sourceCode(url){
+  try{
+    const h = new URL(url).hostname.toLowerCase();
+    if(h.includes("eprocure.gov.in")) return ["CPPP","ref-cppp"];
+    if(h.includes("gem.gov.in")) return ["GeM","ref-gem"];
+    if(h.includes("ireps")) return ["IREPS","ref-ireps"];
+    if(h.includes("defproc")) return ["DefProc","ref-defproc"];
+    if(h.includes("mahatenders")) return ["MahaTenders","ref-state"];
+    if(h.includes("karnataka")) return ["KPPP","ref-state"];
+    if(h.includes("tntenders")) return ["TN Tenders","ref-state"];
+    if(h.includes("telangana")) return ["TS Tenders","ref-state"];
+    if(h.includes("apeprocurement")) return ["AP eProc","ref-state"];
+    if(h.includes("up.nic.in")) return ["UP eTender","ref-state"];
+    if(h.includes("kerala")) return ["KL eTenders","ref-state"];
+    if(h.includes("rajasthan")) return ["RajTenders","ref-state"];
+    if(h.includes("gujarat")) return ["nProcure","ref-state"];
+    if(h.includes("wbtenders")) return ["WB Tenders","ref-state"];
+    if(h.includes("bihar")) return ["Bihar eProc","ref-state"];
+    if(h.includes("mp.gov")) return ["MP eTender","ref-state"];
+    if(h.includes("odisha")) return ["OD Tenders","ref-state"];
+    if(h.includes("haryana")) return ["HRY eProc","ref-state"];
+    if(h.includes("jharkhand")) return ["JH Tenders","ref-state"];
+    if(h.includes("cgstate")) return ["CG eProc","ref-state"];
+    if(h.includes("assam")) return ["AS Tenders","ref-state"];
+    if(h.includes("delhi")) return ["DL eProc","ref-state"];
+    if(h.includes("goa")) return ["Goa eProc","ref-state"];
+    if(h.includes("andaman")) return ["AN Admin","ref-state"];
+    if(h.includes("chandigarh")) return ["CH Admin","ref-state"];
+    return [h.replace(/^www\./,"").split(".")[0].toUpperCase(),"ref-nic"];
+  }catch(e){return ["Source","ref-nic"];}
+}
+
+/* ====== Populate menus ====== */
+const sg = $("#stateGrid"), ug=$("#utGrid");
+STATES.forEach(([c,n])=>{const a=document.createElement("a");a.href="#";a.dataset.regionnav=c;a.innerHTML=`<span>${n}</span><span class="c">${c}</span>`;sg.appendChild(a);});
+UTS.forEach(([c,n])=>{const a=document.createElement("a");a.href="#";a.dataset.regionnav=c;a.innerHTML=`<span>${n}</span><span class="c">${c}</span>`;ug.appendChild(a);});
+
+const regionSel = $("#region"), distSel = $("#district");
+function refillRegionSel(jur){
+  regionSel.innerHTML = '<option value="">All</option>';
+  let list = [];
+  if(jur === "" || jur === "all"){ list = [...MINISTRIES, ...STATES, ...UTS]; }
+  else if(jur === "centre" || jur === "psu"){ list = MINISTRIES; }
+  else if(jur === "state"){ list = STATES; }
+  else if(jur === "ut"){ list = UTS; }
+  list.forEach(([c,n])=>{const o=document.createElement("option");o.value=c;o.textContent=n;regionSel.appendChild(o);});
+}
+function refillDistSel(){
+  /* districts cascade from current jurisdiction + region */
+  const jur=$("#jur").value, reg=$("#region").value;
+  const pool = TENDERS.filter(t=>(!jur||t.jur===jur)&&(!reg||t.region===reg));
+  const ds = [...new Set(pool.map(t=>t.district))].sort();
+  const cur = distSel.value;
+  distSel.innerHTML = '<option value="">All districts</option>'+ds.map(d=>`<option value="${d}">${d}</option>`).join("");
+  if(ds.includes(cur)) distSel.value = cur;
+}
+refillRegionSel(""); refillDistSel();
+
+/* ====== Active-filter UI ====== */
+const JUR_LABEL = {centre:"Centre",psu:"PSU",state:"State",ut:"UT"};
+const QUICK_LABEL = {closing:"Closing in 7 days",big:"Above ₹100 Cr",msme:"MSME-friendly",new:"Published this week",green:"Green / Renewable"};
+function clearOne(id){
+  if(id==="quick"){document.querySelectorAll(".chip").forEach(x=>x.classList.remove("active"));document.querySelector('.chip[data-quick=""]').classList.add("active");}
+  else { $("#"+id).value=""; if(id==="jur"){refillRegionSel("");refillDistSel();} if(id==="region"){refillDistSel();} }
+  render();
+}
+function updateActiveUI(f){
+  /* highlight non-empty fields */
+  [["q",f.q],["jur",f.jur],["region",f.region],["district",f.district],["sector",f.sector]].forEach(([id,v])=>{
+    const fld=$("#"+id).closest(".fld"); if(fld) fld.classList.toggle("active",!!v);
+  });
+  /* build chip strip */
+  const chips = [];
+  if(f.q) chips.push({k:"q",lbl:"Search",v:f.q});
+  if(f.jur) chips.push({k:"jur",lbl:"Jurisdiction",v:JUR_LABEL[f.jur]||f.jur});
+  if(f.region) chips.push({k:"region",lbl:"Region",v:regionLabel(f.region)});
+  if(f.district) chips.push({k:"district",lbl:"District",v:f.district});
+  if(f.sector) chips.push({k:"sector",lbl:"Sector",v:f.sector});
+  if(f.quick) chips.push({k:"quick",lbl:"Quick",v:QUICK_LABEL[f.quick]||f.quick});
+  const strip = $("#activeStrip");
+  if(!chips.length){strip.classList.add("empty");strip.innerHTML="";}
+  else{
+    strip.classList.remove("empty");
+    strip.innerHTML = `<span class="lbl">Active filters →</span>` + chips.map(c=>`<span class="pill"><b>${c.lbl}:</b>${c.v}<button type="button" data-clear="${c.k}" title="Clear ${c.lbl}">×</button></span>`).join("");
+    strip.querySelectorAll("button[data-clear]").forEach(b=>b.addEventListener("click",()=>clearOne(b.dataset.clear)));
+  }
+  /* reset badge */
+  const badge = $("#resetBadge"), btn = $("#reset");
+  if(chips.length){badge.style.display="inline-block";badge.textContent=chips.length;btn.classList.add("has");}
+  else{badge.style.display="none";btn.classList.remove("has");}
+}
+
+/* ====== Render ====== */
+const list = $("#tlist"), empty=$("#empty");
+function matchTender(t, f){
+  if(f.q){
+    const hay = (t.title+" "+t.org+" "+t.desc+" "+t.sector+" "+t.district+" "+regionLabel(t.region)).toLowerCase();
+    if(!hay.includes(f.q.toLowerCase())) return false;
+  }
+  if(f.jur && t.jur !== f.jur) return false;
+  if(f.region && t.region !== f.region) return false;
+  if(f.district && t.district !== f.district) return false;
+  if(f.sector && t.sector !== f.sector) return false;
+  if(f.quick === "closing" && daysTo(t.deadline) > 7) return false;
+  if(f.quick === "big" && t.value < 100) return false;
+  if(f.quick === "msme" && !t.tags.includes("msme")) return false;
+  if(f.quick === "new" && !t.tags.includes("new")) return false;
+  if(f.quick === "green" && !t.tags.includes("green")) return false;
+  return true;
+}
+function render(){
+  const f = {q:$("#q").value.trim(), jur:$("#jur").value, region:$("#region").value, district:$("#district").value, sector:$("#sector").value, quick:document.querySelector(".chip.active").dataset.quick};
+  updateActiveUI(f);
+  const rows = TENDERS.filter(t=>matchTender(t,f));
+  list.innerHTML = "";
+  rows.forEach(t=>{
+    const d = daysTo(t.deadline);
+    const ddl = d<0 ? `Closed ${-d}d ago` : d===0 ? "Closes today" : `Closes in ${d}d`;
+    const ok = d>14;
+    const jurLabel = {centre:"Centre",state:"State",ut:"UT",psu:"PSU"}[t.jur];
+    const [code,refId] = sourceCode(t.src);
+    const card = document.createElement("article");
+    card.className="tcard"; card.dataset.jur=t.jur;
+    card.innerHTML = `
+      <div>
+        <h3>${t.title}</h3>
+        <div class="meta"><b>${t.org}</b> · ${jurLabel} · ${regionLabel(t.region)} · 📍 ${t.district} · ${t.sector} · ID ${t.id}</div>
+        <p class="desc">${t.desc}</p>
+        <div class="tags">
+          ${t.tags.includes("new")?'<span class="s">🆕 New</span>':''}
+          ${t.tags.includes("big")?'<span>💰 ₹100 Cr+</span>':''}
+          ${t.tags.includes("msme")?'<span class="s">🏭 MSME-friendly</span>':''}
+          ${t.tags.includes("green")?'<span class="s">🌱 Green</span>':''}
+          ${t.tags.includes("closing")?'<span class="r">⏰ Closing soon</span>':''}
+        </div>
+        <div class="cite">Source: <a class="ref" href="${t.src}" target="_blank" rel="noopener" title="Open on ${code}">[${code}]</a> · published ${t.published} · cite as <code>${t.id} · ${code} · ${t.deadline}</code></div>
+      </div>
+      <div class="side">
+        <div class="val">₹ ${fmtCr(t.value)}</div>
+        <div class="deadline ${ok?'ok':''}">${ddl}<br><small style="color:var(--muted);font-weight:normal;">${t.deadline}</small></div>
+        <a class="open" href="${t.src}" target="_blank" rel="noopener">Open ↗</a>
+      </div>`;
+    list.appendChild(card);
+  });
+  empty.style.display = rows.length ? "none" : "block";
+  $("#visCount").textContent = rows.length;
+  $("#totalCount").textContent = TENDERS.length;
+  renderDistrictAnalysis(rows);
+}
+
+/* ====== District Analysis ====== */
+function aggByDistrict(rows){
+  const m = new Map();
+  rows.forEach(t=>{
+    if(!m.has(t.district)) m.set(t.district,{name:t.district,region:t.region,count:0,value:0,sectors:new Map(),tags:new Set(),tenders:[]});
+    const o = m.get(t.district);
+    o.count++; o.value+=t.value; o.tenders.push(t);
+    o.sectors.set(t.sector,(o.sectors.get(t.sector)||0)+1);
+    t.tags.forEach(tg=>o.tags.add(tg));
+  });
+  return [...m.values()];
+}
+function renderBars(elId,data,key,unit,cls){
+  const el=$("#"+elId); el.innerHTML="";
+  if(!data.length){el.innerHTML='<div style="font-size:0.8rem;color:var(--muted);">No districts in current filter.</div>';return;}
+  const max = Math.max(...data.map(d=>d[key]));
+  data.forEach(d=>{
+    const w = max>0?(d[key]/max*100):0;
+    const row = document.createElement("div");
+    row.className="bar "+(cls||"");
+    row.innerHTML=`<div class="name">${d.name}<br><small>${regionLabel(d.region)} · ${d.count} tender${d.count>1?"s":""}</small></div><div class="track"><div class="fill" style="width:${w.toFixed(1)}%;"></div></div><div class="val">${unit==="cr"?"₹ "+fmtCr(d[key]):d[key]}</div>`;
+    row.style.cursor="pointer";
+    row.addEventListener("click",()=>{$("#distDrill").value=d.name;renderDrill(d.name);document.getElementById("districts").scrollIntoView({behavior:"smooth"});});
+    el.appendChild(row);
+  });
+}
+function renderDrill(name){
+  const det=$("#distDetail");
+  if(!name){det.innerHTML='<div style="font-size:0.85rem;color:var(--muted);padding:6px 2px;">Select a district above to see its profile.</div>';$("#distDrillCt").textContent="—";return;}
+  const agg = aggByDistrict(TENDERS.filter(t=>t.district===name))[0];
+  if(!agg){det.innerHTML='<div style="font-size:0.85rem;color:var(--muted);">No tenders for this district in the dataset.</div>';$("#distDrillCt").textContent="—";return;}
+  const stateName = regionLabel(agg.region);
+  $("#distDrillCt").textContent = `${name} · ${stateName}`;
+  const top = [...agg.sectors.entries()].sort((a,b)=>b[1]-a[1]).slice(0,6);
+  const avg = (agg.value/agg.count);
+  const closing = agg.tenders.filter(t=>daysTo(t.deadline)<=14 && daysTo(t.deadline)>=0).length;
+  const prof = DISTRICT_PROFILES[name] || {str:["Active procurement pipeline","Tenders across "+agg.sectors.size+" sectors"],gap:["Profile data not curated — inferring from sector mix","Verify sector capacity locally before bidding"]};
+  det.innerHTML = `
+    <div style="display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap;">
+      <h3 style="margin:0;color:var(--navy);font-size:1.05rem;">📍 ${name} <small style="color:var(--muted);font-size:0.78rem;font-weight:500;">· ${stateName}</small></h3>
+      <small style="color:var(--muted);">Region code: ${agg.region}</small>
+    </div>
+    <div class="dist-kpis">
+      <div class="k"><div class="v">${agg.count}</div><div class="l">Live tenders</div></div>
+      <div class="k"><div class="v">₹ ${fmtCr(agg.value)}</div><div class="l">Total value</div></div>
+      <div class="k"><div class="v">₹ ${fmtCr(avg)}</div><div class="l">Avg ticket size</div></div>
+      <div class="k"><div class="v">${closing}</div><div class="l">Closing in 14d</div></div>
+    </div>
+    <div style="font-size:0.78rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;font-weight:700;margin-bottom:3px;">Sector mix</div>
+    <div class="sector-pills">${top.map(([s,c])=>`<span>${s}<b>${c}</b></span>`).join("")}</div>
+    <div class="swot">
+      <div class="str"><h5>✓ Strengths</h5><ul>${prof.str.map(x=>`<li>${x}</li>`).join("")}</ul></div>
+      <div class="gap"><h5>⚠ Gaps / opportunities</h5><ul>${prof.gap.map(x=>`<li>${x}</li>`).join("")}</ul></div>
+    </div>
+    <div style="font-size:0.74rem;color:var(--muted);margin-top:8px;">Citations: ${[...new Set(agg.tenders.map(t=>sourceCode(t.src)[0]))].map(c=>`<a class="ref" href="#ref-${c.toLowerCase().split(" ")[0]}">[${c}]</a>`).join(" ")}</div>`;
+}
+function renderDistrictAnalysis(rows){
+  const data = aggByDistrict(rows);
+  $("#distSummaryCt").textContent = `${data.length} district${data.length===1?"":"s"} · ${rows.length} tenders`;
+  /* state-name appended in renderBars via regionLabel(d.region) */
+  renderBars("barsValue", [...data].sort((a,b)=>b.value-a.value).slice(0,8), "value", "cr");
+  renderBars("barsCount", [...data].sort((a,b)=>b.count-a.count).slice(0,8), "count", "n", "b");
+  const ds = data.sort((a,b)=>a.name.localeCompare(b.name));
+  const cur = $("#distDrill").value;
+  $("#distDrill").innerHTML = '<option value="">— pick a district —</option>'+ds.map(d=>`<option value="${d.name}">${d.name} · ${regionLabel(d.region)}</option>`).join("");
+  if(ds.find(d=>d.name===cur)) $("#distDrill").value = cur;
+  else if(ds.length) $("#distDrill").value = ds[0].name;
+  renderDrill($("#distDrill").value);
+}
+
+/* ====== KPIs ====== */
+(function kpis(){
+  $("#kTotal").textContent = TENDERS.length;
+  $("#kValue").textContent = TENDERS.reduce((s,t)=>s+t.value,0).toLocaleString("en-IN");
+  $("#kClosing").textContent = TENDERS.filter(t=>daysTo(t.deadline)<=7 && daysTo(t.deadline)>=0).length;
+  $("#kCentre").textContent = TENDERS.filter(t=>t.jur==="centre"||t.jur==="psu").length;
+  $("#kStates").textContent = TENDERS.filter(t=>t.jur==="state"||t.jur==="ut").length;
+})();
+
+/* ====== Events ====== */
+["q","jur","region","district","sector"].forEach(id=>$("#"+id).addEventListener("input",render));
+$("#jur").addEventListener("change",e=>{refillRegionSel(e.target.value);refillDistSel();render();});
+$("#region").addEventListener("change",()=>{refillDistSel();render();});
+$("#distDrill").addEventListener("change",e=>renderDrill(e.target.value));
+$("#expandAll").addEventListener("click",()=>document.querySelectorAll("#districts details.collapsible").forEach(d=>d.open=true));
+$("#collapseAll").addEventListener("click",()=>document.querySelectorAll("#districts details.collapsible").forEach(d=>{if(d.id!=="distMain")d.open=false;}));
+$("#reset").addEventListener("click",()=>{["q","jur","region","district","sector"].forEach(id=>$("#"+id).value="");refillRegionSel("");refillDistSel();document.querySelectorAll(".chip").forEach(c=>c.classList.remove("active"));document.querySelector('.chip[data-quick=""]').classList.add("active");render();});
+document.querySelectorAll(".chip").forEach(c=>c.addEventListener("click",()=>{document.querySelectorAll(".chip").forEach(x=>x.classList.remove("active"));c.classList.add("active");render();}));
+
+/* nav shortcuts */
+document.querySelectorAll("[data-jurnav]").forEach(a=>a.addEventListener("click",e=>{e.preventDefault();$("#jur").value=a.dataset.jurnav==="all"?"":a.dataset.jurnav;refillRegionSel($("#jur").value);refillDistSel();render();window.scrollTo({top:280,behavior:"smooth"});}));
+document.querySelectorAll("[data-regionnav]").forEach(a=>a.addEventListener("click",e=>{e.preventDefault();const code=a.dataset.regionnav;const isUT=UTS.find(r=>r[0]===code);$("#jur").value=isUT?"ut":"state";refillRegionSel($("#jur").value);$("#region").value=code;refillDistSel();render();window.scrollTo({top:280,behavior:"smooth"});}));
+document.querySelectorAll("[data-orgnav]").forEach(a=>a.addEventListener("click",e=>{e.preventDefault();$("#jur").value="centre";refillRegionSel("centre");$("#region").value=a.dataset.orgnav;refillDistSel();render();window.scrollTo({top:280,behavior:"smooth"});}));
+
+render();
+</script>
+</body>
+</html>
