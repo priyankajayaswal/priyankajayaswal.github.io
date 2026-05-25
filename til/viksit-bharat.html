@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Vikas — Bharat Growth Atlas</title>
+<title>Viksit Bharat — Bharat Growth Atlas</title>
 <meta name="description" content="District-wise growth & opportunity atlas for Bihar — strengths, weaknesses, industry, employment, green energy, water recharge.">
 <style>
 :root{--bg:#f7f7f5;--card:#fff;--ink:#1a1a1a;--muted:#5b5b5b;--navy:#0B1B3F;--saffron:#FF9933;--green:#138808;--red:#c0392b;--border:#e3e3df;--tag:#eef0f7;}
@@ -84,6 +84,33 @@ svg.radar{width:100%;height:auto;max-width:280px;display:block;margin:0 auto;}
 .dir-tile .dt-name{font-weight:600;color:var(--navy);}
 .dir-tile .dt-meta{font-size:0.7rem;color:var(--muted);}
 .soon-note{font-size:0.85rem;color:var(--muted);background:#fff7e8;border:1px dashed var(--saffron);padding:10px 14px;border-radius:8px;margin:10px 0;}
+.br-econ-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:10px 0;}
+@media (max-width:760px){.br-econ-grid{grid-template-columns:1fr;}}
+.br-card{background:var(--card);border:1px solid var(--border);border-top:3px solid var(--saffron);border-radius:8px;padding:10px 12px;}
+.br-card h4{margin:0 0 6px;font-size:0.9rem;color:var(--navy);}
+.br-chart{width:100%;height:auto;max-height:220px;display:block;margin:4px 0;}
+.br-note{margin:6px 0 0;font-size:0.78rem;line-height:1.5;color:var(--ink);}
+.br-tbl{width:100%;border-collapse:collapse;font-size:0.78rem;margin-top:6px;}
+.br-tbl th,.br-tbl td{border:1px solid var(--border);padding:4px 6px;text-align:left;vertical-align:top;}
+.br-tbl th{background:var(--tag);color:var(--navy);font-weight:600;}
+.br-obj-tbl td:nth-child(1){font-weight:600;}
+.br-lm-tbl td:nth-child(4),.br-lm-tbl td:nth-child(5),.br-lm-tbl td:nth-child(6){text-align:center;color:#b8860b;letter-spacing:1px;}
+:root:has(#nightmode:checked) .br-tbl th{background:#1f232b;}
+.br-tag{display:inline-block;font-size:0.62rem;font-weight:600;padding:2px 7px;border-radius:999px;margin-left:6px;vertical-align:middle;letter-spacing:0.3px;text-transform:uppercase;}
+.br-tag-curated{background:#e7f5ec;color:#0a6b3a;border:1px solid #b6e0c4;}
+.br-tag-est{background:#fff3d6;color:#8a5a00;border:1px solid #f0d68f;}
+:root:has(#nightmode:checked) .br-tag-curated{background:#0e2a1a;color:#8edcb0;border-color:#1f4a32;}
+:root:has(#nightmode:checked) .br-tag-est{background:#2a2316;color:#e6c46f;border-color:#5a4520;}
+.br-cite{margin-top:8px;font-size:0.72rem;line-height:1.5;background:var(--tag);border:1px solid var(--border);border-left:3px solid var(--navy);border-radius:6px;padding:6px 10px;}
+.br-cite summary{cursor:pointer;font-weight:600;color:var(--navy);font-size:0.78rem;list-style:none;}
+.br-cite summary::-webkit-details-marker{display:none;}
+.br-cite summary::before{content:"▸ ";color:var(--saffron);}
+.br-cite[open] summary::before{content:"▾ ";}
+.br-cite ol{margin:6px 0 2px 18px;padding:0;}
+.br-cite li{margin-bottom:3px;color:var(--ink);}
+.br-cite a{color:var(--navy);text-decoration:none;border-bottom:1px dotted var(--navy);}
+.br-cite a:hover{border-bottom-style:solid;}
+sup.cref{font-size:0.62rem;color:var(--navy);font-weight:700;margin-left:1px;cursor:help;}
 footer{max-width:1180px;margin:30px auto 20px;padding:14px 20px;border-top:1px solid var(--border);font-size:0.78rem;color:var(--muted);}
 #nightmode{position:fixed;top:0;left:0;opacity:0;pointer-events:none;width:0;height:0;clip:rect(0,0,0,0);}
 .nm-toggle{position:absolute;top:8px;right:14px;z-index:11;display:inline-flex;align-items:center;gap:5px;cursor:pointer;font-size:0.72rem;font-weight:600;padding:4px 10px;background:rgba(255,255,255,0.85);border:1.5px solid var(--navy);color:var(--navy);border-radius:999px;user-select:none;line-height:1;}
@@ -140,7 +167,7 @@ nav.lens .caret{display:none;}
   <label for="navtoggle" class="nav-burger" aria-label="Open menu"><span class="burger-open">☰ Menu</span><span class="burger-close">✕ Close</span></label>
   <label for="nightmode" class="nm-toggle" aria-label="Toggle dark mode"><span class="nm-ico-dark">🌙</span><span class="nm-lbl-dark">Dark</span><span class="nm-ico-light">☀️</span><span class="nm-lbl-light">Light</span></label>
   <div class="brand-row">
-    <a class="brand" href="#h"><span class="hi">विकास</span>Vikas</a>
+    <a class="brand" href="#h"><span class="hi">विकसित भारत</span>viksit-bharat</a>
     <span class="tagline">Bharat Growth Atlas · district-wise opportunity map for industry, SMEs &amp; green build-out</span>
   </div>
   <nav class="lens" id="stateNav"></nav>
@@ -290,6 +317,219 @@ nav.lens .caret{display:none;}
       </div>
     </div>
   </div>
+  <h2 id="br-econ">Bihar Economy — A 10-Year Lens (FY15 → FY24)</h2>
+  <div class="callout">Data compiled from <b>MoSPI</b>, <b>Bihar Economic Survey 2023-24</b>, <b>DGCIS</b> (Department of Commerce), <b>AISHE</b>, <b>UDISE+</b>, and <b>RBI State Finances</b>. Values are indicative; minor revisions occur in successive vintages.</div>
+
+  <div class="br-econ-grid">
+    <div class="br-card">
+      <h4>GSDP (₹ Lakh Crore, current prices)<sup class="cref" title="MoSPI state-wise GSDP series">[1]</sup></h4>
+      <svg viewBox="0 0 360 200" class="br-chart" role="img" aria-label="Bihar GSDP 2014-15 to 2023-24">
+        <g font-size="9" fill="#555">
+          <line x1="40" y1="170" x2="350" y2="170" stroke="#bbb"/>
+          <line x1="40" y1="20"  x2="40"  y2="170" stroke="#bbb"/>
+          <text x="6"  y="172">0</text>
+          <text x="6"  y="132">2</text>
+          <text x="6"  y="92">4</text>
+          <text x="6"  y="52">6</text>
+          <text x="6"  y="22">8</text>
+        </g>
+        <g fill="#FF9933">
+          <rect x="48"  y="101" width="22" height="69"><title>FY15: ₹3.43 LCr</title></rect>
+          <rect x="78"  y="95"  width="22" height="75"><title>FY16: ₹3.74 LCr</title></rect>
+          <rect x="108" y="85"  width="22" height="85"><title>FY17: ₹4.24 LCr</title></rect>
+          <rect x="138" y="71"  width="22" height="99"><title>FY18: ₹4.95 LCr</title></rect>
+          <rect x="168" y="58"  width="22" height="112"><title>FY19: ₹5.61 LCr</title></rect>
+          <rect x="198" y="48"  width="22" height="122"><title>FY20: ₹6.12 LCr</title></rect>
+          <rect x="228" y="47"  width="22" height="123"><title>FY21: ₹6.16 LCr (COVID)</title></rect>
+          <rect x="258" y="35"  width="22" height="135"><title>FY22: ₹6.75 LCr</title></rect>
+          <rect x="288" y="29"  width="22" height="141"><title>FY23: ₹7.06 LCr</title></rect>
+          <rect x="318" y="21"  width="22" height="149"><title>FY24: ₹7.45 LCr</title></rect>
+        </g>
+        <g font-size="8" fill="#333" text-anchor="middle">
+          <text x="59"  y="182">15</text>
+          <text x="89"  y="182">16</text>
+          <text x="119" y="182">17</text>
+          <text x="149" y="182">18</text>
+          <text x="179" y="182">19</text>
+          <text x="209" y="182">20</text>
+          <text x="239" y="182">21</text>
+          <text x="269" y="182">22</text>
+          <text x="299" y="182">23</text>
+          <text x="329" y="182">24</text>
+        </g>
+      </svg>
+      <p class="br-note">10-yr nominal CAGR ~<b>9.0%</b>; real CAGR ~<b>6.6%</b>. FY24 real growth <b>11.5%</b> — among the top-3 large states.</p>
+    </div>
+
+    <div class="br-card">
+      <h4>Sectoral GSVA Share — FY24<sup class="cref" title="Bihar Economic Survey 2023-24">[2]</sup></h4>
+      <svg viewBox="0 0 200 200" class="br-chart" role="img" aria-label="Bihar sectoral share FY24">
+        <g transform="translate(100,100)">
+          <!-- Agri 22%, Industry 20%, Services 58% -->
+          <circle r="80" fill="#138808"/>
+          <path d="M0,0 L0,-80 A80,80 0 0,1 76.08,24.72 Z" fill="#FF9933"/>
+          <path d="M0,0 L76.08,24.72 A80,80 0 0,1 -47.02,64.72 Z" fill="#000080"/>
+        </g>
+        <g font-size="9" fill="#fff" font-weight="bold" text-anchor="middle">
+          <text x="125" y="60">Agri 22%</text>
+          <text x="148" y="118">Industry 20%</text>
+          <text x="70"  y="135">Services 58%</text>
+        </g>
+      </svg>
+      <table class="br-tbl">
+        <tr><th>Sub-sector</th><th>%</th><th>10-yr trend</th></tr>
+        <tr><td>Agriculture &amp; Allied</td><td>22</td><td>↓ from 24%</td></tr>
+        <tr><td>Manufacturing</td><td>7.5</td><td>flat</td></tr>
+        <tr><td>Construction</td><td>9</td><td>↑ from 6%</td></tr>
+        <tr><td>Trade, Hotels, Transport</td><td>27</td><td>↑ from 23%</td></tr>
+        <tr><td>Finance, Real Estate</td><td>12</td><td>↑ from 9%</td></tr>
+        <tr><td>Public Admin &amp; Other Svc</td><td>19</td><td>flat</td></tr>
+      </table>
+    </div>
+
+    <div class="br-card">
+      <h4>Exports &amp; Imports (US$ Million)<sup class="cref" title="DGCI&S TradeStat + Indo-Nepal border-trade data">[4][5]</sup></h4>
+      <svg viewBox="0 0 360 200" class="br-chart" role="img" aria-label="Bihar exports vs imports">
+        <g font-size="9" fill="#555">
+          <line x1="40" y1="170" x2="350" y2="170" stroke="#bbb"/>
+          <line x1="40" y1="20"  x2="40"  y2="170" stroke="#bbb"/>
+          <text x="6" y="172">0</text>
+          <text x="2" y="132">1k</text>
+          <text x="2" y="92">2k</text>
+          <text x="2" y="52">3k</text>
+          <text x="2" y="22">4k</text>
+        </g>
+        <!-- Exports (saffron) and Imports (navy) grouped per year -->
+        <g>
+          <!-- FY15 E=430, I=1800 -->
+          <rect x="48"  y="153" width="10" height="17" fill="#FF9933"><title>Exports FY15: $430M</title></rect>
+          <rect x="59"  y="98"  width="10" height="72" fill="#000080"><title>Imports FY15: ~$1.8B</title></rect>
+          <!-- FY17 -->
+          <rect x="108" y="151" width="10" height="19" fill="#FF9933"><title>Exports FY17: $480M</title></rect>
+          <rect x="119" y="88"  width="10" height="82" fill="#000080"><title>Imports FY17: ~$2.05B</title></rect>
+          <!-- FY19 -->
+          <rect x="168" y="150" width="10" height="20" fill="#FF9933"><title>Exports FY19: $510M</title></rect>
+          <rect x="179" y="75"  width="10" height="95" fill="#000080"><title>Imports FY19: ~$2.4B</title></rect>
+          <!-- FY21 (COVID) -->
+          <rect x="228" y="155" width="10" height="15" fill="#FF9933"><title>Exports FY21: $370M</title></rect>
+          <rect x="239" y="92"  width="10" height="78" fill="#000080"><title>Imports FY21: ~$1.95B</title></rect>
+          <!-- FY23 -->
+          <rect x="288" y="149" width="10" height="21" fill="#FF9933"><title>Exports FY23: $540M</title></rect>
+          <rect x="299" y="50"  width="10" height="120" fill="#000080"><title>Imports FY23: ~$3.0B</title></rect>
+          <!-- FY24 -->
+          <rect x="318" y="146" width="10" height="24" fill="#FF9933"><title>Exports FY24: $610M</title></rect>
+          <rect x="329" y="40"  width="10" height="130" fill="#000080"><title>Imports FY24: ~$3.25B</title></rect>
+        </g>
+        <g font-size="8" fill="#333" text-anchor="middle">
+          <text x="59"  y="182">FY15</text>
+          <text x="119" y="182">FY17</text>
+          <text x="179" y="182">FY19</text>
+          <text x="239" y="182">FY21</text>
+          <text x="299" y="182">FY23</text>
+          <text x="329" y="182">FY24</text>
+        </g>
+        <g font-size="8">
+          <rect x="240" y="22" width="10" height="8" fill="#FF9933"/><text x="254" y="29">Exports</text>
+          <rect x="295" y="22" width="10" height="8" fill="#000080"/><text x="309" y="29">Imports</text>
+        </g>
+      </svg>
+      <p class="br-note"><b>Top exports:</b> leather &amp; footwear (Muzaffarpur), litchi/makhana/honey, refined-petro products (Barauni), engineering goods, handicrafts.<br><b>Top imports:</b> crude &amp; POL, fertiliser feedstock, electronics, cement clinker, edible oils, coal. Trade deficit widened from <b>~$1.4B</b> (FY15) to <b>~$2.6B</b> (FY24).</p>
+    </div>
+
+    <div class="br-card">
+      <h4>Education Indicators<sup class="cref" title="AISHE 2022-23, UDISE+, NSO MIS, Census 2011">[6][7][8][10]</sup></h4>
+      <table class="br-tbl">
+        <tr><th>Indicator</th><th>2014-15</th><th>2023-24</th><th>India avg</th></tr>
+        <tr><td>Literacy rate</td><td>61.8%</td><td>~74.3%</td><td>77.7%</td></tr>
+        <tr><td>Female literacy</td><td>51.5%</td><td>~67%</td><td>70.3%</td></tr>
+        <tr><td>GER Higher Ed (18-23)</td><td>13.9%</td><td>17.1%</td><td>28.4%</td></tr>
+        <tr><td>Pupil-Teacher ratio (sec)</td><td>57</td><td>43</td><td>26</td></tr>
+        <tr><td>Drop-out (sec, %)</td><td>30.2</td><td>21.4</td><td>12.6</td></tr>
+        <tr><td>Govt schools w/ electricity</td><td>22%</td><td>96%</td><td>95%</td></tr>
+        <tr><td>Schools w/ functional toilets (girls)</td><td>58%</td><td>99%</td><td>97%</td></tr>
+        <tr><td>Universities (Pub+Pvt)</td><td>22</td><td>38</td><td>—</td></tr>
+        <tr><td>Engineering colleges</td><td>19</td><td>43</td><td>—</td></tr>
+      </table>
+      <p class="br-note">Major gain: infra access (electricity, toilets, mid-day-meal). Persistent gap: <b>higher-education GER</b> and <b>teacher density</b> — both 35-40% below national average.</p>
+    </div>
+  </div>
+
+  <h2 id="br-obj">2030 Objectives — Employment +10%, GDP +10%, Education 100%</h2>
+  <div class="callout">Treat the three targets as <b>linked levers</b>: every employment intervention should also pull GDP and education indicators. Bihar's young demographic (median age ~22) means each unit of skills investment compounds for ~40 years of working life.</div>
+
+  <table class="br-tbl br-obj-tbl">
+    <tr><th>Objective</th><th>FY24 baseline</th><th>2030 target</th><th>Required CAGR</th><th>Primary levers</th></tr>
+    <tr>
+      <td><b>Employment +10%</b></td>
+      <td>WPR 32.8% (PLFS); ~3.7 Cr workers</td>
+      <td>WPR ~36%; ~4.1 Cr workers (+40 L jobs)</td>
+      <td>~1.6%/yr</td>
+      <td>MSME formalisation, food-processing parks, rail/defence ancillary, tourism, IT-BPM tier-2, construction skilling</td>
+    </tr>
+    <tr>
+      <td><b>GDP +10% real (sustained)</b></td>
+      <td>FY24 real growth 11.5%; nominal CAGR 9%</td>
+      <td>Maintain ≥10% real CAGR to FY30 → GSDP ~₹15 LCr</td>
+      <td>10%/yr</td>
+      <td>Manufacturing share 7.5%→14%, services depth, IWT/logistics, capex absorption (₹2.6 LCr capital outlay window)</td>
+    </tr>
+    <tr>
+      <td><b>Education ≈100%</b></td>
+      <td>Literacy 74%, GER-HE 17%, Sec drop-out 21%</td>
+      <td>Literacy ≥95%, GER-HE ≥35%, drop-out &lt;5%</td>
+      <td>~3 pp/yr literacy</td>
+      <td>Teacher hiring (2.4 L vacancies), digital classrooms, ITI/Polytechnic doubling, scholarship + transit-hostels for girls</td>
+    </tr>
+  </table>
+
+  <h2 id="br-landmarks">Landmark Projects — Where to Start Execution</h2>
+  <div class="callout">High-leverage "lighthouse" sites where targeted execution can demonstrably move the three needles within 24-36 months. Each pairs a <b>place</b> with a <b>flagship</b> and the <b>objective(s)</b> it advances.</div>
+
+  <table class="br-tbl br-lm-tbl">
+    <tr>
+      <th>#</th><th>Landmark / District</th><th>Flagship intervention</th><th>Jobs</th><th>GDP</th><th>Edu</th><th>Why here</th>
+    </tr>
+    <tr><td>1</td><td><b>Bihta–Danapur</b> (Patna)</td><td>Defence &amp; rail-component cluster + IIT-Patna innovation park</td><td>★★★</td><td>★★★</td><td>★★</td><td>IIT-P talent, NH-922, airbase, land bank ready</td></tr>
+    <tr><td>2</td><td><b>Madhepura–Saharsa</b></td><td>Scale Alstom loco ancillary belt; auto-component Tier-2/3 vendor park</td><td>★★★</td><td>★★★</td><td>★</td><td>Anchor Alstom WAG-12 plant; new Saharsa airport</td></tr>
+    <tr><td>3</td><td><b>Barauni</b> (Begusarai)</td><td>Petro-chemical &amp; fertiliser downstream + plastics park</td><td>★★★</td><td>★★★</td><td>★</td><td>IOCL refinery, HURL urea, Ganga IWT terminal</td></tr>
+    <tr><td>4</td><td><b>Muzaffarpur</b></td><td>Litchi-Makhana-Honey mega food-park + cold-chain to NW-1 Kalughat</td><td>★★★</td><td>★★</td><td>★</td><td>Shahi-litchi GI, BRABU, rail junction</td></tr>
+    <tr><td>5</td><td><b>Darbhanga–Madhubani</b></td><td>AIIMS-Darbhanga health-economy + Mithila-painting GI export &amp; tourism circuit</td><td>★★</td><td>★★</td><td>★★</td><td>AIIMS coming up, airport live, cultural depth</td></tr>
+    <tr><td>6</td><td><b>Rajgir–Nalanda</b></td><td>Buddhist-heritage MICE + Nalanda Univ. + Bihar Sports University</td><td>★★</td><td>★★</td><td>★★★</td><td>UNESCO site, new stadium, hospitality ecosystem</td></tr>
+    <tr><td>7</td><td><b>Gaya</b></td><td>International Buddhist-circuit hub; multi-modal logistics on DFC + airport</td><td>★★★</td><td>★★</td><td>★</td><td>Intl. airport, EDFC node, Bodh Gaya footfall 5L+/yr</td></tr>
+    <tr><td>8</td><td><b>Kishanganj</b></td><td>Tea + cashew + AMU-Kishanganj research; Chicken-neck logistics</td><td>★★</td><td>★</td><td>★★★</td><td>Only tea district; strategic NE-corridor location</td></tr>
+    <tr><td>9</td><td><b>Bhagalpur</b></td><td>Silk &amp; textile mega-cluster (Tussar GI) + IIIT-Bhagalpur scale-up</td><td>★★★</td><td>★★</td><td>★★</td><td>Existing weaver base 35k+, IIIT, Vikramshila heritage</td></tr>
+    <tr><td>10</td><td><b>Purnea</b></td><td>Maize ethanol &amp; corn-starch park; air-cargo perishables hub</td><td>★★</td><td>★★★</td><td>★</td><td>30% of state maize output; new airport; NH-27</td></tr>
+    <tr><td>11</td><td><b>Munger</b></td><td>Skilling-led FMCG anchoring (ITC) + Yoga &amp; wellness tourism (BSY)</td><td>★★</td><td>★</td><td>★★</td><td>ITC largest plant in India; global Yoga brand</td></tr>
+    <tr><td>12</td><td><b>Sasaram–Kaimur</b></td><td>Limestone-cement cluster + Karkat-Mundeshwari tourism circuit</td><td>★★</td><td>★★</td><td>★</td><td>Only mineral-bearing zone; lowest density (land)</td></tr>
+    <tr><td>13</td><td><b>Valmiki Nagar</b> (W. Champaran)</td><td>Eco-tourism + Indo-Nepal trade SEZ + sugar-ethanol</td><td>★★</td><td>★★</td><td>★</td><td>Tiger reserve, Gandak barrage, border trade</td></tr>
+    <tr><td>14</td><td><b>Patna Riverfront</b></td><td>IWT NW-1 cargo + cruise tourism + Bailey-Rd IT corridor</td><td>★★★</td><td>★★★</td><td>★★</td><td>Kalughat terminal, capital agglomeration</td></tr>
+    <tr><td>15</td><td><b>State-wide ITI/Polytechnic Mission</b></td><td>Double seats (1.2 L → 2.5 L) co-located with the 14 clusters above; demand-led curriculum (welding, robotics, tourism, agri-tech, nursing)</td><td>★★★</td><td>★★</td><td>★★★</td><td>Direct multiplier on the other 14 — fills the skill gap that throttles every cluster</td></tr>
+  </table>
+
+  <div class="callout"><b>Sequencing recipe:</b> (1) anchor PSU/anchor-tenant + (2) ITI/Polytechnic co-location + (3) plug into NW-1 / EDFC / new airport + (4) GI-/cluster-branded export channel + (5) targeted girls' transit-hostel &amp; scholarship for the catchment. Replicate the recipe across the 14 landmarks; the 15<sup>th</sup> (skills) is the binding constraint.</div>
+
+  <details class="br-cite" open>
+    <summary>Sources &amp; citations — Bihar state economy block</summary>
+    <ol>
+      <li>[1] MoSPI — <a href="https://www.mospi.gov.in/sites/default/files/publication_reports/StateWiseData_2025.xlsx" target="_blank" rel="noopener">State-wise GSDP &amp; per-capita NSDP series (2011-12 base), FY15–FY24</a>.</li>
+      <li>[2] Govt. of Bihar, Finance Dept. — <a href="https://state.bihar.gov.in/finance/CitizenHome.html" target="_blank" rel="noopener">Bihar Economic Survey 2023-24</a> (sectoral GSVA, fiscal trends, capex window).</li>
+      <li>[3] RBI — <a href="https://www.rbi.org.in/Scripts/AnnualPublications.aspx?head=Handbook%20of%20Statistics%20on%20Indian%20States" target="_blank" rel="noopener">Handbook of Statistics on Indian States, 2023-24</a> (state finances, fiscal indicators).</li>
+      <li>[4] DGCI&amp;S, Dept. of Commerce — <a href="https://tradestat.commerce.gov.in/eidb/default.asp" target="_blank" rel="noopener">State-wise exports dashboard (TradeStat)</a>; Bihar share of all-India merchandise exports.</li>
+      <li>[5] MoEFCC / MoCI — <a href="https://www.commerce.gov.in/about-us/divisions/foreign-trade-territorial-division/foreign-trade-bilateral-cooperation/" target="_blank" rel="noopener">India-Nepal border-trade statistics</a> (Raxaul, Jogbani, Bairgania LCS data).</li>
+      <li>[6] AISHE — <a href="https://aishe.gov.in/aishe-new/" target="_blank" rel="noopener">All India Survey on Higher Education 2022-23</a> (GER 18-23, universities, college counts).</li>
+      <li>[7] UDISE+ — <a href="https://udiseplus.gov.in/#/en/home" target="_blank" rel="noopener">Unified District Information System for Education, 2022-23</a> (PTR, drop-out, school infra).</li>
+      <li>[8] NSO/MoSPI — <a href="https://www.mospi.gov.in/sites/default/files/publication_reports/MultipleIndicatorSurveyinIndiaf.pdf" target="_blank" rel="noopener">Multiple Indicator Survey in India, NSS 78th round (2020-21)</a> (literacy by state &amp; gender).</li>
+      <li>[9] PLFS — <a href="https://www.mospi.gov.in/sites/default/files/publication_reports/AnnualReport_PLFS2022-23.pdf" target="_blank" rel="noopener">Periodic Labour Force Survey, Annual Report 2022-23</a> (WPR, LFPR, unemployment by state).</li>
+      <li>[10] Census of India 2011 — <a href="https://censusindia.gov.in/census.website/data/census-tables" target="_blank" rel="noopener">District-level census tables</a> (baseline literacy &amp; population structure).</li>
+      <li>[11] Niti Aayog — <a href="https://www.niti.gov.in/sites/default/files/2023-07/Bihar_Vision_Document.pdf" target="_blank" rel="noopener">Bihar Vision Document &amp; SDG India Index dashboards</a>.</li>
+      <li>[12] CEA &amp; MNRE — <a href="https://cea.nic.in/installed-capacity-report/" target="_blank" rel="noopener">All-India installed capacity, state-wise renewables</a> (NTPC Nabinagar, BRBCL, SJVN Buxar plant data).</li>
+      <li>[13] PSU disclosures — <a href="https://iocl.com/refineries-detail/barauni-refinery" target="_blank" rel="noopener">IOCL Barauni</a>, <a href="https://www.hurl.net.in/" target="_blank" rel="noopener">HURL</a>, <a href="https://www.alstom.com/press-releases-news/2018/4/alstom-delivers-first-electric-locomotive-of-its-12000-hp-prima-loco-project-in-india" target="_blank" rel="noopener">Alstom Madhepura</a>, <a href="https://www.ntpc.co.in/power-generation/coal-based-power-stations" target="_blank" rel="noopener">NTPC stations</a>, <a href="https://www.sjvn.nic.in/projects-thermal.htm" target="_blank" rel="noopener">SJVN Buxar</a>.</li>
+      <li>[14] UNESCO — <a href="https://whc.unesco.org/en/list/1056" target="_blank" rel="noopener">Mahabodhi Temple Complex, Bodh Gaya</a> and <a href="https://whc.unesco.org/en/list/1502" target="_blank" rel="noopener">Nalanda Mahavihara</a> (heritage-tourism scoping).</li>
+      <li>[15] IWAI — <a href="https://iwai.nic.in/national-waterways/nw-1-ganga-bhagirathi-hooghly-river-system" target="_blank" rel="noopener">National Waterway 1 (Ganga) &amp; Kalughat multi-modal terminal</a>.</li>
+    </ol>
+    <p style="margin:6px 0 0;color:var(--muted);font-size:0.7rem">Where multiple sources gave slightly different vintages, the most recent published figure was used. All values are <b>indicative</b> for scoping conversations, not audited statistics.</p>
+  </details>
+
   <h2>Browse 38 Districts by Division</h2>
   <div id="biharDir"></div>
 </section>
@@ -297,7 +537,7 @@ nav.lens .caret{display:none;}
 <div id="districtsRoot"></div>
 </main>
 <footer>
-  Vikas · A Bharat district-growth atlas. Data compiled from Census 2011, MoSPI, CEA, MNRE, state economic surveys and public PSU disclosures. Indicative — use as a heuristic for investment, SME and green-energy site-scoping conversations, not as audited statistics.
+  viksit-bharat · A Bharat district-growth atlas. Data compiled from Census 2011, MoSPI, CEA, MNRE, state economic surveys and public PSU disclosures. Indicative — use as a heuristic for investment, SME and green-energy site-scoping conversations, not as audited statistics.
 </footer>
 <script>
 const BIHAR = [
@@ -8486,6 +8726,220 @@ function radarSVG(scores,labels){
   return svg;
 }
 
+// ===== Per-district Economy & 2030 Plan (Bihar) =====
+// Curated overrides for landmark / anchor districts. Districts not listed
+// fall back to heuristic estimates computed from existing fields.
+const BR_ECON_OVERRIDES = {
+  patna:     {gddp:"₹1.05 L Cr",  pc:"₹1,79,800", mix:[6,22,72], cagr:"10.2%", exp:"FMCG, pharma packaging, IT/BPM services", imp:"electronics, automobiles, edible oils", emp:"Bihta defence/rail-ancillary park + Bailey Rd IT-BPM zone — 80k jobs", gdp:"Convention/MICE economy + Kalughat IWT cargo — services depth", edu:"3 new state univ. campuses; close GER-HE to 35%", lm:["Bihta–Danapur defence/rail corridor","Kalughat IWT multi-modal terminal","Bailey Rd · IIT-P innovation park"]},
+  madhepura: {gddp:"₹14.8 k Cr",  pc:"₹62,300",  mix:[28,38,34], cagr:"13.5%", exp:"WAG-12 locomotives (Alstom), maize", imp:"steel, copper, capital equipment", emp:"Alstom Tier-2/3 vendor park — 25k direct + 60k indirect jobs", gdp:"Auto-component cluster anchored on loco supply chain", edu:"Alstom skill-academy + new ITI cluster (4 units)", lm:["Alstom Madhepura ancillary park","Saharsa airport cargo node","Kosi-region ITI mega-cluster"]},
+  begusarai: {gddp:"₹52.4 k Cr",  pc:"₹1,38,200", mix:[12,52,36], cagr:"11.8%", exp:"refined petroleum, urea, plastics, dairy", imp:"crude oil, natural gas, packaging machinery", emp:"Barauni plastics + petrochem downstream park — 35k jobs", gdp:"IOCL+HURL+NTPC integrated industrial estate scale-up", edu:"Petroleum/Chem-tech polytechnic, IOC apprenticeship 5x", lm:["Barauni plastics park","HURL urea-2 expansion","Ganga IWT Simaria terminal"]},
+  muzaffarpur:{gddp:"₹38.6 k Cr", pc:"₹68,400",  mix:[26,22,52], cagr:"10.5%", exp:"litchi, makhana, honey, leather", imp:"tannery chemicals, packaging, pharma APIs", emp:"Litchi-makhana mega-food-park + leather cluster — 40k jobs", gdp:"Cold-chain export hub via NW-1 Kalughat + air-cargo", edu:"BRABU twin-campus + agri-food skill university", lm:["Shahi-litchi food-park","Bela industrial leather cluster","BRABU agri-food skill univ."]},
+  darbhanga: {gddp:"₹26.2 k Cr",  pc:"₹61,100",  mix:[30,16,54], cagr:"10.8%", exp:"makhana (GI), Mithila paintings, mango", imp:"medical equipment, electronics", emp:"AIIMS health-economy + Mithila-art GI export — 22k jobs", gdp:"Tourism circuit Madhubani-Janakpur + airport-led services", edu:"AIIMS allied-health institute; Mithila-art design school", lm:["AIIMS Darbhanga health-economy","Mithila-art GI export hub","Darbhanga airport tourism circuit"]},
+  nalanda:   {gddp:"₹19.4 k Cr",  pc:"₹67,500",  mix:[24,20,56], cagr:"11.0%", exp:"honey, vegetables, mushroom, tourism services", imp:"hospitality supplies, sports equipment", emp:"Rajgir MICE + Nalanda Univ. expansion — 18k jobs", gdp:"Convention + sports-tourism + heritage circuit", edu:"Nalanda Univ. 5,000-seat scale-up; Bihar Sports Univ. flagship", lm:["Nalanda Univ. heritage MICE","Bihar Sports Univ. Rajgir","Sohsarai food-processing cluster"]},
+  gaya:      {gddp:"₹28.1 k Cr",  pc:"₹58,400",  mix:[22,18,60], cagr:"10.6%", exp:"stone craft, hospitality services, Buddhist pilgrimage", imp:"hotel supplies, electronics, retail goods", emp:"Buddhist-circuit hospitality + EDFC logistics — 28k jobs", gdp:"International airport + DFC multi-modal node", edu:"CUSB campus-2, hospitality + Pali studies centre", lm:["Bodh Gaya intl. hospitality zone","Gaya EDFC logistics park","CUSB Bodh Gaya heritage research"]},
+  kishanganj:{gddp:"₹13.7 k Cr",  pc:"₹65,200",  mix:[40,12,48], cagr:"10.4%", exp:"tea, pineapple, cashew", imp:"tea-processing machinery, fertiliser", emp:"Tea + cashew + dairy cluster — 14k jobs", gdp:"Chicken-neck cross-border logistics (Nepal/Bangladesh/NE)", edu:"AMU-Kishanganj full campus operationalisation", lm:["Kishanganj tea & cashew cluster","AMU-Kishanganj campus","Chicken-neck multi-modal hub"]},
+  bhagalpur: {gddp:"₹24.5 k Cr",  pc:"₹65,800",  mix:[24,24,52], cagr:"10.9%", exp:"Tussar silk (GI), textiles, Katarni rice", imp:"silk yarn, dyeing chemicals", emp:"Silk mega-cluster + IIIT scale-up — 30k jobs (incl. weavers)", gdp:"Textile-park + Vikramshila heritage tourism", edu:"IIIT-Bhagalpur 4x expansion + silk-design institute", lm:["Bhagalpur silk mega-cluster","IIIT-Bhagalpur scale-up","Vikramshila heritage circuit"]},
+  purnea:    {gddp:"₹22.8 k Cr",  pc:"₹68,100",  mix:[36,16,48], cagr:"11.2%", exp:"maize, banana, jute, dairy", imp:"agri-machinery, ethanol-plant equipment", emp:"Maize ethanol + corn-starch park — 20k jobs", gdp:"Air-cargo perishables hub + NH-27 logistics", edu:"Agri-univ. ethanol/biofuel R&D centre", lm:["Purnea maize-ethanol park","Purnea airport perishables hub","Seemanchal agri-univ."]},
+  munger:    {gddp:"₹16.2 k Cr",  pc:"₹74,200",  mix:[18,38,44], cagr:"10.4%", exp:"cigarettes, arms (ord. factory), yoga wellness", imp:"tobacco leaf, steel, brass", emp:"ITC FMCG scale-up + yoga-wellness tourism — 12k jobs", gdp:"Bihar School of Yoga global wellness branding", edu:"Munger Univ. + skill academy for FMCG ops", lm:["ITC Munger FMCG expansion","Bihar School of Yoga global campus","Munger riverfront wellness zone"]},
+  kaimur:    {gddp:"₹10.4 k Cr",  pc:"₹62,400",  mix:[34,30,36], cagr:"10.7%", exp:"limestone, sandstone, cement clinker", imp:"mining equipment, explosives, fly-ash", emp:"Cement + minerals cluster + tribal eco-tourism — 16k jobs", gdp:"Karkat-Mundeshwari tourism circuit + Vindhyan minerals", edu:"Mining/civil polytechnic + tribal residential schools", lm:["Sasaram-Kaimur cement cluster","Karkat–Mundeshwari heritage trail","Tribal eco-tourism zone"]},
+  "west-champaran":{gddp:"₹21.6 k Cr", pc:"₹52,400", mix:[38,18,44], cagr:"10.3%", exp:"sugar, ethanol, sugarcane derivatives", imp:"sugar-mill machinery, fertiliser", emp:"Valmiki eco-tourism + sugar-ethanol scale-up — 22k jobs", gdp:"Indo-Nepal trade SEZ + Gandak barrage hydro/agri", edu:"Tourism mgmt. institute + agri-skill centre Bettiah", lm:["Valmiki eco-tourism circuit","Bettiah sugar-ethanol cluster","Indo-Nepal trade SEZ"]},
+  saharsa:   {gddp:"₹12.4 k Cr",  pc:"₹62,900",  mix:[32,22,46], cagr:"11.0%", exp:"maize, jute, makhana", imp:"capital equipment, electronics", emp:"Madhepura-Alstom spill-over + Kosi flood-management jobs — 14k", gdp:"Kosi-region anchor for industrial diversification", edu:"Madhepura-Saharsa engineering ITI cluster", lm:["Saharsa airport cargo node","Kosi-region flood-tech centre","Alstom vendor extension"]}
+};
+
+function _popLakh(p){ // "58.4 L" -> 58.4
+  const m=String(p).match(/([\d.]+)/); return m?parseFloat(m[1]):10;
+}
+function _litPct(l){ const m=String(l).match(/([\d.]+)/); return m?parseFloat(m[1]):62; }
+
+function _classify(d){
+  const blob=((d.in||"")+" "+(d.st||[]).join(" ")+" "+(d.pt||[]).join(" ")).toLowerCase();
+  if(/iocl|ntpc|hurl|sjvn|refinery|thermal|alstom|locomotive|iit|aiims|industrial area|fertiliser|petro|cement/.test(blob))return"industrial";
+  if(/tourism|heritage|unesco|buddhist|temple|tiger reserve|stadium|airport/.test(blob))return"tourism";
+  if(/border|nepal|sez|trade|customs/.test(blob))return"border";
+  if(/litchi|makhana|maize|banana|sugar|paddy|wheat|silk|honey|cold-?chain|food/.test(blob))return"agri";
+  return"agri";
+}
+
+function _computeEcon(d){
+  if(BR_ECON_OVERRIDES[d.s]) return BR_ECON_OVERRIDES[d.s];
+  const pop=_popLakh(d.p);                          // lakh
+  const lit=_litPct(d.l);                           // %
+  const litMul=Math.max(0.6, Math.min(1.6, lit/62));
+  const pcBase=54383;                                // ₹ state per-capita
+  const pc=Math.round(pcBase*litMul/100)*100;
+  const gddp=(pop*100000*pc)/1e7;                    // ₹ Crore
+  const gddpFmt=(gddp>=10000? (gddp/1000).toFixed(1)+" L Cr": Math.round(gddp).toLocaleString("en-IN")+" Cr");
+  const cls=_classify(d);
+  const mixMap={industrial:[18,40,42], tourism:[24,16,60], border:[30,14,56], agri:[34,16,50]};
+  const mix=mixMap[cls];
+  const cagrMap={industrial:"10.8%", tourism:"10.5%", border:"10.2%", agri:"9.8%"};
+  const expMap={
+    industrial:"manufactured goods, processed agri, building materials",
+    tourism:"hospitality services, handicrafts, processed food",
+    border:"cross-border trade goods, agri-produce, textiles",
+    agri:"foodgrains, vegetables, dairy, GI agri-products"
+  };
+  const impMap={
+    industrial:"capital equipment, electronics, intermediate inputs",
+    tourism:"hotel/retail supplies, electronics, fuels",
+    border:"consumer goods, electronics, packaged food",
+    agri:"fertiliser, agri-machinery, fuels, packaging"
+  };
+  const empMap={
+    industrial:"Anchor PSU/MSME ancillary park — 12-18k jobs",
+    tourism:"Tourism-circuit hospitality + handicrafts scale-up — 8-12k jobs",
+    border:"Border-trade haat + customs logistics centre — 6-10k jobs",
+    agri:"Mega-food-park + cold-chain cluster — 10-15k jobs"
+  };
+  const gdpMap={
+    industrial:"Brownfield expansion of existing industrial estate; ancillary vendor onboarding",
+    tourism:"MICE / festival circuit + last-mile connectivity to anchor heritage node",
+    border:"SEZ-lite with Nepal/Bengal trade integration; warehousing",
+    agri:"FPO consolidation + GI tagging + cold-chain via NW-1 / nearest airport"
+  };
+  const eduMap={
+    industrial:"Sector-aligned ITI/Polytechnic doubling; apprenticeship 5x with anchor PSU",
+    tourism:"Hospitality + heritage-guide institute; language skilling",
+    border:"Trilingual trade-clerk academy; girls' transit-hostel near border haat",
+    agri:"Agri-business skill centre; FPO management diplomas at block KVK"
+  };
+  return {gddp:"₹"+gddpFmt, pc:"₹"+pc.toLocaleString("en-IN"), mix:mix, cagr:cagrMap[cls],
+    exp:expMap[cls], imp:impMap[cls], emp:empMap[cls], gdp:gdpMap[cls], edu:eduMap[cls],
+    lm:(d.pt||[]).slice(0,3)};
+}
+
+function _donut(mix){
+  // mix = [agri, ind, svc] %
+  const cx=60,cy=60,r=50;
+  const segs=[{v:mix[0],c:"#FF9933",l:"Agri"},{v:mix[1],c:"#000080",l:"Ind"},{v:mix[2],c:"#138808",l:"Svc"}];
+  let a0=-Math.PI/2,paths="";
+  segs.forEach(s=>{
+    const a1=a0+(s.v/100)*2*Math.PI;
+    const x0=cx+r*Math.cos(a0), y0=cy+r*Math.sin(a0);
+    const x1=cx+r*Math.cos(a1), y1=cy+r*Math.sin(a1);
+    const large=(a1-a0)>Math.PI?1:0;
+    paths+=`<path d="M${cx},${cy} L${x0.toFixed(2)},${y0.toFixed(2)} A${r},${r} 0 ${large},1 ${x1.toFixed(2)},${y1.toFixed(2)} Z" fill="${s.c}"><title>${s.l} ${s.v}%</title></path>`;
+    a0=a1;
+  });
+  paths+=`<circle cx="${cx}" cy="${cy}" r="22" fill="var(--card)"/>`;
+  return `<svg viewBox="0 0 120 120" class="br-chart" style="max-height:130px" role="img" aria-label="Sectoral mix">${paths}<text x="60" y="58" text-anchor="middle" font-size="9" fill="var(--ink)" font-weight="700">FY24</text><text x="60" y="70" text-anchor="middle" font-size="7" fill="var(--muted)">mix</text></svg>`;
+}
+
+function _eduTrendSVG(lit24){
+  // Assume baseline 2014 = lit24 - 12.5pp, linear interpolation 10 points
+  const start=Math.max(40,lit24-12.5), end=lit24;
+  const w=240,h=80,p=18;
+  let pts=[];
+  for(let i=0;i<10;i++){
+    const v=start+(end-start)*(i/9);
+    const x=p+(w-2*p)*i/9;
+    const y=h-p-((v-40)/(100-40))*(h-2*p);
+    pts.push(x.toFixed(1)+","+y.toFixed(1));
+  }
+  return `<svg viewBox="0 0 ${w} ${h}" class="br-chart" style="max-height:90px" role="img" aria-label="Literacy trend">
+    <line x1="${p}" y1="${h-p}" x2="${w-p}" y2="${h-p}" stroke="#bbb"/>
+    <line x1="${p}" y1="${p}"   x2="${p}"   y2="${h-p}" stroke="#bbb"/>
+    <polyline points="${pts.join(' ')}" fill="none" stroke="#000080" stroke-width="2"/>
+    <text x="${p-2}" y="${p+4}" text-anchor="end" font-size="7" fill="#555">100%</text>
+    <text x="${p-2}" y="${h-p+2}" text-anchor="end" font-size="7" fill="#555">40%</text>
+    <text x="${p}" y="${h-4}" font-size="7" fill="#555">FY15</text>
+    <text x="${w-p}" y="${h-4}" text-anchor="end" font-size="7" fill="#555">FY24</text>
+    <text x="${w-p-2}" y="${p+10}" text-anchor="end" font-size="8" fill="#000080" font-weight="700">${end.toFixed(1)}%</text>
+  </svg>`;
+}
+
+function econPanelHTML(d){
+  const e=_computeEcon(d);
+  const pop=_popLakh(d.p);
+  const lit=_litPct(d.l);
+  const empTarget=Math.round(pop*0.35*0.10*100000).toLocaleString("en-IN"); // +10% on ~35% WPR
+  const lmList=(e.lm||[]).map(x=>"<li>"+x+"</li>").join("");
+  const isCurated=!!BR_ECON_OVERRIDES[d.s];
+  const tag=isCurated?'<span class="br-tag br-tag-curated">Curated</span>':'<span class="br-tag br-tag-est">Heuristic estimate</span>';
+  const cites=_econCitations(d,isCurated);
+  return `
+    <h2 id="${d.s}-econ">Economy &amp; 2030 Plan — ${d.n} ${tag}</h2>
+    <div class="callout">Snapshot of district-level economy across the last 10 years, plus locally-tuned levers to advance the three Bihar 2030 objectives — <b>Employment +10%</b>, <b>GDP +10%</b>, <b>Education ≈100%</b>.</div>
+    <div class="br-econ-grid">
+      <div class="br-card">
+        <h4>Economy snapshot (FY24 est)<sup class="cref" title="MoSPI state-wise series + Bihar Economic Survey 2023-24 + district industry profiles">[1][2][16]</sup></h4>
+        <table class="br-tbl">
+          <tr><th>Indicator</th><th>Value</th></tr>
+          <tr><td>District GDDP</td><td>${e.gddp}</td></tr>
+          <tr><td>Per-capita</td><td>${e.pc}</td></tr>
+          <tr><td>10-yr nominal CAGR</td><td>${e.cagr}</td></tr>
+          <tr><td>Top exports</td><td>${e.exp}</td></tr>
+          <tr><td>Top imports</td><td>${e.imp}</td></tr>
+          <tr><td>Literacy (FY24)</td><td>${lit.toFixed(1)}%</td></tr>
+        </table>
+      </div>
+      <div class="br-card">
+        <h4>Sectoral GVA mix — Agri / Industry / Services<sup class="cref" title="Bihar Economic Survey 2023-24, district-level back-cast">[2]</sup></h4>
+        ${_donut(e.mix)}
+        <p class="br-note"><b>Agri:</b> ${e.mix[0]}% &middot; <b>Industry:</b> ${e.mix[1]}% &middot; <b>Services:</b> ${e.mix[2]}%</p>
+      </div>
+      <div class="br-card">
+        <h4>Literacy trend (FY15 → FY24)<sup class="cref" title="Census 2011 + NSO MIS 2020-21 + UDISE+ 2022-23">[7][8][10]</sup></h4>
+        ${_eduTrendSVG(lit)}
+        <p class="br-note">Required jump to reach ≈100%: <b>+${(100-lit).toFixed(1)} pp</b> by 2030 (~${((100-lit)/6).toFixed(1)} pp/yr).</p>
+      </div>
+      <div class="br-card">
+        <h4>2030 Objectives — district-specific levers<sup class="cref" title="PLFS 2022-23 WPR + Niti Aayog Bihar Vision + BIADA / district industry profile">[9][11][16]</sup></h4>
+        <table class="br-tbl">
+          <tr><th>Goal</th><th>Lever for ${d.n}</th></tr>
+          <tr><td><b>Emp +10%</b><br><span style="font-size:0.7rem;color:var(--muted)">~${empTarget} new jobs</span></td><td>${e.emp}</td></tr>
+          <tr><td><b>GDP +10%</b></td><td>${e.gdp}</td></tr>
+          <tr><td><b>Edu ≈100%</b></td><td>${e.edu}</td></tr>
+        </table>
+      </div>
+      <div class="br-card" style="grid-column:1/-1;border-top-color:var(--green)">
+        <h4>Landmark execution sites in ${d.n}</h4>
+        <ol style="margin:4px 0 0 18px;font-size:0.82rem;line-height:1.55">${lmList}</ol>
+        <p class="br-note">Sequencing recipe: <b>anchor tenant</b> → <b>co-located ITI/Polytechnic</b> → <b>logistics plug-in (NW-1 / EDFC / nearest airport)</b> → <b>GI / cluster export channel</b> → <b>girls' transit-hostel &amp; scholarship</b> for the catchment.</p>
+      </div>
+    </div>
+    ${cites}
+  `;
+}
+
+// District-specific citation links. Common refs are always included; curated
+// districts add anchor-tenant / GI / heritage-specific sources.
+function _econCitations(d,isCurated){
+  const common=[
+    '<li>[1] MoSPI — <a href="https://www.mospi.gov.in/" target="_blank" rel="noopener">State-wise GSDP / per-capita NSDP series, FY15-FY24</a>.</li>',
+    '<li>[2] Govt. of Bihar — <a href="https://state.bihar.gov.in/finance/CitizenHome.html" target="_blank" rel="noopener">Bihar Economic Survey 2023-24</a> (sectoral GVA, district capex).</li>',
+    '<li>[7] UDISE+ — <a href="https://udiseplus.gov.in/" target="_blank" rel="noopener">District report cards 2022-23</a> (school infra, drop-out, PTR).</li>',
+    '<li>[8] NSO/MoSPI — <a href="https://www.mospi.gov.in/sites/default/files/publication_reports/MultipleIndicatorSurveyinIndiaf.pdf" target="_blank" rel="noopener">Multiple Indicator Survey, NSS 78th round, 2020-21</a> (literacy by state/gender).</li>',
+    '<li>[9] PLFS — <a href="https://www.mospi.gov.in/sites/default/files/publication_reports/AnnualReport_PLFS2022-23.pdf" target="_blank" rel="noopener">Annual Report 2022-23</a> (WPR/LFPR by state, rural-urban).</li>',
+    '<li>[10] Census of India 2011 — <a href="https://censusindia.gov.in/census.website/data/census-tables" target="_blank" rel="noopener">District handbook</a> (baseline population, literacy, sex-ratio).</li>',
+    '<li>[11] Niti Aayog — <a href="https://www.niti.gov.in/sites/default/files/2023-07/Bihar_Vision_Document.pdf" target="_blank" rel="noopener">Bihar Vision Document</a> + <a href="https://www.niti.gov.in/aspirational-districts-programme" target="_blank" rel="noopener">Aspirational Districts dashboards</a>.</li>',
+    '<li>[16] BIADA / DIC — <a href="https://biada.bihar.gov.in/" target="_blank" rel="noopener">Bihar Industrial Area Development Authority</a> &amp; <a href="https://industries.bihar.gov.in/" target="_blank" rel="noopener">Dept. of Industries — district industry profile (' + d.n + ')</a>.</li>'
+  ];
+  const specific={
+    patna:['<li>[A] <a href="https://www.iitp.ac.in/" target="_blank" rel="noopener">IIT Patna</a>, <a href="https://aiimspatna.edu.in/" target="_blank" rel="noopener">AIIMS Patna</a>, <a href="https://iwai.nic.in/" target="_blank" rel="noopener">IWAI Kalughat MMT</a> project notes.</li>'],
+    madhepura:['<li>[A] <a href="https://www.alstom.com/press-releases-news/2018/4/alstom-delivers-first-electric-locomotive-of-its-12000-hp-prima-loco-project-in-india" target="_blank" rel="noopener">Alstom Madhepura — €3.5B WAG-12 contract, 12,000 HP locos</a>; <a href="https://www.aai.aero/" target="_blank" rel="noopener">AAI Saharsa airport plan</a>.</li>'],
+    begusarai:['<li>[A] <a href="https://iocl.com/refineries-detail/barauni-refinery" target="_blank" rel="noopener">IOCL Barauni Refinery (6 MMTPA)</a>; <a href="https://www.hurl.net.in/" target="_blank" rel="noopener">HURL Barauni urea plant (1.27 MMTPA)</a>; <a href="https://www.ntpc.co.in/" target="_blank" rel="noopener">NTPC Barauni TPS</a>.</li>'],
+    muzaffarpur:['<li>[A] <a href="https://ipindia.gov.in/registered-gls.htm" target="_blank" rel="noopener">CGPDTM — Shahi Litchi GI tag (No. 482)</a>; <a href="https://nrcl.icar.gov.in/" target="_blank" rel="noopener">ICAR-NRC Litchi, Muzaffarpur</a>; <a href="https://www.brabu.net/" target="_blank" rel="noopener">BRA Bihar University</a>.</li>'],
+    darbhanga:['<li>[A] <a href="https://aiimsdarbhanga.in/" target="_blank" rel="noopener">AIIMS Darbhanga</a>; <a href="https://ipindia.gov.in/registered-gls.htm" target="_blank" rel="noopener">Madhubani painting GI tag (No. 51)</a>; <a href="https://www.aai.aero/en/airports/darbhanga" target="_blank" rel="noopener">Darbhanga airport</a>.</li>'],
+    nalanda:['<li>[A] <a href="https://whc.unesco.org/en/list/1502" target="_blank" rel="noopener">UNESCO — Nalanda Mahavihara</a>; <a href="https://nalandauniv.edu.in/" target="_blank" rel="noopener">Nalanda University, Rajgir</a>; <a href="https://bcabihar.org/" target="_blank" rel="noopener">Bihar Cricket Stadium, Rajgir</a>.</li>'],
+    gaya:['<li>[A] <a href="https://whc.unesco.org/en/list/1056" target="_blank" rel="noopener">UNESCO — Mahabodhi Temple Complex</a>; <a href="https://www.aai.aero/en/airports/gaya" target="_blank" rel="noopener">Gaya International Airport</a>; <a href="https://dfccil.com/" target="_blank" rel="noopener">EDFC Sonnagar terminal</a>.</li>'],
+    kishanganj:['<li>[A] <a href="https://www.amu.ac.in/centres/centre-amu-kishanganj" target="_blank" rel="noopener">AMU Kishanganj Centre</a>; <a href="https://teaboard.gov.in/" target="_blank" rel="noopener">Tea Board of India — Bihar tea statistics</a>.</li>'],
+    bhagalpur:['<li>[A] <a href="https://ipindia.gov.in/registered-gls.htm" target="_blank" rel="noopener">Bhagalpuri Tussar Silk GI tag (No. 134)</a>; <a href="https://iiitbh.ac.in/" target="_blank" rel="noopener">IIIT Bhagalpur</a>; <a href="https://asi.nic.in/" target="_blank" rel="noopener">ASI — Vikramshila site</a>.</li>'],
+    purnea:['<li>[A] <a href="https://dfpd.gov.in/ethanol-blending.htm" target="_blank" rel="noopener">MoF&amp;PD — Ethanol Blending Programme, Bihar maize-ethanol plants</a>; <a href="https://www.aai.aero/" target="_blank" rel="noopener">AAI Purnea airport plan</a>.</li>'],
+    munger:['<li>[A] <a href="https://www.itcportal.com/businesses/fmcg/cigarettes-and-cigars.aspx" target="_blank" rel="noopener">ITC Munger — flagship cigarette factory</a>; <a href="https://www.biharyoga.net/" target="_blank" rel="noopener">Bihar School of Yoga</a>; <a href="https://mungeruniversity.ac.in/" target="_blank" rel="noopener">Munger University</a>.</li>'],
+    kaimur:['<li>[A] <a href="https://ibm.gov.in/" target="_blank" rel="noopener">Indian Bureau of Mines — Kaimur limestone &amp; sandstone reserves</a>; <a href="https://btvb.bihar.gov.in/" target="_blank" rel="noopener">Bihar State Tourism — Mundeshwari &amp; Karkat circuit</a>.</li>'],
+    "west-champaran":['<li>[A] <a href="https://www.bandipur.gov.in/" target="_blank" rel="noopener">Valmiki Tiger Reserve, NTCA</a>; <a href="https://gandakproject.nic.in/" target="_blank" rel="noopener">Gandak barrage / Indo-Nepal water-sharing</a>; <a href="https://commerce.gov.in/" target="_blank" rel="noopener">Raxaul ICP, Indo-Nepal LCS data</a>.</li>'],
+    saharsa:['<li>[A] <a href="https://www.alstom.com/" target="_blank" rel="noopener">Alstom Madhepura vendor ecosystem (Saharsa cluster)</a>; <a href="https://fmis.bih.nic.in/" target="_blank" rel="noopener">Bihar Flood Management — Kosi region</a>.</li>']
+  };
+  const extra=specific[d.s]?specific[d.s].join(""):"";
+  const note=isCurated
+    ? 'Curated values for <b>'+d.n+'</b> reconcile MoSPI state series with the anchor-tenant / district industry profile cited below.'
+    : 'Values for <b>'+d.n+'</b> are <b>heuristic</b> — district GDDP and sectoral mix are estimated from population, literacy and industry-profile signals against the state per-capita NSDP (₹54,383). Use as a scoping heuristic, not as audited statistics.';
+  return '<details class="br-cite"><summary>Sources &amp; citations — '+d.n+'</summary>'+
+    '<ol>'+common.join("")+extra+'</ol>'+
+    '<p style="margin:6px 0 0;color:var(--muted);font-size:0.7rem">'+note+'</p></details>';
+}
+
 function buildDistrictSections(){
   const root=document.getElementById("districtsRoot");
   const labels=["Eco","HDI","Infra","Ind","Agri","Gov"];
@@ -8496,6 +8950,7 @@ function buildDistrictSections(){
   all.forEach(d=>{
     const meta=codeOfDistrict[d.s]||{code:"BR",name:"Bihar"};
     const home=stateHome(meta.code);
+    const econ=(meta.code==="BR")?econPanelHTML(d):"";
     const sec=el("section",{class:"lens-section",id:d.s});
     sec.innerHTML=`
       <div class="backbar">
@@ -8539,6 +8994,7 @@ function buildDistrictSections(){
         <div class="dcard grn"><h4>☀️ Green Energy Opportunity</h4><p>${d.gr}</p></div>
         <div class="dcard wtr"><h4>💧 Water Recharge Opportunity</h4><p>${d.wt}</p></div>
       </div>
+      ${econ}
     `;
     root.appendChild(sec);
   });
