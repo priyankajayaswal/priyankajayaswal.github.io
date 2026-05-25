@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Goa Shasan — Governance Personnel Catalogue (Centre → Ward)</title>
+<meta name="description" content="Catalogue of every named official in Goa's governance chain — Union representation, State cabinet, Legislative Assembly, Judiciary, 2 districts, and Panchayati Raj.">
+<style>
+  :root {
+    --bg:#f7f7f5; --card:#fff; --ink:#1a1a1a; --muted:#5b5b5b;
+    --navy:#0B1B3F; --saffron:#FF9933; --green:#138808; --red:#c0392b;
+    --border:#e3e3df; --tag:#eef0f7;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-padding-top:115px;scroll-behavior:smooth;}
+  body{margin:0;font-family:'Segoe UI',Tahoma,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5;font-size:14px;}
+  a{color:var(--navy);}
+
+  /* ===== TOPBAR ===== */
+  header.topbar{background:linear-gradient(135deg,var(--saffron) 0%,#fff 50%,var(--green) 100%);padding:8px 20px 6px;border-bottom:2px solid var(--navy);position:sticky;top:0;z-index:10;text-align:center;}
+  header.topbar > *{text-align:left;}
+  header.topbar nav.lens{justify-content:center;display:inline-flex;}
+  .brand-row{display:flex;flex-direction:row;align-items:baseline;justify-content:center;gap:10px;flex-wrap:wrap;line-height:1.05;margin-bottom:4px;}
+  .brand{display:inline-block;font-size:1.2rem;font-weight:700;color:var(--navy);text-decoration:none;}
+  .brand:hover{color:var(--navy);text-decoration:none;}
+  .brand .hi{font-family:'Mangal','Nirmala UI',serif;margin-right:6px;color:var(--red);}
+  .tagline{font-size:0.65rem;color:var(--muted);font-weight:500;letter-spacing:0.3px;}
+  nav.lens{margin-top:4px;display:flex;flex-wrap:wrap;gap:2px;align-items:stretch;}
+  nav.lens > .lens-item{position:relative;}
+  nav.lens > .lens-item > a, nav.lens > a{display:inline-block;padding:4px 11px;background:rgba(255,255,255,0.75);border:1.5px solid var(--navy);color:var(--navy);text-decoration:none;border-radius:6px;font-weight:600;font-size:0.8rem;}
+  nav.lens > .lens-item > a:hover, nav.lens > a:hover, nav.lens > .lens-item:hover > a{background:var(--navy);color:#fff;}
+  nav.lens .caret{font-size:0.7rem;margin-left:4px;opacity:0.7;}
+
+  /* ===== MEGA-MENU DROPDOWN ===== */
+  .lens-drop{position:absolute;top:100%;left:0;display:none;background:var(--card);border:1.5px solid var(--navy);border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,0.25);padding:8px;min-width:280px;max-width:520px;max-height:60vh;overflow-y:auto;z-index:20;margin-top:0;}
+  .lens-item:hover .lens-drop, .lens-item:focus-within .lens-drop{display:block;}
+  .lens-item::after{content:"";position:absolute;top:100%;left:0;right:0;height:10px;display:none;}
+  .lens-item:hover::after, .lens-item:focus-within::after{display:block;}
+  .lens-drop .ld-head{font-size:0.7rem;text-transform:uppercase;letter-spacing:0.5px;color:var(--muted);padding:6px 8px;border-bottom:1px solid var(--border);margin-bottom:4px;font-weight:700;display:flex;justify-content:space-between;align-items:center;}
+  .lens-drop .ld-head a{font-size:0.72rem;color:var(--navy);text-decoration:none;font-weight:600;}
+  .lens-drop .ld-head a:hover{text-decoration:underline;}
+  .lens-drop .ld-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:2px;}
+  .lens-drop .ld-grid a{display:flex;justify-content:space-between;align-items:center;gap:6px;padding:5px 9px;font-size:0.8rem;color:var(--ink);text-decoration:none;border-radius:4px;}
+  .lens-drop .ld-grid a:hover{background:var(--tag);color:var(--navy);}
+  .lens-drop .ld-grid a .c{font-size:0.65rem;color:var(--muted);background:var(--tag);padding:1px 6px;border-radius:999px;font-weight:600;}
+  @media (max-width:700px){
+    .lens-drop{position:static;display:block;max-height:none;margin-top:0;border-radius:0;border:none;border-top:1px dashed var(--border);box-shadow:none;}
+  }
+
+  .help{padding:8px 20px;background:#fff7e8;border-bottom:1px solid var(--border);font-size:0.82rem;color:#5a3a00;}
+
+  main{max-width:1180px;margin:0 auto;padding:14px 20px 50px;}
+
+  /* ===== LENS ROUTING via :target ===== */
+  .lens-section{display:none;}
+  .lens-section:target, .lens-section:has(:target){display:block;}
+  body:not(:has(:target)) #h{display:block;}
+
+  details:target, details:has(:target){scroll-margin-top:120px;}
+  details:target > summary, details:has(:target) > summary{background:linear-gradient(90deg,rgba(255,153,51,0.18) 0%,transparent 100%);}
+
+  /* ===== JUMPBAR ===== */
+  .jumpbar{position:sticky;top:0;z-index:8;background:var(--card);border-bottom:1px solid var(--border);padding:6px 8px;margin:-14px -20px 14px;display:flex;gap:4px;overflow-x:auto;white-space:nowrap;}
+  .jumpbar a{flex:0 0 auto;font-size:0.72rem;padding:3px 9px;color:var(--ink);text-decoration:none;border-radius:999px;background:var(--tag);font-weight:600;}
+  .jumpbar a:hover{background:var(--navy);color:#fff;}
+  .jumpbar .jb-label{flex:0 0 auto;font-size:0.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;padding:4px 8px 4px 0;font-weight:700;}
+
+  /* ===== GOV INTRO + FLOWCHART BLOCKS ===== */
+  .gov-intro{background:linear-gradient(135deg,#fff7e8 0%,#e6f0ff 100%);border-left:4px solid var(--saffron);padding:10px 14px;border-radius:6px;margin:8px 0 14px;font-size:0.88rem;line-height:1.55;}
+  .gov-block{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin:14px 0;}
+  .gov-block h3{margin:0 0 6px;color:var(--navy);font-size:1.05rem;display:flex;align-items:center;gap:8px;}
+  .gov-block .lede{font-size:0.85rem;color:var(--muted);margin:0 0 12px;line-height:1.5;}
+  .gov-block svg{display:block;width:100%;height:auto;max-width:100%;background:transparent;}
+  .gov-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(360px,1fr));gap:12px;}
+  .gov-grid .gov-block{margin:0;}
+  .gov-notes{margin-top:10px;font-size:0.82rem;color:var(--muted);line-height:1.5;}
+  .gov-notes strong{color:var(--ink);}
+  .gov-legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;font-size:0.72rem;color:var(--muted);}
+  .gov-legend span{display:inline-flex;align-items:center;gap:5px;}
+  .gov-legend .sw{width:14px;height:14px;border-radius:3px;display:inline-block;border:1px solid var(--border);}
+  .gb-const{fill:#fde7d8;stroke:#c0392b;stroke-width:1.5;}
+  .gb-exec{fill:#e6f0ff;stroke:#0B1B3F;stroke-width:1.5;}
+  .gb-legis{fill:#fff7e8;stroke:#FF9933;stroke-width:1.5;}
+  .gb-judic{fill:#f5f0ff;stroke:#8338EC;stroke-width:1.5;}
+  .gb-state{fill:#e6f7e9;stroke:#138808;stroke-width:1.5;}
+  .gb-people{fill:#fde7d8;stroke:#c0392b;stroke-width:1.5;}
+  .gb-regu{fill:#e6f5f2;stroke:#06A77D;stroke-width:1.5;}
+
+  /* ===== INSIGHT (SWOT + radar) ===== */
+  .insight{background:linear-gradient(135deg,#f8fafc 0%,#fff7e8 100%);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin:8px 12px 12px;}
+  .insight-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:14px;align-items:start;}
+  @media (max-width:760px){.insight-grid{grid-template-columns:1fr;}}
+  .insight-meta{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px;}
+  .insight-meta .im{font-size:0.72rem;background:var(--tag);padding:2px 8px;border-radius:999px;color:var(--ink);}
+  .insight-meta .im strong{color:var(--navy);}
+  .insight h4{margin:6px 0 4px;color:var(--navy);font-size:0.85rem;}
+  .insight p.how{margin:0 0 8px;font-size:0.82rem;line-height:1.5;}
+  .swot{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+  .swot > div{background:var(--card);border:1px solid var(--border);border-left:3px solid;border-radius:6px;padding:8px 10px;}
+  .swot .str{border-left-color:var(--green);}
+  .swot .wkn{border-left-color:var(--red);}
+  .swot .pot{border-left-color:var(--saffron);grid-column:1/-1;}
+  .swot h5{margin:0 0 4px;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.4px;}
+  .swot .str h5{color:var(--green);}
+  .swot .wkn h5{color:var(--red);}
+  .swot .pot h5{color:#7a3a00;}
+  .swot ul{margin:0;padding-left:18px;font-size:0.78rem;line-height:1.45;}
+  .insight svg.radar{width:100%;height:auto;max-width:280px;display:block;margin:0 auto;}
+  .scores-label{font-size:0.7rem;color:var(--muted);text-align:center;margin-top:4px;}
+
+  /* ===== LENS-OVERVIEW (bar chart) ===== */
+  .lens-overview{background:linear-gradient(135deg,#eef2fb 0%,#fff7e8 100%);border:1px solid var(--border);border-radius:10px;padding:14px 18px;margin:8px 0 16px;}
+  .lens-overview .lo-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:18px;align-items:center;}
+  @media (max-width:780px){.lens-overview .lo-grid{grid-template-columns:1fr;}}
+  .lens-overview h3{margin:0 0 6px;color:var(--navy);font-size:0.95rem;}
+  .lens-overview p{margin:0 0 6px;font-size:0.85rem;line-height:1.5;}
+  .lens-overview .lo-rel{margin-top:8px;padding-top:6px;border-top:1px dashed var(--border);font-size:0.78rem;color:var(--muted);}
+  .lens-overview .lo-chart{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:10px;}
+  .lens-overview .lo-chart-title{font-size:0.72rem;text-transform:uppercase;letter-spacing:0.5px;color:var(--muted);font-weight:700;margin-bottom:4px;text-align:center;}
+
+  /* ===== RELMAP ===== */
+  .relmap{background:linear-gradient(135deg,#eef2fb 0%,#e6f7e9 100%);border:1px solid var(--border);border-radius:10px;padding:16px 20px;margin:14px 0;}
+  .relmap h2{margin:0 0 8px;color:var(--navy);}
+  .relmap p{font-size:0.88rem;line-height:1.55;margin:0 0 10px;}
+  .relmap svg.relflow{width:100%;height:auto;max-width:860px;display:block;margin:6px auto;}
+  .relmap svg.relflow text{fill:var(--ink);}
+
+  /* ===== EXPAND/COLLAPSE TOGGLE ===== */
+  .ec-toggle{display:flex;gap:8px;margin:6px 0 12px;align-items:center;flex-wrap:wrap;}
+  .ec-btn{cursor:pointer;font-size:0.78rem;padding:4px 10px;background:var(--card);border:1px solid var(--border);border-radius:6px;color:var(--navy);font-weight:600;font-family:inherit;}
+  .ec-btn:hover{background:var(--navy);color:#fff;}
+  .ec-hint{font-size:0.72rem;color:var(--muted);}
+
+  /* ===== HEADINGS / KPI / DIR ===== */
+  h1{color:var(--navy);font-size:1.3rem;margin:14px 0 6px;border-left:4px solid var(--red);padding-left:10px;}
+  h2{color:var(--navy);font-size:1.05rem;margin:18px 0 8px;}
+  .kpis{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px;margin:10px 0;}
+  @media (max-width:900px){ .kpis{grid-template-columns:repeat(auto-fit,minmax(140px,1fr));} }
+  .kpi{background:var(--card);border:1px solid var(--border);border-left:3px solid var(--red);border-radius:6px;padding:8px 12px;min-height:60px;display:flex;flex-direction:column;justify-content:center;}
+  .kpi .v{font-size:1.15rem;font-weight:700;color:var(--navy);}
+  .kpi .l{font-size:0.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.4px;}
+
+  .dir-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:6px;margin:8px 0 18px;}
+  .dir-tile{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:8px 12px;text-decoration:none;color:var(--ink);font-size:0.85rem;display:flex;justify-content:space-between;align-items:center;gap:8px;}
+  .dir-tile:hover{border-color:var(--navy);background:var(--tag);}
+  .dir-tile .dt-c{font-size:0.7rem;color:var(--muted);background:var(--tag);padding:1px 7px;border-radius:999px;}
+
+  /* ===== DETAILS / BRANCHES / CARDS ===== */
+  details{background:var(--card);border:1px solid var(--border);border-radius:8px;margin:8px 0;}
+  details > summary{cursor:pointer;padding:10px 14px;font-weight:600;color:var(--navy);list-style:none;display:flex;justify-content:space-between;align-items:center;gap:8px;}
+  details > summary::-webkit-details-marker{display:none;}
+  details > summary::before{content:"▸";color:var(--muted);font-size:0.85rem;margin-right:6px;}
+  details[open] > summary::before{content:"▾";}
+  details > summary .ct{font-size:0.72rem;color:var(--muted);background:var(--tag);padding:2px 9px;border-radius:999px;font-weight:600;}
+  details details{background:transparent;border:none;border-left:2px solid var(--border);margin:6px 0 6px 8px;border-radius:0;}
+  details details > summary{padding:6px 10px;font-weight:500;font-size:0.88rem;color:var(--ink);}
+  details details > summary .ct{background:#fff3e0;color:#7a3a00;}
+  .blurb{font-size:0.78rem;color:var(--muted);margin:0 14px 6px;}
+
+  .state-group:target, .min-group:target, .body-group:target{outline:2px solid var(--saffron);outline-offset:4px;border-radius:8px;}
+  .su-type{display:inline-block;font-size:0.65rem;font-weight:700;padding:2px 8px;border-radius:999px;margin-left:8px;letter-spacing:0.3px;text-transform:uppercase;}
+  .su-type.st{background:rgba(19,136,8,0.14);color:var(--green);border:1px solid rgba(19,136,8,0.45);}
+  .su-type.ut{background:rgba(255,153,51,0.14);color:#a55300;border:1px solid rgba(255,153,51,0.5);}
+
+  .card-list{padding:6px 10px 10px;display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:8px;align-items:start;}
+  .card{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:10px 12px;}
+  .card h3{margin:0 0 4px;font-size:0.95rem;line-height:1.3;}
+  .card h3 a{color:var(--ink);text-decoration:none;}
+  .card h3 a:hover{color:var(--navy);text-decoration:underline;}
+  .card .host{font-size:0.72rem;color:var(--muted);margin-bottom:6px;display:flex;flex-wrap:wrap;gap:6px;align-items:center;}
+  .card .hn{font-family:'Consolas','Monaco',monospace;}
+  .badge{font-size:0.65rem;padding:1px 6px;border-radius:4px;font-weight:600;}
+  .badge.official{background:#e6f7e9;color:var(--green);}
+  .badge.fresh{background:#e6f0ff;color:var(--navy);}
+  .badge.stale{background:#fdecea;color:var(--red);}
+  .lv{font-size:0.7rem;color:var(--muted);}
+  .desc{font-size:0.82rem;color:var(--muted);margin:4px 0;line-height:1.45;}
+  .meta{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px;}
+  .mchip{font-size:0.7rem;background:var(--tag);padding:1px 7px;border-radius:4px;color:var(--ink);}
+  .mchip.s{background:#fff3e0;color:#7a3a00;}
+  .mchip.m{background:#e6f0ff;color:var(--navy);}
+  .mchip.v{background:#f5f0ff;color:#5e35b1;}
+  .tags{display:flex;flex-wrap:wrap;gap:3px;margin-top:6px;}
+  .tag{font-size:0.65rem;background:var(--tag);padding:1px 6px;border-radius:3px;color:var(--muted);}
+  .children{margin-top:6px;background:transparent;border:none;border-left:none;}
+  .children > summary{padding:4px 0;font-size:0.78rem;color:var(--muted);font-weight:500;}
+  .children ul{margin:4px 0 0 18px;padding:0;font-size:0.78rem;}
+  .children li{margin-bottom:3px;}
+
+  footer{max-width:1180px;margin:30px auto 20px;padding:14px 20px;border-top:1px solid var(--border);font-size:0.78rem;color:var(--muted);}
+
+  /* ===== NIGHT-MODE TOGGLE (pure CSS, no JS) ===== */
+  #nightmode{position:fixed;top:0;left:0;opacity:0;pointer-events:none;width:0;height:0;clip:rect(0,0,0,0);}
+  .nm-toggle{position:absolute;top:8px;right:14px;z-index:11;display:inline-flex;align-items:center;gap:5px;cursor:pointer;font-size:0.72rem;font-weight:600;padding:4px 10px;background:rgba(255,255,255,0.85);border:1.5px solid var(--navy);color:var(--navy);border-radius:999px;user-select:none;line-height:1;}
+  .nm-toggle:hover{background:var(--navy);color:#fff;}
+  .nm-toggle .nm-ico-dark,.nm-toggle .nm-lbl-dark{display:inline;}
+  .nm-toggle .nm-ico-light,.nm-toggle .nm-lbl-light{display:none;}
+  @media (max-width:520px){ .nm-toggle .nm-lbl-dark,.nm-toggle .nm-lbl-light{display:none;} .nm-toggle{padding:4px 8px;} }
+
+  :root:has(#nightmode:checked){
+    --bg:#0e0f12; --card:#16181d; --ink:#e6e6e6; --muted:#9aa0a8;
+    --border:#262932; --tag:#1f232b; --navy:#7aa2ff;
+  }
+  :root:has(#nightmode:checked) header.topbar{background:linear-gradient(135deg,#5d3a14 0%,#1a1a1a 50%,#0f3a1c 100%);}
+  :root:has(#nightmode:checked) nav.lens > .lens-item > a,
+  :root:has(#nightmode:checked) nav.lens > a{background:rgba(255,255,255,0.08);}
+  :root:has(#nightmode:checked) .nm-toggle{background:rgba(255,255,255,0.08);}
+  :root:has(#nightmode:checked) .nm-toggle .nm-ico-dark,
+  :root:has(#nightmode:checked) .nm-toggle .nm-lbl-dark{display:none;}
+  :root:has(#nightmode:checked) .nm-toggle .nm-ico-light,
+  :root:has(#nightmode:checked) .nm-toggle .nm-lbl-light{display:inline;}
+  :root:has(#nightmode:checked) .help{background:#2a2316;color:#d9b779;}
+  :root:has(#nightmode:checked) .gov-intro{background:linear-gradient(135deg,#2a2316 0%,#172238 100%);}
+  :root:has(#nightmode:checked) .insight{background:linear-gradient(135deg,#16181d 0%,#2a2316 100%);}
+  :root:has(#nightmode:checked) .lens-overview{background:linear-gradient(135deg,#11192a 0%,#2a2316 100%);}
+  :root:has(#nightmode:checked) .relmap{background:linear-gradient(135deg,#11192a 0%,#0e2a14 100%);}
+  :root:has(#nightmode:checked) .badge.official{background:#0e2a14;color:#9fd1a8;}
+  :root:has(#nightmode:checked) .badge.fresh{background:#172238;color:#8aa6e2;}
+  :root:has(#nightmode:checked) .badge.stale{background:#3a1614;color:#e29a8a;}
+  :root:has(#nightmode:checked) .mchip.s{background:#3a2a14;color:#d9b779;}
+  :root:has(#nightmode:checked) .mchip.m{background:#172238;color:#8aa6e2;}
+  :root:has(#nightmode:checked) .mchip.v{background:#241a3a;color:#b39ad9;}
+  :root:has(#nightmode:checked) details details > summary .ct{background:#3a2a14;color:#d9b779;}
+  :root:has(#nightmode:checked) .swot .pot h5{color:#d9b779;}
+  :root:has(#nightmode:checked) .su-type.ut{color:#ffb866;}
+  :root:has(#nightmode:checked) .gb-const{fill:#3a2014;stroke:#e29a8a;}
+  :root:has(#nightmode:checked) .gb-exec{fill:#152238;stroke:#8aa6e2;}
+  :root:has(#nightmode:checked) .gb-legis{fill:#2a2316;stroke:#d9b779;}
+  :root:has(#nightmode:checked) .gb-judic{fill:#241a3a;stroke:#b39ad9;}
+  :root:has(#nightmode:checked) .gb-state{fill:#0e2a14;stroke:#9fd1a8;}
+  :root:has(#nightmode:checked) .gb-people{fill:#3a2014;stroke:#e29a8a;}
+  :root:has(#nightmode:checked) .gb-regu{fill:#0f2a24;stroke:#7fd1bf;}
+
+  /* ===== RESPONSIVE + HAMBURGER ===== */
+  img,iframe,svg{max-width:100%;height:auto;}
+  #navtoggle{position:fixed;top:0;left:0;opacity:0;pointer-events:none;width:0;height:0;clip:rect(0,0,0,0);}
+  .nav-burger{display:none;}
+  .nav-burger .burger-close{display:none;}
+  :root:has(#navtoggle:checked) .nav-burger .burger-open{display:none;}
+  :root:has(#navtoggle:checked) .nav-burger .burger-close{display:inline;}
+
+  @media (max-width:768px){
+    html{scroll-padding-top:110px;}
+    body{font-size:14px;overflow-x:hidden;}
+    header.topbar{padding:6px 8px;text-align:left;display:grid;grid-template-columns:auto 1fr auto;grid-template-areas:"burger brand toggle";gap:6px 8px;align-items:center;position:sticky;}
+    .nav-burger{grid-area:burger;position:static;display:inline-flex;align-items:center;justify-content:center;font-size:1rem;line-height:1;padding:6px 10px;min-width:40px;background:rgba(255,255,255,0.85);border:1.5px solid var(--navy);color:var(--navy);border-radius:8px;cursor:pointer;user-select:none;font-weight:700;}
+    :root:has(#nightmode:checked) .nav-burger{background:rgba(255,255,255,0.08);}
+    .nm-toggle{grid-area:toggle;position:static;top:auto;right:auto;}
+    .brand-row{grid-area:brand;justify-content:flex-start;gap:6px;margin-bottom:0;line-height:1.1;min-width:0;}
+    .brand{font-size:1.05rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+    .tagline{display:none;}
+    header.topbar nav.lens{display:none;}
+    :root:has(#navtoggle:checked) header.topbar nav.lens{display:flex;flex-direction:column;align-items:stretch;position:absolute;left:0;right:0;top:100%;width:100%;max-height:75vh;overflow-y:auto;flex-wrap:nowrap;gap:4px;padding:8px 10px 10px;margin:0;background:var(--card);border-top:1px solid var(--border);border-bottom:1px solid var(--border);box-shadow:0 10px 24px rgba(0,0,0,0.35);z-index:30;}
+    :root:has(#navtoggle:checked) header.topbar nav.lens > .lens-item,
+    :root:has(#navtoggle:checked) header.topbar nav.lens > a{width:100%;min-width:0;flex:0 0 auto;}
+    :root:has(#navtoggle:checked) header.topbar nav.lens > .lens-item > a,
+    :root:has(#navtoggle:checked) header.topbar nav.lens > a{display:block;width:100%;text-align:left;padding:9px 12px;font-size:0.85rem;}
+    .lens-drop,.lens-item:focus-within .lens-drop,.lens-item:hover .lens-drop{display:none !important;}
+    nav.lens .caret{display:none;}
+    main{padding:12px 14px 42px;max-width:100%;}
+    footer{padding:12px 14px;max-width:100%;}
+    .help{padding:8px 14px;font-size:0.78rem;}
+    .jumpbar{margin:-12px -14px 12px;padding:6px 10px;}
+    .kpis{grid-template-columns:repeat(auto-fit,minmax(130px,1fr));}
+    .dir-grid{grid-template-columns:repeat(auto-fit,minmax(150px,1fr));}
+    .card-list{grid-template-columns:1fr;padding:6px 8px 10px;}
+    .gov-grid,.insight-grid,.lens-overview .lo-grid{grid-template-columns:1fr;}
+    .ec-btn{min-height:40px;padding:8px 12px;}
+    .nm-toggle{font-size:0.7rem;padding:4px 8px;}
+  }
+  @media (max-width:480px){
+    html{scroll-padding-top:96px;}
+    .brand{font-size:1rem;}
+    h1{font-size:1.15rem;}
+    h2{font-size:1rem;}
+    .dir-grid,.kpis,.swot{grid-template-columns:1fr;}
+    .card{padding:9px 10px;}
+  }
+
+  /* ===== GOA EXTENSIONS — party pills · tables · branch details ===== */
+  :root{
+    --bjp:#FF9933; --jdu:#138808; --rjd:#2E7D32; --inc:#1E88E5;
+    --ljprv:#7C3AED; --hams:#0EA5E9; --rlm:#8B5CF6; --cpiml:#DC2626;
+    --aimim:#0F766E; --ind:#6B7280;
+  }
+  .pill{display:inline-block;padding:1px 7px;border-radius:999px;font-size:0.65rem;font-weight:700;color:#fff;letter-spacing:0.3px;margin-left:4px;vertical-align:middle;}
+  .p-BJP,.p-bjp{background:var(--bjp);color:#1a1a1a;}
+  .p-JDU,.p-jdu{background:var(--jdu);} .p-RJD,.p-rjd{background:var(--rjd);} .p-INC,.p-inc{background:var(--inc);}
+  .p-LJPRV{background:var(--ljprv);} .p-HAMS{background:var(--hams);} .p-RLM{background:var(--rlm);}
+  .p-CPIML{background:var(--cpiml);} .p-AIMIM{background:var(--aimim);} .p-IND,.p-ind{background:var(--ind);}
+  .p-aap{background:#00AEEF;} .p-mgp{background:#C2410C;} .p-rgp{background:#7C3AED;} .p-gfp{background:#16A34A;}
+  .src{font-size:0.72rem;color:var(--muted);font-style:italic;margin:10px 0 0;}
+  .legend{display:flex;flex-wrap:wrap;gap:8px;font-size:0.72rem;margin:8px 0 14px;color:var(--muted);}
+  .legend > span{display:inline-flex;align-items:center;gap:2px;}
+
+  table.goa{width:100%;border-collapse:collapse;font-size:0.84rem;background:var(--card);border:1px solid var(--border);border-radius:8px;overflow:hidden;margin:8px 0 14px;}
+  table.goa th, table.goa td{padding:7px 10px;text-align:left;border-bottom:1px solid var(--border);}
+  table.goa th{background:var(--tag);font-weight:700;color:var(--navy);font-size:0.74rem;text-transform:uppercase;letter-spacing:0.4px;}
+  table.goa tr:last-child td{border-bottom:none;}
+  table.goa td.r{text-align:right;font-variant-numeric:tabular-nums;}
+  table.goa caption{caption-side:bottom;font-size:0.72rem;color:var(--muted);padding-top:6px;text-align:left;}
+  :root:has(#nightmode:checked) table.goa th{background:#1f232b;color:#9ab3ff;}
+
+  details.branch{background:var(--card);border:1px solid var(--border);border-radius:8px;margin:10px 0;}
+  details.branch > summary{padding:10px 14px;cursor:pointer;font-weight:700;color:var(--navy);font-size:0.95rem;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:8px;}
+  details.branch > summary::-webkit-details-marker{display:none;}
+  details.branch > summary::before{content:"▸ ";color:var(--saffron);}
+  details.branch[open] > summary::before{content:"▾ ";}
+  details.branch > .b-body{padding:6px 14px 14px;}
+  details.branch > table.goa{margin:0 14px 14px;width:calc(100% - 28px);}
+  details.branch p.verify{font-size:0.7rem;color:var(--muted);font-style:italic;padding:0 14px 10px;margin:0;}
+
+  .role-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:10px 12px;font-size:0.85rem;}
+  .role-card .role{font-size:0.68rem;text-transform:uppercase;letter-spacing:0.5px;color:var(--muted);font-weight:700;}
+  .role-card .name{font-weight:700;color:var(--ink);margin:2px 0;}
+  .role-card .meta{font-size:0.75rem;color:var(--muted);}
+  .role-card .meta a{font-size:0.75rem;}
+  .role-grid{display:grid;gap:8px;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));margin:6px 0 12px;}
+
+  .callout{background:#fff7e8;border-left:4px solid var(--saffron);padding:10px 14px;border-radius:6px;margin:14px 0;font-size:0.86rem;color:#5a3a00;}
+  .callout.warn{background:#fdecea;border-left-color:var(--red);color:#7a1b13;}
+  .callout.ok{background:#e8f5e9;border-left-color:var(--green);color:#1b4d20;}
+  :root:has(#nightmode:checked) .callout{background:#2a2316;color:#d9b779;}
+  :root:has(#nightmode:checked) .callout.warn{background:#2a1715;color:#e8a097;}
+  :root:has(#nightmode:checked) .callout.ok{background:#142a17;color:#a7d9aa;}
+
+  h3.grp-h{font-size:1rem;color:var(--navy);margin:18px 0 6px;border-left:4px solid var(--green);padding-left:8px;}
+  .sec-sub{color:var(--muted);font-size:0.86rem;margin:0 0 14px;}
+  .kpi .sub{font-size:0.7rem;color:var(--muted);margin-top:2px;line-height:1.3;}
+
+  /* ===== PRINT ===== */
+  @media print{
+    header.topbar,.help,.jumpbar,nav.lens,.lens-drop,footer{display:none !important;}
+    .lens-section,.lens-section:target{display:block !important;}
+    details,details[open]{display:block !important;}
+    details > *{display:revert !important;}
+    details > summary{font-weight:700;color:#000;padding:6px 0;border-bottom:1px solid #999;cursor:default;}
+    details > summary::before{content:"" !important;}
+    .card{break-inside:avoid;border:1px solid #ccc;}
+    .card a[href]::after{content:" — " attr(href);font-size:0.7em;color:#555;}
+    body{background:#fff;color:#000;font-size:11pt;}
+    a{color:#000;text-decoration:none;}
+  }
+</style>
+</head>
+<body>
+
+<!-- Hidden checkboxes drive night-mode and mobile nav with no JS -->
+<input type="checkbox" id="nightmode" aria-label="Toggle night mode" tabindex="-1">
+<input type="checkbox" id="navtoggle" aria-label="Toggle navigation menu" tabindex="-1">
+
+<header class="topbar">
+  <label for="navtoggle" class="nav-burger" title="Menu"><span class="burger-open">☰</span><span class="burger-close">✕</span></label>
+  <label for="nightmode" class="nm-toggle" title="Toggle night mode (no JavaScript)">
+    <span class="nm-ico-dark" aria-hidden="true">🌙</span><span class="nm-lbl-dark">Night</span>
+    <span class="nm-ico-light" aria-hidden="true">☀</span><span class="nm-lbl-light">Day</span>
+  </label>
+  <div class="brand-row">
+    <a class="brand" href="#h"><span class="hi">गो</span>Goa Shasan</a>
+    <span class="tagline">💡 Transparency experiment · Centre → Cabinet → Legislature → District → Panchayat → Ward</span>
+  </div>
+  <nav class="lens">
+    <a href="#h">🏠 Home</a>
+    <a href="#how">🛠 How it works</a>
+    <a href="#centre">🇮🇳 Goa @ Centre</a>
+    <a href="#exec">🏛 State Cabinet</a>
+    <div class="lens-item">
+      <a href="#leg">🗳 Legislature <span class="caret">▾</span></a>
+      <div class="lens-drop">
+        <div class="ld-head"><span>Legislature</span><a href="#leg">View lens →</a></div>
+        <div class="ld-grid">
+          <a href="#leg-vs">Vidhan Sabha<span class="c">243</span></a>
+          <a href="#leg-off">Office-bearers<span class="c">4</span></a>
+          <a href="#leg-off">Office-bearers<span class="c">5</span></a>
+        </div>
+      </div>
+    </div>
+    <a href="#judic">⚖ Judiciary</a>
+    <a href="#dist">📍 Districts (2)</a>
+    <a href="#pri">🌾 Panchayati Raj</a>
+    <a href="#bodies">📊 Constitutional Bodies</a>
+    <a href="#scope">📑 Scope memo</a>
+  </nav>
+</header>
+
+
+<main>
+
+
+
+<!-- =========================== HOME =========================== -->
+<section id="h" class="lens-section">
+  <h1>Goa's Governance Chain — at a Glance</h1>
+  <p class="sec-sub">Every elected/appointed office in Goa, by layer. Click a lens above (or a tile below) to drill in.</p>
+
+  <h2>KPI tiles — by layer</h2>
+  <div class="kpis">
+    <div class="kpi"><div class="v">1</div><div class="l">Goa @ Union</div><div class="sub">Union Council minister (Modi-3)</div></div>
+    <div class="kpi"><div class="v">2</div><div class="l">Lok Sabha MPs</div><div class="sub">Direct election · 2024</div></div>
+    <div class="kpi"><div class="v">1</div><div class="l">Rajya Sabha MP</div><div class="sub">Elected by MLAs</div></div>
+    <div class="kpi"><div class="v">11</div><div class="l">State Cabinet</div><div class="sub">Pramod Sawant ministry</div></div>
+    <div class="kpi"><div class="v">40</div><div class="l">MLAs (V. Sabha)</div><div class="sub">2022 Assembly · current tally</div></div>
+    <div class="kpi"><div class="v">0</div><div class="l">MLCs</div><div class="sub">No Vidhan Parishad</div></div>
+    <div class="kpi"><div class="v">2</div><div class="l">Districts</div><div class="sub">Collector + SP + ZP</div></div>
+    <div class="kpi"><div class="v">12</div><div class="l">Blocks</div><div class="sub">BDO + Panchayat Samiti</div></div>
+    <div class="kpi"><div class="v">191</div><div class="l">Gram Panchayats</div><div class="sub">Sarpanch each</div></div>
+    <div class="kpi"><div class="v">1,561</div><div class="l">Panchayat Wards</div><div class="sub">Ward Member each</div></div>
+    <div class="kpi"><div class="v">~1.85k</div><div class="l">Total elected reps</div><div class="sub">MPs + MLAs + PRI</div></div>
+    <div class="kpi"><div class="v">7</div><div class="l">Elected layers / citizen</div><div class="sub">Ward → CM → PM</div></div>
+  </div>
+
+  <h2>Pick a lens</h2>
+  <div class="dir-grid">
+    <a class="dir-tile" href="#centre" style="border-left:3px solid var(--saffron);">🇮🇳 Goa @ Centre<span class="dt-c">~61</span></a>
+    <a class="dir-tile" href="#exec" style="border-left:3px solid var(--green);">🏛 State Cabinet<span class="dt-c">11</span></a>
+    <a class="dir-tile" href="#leg" style="border-left:3px solid var(--navy);">🗳 Legislature<span class="dt-c">40</span></a>
+    <a class="dir-tile" href="#judic" style="border-left:3px solid #8338EC;">⚖ Judiciary<span class="dt-c">Goa Bench</span></a>
+    <a class="dir-tile" href="#dist" style="border-left:3px solid var(--red);">📍 Districts<span class="dt-c">2</span></a>
+    <a class="dir-tile" href="#pri" style="border-left:3px solid var(--green);">🌾 Panchayati Raj<span class="dt-c">~1.8k</span></a>
+    <a class="dir-tile" href="#bodies" style="border-left:3px solid #06A77D;">📊 Constitutional Bodies<span class="dt-c">12+</span></a>
+    <a class="dir-tile" href="#scope" style="border-left:3px solid var(--muted);">📑 Scope memo<span class="dt-c">read</span></a>
+  </div>
+
+  <div class="legend">
+    <span><span class="pill p-bjp">BJP</span> Bharatiya Janata Party</span>
+    <span><span class="pill p-mgp">MGP</span> Maharashtrawadi Gomantak Party</span>
+    <span><span class="pill p-inc">INC</span> Indian National Congress</span>
+    <span><span class="pill p-aap">AAP</span> Aam Aadmi Party</span>
+    <span><span class="pill p-gfp">GFP</span> Goa Forward Party</span>
+    <span><span class="pill p-rgp">RGP</span> Revolutionary Goans Party</span>
+    <span><span class="pill p-ind">IND</span> Independent</span>
+  </div>
+
+  <h2>Relmap — how the chain connects</h2>
+  <div class="relmap">
+    <h2>🔗 Centre → State → District → Block → GP → Ward</h2>
+    <p>Six tiers. Top two are elected to Parliament/Assembly; bottom four mix elected representatives with civil-service counterparts. Every citizen sits inside one chain that touches all six.</p>
+    <svg viewBox="0 0 900 320" xmlns="http://www.w3.org/2000/svg" class="relflow" role="img" aria-label="Goa governance chain">
+      <defs>
+        <marker id="bArr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#888"/></marker>
+      </defs>
+      <rect x="360" y="10" width="180" height="44" rx="6" class="gb-const"/>
+      <text x="450" y="32" text-anchor="middle" font-size="12" font-weight="700">🇮🇳 Union (Centre)</text>
+      <text x="450" y="46" text-anchor="middle" font-size="10" fill="#666">Cabinet · 2 LS · 1 RS</text>
+
+      <rect x="360" y="90" width="180" height="44" rx="6" class="gb-exec"/>
+      <text x="450" y="112" text-anchor="middle" font-size="12" font-weight="700">🏛 State (Goa)</text>
+      <text x="450" y="126" text-anchor="middle" font-size="10" fill="#666">CM + 10 ministers · 40 MLAs</text>
+
+      <rect x="30" y="170" width="190" height="44" rx="6" class="gb-state"/>
+      <text x="125" y="192" text-anchor="middle" font-size="12" font-weight="700">📍 District (2)</text>
+      <text x="125" y="206" text-anchor="middle" font-size="10" fill="#666">DM · SP · ZP Adhyaksh</text>
+
+      <rect x="245" y="170" width="190" height="44" rx="6" class="gb-state"/>
+      <text x="340" y="192" text-anchor="middle" font-size="12" font-weight="700">📦 Block (12)</text>
+      <text x="340" y="206" text-anchor="middle" font-size="10" fill="#666">BDO · Pramukh</text>
+
+      <rect x="460" y="170" width="190" height="44" rx="6" class="gb-regu"/>
+      <text x="555" y="192" text-anchor="middle" font-size="12" font-weight="700">🌾 Gram Panchayat (191)</text>
+      <text x="555" y="206" text-anchor="middle" font-size="10" fill="#666">Sarpanch + Panchayat</text>
+
+      <rect x="675" y="170" width="195" height="44" rx="6" class="gb-legis"/>
+      <text x="772" y="192" text-anchor="middle" font-size="12" font-weight="700">🏘 Ward (1,561)</text>
+      <text x="772" y="206" text-anchor="middle" font-size="10" fill="#666">Ward Member</text>
+
+      <line x1="450" y1="54" x2="450" y2="86" stroke="#888" stroke-width="1.5" marker-end="url(#bArr)"/>
+      <line x1="450" y1="134" x2="125" y2="166" stroke="#888" stroke-width="1.5" marker-end="url(#bArr)"/>
+      <line x1="450" y1="134" x2="340" y2="166" stroke="#888" stroke-width="1.5" marker-end="url(#bArr)"/>
+      <line x1="450" y1="134" x2="555" y2="166" stroke="#888" stroke-width="1.5" marker-end="url(#bArr)"/>
+      <line x1="450" y1="134" x2="772" y2="166" stroke="#888" stroke-width="1.5" marker-end="url(#bArr)"/>
+
+      <rect x="340" y="260" width="220" height="40" rx="20" fill="#138808" opacity="0.18" stroke="#138808" stroke-width="1.5"/>
+      <text x="450" y="285" text-anchor="middle" font-size="13" font-weight="700">👥 Citizen (you)</text>
+      <line x1="125" y1="214" x2="380" y2="255" stroke="#888" stroke-width="1.5" marker-end="url(#bArr)"/>
+      <line x1="772" y1="214" x2="520" y2="255" stroke="#888" stroke-width="1.5" marker-end="url(#bArr)"/>
+    </svg>
+    <p style="font-size:0.82rem;color:var(--muted);"><strong>Reading it:</strong> Every Goan citizen has, simultaneously, a Ward Member, Mukhiya, Pramukh, ZP member, MLA, MLC, MP (LS), MP (RS) and a CM — nine elected layers, plus the appointed DM/SP/BDO chain. This catalogue names them where it can, links the live registers where the count is too large.</p>
+  </div>
+</section>
+
+<!-- =========================== HOW IT WORKS =========================== -->
+<section id="how" class="lens-section">
+  <h1>🛠 How this catalogue works</h1>
+  <p class="sec-sub">A visual walkthrough of the 7-tier governance pyramid this site catalogues, and the rule deciding what gets named inline vs linked to a live register.</p>
+
+  <div class="lens-overview">
+    <div class="lo-grid">
+      <div>
+        <h3>① The 7-tier pyramid</h3>
+        <p>Goa's governance stack runs from <strong>1 Union minister</strong> and <strong>3 MPs</strong> at the apex down to <strong>1,561 Panchayat Ward Members</strong> at the base.</p>
+        <p>Cards in every lens use the same colour key as the pyramid: 🟢 named inline · 🟠 linked to live register · 🔴 too volatile to embed.</p>
+      </div>
+      <div class="lo-chart">
+        <div class="lo-chart-title">7-tier governance pyramid (log scale)</div>
+        <svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Governance pyramid">
+          <defs>
+            <linearGradient id="pyG" x1="0" x2="0" y1="0" y2="1">
+              <stop offset="0%" stop-color="var(--green)"/>
+              <stop offset="55%" stop-color="var(--saffron)"/>
+              <stop offset="100%" stop-color="var(--red)"/>
+            </linearGradient>
+          </defs>
+          <g font-family="inherit" font-size="9">
+            <polygon points="160,15 200,15 220,45 140,45" fill="var(--green)" opacity="0.9"/>
+            <text x="180" y="33" text-anchor="middle" fill="#fff" font-weight="600">Union · 1</text>
+
+            <polygon points="140,48 220,48 240,78 120,78" fill="var(--green)" opacity="0.85"/>
+            <text x="180" y="66" text-anchor="middle" fill="#fff" font-weight="600">MPs (LS+RS) · 3</text>
+
+            <polygon points="120,81 240,81 260,111 100,111" fill="var(--green)" opacity="0.8"/>
+            <text x="180" y="99" text-anchor="middle" fill="#fff" font-weight="600">State Cabinet · 11</text>
+
+            <polygon points="100,114 260,114 280,144 80,144" fill="var(--saffron)" opacity="0.85"/>
+            <text x="180" y="132" text-anchor="middle" fill="#fff" font-weight="600">MLAs · 40</text>
+
+            <polygon points="80,147 280,147 300,177 60,177" fill="var(--saffron)" opacity="0.8"/>
+            <text x="180" y="165" text-anchor="middle" fill="#fff" font-weight="600">Districts · 2 × Collector+SP+ZP</text>
+
+            <polygon points="60,180 300,180 320,205 40,205" fill="var(--red)" opacity="0.75"/>
+            <text x="180" y="197" text-anchor="middle" fill="#fff" font-weight="600">Blocks · 12 + 191 GPs</text>
+
+            <polygon points="40,208 320,208 340,235 20,235" fill="var(--red)" opacity="0.85"/>
+            <text x="180" y="225" text-anchor="middle" fill="#fff" font-weight="600">Wards · 1,561</text>
+          </g>
+          <g font-size="8" fill="var(--muted)">
+            <text x="345" y="35">🟢 inline</text>
+            <text x="345" y="130">🟠 link</text>
+            <text x="345" y="225">🔴 impractical</text>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <h3 class="grp-h">② The decision flow — inline or link?</h3>
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px;margin-top:8px;">
+    <svg viewBox="0 0 720 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Decision flow" style="width:100%;height:auto;display:block;">
+      <defs>
+        <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M0,0 L10,5 L0,10 z" fill="#5b5b5b"/>
+        </marker>
+      </defs>
+
+      <rect x="20" y="95" width="140" height="50" rx="6" fill="#eef0f7" stroke="#e3e3df" stroke-width="1.2"/>
+      <text x="90" y="118" text-anchor="middle" font-size="11" fill="#1a1a1a" font-family="inherit">New office-holder</text>
+      <text x="90" y="134" text-anchor="middle" font-size="11" fill="#1a1a1a" font-family="inherit">layer to catalogue</text>
+
+      <line x1="160" y1="120" x2="215" y2="120" stroke="#5b5b5b" stroke-width="1.4" marker-end="url(#ar)"/>
+
+      <polygon points="220,120 305,75 390,120 305,165" fill="#fff7e8" stroke="#FF9933" stroke-width="1.4"/>
+      <text x="305" y="115" text-anchor="middle" font-size="11" fill="#1a1a1a" font-family="inherit">&lt; 50 people?</text>
+      <text x="305" y="130" text-anchor="middle" font-size="11" fill="#1a1a1a" font-family="inherit">turnover &gt; 1 yr?</text>
+
+      <path d="M305,75 L305,40 L470,40 L470,75" stroke="#5b5b5b" stroke-width="1.4" fill="none" marker-end="url(#ar)"/>
+      <text x="385" y="34" text-anchor="middle" font-size="10" fill="#5b5b5b" font-family="inherit">yes (both)</text>
+
+      <line x1="390" y1="120" x2="470" y2="120" stroke="#5b5b5b" stroke-width="1.4" marker-end="url(#ar)"/>
+      <text x="430" y="113" text-anchor="middle" font-size="10" fill="#5b5b5b" font-family="inherit">one no</text>
+
+      <path d="M305,165 L305,200 L470,200 L470,170" stroke="#5b5b5b" stroke-width="1.4" fill="none" marker-end="url(#ar)"/>
+      <text x="385" y="216" text-anchor="middle" font-size="10" fill="#5b5b5b" font-family="inherit">huge or volatile</text>
+
+      <rect x="395" y="78" width="150" height="38" rx="6" fill="#138808"/>
+      <text x="470" y="102" text-anchor="middle" font-size="12" fill="#fff" font-weight="600" font-family="inherit">🟢 Inline · full names</text>
+
+      <rect x="395" y="123" width="150" height="38" rx="6" fill="#FF9933"/>
+      <text x="470" y="147" text-anchor="middle" font-size="12" fill="#fff" font-weight="600" font-family="inherit">🟠 Tally + role-cards</text>
+
+      <rect x="395" y="168" width="150" height="38" rx="6" fill="#c0392b"/>
+      <text x="470" y="192" text-anchor="middle" font-size="12" fill="#fff" font-weight="600" font-family="inherit">🔴 Link to live register</text>
+
+      <line x1="545" y1="97" x2="585" y2="97" stroke="#5b5b5b" stroke-width="1.4" marker-end="url(#ar)"/>
+      <line x1="545" y1="142" x2="585" y2="142" stroke="#5b5b5b" stroke-width="1.4" marker-end="url(#ar)"/>
+      <line x1="545" y1="187" x2="585" y2="187" stroke="#5b5b5b" stroke-width="1.4" marker-end="url(#ar)"/>
+
+      <rect x="585" y="73" width="125" height="48" rx="6" fill="#eef0f7" stroke="#e3e3df"/>
+      <text x="647" y="92" text-anchor="middle" font-size="10" fill="#1a1a1a" font-family="inherit">Cabinet · MPs ·</text>
+      <text x="647" y="108" text-anchor="middle" font-size="10" fill="#1a1a1a" font-family="inherit">CM · constit. bodies</text>
+
+      <rect x="585" y="118" width="125" height="48" rx="6" fill="#eef0f7" stroke="#e3e3df"/>
+      <text x="647" y="137" text-anchor="middle" font-size="10" fill="#1a1a1a" font-family="inherit">MLAs · MLCs ·</text>
+      <text x="647" y="153" text-anchor="middle" font-size="10" fill="#1a1a1a" font-family="inherit">HC bench</text>
+
+      <rect x="585" y="163" width="125" height="48" rx="6" fill="#eef0f7" stroke="#e3e3df"/>
+      <text x="647" y="182" text-anchor="middle" font-size="10" fill="#1a1a1a" font-family="inherit">Mukhiyas · Wards ·</text>
+      <text x="647" y="198" text-anchor="middle" font-size="10" fill="#1a1a1a" font-family="inherit">BDOs · ULB members</text>
+    </svg>
+    <div style="font-size:0.78rem;color:#5b5b5b;margin-top:6px;text-align:center;">Decision tree applied independently per layer · re-evaluated each election cycle</div>
+  </div>
+
+  <h3 class="grp-h">③ How a query flows through the catalogue</h3>
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px;">
+    <svg viewBox="0 0 720 140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Query flow" style="width:100%;height:auto;display:block;">
+      <defs>
+        <marker id="ar2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M0,0 L10,5 L0,10 z" fill="#FF9933"/>
+        </marker>
+      </defs>
+
+      <rect x="15" y="50" width="110" height="40" rx="20" fill="#eef0f7" stroke="#e3e3df"/>
+      <text x="70" y="75" text-anchor="middle" font-size="12" fill="#1a1a1a" font-family="inherit">👤 Citizen</text>
+
+      <line x1="125" y1="70" x2="170" y2="70" stroke="#FF9933" stroke-width="2" marker-end="url(#ar2)"/>
+
+      <rect x="170" y="50" width="120" height="40" rx="6" fill="#138808"/>
+      <text x="230" y="75" text-anchor="middle" font-size="12" fill="#fff" font-weight="600" font-family="inherit">Pick a lens</text>
+
+      <line x1="290" y1="70" x2="335" y2="70" stroke="#FF9933" stroke-width="2" marker-end="url(#ar2)"/>
+
+      <rect x="335" y="50" width="140" height="40" rx="6" fill="#FF9933"/>
+      <text x="405" y="75" text-anchor="middle" font-size="12" fill="#fff" font-weight="600" font-family="inherit">Inline data here?</text>
+
+      <path d="M475,60 L505,30" stroke="#FF9933" stroke-width="2" fill="none" marker-end="url(#ar2)"/>
+      <path d="M475,80 L505,110" stroke="#FF9933" stroke-width="2" fill="none" marker-end="url(#ar2)"/>
+
+      <rect x="510" y="10" width="200" height="40" rx="6" fill="#138808"/>
+      <text x="610" y="35" text-anchor="middle" font-size="12" fill="#fff" font-weight="600" font-family="inherit">✅ Read name + party + link</text>
+
+      <rect x="510" y="95" width="200" height="40" rx="6" fill="#c0392b"/>
+      <text x="610" y="120" text-anchor="middle" font-size="12" fill="#fff" font-weight="600" font-family="inherit">⛓ Hand off to live register</text>
+
+      <text x="485" y="25" font-size="10" fill="#5b5b5b" font-family="inherit">yes</text>
+      <text x="485" y="125" font-size="10" fill="#5b5b5b" font-family="inherit">no</text>
+    </svg>
+  </div>
+
+  <div class="callout ok" style="margin-top:14px;">
+    <strong>The promise:</strong> every named person on this page comes with a link back to the official source that minted
+    them. Every layer this page does <em>not</em> name comes with a link to the authoritative live register that does.
+    Transparency = traceability, not bulk.
+  </div>
+</section>
+
+<!-- =========================== CENTRE =========================== -->
+<section id="centre" class="lens-section">
+<!-- BEGIN: CENTRE -->
+  <h1>🇮🇳 Goa's Representation at the Union</h1>
+  <p class="sec-sub">Union Council representation from Goa, both Lok Sabha MPs, and the single Rajya Sabha MP elected by the Goa Legislative Assembly.</p>
+
+  <div class="ec-toggle">
+    <button type="button" class="ec-btn" data-ec="expand" data-scope="centre">⊞ Expand all</button>
+    <button type="button" class="ec-btn" data-ec="collapse" data-scope="centre">⊟ Collapse all</button>
+    <span class="ec-hint">Toggles every <code>details</code> in this lens.</span>
+  </div>
+
+  <details class="branch" open>
+    <summary><span>Union Council of Ministers from Goa</span><span class="ct">1 · Modi 3.0</span></summary>
+    <div class="b-body"><div class="role-grid">
+      <div class="role-card"><div class="role">Minister of State · Power; New &amp; Renewable Energy</div><div class="name">Shripad Yesso Naik<span class="pill p-bjp">BJP</span></div><div class="meta">MP, North Goa · <a href="https://www.pmindia.gov.in/en/the-union-council-of-ministers/" target="_blank" rel="noopener">PM India</a> · <a href="https://sansad.in/ls" target="_blank" rel="noopener">Sansad</a></div></div>
+    </div></div>
+  </details>
+
+  <details class="branch" open>
+    <summary><span>Lok Sabha — all 2 MPs from Goa</span><span class="ct">18ᵗʰ LS · 2024</span></summary>
+    <table class="goa">
+      <thead><tr><th>#</th><th>Constituency</th><th>Member of Parliament</th><th>Party</th></tr></thead>
+      <tbody>
+        <tr><td class="r">1</td><td>North Goa</td><td>Shripad Yesso Naik</td><td><span class="pill p-bjp">BJP</span></td></tr>
+        <tr><td class="r">2</td><td>South Goa</td><td>Capt. Viriato Fernandes</td><td><span class="pill p-inc">INC</span></td></tr>
+      </tbody>
+      <caption>Tally: BJP 1 · INC 1 = <strong>2</strong>. Official roster: <a href="https://www.goavidhansabha.gov.in/member-of-parliament.php" target="_blank" rel="noopener">Goa Legislative Assembly / MPs of Goa</a>; member profiles: <a href="https://sansad.in/ls" target="_blank" rel="noopener">sansad.in/ls</a>.</caption>
+    </table>
+  </details>
+
+  <details class="branch" open>
+    <summary><span>Rajya Sabha — Goa</span><span class="ct">1 seat</span></summary>
+    <table class="goa">
+      <thead><tr><th>#</th><th>Member</th><th>Party</th><th>Term ends</th></tr></thead>
+      <tbody>
+        <tr><td class="r">1</td><td>Sadanand Shet Tanavade</td><td><span class="pill p-bjp">BJP</span></td><td>28-Jul-2029</td></tr>
+      </tbody>
+      <caption>Official member profile source: <a href="https://sansad.in/rs/member" target="_blank" rel="noopener">sansad.in/rs/member</a>; term cross-check: <a href="https://prsindia.org/mptrack/rajya-sabha/sadanand-shet-tanawde" target="_blank" rel="noopener">PRS MPTrack</a>.</caption>
+    </table>
+  </details>
+  <p class="src">Sources: https://www.pmindia.gov.in/en/the-union-council-of-ministers/ · https://sansad.in/ls · https://sansad.in/rs/member · https://www.goavidhansabha.gov.in/member-of-parliament.php · https://prsindia.org/mptrack/rajya-sabha/sadanand-shet-tanawde</p>
+<!-- END: CENTRE -->
+
+</section>
+
+<!-- =========================== EXECUTIVE =========================== -->
+<section id="exec" class="lens-section">
+<!-- BEGIN: EXEC -->
+  <h1>🏛 State Executive — Pramod Sawant Ministry</h1>
+  <p class="sec-sub">Goa's executive is headed by Chief Minister Pramod Sawant. The official Legislative Assembly council page cites the 27-Aug-2025 portfolio notification; no current Deputy Chief Minister office is listed in the official council roster.</p>
+
+  <h3 class="grp-h">Triumvirate / apex executive</h3>
+  <div class="role-grid">
+    <div class="role-card"><div class="role">Chief Minister</div><div class="name">Pramod Sawant<span class="pill p-bjp">BJP</span></div><div class="meta">Sanquelim MLA · Home, Finance, Personnel, Vigilance, Official Language and unallocated departments</div></div>
+    <div class="role-card"><div class="role">Deputy Chief Minister</div><div class="name">No current Dy CM notified</div><div class="meta">Official council roster lists Cabinet Ministers but no Deputy Chief Minister designation.</div></div>
+    <div class="role-card"><div class="role">Governor</div><div class="name">Pusapati Ashok Gajapathi Raju</div><div class="meta">Raj Bhavan/Lok Bhavan, Dona Paula · <a href="https://www.goavidhansabha.gov.in/governor.php" target="_blank" rel="noopener">Assembly governor profile</a></div></div>
+  </div>
+
+  <h3 class="grp-h">Council of Ministers — portfolio map</h3>
+  <table class="goa">
+    <thead><tr><th>Minister</th><th>Party</th><th>Constituency</th><th>Portfolio(s)</th></tr></thead>
+    <tbody>
+      <tr><td>Pramod Sawant</td><td><span class="pill p-bjp">BJP</span></td><td>Sanquelim</td><td>Home; Finance; Personnel; Vigilance; Official Language; unallocated departments</td></tr>
+      <tr><td>Vishwajit Rane</td><td><span class="pill p-bjp">BJP</span></td><td>Valpoi</td><td>Public Health; Urban Development; Town &amp; Country Planning; Women &amp; Child Development; Forest</td></tr>
+      <tr><td>Mauvin Godinho</td><td><span class="pill p-bjp">BJP</span></td><td>Dabolim</td><td>Transport; Industries, Trade &amp; Commerce; Panchayati Raj; Protocol; Legislative Affairs</td></tr>
+      <tr><td>Subhash A. Shirodkar</td><td><span class="pill p-bjp">BJP</span></td><td>Shiroda</td><td>Water Resources; Co-operation; Institute of Public Assistance (Provedoria)</td></tr>
+      <tr><td>Rohan Khaunte</td><td><span class="pill p-bjp">BJP</span></td><td>Porvorim</td><td>Tourism; Information Technology; Printing &amp; Stationery</td></tr>
+      <tr><td>Atanasio J. Monserrate</td><td><span class="pill p-bjp">BJP</span></td><td>Panaji</td><td>Revenue; Labour &amp; Employment; Waste Management</td></tr>
+      <tr><td>Ramkrishna alias Sudin Dhavalikar</td><td><span class="pill p-mgp">MGP</span></td><td>Marcaim</td><td>Power; New &amp; Renewable Energy; Museum; Goa Gazetteer; Historical Records</td></tr>
+      <tr><td>Nilkanth Halarnkar</td><td><span class="pill p-bjp">BJP</span></td><td>Tivim</td><td>Fisheries; Animal Husbandry &amp; Veterinary Services; Factories &amp; Boilers</td></tr>
+      <tr><td>Subhash Phal Dessai</td><td><span class="pill p-bjp">BJP</span></td><td>Sanguem</td><td>Social Welfare; Drinking Water; Empowerment of Persons with Disabilities; River Navigation</td></tr>
+      <tr><td>Digambar Kamat</td><td><span class="pill p-bjp">BJP</span></td><td>Margao</td><td>Public Works; Captain of Ports; Legal Metrology</td></tr>
+      <tr><td>Ramesh Tawadkar</td><td><span class="pill p-bjp">BJP</span></td><td>Canacona</td><td>Art &amp; Culture; Tribal Welfare; Sports</td></tr>
+    </tbody>
+    <caption>Official page lists 11 ministers including the Chief Minister under notification dated 27-Aug-2025.</caption>
+  </table>
+
+  <h3 class="grp-h">Apex civil, police and election administration</h3>
+  <div class="role-grid">
+    <div class="role-card"><div class="role">Chief Secretary, Goa</div><div class="name">Dr. V. Candavelou, IAS</div><div class="meta">Succeeded Puneet Kumar Goel after 2024 AGMUT order.</div></div>
+    <div class="role-card"><div class="role">Director General of Police, Goa</div><div class="name">Alok Kumar, IPS</div><div class="meta">Goa Police chief; appointment reported after July-2024 transfer.</div></div>
+    <div class="role-card"><div class="role">Chief Electoral Officer, Goa</div><div class="name">Dr. Sanjay Goel, IAS</div><div class="meta"><a href="https://ceogoa.nic.in/" target="_blank" rel="noopener">ceogoa.nic.in</a></div></div>
+  </div>
+  <p class="src">Sources: https://www.goavidhansabha.gov.in/council-of-ministers.php · https://www.goavidhansabha.gov.in/governor.php · https://www.mha.gov.in/MHA1/uttrans/tranpdfs/AGMUT_30102024.pdf · https://ceogoa.nic.in/ · Goa Police/DGP appointment reports linked during verification.</p>
+<!-- END: EXEC -->
+
+</section>
+
+<!-- =========================== LEGISLATURE =========================== -->
+<section id="leg" class="lens-section">
+<!-- BEGIN: LEG -->
+  <h1>🗳 Goa Legislature — Unicameral</h1>
+  <p class="sec-sub">Goa has a 40-seat Legislative Assembly and no Legislative Council. Majority mark: 21.</p>
+
+  <div class="jumpbar"><span class="jb-label">Jump to</span><a href="#leg-vs">Vidhan Sabha</a><a href="#leg-off">Office-bearers</a></div>
+
+  <h3 class="grp-h" id="leg-vs">Vidhan Sabha (Legislative Assembly) — 40 seats</h3>
+  <table class="goa">
+    <thead><tr><th>Alliance / Party</th><th class="r">Seats</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Government</strong> — BJP <span class="pill p-bjp">BJP</span></td><td class="r">28</td><td>Ruling party</td></tr>
+      <tr><td>Government ally — MGP <span class="pill p-mgp">MGP</span></td><td class="r">2</td><td>Maharashtrawadi Gomantak Party</td></tr>
+      <tr><td>Government-supporting Independents <span class="pill p-ind">IND</span></td><td class="r">3</td><td>Support group</td></tr>
+      <tr><td><strong>Government total</strong></td><td class="r"><strong>33</strong></td><td>Majority mark 21</td></tr>
+      <tr><td>Opposition — INC <span class="pill p-inc">INC</span></td><td class="r">3</td><td>Leader of Opposition from INC</td></tr>
+      <tr><td>Opposition — AAP <span class="pill p-aap">AAP</span></td><td class="r">2</td><td></td></tr>
+      <tr><td>Opposition — Goa Forward Party <span class="pill p-gfp">GFP</span></td><td class="r">1</td><td></td></tr>
+      <tr><td>Opposition — Revolutionary Goans Party <span class="pill p-rgp">RGP</span></td><td class="r">1</td><td></td></tr>
+      <tr><td><strong>Opposition total</strong></td><td class="r"><strong>7</strong></td><td></td></tr>
+      <tr><td><strong>Total</strong></td><td class="r"><strong>40</strong></td><td>Reconciles to JSON vidhan_sabha_seats</td></tr>
+    </tbody>
+    <caption>Current 40-seat composition as verified 24-May-2026 from Assembly/ECI and contemporary official/news updates.</caption>
+  </table>
+
+  <h3 class="grp-h" id="leg-off">Key office-bearers — Vidhan Sabha</h3>
+  <div class="role-grid">
+    <div class="role-card"><div class="role">Speaker</div><div class="name">Ganesh Gaonkar<span class="pill p-bjp">BJP</span></div><div class="meta">Sanvordem MLA · Speaker since 25-Sep-2025 per Assembly profile</div></div>
+    <div class="role-card"><div class="role">Deputy Speaker</div><div class="name">Joshua Peter De Souza<span class="pill p-bjp">BJP</span></div><div class="meta">Mapusa MLA · official Deputy Speaker profile</div></div>
+    <div class="role-card"><div class="role">Leader of Opposition</div><div class="name">Yuri Alemao<span class="pill p-inc">INC</span></div><div class="meta">Cuncolim MLA · LoP since 30-Sep-2022</div></div>
+    <div class="role-card"><div class="role">Leader of the House</div><div class="name">Pramod Sawant<span class="pill p-bjp">BJP</span></div><div class="meta">Chief Minister</div></div>
+  </div>
+
+  <div class="callout">Goa has <strong>no Vidhan Parishad</strong>; the Legislative Council block is intentionally omitted by the build pipeline.</div>
+  <p class="src">Sources: https://www.goavidhansabha.gov.in/speaker.php · https://www.goavidhansabha.gov.in/member_detail.php?dflag=DYP · https://www.goavidhansabha.gov.in/member_detail.php?dflag=OPOS · https://www.goavidhansabha.gov.in/mlas.php · https://results.eci.gov.in/</p>
+<!-- END: LEG -->
+
+</section>
+
+<!-- =========================== JUDICIARY =========================== -->
+<section id="judic" class="lens-section">
+<!-- BEGIN: JUDIC -->
+  <h1>⚖ Judiciary — Bombay High Court at Goa</h1>
+  <p class="sec-sub">Goa is served by the High Court of Bombay at Goa. Sitting lists are issued by the High Court and can change by roster order.</p>
+
+  <div class="role-grid">
+    <div class="role-card"><div class="role">Chief Justice, Bombay High Court</div><div class="name">Justice Alok Aradhe</div><div class="meta">Court-wide Chief Justice; Goa Bench roster under Bombay High Court.</div></div>
+    <div class="role-card"><div class="role">Judge, Goa Bench</div><div class="name">Justice Valmiki Menezes</div><div class="meta">Listed on 2026 Goa Bench sitting list.</div></div>
+    <div class="role-card"><div class="role">Judge, Goa Bench</div><div class="name">Justice Amit S. Jamsandekar</div><div class="meta">Listed on 2026 Goa Bench sitting list.</div></div>
+    <div class="role-card"><div class="role">Advocate General, Goa</div><div class="name">Devidas J. Pangam</div><div class="meta">State law officer; verify against Law Department notifications for changes.</div></div>
+  </div>
+
+  <details class="branch"><summary><span>Subordinate judiciary</span><span class="ct">live roster</span></summary><div class="b-body"><p>District and subordinate courts in Goa are best tracked through the Bombay High Court at Goa and eCourts portals because judicial postings and cause-list assignments change frequently.</p><p><a href="https://hcbombayatgoa.nic.in/" target="_blank" rel="noopener">hcbombayatgoa.nic.in</a> · <a href="https://services.ecourts.gov.in/ecourtindia_v6/" target="_blank" rel="noopener">eCourts</a></p></div></details>
+  <p class="src">Sources: https://hcbombayatgoa.nic.in/ · https://bombayhighcourt.gov.in/bhc/sitting-list · https://hcbombayatgoa.nic.in/download/sitlistbom20260228152323.pdf · https://legalaffairs.gov.in/high-court-bombay-goa-bench</p>
+<!-- END: JUDIC -->
+
+</section>
+
+<!-- =========================== DISTRICTS =========================== -->
+<section id="dist" class="lens-section">
+<!-- BEGIN: DIST -->
+  <h1>📍 District Administration — 2 Districts</h1>
+  <p class="sec-sub">Goa is administered through two revenue districts: North Goa headquartered at Panaji and South Goa headquartered at Margao.</p>
+
+  <div class="callout">Collector and SP postings are transfer-sensitive. The table names the verified snapshot and links the official district roster pages for live updates.</div>
+
+  <h3 class="grp-h">🗺 District map</h3>
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:14px;">
+<svg viewBox="0 0 360 520" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Map of Goa showing North Goa and South Goa districts" style="width:100%;height:auto;display:block;background:#fffdf6;border-radius:6px;font-family:inherit;">
+<rect x="0" y="0" width="360" height="520" rx="6" fill="#fffdf6"/>
+<path d="M212.0,228.6 L212.9,228.1 L214.0,227.6 L214.7,227.3 L215.6,226.9 L216.4,226.5 L217.6,226.0 L218.0,225.3 L218.6,224.7 L219.4,224.6 L220.2,224.4 L221.4,224.0 L222.3,223.6 L224.0,223.0 L225.3,222.4 L226.4,221.8 L227.8,221.1 L229.3,223.0 L230.1,224.4 L230.7,225.4 L230.8,224.4 L231.1,223.4 L231.0,222.4 L231.4,221.4 L232.1,220.1 L232.8,219.6 L233.6,219.3 L234.4,219.0 L235.5,218.6 L236.1,217.5 L236.9,216.8 L237.8,216.0 L238.6,215.8 L239.3,216.3 L240.4,216.6 L241.2,216.9 L242.0,217.4 L242.9,217.1 L244.0,216.6 L244.6,215.7 L245.8,215.5 L247.1,215.2 L248.1,215.2 L248.9,215.3 L249.9,215.2 L250.8,215.0 L251.4,214.2 L252.0,213.6 L252.5,214.4 L253.3,214.8 L254.0,214.4 L254.9,214.0 L255.6,213.6 L256.6,213.6 L257.4,213.8 L258.6,213.4 L259.5,213.0 L260.1,213.7 L260.4,214.6 L261.5,215.1 L262.3,215.3 L263.4,215.6 L264.7,216.1 L265.3,215.0 L266.1,213.9 L266.8,213.4 L268.0,213.0 L268.9,212.4 L269.7,211.1 L269.7,209.8 L270.0,208.8 L270.0,207.6 L269.9,206.8 L271.0,205.9 L271.8,205.0 L272.1,204.3 L272.7,203.2 L273.5,202.6 L274.5,201.9 L274.9,201.2 L275.8,200.7 L276.6,200.3 L277.3,199.8 L278.1,199.4 L279.2,199.2 L280.0,198.9 L280.8,198.8 L281.4,198.2 L282.2,197.8 L283.1,197.5 L283.9,197.2 L284.9,197.1 L285.6,196.7 L286.3,196.2 L286.9,195.4 L287.4,194.8 L288.3,193.8 L289.0,193.4 L289.7,193.7 L289.9,192.9 L290.4,192.3 L291.4,191.9 L292.4,191.3 L293.3,191.1 L294.2,190.7 L294.9,190.3 L296.2,190.0 L297.0,190.0 L297.7,189.3 L298.3,188.6 L299.2,188.6 L300.0,188.5 L300.8,184.5 L301.2,183.8 L302.1,182.7 L303.0,182.0 L304.3,181.2 L306.0,180.6 L306.8,180.2 L307.5,179.9 L308.4,179.5 L309.5,179.1 L310.4,178.5 L311.2,178.1 L312.0,177.3 L312.9,176.1 L313.5,175.4 L313.4,172.9 L313.7,172.1 L314.6,171.5 L315.2,170.8 L315.6,169.5 L315.6,168.7 L315.6,167.8 L315.4,166.9 L315.0,165.8 L314.4,164.5 L314.2,163.8 L313.8,162.3 L313.6,161.2 L313.0,160.3 L312.1,159.7 L311.3,158.9 L310.5,158.0 L309.9,157.1 L308.9,156.3 L308.3,155.7 L307.5,154.8 L306.9,154.1 L306.5,153.0 L306.4,152.2 L306.0,151.6 L305.2,151.2 L304.6,151.8 L304.2,152.6 L303.3,152.7 L302.2,152.0 L301.0,150.9 L300.4,150.4 L299.8,149.9 L297.3,150.2 L297.8,149.0 L298.8,146.9 L299.2,146.1 L299.6,145.3 L299.3,143.7 L300.4,141.8 L301.2,141.0 L301.7,140.4 L302.3,139.8 L303.1,138.8 L304.3,137.5 L304.6,136.4 L304.3,135.1 L304.4,134.4 L304.8,133.4 L304.8,132.3 L304.6,130.9 L304.6,130.0 L305.1,129.4 L305.8,127.8 L306.0,127.0 L306.5,125.8 L306.0,124.5 L305.5,123.9 L304.8,123.2 L303.8,122.7 L304.0,121.8 L303.2,120.9 L302.0,120.2 L300.9,120.1 L298.8,121.6 L296.8,120.0 L297.5,117.1 L298.5,112.8 L299.3,110.2 L299.7,108.7 L299.9,107.9 L300.3,106.7 L300.6,105.7 L299.8,104.9 L299.6,104.1 L297.1,103.7 L296.2,101.5 L294.0,101.1 L293.3,99.6 L293.1,98.8 L292.2,98.6 L291.2,98.9 L290.6,99.6 L289.7,99.5 L289.1,100.5 L288.1,99.8 L287.2,99.6 L287.2,98.6 L285.7,99.1 L284.0,100.6 L283.7,101.6 L282.6,101.3 L283.1,102.8 L283.7,103.8 L285.1,104.2 L285.9,104.5 L285.4,105.3 L283.7,106.5 L282.9,106.3 L282.0,106.6 L280.0,106.9 L277.6,107.3 L276.7,106.0 L276.0,104.6 L276.2,103.7 L277.1,100.9 L274.0,100.5 L271.8,99.9 L268.7,99.0 L268.5,97.1 L268.3,95.5 L270.0,95.1 L270.6,94.5 L270.6,93.1 L270.0,92.3 L269.0,92.1 L268.2,92.1 L267.3,91.7 L266.3,91.5 L265.4,91.8 L264.5,92.0 L263.7,92.5 L263.1,93.1 L262.6,93.8 L262.2,94.7 L261.5,95.5 L260.7,95.9 L259.8,96.2 L259.1,96.6 L259.0,97.4 L258.6,98.5 L258.2,100.5 L258.0,102.4 L258.0,103.2 L257.9,104.0 L257.9,104.8 L258.1,105.7 L257.0,106.0 L255.8,105.7 L254.3,105.5 L253.8,106.2 L253.1,107.5 L252.0,107.4 L251.2,106.9 L250.2,106.9 L249.1,107.1 L248.3,107.3 L247.0,107.2 L245.6,107.5 L244.8,107.8 L244.0,108.5 L242.4,108.3 L240.5,107.6 L239.5,107.3 L238.4,107.2 L237.6,107.2 L235.7,106.6 L234.7,107.2 L233.9,108.3 L232.9,108.6 L232.7,109.4 L231.8,109.7 L231.0,109.4 L229.7,109.9 L228.8,110.2 L228.0,110.5 L227.2,111.5 L226.5,112.1 L225.8,112.5 L224.2,112.3 L222.1,113.1 L220.4,113.8 L219.2,114.5 L218.2,115.2 L217.3,116.4 L216.0,117.2 L215.2,117.3 L213.3,118.1 L211.4,118.9 L210.6,118.3 L209.7,118.4 L208.6,119.0 L207.7,119.0 L206.7,119.3 L206.1,119.8 L201.7,120.9 L198.9,121.1 L197.6,121.2 L196.3,121.2 L194.5,121.5 L192.8,121.9 L192.1,122.3 L191.7,123.3 L191.1,124.2 L190.7,124.8 L190.3,127.0 L190.1,128.2 L189.0,128.5 L188.1,129.6 L187.4,130.2 L185.8,129.7 L184.0,129.1 L182.8,128.7 L181.6,128.3 L179.8,127.7 L178.9,127.4 L177.4,127.6 L176.6,127.8 L175.8,128.0 L174.4,127.8 L173.5,127.6 L172.5,127.4 L172.3,126.5 L171.4,125.2 L170.8,124.6 L170.0,123.4 L169.4,122.9 L168.8,122.3 L168.1,121.6 L167.5,120.8 L166.7,119.6 L165.1,119.5 L164.0,119.3 L162.7,119.5 L162.3,118.7 L161.2,117.9 L160.8,116.9 L161.0,115.5 L160.1,114.5 L158.1,112.2 L157.9,110.3 L158.0,109.1 L158.7,107.2 L161.0,103.6 L161.3,102.8 L161.0,101.6 L160.3,99.4 L160.3,98.5 L159.9,97.4 L159.0,97.2 L158.8,96.0 L159.0,95.2 L159.1,92.6 L159.3,90.2 L159.4,88.6 L159.4,87.0 L159.1,86.3 L158.4,85.8 L157.9,85.2 L157.6,84.4 L157.1,83.7 L157.2,82.9 L156.5,83.3 L156.1,82.6 L155.2,82.8 L154.2,82.8 L153.8,83.5 L153.0,83.8 L152.3,83.5 L151.5,83.3 L150.5,83.5 L149.7,83.4 L150.6,82.8 L151.7,81.7 L152.1,80.9 L152.2,80.2 L152.3,79.2 L152.5,78.3 L151.8,78.5 L151.2,77.8 L152.0,77.4 L152.5,76.7 L153.0,76.1 L153.3,75.3 L153.4,74.5 L152.7,74.1 L151.9,73.1 L151.3,72.5 L150.5,72.2 L150.3,71.4 L149.9,70.5 L149.6,69.7 L149.1,68.9 L148.4,68.0 L148.5,67.2 L148.5,66.4 L148.2,65.6 L148.0,64.7 L147.9,63.6 L147.7,62.8 L147.3,62.1 L147.0,61.3 L144.7,60.0 L143.8,60.0 L142.4,59.9 L141.4,59.9 L140.4,60.0 L139.5,60.1 L138.0,59.8 L136.5,59.6 L135.6,59.9 L134.3,59.1 L133.4,58.7 L132.3,58.1 L131.4,57.9 L131.3,58.7 L130.4,59.1 L129.2,59.1 L128.4,59.2 L127.6,59.7 L126.5,59.1 L125.8,58.5 L124.5,57.9 L123.5,57.8 L122.6,57.6 L121.6,57.4 L120.5,57.1 L119.5,57.4 L118.4,57.5 L117.5,57.5 L116.5,57.0 L115.6,56.4 L114.7,54.9 L114.4,54.1 L114.4,52.6 L115.2,51.1 L115.8,50.4 L116.5,49.4 L115.8,48.8 L115.9,47.9 L116.7,47.9 L117.1,47.1 L117.7,45.8 L118.0,44.8 L117.3,44.6 L116.4,44.4 L115.8,43.8 L115.0,43.3 L114.6,42.6 L113.9,41.7 L113.5,40.7 L112.8,40.0 L111.9,39.9 L111.3,39.4 L111.3,38.5 L110.9,37.0 L110.9,36.0 L111.2,35.0 L112.0,33.4 L109.9,32.3 L108.9,32.3 L108.1,32.2 L107.3,31.4 L106.5,31.2 L105.8,31.8 L105.1,32.8 L104.6,33.7 L104.0,35.7 L103.7,36.7 L103.4,37.5 L102.5,38.1 L101.9,38.6 L102.6,39.4 L103.4,40.0 L104.3,41.0 L104.0,41.7 L102.9,41.7 L102.0,41.4 L100.9,41.2 L100.1,41.3 L99.7,42.0 L99.2,42.9 L98.7,43.9 L98.4,44.8 L98.1,45.8 L97.9,47.5 L97.6,48.4 L96.9,48.8 L95.5,49.1 L94.8,49.1 L93.9,49.3 L93.5,50.1 L93.6,51.1 L94.1,52.0 L94.3,52.8 L94.3,53.7 L94.2,54.9 L94.1,55.7 L93.8,56.5 L93.1,57.2 L92.4,58.2 L91.9,59.4 L91.7,60.3 L91.4,61.3 L90.7,62.0 L89.9,62.3 L88.8,62.5 L87.7,62.6 L85.8,61.7 L84.5,60.9 L83.5,60.9 L83.0,61.6 L82.6,62.6 L81.9,63.3 L81.0,63.7 L80.1,64.2 L79.4,64.6 L78.3,65.0 L77.3,64.7 L76.5,64.1 L75.4,64.1 L74.1,64.7 L73.6,65.3 L73.7,66.8 L73.6,67.7 L73.0,68.6 L72.3,69.3 L71.4,69.5 L70.7,69.2 L69.4,68.6 L68.5,68.3 L67.3,68.2 L66.0,68.2 L65.5,67.6 L64.5,67.1 L62.7,66.0 L61.8,65.6 L59.6,65.0 L58.0,64.8 L56.6,64.9 L55.8,64.9 L54.6,64.6 L53.8,64.5 L52.0,64.4 L50.9,64.4 L49.7,64.7 L49.0,65.4 L48.1,65.8 L47.0,66.9 L46.2,68.1 L46.0,68.9 L45.9,69.8 L45.6,70.7 L45.3,71.5 L44.5,72.2 L43.4,72.4 L41.9,71.9 L40.5,70.2 L38.8,69.9 L38.0,69.8 L36.4,69.6 L35.5,69.3 L33.9,70.2 L32.8,70.6 L31.5,70.8 L30.3,70.9 L28.8,70.9 L28.0,70.9 L27.2,70.9 L26.9,69.8 L26.7,68.8 L25.2,67.9 L24.3,67.6 L23.1,67.4 L22.1,67.3 L21.3,67.3 L20.5,67.5 L18.7,67.6 L18.6,68.4 L18.7,69.3 L19.6,69.3 L20.3,69.6 L20.3,70.6 L19.7,71.3 L20.5,71.6 L21.3,71.3 L21.7,72.0 L22.5,72.0 L23.3,72.0 L23.6,71.2 L24.3,70.7 L24.8,71.3 L25.2,72.1 L24.8,72.9 L24.8,73.7 L25.2,74.7 L25.4,75.6 L25.8,76.3 L26.2,77.1 L26.5,77.9 L26.8,78.7 L27.1,79.4 L26.9,80.3 L27.1,81.4 L27.4,82.2 L28.0,82.8 L28.7,83.3 L29.5,83.0 L29.0,83.9 L28.9,84.6 L29.2,85.4 L29.1,86.3 L29.9,86.2 L30.6,86.9 L31.0,87.6 L31.3,88.4 L31.6,89.3 L31.8,90.5 L32.1,91.7 L32.3,93.1 L32.6,94.1 L33.2,95.7 L33.6,96.6 L34.1,97.3 L34.5,98.3 L34.9,99.2 L35.3,99.9 L35.4,100.8 L35.5,101.8 L35.8,102.6 L36.1,103.7 L36.4,104.4 L36.5,105.6 L36.8,106.5 L37.1,107.5 L37.6,108.2 L38.0,108.9 L38.2,109.7 L38.5,110.6 L38.7,111.4 L39.0,112.2 L39.5,113.0 L39.9,113.6 L40.4,114.9 L40.7,115.6 L41.0,116.6 L41.3,117.6 L42.1,117.9 L42.7,118.4 L43.6,119.1 L44.1,119.7 L44.5,120.7 L44.9,121.8 L45.3,122.7 L45.7,123.5 L46.1,124.2 L46.6,124.8 L47.2,125.4 L48.0,125.5 L48.4,124.7 L49.6,129.9 L49.0,129.3 L48.2,129.0 L47.3,129.0 L46.4,129.0 L45.6,129.2 L46.1,129.9 L46.3,130.7 L46.7,131.4 L46.8,132.2 L46.4,132.9 L46.2,133.7 L46.5,134.4 L46.5,135.3 L46.8,136.1 L46.7,136.9 L45.9,137.3 L45.7,138.0 L46.1,138.7 L46.9,138.9 L47.5,139.6 L47.8,140.6 L48.2,141.4 L48.2,142.1 L48.6,143.1 L49.0,144.0 L49.2,144.9 L49.5,145.9 L49.8,146.7 L50.1,147.4 L50.4,148.2 L50.4,149.0 L50.2,149.7 L50.2,150.6 L50.3,151.3 L51.0,151.9 L51.6,152.4 L52.3,152.9 L53.2,152.5 L54.0,152.3 L54.2,153.1 L54.8,154.4 L55.3,155.7 L55.6,157.2 L56.2,158.3 L56.6,159.5 L57.0,160.5 L57.2,161.3 L57.3,162.3 L57.7,164.0 L57.9,164.8 L58.2,165.7 L58.5,167.0 L58.8,168.0 L59.0,168.9 L59.5,170.5 L60.4,174.0 L60.7,175.3 L60.9,176.2 L61.6,178.8 L61.9,179.8 L62.1,180.8 L62.4,181.6 L62.7,182.8 L63.0,183.6 L63.1,184.7 L62.4,185.2 L62.2,186.0 L62.5,186.8 L63.4,186.8 L63.8,187.8 L64.3,188.5 L65.1,188.6 L65.9,188.8 L66.8,188.9 L67.5,188.4 L68.3,187.6 L69.1,187.5 L69.8,188.0 L71.3,187.7 L72.4,187.4 L73.2,186.8 L72.0,186.0 L71.1,185.7 L70.3,185.5 L71.1,185.2 L72.1,185.3 L72.8,184.5 L73.7,183.9 L74.6,183.9 L75.8,184.3 L77.0,184.6 L78.2,185.2 L78.8,185.6 L79.8,186.2 L80.6,186.2 L81.5,186.4 L82.5,186.0 L83.6,186.2 L86.0,188.2 L84.1,190.0 L83.8,190.7 L83.1,192.9 L83.1,193.9 L83.1,195.7 L83.0,196.8 L82.9,198.2 L82.6,199.3 L81.4,201.8 L81.0,202.5 L80.3,203.6 L79.3,204.1 L78.6,204.5 L77.8,204.3 L76.9,203.9 L75.8,203.4 L74.5,202.3 L73.7,202.0 L73.0,202.5 L73.5,203.5 L74.6,203.9 L75.3,204.8 L76.2,205.3 L77.1,206.1 L77.9,206.4 L78.7,207.5 L79.7,207.5 L79.5,208.4 L80.3,208.8 L81.0,209.3 L80.7,208.6 L81.1,207.2 L82.3,207.1 L83.2,207.3 L84.2,206.7 L85.3,206.5 L86.4,206.8 L86.7,207.7 L87.6,208.2 L88.6,207.3 L90.2,207.5 L91.4,207.5 L92.3,207.8 L93.2,208.0 L94.0,207.7 L94.7,208.2 L95.5,208.6 L96.3,209.0 L97.2,209.1 L98.0,209.9 L98.8,210.2 L99.8,210.5 L100.0,209.2 L101.2,208.7 L102.2,208.2 L103.2,208.3 L104.6,209.6 L105.4,210.8 L106.1,211.5 L106.7,212.6 L107.6,212.9 L108.4,213.4 L108.8,214.4 L108.9,215.5 L109.0,217.0 L109.8,218.6 L109.9,219.7 L110.6,220.4 L111.4,220.0 L112.4,219.5 L113.3,218.9 L114.1,218.9 L114.9,218.7 L115.7,218.9 L116.5,218.9 L117.3,218.6 L118.1,219.0 L119.1,219.2 L118.5,218.3 L118.1,217.6 L119.0,217.3 L120.0,218.1 L120.8,218.3 L121.3,219.0 L122.1,219.8 L123.0,220.8 L123.6,221.7 L124.6,223.2 L125.1,224.5 L125.9,225.2 L126.6,225.5 L127.4,225.6 L130.1,226.0 L131.8,225.9 L132.7,224.9 L132.9,222.8 L133.6,222.1 L137.0,221.8 L138.2,221.2 L138.8,219.0 L141.5,216.8 L144.4,215.9 L145.1,216.0 L145.7,216.7 L146.4,216.6 L147.3,216.5 L148.3,216.2 L149.2,215.7 L150.2,215.2 L150.7,214.5 L150.8,213.4 L150.4,212.2 L150.0,211.4 L149.9,210.3 L150.1,208.4 L150.2,207.4 L150.6,206.6 L150.9,205.8 L151.3,205.1 L151.9,204.4 L152.8,204.0 L154.2,204.0 L155.2,203.6 L156.1,202.6 L156.2,201.5 L156.1,200.7 L155.7,199.6 L154.9,198.6 L154.1,198.0 L153.4,197.4 L153.0,196.5 L152.8,195.6 L152.9,194.8 L153.2,193.6 L154.3,192.4 L154.9,191.6 L155.1,190.6 L155.1,189.5 L155.1,188.7 L154.9,187.5 L154.5,186.3 L154.3,185.3 L154.8,184.4 L155.5,183.9 L156.7,183.3 L157.9,183.2 L158.2,182.3 L157.4,180.8 L157.1,180.0 L156.3,179.2 L155.4,178.9 L154.4,178.8 L153.7,178.2 L153.0,177.7 L152.1,176.8 L152.2,176.0 L152.1,174.9 L151.1,173.6 L150.4,173.0 L149.7,172.3 L150.1,171.5 L151.0,171.6 L152.0,171.4 L152.8,170.9 L153.9,170.4 L154.6,169.4 L154.7,168.6 L155.5,167.3 L156.2,166.4 L156.1,165.6 L157.4,164.4 L158.2,163.9 L159.2,164.6 L160.1,165.7 L160.6,166.5 L161.1,167.4 L161.5,168.6 L162.1,170.4 L162.6,171.2 L163.6,171.7 L164.8,172.2 L166.5,172.9 L167.6,173.2 L169.0,173.5 L169.9,173.9 L170.7,174.3 L171.5,174.7 L172.9,175.8 L174.7,177.0 L175.4,178.0 L175.9,179.2 L176.0,180.0 L176.2,181.1 L176.6,182.7 L177.6,183.8 L178.3,184.2 L179.2,184.5 L180.8,184.8 L181.6,184.9 L182.7,185.1 L183.7,185.2 L184.5,185.3 L185.2,185.7 L185.8,186.3 L186.5,186.9 L187.0,187.5 L187.5,188.5 L187.7,189.7 L187.7,190.5 L187.9,191.7 L188.0,192.6 L188.0,193.4 L188.5,194.1 L189.2,194.4 L190.2,194.5 L191.1,194.5 L191.9,194.6 L192.2,195.4 L191.8,196.1 L191.2,196.5 L190.1,196.9 L190.1,198.3 L190.6,198.9 L191.3,199.4 L192.2,199.9 L193.0,200.3 L193.7,200.8 L194.0,201.6 L193.9,202.8 L193.9,203.9 L193.8,204.8 L194.1,205.5 L194.9,206.4 L195.7,206.7 L196.4,207.5 L196.8,208.2 L197.0,209.1 L196.1,209.8 L195.2,209.6 L194.1,208.8 L193.7,210.0 L193.9,211.3 L194.7,211.8 L195.5,211.2 L196.3,211.6 L196.9,212.3 L197.6,213.1 L198.7,213.8 L199.5,214.3 L200.4,214.8 L200.6,215.6 L200.0,216.5 L199.7,217.5 L200.4,218.1 L201.0,217.5 L201.9,216.7 L202.9,217.0 L203.4,217.7 L203.2,218.8 L203.1,219.7 L202.0,220.0 L202.2,221.1 L202.6,222.0 L201.8,223.0 L201.2,223.6 L200.7,224.6 L201.2,225.4 L202.0,225.7 L202.3,226.4 L202.0,227.2 L202.2,228.1 L203.0,228.2 L203.7,228.7 L203.9,229.5 L204.0,230.4 L204.2,231.2 L204.7,231.9 L205.0,231.2 L205.6,230.6 L206.6,230.4 L207.4,230.2 L207.7,229.5 L208.1,228.7 L209.0,228.6 L209.8,228.8 L210.4,228.3 L211.2,228.2 Z" fill="#FF9933" fill-opacity="0.78" stroke="#ffffff" stroke-width="1.2"><title>North Goa</title></path>
+<path d="M163.1,171.5 L162.4,171.0 L161.5,168.6 L161.1,167.4 L160.6,166.5 L160.1,165.7 L159.7,165.0 L158.6,164.2 L157.4,164.4 L156.4,165.1 L156.2,165.9 L155.5,167.3 L155.0,168.1 L154.6,169.4 L154.2,170.2 L153.3,170.7 L152.5,171.1 L151.4,171.7 L150.4,171.5 L149.6,172.0 L150.4,173.0 L151.1,173.6 L151.7,174.4 L152.3,175.5 L152.0,176.3 L152.5,177.3 L153.2,177.8 L154.2,178.6 L154.9,179.0 L155.7,179.0 L156.7,179.6 L157.4,180.8 L157.9,181.7 L158.3,182.6 L157.4,183.1 L155.9,183.8 L155.2,184.2 L154.4,184.6 L154.3,185.7 L154.8,187.2 L155.0,188.3 L155.1,189.5 L155.1,190.6 L154.9,191.6 L154.3,192.4 L153.6,193.1 L153.0,194.1 L152.8,195.6 L153.0,196.5 L153.4,197.4 L154.1,198.0 L154.9,198.6 L155.7,199.6 L156.1,200.7 L156.2,201.5 L156.1,202.6 L155.2,203.6 L154.2,204.0 L153.3,204.0 L152.5,204.1 L151.6,204.6 L150.9,205.8 L150.6,206.6 L150.2,207.4 L150.1,208.4 L149.9,209.7 L149.9,210.9 L150.4,212.2 L150.8,213.4 L150.7,214.5 L150.2,215.2 L149.2,215.7 L148.3,216.2 L147.3,216.5 L146.4,216.6 L145.7,216.7 L145.7,218.8 L143.4,221.6 L141.3,223.0 L140.6,226.7 L141.4,227.5 L142.5,228.1 L146.8,229.5 L147.7,229.8 L147.6,230.6 L142.9,231.6 L140.8,231.6 L140.0,231.7 L139.2,232.2 L137.9,232.7 L135.8,232.9 L134.5,232.7 L133.4,231.9 L131.6,230.5 L131.5,231.4 L131.5,232.6 L130.6,232.8 L129.6,233.2 L128.6,233.1 L127.7,232.8 L127.0,232.2 L125.9,231.7 L124.5,230.6 L123.5,231.2 L122.7,231.7 L122.1,232.7 L121.9,233.7 L120.9,234.3 L120.0,235.2 L119.2,235.7 L118.0,236.1 L115.7,236.7 L114.5,236.7 L113.7,235.6 L113.5,234.6 L112.1,233.9 L111.2,233.9 L110.3,234.0 L109.2,234.5 L108.6,235.3 L107.8,236.1 L107.1,235.1 L106.5,234.6 L105.6,234.4 L104.6,234.4 L103.5,234.7 L103.1,235.6 L102.3,235.6 L101.4,235.5 L100.4,234.5 L100.2,233.6 L100.9,232.7 L100.7,231.6 L100.5,230.7 L99.8,230.3 L98.8,229.6 L97.5,229.9 L96.4,230.1 L95.7,230.6 L95.3,231.6 L94.5,232.2 L93.7,231.7 L92.8,231.5 L92.9,232.3 L93.1,233.3 L91.8,233.4 L91.0,233.1 L90.2,233.1 L90.3,232.1 L90.5,231.3 L89.9,230.3 L88.8,229.6 L87.5,229.6 L87.0,230.2 L87.5,231.1 L87.2,232.3 L86.9,233.2 L86.2,233.8 L85.3,234.4 L84.4,234.8 L83.3,235.2 L82.3,235.3 L81.5,235.0 L81.4,234.1 L81.4,233.3 L80.9,232.1 L80.2,231.4 L79.3,231.1 L78.3,230.5 L77.6,228.6 L76.5,227.6 L75.2,227.4 L74.2,227.4 L73.6,227.9 L72.8,227.8 L71.9,227.7 L71.1,228.0 L70.7,229.1 L71.1,230.4 L72.2,231.2 L72.6,232.0 L72.9,233.1 L73.4,233.9 L74.4,234.6 L74.3,235.6 L74.1,236.6 L74.6,237.6 L75.6,237.9 L76.4,238.0 L77.6,237.6 L79.0,237.7 L80.3,237.5 L81.2,237.3 L82.0,238.1 L82.6,239.9 L82.7,241.1 L82.9,241.9 L82.8,244.2 L82.9,245.0 L82.5,245.7 L83.1,246.6 L84.0,246.7 L85.1,246.6 L85.9,246.9 L86.5,247.8 L87.3,248.3 L88.1,248.3 L89.2,248.3 L89.9,249.4 L90.9,249.8 L92.4,250.3 L93.5,250.4 L94.0,249.6 L95.4,250.0 L96.2,250.7 L96.4,251.9 L97.0,252.7 L97.2,253.7 L98.3,254.3 L99.5,255.1 L102.8,254.8 L103.7,254.8 L104.6,254.4 L104.4,253.6 L104.6,252.7 L105.3,252.3 L106.6,252.0 L107.5,252.0 L108.3,251.9 L109.3,252.0 L109.8,251.2 L109.3,250.4 L108.4,250.1 L109.4,250.2 L110.3,250.2 L111.5,250.1 L112.4,250.1 L113.2,249.8 L114.6,249.8 L115.3,250.1 L115.6,250.8 L116.3,251.5 L116.9,252.5 L117.7,253.2 L118.9,255.5 L119.4,256.4 L120.3,258.1 L122.2,262.2 L124.1,266.9 L124.6,267.8 L124.9,268.6 L125.5,269.6 L125.8,270.4 L125.9,271.3 L126.6,273.1 L127.3,275.4 L128.0,276.6 L128.3,278.0 L128.6,278.8 L129.1,279.8 L129.9,282.7 L130.0,283.6 L130.6,285.2 L131.4,287.5 L132.1,289.6 L132.2,290.5 L132.5,291.6 L132.7,292.9 L133.2,294.1 L133.6,295.7 L133.7,296.6 L134.1,297.6 L134.6,298.4 L134.8,299.5 L135.4,300.5 L135.6,301.6 L136.0,302.4 L136.3,303.4 L136.6,304.8 L136.9,305.6 L137.2,306.8 L137.3,307.7 L137.6,308.6 L137.7,309.4 L138.3,310.2 L138.6,312.2 L139.0,313.5 L139.0,314.5 L139.9,317.3 L140.2,318.3 L140.6,319.7 L141.2,320.5 L141.5,321.2 L141.3,322.1 L141.5,323.0 L141.9,323.7 L142.3,324.4 L142.6,325.9 L142.7,327.0 L143.2,329.0 L143.6,330.6 L143.8,331.5 L144.1,332.7 L144.5,333.6 L145.0,336.4 L145.5,338.8 L145.8,339.8 L146.2,341.6 L146.5,342.7 L147.2,345.2 L147.7,346.9 L148.0,348.0 L148.3,349.6 L148.8,351.7 L149.6,354.6 L150.0,356.5 L150.3,357.5 L151.1,360.6 L151.3,361.5 L151.7,362.8 L151.8,363.8 L152.4,364.6 L152.1,365.9 L151.1,366.0 L150.3,366.2 L150.1,367.0 L149.6,367.9 L148.9,368.7 L148.2,369.4 L147.5,369.8 L146.5,370.0 L145.7,370.2 L146.4,371.0 L146.4,371.9 L147.4,372.1 L147.8,373.0 L147.7,374.1 L147.8,374.9 L148.0,376.0 L148.1,377.0 L147.9,377.7 L146.7,377.8 L146.1,378.9 L146.0,379.7 L145.7,380.4 L145.4,381.3 L144.7,380.7 L143.7,380.6 L142.8,381.1 L141.6,381.7 L140.7,382.3 L139.9,382.3 L139.1,382.7 L137.9,383.1 L137.0,383.2 L138.2,383.3 L139.0,383.7 L139.4,384.4 L140.3,384.5 L140.5,385.5 L140.5,386.5 L140.9,387.5 L140.9,388.3 L141.2,389.0 L140.1,389.6 L139.7,390.8 L139.0,391.6 L138.6,392.4 L137.7,392.3 L136.1,392.9 L135.8,394.2 L135.1,394.4 L134.1,394.5 L135.0,394.9 L135.9,394.7 L136.4,395.5 L137.1,395.1 L138.2,394.6 L138.9,394.0 L140.0,394.3 L140.9,394.4 L141.7,395.1 L142.7,395.4 L143.2,396.3 L143.3,397.5 L144.2,398.2 L145.4,398.2 L146.3,398.5 L147.6,399.7 L148.3,400.1 L149.7,400.1 L150.9,400.0 L151.6,400.0 L152.5,400.5 L153.9,400.7 L154.8,400.8 L154.4,401.9 L155.3,402.2 L156.2,402.3 L156.8,402.9 L157.6,403.2 L158.3,403.9 L159.1,404.5 L160.2,404.3 L160.9,404.8 L160.8,405.8 L161.5,406.4 L162.2,407.5 L162.4,408.5 L162.9,409.5 L163.1,410.7 L163.1,411.5 L164.0,411.9 L164.8,412.4 L165.3,411.7 L166.5,411.3 L167.1,410.7 L166.8,409.8 L167.8,410.2 L168.1,411.0 L168.4,411.8 L169.6,414.0 L170.4,416.1 L170.9,417.4 L171.5,419.0 L171.9,420.1 L172.2,420.9 L172.2,422.3 L171.4,422.9 L170.6,423.2 L170.8,424.1 L170.1,424.6 L170.9,424.9 L171.6,425.9 L171.6,427.2 L171.9,427.9 L172.9,428.8 L173.9,428.9 L174.5,428.4 L174.8,427.7 L175.7,427.2 L176.1,428.0 L176.7,428.7 L177.5,428.2 L178.2,428.9 L178.3,429.7 L179.3,429.8 L180.1,429.4 L180.5,430.1 L181.1,430.7 L182.5,431.5 L183.1,432.1 L183.4,432.9 L184.2,432.6 L185.2,431.8 L186.4,432.0 L187.5,432.4 L188.3,432.9 L189.0,433.5 L190.0,434.4 L190.4,435.4 L190.3,436.2 L189.6,436.6 L188.8,436.8 L189.6,436.9 L190.4,436.7 L191.2,437.0 L191.8,437.6 L191.0,438.7 L191.9,438.4 L192.9,438.4 L193.5,439.0 L194.2,439.7 L194.6,440.7 L194.9,441.5 L195.4,442.9 L195.7,443.7 L196.1,445.4 L196.0,446.2 L195.1,446.2 L194.4,446.6 L195.3,446.9 L196.6,447.0 L197.9,449.5 L198.5,451.5 L198.8,452.3 L199.7,454.6 L200.2,455.9 L200.9,457.6 L201.2,458.4 L201.5,459.5 L201.2,460.3 L201.0,461.2 L200.5,462.1 L200.4,463.0 L199.8,463.8 L199.0,463.7 L199.2,464.5 L198.3,464.8 L199.0,465.5 L199.2,466.3 L198.7,467.0 L199.3,468.3 L199.7,469.3 L199.9,470.3 L200.1,471.3 L199.7,472.0 L200.1,472.8 L199.8,473.6 L198.8,473.6 L199.2,474.6 L199.1,475.6 L199.5,476.3 L198.6,476.6 L197.9,477.0 L198.0,478.3 L198.5,479.7 L199.3,480.5 L200.3,481.0 L201.7,481.3 L202.5,481.6 L203.8,481.7 L204.8,481.5 L205.5,482.2 L206.2,482.8 L206.7,483.7 L207.7,483.8 L208.8,484.2 L209.6,484.9 L210.3,484.4 L211.1,484.1 L211.4,484.9 L212.3,485.0 L213.4,484.5 L214.3,484.1 L215.3,483.8 L216.3,483.8 L217.1,484.1 L217.6,484.8 L218.1,486.0 L217.9,486.9 L217.9,487.9 L218.8,488.1 L219.4,488.6 L220.2,487.5 L221.2,487.5 L222.6,485.1 L223.3,483.7 L224.0,483.2 L226.8,481.2 L227.7,481.9 L228.3,482.7 L229.6,482.1 L230.8,480.6 L232.2,480.2 L233.2,479.9 L234.0,480.1 L235.8,480.7 L236.6,480.1 L236.1,479.0 L237.9,476.4 L239.2,476.5 L239.9,476.3 L243.2,478.0 L245.7,477.5 L247.4,478.4 L248.4,479.6 L252.2,480.6 L253.7,481.7 L256.4,483.0 L258.4,480.9 L258.4,479.9 L258.2,479.2 L257.9,478.2 L257.6,477.5 L257.3,476.7 L256.9,475.8 L256.3,475.2 L255.3,474.6 L254.9,473.9 L254.6,473.1 L254.3,472.1 L253.9,471.3 L253.7,470.1 L253.7,469.3 L252.8,469.0 L253.0,468.2 L252.7,467.3 L253.1,466.4 L253.1,465.6 L253.9,465.2 L254.4,464.4 L254.7,463.5 L254.7,462.7 L254.9,461.9 L255.3,461.1 L256.0,460.7 L256.7,460.2 L257.2,459.5 L258.3,459.7 L259.2,459.7 L260.1,460.0 L261.0,460.2 L261.8,459.7 L262.6,459.5 L263.8,460.0 L264.9,460.3 L264.4,462.0 L265.1,463.0 L265.9,463.6 L266.3,464.3 L267.0,464.7 L267.8,465.2 L269.2,465.6 L270.7,466.4 L271.7,467.5 L272.4,469.0 L272.5,469.8 L271.0,472.3 L275.0,475.8 L275.8,476.2 L277.1,474.9 L277.5,473.9 L278.0,473.2 L278.2,472.3 L278.7,471.3 L279.3,470.5 L281.2,468.8 L280.8,466.9 L281.7,465.0 L283.6,465.9 L284.8,464.9 L286.8,464.4 L287.7,463.6 L289.6,463.6 L290.2,462.9 L290.7,461.9 L290.5,460.5 L290.5,459.5 L290.9,458.6 L291.0,457.7 L291.2,456.7 L292.2,456.4 L292.7,455.6 L293.7,455.4 L294.6,455.6 L295.3,456.6 L296.2,456.8 L297.1,457.6 L298.3,457.8 L299.1,459.3 L300.0,458.9 L300.8,459.2 L301.5,458.0 L301.3,456.7 L301.9,454.1 L304.0,453.7 L305.0,450.3 L306.5,449.3 L303.6,444.5 L303.0,444.0 L302.1,443.6 L301.2,442.7 L300.7,442.0 L300.7,441.0 L301.3,439.4 L302.7,438.8 L303.9,438.3 L304.9,438.4 L305.8,438.2 L306.6,438.0 L308.4,437.4 L307.9,436.3 L307.7,434.8 L308.9,433.8 L309.4,432.9 L310.5,431.2 L311.3,430.5 L315.9,426.5 L315.9,422.3 L316.8,421.2 L318.0,420.3 L320.9,418.6 L322.3,417.5 L322.2,416.6 L322.1,415.8 L321.7,414.4 L321.5,413.3 L320.7,412.8 L319.4,411.0 L319.2,410.1 L319.1,408.8 L319.3,407.0 L319.0,405.3 L317.3,404.7 L316.3,404.7 L314.7,403.3 L314.7,402.4 L314.6,401.4 L314.5,400.2 L314.5,397.2 L314.2,393.5 L313.7,392.6 L312.0,389.5 L310.9,388.8 L311.6,385.9 L312.5,384.9 L315.5,384.2 L315.7,380.9 L316.6,380.5 L316.4,374.3 L316.4,373.4 L316.5,372.6 L316.4,370.7 L316.9,368.7 L316.8,367.6 L316.1,365.6 L316.1,364.6 L316.8,362.7 L318.3,362.5 L319.8,362.7 L321.9,361.6 L323.6,358.9 L324.8,357.7 L326.3,355.3 L327.8,352.6 L329.2,350.2 L329.7,349.3 L330.5,348.8 L331.0,348.2 L331.1,347.3 L332.5,345.1 L332.5,343.8 L332.0,342.8 L331.3,342.1 L330.7,341.7 L330.0,340.8 L329.6,340.0 L329.2,338.9 L328.7,337.7 L328.5,336.6 L328.4,335.7 L329.0,333.9 L328.8,333.2 L328.1,332.4 L327.3,332.1 L327.0,331.2 L326.7,330.4 L326.2,329.5 L326.5,328.6 L325.9,328.1 L325.2,327.4 L324.4,326.9 L324.0,326.2 L324.4,325.4 L324.8,324.4 L323.7,323.1 L322.7,322.3 L322.2,321.6 L321.3,320.9 L320.6,320.3 L320.0,319.4 L317.6,319.9 L314.9,318.2 L308.7,316.8 L304.3,315.7 L302.5,313.7 L302.2,312.4 L300.7,310.7 L301.8,309.3 L300.3,306.8 L304.9,306.2 L305.7,305.3 L307.1,301.6 L308.1,299.7 L309.3,297.7 L310.1,295.5 L312.4,294.3 L315.1,295.9 L318.0,294.1 L320.8,293.8 L321.3,291.4 L322.3,291.6 L327.9,294.4 L333.7,294.4 L334.1,293.7 L337.0,294.2 L339.1,292.3 L341.9,288.5 L340.7,286.7 L336.1,280.7 L332.5,271.0 L332.8,268.5 L333.8,265.4 L334.4,264.6 L334.8,263.6 L334.0,261.4 L332.8,257.9 L332.4,256.6 L332.0,255.3 L332.1,254.0 L334.7,252.0 L335.4,251.5 L334.4,250.8 L330.9,249.2 L328.9,248.2 L328.1,247.7 L324.9,245.3 L324.2,244.7 L323.5,244.1 L317.6,243.7 L315.8,243.6 L314.6,242.2 L312.3,239.2 L312.9,235.3 L313.2,233.6 L313.5,232.0 L312.8,231.1 L312.1,229.7 L311.8,228.3 L309.6,226.8 L308.8,225.2 L309.0,224.3 L309.4,221.7 L309.9,221.1 L310.6,220.2 L311.8,218.6 L312.7,217.2 L312.0,216.4 L312.7,215.7 L313.0,214.3 L312.5,213.1 L312.2,211.0 L312.1,209.9 L311.0,207.6 L310.4,206.4 L309.8,205.1 L308.6,203.1 L308.2,202.3 L307.6,200.8 L306.8,198.7 L305.7,196.8 L304.9,195.5 L303.7,193.2 L301.8,190.8 L300.2,188.5 L299.4,188.5 L298.5,188.5 L297.7,189.3 L297.4,190.0 L296.2,190.0 L295.4,190.2 L294.2,190.7 L293.3,191.1 L292.4,191.3 L291.4,191.9 L290.4,192.3 L289.9,192.8 L290.0,193.6 L289.3,193.2 L288.5,193.7 L287.8,194.3 L287.3,194.9 L286.5,196.0 L285.8,196.6 L285.1,197.0 L284.1,197.2 L283.1,197.5 L282.3,197.8 L281.6,198.3 L280.8,198.8 L280.0,198.9 L279.2,199.2 L278.4,199.3 L277.6,199.6 L276.9,200.1 L275.9,200.7 L274.9,201.2 L274.5,201.9 L273.5,202.6 L272.7,203.2 L272.1,204.3 L271.8,205.0 L271.0,205.9 L270.4,206.4 L269.9,207.0 L270.0,208.8 L269.7,209.8 L269.6,210.7 L269.3,211.8 L268.6,212.7 L267.2,213.3 L266.2,213.9 L265.5,214.7 L264.9,215.8 L263.4,215.6 L262.3,215.3 L261.5,215.1 L260.7,214.9 L260.2,214.2 L259.9,213.4 L259.2,213.1 L257.7,213.7 L256.6,213.6 L255.6,213.6 L254.9,214.0 L254.0,214.4 L253.3,214.8 L252.5,214.4 L252.0,213.6 L251.4,214.2 L250.8,215.0 L249.9,215.2 L248.9,215.3 L248.1,215.2 L247.1,215.2 L245.8,215.5 L244.8,215.2 L244.2,216.5 L243.5,216.8 L242.7,217.2 L241.8,217.2 L241.0,216.8 L239.9,216.6 L239.0,216.1 L237.9,215.7 L237.3,216.5 L236.1,217.5 L235.6,218.3 L235.1,218.9 L234.2,219.0 L232.8,219.6 L232.1,220.1 L231.4,220.8 L231.0,222.4 L231.1,223.4 L230.8,224.4 L230.9,225.3 L230.1,224.4 L229.3,223.0 L228.0,221.2 L226.4,221.8 L225.3,222.4 L224.0,223.0 L222.3,223.6 L221.5,223.9 L220.3,224.4 L219.5,224.6 L218.6,224.7 L218.0,225.3 L217.6,226.0 L216.6,226.4 L215.6,226.9 L214.7,227.3 L214.0,227.6 L212.9,228.1 L212.2,228.5 L211.4,228.3 L210.7,228.1 L210.1,228.7 L209.2,228.7 L208.3,228.6 L207.8,229.3 L207.4,230.2 L206.6,230.4 L205.8,230.5 L205.1,231.0 L205.0,231.8 L204.3,231.3 L204.0,230.4 L203.9,229.5 L203.7,228.7 L203.0,228.2 L202.2,228.1 L202.0,227.2 L202.3,226.4 L202.0,225.7 L201.2,225.4 L200.7,224.6 L201.2,223.6 L201.8,223.0 L202.4,222.3 L202.4,221.5 L201.9,220.6 L202.5,220.0 L203.2,219.5 L203.1,218.3 L203.3,217.5 L202.6,216.8 L201.5,217.0 L200.9,217.7 L200.0,217.8 L199.6,217.0 L200.3,216.1 L200.6,215.1 L200.0,214.4 L199.1,214.0 L198.1,213.4 L197.2,212.7 L196.6,211.9 L195.9,211.3 L194.9,211.6 L193.9,211.3 L193.7,210.0 L193.7,209.0 L194.7,209.2 L195.7,209.7 L196.6,209.6 L197.1,208.8 L196.7,208.0 L196.3,207.2 L195.4,206.7 L194.5,206.0 L194.0,205.3 L193.9,204.2 L193.9,203.3 L193.9,202.4 L194.0,201.4 L193.5,200.6 L192.7,200.1 L191.9,199.8 L191.1,199.3 L190.5,198.8 L189.6,197.4 L190.8,196.6 L191.6,196.3 L192.2,195.7 L192.2,194.9 L191.4,194.6 L190.6,194.5 L189.5,194.5 L188.6,194.2 L188.0,193.4 L188.0,192.6 L187.9,191.7 L187.8,190.8 L187.7,189.7 L187.6,188.8 L187.2,187.9 L186.6,187.0 L186.1,186.5 L185.5,185.9 L184.8,185.4 L183.7,185.2 L182.7,185.1 L181.6,184.9 L180.8,184.8 L179.7,184.6 L178.9,184.4 L178.1,184.1 L176.6,182.7 L176.3,181.6 L176.0,180.0 L175.9,179.2 L175.4,178.0 L174.7,177.0 L172.9,175.8 L171.9,175.1 L170.7,174.3 L169.9,173.9 L169.0,173.5 L167.9,173.2 L166.5,172.9 L164.8,172.2 Z" fill="#138808" fill-opacity="0.78" stroke="#ffffff" stroke-width="1.2"><title>South Goa</title></path>
+<text x="164.1" y="131.0" text-anchor="middle" font-size="12" font-weight="700" fill="#1a1a1a" font-family="inherit" paint-order="stroke" stroke="#fff" stroke-width="3" stroke-linejoin="round">North</text>
+<text x="164.1" y="144.0" text-anchor="middle" font-size="12" font-weight="700" fill="#1a1a1a" font-family="inherit" paint-order="stroke" stroke="#fff" stroke-width="3" stroke-linejoin="round">Goa</text>
+<text x="229.3" y="335.5" text-anchor="middle" font-size="12" font-weight="700" fill="#1a1a1a" font-family="inherit" paint-order="stroke" stroke="#fff" stroke-width="3" stroke-linejoin="round">South</text>
+<text x="229.3" y="348.5" text-anchor="middle" font-size="12" font-weight="700" fill="#1a1a1a" font-family="inherit" paint-order="stroke" stroke="#fff" stroke-width="3" stroke-linejoin="round">Goa</text>
+<g font-size="11" fill="#1a1a1a" font-family="inherit">
+<rect x="14" y="456" width="14" height="14" rx="2" fill="#FF9933" fill-opacity="0.78"/><text x="34" y="467">North Goa</text>
+<rect x="14" y="478" width="14" height="14" rx="2" fill="#138808" fill-opacity="0.78"/><text x="34" y="489">South Goa</text>
+</g>
+<text x="14" y="512" font-size="9" fill="#5b5b5b" font-style="italic">Source: datta07/INDIAN-SHAPEFILES · Census 2011 district boundaries</text>
+</svg>
+  </div>
+
+  <table class="goa">
+    <thead><tr><th>#</th><th>District</th><th>HQ</th><th>Collector / DM</th><th>SP</th><th>Official portal</th></tr></thead>
+    <tbody>
+      <tr><td class="r">1</td><td>North Goa</td><td>Panaji</td><td>Ankit Yadav, IAS</td><td>Shekhar Prabhudesai, IPS</td><td><a href="https://northgoa.gov.in/whos-who/" target="_blank" rel="noopener">northgoa.gov.in</a></td></tr>
+      <tr><td class="r">2</td><td>South Goa</td><td>Margao</td><td>Egna Cleetus, IAS</td><td>Santosh Dessai</td><td><a href="https://southgoa.nic.in/whos-who/" target="_blank" rel="noopener">southgoa.nic.in</a></td></tr>
+    </tbody>
+    <caption>2 districts; no administrative divisions counted separately in the JSON.</caption>
+  </table>
+
+  <details class="branch"><summary><span>Sample drill-down — district officer chain</span><span class="ct">2 districts</span></summary><div class="b-body"><div class="role-grid">
+    <div class="role-card"><div class="role">North Goa Collectorate</div><div class="name">Panaji</div><div class="meta">Collector, Additional Collectors, Deputy Collectors, SDOs and Mamlatdars listed at <a href="https://northgoa.gov.in/whos-who/" target="_blank" rel="noopener">North Goa Who's Who</a></div></div>
+    <div class="role-card"><div class="role">South Goa Collectorate</div><div class="name">Margao</div><div class="meta">Collector, Additional Collectors, Deputy Collectors, SDOs and Mamlatdars listed at <a href="https://southgoa.nic.in/whos-who/" target="_blank" rel="noopener">South Goa Who's Who</a></div></div>
+  </div></div></details>
+  <p class="src">Sources: https://northgoa.gov.in/whos-who/ · https://southgoa.nic.in/whos-who/ · https://raw.githubusercontent.com/datta07/INDIAN-SHAPEFILES/master/STATES/GOA/GOA_DISTRICTS.geojson · Goa Police/SP transfer reports verified on 24-May-2026.</p>
+<!-- END: DIST -->
+
+</section>
+
+<!-- =========================== PRI =========================== -->
+<section id="pri" class="lens-section">
+<!-- BEGIN: PRI -->
+  <h1>🌾 Panchayati Raj — Ground-Level Democracy</h1>
+  <p class="sec-sub">Goa has a compact three-tier Panchayati Raj system: 2 Zilla Panchayats, 12 Panchayat Samitis/blocks, 191 Gram Panchayats and 1,561 GP wards.</p>
+
+  <div class="kpis">
+    <div class="kpi"><div class="v">2</div><div class="l">Zilla Panchayats</div><div class="sub">North Goa + South Goa</div></div>
+    <div class="kpi"><div class="v">12</div><div class="l">Blocks / Samitis</div><div class="sub">Intermediate tier</div></div>
+    <div class="kpi"><div class="v">191</div><div class="l">Gram Panchayats</div><div class="sub">Village councils</div></div>
+    <div class="kpi"><div class="v">1,561</div><div class="l">GP wards</div><div class="sub">Ward members</div></div>
+    <div class="kpi"><div class="v">2025</div><div class="l">ZP leadership</div><div class="sub">Both ZP chair posts won by BJP</div></div>
+    <div class="kpi"><div class="v">2027</div><div class="l">Next GP cycle</div><div class="sub">After 2022 GP polls, subject to SEC notification</div></div>
+  </div>
+
+  <h3 class="grp-h">Tier map — elected, civil-service, count</h3>
+  <table class="goa">
+    <thead><tr><th>Tier</th><th>Elected body</th><th>Head / chair</th><th>Civil-service counterpart</th><th>Office-holders</th></tr></thead>
+    <tbody>
+      <tr><td>District</td><td>Zilla Panchayat</td><td>North: Reshma Sandeep Bandodkar; South: Sidharth Gauns Dessai</td><td>CEO-ZP / Collector</td><td>2 chairpersons + ZP members</td></tr>
+      <tr><td>Block</td><td>Panchayat Samiti</td><td>Chairperson / members</td><td>Block Development Officer</td><td>12 samitis</td></tr>
+      <tr><td>Village</td><td>Gram Panchayat</td><td>Sarpanch</td><td>Panchayat Secretary / BDO</td><td>191 sarpanches</td></tr>
+      <tr><td>Ward</td><td>Ward Sabha</td><td>Ward Member</td><td>—</td><td>1,561 ward members</td></tr>
+    </tbody>
+    <caption>SEC local-body statistics: 191 Village Panchayats and 1,561 GP wards.</caption>
+  </table>
+
+  <div class="callout warn"><strong>Do not inline every ward member.</strong> Goa is small enough to summarize counts and ZP leadership, but 1,561 ward members plus GP/samiti rosters are better served from live SEC/Directorate registers.</div>
+
+  <h3 class="grp-h">Authoritative live registers</h3>
+  <div class="role-grid">
+    <div class="role-card"><div class="role">Directorate of Panchayats, Goa</div><div class="name">panchayatsgoa.gov.in</div><div class="meta"><a href="https://panchayatsgoa.gov.in/" target="_blank" rel="noopener">Official panchayat portal</a></div></div>
+    <div class="role-card"><div class="role">State Election Commission, Goa</div><div class="name">Local-body statistics</div><div class="meta"><a href="https://sec.goa.gov.in/local-bodies-statistics/" target="_blank" rel="noopener">SEC statistics</a> · <a href="https://sec.goa.gov.in/" target="_blank" rel="noopener">SEC Goa</a></div></div>
+    <div class="role-card"><div class="role">Local Government Directory</div><div class="name">lgdirectory.gov.in</div><div class="meta"><a href="https://lgdirectory.gov.in/" target="_blank" rel="noopener">LGD codes and hierarchy</a></div></div>
+    <div class="role-card"><div class="role">eGramSwaraj</div><div class="name">egramswaraj.gov.in</div><div class="meta"><a href="https://egramswaraj.gov.in/" target="_blank" rel="noopener">GP plans, profiles and payments</a></div></div>
+  </div>
+  <p class="src">Sources: https://sec.goa.gov.in/local-bodies-statistics/ · https://panchayatsgoa.gov.in/ · https://lgdirectory.gov.in/ · https://egramswaraj.gov.in/ · ZP leadership reports verified 24-May-2026.</p>
+<!-- END: PRI -->
+
+</section>
+
+<!-- =========================== CONSTITUTIONAL BODIES =========================== -->
+<section id="bodies" class="lens-section">
+<!-- BEGIN: BODIES -->
+  <h1>📊 State Constitutional &amp; Statutory Bodies</h1>
+  <p class="sec-sub">Independent oversight institutions whose chairpersons or commissioners are appointed under constitutional/statutory processes. Where the current chair could not be confirmed from an official page, this page links the live official register rather than inventing a name.</p>
+
+  <div class="role-grid">
+    <div class="role-card"><div class="role">Goa Public Service Commission (Art. 315)</div><div class="name">Udaysinh S. Raorane</div><div class="meta">Chairman · <a href="https://gpsc.goa.gov.in/" target="_blank" rel="noopener">gpsc.goa.gov.in</a></div></div>
+    <div class="role-card"><div class="role">State Election Commission (Art. 243K)</div><div class="name">W. V. Ramanamurthy, IAS (Retd.)</div><div class="meta">State Election Commissioner · <a href="https://sec.goa.gov.in/" target="_blank" rel="noopener">sec.goa.gov.in</a></div></div>
+    <div class="role-card"><div class="role">Chief Electoral Officer (ECI)</div><div class="name">Dr. Sanjay Goel, IAS</div><div class="meta"><a href="https://ceogoa.nic.in/" target="_blank" rel="noopener">ceogoa.nic.in</a></div></div>
+    <div class="role-card"><div class="role">Goa State Information Commission</div><div class="name">Current CIC not confirmed in official scrape</div><div class="meta">RTI appeals · <a href="http://www.gsic.goa.gov.in/" target="_blank" rel="noopener">gsic.goa.gov.in</a></div></div>
+    <div class="role-card"><div class="role">Goa Lokayukta</div><div class="name">Justice Sandeep Kashinath Shinde (Retd.)</div><div class="meta">Sworn in March 2026; anti-corruption ombudsman</div></div>
+    <div class="role-card"><div class="role">Goa Human Rights Commission</div><div class="name">Chairperson vacancy / latest appointment not confirmed</div><div class="meta">Rights-body reports indicate vacancies; verify via state notifications.</div></div>
+    <div class="role-card"><div class="role">Goa State Commission for Women</div><div class="name">Chairperson not confirmed after resignation reports</div><div class="meta"><a href="https://goawomenscommission.gov.in/" target="_blank" rel="noopener">Commission portal</a></div></div>
+    <div class="role-card"><div class="role">Goa State Commission for Protection of Child Rights</div><div class="name">Chairperson / members — live register</div><div class="meta"><a href="https://gscpcr.goa.gov.in/" target="_blank" rel="noopener">gscpcr.goa.gov.in</a></div></div>
+    <div class="role-card"><div class="role">Accountant General, Goa (CAG)</div><div class="name">Indian Audit &amp; Accounts Service</div><div class="meta"><a href="https://cag.gov.in/ag/goa/en" target="_blank" rel="noopener">cag.gov.in/ag/goa</a></div></div>
+    <div class="role-card"><div class="role">State Finance Commission / devolution</div><div class="name">Finance Department / notification-based</div><div class="meta"><a href="https://www.goa.gov.in/department/finance/" target="_blank" rel="noopener">Finance Department</a></div></div>
+  </div>
+  <p class="src">Sources: https://gpsc.goa.gov.in/ · https://sec.goa.gov.in/ · https://ceogoa.nic.in/ · http://www.gsic.goa.gov.in/ · https://goawomenscommission.gov.in/ · https://gscpcr.goa.gov.in/ · https://cag.gov.in/ag/goa/en · Lokayukta/SHRC appointment-vacancy reports verified 24-May-2026.</p>
+<!-- END: BODIES -->
+
+</section>
+
+<!-- =========================== SCOPE MEMO =========================== -->
+<section id="scope" class="lens-section">
+<!-- BEGIN: SCOPE -->
+  <h3 class="grp-h">The math</h3>
+  <table class="goa">
+    <thead><tr><th>Layer</th><th class="r">Office-holders</th><th>In-HTML?</th><th>Drill deeper</th></tr></thead>
+    <tbody>
+      <tr><td>Union ministers from Goa</td><td class="r">1</td><td>✅ inline</td><td><a href="#centre">↑ See Centre lens</a> · <a href="https://www.pmindia.gov.in/en/the-union-council-of-ministers/" target="_blank" rel="noopener">PM India</a></td></tr>
+      <tr><td>Lok Sabha MPs</td><td class="r">2</td><td>✅ inline</td><td><a href="#centre">↑ See Centre lens</a> · <a href="https://sansad.in/ls" target="_blank" rel="noopener">sansad.in/ls</a></td></tr>
+      <tr><td>Rajya Sabha MPs</td><td class="r">1</td><td>✅ inline</td><td><a href="#centre">↑ See Centre lens</a> · <a href="https://sansad.in/rs/member" target="_blank" rel="noopener">sansad.in/rs/member</a></td></tr>
+      <tr><td>State council of ministers</td><td class="r">11</td><td>✅ inline</td><td><a href="#exec">↑ See Executive lens</a> · <a href="https://www.goavidhansabha.gov.in/council-of-ministers.php" target="_blank" rel="noopener">Assembly council page</a></td></tr>
+      <tr><td>MLAs</td><td class="r">40</td><td>⚠ tally only</td><td><a href="#leg">↑ See Legislature lens</a> · <a href="https://www.goavidhansabha.gov.in/mlas.php" target="_blank" rel="noopener">Assembly members</a></td></tr>
+      <tr><td>MLCs</td><td class="r">0</td><td>—</td><td>No Vidhan Parishad in Goa</td></tr>
+      <tr><td>Goa Bench HC judges</td><td class="r">2 rostered</td><td>✅ inline snapshot</td><td><a href="https://bombayhighcourt.gov.in/bhc/sitting-list" target="_blank" rel="noopener">Bombay HC sitting lists</a></td></tr>
+      <tr><td>District officers (Collector+SP+ZP chair)</td><td class="r">~6</td><td>✅ / ⛓ hybrid</td><td><a href="#dist">↑ See District lens</a> · district Who's Who pages</td></tr>
+      <tr><td>Sub-divisional officers</td><td class="r">~13</td><td>⛓ link</td><td>North/South Goa Who's Who pages</td></tr>
+      <tr><td>Blocks / BDOs / Panchayat Samitis</td><td class="r">12</td><td>⚠ aggregate</td><td><a href="https://panchayatsgoa.gov.in/" target="_blank" rel="noopener">Directorate of Panchayats</a></td></tr>
+      <tr><td>Gram Panchayat sarpanches</td><td class="r">191</td><td>⚠ aggregate + link</td><td><a href="https://sec.goa.gov.in/local-bodies-statistics/" target="_blank" rel="noopener">SEC local-body statistics</a></td></tr>
+      <tr><td>GP ward members</td><td class="r">1,561</td><td>⛓ link</td><td><a href="https://lgdirectory.gov.in/" target="_blank" rel="noopener">LGD</a> · <a href="https://sec.goa.gov.in/" target="_blank" rel="noopener">SEC Goa</a></td></tr>
+      <tr><td>ZP / Panchayat Samiti members</td><td class="r">live</td><td>⛓ link</td><td>SEC and Directorate registers</td></tr>
+      <tr><td>Municipal chairpersons / councillors</td><td class="r">14 ULBs + councillors</td><td>⛓ link</td><td>DMA / SEC registers</td></tr>
+      <tr><td><strong>Total elected reps</strong></td><td class="r"><strong>~1.85k+</strong></td><td>hybrid</td><td><a href="https://lgdirectory.gov.in/" target="_blank" rel="noopener">Master directory</a></td></tr>
+    </tbody>
+    <caption>Decision rule: inline if names are few and stable; link out for volatile local rosters.</caption>
+  </table>
+
+  <h3 class="grp-h">Recommendation</h3>
+  <div class="callout ok"><strong>Goa fits a hybrid page well.</strong> The top chain (Union, MPs, Cabinet, Assembly officers, two districts and statutory bodies) is small enough to audit inline. The 191 GP and 1,561 ward-member layer should remain linked to SEC/LGD/eGramSwaraj because by-elections and local vacancies change faster than this static page.</div>
+
+  <h3 class="grp-h">Suggested next iterations</h3>
+  <ol style="font-size:0.88rem;line-height:1.55;">
+    <li><strong>Two district pages</strong> — one for North Goa and one for South Goa with live Collectorate and police chains.</li>
+    <li><strong>PRI scraper</strong> — pull SEC/LGD/eGramSwaraj lists into small generated tables, refreshed by election cycle.</li>
+    <li><strong>Constituency resolver</strong> — map village/ward to GP → ZP → Assembly → Lok Sabha.</li>
+  </ol>
+  <p class="src">Sources: all sources cited in Centre, Executive, Legislature, Judiciary, District, PRI and Bodies lenses; verified 24-May-2026.</p>
+<!-- END: SCOPE -->
+
+</section>
+
+
+</main>
+
+<footer>
+  Goa Shasan · governance transparency experiment · verified 24-May-2026 · skinned with the <code>bharat-sanchar-aesthetic</code> skill · zero external dependencies · data sources cited inline · live officials of district/PRI level are intentionally not embedded — see <a href="#scope">Scope memo</a>.
+</footer>
+
+<!-- JS 1: expand/collapse-all within a lens -->
+<script>
+(function(){
+  document.addEventListener('click', function(e){
+    var btn = e.target.closest('.ec-btn'); if(!btn) return;
+    e.preventDefault();
+    var root = document.getElementById(btn.getAttribute('data-scope')); if(!root) return;
+    var openVal = btn.getAttribute('data-ec') === 'expand';
+    root.querySelectorAll('details').forEach(function(d){ if(d!==root) d.open = openVal; });
+    if(root.tagName === 'DETAILS' && openVal) root.open = true;
+  });
+})();
+</script>
+
+<!-- JS 2: close mobile hamburger after a nav link tap -->
+<script>
+(function(){
+  var toggle = document.getElementById('navtoggle');
+  var nav = document.querySelector('header.topbar nav.lens');
+  if(!toggle || !nav) return;
+  nav.addEventListener('click', function(e){
+    var a = e.target.closest('a'); if(!a) return;
+    var href = a.getAttribute('href'); if(!href) return;
+    toggle.checked = false;
+    if(href.charAt(0) === '#' && href.length > 1){
+      requestAnimationFrame(function(){
+        requestAnimationFrame(function(){
+          var el = document.getElementById(href.slice(1)); if(!el) return;
+          var topbar = document.querySelector('header.topbar');
+          var offset = topbar ? topbar.getBoundingClientRect().height : 0;
+          var y = el.getBoundingClientRect().top + window.pageYOffset - offset - 4;
+          window.scrollTo({top: Math.max(0, y), behavior: 'auto'});
+        });
+      });
+    }
+  });
+})();
+</script>
+</body>
+</html>

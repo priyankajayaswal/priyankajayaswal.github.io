@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lakshadweep Shasan — Governance Personnel Catalogue (Centre → Ward)</title>
+<meta name="description" content="Catalogue of Lakshadweep (UT)'s governance chain — Union representation, Administrator, Kerala High Court jurisdiction, one district, and Dweep Panchayats.">
+<style>
+  :root {
+    --bg:#f7f7f5; --card:#fff; --ink:#1a1a1a; --muted:#5b5b5b;
+    --navy:#0B1B3F; --saffron:#FF9933; --green:#138808; --red:#c0392b;
+    --border:#e3e3df; --tag:#eef0f7;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-padding-top:115px;scroll-behavior:smooth;}
+  body{margin:0;font-family:'Segoe UI',Tahoma,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5;font-size:14px;}
+  a{color:var(--navy);}
+
+  /* ===== TOPBAR ===== */
+  header.topbar{background:linear-gradient(135deg,var(--saffron) 0%,#fff 50%,var(--green) 100%);padding:8px 20px 6px;border-bottom:2px solid var(--navy);position:sticky;top:0;z-index:10;text-align:center;}
+  header.topbar > *{text-align:left;}
+  header.topbar nav.lens{justify-content:center;display:inline-flex;}
+  .brand-row{display:flex;flex-direction:row;align-items:baseline;justify-content:center;gap:10px;flex-wrap:wrap;line-height:1.05;margin-bottom:4px;}
+  .brand{display:inline-block;font-size:1.2rem;font-weight:700;color:var(--navy);text-decoration:none;}
+  .brand:hover{color:var(--navy);text-decoration:none;}
+  .brand .hi{font-family:'Mangal','Nirmala UI',serif;margin-right:6px;color:var(--red);}
+  .tagline{font-size:0.65rem;color:var(--muted);font-weight:500;letter-spacing:0.3px;}
+  nav.lens{margin-top:4px;display:flex;flex-wrap:wrap;gap:2px;align-items:stretch;}
+  nav.lens > .lens-item{position:relative;}
+  nav.lens > .lens-item > a, nav.lens > a{display:inline-block;padding:4px 11px;background:rgba(255,255,255,0.75);border:1.5px solid var(--navy);color:var(--navy);text-decoration:none;border-radius:6px;font-weight:600;font-size:0.8rem;}
+  nav.lens > .lens-item > a:hover, nav.lens > a:hover, nav.lens > .lens-item:hover > a{background:var(--navy);color:#fff;}
+  nav.lens .caret{font-size:0.7rem;margin-left:4px;opacity:0.7;}
+
+  /* ===== MEGA-MENU DROPDOWN ===== */
+  .lens-drop{position:absolute;top:100%;left:0;display:none;background:var(--card);border:1.5px solid var(--navy);border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,0.25);padding:8px;min-width:280px;max-width:520px;max-height:60vh;overflow-y:auto;z-index:20;margin-top:0;}
+  .lens-item:hover .lens-drop, .lens-item:focus-within .lens-drop{display:block;}
+  .lens-item::after{content:"";position:absolute;top:100%;left:0;right:0;height:10px;display:none;}
+  .lens-item:hover::after, .lens-item:focus-within::after{display:block;}
+  .lens-drop .ld-head{font-size:0.7rem;text-transform:uppercase;letter-spacing:0.5px;color:var(--muted);padding:6px 8px;border-bottom:1px solid var(--border);margin-bottom:4px;font-weight:700;display:flex;justify-content:space-between;align-items:center;}
+  .lens-drop .ld-head a{font-size:0.72rem;color:var(--navy);text-decoration:none;font-weight:600;}
+  .lens-drop .ld-head a:hover{text-decoration:underline;}
+  .lens-drop .ld-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:2px;}
+  .lens-drop .ld-grid a{display:flex;justify-content:space-between;align-items:center;gap:6px;padding:5px 9px;font-size:0.8rem;color:var(--ink);text-decoration:none;border-radius:4px;}
+  .lens-drop .ld-grid a:hover{background:var(--tag);color:var(--navy);}
+  .lens-drop .ld-grid a .c{font-size:0.65rem;color:var(--muted);background:var(--tag);padding:1px 6px;border-radius:999px;font-weight:600;}
+  @media (max-width:700px){
+    .lens-drop{position:static;display:block;max-height:none;margin-top:0;border-radius:0;border:none;border-top:1px dashed var(--border);box-shadow:none;}
+  }
+
+  .help{padding:8px 20px;background:#fff7e8;border-bottom:1px solid var(--border);font-size:0.82rem;color:#5a3a00;}
+
+  main{max-width:1180px;margin:0 auto;padding:14px 20px 50px;}
+
+  /* ===== LENS ROUTING via :target ===== */
+  .lens-section{display:none;}
+  .lens-section:target, .lens-section:has(:target){display:block;}
+  body:not(:has(:target)) #h{display:block;}
+
+  details:target, details:has(:target){scroll-margin-top:120px;}
+  details:target > summary, details:has(:target) > summary{background:linear-gradient(90deg,rgba(255,153,51,0.18) 0%,transparent 100%);}
+
+  /* ===== JUMPBAR ===== */
+  .jumpbar{position:sticky;top:0;z-index:8;background:var(--card);border-bottom:1px solid var(--border);padding:6px 8px;margin:-14px -20px 14px;display:flex;gap:4px;overflow-x:auto;white-space:nowrap;}
+  .jumpbar a{flex:0 0 auto;font-size:0.72rem;padding:3px 9px;color:var(--ink);text-decoration:none;border-radius:999px;background:var(--tag);font-weight:600;}
+  .jumpbar a:hover{background:var(--navy);color:#fff;}
+  .jumpbar .jb-label{flex:0 0 auto;font-size:0.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;padding:4px 8px 4px 0;font-weight:700;}
+
+  /* ===== GOV INTRO + FLOWCHART BLOCKS ===== */
+  .gov-intro{background:linear-gradient(135deg,#fff7e8 0%,#e6f0ff 100%);border-left:4px solid var(--saffron);padding:10px 14px;border-radius:6px;margin:8px 0 14px;font-size:0.88rem;line-height:1.55;}
+  .gov-block{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin:14px 0;}
+  .gov-block h3{margin:0 0 6px;color:var(--navy);font-size:1.05rem;display:flex;align-items:center;gap:8px;}
+  .gov-block .lede{font-size:0.85rem;color:var(--muted);margin:0 0 12px;line-height:1.5;}
+  .gov-block svg{display:block;width:100%;height:auto;max-width:100%;background:transparent;}
+  .gov-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(360px,1fr));gap:12px;}
+  .gov-grid .gov-block{margin:0;}
+  .gov-notes{margin-top:10px;font-size:0.82rem;color:var(--muted);line-height:1.5;}
+  .gov-notes strong{color:var(--ink);}
+  .gov-legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;font-size:0.72rem;color:var(--muted);}
+  .gov-legend span{display:inline-flex;align-items:center;gap:5px;}
+  .gov-legend .sw{width:14px;height:14px;border-radius:3px;display:inline-block;border:1px solid var(--border);}
+  .gb-const{fill:#fde7d8;stroke:#c0392b;stroke-width:1.5;}
+  .gb-exec{fill:#e6f0ff;stroke:#0B1B3F;stroke-width:1.5;}
+  .gb-legis{fill:#fff7e8;stroke:#FF9933;stroke-width:1.5;}
+  .gb-judic{fill:#f5f0ff;stroke:#8338EC;stroke-width:1.5;}
+  .gb-state{fill:#e6f7e9;stroke:#138808;stroke-width:1.5;}
+  .gb-people{fill:#fde7d8;stroke:#c0392b;stroke-width:1.5;}
+  .gb-regu{fill:#e6f5f2;stroke:#06A77D;stroke-width:1.5;}
+
+  /* ===== INSIGHT (SWOT + radar) ===== */
+  .insight{background:linear-gradient(135deg,#f8fafc 0%,#fff7e8 100%);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin:8px 12px 12px;}
+  .insight-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:14px;align-items:start;}
+  @media (max-width:760px){.insight-grid{grid-template-columns:1fr;}}
+  .insight-meta{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px;}
+  .insight-meta .im{font-size:0.72rem;background:var(--tag);padding:2px 8px;border-radius:999px;color:var(--ink);}
+  .insight-meta .im strong{color:var(--navy);}
+  .insight h4{margin:6px 0 4px;color:var(--navy);font-size:0.85rem;}
+  .insight p.how{margin:0 0 8px;font-size:0.82rem;line-height:1.5;}
+  .swot{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+  .swot > div{background:var(--card);border:1px solid var(--border);border-left:3px solid;border-radius:6px;padding:8px 10px;}
+  .swot .str{border-left-color:var(--green);}
+  .swot .wkn{border-left-color:var(--red);}
+  .swot .pot{border-left-color:var(--saffron);grid-column:1/-1;}
+  .swot h5{margin:0 0 4px;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.4px;}
+  .swot .str h5{color:var(--green);}
+  .swot .wkn h5{color:var(--red);}
+  .swot .pot h5{color:#7a3a00;}
+  .swot ul{margin:0;padding-left:18px;font-size:0.78rem;line-height:1.45;}
+  .insight svg.radar{width:100%;height:auto;max-width:280px;display:block;margin:0 auto;}
+  .scores-label{font-size:0.7rem;color:var(--muted);text-align:center;margin-top:4px;}
+
+  /* ===== LENS-OVERVIEW (bar chart) ===== */
+  .lens-overview{background:linear-gradient(135deg,#eef2fb 0%,#fff7e8 100%);border:1px solid var(--border);border-radius:10px;padding:14px 18px;margin:8px 0 16px;}
+  .lens-overview .lo-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:18px;align-items:center;}
+  @media (max-width:780px){.lens-overview .lo-grid{grid-template-columns:1fr;}}
+  .lens-overview h3{margin:0 0 6px;color:var(--navy);font-size:0.95rem;}
+  .lens-overview p{margin:0 0 6px;font-size:0.85rem;line-height:1.5;}
+  .lens-overview .lo-rel{margin-top:8px;padding-top:6px;border-top:1px dashed var(--border);font-size:0.78rem;color:var(--muted);}
+  .lens-overview .lo-chart{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:10px;}
+  .lens-overview .lo-chart-title{font-size:0.72rem;text-transform:uppercase;letter-spacing:0.5px;color:var(--muted);font-weight:700;margin-bottom:4px;text-align:center;}
+
+  /* ===== RELMAP ===== */
+  .relmap{background:linear-gradient(135deg,#eef2fb 0%,#e6f7e9 100%);border:1px solid var(--border);border-radius:10px;padding:16px 20px;margin:14px 0;}
+  .relmap h2{margin:0 0 8px;color:var(--navy);}
+  .relmap p{font-size:0.88rem;line-height:1.55;margin:0 0 10px;}
+  .relmap svg.relflow{width:100%;height:auto;max-width:860px;display:block;margin:6px auto;}
+  .relmap svg.relflow text{fill:var(--ink);}
+
+  /* ===== EXPAND/COLLAPSE TOGGLE ===== */
+  .ec-toggle{display:flex;gap:8px;margin:6px 0 12px;align-items:center;flex-wrap:wrap;}
+  .ec-btn{cursor:pointer;font-size:0.78rem;padding:4px 10px;background:var(--card);border:1px solid var(--border);border-radius:6px;color:var(--navy);font-weight:600;font-family:inherit;}
+  .ec-btn:hover{background:var(--navy);color:#fff;}
+  .ec-hint{font-size:0.72rem;color:var(--muted);}
+
+  /* ===== HEADINGS / KPI / DIR ===== */
+  h1{color:var(--navy);font-size:1.3rem;margin:14px 0 6px;border-left:4px solid var(--red);padding-left:10px;}
+  h2{color:var(--navy);font-size:1.05rem;margin:18px 0 8px;}
+  .kpis{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px;margin:10px 0;}
+  @media (max-width:900px){ .kpis{grid-template-columns:repeat(auto-fit,minmax(140px,1fr));} }
+  .kpi{background:var(--card);border:1px solid var(--border);border-left:3px solid var(--red);border-radius:6px;padding:8px 12px;min-height:60px;display:flex;flex-direction:column;justify-content:center;}
+  .kpi .v{font-size:1.15rem;font-weight:700;color:var(--navy);}
+  .kpi .l{font-size:0.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.4px;}
+
+  .dir-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:6px;margin:8px 0 18px;}
+  .dir-tile{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:8px 12px;text-decoration:none;color:var(--ink);font-size:0.85rem;display:flex;justify-content:space-between;align-items:center;gap:8px;}
+  .dir-tile:hover{border-color:var(--navy);background:var(--tag);}
+  .dir-tile .dt-c{font-size:0.7rem;color:var(--muted);background:var(--tag);padding:1px 7px;border-radius:999px;}
+
+  /* ===== DETAILS / BRANCHES / CARDS ===== */
+  details{background:var(--card);border:1px solid var(--border);border-radius:8px;margin:8px 0;}
+  details > summary{cursor:pointer;padding:10px 14px;font-weight:600;color:var(--navy);list-style:none;display:flex;justify-content:space-between;align-items:center;gap:8px;}
+  details > summary::-webkit-details-marker{display:none;}
+  details > summary::before{content:"▸";color:var(--muted);font-size:0.85rem;margin-right:6px;}
+  details[open] > summary::before{content:"▾";}
+  details > summary .ct{font-size:0.72rem;color:var(--muted);background:var(--tag);padding:2px 9px;border-radius:999px;font-weight:600;}
+  details details{background:transparent;border:none;border-left:2px solid var(--border);margin:6px 0 6px 8px;border-radius:0;}
+  details details > summary{padding:6px 10px;font-weight:500;font-size:0.88rem;color:var(--ink);}
+  details details > summary .ct{background:#fff3e0;color:#7a3a00;}
+  .blurb{font-size:0.78rem;color:var(--muted);margin:0 14px 6px;}
+
+  .state-group:target, .min-group:target, .body-group:target{outline:2px solid var(--saffron);outline-offset:4px;border-radius:8px;}
+  .su-type{display:inline-block;font-size:0.65rem;font-weight:700;padding:2px 8px;border-radius:999px;margin-left:8px;letter-spacing:0.3px;text-transform:uppercase;}
+  .su-type.st{background:rgba(19,136,8,0.14);color:var(--green);border:1px solid rgba(19,136,8,0.45);}
+  .su-type.ut{background:rgba(255,153,51,0.14);color:#a55300;border:1px solid rgba(255,153,51,0.5);}
+
+  .card-list{padding:6px 10px 10px;display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:8px;align-items:start;}
+  .card{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:10px 12px;}
+  .card h3{margin:0 0 4px;font-size:0.95rem;line-height:1.3;}
+  .card h3 a{color:var(--ink);text-decoration:none;}
+  .card h3 a:hover{color:var(--navy);text-decoration:underline;}
+  .card .host{font-size:0.72rem;color:var(--muted);margin-bottom:6px;display:flex;flex-wrap:wrap;gap:6px;align-items:center;}
+  .card .hn{font-family:'Consolas','Monaco',monospace;}
+  .badge{font-size:0.65rem;padding:1px 6px;border-radius:4px;font-weight:600;}
+  .badge.official{background:#e6f7e9;color:var(--green);}
+  .badge.fresh{background:#e6f0ff;color:var(--navy);}
+  .badge.stale{background:#fdecea;color:var(--red);}
+  .lv{font-size:0.7rem;color:var(--muted);}
+  .desc{font-size:0.82rem;color:var(--muted);margin:4px 0;line-height:1.45;}
+  .meta{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px;}
+  .mchip{font-size:0.7rem;background:var(--tag);padding:1px 7px;border-radius:4px;color:var(--ink);}
+  .mchip.s{background:#fff3e0;color:#7a3a00;}
+  .mchip.m{background:#e6f0ff;color:var(--navy);}
+  .mchip.v{background:#f5f0ff;color:#5e35b1;}
+  .tags{display:flex;flex-wrap:wrap;gap:3px;margin-top:6px;}
+  .tag{font-size:0.65rem;background:var(--tag);padding:1px 6px;border-radius:3px;color:var(--muted);}
+  .children{margin-top:6px;background:transparent;border:none;border-left:none;}
+  .children > summary{padding:4px 0;font-size:0.78rem;color:var(--muted);font-weight:500;}
+  .children ul{margin:4px 0 0 18px;padding:0;font-size:0.78rem;}
+  .children li{margin-bottom:3px;}
+
+  footer{max-width:1180px;margin:30px auto 20px;padding:14px 20px;border-top:1px solid var(--border);font-size:0.78rem;color:var(--muted);}
+
+  /* ===== NIGHT-MODE TOGGLE (pure CSS, no JS) ===== */
+  #nightmode{position:fixed;top:0;left:0;opacity:0;pointer-events:none;width:0;height:0;clip:rect(0,0,0,0);}
+  .nm-toggle{position:absolute;top:8px;right:14px;z-index:11;display:inline-flex;align-items:center;gap:5px;cursor:pointer;font-size:0.72rem;font-weight:600;padding:4px 10px;background:rgba(255,255,255,0.85);border:1.5px solid var(--navy);color:var(--navy);border-radius:999px;user-select:none;line-height:1;}
+  .nm-toggle:hover{background:var(--navy);color:#fff;}
+  .nm-toggle .nm-ico-dark,.nm-toggle .nm-lbl-dark{display:inline;}
+  .nm-toggle .nm-ico-light,.nm-toggle .nm-lbl-light{display:none;}
+  @media (max-width:520px){ .nm-toggle .nm-lbl-dark,.nm-toggle .nm-lbl-light{display:none;} .nm-toggle{padding:4px 8px;} }
+
+  :root:has(#nightmode:checked){
+    --bg:#0e0f12; --card:#16181d; --ink:#e6e6e6; --muted:#9aa0a8;
+    --border:#262932; --tag:#1f232b; --navy:#7aa2ff;
+  }
+  :root:has(#nightmode:checked) header.topbar{background:linear-gradient(135deg,#5d3a14 0%,#1a1a1a 50%,#0f3a1c 100%);}
+  :root:has(#nightmode:checked) nav.lens > .lens-item > a,
+  :root:has(#nightmode:checked) nav.lens > a{background:rgba(255,255,255,0.08);}
+  :root:has(#nightmode:checked) .nm-toggle{background:rgba(255,255,255,0.08);}
+  :root:has(#nightmode:checked) .nm-toggle .nm-ico-dark,
+  :root:has(#nightmode:checked) .nm-toggle .nm-lbl-dark{display:none;}
+  :root:has(#nightmode:checked) .nm-toggle .nm-ico-light,
+  :root:has(#nightmode:checked) .nm-toggle .nm-lbl-light{display:inline;}
+  :root:has(#nightmode:checked) .help{background:#2a2316;color:#d9b779;}
+  :root:has(#nightmode:checked) .gov-intro{background:linear-gradient(135deg,#2a2316 0%,#172238 100%);}
+  :root:has(#nightmode:checked) .insight{background:linear-gradient(135deg,#16181d 0%,#2a2316 100%);}
+  :root:has(#nightmode:checked) .lens-overview{background:linear-gradient(135deg,#11192a 0%,#2a2316 100%);}
+  :root:has(#nightmode:checked) .relmap{background:linear-gradient(135deg,#11192a 0%,#0e2a14 100%);}
+  :root:has(#nightmode:checked) .badge.official{background:#0e2a14;color:#9fd1a8;}
+  :root:has(#nightmode:checked) .badge.fresh{background:#172238;color:#8aa6e2;}
+  :root:has(#nightmode:checked) .badge.stale{background:#3a1614;color:#e29a8a;}
+  :root:has(#nightmode:checked) .mchip.s{background:#3a2a14;color:#d9b779;}
+  :root:has(#nightmode:checked) .mchip.m{background:#172238;color:#8aa6e2;}
+  :root:has(#nightmode:checked) .mchip.v{background:#241a3a;color:#b39ad9;}
+  :root:has(#nightmode:checked) details details > summary .ct{background:#3a2a14;color:#d9b779;}
+  :root:has(#nightmode:checked) .swot .pot h5{color:#d9b779;}
+  :root:has(#nightmode:checked) .su-type.ut{color:#ffb866;}
+  :root:has(#nightmode:checked) .gb-const{fill:#3a2014;stroke:#e29a8a;}
+  :root:has(#nightmode:checked) .gb-exec{fill:#152238;stroke:#8aa6e2;}
+  :root:has(#nightmode:checked) .gb-legis{fill:#2a2316;stroke:#d9b779;}
+  :root:has(#nightmode:checked) .gb-judic{fill:#241a3a;stroke:#b39ad9;}
+  :root:has(#nightmode:checked) .gb-state{fill:#0e2a14;stroke:#9fd1a8;}
+  :root:has(#nightmode:checked) .gb-people{fill:#3a2014;stroke:#e29a8a;}
+  :root:has(#nightmode:checked) .gb-regu{fill:#0f2a24;stroke:#7fd1bf;}
+
+  /* ===== RESPONSIVE + HAMBURGER ===== */
+  img,iframe,svg{max-width:100%;height:auto;}
+  #navtoggle{position:fixed;top:0;left:0;opacity:0;pointer-events:none;width:0;height:0;clip:rect(0,0,0,0);}
+  .nav-burger{display:none;}
+  .nav-burger .burger-close{display:none;}
+  :root:has(#navtoggle:checked) .nav-burger .burger-open{display:none;}
+  :root:has(#navtoggle:checked) .nav-burger .burger-close{display:inline;}
+
+  @media (max-width:768px){
+    html{scroll-padding-top:110px;}
+    body{font-size:14px;overflow-x:hidden;}
+    header.topbar{padding:6px 8px;text-align:left;display:grid;grid-template-columns:auto 1fr auto;grid-template-areas:"burger brand toggle";gap:6px 8px;align-items:center;position:sticky;}
+    .nav-burger{grid-area:burger;position:static;display:inline-flex;align-items:center;justify-content:center;font-size:1rem;line-height:1;padding:6px 10px;min-width:40px;background:rgba(255,255,255,0.85);border:1.5px solid var(--navy);color:var(--navy);border-radius:8px;cursor:pointer;user-select:none;font-weight:700;}
+    :root:has(#nightmode:checked) .nav-burger{background:rgba(255,255,255,0.08);}
+    .nm-toggle{grid-area:toggle;position:static;top:auto;right:auto;}
+    .brand-row{grid-area:brand;justify-content:flex-start;gap:6px;margin-bottom:0;line-height:1.1;min-width:0;}
+    .brand{font-size:1.05rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+    .tagline{display:none;}
+    header.topbar nav.lens{display:none;}
+    :root:has(#navtoggle:checked) header.topbar nav.lens{display:flex;flex-direction:column;align-items:stretch;position:absolute;left:0;right:0;top:100%;width:100%;max-height:75vh;overflow-y:auto;flex-wrap:nowrap;gap:4px;padding:8px 10px 10px;margin:0;background:var(--card);border-top:1px solid var(--border);border-bottom:1px solid var(--border);box-shadow:0 10px 24px rgba(0,0,0,0.35);z-index:30;}
+    :root:has(#navtoggle:checked) header.topbar nav.lens > .lens-item,
+    :root:has(#navtoggle:checked) header.topbar nav.lens > a{width:100%;min-width:0;flex:0 0 auto;}
+    :root:has(#navtoggle:checked) header.topbar nav.lens > .lens-item > a,
+    :root:has(#navtoggle:checked) header.topbar nav.lens > a{display:block;width:100%;text-align:left;padding:9px 12px;font-size:0.85rem;}
+    .lens-drop,.lens-item:focus-within .lens-drop,.lens-item:hover .lens-drop{display:none !important;}
+    nav.lens .caret{display:none;}
+    main{padding:12px 14px 42px;max-width:100%;}
+    footer{padding:12px 14px;max-width:100%;}
+    .help{padding:8px 14px;font-size:0.78rem;}
+    .jumpbar{margin:-12px -14px 12px;padding:6px 10px;}
+    .kpis{grid-template-columns:repeat(auto-fit,minmax(130px,1fr));}
+    .dir-grid{grid-template-columns:repeat(auto-fit,minmax(150px,1fr));}
+    .card-list{grid-template-columns:1fr;padding:6px 8px 10px;}
+    .gov-grid,.insight-grid,.lens-overview .lo-grid{grid-template-columns:1fr;}
+    .ec-btn{min-height:40px;padding:8px 12px;}
+    .nm-toggle{font-size:0.7rem;padding:4px 8px;}
+  }
+  @media (max-width:480px){
+    html{scroll-padding-top:96px;}
+    .brand{font-size:1rem;}
+    h1{font-size:1.15rem;}
+    h2{font-size:1rem;}
+    .dir-grid,.kpis,.swot{grid-template-columns:1fr;}
+    .card{padding:9px 10px;}
+  }
+
+  /* ===== BIHAR EXTENSIONS — party pills · tables · branch details ===== */
+  :root{
+    --bjp:#FF9933; --jdu:#138808; --rjd:#2E7D32; --inc:#1E88E5;
+    --ljprv:#7C3AED; --hams:#0EA5E9; --rlm:#8B5CF6; --cpiml:#DC2626;
+    --aimim:#0F766E; --ind:#6B7280;
+  }
+  .pill{display:inline-block;padding:1px 7px;border-radius:999px;font-size:0.65rem;font-weight:700;color:#fff;letter-spacing:0.3px;margin-left:4px;vertical-align:middle;}
+  .p-BJP{background:var(--bjp);color:#1a1a1a;}
+  .p-JDU{background:var(--jdu);} .p-RJD{background:var(--rjd);} .p-INC{background:var(--inc);}
+  .p-LJPRV{background:var(--ljprv);} .p-HAMS{background:var(--hams);} .p-RLM{background:var(--rlm);}
+  .p-CPIML{background:var(--cpiml);} .p-AIMIM{background:var(--aimim);} .p-IND{background:var(--ind);}
+  .legend{display:flex;flex-wrap:wrap;gap:8px;font-size:0.72rem;margin:8px 0 14px;color:var(--muted);}
+  .legend > span{display:inline-flex;align-items:center;gap:2px;}
+
+  table.bihar{width:100%;border-collapse:collapse;font-size:0.84rem;background:var(--card);border:1px solid var(--border);border-radius:8px;overflow:hidden;margin:8px 0 14px;}
+  table.bihar th, table.bihar td{padding:7px 10px;text-align:left;border-bottom:1px solid var(--border);}
+  table.bihar th{background:var(--tag);font-weight:700;color:var(--navy);font-size:0.74rem;text-transform:uppercase;letter-spacing:0.4px;}
+  table.bihar tr:last-child td{border-bottom:none;}
+  table.bihar td.r{text-align:right;font-variant-numeric:tabular-nums;}
+  table.bihar caption{caption-side:bottom;font-size:0.72rem;color:var(--muted);padding-top:6px;text-align:left;}
+  :root:has(#nightmode:checked) table.bihar th{background:#1f232b;color:#9ab3ff;}
+
+  details.branch{background:var(--card);border:1px solid var(--border);border-radius:8px;margin:10px 0;}
+  details.branch > summary{padding:10px 14px;cursor:pointer;font-weight:700;color:var(--navy);font-size:0.95rem;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:8px;}
+  details.branch > summary::-webkit-details-marker{display:none;}
+  details.branch > summary::before{content:"▸ ";color:var(--saffron);}
+  details.branch[open] > summary::before{content:"▾ ";}
+  details.branch > .b-body{padding:6px 14px 14px;}
+  details.branch > table.bihar{margin:0 14px 14px;width:calc(100% - 28px);}
+  details.branch p.verify{font-size:0.7rem;color:var(--muted);font-style:italic;padding:0 14px 10px;margin:0;}
+
+  .role-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:10px 12px;font-size:0.85rem;}
+  .role-card .role{font-size:0.68rem;text-transform:uppercase;letter-spacing:0.5px;color:var(--muted);font-weight:700;}
+  .role-card .name{font-weight:700;color:var(--ink);margin:2px 0;}
+  .role-card .meta{font-size:0.75rem;color:var(--muted);}
+  .role-card .meta a{font-size:0.75rem;}
+  .role-grid{display:grid;gap:8px;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));margin:6px 0 12px;}
+
+  .callout{background:#fff7e8;border-left:4px solid var(--saffron);padding:10px 14px;border-radius:6px;margin:14px 0;font-size:0.86rem;color:#5a3a00;}
+  .callout.warn{background:#fdecea;border-left-color:var(--red);color:#7a1b13;}
+  .callout.ok{background:#e8f5e9;border-left-color:var(--green);color:#1b4d20;}
+  :root:has(#nightmode:checked) .callout{background:#2a2316;color:#d9b779;}
+  :root:has(#nightmode:checked) .callout.warn{background:#2a1715;color:#e8a097;}
+  :root:has(#nightmode:checked) .callout.ok{background:#142a17;color:#a7d9aa;}
+
+  h3.grp-h{font-size:1rem;color:var(--navy);margin:18px 0 6px;border-left:4px solid var(--green);padding-left:8px;}
+  .sec-sub{color:var(--muted);font-size:0.86rem;margin:0 0 14px;}
+  .kpi .sub{font-size:0.7rem;color:var(--muted);margin-top:2px;line-height:1.3;}
+
+  /* ===== PRINT ===== */
+  @media print{
+    header.topbar,.help,.jumpbar,nav.lens,.lens-drop,footer{display:none !important;}
+    .lens-section,.lens-section:target{display:block !important;}
+    details,details[open]{display:block !important;}
+    details > *{display:revert !important;}
+    details > summary{font-weight:700;color:#000;padding:6px 0;border-bottom:1px solid #999;cursor:default;}
+    details > summary::before{content:"" !important;}
+    .card{break-inside:avoid;border:1px solid #ccc;}
+    .card a[href]::after{content:" — " attr(href);font-size:0.7em;color:#555;}
+    body{background:#fff;color:#000;font-size:11pt;}
+    a{color:#000;text-decoration:none;}
+  }
+</style>
+</head>
+<body>
+
+<!-- Hidden checkboxes drive night-mode and mobile nav with no JS -->
+<input type="checkbox" id="nightmode" aria-label="Toggle night mode" tabindex="-1">
+<input type="checkbox" id="navtoggle" aria-label="Toggle navigation menu" tabindex="-1">
+
+<header class="topbar">
+  <label for="navtoggle" class="nav-burger" title="Menu"><span class="burger-open">☰</span><span class="burger-close">✕</span></label>
+  <label for="nightmode" class="nm-toggle" title="Toggle night mode (no JavaScript)">
+    <span class="nm-ico-dark" aria-hidden="true">🌙</span><span class="nm-lbl-dark">Night</span>
+    <span class="nm-ico-light" aria-hidden="true">☀</span><span class="nm-lbl-light">Day</span>
+  </label>
+  <div class="brand-row">
+    <a class="brand" href="#h"><span class="hi">ल</span>Lakshadweep Shasan</a>
+    <span class="tagline">💡 Transparency experiment · Centre → Administrator → District → Dweep Panchayat → Ward</span>
+  </div>
+  <nav class="lens">
+    <a href="#h">🏠 Home</a>
+    <a href="#how">🛠 How it works</a>
+    <a href="#centre">🇮🇳 Lakshadweep @ Centre</a>
+    <a href="#exec">🏛 Administrator</a>
+    <a href="#leg">🗳 No Legislature</a>
+    <a href="#judic">⚖ Judiciary</a>
+    <a href="#dist">📍 District (1)</a>
+    <a href="#pri">🌾 Dweep Panchayats</a>
+    <a href="#bodies">📊 Bodies</a>
+    <a href="#scope">📑 Scope memo</a>
+  </nav>
+</header>
+
+
+<main>
+
+
+
+<!-- =========================== HOME =========================== -->
+<section id="h" class="lens-section">
+  <h1>Lakshadweep (UT) Governance Chain — at a Glance</h1>
+  <p class="sec-sub">A one-district Union Territory in the Arabian Sea: no Chief Minister, no territorial legislature, and administration through the President-appointed Administrator at Kavaratti.</p>
+
+  <h2>KPI tiles — by layer</h2>
+  <div class="kpis">
+    <div class="kpi"><div class="v">1</div><div class="l">Lok Sabha MP</div><div class="sub">Single UT constituency · 2024</div></div>
+    <div class="kpi"><div class="v">0</div><div class="l">Rajya Sabha MPs</div><div class="sub">No elected Assembly college</div></div>
+    <div class="kpi"><div class="v">0</div><div class="l">MLAs / MLCs</div><div class="sub">UT without legislature</div></div>
+    <div class="kpi"><div class="v">1</div><div class="l">District</div><div class="sub">UT and district are coterminous</div></div>
+    <div class="kpi"><div class="v">10</div><div class="l">Inhabited islands</div><div class="sub">36 total islands</div></div>
+    <div class="kpi"><div class="v">10</div><div class="l">Dweep Panchayats</div><div class="sub">One per inhabited island</div></div>
+    <div class="kpi"><div class="v">1</div><div class="l">District Panchayat</div><div class="sub">Whole-of-UT elected PRI tier</div></div>
+    <div class="kpi"><div class="v">79</div><div class="l">Dweep members</div><div class="sub">Village Panchayat members</div></div>
+    <div class="kpi"><div class="v">22</div><div class="l">District members</div><div class="sub">Directly elected District Panchayat members</div></div>
+    <div class="kpi"><div class="v">32.69 km²</div><div class="l">Area</div><div class="sub">India's smallest UT by area</div></div>
+    <div class="kpi"><div class="v">~96%</div><div class="l">Muslim population</div><div class="sub">Census religion share; official profile says indigenous population is mostly Muslim</div></div>
+    <div class="kpi"><div class="v">IOR</div><div class="l">Strategic location</div><div class="sub">Arabian Sea / Indian Ocean Region</div></div>
+  </div>
+
+  <h2>Pick a lens</h2>
+  <div class="dir-grid">
+    <a class="dir-tile" href="#centre" style="border-left:3px solid var(--saffron);">🇮🇳 Union representation<span class="dt-c">1 LS</span></a>
+    <a class="dir-tile" href="#exec" style="border-left:3px solid var(--green);">🏛 Administrator track<span class="dt-c">UT</span></a>
+    <a class="dir-tile" href="#leg" style="border-left:3px solid var(--navy);">🗳 Legislature status<span class="dt-c">N/A</span></a>
+    <a class="dir-tile" href="#judic" style="border-left:3px solid #8338EC;">⚖ Judiciary<span class="dt-c">Kerala HC</span></a>
+    <a class="dir-tile" href="#dist" style="border-left:3px solid var(--red);">📍 District &amp; islands<span class="dt-c">1 / 10</span></a>
+    <a class="dir-tile" href="#pri" style="border-left:3px solid var(--green);">🌾 Panchayats<span class="dt-c">10 + 1</span></a>
+    <a class="dir-tile" href="#bodies" style="border-left:3px solid #06A77D;">📊 Bodies<span class="dt-c">links</span></a>
+    <a class="dir-tile" href="#scope" style="border-left:3px solid var(--muted);">📑 Scope memo<span class="dt-c">read</span></a>
+  </div>
+
+  <div class="legend">
+    <span><span class="pill p-INC">INC</span> Indian National Congress</span>
+    <span><span class="pill p-BJP">BJP</span> Bharatiya Janata Party</span>
+    <span><span class="pill p-IND">UT</span> Union Territory administration</span>
+  </div>
+
+  <h2>Relmap — how the chain connects</h2>
+  <div class="relmap">
+    <h2>🔗 Centre → Administrator → District → Dweep Panchayat → Ward</h2>
+    <p>Lakshadweep is governed under the Union Territory model: the Administrator runs the administration under the President/Union Government, while local democratic representation enters through Parliament and the Panchayat system.</p>
+    <svg viewBox="0 0 900 300" xmlns="http://www.w3.org/2000/svg" class="relflow" role="img" aria-label="Lakshadweep governance chain">
+      <defs><marker id="lkArr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#888"/></marker></defs>
+      <rect x="350" y="10" width="200" height="44" rx="6" class="gb-const"/><text x="450" y="32" text-anchor="middle" font-size="12" font-weight="700">🇮🇳 Union</text><text x="450" y="46" text-anchor="middle" font-size="10" fill="#666">MHA · Parliament · President</text>
+      <rect x="350" y="82" width="200" height="44" rx="6" class="gb-exec"/><text x="450" y="104" text-anchor="middle" font-size="12" font-weight="700">🏛 Administrator</text><text x="450" y="118" text-anchor="middle" font-size="10" fill="#666">Praful Khoda Patel · Kavaratti</text>
+      <rect x="80" y="160" width="180" height="44" rx="6" class="gb-state"/><text x="170" y="182" text-anchor="middle" font-size="12" font-weight="700">📍 District (1)</text><text x="170" y="196" text-anchor="middle" font-size="10" fill="#666">Collectorate · Police · line depts.</text>
+      <rect x="360" y="160" width="180" height="44" rx="6" class="gb-regu"/><text x="450" y="182" text-anchor="middle" font-size="12" font-weight="700">🌾 Dweep Panchayats</text><text x="450" y="196" text-anchor="middle" font-size="10" fill="#666">10 island-level bodies</text>
+      <rect x="640" y="160" width="180" height="44" rx="6" class="gb-legis"/><text x="730" y="182" text-anchor="middle" font-size="12" font-weight="700">🏘 Panchayat wards</text><text x="730" y="196" text-anchor="middle" font-size="10" fill="#666">79 Dweep members</text>
+      <rect x="350" y="242" width="200" height="40" rx="20" fill="#138808" opacity="0.18" stroke="#138808" stroke-width="1.5"/><text x="450" y="267" text-anchor="middle" font-size="13" font-weight="700">👥 Island resident</text>
+      <line x1="450" y1="54" x2="450" y2="78" stroke="#888" stroke-width="1.5" marker-end="url(#lkArr)"/><line x1="450" y1="126" x2="170" y2="156" stroke="#888" stroke-width="1.5" marker-end="url(#lkArr)"/><line x1="450" y1="126" x2="450" y2="156" stroke="#888" stroke-width="1.5" marker-end="url(#lkArr)"/><line x1="450" y1="126" x2="730" y2="156" stroke="#888" stroke-width="1.5" marker-end="url(#lkArr)"/><line x1="450" y1="204" x2="450" y2="238" stroke="#888" stroke-width="1.5" marker-end="url(#lkArr)"/>
+    </svg>
+    <p style="font-size:0.82rem;color:var(--muted);"><strong>Reading it:</strong> A resident has one Lok Sabha MP, no MLA/MLC layer, one Administrator-led UT administration, one district administration, a Dweep Panchayat and District Panchayat representation.</p>
+  </div>
+</section>
+
+<!-- =========================== HOW IT WORKS =========================== -->
+<section id="how" class="lens-section">
+  <h1>🛠 How this Lakshadweep catalogue works</h1>
+  <p class="sec-sub">This page follows the same Bharat Sanchar shell as the state pages, but adapts the governance stack for a Union Territory without a legislature.</p>
+  <div class="lens-overview"><div class="lo-grid"><div>
+    <h3>UT model, not state model</h3>
+    <p>There is no Chief Minister, Cabinet, Vidhan Sabha or Vidhan Parishad. The Administrator is the apex executive, Parliament provides national representation, and elected local government flows through Dweep Panchayats plus one District Panchayat.</p>
+    <p>Inline rows are used only for stable, small rosters; volatile postings link to official live directories.</p>
+  </div><div class="lo-chart"><div class="lo-chart-title">Lakshadweep stack</div>
+    <svg viewBox="0 0 360 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Lakshadweep governance stack"><g font-family="inherit" font-size="10">
+      <polygon points="160,15 200,15 220,45 140,45" fill="var(--green)" opacity="0.9"/><text x="180" y="33" text-anchor="middle" fill="#fff" font-weight="600">Union · 1 LS</text>
+      <polygon points="135,50 225,50 250,84 110,84" fill="var(--green)" opacity="0.85"/><text x="180" y="72" text-anchor="middle" fill="#fff" font-weight="600">Administrator</text>
+      <polygon points="105,89 255,89 285,123 75,123" fill="var(--saffron)" opacity="0.82"/><text x="180" y="111" text-anchor="middle" fill="#fff" font-weight="600">District · 1</text>
+      <polygon points="75,128 285,128 315,164 45,164" fill="var(--saffron)" opacity="0.78"/><text x="180" y="151" text-anchor="middle" fill="#fff" font-weight="600">Dweep Panchayats · 10</text>
+      <polygon points="45,169 315,169 340,205 20,205" fill="var(--red)" opacity="0.75"/><text x="180" y="192" text-anchor="middle" fill="#fff" font-weight="600">Village members · 79</text>
+    </g></svg>
+  </div></div></div>
+  <div class="callout ok"><strong>Audit rule:</strong> every named person is paired with an official source or a conservative note; where the official page is a live register, this page links out rather than freezing names that can change by transfer order.</div>
+</section>
+
+<!-- =========================== CENTRE =========================== -->
+<section id="centre" class="lens-section">
+<!-- BEGIN: CENTRE -->
+  <h1>🇮🇳 Lakshadweep's Representation at the Union</h1>
+  <p class="sec-sub">Lakshadweep has one Lok Sabha constituency and no Rajya Sabha seat. No current Union Council minister is listed as representing Lakshadweep in this snapshot.</p>
+  <div class="ec-toggle"><button type="button" class="ec-btn" data-ec="expand" data-scope="centre">⊞ Expand all</button><button type="button" class="ec-btn" data-ec="collapse" data-scope="centre">⊟ Collapse all</button><span class="ec-hint">Toggles every <code>details</code> in this lens.</span></div>
+  <details class="branch" open><summary><span>Union Council of Ministers from Lakshadweep</span><span class="ct">0</span></summary><div class="b-body"><div class="callout">No Lakshadweep MP is listed in the current Union Council of Ministers snapshot.</div></div></details>
+  <details class="branch" open><summary><span>Lok Sabha — Lakshadweep</span><span class="ct">18ᵗʰ LS · 2024</span></summary>
+    <table class="bihar"><thead><tr><th>#</th><th>Constituency</th><th>Member of Parliament</th><th>Party</th></tr></thead><tbody><tr><td class="r">1</td><td>Lakshadweep (ST)</td><td>Muhammed Hamdulla Sayeed</td><td><span class="pill p-INC">INC</span></td></tr></tbody><caption>Tally: INC 1 = <strong>1</strong>; one Union Territory constituency.</caption></table>
+  </details>
+  <details class="branch" open><summary><span>Rajya Sabha — Lakshadweep</span><span class="ct">0 seats</span></summary><div class="b-body"><p>Lakshadweep has no Rajya Sabha seat because it has no territorial Legislative Assembly to form an electoral college.</p></div></details>
+  <p class="src">Sources: Union Council of Ministers — <a href="https://www.pmindia.gov.in/en/the-union-council-of-ministers/" target="_blank" rel="noopener">pmindia.gov.in</a>; Lok Sabha roster — <a href="https://sansad.in/ls/members" target="_blank" rel="noopener">sansad.in/ls/members</a>; ECI 2024 parliamentary results for Lakshadweep.</p>
+<!-- END: CENTRE -->
+</section>
+
+<!-- =========================== EXECUTIVE =========================== -->
+<section id="exec" class="lens-section">
+<!-- BEGIN: EXEC -->
+  <h1>🏛 UT Executive — Administrator-led administration</h1>
+  <p class="sec-sub">Lakshadweep is a Union Territory without a Council of Ministers. The President-appointed Administrator heads the administration from Kavaratti; official UT pages list Shri Praful Patel as Hon'ble Administrator.</p>
+  <h3 class="grp-h">Apex executive</h3>
+  <div class="role-grid">
+    <div class="role-card"><div class="role">Administrator, Lakshadweep</div><div class="name">Praful Khoda Patel</div><div class="meta">Official UT roster lists Shri Praful Patel as Hon'ble Administrator; he also holds administrator charge of Dadra &amp; Nagar Haveli and Daman &amp; Diu.</div></div>
+    <div class="role-card"><div class="role">Chief Minister</div><div class="name">Not applicable</div><div class="meta">Lakshadweep has no territorial legislature or Council of Ministers.</div></div>
+    <div class="role-card"><div class="role">Seat of administration</div><div class="name">Kavaratti</div><div class="meta">Capital and principal town of the UT.</div></div>
+  </div>
+  <div class="callout warn"><strong>2021-22 reform controversy:</strong> Administrator Patel's proposed / notified reform package, including the Lakshadweep Animal Preservation Regulation with a beef-ban effect and panchayat-election eligibility changes, triggered local protests and national coverage. This page records that governance context without treating draft reform proposals as current office-holder rosters.</div>
+  <h3 class="grp-h">Secretariat and departments</h3>
+  <div class="role-grid">
+    <div class="role-card"><div class="role">Director · Planning, Statistics &amp; Taxation and Industries</div><div class="name">P. Abdul Samad</div><div class="meta">Listed in UT Administration Who's Who.</div></div>
+    <div class="role-card"><div class="role">Director · Food &amp; Civil Supplies, Panchayat and LCMF</div><div class="name">Buzar Jamhar</div><div class="meta">Listed in UT Administration Who's Who.</div></div>
+    <div class="role-card"><div class="role">Superintending Engineer</div><div class="name">Shajahan C. N.</div><div class="meta">Listed in UT Administration Who's Who.</div></div>
+  </div>
+  <p class="src">Sources: UT Administration Who's Who — <a href="https://lakshadweep.gov.in/whos-who/" target="_blank" rel="noopener">lakshadweep.gov.in/whos-who</a>; UT profile — <a href="https://lakshadweep.gov.in/about-lakshadweep/" target="_blank" rel="noopener">About Lakshadweep</a>; reform-controversy coverage — <a href="https://www.newindianexpress.com/nation/2021/may/27/island-on-the-boil-everything-you-need-to-know-about-savelakshadweep-campaign-2308142.html" target="_blank" rel="noopener">New Indian Express</a>, <a href="https://www.hindustantimes.com/india-news/beef-ban-nod-to-liquor-sale-lakshadweep-protests-as-praful-patel-approves-new-reforms-101621931021124.html" target="_blank" rel="noopener">Hindustan Times</a>.</p>
+<!-- END: EXEC -->
+</section>
+
+<!-- =========================== LEGISLATURE =========================== -->
+<section id="leg" class="lens-section">
+<!-- BEGIN: LEG -->
+  <h1>🗳 Legislature — Not applicable</h1>
+  <p class="sec-sub">Lakshadweep is a Union Territory without a territorial Legislative Assembly and without a Legislative Council.</p>
+  <table class="bihar"><thead><tr><th>Institution</th><th class="r">Seats</th><th>Snapshot note</th></tr></thead><tbody>
+    <tr><td>Vidhan Sabha / territorial Assembly</td><td class="r">N/A</td><td>No Assembly exists for Lakshadweep.</td></tr>
+    <tr><td>Vidhan Parishad / Legislative Council</td><td class="r">N/A</td><td>No Council; build's VP block is intentionally stripped.</td></tr>
+    <tr><td>Rajya Sabha electoral college</td><td class="r">N/A</td><td>No MLAs, therefore no RS seat from the UT.</td></tr>
+  </tbody><caption>Counts reconcile with JSON: VS=0, VP=0, RS=0.</caption></table>
+  <div class="callout"><strong>Comparison-table convention:</strong> the national comparison row uses <em>VS N/A</em> rather than 0 MLAs so readers do not mistake absence of legislature for vacant seats.</div>
+  <p class="src">Sources: Constitution of India Union Territory framework via India Code; Lakshadweep Administration portal; Sansad Rajya Sabha roster.</p>
+<!-- END: LEG -->
+</section>
+
+<!-- =========================== JUDICIARY =========================== -->
+<section id="judic" class="lens-section">
+<!-- BEGIN: JUDIC -->
+  <h1>⚖ Judiciary — High Court of Kerala jurisdiction</h1>
+  <p class="sec-sub">The High Court of Kerala exercises jurisdiction over Lakshadweep. Subordinate judicial service recruitment and orders are published through the UT administration and Kerala High Court / eCourts systems.</p>
+  <div class="role-grid">
+    <div class="role-card"><div class="role">Constitutional court</div><div class="name">High Court of Kerala</div><div class="meta"><a href="https://highcourt.kerala.gov.in/" target="_blank" rel="noopener">Official High Court portal</a></div></div>
+    <div class="role-card"><div class="role">UT judicial administration</div><div class="name">Lakshadweep Judicial Services</div><div class="meta">UT Gazette and recruitment rules are published on the Administration portal.</div></div>
+    <div class="role-card"><div class="role">Case-status layer</div><div class="name">eCourts</div><div class="meta">Use eCourts for current subordinate court postings and case status.</div></div>
+  </div>
+  <p class="src">Sources: High Court of Kerala — <a href="https://highcourt.kerala.gov.in/" target="_blank" rel="noopener">highcourt.kerala.gov.in</a>; Lakshadweep Administration notices / Gazette; eCourts services.</p>
+<!-- END: JUDIC -->
+</section>
+
+<!-- =========================== DISTRICTS =========================== -->
+<section id="dist" class="lens-section">
+<!-- BEGIN: DIST -->
+  <h1>📍 District Administration — 1 District</h1>
+  <p class="sec-sub">Lakshadweep is a uni-district Union Territory. The official profile lists one district, 36 total islands and 10 inhabited islands.</p>
+  <h3 class="grp-h">🗺 District map</h3>
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:14px;">
+<svg viewBox="0 0 420 720" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Map of Lakshadweep district" style="width:100%;height:auto;display:block;background:#fffdf6;border-radius:6px;font-family:inherit;">
+<rect x="0" y="0" width="420" height="720" rx="6" fill="#fffdf6"/>
+<path d="M233.7,700.1 L234.2,699.6 L234.9,698.9 L235.8,698.1 L236.1,697.2 L235.9,696.3 L236.0,695.5 L236.1,694.6 L236.6,693.2 L237.5,691.6 L237.9,690.8 L238.4,690.1 L237.7,690.7 L237.0,692.1 L236.5,693.0 L236.2,693.8 L235.9,694.9 L235.7,695.8 L235.2,696.4 L234.7,697.2 L234.3,697.9 L233.7,698.6 L232.8,699.3 L232.2,699.9 L231.4,700.2 L230.5,700.4 L229.7,700.4 L228.8,700.6 L227.7,700.6 L227.0,700.2 L227.1,701.0 L227.9,701.4 L229.3,701.8 L230.1,701.9 L231.4,702.0 L232.4,701.8 L232.9,701.1 Z" fill="#FF9933" fill-opacity="0.78" stroke="#ffffff" stroke-width="1.2"><title>Lakshadweep</title></path>
+<path d="M349.9,342.4 L349.8,341.6 L349.9,340.6 L350.2,339.7 L350.3,338.9 L350.6,337.6 L350.6,336.6 L350.5,337.6 L350.1,338.5 L349.9,339.5 L349.6,340.4 L349.3,341.1 L349.0,342.0 L348.5,342.7 L347.6,342.6 L347.9,343.4 L348.3,344.3 L348.3,345.1 L349.1,345.5 L349.8,345.1 L349.9,344.2 L350.0,343.4 Z" fill="#FF9933" fill-opacity="0.78" stroke="#ffffff" stroke-width="1.2"><title>Lakshadweep</title></path>
+<path d="M82.9,348.6 L83.5,348.1 L83.9,347.4 L84.1,346.4 L83.6,347.1 L83.1,347.8 Z" fill="#FF9933" fill-opacity="0.78" stroke="#ffffff" stroke-width="1.2"><title>Lakshadweep</title></path>
+<path d="M352.4,326.2 L352.2,327.0 L352.5,327.8 L352.8,328.5 L352.7,329.5 L352.5,330.4 L353.0,329.7 L353.1,328.7 L352.9,328.0 L352.6,327.1 Z" fill="#FF9933" fill-opacity="0.78" stroke="#ffffff" stroke-width="1.2"><title>Lakshadweep</title></path>
+<path d="M92.3,330.9 L92.0,330.2 L91.6,329.5 L91.5,330.3 Z" fill="#FF9933" fill-opacity="0.78" stroke="#ffffff" stroke-width="1.2"><title>Lakshadweep</title></path>
+<path d="M153.4,241.8 L152.6,242.1 L152.3,242.9 L152.0,243.6 L151.6,244.3 L151.2,245.0 L150.7,245.7 L150.2,246.4 L149.8,247.2 L149.3,247.8 L148.5,248.1 L148.0,248.7 L148.8,248.7 L149.3,248.1 L150.3,247.2 L151.0,246.6 L151.7,246.1 L152.4,245.7 L153.2,245.4 L154.0,245.1 L154.6,244.5 L154.8,243.6 L154.6,242.8 L154.1,242.1 Z" fill="#FF9933" fill-opacity="0.78" stroke="#ffffff" stroke-width="1.2"><title>Lakshadweep</title></path>
+<path d="M353.9,194.2 L353.0,194.3 L352.3,194.7 L352.3,195.6 L352.8,196.4 L353.8,196.8 L354.6,196.9 L355.4,196.9 L356.2,196.7 L357.1,196.5 L357.8,196.2 L358.6,195.8 L359.3,195.6 L360.1,195.4 L360.4,194.7 L359.5,194.4 L358.6,194.4 L357.8,194.4 L356.9,194.4 L356.0,194.3 L355.1,194.4 Z" fill="#FF9933" fill-opacity="0.78" stroke="#ffffff" stroke-width="1.2"><title>Lakshadweep</title></path>
+<path d="M67.2,182.1 L66.3,182.4 L65.7,183.2 L65.2,183.9 L65.0,184.8 L64.7,185.5 L64.5,186.5 L64.2,187.4 L64.0,188.2 L63.5,189.1 L63.1,189.9 L62.7,190.9 L62.3,191.6 L61.8,192.3 L61.3,192.9 L60.8,193.6 L61.5,193.2 L62.0,192.5 L62.5,191.8 L62.8,191.0 L63.1,190.3 L63.5,189.6 L64.0,188.7 L64.4,187.9 L64.9,187.3 L65.4,186.5 L65.9,185.8 L66.4,184.9 L66.9,184.1 L67.3,183.2 Z" fill="#FF9933" fill-opacity="0.78" stroke="#ffffff" stroke-width="1.2"><title>Lakshadweep</title></path>
+<path d="M83.8,168.6 L83.3,169.2 L83.1,170.0 L83.5,170.7 L84.4,170.6 L84.1,169.7 Z" fill="#FF9933" fill-opacity="0.78" stroke="#ffffff" stroke-width="1.2"><title>Lakshadweep</title></path>
+<path d="M91.0,167.8 L90.1,167.9 L89.3,168.0 L89.0,168.7 L89.9,168.8 Z" fill="#FF9933" fill-opacity="0.78" stroke="#ffffff" stroke-width="1.2"><title>Lakshadweep</title></path>
+<path d="M168.3,135.3 L169.2,134.5 L170.0,133.6 L170.7,132.5 L170.9,131.8 L171.0,130.9 L170.2,130.8 L169.6,131.3 L168.9,131.7 L168.1,132.4 L167.7,133.1 L167.6,134.0 Z" fill="#FF9933" fill-opacity="0.78" stroke="#ffffff" stroke-width="1.2"><title>Lakshadweep</title></path>
+<path d="M176.5,121.6 L176.8,120.8 L177.0,119.9 L177.3,119.1 L177.5,118.4 L177.8,117.5 L178.2,116.7 L178.7,116.0 L179.1,115.3 L179.5,114.5 L179.7,113.8 L179.8,113.0 L180.1,112.2 L180.3,111.3 L180.6,110.5 L180.9,109.6 L181.2,108.9 L181.6,108.0 L181.9,107.2 L182.1,106.3 L181.3,106.7 L180.9,107.6 L180.5,108.4 L180.1,109.2 L179.8,110.0 L179.6,110.8 L179.3,111.7 L179.1,112.5 L178.8,113.4 L178.6,114.3 L178.3,115.3 L178.0,116.1 L177.7,116.8 L177.4,117.7 L177.0,118.6 L176.8,119.4 L176.7,120.3 Z" fill="#FF9933" fill-opacity="0.78" stroke="#ffffff" stroke-width="1.2"><title>Lakshadweep</title></path>
+<path d="M224.7,64.6 L225.3,64.0 L225.2,63.3 L225.0,62.4 L225.0,61.6 L224.9,60.8 L224.4,59.9 L223.8,59.1 L223.0,58.9 L223.1,59.7 L223.7,60.4 L223.9,61.2 L224.0,61.9 L224.2,62.8 L224.5,63.5 Z" fill="#FF9933" fill-opacity="0.78" stroke="#ffffff" stroke-width="1.2"><title>Lakshadweep</title></path>
+<path d="M166.7,21.4 L167.2,20.8 L167.6,20.1 L167.7,19.2 L167.6,18.3 L167.0,18.8 L166.7,19.6 L166.3,20.6 L166.0,21.6 L165.4,22.1 Z" fill="#FF9933" fill-opacity="0.78" stroke="#ffffff" stroke-width="1.2"><title>Lakshadweep</title></path>
+<text x="18" y="32" font-size="15" fill="#0B1B3F" font-weight="700" font-family="inherit">Lakshadweep · one revenue district</text>
+<text x="18" y="52" font-size="11" fill="#5b5b5b" font-family="inherit">Actual district polygons from GeoJSON; inset lists the 10 inhabited islands.</text>
+<text x="342.0" y="195.4" text-anchor="middle" font-size="13" font-weight="700" fill="#1a1a1a" font-family="inherit" paint-order="stroke" stroke="#fff" stroke-width="3" stroke-linejoin="round">Lakshadweep</text>
+<g font-size="10" fill="#1a1a1a" font-family="inherit">
+<rect x="244" y="72" width="158" height="188" rx="6" fill="#ffffff" fill-opacity="0.86" stroke="#e3e3df"/>
+<text x="258" y="94" font-size="11" fill="#0B1B3F" font-weight="700">Inhabited islands</text>
+<circle cx="260" cy="113" r="3" fill="#FF9933" stroke="#0B1B3F" stroke-width="0.8"/><text x="269" y="116" fill="#1a1a1a">Chetlat</text>
+<circle cx="260" cy="127" r="3" fill="#FF9933" stroke="#0B1B3F" stroke-width="0.8"/><text x="269" y="130" fill="#1a1a1a">Bitra</text>
+<circle cx="260" cy="141" r="3" fill="#FF9933" stroke="#0B1B3F" stroke-width="0.8"/><text x="269" y="144" fill="#1a1a1a">Kiltan</text>
+<circle cx="260" cy="155" r="3" fill="#FF9933" stroke="#0B1B3F" stroke-width="0.8"/><text x="269" y="158" fill="#1a1a1a">Kadmat</text>
+<circle cx="260" cy="169" r="3" fill="#FF9933" stroke="#0B1B3F" stroke-width="0.8"/><text x="269" y="172" fill="#1a1a1a">Amini</text>
+<circle cx="260" cy="183" r="3" fill="#FF9933" stroke="#0B1B3F" stroke-width="0.8"/><text x="269" y="186" fill="#1a1a1a">Andrott</text>
+<circle cx="260" cy="197" r="3" fill="#FF9933" stroke="#0B1B3F" stroke-width="0.8"/><text x="269" y="200" fill="#1a1a1a">Agatti</text>
+<circle cx="260" cy="211" r="3" fill="#FF9933" stroke="#0B1B3F" stroke-width="0.8"/><text x="269" y="214" fill="#1a1a1a">Kavaratti</text>
+<circle cx="260" cy="225" r="3" fill="#FF9933" stroke="#0B1B3F" stroke-width="0.8"/><text x="269" y="228" fill="#1a1a1a">Kalpeni</text>
+<circle cx="260" cy="239" r="3" fill="#FF9933" stroke="#0B1B3F" stroke-width="0.8"/><text x="269" y="242" fill="#1a1a1a">Minicoy</text>
+</g>
+<text x="18" y="704" font-size="10" fill="#5b5b5b" font-style="italic">Source: datta07/INDIAN-SHAPEFILES · Census 2011 district boundary</text>
+</svg>
+  </div>
+  <h3 class="grp-h">District / island table</h3>
+  <table class="bihar"><thead><tr><th>#</th><th>Unit</th><th>HQ / principal place</th><th>Administrative note</th><th>Population / geography</th></tr></thead><tbody>
+    <tr><td class="r">1</td><td>Lakshadweep district</td><td>Kavaratti</td><td>UT and district are coterminous; district-level postings are transfer-sensitive, so the live Administration directory is the source of record.</td><td>64,473 population; 32.69 sq km; 36 total islands</td></tr>
+    <tr><td class="r">2</td><td>Inhabited islands</td><td>Kavaratti plus island offices</td><td>Kavaratti, Agatti, Amini, Kadmat, Kiltan, Chetlat, Bitra, Andrott, Kalpeni and Minicoy.</td><td>10 inhabited islands</td></tr>
+  </tbody><caption>District count = 1; inhabited-island count = 10; total-island count = 36.</caption></table>
+  <div class="callout ok"><strong>Strategic note:</strong> though India's smallest UT by area, Lakshadweep sits across sea lanes in the Arabian Sea and is strategically important for the Indian Ocean Region.</div>
+  <p class="src">Sources: Lakshadweep official profile — <a href="https://lakshadweep.gov.in/about-lakshadweep/" target="_blank" rel="noopener">About Lakshadweep</a>; islands profile — <a href="https://lakshadweep.gov.in/islands/" target="_blank" rel="noopener">lakshadweep.gov.in/islands</a>; district GeoJSON — <a href="https://raw.githubusercontent.com/datta07/INDIAN-SHAPEFILES/master/STATES/LAKSHADWEEP/LAKSHADWEEP_DISTRICTS.geojson" target="_blank" rel="noopener">datta07/INDIAN-SHAPEFILES</a>.</p>
+<!-- END: DIST -->
+</section>
+
+<!-- =========================== PRI =========================== -->
+<section id="pri" class="lens-section">
+<!-- BEGIN: PRI -->
+  <h1>🌾 Panchayati Raj — Dweep Panchayats + District Panchayat</h1>
+  <p class="sec-sub">Lakshadweep's local-government layer is created by the Lakshadweep Panchayats Regulation, 1994: one Village (Dweep) Panchayat for each inhabited island and one District Panchayat for the whole UT.</p>
+  <div class="kpis">
+    <div class="kpi"><div class="v">10</div><div class="l">Village (Dweep) Panchayats</div><div class="sub">One per inhabited island</div></div>
+    <div class="kpi"><div class="v">1</div><div class="l">District Panchayat</div><div class="sub">Whole-of-UT tier</div></div>
+    <div class="kpi"><div class="v">79</div><div class="l">Dweep members</div><div class="sub">Village Panchayat members</div></div>
+    <div class="kpi"><div class="v">22</div><div class="l">District members</div><div class="sub">Directly elected</div></div>
+    <div class="kpi"><div class="v">10</div><div class="l">Chairpersons</div><div class="sub">Dweep Panchayat chairpersons</div></div>
+  </div>
+  <h3 class="grp-h">Tier map — elected, civil-service, count</h3>
+  <table class="bihar"><thead><tr><th>Tier</th><th>Elected side</th><th>Administration side</th><th class="r">Count</th><th>Inline?</th></tr></thead><tbody>
+    <tr><td>District Panchayat</td><td>Directly elected members + MP representative</td><td>UT Administration / Panchayat department</td><td class="r">1 body</td><td>Aggregate inline; roster link-out</td></tr>
+    <tr><td>Village (Dweep) Panchayat</td><td>Chairperson + members</td><td>Island / department offices</td><td class="r">10 bodies</td><td>Counts inline; names link-out</td></tr>
+    <tr><td>Ward/member layer</td><td>Village Panchayat members</td><td>Panchayat Secretary / local staff</td><td class="r">79 members</td><td>Link live register</td></tr>
+  </tbody></table>
+  <h3 class="grp-h">Authoritative live registers</h3>
+  <div class="role-grid">
+    <div class="role-card"><div class="role">Panchayat profile</div><div class="name"><a href="https://lakshadweep.gov.in/village-panchayats/" target="_blank" rel="noopener">Village Panchayats</a></div><div class="meta">Official Regulation and count page.</div></div>
+    <div class="role-card"><div class="role">Local Government Directory</div><div class="name"><a href="https://lgdirectory.gov.in/" target="_blank" rel="noopener">LGD</a></div><div class="meta">Source of record for local-body codes.</div></div>
+    <div class="role-card"><div class="role">eGramSwaraj</div><div class="name"><a href="https://egramswaraj.gov.in/" target="_blank" rel="noopener">egramswaraj.gov.in</a></div><div class="meta">Plan and accounting layer for Panchayats.</div></div>
+  </div>
+  <p class="src">Sources: Lakshadweep Village Panchayats — <a href="https://lakshadweep.gov.in/village-panchayats/" target="_blank" rel="noopener">lakshadweep.gov.in/village-panchayats</a>; LGD; eGramSwaraj.</p>
+<!-- END: PRI -->
+</section>
+
+<!-- =========================== CONSTITUTIONAL BODIES =========================== -->
+<section id="bodies" class="lens-section">
+<!-- BEGIN: BODIES -->
+  <h1>📊 Constitutional / Statutory Bodies and Oversight</h1>
+  <p class="sec-sub">For a small UT, many oversight functions are either UT-level offices, Kerala-linked judicial forums, or Union/central registers. This lens links the live source rather than freezing volatile postings.</p>
+  <div class="role-grid">
+    <div class="role-card"><div class="role">Election administration</div><div class="name">CEO / Election machinery</div><div class="meta">Parliamentary constituency and Panchayat election material through UT / ECI sources.</div></div>
+    <div class="role-card"><div class="role">Comptroller &amp; Auditor General</div><div class="name">CAG audit jurisdiction</div><div class="meta"><a href="https://cag.gov.in/" target="_blank" rel="noopener">cag.gov.in</a></div></div>
+    <div class="role-card"><div class="role">Information / grievance layer</div><div class="name">UT departments and Administration notices</div><div class="meta"><a href="https://lakshadweep.gov.in/" target="_blank" rel="noopener">lakshadweep.gov.in</a></div></div>
+    <div class="role-card"><div class="role">Women / child / welfare bodies</div><div class="name">Department-linked committees</div><div class="meta">Orders are published through UT Administration notices and Gazette.</div></div>
+    <div class="role-card"><div class="role">Juvenile Justice Board</div><div class="name">UT-notified board</div><div class="meta">Current 2026 constitution order appears in Administration notices.</div></div>
+  </div>
+  <p class="src">Sources: Lakshadweep Administration notices and Who's Who — <a href="https://lakshadweep.gov.in/" target="_blank" rel="noopener">lakshadweep.gov.in</a>; CAG — <a href="https://cag.gov.in/" target="_blank" rel="noopener">cag.gov.in</a>; ECI / Sansad sources linked above.</p>
+<!-- END: BODIES -->
+</section>
+
+<!-- =========================== SCOPE MEMO =========================== -->
+<section id="scope" class="lens-section">
+<!-- BEGIN: SCOPE -->
+  <h1>📑 Scope memo — why this page is UT-shaped</h1>
+  <p class="sec-sub">The base state-page template is designed for a state. This memo records every deliberate adaptation for Lakshadweep.</p>
+  <h3 class="grp-h">The math</h3>
+  <table class="bihar"><thead><tr><th>Layer</th><th class="r">Count</th><th>Decision</th><th>Reason</th></tr></thead><tbody>
+    <tr><td>Union ministers</td><td class="r">0</td><td>Inline</td><td>Small and stable.</td></tr>
+    <tr><td>Lok Sabha MPs</td><td class="r">1</td><td>Inline</td><td>Single row.</td></tr>
+    <tr><td>Rajya Sabha MPs</td><td class="r">0</td><td>Inline</td><td>No RS seat.</td></tr>
+    <tr><td>Administrator</td><td class="r">1</td><td>Inline</td><td>Apex executive and requested key fact.</td></tr>
+    <tr><td>Cabinet / CM</td><td class="r">N/A</td><td>Omit</td><td>UT without legislature has no CM or territorial cabinet.</td></tr>
+    <tr><td>Legislature</td><td class="r">N/A</td><td>Explain</td><td>VS N/A, VP N/A; comparison table follows this convention.</td></tr>
+    <tr><td>Districts</td><td class="r">1</td><td>Inline</td><td>Uni-district UT; map plus table is tractable.</td></tr>
+    <tr><td>Dweep Panchayats</td><td class="r">10</td><td>Hybrid</td><td>Counts inline, changing members link to live registers.</td></tr>
+    <tr><td>Panchayat members</td><td class="r">79</td><td>Link out</td><td>Small enough, but volatile and better maintained by official Panchayat sources.</td></tr>
+  </tbody></table>
+  <h3 class="grp-h">Special callouts included</h3>
+  <ul class="grp">
+    <li>Administrator Praful Khoda Patel and his DNH + DD charge.</li>
+    <li>2021-22 reform controversy: Animal Preservation / beef-ban effect and Panchayat election eligibility reform.</li>
+    <li>Kerala High Court jurisdiction.</li>
+    <li>India's smallest UT by area; 36 total islands, 10 inhabited; Indian Ocean Region strategic location.</li>
+  </ul>
+  <p class="src">Sources: all linked sources in Centre, Executive, Legislature, Judiciary, District, PRI and Bodies lenses; verified 24-May-2026.</p>
+<!-- END: SCOPE -->
+</section>
+
+
+</main>
+
+<footer>
+  Lakshadweep Shasan · governance transparency experiment · drafted 24-May-2026 · skinned with the <code>bharat-sanchar-aesthetic</code> skill · zero external dependencies · data sources cited inline · live officials of district/PRI level are intentionally not embedded — see <a href="#scope">Scope memo</a>.
+</footer>
+
+<!-- JS 1: expand/collapse-all within a lens -->
+<script>
+(function(){
+  document.addEventListener('click', function(e){
+    var btn = e.target.closest('.ec-btn'); if(!btn) return;
+    e.preventDefault();
+    var root = document.getElementById(btn.getAttribute('data-scope')); if(!root) return;
+    var openVal = btn.getAttribute('data-ec') === 'expand';
+    root.querySelectorAll('details').forEach(function(d){ if(d!==root) d.open = openVal; });
+    if(root.tagName === 'DETAILS' && openVal) root.open = true;
+  });
+})();
+</script>
+
+<!-- JS 2: close mobile hamburger after a nav link tap -->
+<script>
+(function(){
+  var toggle = document.getElementById('navtoggle');
+  var nav = document.querySelector('header.topbar nav.lens');
+  if(!toggle || !nav) return;
+  nav.addEventListener('click', function(e){
+    var a = e.target.closest('a'); if(!a) return;
+    var href = a.getAttribute('href'); if(!href) return;
+    toggle.checked = false;
+    if(href.charAt(0) === '#' && href.length > 1){
+      requestAnimationFrame(function(){
+        requestAnimationFrame(function(){
+          var el = document.getElementById(href.slice(1)); if(!el) return;
+          var topbar = document.querySelector('header.topbar');
+          var offset = topbar ? topbar.getBoundingClientRect().height : 0;
+          var y = el.getBoundingClientRect().top + window.pageYOffset - offset - 4;
+          window.scrollTo({top: Math.max(0, y), behavior: 'auto'});
+        });
+      });
+    }
+  });
+})();
+</script>
+</body>
+</html>

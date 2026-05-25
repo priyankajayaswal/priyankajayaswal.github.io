@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arunachal Pradesh Shasan — Governance Personnel Catalogue (Centre → Ward)</title>
+<meta name="description" content="A link-anchored catalogue of named officials in Arunachal Pradesh's governance chain — Union representation, State cabinet, Legislature, Judiciary, Districts, and Panchayati Raj.">
+<style>
+  :root {
+    --bg:#f7f7f5; --card:#fff; --ink:#1a1a1a; --muted:#5b5b5b;
+    --navy:#0B1B3F; --saffron:#FF9933; --green:#138808; --red:#c0392b;
+    --border:#e3e3df; --tag:#eef0f7;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-padding-top:115px;scroll-behavior:smooth;}
+  body{margin:0;font-family:'Segoe UI',Tahoma,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5;font-size:14px;}
+  a{color:var(--navy);}
+
+  /* ===== TOPBAR ===== */
+  header.topbar{background:linear-gradient(135deg,var(--saffron) 0%,#fff 50%,var(--green) 100%);padding:8px 20px 6px;border-bottom:2px solid var(--navy);position:sticky;top:0;z-index:10;text-align:center;}
+  header.topbar > *{text-align:left;}
+  header.topbar nav.lens{justify-content:center;display:inline-flex;}
+  .brand-row{display:flex;flex-direction:row;align-items:baseline;justify-content:center;gap:10px;flex-wrap:wrap;line-height:1.05;margin-bottom:4px;}
+  .brand{display:inline-block;font-size:1.2rem;font-weight:700;color:var(--navy);text-decoration:none;}
+  .brand:hover{color:var(--navy);text-decoration:none;}
+  .brand .hi{font-family:'Mangal','Nirmala UI',serif;margin-right:6px;color:var(--red);}
+  .tagline{font-size:0.65rem;color:var(--muted);font-weight:500;letter-spacing:0.3px;}
+  nav.lens{margin-top:4px;display:flex;flex-wrap:wrap;gap:2px;align-items:stretch;}
+  nav.lens > .lens-item{position:relative;}
+  nav.lens > .lens-item > a, nav.lens > a{display:inline-block;padding:4px 11px;background:rgba(255,255,255,0.75);border:1.5px solid var(--navy);color:var(--navy);text-decoration:none;border-radius:6px;font-weight:600;font-size:0.8rem;}
+  nav.lens > .lens-item > a:hover, nav.lens > a:hover, nav.lens > .lens-item:hover > a{background:var(--navy);color:#fff;}
+  nav.lens .caret{font-size:0.7rem;margin-left:4px;opacity:0.7;}
+
+  /* ===== MEGA-MENU DROPDOWN ===== */
+  .lens-drop{position:absolute;top:100%;left:0;display:none;background:var(--card);border:1.5px solid var(--navy);border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,0.25);padding:8px;min-width:280px;max-width:520px;max-height:60vh;overflow-y:auto;z-index:20;margin-top:0;}
+  .lens-item:hover .lens-drop, .lens-item:focus-within .lens-drop{display:block;}
+  .lens-item::after{content:"";position:absolute;top:100%;left:0;right:0;height:10px;display:none;}
+  .lens-item:hover::after, .lens-item:focus-within::after{display:block;}
+  .lens-drop .ld-head{font-size:0.7rem;text-transform:uppercase;letter-spacing:0.5px;color:var(--muted);padding:6px 8px;border-bottom:1px solid var(--border);margin-bottom:4px;font-weight:700;display:flex;justify-content:space-between;align-items:center;}
+  .lens-drop .ld-head a{font-size:0.72rem;color:var(--navy);text-decoration:none;font-weight:600;}
+  .lens-drop .ld-head a:hover{text-decoration:underline;}
+  .lens-drop .ld-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:2px;}
+  .lens-drop .ld-grid a{display:flex;justify-content:space-between;align-items:center;gap:6px;padding:5px 9px;font-size:0.8rem;color:var(--ink);text-decoration:none;border-radius:4px;}
+  .lens-drop .ld-grid a:hover{background:var(--tag);color:var(--navy);}
+  .lens-drop .ld-grid a .c{font-size:0.65rem;color:var(--muted);background:var(--tag);padding:1px 6px;border-radius:999px;font-weight:600;}
+  @media (max-width:700px){
+    .lens-drop{position:static;display:block;max-height:none;margin-top:0;border-radius:0;border:none;border-top:1px dashed var(--border);box-shadow:none;}
+  }
+
+  .help{padding:8px 20px;background:#fff7e8;border-bottom:1px solid var(--border);font-size:0.82rem;color:#5a3a00;}
+
+  main{max-width:1180px;margin:0 auto;padding:14px 20px 50px;}
+
+  /* ===== LENS ROUTING via :target ===== */
+  .lens-section{display:none;}
+  .lens-section:target, .lens-section:has(:target){display:block;}
+  body:not(:has(:target)) #h{display:block;}
+
+  details:target, details:has(:target){scroll-margin-top:120px;}
+  details:target > summary, details:has(:target) > summary{background:linear-gradient(90deg,rgba(255,153,51,0.18) 0%,transparent 100%);}
+
+  /* ===== JUMPBAR ===== */
+  .jumpbar{position:sticky;top:0;z-index:8;background:var(--card);border-bottom:1px solid var(--border);padding:6px 8px;margin:-14px -20px 14px;display:flex;gap:4px;overflow-x:auto;white-space:nowrap;}
+  .jumpbar a{flex:0 0 auto;font-size:0.72rem;padding:3px 9px;color:var(--ink);text-decoration:none;border-radius:999px;background:var(--tag);font-weight:600;}
+  .jumpbar a:hover{background:var(--navy);color:#fff;}
+  .jumpbar .jb-label{flex:0 0 auto;font-size:0.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;padding:4px 8px 4px 0;font-weight:700;}
+
+  /* ===== GOV INTRO + FLOWCHART BLOCKS ===== */
+  .gov-intro{background:linear-gradient(135deg,#fff7e8 0%,#e6f0ff 100%);border-left:4px solid var(--saffron);padding:10px 14px;border-radius:6px;margin:8px 0 14px;font-size:0.88rem;line-height:1.55;}
+  .gov-block{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin:14px 0;}
+  .gov-block h3{margin:0 0 6px;color:var(--navy);font-size:1.05rem;display:flex;align-items:center;gap:8px;}
+  .gov-block .lede{font-size:0.85rem;color:var(--muted);margin:0 0 12px;line-height:1.5;}
+  .gov-block svg{display:block;width:100%;height:auto;max-width:100%;background:transparent;}
+  .gov-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(360px,1fr));gap:12px;}
+  .gov-grid .gov-block{margin:0;}
+  .gov-notes{margin-top:10px;font-size:0.82rem;color:var(--muted);line-height:1.5;}
+  .gov-notes strong{color:var(--ink);}
+  .gov-legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;font-size:0.72rem;color:var(--muted);}
+  .gov-legend span{display:inline-flex;align-items:center;gap:5px;}
+  .gov-legend .sw{width:14px;height:14px;border-radius:3px;display:inline-block;border:1px solid var(--border);}
+  .gb-const{fill:#fde7d8;stroke:#c0392b;stroke-width:1.5;}
+  .gb-exec{fill:#e6f0ff;stroke:#0B1B3F;stroke-width:1.5;}
+  .gb-legis{fill:#fff7e8;stroke:#FF9933;stroke-width:1.5;}
+  .gb-judic{fill:#f5f0ff;stroke:#8338EC;stroke-width:1.5;}
+  .gb-state{fill:#e6f7e9;stroke:#138808;stroke-width:1.5;}
+  .gb-people{fill:#fde7d8;stroke:#c0392b;stroke-width:1.5;}
+  .gb-regu{fill:#e6f5f2;stroke:#06A77D;stroke-width:1.5;}
+
+  /* ===== INSIGHT (SWOT + radar) ===== */
+  .insight{background:linear-gradient(135deg,#f8fafc 0%,#fff7e8 100%);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin:8px 12px 12px;}
+  .insight-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:14px;align-items:start;}
+  @media (max-width:760px){.insight-grid{grid-template-columns:1fr;}}
+  .insight-meta{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px;}
+  .insight-meta .im{font-size:0.72rem;background:var(--tag);padding:2px 8px;border-radius:999px;color:var(--ink);}
+  .insight-meta .im strong{color:var(--navy);}
+  .insight h4{margin:6px 0 4px;color:var(--navy);font-size:0.85rem;}
+  .insight p.how{margin:0 0 8px;font-size:0.82rem;line-height:1.5;}
+  .swot{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+  .swot > div{background:var(--card);border:1px solid var(--border);border-left:3px solid;border-radius:6px;padding:8px 10px;}
+  .swot .str{border-left-color:var(--green);}
+  .swot .wkn{border-left-color:var(--red);}
+  .swot .pot{border-left-color:var(--saffron);grid-column:1/-1;}
+  .swot h5{margin:0 0 4px;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.4px;}
+  .swot .str h5{color:var(--green);}
+  .swot .wkn h5{color:var(--red);}
+  .swot .pot h5{color:#7a3a00;}
+  .swot ul{margin:0;padding-left:18px;font-size:0.78rem;line-height:1.45;}
+  .insight svg.radar{width:100%;height:auto;max-width:280px;display:block;margin:0 auto;}
+  .scores-label{font-size:0.7rem;color:var(--muted);text-align:center;margin-top:4px;}
+
+  /* ===== LENS-OVERVIEW (bar chart) ===== */
+  .lens-overview{background:linear-gradient(135deg,#eef2fb 0%,#fff7e8 100%);border:1px solid var(--border);border-radius:10px;padding:14px 18px;margin:8px 0 16px;}
+  .lens-overview .lo-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:18px;align-items:center;}
+  @media (max-width:780px){.lens-overview .lo-grid{grid-template-columns:1fr;}}
+  .lens-overview h3{margin:0 0 6px;color:var(--navy);font-size:0.95rem;}
+  .lens-overview p{margin:0 0 6px;font-size:0.85rem;line-height:1.5;}
+  .lens-overview .lo-rel{margin-top:8px;padding-top:6px;border-top:1px dashed var(--border);font-size:0.78rem;color:var(--muted);}
+  .lens-overview .lo-chart{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:10px;}
+  .lens-overview .lo-chart-title{font-size:0.72rem;text-transform:uppercase;letter-spacing:0.5px;color:var(--muted);font-weight:700;margin-bottom:4px;text-align:center;}
+
+  /* ===== RELMAP ===== */
+  .relmap{background:linear-gradient(135deg,#eef2fb 0%,#e6f7e9 100%);border:1px solid var(--border);border-radius:10px;padding:16px 20px;margin:14px 0;}
+  .relmap h2{margin:0 0 8px;color:var(--navy);}
+  .relmap p{font-size:0.88rem;line-height:1.55;margin:0 0 10px;}
+  .relmap svg.relflow{width:100%;height:auto;max-width:860px;display:block;margin:6px auto;}
+  .relmap svg.relflow text{fill:var(--ink);}
+
+  /* ===== EXPAND/COLLAPSE TOGGLE ===== */
+  .ec-toggle{display:flex;gap:8px;margin:6px 0 12px;align-items:center;flex-wrap:wrap;}
+  .ec-btn{cursor:pointer;font-size:0.78rem;padding:4px 10px;background:var(--card);border:1px solid var(--border);border-radius:6px;color:var(--navy);font-weight:600;font-family:inherit;}
+  .ec-btn:hover{background:var(--navy);color:#fff;}
+  .ec-hint{font-size:0.72rem;color:var(--muted);}
+
+  /* ===== HEADINGS / KPI / DIR ===== */
+  h1{color:var(--navy);font-size:1.3rem;margin:14px 0 6px;border-left:4px solid var(--red);padding-left:10px;}
+  h2{color:var(--navy);font-size:1.05rem;margin:18px 0 8px;}
+  .kpis{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px;margin:10px 0;}
+  @media (max-width:900px){ .kpis{grid-template-columns:repeat(auto-fit,minmax(140px,1fr));} }
+  .kpi{background:var(--card);border:1px solid var(--border);border-left:3px solid var(--red);border-radius:6px;padding:8px 12px;min-height:60px;display:flex;flex-direction:column;justify-content:center;}
+  .kpi .v{font-size:1.15rem;font-weight:700;color:var(--navy);}
+  .kpi .l{font-size:0.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.4px;}
+
+  .dir-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:6px;margin:8px 0 18px;}
+  .dir-tile{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:8px 12px;text-decoration:none;color:var(--ink);font-size:0.85rem;display:flex;justify-content:space-between;align-items:center;gap:8px;}
+  .dir-tile:hover{border-color:var(--navy);background:var(--tag);}
+  .dir-tile .dt-c{font-size:0.7rem;color:var(--muted);background:var(--tag);padding:1px 7px;border-radius:999px;}
+
+  /* ===== DETAILS / BRANCHES / CARDS ===== */
+  details{background:var(--card);border:1px solid var(--border);border-radius:8px;margin:8px 0;}
+  details > summary{cursor:pointer;padding:10px 14px;font-weight:600;color:var(--navy);list-style:none;display:flex;justify-content:space-between;align-items:center;gap:8px;}
+  details > summary::-webkit-details-marker{display:none;}
+  details > summary::before{content:"▸";color:var(--muted);font-size:0.85rem;margin-right:6px;}
+  details[open] > summary::before{content:"▾";}
+  details > summary .ct{font-size:0.72rem;color:var(--muted);background:var(--tag);padding:2px 9px;border-radius:999px;font-weight:600;}
+  details details{background:transparent;border:none;border-left:2px solid var(--border);margin:6px 0 6px 8px;border-radius:0;}
+  details details > summary{padding:6px 10px;font-weight:500;font-size:0.88rem;color:var(--ink);}
+  details details > summary .ct{background:#fff3e0;color:#7a3a00;}
+  .blurb{font-size:0.78rem;color:var(--muted);margin:0 14px 6px;}
+
+  .state-group:target, .min-group:target, .body-group:target{outline:2px solid var(--saffron);outline-offset:4px;border-radius:8px;}
+  .su-type{display:inline-block;font-size:0.65rem;font-weight:700;padding:2px 8px;border-radius:999px;margin-left:8px;letter-spacing:0.3px;text-transform:uppercase;}
+  .su-type.st{background:rgba(19,136,8,0.14);color:var(--green);border:1px solid rgba(19,136,8,0.45);}
+  .su-type.ut{background:rgba(255,153,51,0.14);color:#a55300;border:1px solid rgba(255,153,51,0.5);}
+
+  .card-list{padding:6px 10px 10px;display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:8px;align-items:start;}
+  .card{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:10px 12px;}
+  .card h3{margin:0 0 4px;font-size:0.95rem;line-height:1.3;}
+  .card h3 a{color:var(--ink);text-decoration:none;}
+  .card h3 a:hover{color:var(--navy);text-decoration:underline;}
+  .card .host{font-size:0.72rem;color:var(--muted);margin-bottom:6px;display:flex;flex-wrap:wrap;gap:6px;align-items:center;}
+  .card .hn{font-family:'Consolas','Monaco',monospace;}
+  .badge{font-size:0.65rem;padding:1px 6px;border-radius:4px;font-weight:600;}
+  .badge.official{background:#e6f7e9;color:var(--green);}
+  .badge.fresh{background:#e6f0ff;color:var(--navy);}
+  .badge.stale{background:#fdecea;color:var(--red);}
+  .lv{font-size:0.7rem;color:var(--muted);}
+  .desc{font-size:0.82rem;color:var(--muted);margin:4px 0;line-height:1.45;}
+  .meta{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px;}
+  .mchip{font-size:0.7rem;background:var(--tag);padding:1px 7px;border-radius:4px;color:var(--ink);}
+  .mchip.s{background:#fff3e0;color:#7a3a00;}
+  .mchip.m{background:#e6f0ff;color:var(--navy);}
+  .mchip.v{background:#f5f0ff;color:#5e35b1;}
+  .tags{display:flex;flex-wrap:wrap;gap:3px;margin-top:6px;}
+  .tag{font-size:0.65rem;background:var(--tag);padding:1px 6px;border-radius:3px;color:var(--muted);}
+  .children{margin-top:6px;background:transparent;border:none;border-left:none;}
+  .children > summary{padding:4px 0;font-size:0.78rem;color:var(--muted);font-weight:500;}
+  .children ul{margin:4px 0 0 18px;padding:0;font-size:0.78rem;}
+  .children li{margin-bottom:3px;}
+
+  footer{max-width:1180px;margin:30px auto 20px;padding:14px 20px;border-top:1px solid var(--border);font-size:0.78rem;color:var(--muted);}
+
+  /* ===== NIGHT-MODE TOGGLE (pure CSS, no JS) ===== */
+  #nightmode{position:fixed;top:0;left:0;opacity:0;pointer-events:none;width:0;height:0;clip:rect(0,0,0,0);}
+  .nm-toggle{position:absolute;top:8px;right:14px;z-index:11;display:inline-flex;align-items:center;gap:5px;cursor:pointer;font-size:0.72rem;font-weight:600;padding:4px 10px;background:rgba(255,255,255,0.85);border:1.5px solid var(--navy);color:var(--navy);border-radius:999px;user-select:none;line-height:1;}
+  .nm-toggle:hover{background:var(--navy);color:#fff;}
+  .nm-toggle .nm-ico-dark,.nm-toggle .nm-lbl-dark{display:inline;}
+  .nm-toggle .nm-ico-light,.nm-toggle .nm-lbl-light{display:none;}
+  @media (max-width:520px){ .nm-toggle .nm-lbl-dark,.nm-toggle .nm-lbl-light{display:none;} .nm-toggle{padding:4px 8px;} }
+
+  :root:has(#nightmode:checked){
+    --bg:#0e0f12; --card:#16181d; --ink:#e6e6e6; --muted:#9aa0a8;
+    --border:#262932; --tag:#1f232b; --navy:#7aa2ff;
+  }
+  :root:has(#nightmode:checked) header.topbar{background:linear-gradient(135deg,#5d3a14 0%,#1a1a1a 50%,#0f3a1c 100%);}
+  :root:has(#nightmode:checked) nav.lens > .lens-item > a,
+  :root:has(#nightmode:checked) nav.lens > a{background:rgba(255,255,255,0.08);}
+  :root:has(#nightmode:checked) .nm-toggle{background:rgba(255,255,255,0.08);}
+  :root:has(#nightmode:checked) .nm-toggle .nm-ico-dark,
+  :root:has(#nightmode:checked) .nm-toggle .nm-lbl-dark{display:none;}
+  :root:has(#nightmode:checked) .nm-toggle .nm-ico-light,
+  :root:has(#nightmode:checked) .nm-toggle .nm-lbl-light{display:inline;}
+  :root:has(#nightmode:checked) .help{background:#2a2316;color:#d9b779;}
+  :root:has(#nightmode:checked) .gov-intro{background:linear-gradient(135deg,#2a2316 0%,#172238 100%);}
+  :root:has(#nightmode:checked) .insight{background:linear-gradient(135deg,#16181d 0%,#2a2316 100%);}
+  :root:has(#nightmode:checked) .lens-overview{background:linear-gradient(135deg,#11192a 0%,#2a2316 100%);}
+  :root:has(#nightmode:checked) .relmap{background:linear-gradient(135deg,#11192a 0%,#0e2a14 100%);}
+  :root:has(#nightmode:checked) .badge.official{background:#0e2a14;color:#9fd1a8;}
+  :root:has(#nightmode:checked) .badge.fresh{background:#172238;color:#8aa6e2;}
+  :root:has(#nightmode:checked) .badge.stale{background:#3a1614;color:#e29a8a;}
+  :root:has(#nightmode:checked) .mchip.s{background:#3a2a14;color:#d9b779;}
+  :root:has(#nightmode:checked) .mchip.m{background:#172238;color:#8aa6e2;}
+  :root:has(#nightmode:checked) .mchip.v{background:#241a3a;color:#b39ad9;}
+  :root:has(#nightmode:checked) details details > summary .ct{background:#3a2a14;color:#d9b779;}
+  :root:has(#nightmode:checked) .swot .pot h5{color:#d9b779;}
+  :root:has(#nightmode:checked) .su-type.ut{color:#ffb866;}
+  :root:has(#nightmode:checked) .gb-const{fill:#3a2014;stroke:#e29a8a;}
+  :root:has(#nightmode:checked) .gb-exec{fill:#152238;stroke:#8aa6e2;}
+  :root:has(#nightmode:checked) .gb-legis{fill:#2a2316;stroke:#d9b779;}
+  :root:has(#nightmode:checked) .gb-judic{fill:#241a3a;stroke:#b39ad9;}
+  :root:has(#nightmode:checked) .gb-state{fill:#0e2a14;stroke:#9fd1a8;}
+  :root:has(#nightmode:checked) .gb-people{fill:#3a2014;stroke:#e29a8a;}
+  :root:has(#nightmode:checked) .gb-regu{fill:#0f2a24;stroke:#7fd1bf;}
+
+  /* ===== RESPONSIVE + HAMBURGER ===== */
+  img,iframe,svg{max-width:100%;height:auto;}
+  #navtoggle{position:fixed;top:0;left:0;opacity:0;pointer-events:none;width:0;height:0;clip:rect(0,0,0,0);}
+  .nav-burger{display:none;}
+  .nav-burger .burger-close{display:none;}
+  :root:has(#navtoggle:checked) .nav-burger .burger-open{display:none;}
+  :root:has(#navtoggle:checked) .nav-burger .burger-close{display:inline;}
+
+  @media (max-width:768px){
+    html{scroll-padding-top:110px;}
+    body{font-size:14px;overflow-x:hidden;}
+    header.topbar{padding:6px 8px;text-align:left;display:grid;grid-template-columns:auto 1fr auto;grid-template-areas:"burger brand toggle";gap:6px 8px;align-items:center;position:sticky;}
+    .nav-burger{grid-area:burger;position:static;display:inline-flex;align-items:center;justify-content:center;font-size:1rem;line-height:1;padding:6px 10px;min-width:40px;background:rgba(255,255,255,0.85);border:1.5px solid var(--navy);color:var(--navy);border-radius:8px;cursor:pointer;user-select:none;font-weight:700;}
+    :root:has(#nightmode:checked) .nav-burger{background:rgba(255,255,255,0.08);}
+    .nm-toggle{grid-area:toggle;position:static;top:auto;right:auto;}
+    .brand-row{grid-area:brand;justify-content:flex-start;gap:6px;margin-bottom:0;line-height:1.1;min-width:0;}
+    .brand{font-size:1.05rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+    .tagline{display:none;}
+    header.topbar nav.lens{display:none;}
+    :root:has(#navtoggle:checked) header.topbar nav.lens{display:flex;flex-direction:column;align-items:stretch;position:absolute;left:0;right:0;top:100%;width:100%;max-height:75vh;overflow-y:auto;flex-wrap:nowrap;gap:4px;padding:8px 10px 10px;margin:0;background:var(--card);border-top:1px solid var(--border);border-bottom:1px solid var(--border);box-shadow:0 10px 24px rgba(0,0,0,0.35);z-index:30;}
+    :root:has(#navtoggle:checked) header.topbar nav.lens > .lens-item,
+    :root:has(#navtoggle:checked) header.topbar nav.lens > a{width:100%;min-width:0;flex:0 0 auto;}
+    :root:has(#navtoggle:checked) header.topbar nav.lens > .lens-item > a,
+    :root:has(#navtoggle:checked) header.topbar nav.lens > a{display:block;width:100%;text-align:left;padding:9px 12px;font-size:0.85rem;}
+    .lens-drop,.lens-item:focus-within .lens-drop,.lens-item:hover .lens-drop{display:none !important;}
+    nav.lens .caret{display:none;}
+    main{padding:12px 14px 42px;max-width:100%;}
+    footer{padding:12px 14px;max-width:100%;}
+    .help{padding:8px 14px;font-size:0.78rem;}
+    .jumpbar{margin:-12px -14px 12px;padding:6px 10px;}
+    .kpis{grid-template-columns:repeat(auto-fit,minmax(130px,1fr));}
+    .dir-grid{grid-template-columns:repeat(auto-fit,minmax(150px,1fr));}
+    .card-list{grid-template-columns:1fr;padding:6px 8px 10px;}
+    .gov-grid,.insight-grid,.lens-overview .lo-grid{grid-template-columns:1fr;}
+    .ec-btn{min-height:40px;padding:8px 12px;}
+    .nm-toggle{font-size:0.7rem;padding:4px 8px;}
+  }
+  @media (max-width:480px){
+    html{scroll-padding-top:96px;}
+    .brand{font-size:1rem;}
+    h1{font-size:1.15rem;}
+    h2{font-size:1rem;}
+    .dir-grid,.kpis,.swot{grid-template-columns:1fr;}
+    .card{padding:9px 10px;}
+  }
+
+  /* ===== STATE EXTENSIONS — party pills · tables · branch details ===== */
+  :root{
+    --bjp:#FF9933; --jdu:#138808; --rjd:#2E7D32; --inc:#1E88E5;
+    --ljprv:#7C3AED; --hams:#0EA5E9; --rlm:#8B5CF6; --cpiml:#DC2626;
+    --aimim:#0F766E; --ind:#6B7280;
+  }
+  .pill{display:inline-block;padding:1px 7px;border-radius:999px;font-size:0.65rem;font-weight:700;color:#fff;letter-spacing:0.3px;margin-left:4px;vertical-align:middle;}
+  .p-BJP,.p-bjp{background:var(--bjp);color:#1a1a1a;}
+  .p-JDU,.p-jdu{background:var(--jdu);} .p-RJD,.p-rjd{background:var(--rjd);} .p-INC,.p-inc{background:var(--inc);}
+  .p-LJPRV{background:var(--ljprv);} .p-HAMS{background:var(--hams);} .p-RLM{background:var(--rlm);}
+  .p-CPIML{background:var(--cpiml);} .p-AIMIM{background:var(--aimim);} .p-IND,.p-ind{background:var(--ind);}
+  .p-NPP,.p-npp{background:var(--red);} .p-NCP,.p-ncp{background:var(--navy);} .p-PPA,.p-pp-arunachal{background:var(--green);}
+  p.src{font-size:0.72rem;color:var(--muted);font-style:italic;margin:8px 14px 10px;}
+  .legend{display:flex;flex-wrap:wrap;gap:8px;font-size:0.72rem;margin:8px 0 14px;color:var(--muted);}
+  .legend > span{display:inline-flex;align-items:center;gap:2px;}
+
+  table.bihar{width:100%;border-collapse:collapse;font-size:0.84rem;background:var(--card);border:1px solid var(--border);border-radius:8px;overflow:hidden;margin:8px 0 14px;}
+  table.bihar th, table.bihar td{padding:7px 10px;text-align:left;border-bottom:1px solid var(--border);}
+  table.bihar th{background:var(--tag);font-weight:700;color:var(--navy);font-size:0.74rem;text-transform:uppercase;letter-spacing:0.4px;}
+  table.bihar tr:last-child td{border-bottom:none;}
+  table.bihar td.r{text-align:right;font-variant-numeric:tabular-nums;}
+  table.bihar caption{caption-side:bottom;font-size:0.72rem;color:var(--muted);padding-top:6px;text-align:left;}
+  :root:has(#nightmode:checked) table.bihar th{background:#1f232b;color:#9ab3ff;}
+
+  details.branch{background:var(--card);border:1px solid var(--border);border-radius:8px;margin:10px 0;}
+  details.branch > summary{padding:10px 14px;cursor:pointer;font-weight:700;color:var(--navy);font-size:0.95rem;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:8px;}
+  details.branch > summary::-webkit-details-marker{display:none;}
+  details.branch > summary::before{content:"▸ ";color:var(--saffron);}
+  details.branch[open] > summary::before{content:"▾ ";}
+  details.branch > .b-body{padding:6px 14px 14px;}
+  details.branch > table.bihar{margin:0 14px 14px;width:calc(100% - 28px);}
+  details.branch p.verify{font-size:0.7rem;color:var(--muted);font-style:italic;padding:0 14px 10px;margin:0;}
+
+  .role-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:10px 12px;font-size:0.85rem;}
+  .role-card .role{font-size:0.68rem;text-transform:uppercase;letter-spacing:0.5px;color:var(--muted);font-weight:700;}
+  .role-card .name{font-weight:700;color:var(--ink);margin:2px 0;}
+  .role-card .meta{font-size:0.75rem;color:var(--muted);}
+  .role-card .meta a{font-size:0.75rem;}
+  .role-grid{display:grid;gap:8px;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));margin:6px 0 12px;}
+
+  .callout{background:#fff7e8;border-left:4px solid var(--saffron);padding:10px 14px;border-radius:6px;margin:14px 0;font-size:0.86rem;color:#5a3a00;}
+  .callout.warn{background:#fdecea;border-left-color:var(--red);color:#7a1b13;}
+  .callout.ok{background:#e8f5e9;border-left-color:var(--green);color:#1b4d20;}
+  :root:has(#nightmode:checked) .callout{background:#2a2316;color:#d9b779;}
+  :root:has(#nightmode:checked) .callout.warn{background:#2a1715;color:#e8a097;}
+  :root:has(#nightmode:checked) .callout.ok{background:#142a17;color:#a7d9aa;}
+
+  h3.grp-h{font-size:1rem;color:var(--navy);margin:18px 0 6px;border-left:4px solid var(--green);padding-left:8px;}
+  .sec-sub{color:var(--muted);font-size:0.86rem;margin:0 0 14px;}
+  .kpi .sub{font-size:0.7rem;color:var(--muted);margin-top:2px;line-height:1.3;}
+
+  /* ===== PRINT ===== */
+  @media print{
+    header.topbar,.help,.jumpbar,nav.lens,.lens-drop,footer{display:none !important;}
+    .lens-section,.lens-section:target{display:block !important;}
+    details,details[open]{display:block !important;}
+    details > *{display:revert !important;}
+    details > summary{font-weight:700;color:#000;padding:6px 0;border-bottom:1px solid #999;cursor:default;}
+    details > summary::before{content:"" !important;}
+    .card{break-inside:avoid;border:1px solid #ccc;}
+    .card a[href]::after{content:" — " attr(href);font-size:0.7em;color:#555;}
+    body{background:#fff;color:#000;font-size:11pt;}
+    a{color:#000;text-decoration:none;}
+  }
+</style>
+</head>
+<body>
+
+<!-- Hidden checkboxes drive night-mode and mobile nav with no JS -->
+<input type="checkbox" id="nightmode" aria-label="Toggle night mode" tabindex="-1">
+<input type="checkbox" id="navtoggle" aria-label="Toggle navigation menu" tabindex="-1">
+
+<header class="topbar">
+  <label for="navtoggle" class="nav-burger" title="Menu"><span class="burger-open">☰</span><span class="burger-close">✕</span></label>
+  <label for="nightmode" class="nm-toggle" title="Toggle night mode (no JavaScript)">
+    <span class="nm-ico-dark" aria-hidden="true">🌙</span><span class="nm-lbl-dark">Night</span>
+    <span class="nm-ico-light" aria-hidden="true">☀</span><span class="nm-lbl-light">Day</span>
+  </label>
+  <div class="brand-row">
+    <a class="brand" href="#h"><span class="hi">अ</span>Arunachal Pradesh Shasan</a>
+    <span class="tagline">💡 Transparency experiment · Centre → Cabinet → Legislature → District → Panchayat → Ward</span>
+  </div>
+  <nav class="lens">
+    <a href="#h">🏠 Home</a>
+    <a href="#how">🛠 How it works</a>
+    <a href="#centre">🇮🇳 Arunachal Pradesh @ Centre</a>
+    <a href="#exec">🏛 State Cabinet</a>
+    <div class="lens-item">
+      <a href="#leg">🗳 Legislature <span class="caret">▾</span></a>
+      <div class="lens-drop">
+        <div class="ld-head"><span>Legislature</span><a href="#leg">View lens →</a></div>
+        <div class="ld-grid">
+          <a href="#leg-vs">Vidhan Sabha<span class="c">60</span></a>
+          <a href="#leg-vp">No Vidhan Parishad<span class="c">0</span></a>
+          <a href="#leg-off">Office-bearers<span class="c">4</span></a>
+        </div>
+      </div>
+    </div>
+    <a href="#judic">⚖ Judiciary</a>
+    <a href="#dist">📍 Districts (25)</a>
+    <a href="#pri">🌾 Panchayati Raj</a>
+    <a href="#bodies">📊 Constitutional Bodies</a>
+    <a href="#scope">📑 Scope memo</a>
+  </nav>
+</header>
+
+
+<main>
+
+
+
+<!-- =========================== HOME =========================== -->
+<section id="h" class="lens-section">
+  <h1>Arunachal Pradesh's Governance Chain — at a Glance</h1>
+  <p class="sec-sub">Every elected/appointed office in Arunachal Pradesh, by layer. Click a lens above (or a tile below) to drill in.</p>
+
+  <h2>KPI tiles — by layer</h2>
+  <div class="kpis">
+    <div class="kpi"><div class="v">1</div><div class="l">Arunachal Pradesh @ Union</div><div class="sub">Union Council minister (Modi-3)</div></div>
+    <div class="kpi"><div class="v">2</div><div class="l">Lok Sabha MPs</div><div class="sub">Direct election · 2024</div></div>
+    <div class="kpi"><div class="v">1</div><div class="l">Rajya Sabha MP</div><div class="sub">Elected by MLAs</div></div>
+    <div class="kpi"><div class="v">12</div><div class="l">State Cabinet</div><div class="sub">Pema Khandu ministry</div></div>
+    <div class="kpi"><div class="v">60</div><div class="l">MLAs (V. Sabha)</div><div class="sub">2024 Assembly</div></div>
+    <div class="kpi"><div class="v">0</div><div class="l">MLCs</div><div class="sub">No Vidhan Parishad</div></div>
+    <div class="kpi"><div class="v">25</div><div class="l">District polygons</div><div class="sub">map source snapshot</div></div>
+    <div class="kpi"><div class="v">99</div><div class="l">Blocks</div><div class="sub">LGD</div></div>
+    <div class="kpi"><div class="v">1,786</div><div class="l">Gram Panchayats</div><div class="sub">LGD</div></div>
+    <div class="kpi"><div class="v">live</div><div class="l">Panchayat Wards</div><div class="sub">link to register</div></div>
+    <div class="kpi"><div class="v">~1.9k+</div><div class="l">Named / linked reps</div><div class="sub">MPs + MLAs + PRI registers</div></div>
+    <div class="kpi"><div class="v">8</div><div class="l">Governance lenses</div><div class="sub">Centre → Scope</div></div>
+  </div>
+
+  <h2>Pick a lens</h2>
+  <div class="dir-grid">
+    <a class="dir-tile" href="#centre" style="border-left:3px solid var(--saffron);">🇮🇳 Arunachal Pradesh @ Centre<span class="dt-c">3 MPs</span></a>
+    <a class="dir-tile" href="#exec" style="border-left:3px solid var(--green);">🏛 State Cabinet<span class="dt-c">12</span></a>
+    <a class="dir-tile" href="#leg" style="border-left:3px solid var(--navy);">🗳 Legislature<span class="dt-c">60</span></a>
+    <a class="dir-tile" href="#judic" style="border-left:3px solid #8338EC;">⚖ Judiciary<span class="dt-c">3 bench</span></a>
+    <a class="dir-tile" href="#dist" style="border-left:3px solid var(--red);">📍 Districts<span class="dt-c">25</span></a>
+    <a class="dir-tile" href="#pri" style="border-left:3px solid var(--green);">🌾 Panchayati Raj<span class="dt-c">1,786 GP</span></a>
+    <a class="dir-tile" href="#bodies" style="border-left:3px solid #06A77D;">📊 Constitutional Bodies<span class="dt-c">12+</span></a>
+    <a class="dir-tile" href="#scope" style="border-left:3px solid var(--muted);">📑 Scope memo<span class="dt-c">read</span></a>
+  </div>
+
+  <div class="legend">
+    <span><span class="pill p-BJP">BJP</span> Bharatiya Janata Party</span>
+    <span><span class="pill p-NPP">NPP</span> National People's Party</span>
+    <span><span class="pill p-NCP">NCP</span> Nationalist Congress Party</span>
+    <span><span class="pill p-PPA">PPA</span> People's Party of Arunachal</span>
+    
+    
+    <span><span class="pill p-INC">INC</span> Indian National Congress</span>
+    
+    
+    <span><span class="pill p-IND">IND</span> Independent</span>
+  </div>
+
+  <h2>Relmap — how the chain connects</h2>
+  <div class="relmap">
+    <h2>🔗 Centre → State → District → Block → GP → Ward</h2>
+    <p>Six tiers. Top two are elected to Parliament/Assembly; bottom four mix elected representatives with civil-service counterparts. Every citizen sits inside one chain that touches all six.</p>
+    <svg viewBox="0 0 900 320" xmlns="http://www.w3.org/2000/svg" class="relflow" role="img" aria-label="Arunachal Pradesh governance chain">
+      <defs>
+        <marker id="bArr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#888"/></marker>
+      </defs>
+      <rect x="360" y="10" width="180" height="44" rx="6" class="gb-const"/>
+      <text x="450" y="32" text-anchor="middle" font-size="12" font-weight="700">🇮🇳 Union (Centre)</text>
+      <text x="450" y="46" text-anchor="middle" font-size="10" fill="#666">Cabinet · 2 LS · 1 RS</text>
+
+      <rect x="360" y="90" width="180" height="44" rx="6" class="gb-exec"/>
+      <text x="450" y="112" text-anchor="middle" font-size="12" font-weight="700">🏛 State (Arunachal Pradesh)</text>
+      <text x="450" y="126" text-anchor="middle" font-size="10" fill="#666">CM + 12 ministers · 60 MLAs · no MLCs</text>
+
+      <rect x="30" y="170" width="190" height="44" rx="6" class="gb-state"/>
+      <text x="125" y="192" text-anchor="middle" font-size="12" font-weight="700">📍 District (25)</text>
+      <text x="125" y="206" text-anchor="middle" font-size="10" fill="#666">DM · SP · ZP Adhyaksh</text>
+
+      <rect x="245" y="170" width="190" height="44" rx="6" class="gb-state"/>
+      <text x="340" y="192" text-anchor="middle" font-size="12" font-weight="700">📦 Block (99)</text>
+      <text x="340" y="206" text-anchor="middle" font-size="10" fill="#666">BDO · Pramukh</text>
+
+      <rect x="460" y="170" width="190" height="44" rx="6" class="gb-regu"/>
+      <text x="555" y="192" text-anchor="middle" font-size="12" font-weight="700">🌾 Gram Panchayat (1,786)</text>
+      <text x="555" y="206" text-anchor="middle" font-size="10" fill="#666">GP representatives</text>
+
+      <rect x="675" y="170" width="195" height="44" rx="6" class="gb-legis"/>
+      <text x="772" y="192" text-anchor="middle" font-size="12" font-weight="700">🏘 Ward register</text>
+      <text x="772" y="206" text-anchor="middle" font-size="10" fill="#666">Ward Member (Panch)</text>
+
+      <line x1="450" y1="54" x2="450" y2="86" stroke="#888" stroke-width="1.5" marker-end="url(#bArr)"/>
+      <line x1="450" y1="134" x2="125" y2="166" stroke="#888" stroke-width="1.5" marker-end="url(#bArr)"/>
+      <line x1="450" y1="134" x2="340" y2="166" stroke="#888" stroke-width="1.5" marker-end="url(#bArr)"/>
+      <line x1="450" y1="134" x2="555" y2="166" stroke="#888" stroke-width="1.5" marker-end="url(#bArr)"/>
+      <line x1="450" y1="134" x2="772" y2="166" stroke="#888" stroke-width="1.5" marker-end="url(#bArr)"/>
+
+      <rect x="340" y="260" width="220" height="40" rx="20" fill="#138808" opacity="0.18" stroke="#138808" stroke-width="1.5"/>
+      <text x="450" y="285" text-anchor="middle" font-size="13" font-weight="700">👥 Citizen (you)</text>
+      <line x1="125" y1="214" x2="380" y2="255" stroke="#888" stroke-width="1.5" marker-end="url(#bArr)"/>
+      <line x1="772" y1="214" x2="520" y2="255" stroke="#888" stroke-width="1.5" marker-end="url(#bArr)"/>
+    </svg>
+    <p style="font-size:0.82rem;color:var(--muted);"><strong>Reading it:</strong> Every Arunachali citizen has, simultaneously, a ward representative, Gram Panchayat chair, Block chair, ZP member, MLA, MP (LS), MP (RS) and a CM — eight elected lenses, plus the appointed DM/SP/BDO chain. This catalogue names them where it can, links the live registers where the count is too large.</p>
+  </div>
+</section>
+
+<!-- =========================== HOW IT WORKS =========================== -->
+<section id="how" class="lens-section">
+  <h1>🛠 How this catalogue works</h1>
+  <p class="sec-sub">A visual walkthrough of the 7-tier governance pyramid this site catalogues, and the rule deciding what gets named inline vs linked to a live register.</p>
+
+  <div class="lens-overview">
+    <div class="lo-grid">
+      <div>
+        <h3>① The 7-tier pyramid</h3>
+        <p>Arunachal Pradesh's governance stack runs from <strong>1 Union minister</strong> at the apex down to <strong>1,786 Gram Panchayats plus ward registers</strong> at the base. Each tier roughly multiplies the count below it by 10×–100×.</p>
+        <p>Cards in every lens use the same colour key as the pyramid: 🟢 named inline · 🟠 linked to live register · 🔴 too volatile to embed.</p>
+      </div>
+      <div class="lo-chart">
+        <div class="lo-chart-title">7-tier governance pyramid (log scale)</div>
+        <svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Governance pyramid">
+          <defs>
+            <linearGradient id="pyG" x1="0" x2="0" y1="0" y2="1">
+              <stop offset="0%" stop-color="var(--green)"/>
+              <stop offset="55%" stop-color="var(--saffron)"/>
+              <stop offset="100%" stop-color="var(--red)"/>
+            </linearGradient>
+          </defs>
+          <g font-family="inherit" font-size="9">
+            <polygon points="160,15 200,15 220,45 140,45" fill="var(--green)" opacity="0.9"/>
+            <text x="180" y="33" text-anchor="middle" fill="#fff" font-weight="600">Union · 1</text>
+
+            <polygon points="140,48 220,48 240,78 120,78" fill="var(--green)" opacity="0.85"/>
+            <text x="180" y="66" text-anchor="middle" fill="#fff" font-weight="600">MPs (LS+RS) · 3</text>
+
+            <polygon points="120,81 240,81 260,111 100,111" fill="var(--green)" opacity="0.8"/>
+            <text x="180" y="99" text-anchor="middle" fill="#fff" font-weight="600">State Cabinet · 12</text>
+
+            <polygon points="100,114 260,114 280,144 80,144" fill="var(--saffron)" opacity="0.85"/>
+            <text x="180" y="132" text-anchor="middle" fill="#fff" font-weight="600">MLAs · 60</text>
+
+            <polygon points="80,147 280,147 300,177 60,177" fill="var(--saffron)" opacity="0.8"/>
+            <text x="180" y="165" text-anchor="middle" fill="#fff" font-weight="600">Districts · 25 × (DM+SP+ZP)</text>
+
+            <polygon points="60,180 300,180 320,205 40,205" fill="var(--red)" opacity="0.75"/>
+            <text x="180" y="197" text-anchor="middle" fill="#fff" font-weight="600">Blocks · 99 + 1,786 GPs</text>
+
+            <polygon points="40,208 320,208 340,235 20,235" fill="var(--red)" opacity="0.85"/>
+            <text x="180" y="225" text-anchor="middle" fill="#fff" font-weight="600">Wards · live</text>
+          </g>
+          <g font-size="8" fill="var(--muted)">
+            <text x="345" y="35">🟢 inline</text>
+            <text x="345" y="130">🟠 link</text>
+            <text x="345" y="225">🔴 impractical</text>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <h3 class="grp-h">② The decision flow — inline or link?</h3>
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px;margin-top:8px;">
+    <svg viewBox="0 0 720 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Decision flow" style="width:100%;height:auto;display:block;">
+      <defs>
+        <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M0,0 L10,5 L0,10 z" fill="#5b5b5b"/>
+        </marker>
+      </defs>
+
+      <rect x="20" y="95" width="140" height="50" rx="6" fill="#eef0f7" stroke="#e3e3df" stroke-width="1.2"/>
+      <text x="90" y="118" text-anchor="middle" font-size="11" fill="#1a1a1a" font-family="inherit">New office-holder</text>
+      <text x="90" y="134" text-anchor="middle" font-size="11" fill="#1a1a1a" font-family="inherit">layer to catalogue</text>
+
+      <line x1="160" y1="120" x2="215" y2="120" stroke="#5b5b5b" stroke-width="1.4" marker-end="url(#ar)"/>
+
+      <polygon points="220,120 305,75 390,120 305,165" fill="#fff7e8" stroke="#FF9933" stroke-width="1.4"/>
+      <text x="305" y="115" text-anchor="middle" font-size="11" fill="#1a1a1a" font-family="inherit">&lt; 50 people?</text>
+      <text x="305" y="130" text-anchor="middle" font-size="11" fill="#1a1a1a" font-family="inherit">turnover &gt; 1 yr?</text>
+
+      <path d="M305,75 L305,40 L470,40 L470,75" stroke="#5b5b5b" stroke-width="1.4" fill="none" marker-end="url(#ar)"/>
+      <text x="385" y="34" text-anchor="middle" font-size="10" fill="#5b5b5b" font-family="inherit">yes (both)</text>
+
+      <line x1="390" y1="120" x2="470" y2="120" stroke="#5b5b5b" stroke-width="1.4" marker-end="url(#ar)"/>
+      <text x="430" y="113" text-anchor="middle" font-size="10" fill="#5b5b5b" font-family="inherit">one no</text>
+
+      <path d="M305,165 L305,200 L470,200 L470,170" stroke="#5b5b5b" stroke-width="1.4" fill="none" marker-end="url(#ar)"/>
+      <text x="385" y="216" text-anchor="middle" font-size="10" fill="#5b5b5b" font-family="inherit">huge or volatile</text>
+
+      <rect x="395" y="78" width="150" height="38" rx="6" fill="#138808"/>
+      <text x="470" y="102" text-anchor="middle" font-size="12" fill="#fff" font-weight="600" font-family="inherit">🟢 Inline · full names</text>
+
+      <rect x="395" y="123" width="150" height="38" rx="6" fill="#FF9933"/>
+      <text x="470" y="147" text-anchor="middle" font-size="12" fill="#fff" font-weight="600" font-family="inherit">🟠 Tally + role-cards</text>
+
+      <rect x="395" y="168" width="150" height="38" rx="6" fill="#c0392b"/>
+      <text x="470" y="192" text-anchor="middle" font-size="12" fill="#fff" font-weight="600" font-family="inherit">🔴 Link to live register</text>
+
+      <line x1="545" y1="97" x2="585" y2="97" stroke="#5b5b5b" stroke-width="1.4" marker-end="url(#ar)"/>
+      <line x1="545" y1="142" x2="585" y2="142" stroke="#5b5b5b" stroke-width="1.4" marker-end="url(#ar)"/>
+      <line x1="545" y1="187" x2="585" y2="187" stroke="#5b5b5b" stroke-width="1.4" marker-end="url(#ar)"/>
+
+      <rect x="585" y="73" width="125" height="48" rx="6" fill="#eef0f7" stroke="#e3e3df"/>
+      <text x="647" y="92" text-anchor="middle" font-size="10" fill="#1a1a1a" font-family="inherit">Cabinet · MPs ·</text>
+      <text x="647" y="108" text-anchor="middle" font-size="10" fill="#1a1a1a" font-family="inherit">CM · constit. bodies</text>
+
+      <rect x="585" y="118" width="125" height="48" rx="6" fill="#eef0f7" stroke="#e3e3df"/>
+      <text x="647" y="137" text-anchor="middle" font-size="10" fill="#1a1a1a" font-family="inherit">MLAs · MLCs ·</text>
+      <text x="647" y="153" text-anchor="middle" font-size="10" fill="#1a1a1a" font-family="inherit">HC bench</text>
+
+      <rect x="585" y="163" width="125" height="48" rx="6" fill="#eef0f7" stroke="#e3e3df"/>
+      <text x="647" y="182" text-anchor="middle" font-size="10" fill="#1a1a1a" font-family="inherit">Mukhiyas · Wards ·</text>
+      <text x="647" y="198" text-anchor="middle" font-size="10" fill="#1a1a1a" font-family="inherit">BDOs · ULB members</text>
+    </svg>
+    <div style="font-size:0.78rem;color:#5b5b5b;margin-top:6px;text-align:center;">Decision tree applied independently per layer · re-evaluated each election cycle</div>
+  </div>
+
+  <h3 class="grp-h">③ How a query flows through the catalogue</h3>
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px;">
+    <svg viewBox="0 0 720 140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Query flow" style="width:100%;height:auto;display:block;">
+      <defs>
+        <marker id="ar2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M0,0 L10,5 L0,10 z" fill="#FF9933"/>
+        </marker>
+      </defs>
+
+      <rect x="15" y="50" width="110" height="40" rx="20" fill="#eef0f7" stroke="#e3e3df"/>
+      <text x="70" y="75" text-anchor="middle" font-size="12" fill="#1a1a1a" font-family="inherit">👤 Citizen</text>
+
+      <line x1="125" y1="70" x2="170" y2="70" stroke="#FF9933" stroke-width="2" marker-end="url(#ar2)"/>
+
+      <rect x="170" y="50" width="120" height="40" rx="6" fill="#138808"/>
+      <text x="230" y="75" text-anchor="middle" font-size="12" fill="#fff" font-weight="600" font-family="inherit">Pick a lens</text>
+
+      <line x1="290" y1="70" x2="335" y2="70" stroke="#FF9933" stroke-width="2" marker-end="url(#ar2)"/>
+
+      <rect x="335" y="50" width="140" height="40" rx="6" fill="#FF9933"/>
+      <text x="405" y="75" text-anchor="middle" font-size="12" fill="#fff" font-weight="600" font-family="inherit">Inline data here?</text>
+
+      <path d="M475,60 L505,30" stroke="#FF9933" stroke-width="2" fill="none" marker-end="url(#ar2)"/>
+      <path d="M475,80 L505,110" stroke="#FF9933" stroke-width="2" fill="none" marker-end="url(#ar2)"/>
+
+      <rect x="510" y="10" width="200" height="40" rx="6" fill="#138808"/>
+      <text x="610" y="35" text-anchor="middle" font-size="12" fill="#fff" font-weight="600" font-family="inherit">✅ Read name + party + link</text>
+
+      <rect x="510" y="95" width="200" height="40" rx="6" fill="#c0392b"/>
+      <text x="610" y="120" text-anchor="middle" font-size="12" fill="#fff" font-weight="600" font-family="inherit">⛓ Hand off to live register</text>
+
+      <text x="485" y="25" font-size="10" fill="#5b5b5b" font-family="inherit">yes</text>
+      <text x="485" y="125" font-size="10" fill="#5b5b5b" font-family="inherit">no</text>
+    </svg>
+  </div>
+
+  <div class="callout ok" style="margin-top:14px;">
+    <strong>The promise:</strong> every named person on this page comes with a link back to the official source that minted
+    them. Every layer this page does <em>not</em> name comes with a link to the authoritative live register that does.
+    Transparency = traceability, not bulk.
+  </div>
+</section>
+
+<!-- =========================== CENTRE =========================== -->
+<section id="centre" class="lens-section">
+<!-- BEGIN: CENTRE — Union ministers + LS MPs (2 rows) + RS MPs (1 row). -->
+  <h1>🇮🇳 Arunachal Pradesh's Representation at the Union</h1>
+  <p class="sec-sub">Union ministers domiciled to Arunachal Pradesh, both Lok Sabha MPs, and the Rajya Sabha MP elected by the Arunachal Pradesh Legislature.</p>
+
+  <div class="ec-toggle">
+    <button type="button" class="ec-btn" data-ec="expand" data-scope="centre">⊞ Expand all</button>
+    <button type="button" class="ec-btn" data-ec="collapse" data-scope="centre">⊟ Collapse all</button>
+    <span class="ec-hint">Toggles every <code>details</code> in this lens.</span>
+  </div>
+
+  <details class="branch" open>
+    <summary><span>Union Council of Ministers from Arunachal Pradesh</span><span class="ct">1 · Modi 3.0</span></summary>
+    <div class="b-body">
+      <div class="role-grid">
+        <div class="role-card"><div class="role">Cabinet · Parliamentary Affairs; Minority Affairs</div><div class="name">Kiren Rijiju<span class="pill p-bjp">BJP</span></div><div class="meta">MP, Arunachal West · <a href="https://www.pmindia.gov.in/en/the-union-council-of-ministers/" target="_blank" rel="noopener">PM India Council of Ministers</a></div></div>
+      </div>
+    </div>
+    <p class="src">Sources: <a href="https://www.pmindia.gov.in/en/the-union-council-of-ministers/" target="_blank" rel="noopener">PM India — Union Council of Ministers</a>; <a href="https://sansad.in/ls/members" target="_blank" rel="noopener">Digital Sansad LS members</a>.</p>
+  </details>
+
+  <details class="branch">
+    <summary><span>Lok Sabha — all 2 MPs from Arunachal Pradesh</span><span class="ct">18th LS · 2024</span></summary>
+    <table class="bihar">
+      <thead><tr><th>#</th><th>Constituency</th><th>Member of Parliament</th><th>Party</th></tr></thead>
+      <tbody>
+        <tr><td class="r">1</td><td>Arunachal West</td><td>Kiren Rijiju</td><td><span class="pill p-bjp">BJP</span></td></tr>
+        <tr><td class="r">2</td><td>Arunachal East</td><td>Tapir Gao</td><td><span class="pill p-bjp">BJP</span></td></tr>
+      </tbody>
+      <caption>Tally: BJP 2 = <strong>2</strong>.</caption>
+    </table>
+    <p class="src">Sources: <a href="https://results.eci.gov.in/PcResultGenJune2024/partywiseresult-S02.htm" target="_blank" rel="noopener">ECI GE-2024 results</a>; <a href="https://sansad.in/ls/members" target="_blank" rel="noopener">Digital Sansad LS member directory</a>.</p>
+  </details>
+
+  <details class="branch">
+    <summary><span>Rajya Sabha — 1 MP from Arunachal Pradesh</span><span class="ct">BJP 1</span></summary>
+    <table class="bihar">
+      <thead><tr><th>#</th><th>Member</th><th>Party</th><th>Term ends</th></tr></thead>
+      <tbody>
+        <tr><td class="r">1</td><td>Nabam Rebia</td><td><span class="pill p-bjp">BJP</span></td><td>23-Jun-2026</td></tr>
+      </tbody>
+    </table>
+    <p class="src">Sources: <a href="https://sansad.in/rs/members" target="_blank" rel="noopener">Digital Sansad RS member directory</a>; Rajya Sabha state roster as verified 24-May-2026.</p>
+  </details><!-- END: CENTRE -->
+
+</section>
+
+<!-- =========================== EXECUTIVE =========================== -->
+<section id="exec" class="lens-section">
+<!-- BEGIN: EXEC — Triumvirate (CM + Dy-CM) + cabinet table + apex civil service. -->
+  <h1>🏛 State Executive — Pema Khandu Ministry (2024 →)</h1>
+  <p class="sec-sub">BJP government headed by Chief Minister Pema Khandu; Chowna Mein serves as Deputy Chief Minister. Governor Lt Gen K. T. Parnaik (Retd.) is the constitutional head.</p>
+
+  <h3 class="grp-h">Triumvirate</h3>
+  <div class="role-grid">
+    <div class="role-card"><div class="role">Chief Minister</div><div class="name">Pema Khandu<span class="pill p-bjp">BJP</span></div><div class="meta">Head of elected government · <a href="https://arunachalpradesh.gov.in/cabinet-minister.php?lang=en" target="_blank" rel="noopener">state cabinet list</a></div></div>
+    <div class="role-card"><div class="role">Deputy Chief Minister</div><div class="name">Chowna Mein<span class="pill p-bjp">BJP</span></div><div class="meta">Listed by state portal as Hon'ble Deputy Chief Minister</div></div>
+    <div class="role-card"><div class="role">Governor</div><div class="name">Lt Gen K. T. Parnaik (Retd.)</div><div class="meta">Raj Bhavan / Lok Bhavan, Itanagar · <a href="https://arunachalgovernor.gov.in/" target="_blank" rel="noopener">Governor's Secretariat</a></div></div>
+  </div>
+
+  <h3 class="grp-h">Council of Ministers</h3>
+  <table class="bihar">
+    <thead><tr><th>#</th><th>Minister</th><th>Party</th><th>Position / portfolio source</th></tr></thead>
+    <tbody>
+      <tr><td class="r">1</td><td>Pema Khandu</td><td><span class="pill p-bjp">BJP</span></td><td>Chief Minister</td></tr>
+      <tr><td class="r">2</td><td>Chowna Mein</td><td><span class="pill p-bjp">BJP</span></td><td>Deputy Chief Minister</td></tr>
+      <tr><td class="r">3</td><td>Ojing Tasing</td><td><span class="pill p-bjp">BJP</span></td><td>Minister</td></tr>
+      <tr><td class="r">4</td><td>Kento Jini</td><td><span class="pill p-bjp">BJP</span></td><td>Minister</td></tr>
+      <tr><td class="r">5</td><td>Balo Raja</td><td><span class="pill p-bjp">BJP</span></td><td>Minister</td></tr>
+      <tr><td class="r">6</td><td>Mama Natung</td><td><span class="pill p-bjp">BJP</span></td><td>Minister</td></tr>
+      <tr><td class="r">7</td><td>Dasanglu Pul</td><td><span class="pill p-bjp">BJP</span></td><td>Minister</td></tr>
+      <tr><td class="r">8</td><td>Pasang Dorjee Sona</td><td><span class="pill p-bjp">BJP</span></td><td>Minister</td></tr>
+      <tr><td class="r">9</td><td>Gabriel Denwang Wangsu</td><td><span class="pill p-bjp">BJP</span></td><td>Minister</td></tr>
+      <tr><td class="r">10</td><td>Wangki Lowang</td><td><span class="pill p-bjp">BJP</span></td><td>Minister</td></tr>
+      <tr><td class="r">11</td><td>Nyato Dukam</td><td><span class="pill p-bjp">BJP</span></td><td>Minister</td></tr>
+      <tr><td class="r">12</td><td>Biyuram Wahge</td><td><span class="pill p-bjp">BJP</span></td><td>Minister</td></tr>
+    </tbody>
+  </table>
+
+  <h3 class="grp-h">Apex civil / police / election administration</h3>
+  <div class="role-grid">
+    <div class="role-card"><div class="role">Chief Secretary</div><div class="name">Manish Kumar Gupta, IAS</div><div class="meta"><a href="https://arunachalipr.gov.in/index.php/whos-who/" target="_blank" rel="noopener">DIPR who's-who</a></div></div>
+    <div class="role-card"><div class="role">Director General of Police</div><div class="name">Shiv Darshan Singh Jamwal, IPS</div><div class="meta">AGMUT cadre posting; verify against Home/DGP office notifications</div></div>
+    <div class="role-card"><div class="role">Chief Electoral Officer</div><div class="name">Pawan Kumar Sain, IAS</div><div class="meta"><a href="https://ceoarunachal.nic.in/" target="_blank" rel="noopener">CEO Arunachal Pradesh</a></div></div>
+  </div>
+  <p class="src">Sources: <a href="https://arunachalpradesh.gov.in/cabinet-minister.php?lang=en" target="_blank" rel="noopener">Arunachal state portal — Cabinet Ministers</a>; <a href="https://arunachalgovernor.gov.in/" target="_blank" rel="noopener">Governor's Secretariat</a>; <a href="https://ceoarunachal.nic.in/" target="_blank" rel="noopener">CEO Arunachal Pradesh</a>; <a href="https://arunachalipr.gov.in/index.php/whos-who/" target="_blank" rel="noopener">DIPR who's-who</a>.</p><!-- END: EXEC -->
+
+</section>
+
+<!-- =========================== LEGISLATURE =========================== -->
+<section id="leg" class="lens-section">
+<!-- BEGIN: LEG — Vidhan Sabha tally + officers. -->
+  <h1>🗳 Legislature — Arunachal Pradesh Legislative Assembly</h1>
+  <p class="sec-sub">Unicameral legislature: 60 MLAs, majority mark 31, no Vidhan Parishad.</p>
+
+  <details class="branch" open id="leg-vs">
+    <summary><span>Vidhan Sabha party tally</span><span class="ct">60 seats · majority 31</span></summary>
+    <table class="bihar">
+      <thead><tr><th>Party / group</th><th>Seats</th><th>Role</th></tr></thead>
+      <tbody>
+        <tr><td><span class="pill p-bjp">BJP</span> Bharatiya Janata Party</td><td class="r">46</td><td>Government</td></tr>
+        <tr><td><span class="pill p-npp">NPP</span> National People's Party</td><td class="r">5</td><td>Opposition bloc</td></tr>
+        <tr><td><span class="pill p-ncp">NCP</span> Nationalist Congress Party</td><td class="r">3</td><td>Opposition / others</td></tr>
+        <tr><td><span class="pill p-pp-arunachal">PPA</span> People's Party of Arunachal</td><td class="r">2</td><td>Regional party</td></tr>
+        <tr><td><span class="pill p-inc">INC</span> Indian National Congress</td><td class="r">1</td><td>Opposition</td></tr>
+        <tr><td><span class="pill p-ind">IND</span> Independents</td><td class="r">3</td><td>Others</td></tr>
+      </tbody>
+      <caption>Total = 46 + 5 + 3 + 2 + 1 + 3 = <strong>60</strong>.</caption>
+    </table>
+  </details>
+
+  <details class="branch" open id="leg-off">
+    <summary><span>Assembly office-bearers</span><span class="ct">Speaker · Deputy Speaker · LoP</span></summary>
+    <div class="role-grid">
+      <div class="role-card"><div class="role">Speaker</div><div class="name">Tesam Pongte<span class="pill p-bjp">BJP</span></div><div class="meta">Elected after the 2024 Assembly election</div></div>
+      <div class="role-card"><div class="role">Deputy Speaker</div><div class="name">Kardo Nyigyor<span class="pill p-bjp">BJP</span></div><div class="meta">Elected unopposed in June 2024</div></div>
+      <div class="role-card"><div class="role">Leader of the House</div><div class="name">Pema Khandu<span class="pill p-bjp">BJP</span></div><div class="meta">Chief Minister</div></div>
+      <div class="role-card"><div class="role">Leader of Opposition</div><div class="name">Vacant</div><div class="meta">No party meets the conventional 10% threshold in the 60-member House</div></div>
+    </div>
+  </details>
+  <p class="src">Sources: <a href="https://results.eci.gov.in/AcResultGenJune2024/partywiseresult-S02.htm" target="_blank" rel="noopener">ECI Assembly results 2024</a>; <a href="https://prsindia.org/legislatures/state/vital-stats/profile-of-the-8th-arunachal-pradesh-legislative-assembly" target="_blank" rel="noopener">PRS profile of 8th Arunachal Pradesh Assembly</a>; <a href="https://arla.neva.gov.in/" target="_blank" rel="noopener">Arunachal Pradesh Legislative Assembly / NeVA</a>.</p><!-- END: LEG -->
+
+</section>
+
+<!-- =========================== JUDICIARY =========================== -->
+<section id="judic" class="lens-section">
+<!-- BEGIN: JUDIC — Chief Justice + judges. -->
+  <h1>⚖ Judiciary — Gauhati High Court, Itanagar Permanent Bench</h1>
+  <p class="sec-sub">Arunachal Pradesh falls under the Gauhati High Court; the Itanagar Permanent Bench lists sitting judges for the state bench.</p>
+  <div class="role-grid">
+    <div class="role-card"><div class="role">High Court for the state</div><div class="name">Gauhati High Court — Itanagar Permanent Bench</div><div class="meta"><a href="https://ghcitanagar.gov.in/" target="_blank" rel="noopener">ghcitanagar.gov.in</a></div></div>
+    <div class="role-card"><div class="role">Judge</div><div class="name">Justice Kardak Ete</div><div class="meta">Itanagar Permanent Bench judge roster</div></div>
+    <div class="role-card"><div class="role">Judge</div><div class="name">Justice Budi Habung</div><div class="meta">Itanagar Permanent Bench judge roster</div></div>
+    <div class="role-card"><div class="role">Judge</div><div class="name">Justice Anjan Moni Kalita</div><div class="meta">Itanagar Permanent Bench judge roster</div></div>
+  </div>
+  <p class="src">Sources: <a href="https://ghcitanagar.gov.in/judges.html" target="_blank" rel="noopener">Gauhati High Court Itanagar Permanent Bench — Judges</a>; <a href="https://doj.gov.in/" target="_blank" rel="noopener">Department of Justice</a>.</p><!-- END: JUDIC -->
+
+</section>
+
+<!-- =========================== DISTRICTS =========================== -->
+<section id="dist" class="lens-section">
+<!-- BEGIN: DIST — Districts map SVG + table. -->
+  <h1>📍 District Administration</h1>
+  <p class="sec-sub">The supplied district GeoJSON renders 25 district polygons. Newer official district notifications should be reconciled when an updated boundary source is available.</p>
+  <div class="mapbox">
+<svg viewBox="0 0 860 500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Map of Arunachal Pradesh showing 25 districts from the supplied district GeoJSON" style="width:100%;height:auto;display:block;background:#fffdf6;border-radius:6px;font-family:inherit;">
+<rect x="0" y="0" width="860" height="500" rx="6" fill="#fffdf6"/>
+<path d="M736.8,185.7 L733.2,185.9 L730.8,185.9 L727.6,185.6 L724.9,186.1 L722.1,187.7 L720.9,189.4 L718.5,190.6 L716.5,192.4 L715.1,193.2 L713.2,192.4 L710.9,192.2 L709.5,192.5 L707.8,193.0 L707.2,193.6 L706.3,195.0 L705.2,195.9 L704.1,197.4 L703.9,198.3 L703.9,199.1 L703.7,200.5 L703.4,201.9 L702.9,203.9 L701.4,204.6 L699.6,204.9 L698.5,202.1 L696.8,201.8 L696.1,198.1 L695.6,197.0 L694.3,197.1 L689.9,198.0 L688.4,198.3 L687.0,199.0 L687.4,200.8 L689.8,202.5 L691.1,204.9 L690.7,206.7 L687.4,211.4 L686.1,213.8 L685.1,216.3 L685.2,219.3 L685.5,221.3 L687.4,224.1 L689.2,226.9 L690.8,229.5 L690.8,231.5 L690.3,233.7 L689.5,235.4 L689.7,236.6 L689.7,238.1 L688.1,240.1 L686.2,242.1 L683.0,243.6 L682.0,244.4 L682.1,246.2 L684.1,249.1 L690.6,255.3 L695.8,259.3 L698.7,262.9 L699.4,265.7 L701.0,269.2 L702.2,271.2 L704.2,272.6 L711.3,273.4 L715.4,274.0 L718.0,274.8 L721.1,277.1 L724.1,280.8 L726.0,282.3 L727.9,281.8 L729.2,281.3 L729.9,281.6 L730.8,283.1 L730.7,285.1 L732.2,286.4 L732.8,288.4 L732.9,290.2 L732.0,291.5 L730.9,293.3 L729.8,294.9 L729.9,296.2 L732.3,298.7 L733.6,300.7 L732.9,302.0 L730.9,303.5 L730.3,305.2 L730.6,306.9 L732.1,309.2 L734.8,310.9 L739.2,311.7 L741.0,312.2 L742.0,313.0 L742.8,314.6 L745.8,315.1 L746.6,316.0 L748.6,317.4 L750.0,319.2 L751.1,319.9 L752.3,318.9 L752.4,317.7 L753.2,316.2 L754.9,316.3 L756.4,317.5 L757.9,317.3 L758.7,317.5 L759.7,317.4 L760.3,318.0 L762.9,318.8 L763.9,317.9 L764.7,317.7 L767.8,318.8 L769.6,320.1 L770.6,320.4 L771.2,319.7 L771.8,319.1 L771.8,318.2 L772.6,317.7 L773.2,317.2 L773.4,316.4 L774.1,315.8 L774.4,314.9 L774.8,314.2 L775.0,313.1 L775.8,312.6 L776.6,312.7 L777.3,312.4 L778.2,312.5 L779.2,312.7 L779.9,312.0 L780.7,312.4 L781.6,312.2 L781.6,311.3 L781.8,310.5 L781.9,309.6 L782.3,308.9 L783.0,307.9 L783.2,307.2 L784.0,306.5 L784.5,305.8 L785.2,305.3 L785.5,304.4 L785.8,303.5 L786.2,302.7 L786.8,301.9 L786.6,301.0 L787.1,300.3 L788.1,300.1 L788.6,299.4 L789.2,298.9 L790.0,299.2 L790.3,300.0 L791.1,300.4 L791.7,299.7 L792.4,299.1 L793.3,299.5 L793.9,300.0 L794.4,300.6 L795.3,300.9 L796.1,301.4 L796.7,300.8 L797.1,299.9 L797.6,299.2 L797.9,297.4 L798.4,296.1 L797.7,294.9 L797.5,294.0 L798.0,293.2 L799.8,292.8 L801.1,292.4 L802.5,291.1 L802.9,289.8 L803.9,289.5 L805.0,289.1 L806.2,288.6 L807.4,287.5 L807.2,286.4 L808.2,286.0 L809.2,285.5 L809.9,284.9 L810.3,284.1 L811.1,283.2 L812.1,281.9 L813.5,280.7 L814.6,279.8 L815.5,279.1 L816.9,277.8 L817.6,277.0 L818.4,275.6 L819.7,274.7 L823.1,273.1 L824.1,272.8 L826.1,271.9 L827.0,271.5 L827.9,272.3 L828.9,273.7 L829.0,275.7 L828.8,278.0 L830.8,277.4 L831.9,277.2 L834.9,278.7 L835.8,278.4 L836.8,277.4 L838.3,276.9 L838.1,275.7 L837.0,274.3 L836.8,273.4 L838.1,272.1 L837.4,270.5 L836.4,269.2 L836.8,266.2 L836.8,263.8 L836.8,262.5 L837.4,261.5 L838.3,259.4 L838.6,258.4 L840.2,258.3 L841.5,257.9 L842.0,256.5 L840.7,255.5 L839.7,254.9 L838.4,254.4 L837.4,253.9 L835.4,252.0 L836.2,250.3 L836.2,249.1 L835.1,249.5 L833.8,249.5 L832.2,249.7 L830.3,249.9 L828.5,249.6 L827.5,249.1 L826.9,248.0 L827.0,246.6 L827.3,245.4 L828.2,244.3 L829.7,242.8 L831.3,241.2 L831.5,240.4 L830.8,239.4 L830.3,238.6 L829.6,237.7 L829.3,236.6 L829.7,235.7 L830.2,234.3 L831.7,232.8 L833.2,231.3 L834.2,230.2 L834.8,229.0 L836.0,228.3 L837.4,229.0 L838.8,229.8 L840.0,229.4 L840.0,228.3 L838.5,226.4 L837.3,225.3 L836.4,224.3 L835.0,223.4 L833.1,222.9 L831.8,221.7 L830.7,220.8 L829.8,220.3 L829.0,220.1 L827.7,220.1 L827.0,219.1 L826.8,218.2 L824.9,217.1 L823.4,216.2 L821.5,215.9 L819.5,216.1 L817.7,216.3 L816.7,215.4 L815.8,213.3 L815.3,212.4 L813.9,212.5 L812.3,213.1 L810.9,213.2 L809.5,212.9 L808.2,212.5 L807.6,212.0 L807.0,210.3 L806.1,208.0 L805.2,206.9 L803.3,205.2 L802.1,204.1 L801.5,203.4 L799.7,202.9 L798.5,202.3 L797.6,201.5 L796.8,201.2 L795.0,201.9 L793.1,202.8 L791.1,203.0 L790.2,203.7 L789.6,204.4 L788.9,206.1 L787.6,207.5 L787.0,208.1 L784.4,209.3 L783.3,209.7 L782.0,208.7 L781.0,208.7 L780.2,208.5 L778.5,207.1 L777.2,205.9 L775.7,205.5 L773.4,205.1 L772.7,203.9 L772.6,202.8 L771.3,200.8 L770.4,199.5 L769.6,198.5 L767.0,199.0 L765.6,199.3 L764.6,199.7 L763.1,201.3 L759.5,201.5 L757.4,201.3 L755.4,200.9 L753.3,201.0 L752.2,200.4 L751.7,199.3 L751.2,197.9 L750.6,195.5 L749.8,193.8 L748.9,192.8 L747.4,191.9 L746.5,191.3 L744.1,190.9 L742.6,190.2 L740.0,188.5 L739.2,188.0 L738.3,187.1 Z" fill="#FF9933" fill-opacity="0.78" stroke="#ffffff" stroke-width="1.0"><title>Anjaw</title></path>
+<path d="M742.8,314.6 L742.0,313.0 L741.3,313.5 L740.3,313.9 L739.5,313.9 L738.7,314.7 L737.7,315.1 L737.3,315.9 L736.1,317.3 L733.7,318.2 L732.7,317.7 L731.5,317.6 L729.9,316.6 L729.1,315.8 L728.5,315.2 L727.5,314.0 L726.3,314.2 L725.5,313.7 L723.3,313.6 L722.1,314.6 L720.9,315.2 L720.0,315.1 L718.2,315.2 L716.6,316.8 L715.5,315.9 L714.3,316.0 L712.7,315.7 L711.2,315.3 L710.2,315.3 L709.6,315.9 L708.1,316.0 L707.2,316.1 L706.5,315.5 L706.1,314.3 L704.9,314.5 L703.1,314.9 L701.7,314.5 L699.1,314.9 L698.2,315.8 L697.6,316.4 L696.8,316.2 L696.1,315.5 L693.1,318.7 L692.6,321.7 L692.0,322.3 L690.9,322.9 L690.5,324.4 L690.2,325.1 L689.7,325.9 L687.8,327.1 L686.9,328.1 L685.2,329.3 L684.3,329.7 L683.4,329.6 L682.5,329.2 L681.4,329.3 L680.8,328.5 L679.2,328.3 L677.8,328.4 L677.0,327.8 L676.2,328.0 L675.3,327.7 L674.6,326.8 L674.0,326.3 L673.1,326.2 L672.3,325.7 L671.3,325.3 L670.7,324.5 L669.2,324.2 L667.8,323.5 L666.3,322.5 L663.4,321.5 L662.3,321.6 L662.6,320.7 L661.6,320.0 L658.9,320.2 L657.2,320.5 L656.3,320.8 L654.0,321.4 L652.3,321.6 L651.6,322.6 L651.2,323.8 L650.4,324.5 L649.5,324.8 L648.2,325.8 L646.9,327.2 L645.9,327.9 L643.9,329.5 L626.0,331.1 L626.4,331.8 L626.4,332.6 L626.4,333.4 L626.4,334.2 L626.5,335.0 L626.5,335.9 L626.3,336.7 L626.6,337.5 L627.1,338.1 L627.6,338.7 L626.8,339.0 L626.1,339.5 L625.8,340.5 L625.8,341.3 L625.7,342.2 L625.6,343.0 L625.5,343.9 L624.7,344.1 L624.0,344.6 L623.3,345.2 L623.2,346.0 L623.5,346.8 L623.2,347.6 L622.5,348.1 L622.1,348.9 L621.6,349.7 L621.6,350.5 L622.0,351.2 L622.7,351.7 L622.9,352.4 L623.7,352.9 L623.7,352.1 L623.6,351.3 L624.4,350.9 L625.2,350.5 L625.7,349.8 L626.1,349.0 L627.0,348.8 L627.5,349.5 L627.5,350.3 L627.4,351.2 L627.5,352.0 L627.9,352.7 L627.8,353.7 L627.5,354.4 L628.3,354.4 L628.8,353.5 L629.2,352.7 L629.5,351.8 L629.6,351.0 L630.1,350.1 L630.5,349.3 L631.2,348.8 L632.0,348.9 L632.7,348.7 L633.5,348.3 L634.3,348.7 L635.1,348.5 L635.8,348.7 L636.3,349.4 L635.9,350.1 L636.6,350.6 L637.2,351.2 L637.6,350.4 L638.1,349.8 L638.4,350.7 L638.3,351.6 L638.7,350.8 L638.9,350.1 L639.4,350.7 L640.1,351.2 L639.6,351.8 L639.9,352.6 L640.7,352.5 L641.4,352.8 L641.5,353.7 L642.3,354.1 L642.7,354.8 L643.4,356.4 L644.1,357.1 L644.7,357.8 L646.2,359.3 L645.5,360.0 L644.7,360.7 L643.2,361.4 L642.4,361.2 L642.1,362.0 L641.8,362.7 L641.5,363.4 L640.6,364.3 L639.8,364.5 L639.5,365.3 L638.9,365.9 L639.7,366.0 L639.3,366.8 L638.5,366.7 L638.4,367.5 L637.5,367.5 L637.6,368.4 L637.0,369.1 L636.2,369.8 L635.4,369.6 L635.0,370.2 L634.0,370.3 L633.2,370.8 L632.5,371.4 L631.7,371.7 L631.0,372.1 L630.6,372.9 L629.7,373.0 L630.2,374.3 L629.6,374.8 L629.1,375.4 L628.8,376.4 L628.8,377.2 L627.7,377.5 L626.8,377.2 L626.0,376.9 L625.2,376.6 L624.6,376.0 L624.0,375.4 L623.4,374.8 L623.3,374.0 L623.7,373.0 L623.0,372.5 L622.3,372.7 L621.2,372.9 L619.9,373.4 L619.1,373.7 L618.0,373.8 L617.2,374.2 L616.3,374.7 L615.6,374.2 L615.8,373.4 L615.0,373.2 L614.3,373.7 L613.7,374.2 L613.0,374.6 L612.4,375.2 L611.6,375.3 L610.8,375.5 L609.9,375.4 L609.1,375.5 L608.3,375.8 L607.5,375.7 L606.8,376.1 L606.3,376.7 L605.5,376.7 L605.0,377.4 L604.5,378.1 L603.8,378.3 L603.1,377.9 L602.4,378.4 L601.6,378.5 L600.8,378.0 L600.0,378.0 L599.1,378.0 L598.2,378.7 L596.5,379.6 L595.0,380.2 L594.2,380.6 L593.1,381.1 L592.2,381.5 L592.5,382.8 L593.2,384.9 L593.4,386.0 L593.2,387.4 L595.5,388.5 L597.1,389.7 L597.6,391.4 L597.5,394.3 L596.9,396.8 L596.4,398.2 L595.3,399.2 L593.8,400.4 L593.0,402.2 L593.7,403.8 L594.4,405.3 L594.4,406.4 L594.5,408.1 L591.6,413.9 L591.9,416.4 L593.5,419.6 L595.9,420.5 L598.9,420.5 L599.1,422.6 L599.0,424.2 L600.6,427.0 L600.6,428.5 L600.7,431.3 L599.7,433.5 L598.4,434.3 L599.2,434.8 L600.5,435.3 L601.3,435.8 L601.8,436.5 L602.5,437.0 L603.3,437.3 L604.1,437.3 L604.9,436.9 L605.4,436.1 L606.0,435.6 L606.7,435.1 L607.4,434.8 L607.9,434.1 L608.3,433.2 L608.4,432.1 L608.1,431.3 L608.2,430.5 L608.7,429.8 L609.3,429.2 L609.6,428.4 L609.9,427.5 L609.8,426.7 L609.5,425.9 L610.0,424.9 L610.0,424.0 L610.5,423.3 L610.8,422.6 L611.2,421.8 L612.0,421.8 L613.0,421.7 L613.0,420.7 L613.3,419.9 L614.2,419.2 L614.9,418.6 L615.3,417.9 L615.9,417.1 L615.7,416.3 L616.5,415.8 L617.3,415.9 L618.1,416.4 L618.8,416.6 L619.7,416.9 L620.7,416.6 L621.5,416.0 L622.3,415.9 L623.5,416.2 L624.4,416.0 L625.3,416.1 L626.2,415.8 L626.2,415.0 L627.0,414.4 L627.7,414.0 L628.7,414.1 L629.3,413.5 L629.8,412.7 L630.2,411.9 L631.0,412.3 L631.7,412.0 L632.4,411.5 L633.2,411.1 L634.0,410.9 L634.9,410.5 L635.6,409.9 L636.2,409.4 L636.6,408.7 L637.1,407.7 L637.4,406.6 L637.5,405.7 L638.0,405.1 L638.6,404.5 L638.6,403.5 L639.1,402.9 L639.5,402.1 L640.2,401.5 L640.7,400.8 L641.5,400.3 L641.9,399.4 L642.3,398.8 L642.8,398.0 L643.3,397.3 L643.8,396.6 L644.5,396.0 L645.1,395.5 L645.4,394.5 L645.9,393.8 L645.9,393.0 L646.3,392.2 L646.2,391.2 L646.7,390.2 L647.1,389.5 L647.9,388.9 L648.7,388.6 L649.4,388.1 L650.2,387.6 L650.9,387.2 L651.4,386.5 L652.0,386.0 L652.6,385.5 L653.4,385.5 L654.2,385.1 L654.9,384.6 L655.5,384.0 L656.2,383.1 L656.9,382.6 L657.9,382.3 L658.7,381.7 L659.4,381.3 L660.5,381.3 L661.2,380.7 L662.0,380.5 L662.6,379.9 L663.4,379.8 L664.5,379.5 L665.2,378.8 L666.1,378.7 L667.2,378.6 L668.2,378.6 L669.0,378.5 L669.8,378.2 L670.3,377.5 L670.7,376.7 L671.5,376.6 L672.5,376.7 L673.2,376.4 L673.8,375.8 L675.0,374.9 L675.5,374.2 L676.3,374.2 L677.4,374.1 L678.2,374.1 L678.8,374.8 L679.6,374.4 L680.4,374.7 L681.2,374.8 L682.0,374.7 L682.3,373.9 L682.2,373.0 L683.1,372.9 L683.7,372.5 L684.6,372.2 L685.3,371.7 L686.2,371.4 L687.0,371.3 L687.8,371.7 L688.7,371.9 L689.5,372.2 L690.2,372.4 L690.9,372.7 L691.7,372.7 L692.5,372.4 L692.8,371.5 L693.8,371.6 L694.4,372.1 L695.2,372.5 L696.0,372.2 L696.5,372.7 L697.4,372.5 L698.2,372.6 L699.0,372.4 L699.7,372.0 L700.5,372.0 L701.4,371.9 L702.0,371.3 L702.9,370.2 L703.7,370.2 L704.5,370.0 L705.3,369.8 L706.1,370.1 L706.9,370.0 L707.8,369.7 L708.7,369.4 L709.4,370.1 L710.3,370.3 L711.0,370.6 L711.8,370.8 L712.4,370.2 L713.2,370.2 L714.1,370.6 L715.0,370.6 L715.6,371.0 L715.9,371.8 L716.3,372.5 L717.1,372.5 L717.6,371.9 L718.3,371.1 L718.9,370.6 L719.7,370.4 L720.0,369.6 L720.1,368.7 L720.9,368.5 L721.1,367.6 L721.8,367.3 L722.6,367.4 L723.4,366.9 L724.2,366.6 L724.8,366.0 L725.4,365.4 L726.2,364.9 L727.2,364.9 L727.4,364.0 L726.9,363.3 L727.2,362.5 L727.8,362.0 L728.2,361.3 L728.6,360.5 L729.3,360.0 L730.0,360.0 L730.8,359.8 L731.6,359.8 L732.4,360.1 L733.2,360.4 L734.0,360.7 L734.9,360.9 L735.7,360.5 L736.5,360.1 L737.1,360.6 L737.9,360.8 L738.8,360.7 L739.9,360.8 L740.7,361.1 L741.5,361.1 L742.3,361.0 L742.3,360.1 L742.4,359.1 L743.3,359.1 L744.0,359.5 L744.6,360.1 L745.4,360.3 L746.2,360.5 L746.8,361.1 L747.6,361.2 L748.5,361.2 L749.1,361.8 L749.9,361.8 L750.7,361.8 L751.4,361.3 L752.3,361.9 L753.0,362.3 L753.9,362.6 L754.6,363.1 L755.5,363.1 L756.0,363.7 L756.5,364.5 L756.7,365.5 L757.3,366.3 L757.9,366.9 L758.4,367.5 L758.8,368.3 L759.2,368.9 L760.0,369.4 L760.9,369.9 L761.5,370.7 L762.1,371.2 L762.7,371.8 L763.0,372.8 L763.1,373.7 L762.7,374.6 L763.3,375.2 L763.8,375.9 L764.4,376.5 L765.4,376.8 L766.2,376.8 L767.3,376.9 L767.9,377.4 L768.3,378.2 L768.4,379.0 L767.7,379.5 L767.6,380.3 L768.3,380.6 L768.1,381.4 L767.8,382.2 L767.1,382.8 L766.3,383.2 L765.5,383.5 L765.1,384.2 L764.2,384.5 L764.2,385.4 L764.3,386.6 L764.0,387.3 L764.5,387.9 L765.2,388.2 L766.0,389.0 L766.8,389.4 L767.6,389.8 L768.3,390.2 L769.0,390.6 L769.7,391.0 L770.6,391.3 L771.5,391.4 L772.4,391.7 L773.2,391.8 L774.0,392.1 L774.7,392.4 L775.6,392.4 L776.4,392.2 L777.2,392.2 L778.0,392.0 L778.8,392.4 L779.3,393.0 L780.4,393.2 L781.2,393.4 L782.0,393.6 L782.4,394.4 L783.0,395.1 L783.2,395.8 L784.3,395.7 L785.2,395.8 L786.1,396.3 L786.8,396.7 L787.7,397.1 L788.5,397.2 L789.0,398.0 L789.0,398.8 L789.8,399.6 L790.4,400.2 L790.5,401.0 L791.4,401.2 L792.1,401.8 L792.7,402.3 L793.0,403.1 L793.8,403.6 L794.5,402.9 L795.3,402.6 L796.1,402.9 L797.2,402.9 L798.0,402.4 L797.5,401.7 L798.0,401.1 L798.8,401.4 L799.6,401.6 L800.4,401.4 L801.2,401.9 L801.7,402.9 L802.5,403.1 L803.6,403.6 L804.1,403.0 L804.4,402.3 L804.7,401.5 L805.1,400.4 L805.1,399.6 L805.9,399.3 L806.9,398.5 L806.8,397.6 L807.5,396.7 L807.2,395.5 L806.7,394.9 L806.0,394.5 L805.4,393.9 L805.1,393.0 L804.8,391.8 L803.9,392.1 L803.3,391.6 L802.8,391.0 L802.1,390.6 L801.5,389.9 L801.3,388.9 L801.2,388.1 L800.7,387.5 L799.7,386.8 L799.3,386.1 L798.6,385.7 L797.8,384.9 L797.1,384.2 L797.2,383.1 L797.2,382.2 L796.8,381.5 L796.8,380.6 L796.1,379.9 L795.3,379.4 L794.5,378.8 L794.3,377.8 L793.8,377.2 L792.9,376.6 L792.2,376.1 L792.0,375.3 L791.8,374.4 L791.2,373.8 L790.2,373.4 L789.5,372.6 L789.1,371.5 L788.7,370.8 L788.2,370.0 L788.2,369.2 L787.4,369.3 L786.8,368.7 L786.0,368.4 L785.2,368.2 L784.5,367.8 L783.9,367.2 L783.5,366.4 L783.6,365.5 L783.4,364.8 L782.9,363.6 L782.2,363.2 L781.4,362.6 L781.2,361.7 L780.8,360.9 L780.2,360.1 L779.4,359.3 L778.9,358.7 L779.4,357.9 L779.5,356.9 L779.0,356.3 L778.7,355.5 L778.8,354.6 L778.4,353.8 L777.7,353.4 L776.9,353.2 L776.0,352.7 L775.3,352.2 L774.7,351.6 L774.5,350.8 L774.8,349.9 L774.4,349.2 L773.7,348.7 L773.2,347.9 L772.5,347.2 L771.5,346.9 L770.8,346.3 L770.6,345.5 L770.7,344.7 L770.8,343.7 L771.0,342.9 L771.2,342.0 L771.6,341.3 L771.8,340.4 L772.3,339.7 L772.7,339.0 L773.1,338.1 L773.7,337.5 L774.6,337.3 L774.0,336.6 L773.9,335.7 L773.9,334.7 L773.3,333.5 L772.9,332.7 L772.3,332.2 L771.1,331.5 L771.3,330.7 L771.2,329.8 L771.4,329.1 L771.2,328.2 L771.2,327.3 L771.4,326.4 L770.9,325.5 L769.9,325.8 L769.1,326.0 L768.8,325.2 L769.1,324.3 L769.0,323.6 L769.0,322.6 L768.7,321.9 L769.0,320.7 L769.6,320.1 L768.1,319.2 L764.7,317.7 L763.9,317.9 L762.9,318.8 L760.3,318.0 L759.7,317.4 L758.7,317.5 L757.9,317.3 L757.1,317.6 L754.9,316.3 L753.6,315.9 L752.4,317.7 L752.3,318.9 L751.6,320.1 L750.0,319.2 L748.6,317.4 L746.6,316.0 L746.1,315.4 Z" fill="#138808" fill-opacity="0.78" stroke="#ffffff" stroke-width="1.0"><title>Changlang</title></path>
+<path d="M268.6,361.7 L269.6,361.6 L270.4,361.2 L271.2,360.8 L272.3,360.4 L273.0,360.1 L273.8,359.7 L274.5,359.4 L274.3,358.5 L273.9,357.9 L274.3,357.2 L274.5,356.4 L274.6,355.6 L274.3,354.9 L274.1,354.1 L274.0,353.2 L274.3,352.4 L273.8,351.6 L273.2,351.2 L272.3,350.9 L271.5,350.8 L270.8,350.4 L270.3,349.7 L269.6,349.3 L269.1,348.6 L268.7,347.9 L267.8,347.8 L266.8,348.0 L266.9,347.2 L267.5,346.7 L267.9,346.0 L268.0,345.0 L267.7,344.2 L267.5,343.5 L267.3,342.7 L267.1,341.9 L267.0,341.0 L266.8,340.2 L266.6,339.4 L266.3,338.5 L265.9,337.8 L265.2,337.4 L264.9,336.5 L264.4,335.7 L263.6,335.2 L264.2,334.7 L264.9,334.2 L265.7,333.9 L266.4,333.4 L266.7,332.5 L266.9,331.5 L267.6,331.0 L268.4,330.7 L268.7,330.0 L268.1,329.4 L267.9,328.7 L267.2,328.3 L266.4,327.9 L265.5,327.4 L265.0,326.8 L264.5,326.2 L263.6,326.0 L262.5,326.2 L262.1,325.5 L262.2,324.7 L261.5,324.2 L260.7,324.1 L260.3,323.4 L259.4,323.5 L258.5,323.6 L257.7,323.3 L256.9,322.8 L256.2,322.3 L255.3,322.1 L254.5,322.2 L254.8,321.4 L255.6,320.9 L255.6,319.9 L255.0,319.3 L255.1,318.5 L254.8,317.8 L254.4,317.2 L254.2,316.4 L254.2,315.6 L253.8,314.8 L253.1,314.3 L252.3,314.0 L251.7,313.1 L251.1,312.6 L250.8,311.8 L250.3,311.2 L249.7,310.8 L250.2,310.1 L250.3,309.4 L251.1,308.9 L251.7,308.3 L251.5,307.5 L252.2,306.9 L252.6,306.1 L253.3,305.5 L253.7,304.8 L253.4,304.1 L252.5,303.5 L251.9,302.9 L251.3,302.4 L250.5,302.4 L250.5,301.5 L251.2,300.8 L251.6,300.0 L252.0,299.2 L252.5,298.5 L253.1,297.8 L253.8,297.2 L253.6,296.3 L254.1,295.3 L254.7,294.5 L255.0,293.6 L254.9,292.8 L255.4,292.0 L255.4,291.1 L255.4,290.3 L255.1,289.5 L254.5,288.8 L254.4,287.9 L253.6,287.5 L253.3,286.8 L253.1,286.0 L252.3,285.6 L251.7,285.1 L250.9,284.7 L250.4,284.0 L249.8,283.6 L249.0,283.6 L248.5,284.3 L248.5,285.3 L247.9,286.2 L247.3,286.9 L246.7,287.4 L245.9,287.3 L245.1,287.5 L244.5,288.0 L243.8,287.5 L243.0,287.4 L241.8,287.3 L240.9,287.3 L240.0,287.6 L239.3,288.1 L238.4,288.1 L237.6,288.1 L236.9,288.5 L236.2,289.1 L235.1,289.1 L234.6,288.5 L234.0,287.9 L233.5,287.1 L232.8,286.5 L232.0,286.5 L230.7,286.4 L230.0,286.6 L229.2,286.7 L228.3,286.6 L227.5,286.8 L226.6,286.7 L225.8,286.8 L224.9,287.0 L224.2,287.2 L223.5,286.7 L222.7,286.3 L222.0,286.5 L221.2,286.7 L220.2,287.0 L219.4,287.0 L218.7,286.5 L217.9,286.3 L217.4,285.7 L217.1,285.0 L216.7,284.2 L216.5,283.5 L215.7,283.2 L214.9,283.3 L214.4,282.7 L214.3,281.8 L214.0,281.0 L213.5,280.4 L213.6,279.6 L213.1,278.7 L212.6,278.1 L212.6,277.1 L212.7,276.3 L212.6,275.4 L212.5,274.6 L212.2,273.6 L212.3,272.8 L212.8,272.1 L212.7,271.4 L211.7,271.0 L210.7,270.6 L209.8,270.3 L208.7,269.6 L208.0,269.2 L207.2,269.1 L206.4,268.9 L205.7,268.3 L205.0,268.2 L204.4,267.5 L203.7,267.2 L202.8,267.0 L202.6,266.2 L202.0,265.6 L201.1,265.4 L200.3,265.5 L199.6,265.3 L198.8,265.5 L197.9,265.4 L197.0,265.5 L196.3,265.3 L195.6,265.8 L194.9,265.8 L194.1,265.9 L193.2,266.2 L192.2,266.6 L191.6,266.1 L190.8,265.9 L190.0,265.8 L189.1,265.7 L188.4,265.8 L187.6,265.2 L186.9,264.6 L184.9,262.7 L184.5,263.5 L182.2,267.1 L180.4,269.6 L178.4,271.9 L176.6,274.0 L175.9,274.9 L173.5,276.1 L170.7,277.0 L169.1,277.4 L166.9,278.5 L164.2,281.8 L162.9,284.2 L161.3,286.5 L160.7,287.5 L159.8,288.0 L158.3,288.1 L157.0,287.0 L155.9,285.9 L154.3,284.5 L152.4,284.3 L151.1,285.0 L150.0,286.3 L148.9,287.4 L147.5,288.5 L148.1,289.6 L147.5,291.8 L146.5,293.7 L147.7,294.4 L149.4,295.5 L154.2,301.2 L153.6,302.2 L153.4,304.4 L154.0,306.4 L156.2,309.9 L156.7,312.4 L156.9,315.3 L156.3,318.0 L157.5,319.5 L159.2,319.6 L161.4,319.1 L163.8,318.2 L165.3,317.8 L166.8,318.8 L167.5,319.6 L167.0,323.0 L167.7,324.1 L168.6,324.0 L167.5,326.7 L166.9,328.6 L167.4,329.8 L170.5,329.9 L172.1,330.3 L172.2,331.8 L172.7,333.0 L174.1,334.5 L174.0,335.4 L173.9,336.2 L173.3,338.5 L173.8,339.4 L173.8,340.4 L174.5,341.4 L175.4,341.8 L176.0,342.4 L176.8,342.6 L177.9,342.9 L177.9,344.3 L178.5,344.8 L178.9,345.4 L179.7,346.2 L180.8,346.6 L181.8,346.4 L182.9,345.8 L183.8,346.0 L184.8,346.6 L185.7,346.6 L186.5,346.7 L187.2,347.1 L188.1,347.3 L189.0,347.1 L189.7,347.5 L190.7,347.5 L191.0,346.7 L191.7,346.2 L192.4,346.1 L193.4,346.4 L194.3,346.7 L194.7,347.3 L195.0,348.0 L195.2,348.8 L195.0,349.6 L195.5,350.3 L195.2,351.0 L194.7,351.7 L195.7,351.9 L196.3,352.3 L197.0,352.8 L197.2,353.6 L197.3,354.4 L197.1,355.5 L197.1,356.4 L197.1,357.2 L197.3,357.9 L196.5,357.8 L195.9,358.2 L196.0,359.0 L196.2,359.8 L196.1,360.7 L196.2,361.4 L195.4,361.1 L195.0,361.9 L194.3,362.3 L194.7,363.0 L194.9,363.7 L195.1,364.5 L195.1,365.3 L195.1,366.0 L195.5,366.7 L196.2,367.1 L196.6,367.8 L197.1,368.4 L197.9,368.6 L198.6,369.0 L199.2,369.5 L199.8,370.0 L200.2,370.7 L200.4,371.4 L199.9,372.1 L199.0,372.0 L198.1,372.2 L197.3,372.5 L196.5,372.1 L196.0,371.4 L195.2,371.2 L195.0,371.9 L194.9,372.8 L194.6,373.5 L194.9,374.3 L194.6,375.0 L194.2,375.7 L194.1,376.4 L194.2,377.2 L195.4,377.6 L196.2,377.8 L196.8,378.4 L197.2,379.1 L197.6,379.8 L198.3,380.5 L199.1,381.0 L198.6,381.6 L198.1,382.3 L198.5,382.9 L199.0,383.6 L198.3,384.0 L197.5,384.1 L196.9,384.6 L196.6,385.4 L196.0,385.9 L195.3,386.3 L195.8,387.1 L196.2,387.9 L196.2,388.7 L196.1,389.5 L195.4,390.0 L197.9,392.2 L199.6,397.2 L202.1,395.8 L204.6,396.8 L207.5,396.8 L210.0,395.6 L213.3,393.9 L216.3,393.0 L218.0,393.0 L220.7,393.8 L222.9,394.9 L223.9,395.5 L226.4,393.2 L229.1,392.0 L231.9,390.9 L232.7,390.2 L233.6,388.4 L232.4,385.8 L227.0,386.2 L223.5,386.2 L220.0,383.1 L222.5,378.4 L232.7,374.4 L245.4,368.6 L249.6,358.0 L262.8,355.5 L264.3,354.5 L267.2,359.4 Z" fill="#0B1B3F" fill-opacity="0.78" stroke="#ffffff" stroke-width="1.0"><title>East Kameng</title></path>
+<path d="M522.4,288.3 L523.3,288.0 L524.2,287.6 L525.1,287.3 L526.1,287.0 L527.0,286.7 L527.9,286.4 L528.9,286.0 L529.8,285.7 L530.7,285.4 L531.6,285.1 L532.5,284.8 L533.4,284.5 L534.3,284.3 L535.2,283.9 L536.1,283.6 L537.0,283.3 L537.8,282.9 L538.7,282.6 L539.6,282.3 L540.5,282.0 L541.5,281.7 L542.3,281.4 L543.1,281.2 L543.9,280.9 L544.7,280.6 L546.1,280.2 L547.0,280.2 L547.9,280.6 L548.8,281.0 L549.5,281.3 L550.6,281.8 L551.5,282.2 L552.3,282.6 L553.2,283.0 L554.0,283.4 L554.9,283.8 L555.7,284.2 L556.5,284.5 L557.4,284.2 L558.8,283.7 L560.2,283.3 L561.6,282.8 L563.0,282.3 L564.5,281.8 L565.9,281.3 L567.4,280.8 L568.2,280.5 L569.0,280.2 L569.8,280.0 L570.6,279.7 L571.4,279.4 L572.2,279.1 L575.5,278.1 L576.3,277.9 L576.1,276.8 L575.9,275.6 L575.7,274.3 L575.4,272.9 L575.3,272.0 L575.0,271.2 L574.6,270.6 L574.4,269.1 L573.7,268.1 L573.6,266.9 L574.0,265.0 L574.0,264.2 L574.8,263.3 L575.4,262.7 L576.5,261.4 L577.3,260.8 L577.8,260.2 L578.3,259.5 L579.0,258.2 L579.3,256.6 L579.7,255.7 L580.6,254.6 L581.1,253.9 L581.5,253.2 L581.8,252.3 L582.1,251.0 L582.3,250.0 L582.5,248.7 L582.7,247.2 L582.8,245.9 L583.0,244.8 L582.9,243.5 L583.0,242.4 L583.1,241.6 L583.2,240.7 L583.2,239.6 L583.0,238.7 L583.0,237.6 L582.7,236.7 L582.3,235.9 L582.1,235.1 L582.0,234.2 L582.0,233.4 L581.9,232.6 L581.8,231.6 L581.8,230.7 L581.8,229.3 L581.9,227.9 L581.9,227.0 L581.9,225.9 L581.9,225.1 L582.1,223.7 L582.2,222.8 L582.4,221.9 L582.4,221.1 L582.5,220.0 L582.5,219.2 L582.4,218.4 L582.0,217.7 L581.0,216.9 L580.4,216.3 L580.4,215.5 L579.4,215.2 L579.5,214.4 L578.8,213.9 L577.9,214.0 L577.1,214.3 L576.4,214.5 L575.6,215.1 L574.8,215.5 L574.0,215.7 L573.3,216.0 L572.5,216.2 L571.7,215.9 L570.9,216.0 L570.4,216.6 L569.6,216.9 L569.1,217.5 L568.3,217.6 L567.9,216.9 L568.0,216.1 L568.2,215.2 L567.8,214.4 L567.2,213.8 L566.5,213.1 L566.6,212.3 L566.3,211.5 L566.0,210.6 L565.4,210.0 L564.8,209.5 L564.4,208.8 L563.5,208.9 L562.6,209.0 L561.8,209.1 L561.1,208.7 L560.3,208.8 L559.5,208.8 L558.8,209.3 L558.1,209.7 L557.2,209.4 L556.3,209.9 L552.8,212.4 L551.8,213.7 L551.3,216.4 L551.2,220.0 L548.8,221.9 L546.1,223.3 L545.1,224.9 L545.8,226.7 L544.8,227.3 L542.4,226.8 L541.1,227.5 L539.7,230.5 L538.0,231.8 L536.3,234.0 L534.7,234.7 L535.6,234.3 L538.4,235.0 L540.0,235.9 L544.7,239.7 L543.7,242.5 L543.8,244.5 L540.0,248.1 L537.0,251.4 L534.7,251.3 L533.7,250.0 L531.4,250.5 L528.1,251.3 L524.8,252.6 L523.2,253.7 L521.6,254.0 L519.4,255.1 L516.1,255.2 L514.4,255.5 L512.7,255.2 L512.8,256.1 L513.0,257.3 L513.6,260.5 L515.2,262.0 L515.7,264.1 L515.6,266.6 L513.8,268.5 L513.3,272.3 L515.3,273.3 L518.8,274.2 L519.9,274.3 L519.9,277.1 L519.4,281.8 L520.5,283.1 Z" fill="#c0392b" fill-opacity="0.78" stroke="#ffffff" stroke-width="1.0"><title>East Siang</title></path>
+<path d="M354.5,336.8 L363.3,337.8 L368.8,338.6 L372.3,341.4 L375.9,341.2 L379.5,339.0 L382.2,336.3 L382.8,334.4 L383.9,333.7 L387.5,333.4 L389.5,332.8 L391.6,333.6 L392.4,336.6 L393.6,337.8 L394.6,337.4 L395.3,337.1 L396.0,336.8 L396.8,336.4 L398.3,335.9 L399.2,335.6 L400.4,335.2 L399.9,334.6 L399.2,333.5 L398.9,332.6 L398.8,331.8 L399.1,330.7 L399.1,329.9 L398.5,329.2 L398.0,328.4 L397.6,327.8 L396.6,327.4 L395.8,327.6 L395.1,327.2 L394.3,326.7 L394.1,325.7 L394.0,324.7 L394.2,323.8 L394.6,323.1 L393.8,322.9 L392.9,322.6 L392.2,322.0 L392.1,321.2 L392.6,320.3 L393.3,319.4 L393.9,318.7 L394.4,317.6 L395.0,316.8 L395.9,316.1 L396.5,315.6 L396.9,314.9 L397.7,314.4 L398.6,314.0 L399.3,313.5 L399.7,312.7 L400.4,312.3 L401.1,311.9 L401.9,311.6 L402.5,311.0 L403.1,310.4 L403.7,309.8 L404.4,309.4 L405.1,309.1 L405.8,308.5 L406.5,307.9 L406.7,307.1 L407.3,306.4 L408.1,306.0 L408.9,305.7 L409.7,305.2 L410.6,304.6 L411.3,304.3 L412.3,304.1 L412.7,303.3 L412.7,302.4 L412.2,301.8 L411.4,301.6 L410.8,302.2 L410.2,302.7 L409.4,302.4 L408.7,301.8 L408.1,301.3 L407.4,300.8 L406.7,300.4 L406.4,299.6 L406.4,298.6 L406.5,297.8 L406.8,296.9 L406.8,296.0 L407.1,295.3 L407.4,294.6 L406.6,294.0 L406.0,293.3 L405.2,292.7 L404.5,292.1 L403.6,291.3 L402.9,290.6 L402.2,290.1 L401.4,289.5 L400.7,289.0 L399.9,288.9 L399.0,289.1 L398.3,289.5 L396.3,289.3 L391.3,288.8 L389.9,289.0 L389.7,285.0 L388.4,284.3 L386.7,283.6 L385.2,283.8 L384.3,282.5 L384.2,281.5 L383.6,280.3 L382.6,280.2 L381.8,280.9 L380.8,281.6 L379.8,280.9 L378.5,281.2 L377.1,281.1 L376.3,281.3 L374.9,282.3 L373.1,282.9 L371.1,279.7 L371.1,278.7 L370.9,276.9 L370.6,273.9 L369.4,273.0 L370.2,272.0 L370.7,271.3 L372.3,268.6 L370.8,267.7 L369.6,266.5 L368.5,266.2 L367.3,265.7 L365.3,266.2 L364.3,265.9 L362.2,264.2 L361.6,263.7 L361.0,262.9 L360.2,262.8 L359.4,262.6 L358.6,262.5 L357.8,262.2 L356.6,263.0 L354.9,264.6 L354.5,266.0 L354.3,267.4 L353.1,268.3 L352.4,271.7 L350.2,271.6 L347.4,272.3 L346.2,273.3 L346.3,274.8 L347.4,275.3 L350.0,275.4 L351.7,276.0 L352.5,277.3 L352.5,278.9 L351.7,281.1 L350.1,284.8 L350.2,285.9 L347.5,287.5 L347.7,288.3 L349.8,291.3 L347.6,299.8 L351.4,303.0 L351.9,307.9 L352.3,313.2 L354.3,316.6 L355.3,318.0 L358.3,318.7 L365.0,320.8 L369.1,321.4 L370.2,321.4 L369.6,325.4 L377.6,329.9 L377.6,331.5 L372.8,336.1 Z" fill="#1E88E5" fill-opacity="0.78" stroke="#ffffff" stroke-width="1.0"><title>Kamle</title></path>
+<path d="M320.8,209.9 L319.8,209.4 L318.3,207.9 L317.5,208.1 L316.7,208.3 L316.0,208.8 L315.6,209.6 L315.2,210.3 L314.3,210.7 L313.4,210.6 L312.5,210.4 L311.8,210.1 L310.8,210.0 L310.5,210.8 L310.2,211.6 L310.0,212.4 L309.5,213.1 L309.0,214.0 L308.6,215.0 L308.1,215.8 L307.3,215.7 L306.5,215.9 L305.6,215.9 L304.7,216.2 L304.0,216.3 L303.2,216.6 L302.5,217.2 L301.9,217.7 L301.6,217.0 L300.9,217.4 L300.2,217.7 L299.5,217.2 L298.9,216.4 L298.1,216.4 L297.2,216.1 L296.4,216.0 L295.5,216.0 L294.7,216.0 L293.9,215.9 L293.1,215.8 L292.5,215.0 L291.3,214.9 L289.6,214.1 L288.5,215.1 L287.4,215.5 L286.2,215.7 L285.8,218.4 L285.0,222.6 L285.0,227.0 L285.4,231.1 L286.3,238.4 L286.9,241.0 L290.5,242.5 L293.3,246.7 L293.3,247.9 L295.8,248.3 L299.1,248.5 L302.3,249.8 L303.3,253.1 L304.5,259.3 L304.8,262.5 L306.8,264.2 L309.1,266.3 L307.8,267.9 L306.1,271.1 L304.4,274.0 L306.8,273.7 L306.8,277.9 L306.2,281.9 L305.4,285.5 L303.7,288.8 L301.4,291.6 L300.7,292.1 L299.3,293.1 L296.6,296.6 L293.8,299.9 L297.0,303.2 L297.1,305.2 L297.5,308.5 L297.7,310.9 L294.5,314.6 L298.5,319.2 L303.4,319.9 L307.6,316.4 L308.6,315.6 L310.3,314.4 L312.4,312.8 L315.0,311.9 L317.3,309.1 L318.8,308.7 L321.8,308.9 L323.7,306.2 L327.1,304.4 L330.1,301.9 L330.3,300.5 L329.7,299.6 L330.0,296.2 L330.1,292.7 L332.6,291.1 L335.5,290.0 L340.0,288.5 L345.0,288.3 L347.3,287.6 L350.2,285.9 L350.1,284.8 L351.7,281.1 L352.3,279.5 L352.5,277.3 L351.7,276.0 L350.0,275.4 L347.4,275.3 L346.3,274.8 L346.2,273.3 L347.4,272.3 L350.2,271.6 L352.4,271.7 L353.1,268.3 L354.3,267.4 L354.5,266.0 L354.9,264.6 L356.6,263.0 L357.5,262.2 L356.7,262.0 L355.9,262.1 L355.3,261.5 L355.0,260.8 L355.0,260.0 L354.7,259.3 L354.0,258.6 L353.0,258.1 L350.4,256.9 L350.4,255.9 L350.3,254.9 L349.4,253.8 L347.0,252.9 L346.3,251.8 L345.0,250.5 L344.8,249.5 L344.9,248.6 L345.3,247.6 L343.6,246.5 L342.3,246.0 L343.4,244.2 L344.7,243.1 L345.7,242.2 L345.3,240.6 L345.3,239.7 L345.9,238.9 L347.6,238.5 L345.3,233.3 L341.7,227.2 L341.1,225.9 L340.6,224.2 L340.3,222.4 L340.5,221.3 L337.9,219.7 L337.2,219.3 L332.7,218.0 L331.7,217.5 L331.0,217.6 L329.8,217.1 L328.7,216.2 L327.9,214.8 L327.0,213.7 L324.7,213.2 L323.6,212.6 Z" fill="#7C3AED" fill-opacity="0.78" stroke="#ffffff" stroke-width="1.0"><title>Kra Daadi</title></path>
+<path d="M261.9,200.9 L261.2,200.6 L258.7,200.5 L256.7,201.5 L255.8,203.1 L254.8,203.7 L254.0,204.8 L253.5,205.8 L251.5,207.6 L249.7,208.4 L247.7,208.5 L244.2,208.3 L241.6,207.3 L240.6,207.1 L238.2,208.8 L235.9,210.1 L234.7,210.3 L232.6,209.8 L231.1,210.2 L229.0,210.9 L227.0,210.7 L225.8,210.8 L226.1,213.4 L227.1,216.6 L225.3,218.9 L223.9,220.8 L222.5,222.3 L221.7,222.4 L221.1,221.7 L220.6,220.4 L220.5,219.0 L218.9,217.7 L217.5,217.3 L216.2,217.9 L214.3,219.4 L211.6,220.4 L210.2,221.6 L209.2,224.8 L207.7,226.5 L201.0,229.9 L199.9,230.5 L198.3,231.7 L197.4,231.3 L196.9,229.7 L197.1,227.6 L196.7,226.9 L195.4,226.5 L194.3,226.8 L192.0,229.8 L188.5,232.4 L185.5,234.9 L183.3,235.9 L181.0,237.3 L179.7,238.2 L178.5,239.0 L177.5,240.2 L176.5,243.6 L175.7,246.6 L174.9,248.2 L175.1,249.0 L177.7,249.7 L179.7,251.3 L181.6,253.7 L183.3,256.4 L184.2,258.8 L185.0,259.7 L185.8,260.7 L184.9,262.6 L186.8,264.4 L187.5,265.1 L188.0,265.7 L188.9,265.8 L189.7,265.8 L190.6,265.8 L191.4,266.0 L192.0,266.5 L193.2,266.2 L194.0,265.9 L194.9,265.8 L195.6,265.8 L196.3,265.3 L197.0,265.5 L197.8,265.4 L198.6,265.6 L199.2,265.1 L199.9,265.5 L200.7,265.5 L201.5,265.6 L202.4,265.6 L202.6,266.3 L203.0,267.1 L203.8,267.0 L204.4,267.7 L205.0,268.2 L206.0,268.5 L206.6,269.1 L207.5,269.1 L208.3,269.3 L209.1,270.0 L210.1,270.4 L211.0,270.7 L212.0,271.0 L212.7,271.4 L212.8,272.2 L212.2,273.0 L212.4,274.1 L212.6,275.0 L212.7,275.9 L212.6,276.7 L212.7,277.7 L212.6,278.5 L213.3,279.2 L213.5,280.0 L213.8,280.9 L214.3,281.6 L214.4,282.4 L214.6,283.1 L215.4,283.1 L216.5,283.5 L216.7,284.2 L217.1,285.0 L217.4,285.7 L217.9,286.3 L218.7,286.5 L219.3,287.0 L220.2,287.0 L221.2,286.7 L222.0,286.5 L222.7,286.3 L223.5,286.7 L224.2,287.2 L224.9,287.0 L225.7,286.8 L226.5,286.7 L227.3,286.8 L228.1,286.6 L229.0,286.6 L229.8,286.6 L230.7,286.4 L231.7,286.4 L232.6,286.5 L233.4,286.9 L233.8,287.6 L234.3,288.2 L234.8,288.8 L235.5,289.2 L236.6,288.8 L237.6,288.1 L238.4,288.1 L239.2,288.1 L240.0,287.6 L240.6,287.2 L241.5,287.2 L242.4,287.3 L243.4,287.4 L244.1,287.9 L245.0,287.5 L245.8,287.3 L246.6,287.4 L247.3,286.9 L247.9,286.2 L248.5,285.6 L248.4,284.8 L248.7,283.9 L249.5,283.5 L250.3,283.8 L250.8,284.6 L251.5,285.0 L252.2,285.5 L252.9,285.9 L253.3,286.8 L253.6,287.5 L254.3,287.8 L254.4,288.6 L255.0,289.3 L255.4,290.2 L255.4,291.0 L255.5,291.8 L255.0,292.4 L255.0,293.3 L254.9,294.1 L254.5,294.8 L253.8,295.6 L253.6,296.5 L253.7,297.4 L253.0,297.9 L252.4,298.6 L251.9,299.4 L251.6,300.2 L250.9,301.0 L250.5,301.9 L251.2,302.4 L251.7,303.0 L252.5,303.5 L253.3,303.9 L253.7,304.7 L253.3,305.5 L252.7,305.9 L252.3,306.7 L251.7,307.4 L251.7,308.2 L251.1,308.9 L250.4,309.3 L250.2,310.1 L249.7,310.7 L250.3,311.2 L250.8,311.8 L251.1,312.6 L251.7,313.1 L252.2,313.9 L252.9,314.2 L253.6,314.6 L254.4,315.2 L254.2,316.0 L254.3,317.0 L254.8,317.6 L255.1,318.4 L255.0,319.2 L255.6,319.9 L257.1,319.3 L263.1,313.5 L268.5,311.5 L271.9,311.6 L274.3,311.8 L278.3,312.3 L284.8,313.1 L288.3,313.5 L294.5,314.6 L297.7,310.9 L297.5,308.5 L297.1,305.2 L297.0,303.2 L293.8,299.9 L296.6,296.6 L299.3,293.1 L300.7,292.1 L301.4,291.6 L303.7,288.8 L305.4,285.5 L306.2,281.9 L306.8,277.9 L306.8,273.7 L304.4,274.0 L306.1,271.1 L307.8,267.9 L309.1,266.3 L306.8,264.2 L304.8,262.5 L304.5,259.3 L303.3,253.3 L302.3,249.8 L299.1,248.5 L295.8,248.3 L293.3,247.9 L293.3,246.7 L290.5,242.5 L286.9,241.0 L286.3,238.4 L285.4,231.1 L285.0,227.0 L285.0,222.6 L285.8,218.4 L286.5,215.6 L285.1,214.0 L283.6,213.9 L282.9,214.4 L281.9,213.9 L280.4,213.0 L279.9,211.7 L279.6,210.1 L278.4,209.7 L277.6,209.9 L276.5,210.2 L276.2,209.2 L275.4,208.5 L275.6,207.7 L273.4,206.5 L272.7,206.0 L272.9,204.4 L271.3,204.1 L270.1,203.6 L269.5,202.7 L267.2,203.3 L266.0,204.0 L264.8,204.6 L264.0,204.8 L262.7,203.5 L262.2,202.4 Z" fill="#0EA5E9" fill-opacity="0.78" stroke="#ffffff" stroke-width="1.0"><title>Kurung Kumey</title></path>
+<path d="M487.9,289.2 L488.6,287.8 L489.2,287.2 L489.3,286.2 L490.4,285.4 L489.9,284.1 L490.8,283.8 L491.5,283.4 L492.7,282.3 L493.3,281.7 L492.1,281.2 L490.5,281.3 L490.1,280.6 L490.4,279.6 L490.0,278.0 L491.2,277.3 L492.6,276.6 L492.4,275.8 L493.0,274.0 L494.5,271.9 L494.9,271.2 L495.8,269.0 L495.6,268.2 L495.7,267.1 L496.7,266.0 L497.0,264.5 L497.1,263.1 L497.2,262.0 L496.3,261.8 L495.8,261.0 L494.8,260.6 L493.1,260.2 L492.2,259.4 L489.2,259.6 L488.1,259.5 L486.4,258.9 L487.3,257.0 L488.2,256.7 L488.8,256.3 L479.7,260.4 L477.9,261.2 L475.6,261.0 L473.9,261.0 L472.2,260.0 L468.5,257.2 L466.4,257.5 L461.0,255.9 L456.9,252.6 L452.7,252.1 L450.6,250.1 L447.5,249.1 L446.1,250.6 L442.5,251.1 L437.7,251.1 L433.9,250.1 L433.0,252.1 L431.5,253.5 L430.9,255.2 L433.9,255.9 L434.8,256.5 L436.2,258.8 L436.5,259.7 L437.0,260.6 L437.5,261.2 L436.6,262.6 L436.2,264.3 L436.5,265.6 L437.3,266.6 L438.0,267.9 L438.3,269.6 L439.0,270.8 L440.6,273.3 L441.1,274.5 L442.3,275.1 L444.1,275.8 L445.4,276.1 L446.0,276.5 L446.3,277.9 L446.3,279.5 L451.5,280.2 L453.5,282.8 L456.3,283.8 L459.0,284.3 L461.3,285.3 L463.5,286.8 L464.4,291.6 L466.2,293.4 L467.5,295.1 L470.7,295.0 L476.4,293.1 L478.5,291.5 L480.5,290.2 L484.1,289.1 L489.2,287.2 L488.6,287.7 Z" fill="#06A77D" fill-opacity="0.78" stroke="#ffffff" stroke-width="1.0"><title>Lepa Rada</title></path>
+<path d="M687.4,200.8 L686.4,199.4 L685.3,200.6 L685.1,201.4 L684.8,203.5 L683.8,204.8 L681.9,205.7 L681.2,206.4 L680.6,207.2 L679.9,208.5 L679.5,209.7 L677.5,210.8 L677.9,213.6 L679.7,216.6 L680.5,218.3 L681.1,220.0 L681.3,220.9 L679.5,221.1 L678.0,221.0 L677.1,220.8 L676.0,220.9 L674.0,222.2 L672.9,222.9 L672.3,223.6 L670.4,226.1 L669.5,226.5 L668.2,227.6 L667.9,228.4 L667.3,229.2 L665.3,230.2 L663.9,231.0 L663.6,231.9 L662.4,231.5 L660.2,230.6 L659.8,229.9 L658.9,229.3 L657.4,228.4 L655.8,228.5 L654.5,228.6 L653.2,228.1 L652.7,229.2 L652.7,230.6 L652.9,231.3 L653.0,232.2 L652.9,233.0 L653.3,233.9 L654.4,236.3 L654.2,237.4 L653.7,238.2 L653.7,239.0 L653.5,240.0 L653.0,240.9 L652.4,241.8 L652.0,242.4 L651.7,243.2 L652.1,244.0 L651.9,244.9 L651.3,245.8 L650.8,246.6 L650.0,247.5 L649.2,248.5 L648.5,249.4 L647.9,250.1 L647.4,250.8 L646.8,251.4 L646.5,252.6 L645.9,253.6 L645.7,254.7 L645.7,255.7 L645.8,256.7 L645.7,257.6 L645.7,258.4 L645.7,259.7 L645.1,260.3 L644.4,261.1 L644.1,262.1 L643.7,262.9 L643.2,263.6 L642.7,264.4 L641.8,265.5 L639.8,265.0 L639.2,265.7 L638.8,266.5 L638.2,267.2 L637.7,267.9 L637.0,268.5 L636.4,269.1 L636.6,269.9 L637.3,269.9 L636.8,270.6 L637.0,271.5 L636.3,272.1 L635.9,272.8 L635.1,272.8 L634.6,273.4 L635.4,273.8 L634.8,274.3 L633.9,274.4 L634.7,274.9 L634.0,275.4 L633.3,275.0 L632.5,275.5 L632.8,276.5 L631.9,276.5 L632.0,277.3 L632.8,277.5 L632.0,277.4 L631.8,278.3 L631.2,279.2 L630.8,279.9 L630.0,279.8 L630.3,280.8 L629.4,280.9 L629.0,281.6 L628.3,281.2 L627.9,282.0 L627.6,282.9 L627.2,283.6 L626.6,284.2 L625.9,285.1 L625.3,285.7 L624.2,285.9 L623.2,286.0 L622.5,286.3 L621.7,286.7 L620.9,286.9 L620.9,287.8 L620.9,288.9 L620.0,289.3 L619.1,289.5 L618.2,290.1 L617.5,290.8 L617.1,291.7 L616.9,292.5 L616.3,293.0 L616.0,294.1 L615.6,295.0 L615.0,295.5 L614.5,296.2 L613.7,297.2 L613.1,297.7 L612.3,298.1 L612.3,299.0 L612.5,299.9 L612.8,300.6 L612.6,301.4 L611.8,301.8 L613.9,301.5 L616.3,301.0 L619.7,298.3 L623.8,295.8 L627.6,293.4 L629.3,292.3 L637.7,288.0 L647.0,282.8 L650.6,282.8 L661.4,280.8 L670.8,278.7 L672.9,278.5 L674.6,281.3 L678.6,287.0 L682.1,292.7 L682.3,294.1 L681.4,299.4 L680.3,303.6 L681.6,308.8 L681.6,314.4 L684.7,318.2 L683.8,323.4 L687.5,327.4 L689.7,325.9 L690.2,325.1 L690.5,324.4 L690.6,323.5 L692.0,322.3 L692.6,321.7 L693.1,318.7 L695.4,315.9 L696.8,316.2 L697.6,316.4 L698.2,315.8 L699.0,315.4 L701.4,314.8 L702.6,314.5 L704.2,314.8 L705.5,314.3 L706.5,315.5 L707.2,316.1 L708.1,316.0 L708.9,315.8 L710.2,315.3 L711.2,315.3 L712.2,315.5 L714.3,316.0 L715.1,315.8 L716.6,316.8 L717.7,315.6 L720.0,315.1 L720.9,315.2 L722.1,314.6 L723.3,313.6 L725.5,313.7 L726.3,314.2 L727.5,314.0 L728.5,315.2 L729.1,315.8 L729.9,316.6 L731.5,317.6 L732.7,317.7 L733.7,318.2 L736.1,317.3 L737.3,315.9 L737.7,315.1 L738.7,314.7 L739.5,313.9 L740.3,313.9 L741.3,313.5 L742.0,313.0 L741.0,312.2 L739.2,311.7 L734.8,310.9 L732.1,309.2 L730.6,306.9 L730.3,305.2 L730.9,303.5 L732.9,302.0 L733.6,300.7 L732.3,298.7 L729.9,296.2 L729.8,294.9 L730.9,293.3 L732.0,291.5 L732.9,290.2 L732.8,288.4 L732.2,286.4 L730.7,285.1 L730.8,283.1 L729.9,281.6 L729.2,281.3 L727.9,281.8 L726.0,282.3 L724.1,280.8 L721.1,277.1 L718.0,274.8 L715.4,274.0 L711.3,273.4 L704.2,272.6 L702.2,271.2 L701.0,269.2 L699.4,265.7 L698.7,262.9 L695.8,259.3 L690.6,255.3 L684.1,249.1 L682.1,246.2 L682.0,244.4 L683.0,243.6 L686.2,242.1 L688.1,240.1 L689.7,238.1 L689.7,236.6 L689.5,235.4 L690.3,233.7 L690.8,231.5 L690.8,229.5 L689.2,226.9 L687.4,224.1 L685.5,221.3 L685.2,219.3 L685.1,216.3 L686.1,213.8 L687.4,211.4 L690.7,206.7 L691.1,204.9 L689.8,202.5 Z" fill="#F59E0B" fill-opacity="0.78" stroke="#ffffff" stroke-width="1.0"><title>Lohit</title></path>
+<path d="M554.7,401.0 L553.8,401.2 L553.0,401.6 L552.1,402.3 L551.3,402.8 L550.6,403.3 L549.8,403.9 L548.8,404.5 L547.7,405.0 L547.0,405.5 L546.2,406.1 L545.6,406.6 L545.0,407.1 L544.2,407.6 L543.5,408.2 L543.0,408.9 L542.3,409.4 L541.9,410.2 L542.0,411.0 L541.5,411.6 L540.8,412.0 L540.2,412.6 L539.5,412.9 L538.9,413.6 L538.2,414.1 L537.5,414.0 L537.1,413.3 L536.8,412.4 L536.0,412.2 L535.9,411.4 L535.6,412.1 L534.8,412.5 L534.1,412.9 L533.4,413.3 L532.6,413.4 L532.0,412.9 L531.4,412.3 L530.7,412.7 L530.6,413.9 L530.7,415.2 L530.8,416.4 L530.9,417.5 L530.8,418.3 L530.5,419.1 L530.1,419.8 L530.1,420.6 L530.8,421.0 L531.6,421.0 L531.8,421.8 L531.7,422.6 L532.3,423.2 L532.9,423.8 L532.3,424.4 L531.7,424.9 L532.3,425.5 L532.5,426.2 L532.4,427.1 L532.5,427.9 L532.8,428.7 L533.5,429.4 L534.3,429.5 L535.0,429.9 L535.5,430.5 L535.8,431.3 L535.4,432.0 L535.3,432.8 L535.7,433.5 L535.6,434.2 L535.1,434.9 L535.5,436.3 L535.3,437.0 L534.4,437.2 L533.7,436.8 L532.8,436.9 L532.2,437.6 L531.7,438.2 L531.0,438.7 L530.3,439.0 L529.6,439.5 L528.8,440.2 L528.6,441.0 L529.2,441.5 L529.4,442.3 L530.2,442.6 L531.1,442.8 L531.8,443.0 L531.3,443.6 L530.9,444.3 L530.8,445.1 L531.1,446.0 L531.2,446.7 L531.3,447.6 L531.6,448.4 L532.0,449.3 L532.6,449.8 L532.4,450.6 L532.9,451.2 L533.7,451.7 L534.5,451.9 L535.3,452.3 L536.1,452.2 L536.7,452.7 L536.2,453.4 L535.5,453.9 L535.4,454.7 L535.7,455.5 L535.1,456.0 L534.5,456.6 L533.8,457.0 L533.5,457.8 L533.5,458.5 L533.7,459.3 L533.3,460.3 L532.8,460.9 L533.3,461.6 L534.0,462.1 L534.6,462.6 L535.1,463.3 L534.9,464.1 L535.6,464.5 L535.8,465.3 L535.7,466.1 L535.5,466.9 L535.8,467.9 L536.1,468.7 L536.9,468.8 L537.8,468.5 L538.6,469.0 L539.2,469.5 L539.5,470.4 L539.3,471.2 L539.2,472.0 L539.5,472.8 L540.3,472.8 L541.2,472.7 L541.9,472.6 L542.8,472.9 L543.6,473.1 L544.4,473.5 L545.2,473.7 L546.0,473.5 L546.5,472.9 L547.3,471.9 L548.1,471.7 L548.9,471.5 L549.4,470.9 L550.1,470.4 L551.2,469.9 L552.1,469.9 L552.8,470.4 L553.8,470.5 L554.5,470.0 L555.2,469.2 L555.7,468.5 L556.6,468.4 L557.5,468.4 L558.2,468.4 L559.0,468.0 L559.6,467.4 L560.3,466.7 L561.1,467.0 L561.9,467.0 L562.7,466.5 L563.3,466.1 L564.0,465.5 L563.8,464.7 L563.9,463.9 L564.2,463.1 L565.1,462.6 L565.8,462.0 L566.5,461.1 L567.0,460.3 L567.6,459.3 L568.3,459.0 L569.4,459.3 L570.5,458.9 L570.9,458.0 L571.2,457.1 L571.6,456.3 L572.1,455.2 L572.3,454.4 L572.8,453.7 L573.1,452.8 L573.7,452.1 L574.1,451.2 L574.2,450.3 L573.0,447.2 L573.1,445.2 L573.8,442.2 L574.1,437.8 L569.5,439.2 L565.1,439.3 L561.4,436.4 L560.3,436.4 L558.5,434.2 L557.3,432.6 L556.5,432.1 L556.1,430.1 L554.9,428.4 L554.9,427.1 L555.1,425.3 L555.7,423.0 L556.0,420.8 L556.2,416.8 L556.0,415.3 L553.8,413.0 L555.2,411.9 L557.8,411.0 L557.3,407.9 L557.6,404.7 L555.8,403.4 L555.2,402.8 L555.2,402.0 L554.4,401.9 Z" fill="#2563EB" fill-opacity="0.78" stroke="#ffffff" stroke-width="1.0"><title>Longding</title></path>
+<path d="M680.3,173.3 L679.3,172.7 L678.6,173.0 L677.5,173.9 L675.3,174.1 L672.3,175.0 L668.5,177.0 L667.8,179.9 L663.7,180.7 L661.4,181.1 L658.2,181.1 L656.1,180.1 L652.7,178.9 L650.2,179.6 L648.8,179.5 L645.8,178.2 L643.2,181.1 L639.4,182.1 L636.4,182.2 L636.0,183.9 L636.0,187.2 L635.8,190.3 L638.1,193.2 L637.3,194.3 L636.1,194.9 L633.3,195.3 L631.0,195.7 L628.4,196.6 L625.8,198.4 L622.6,200.7 L622.2,202.2 L621.8,205.1 L626.2,208.1 L627.3,210.2 L626.6,210.8 L620.2,215.2 L615.0,208.7 L610.6,208.4 L609.9,207.0 L607.3,206.0 L604.2,204.8 L599.5,203.4 L598.2,201.3 L597.2,201.4 L593.2,201.7 L590.3,200.4 L586.4,200.7 L583.7,199.9 L583.1,197.9 L584.3,191.4 L584.7,185.3 L581.8,181.8 L577.3,182.5 L576.0,181.4 L575.5,178.9 L572.7,178.5 L570.4,177.0 L566.6,175.9 L562.5,175.2 L561.3,174.9 L558.6,174.6 L558.8,175.3 L558.6,176.1 L558.8,177.0 L558.2,177.4 L557.3,177.6 L556.5,177.7 L555.9,178.2 L555.5,179.4 L554.9,180.1 L554.3,180.6 L553.5,180.7 L552.6,181.0 L551.8,181.7 L551.4,182.4 L550.8,182.9 L550.4,183.7 L550.2,184.5 L550.4,185.3 L550.4,186.1 L550.2,186.9 L550.7,187.7 L550.7,188.6 L550.3,189.3 L549.9,190.0 L549.1,190.3 L548.4,190.7 L548.4,191.7 L549.1,192.3 L549.8,192.9 L550.4,193.5 L550.8,194.1 L550.8,194.9 L550.6,195.7 L550.7,196.7 L550.9,197.5 L550.7,198.3 L550.5,199.1 L550.7,199.8 L550.7,200.7 L551.5,201.2 L552.7,201.5 L553.4,201.9 L554.2,202.0 L555.0,201.9 L555.1,202.7 L555.0,203.5 L555.1,204.4 L555.3,205.2 L556.0,205.6 L556.1,206.6 L555.9,207.3 L556.1,208.2 L556.6,208.9 L557.2,209.4 L557.9,210.0 L558.5,209.4 L559.1,208.8 L560.3,208.8 L561.1,208.7 L561.8,209.1 L562.6,209.0 L563.5,208.9 L564.2,208.7 L564.7,209.4 L565.4,210.0 L566.0,210.6 L566.3,211.3 L566.6,212.0 L566.4,212.8 L567.0,213.6 L567.6,214.2 L568.2,214.8 L568.1,215.6 L567.9,216.5 L568.2,217.4 L568.9,217.6 L569.5,217.0 L570.3,216.9 L570.8,216.1 L571.6,215.8 L572.3,216.2 L573.2,216.0 L573.9,215.7 L574.8,215.5 L575.6,215.2 L576.3,214.7 L577.0,214.3 L577.8,214.1 L578.4,213.6 L579.0,214.1 L579.2,215.0 L580.2,215.0 L580.4,215.8 L581.0,216.9 L581.8,217.4 L582.4,218.2 L582.5,219.0 L582.5,220.0 L582.5,220.8 L582.4,221.6 L582.2,222.8 L582.1,223.7 L582.0,224.5 L581.9,225.9 L581.9,227.0 L581.9,227.9 L581.8,229.3 L581.8,230.7 L581.8,231.6 L581.9,232.6 L582.0,233.4 L582.0,234.2 L582.1,235.1 L582.3,235.9 L582.7,236.7 L583.0,237.5 L583.0,238.4 L583.2,239.6 L583.2,240.7 L583.1,241.6 L583.0,242.4 L582.9,243.5 L583.0,244.8 L582.8,245.9 L582.7,247.2 L582.6,248.2 L582.3,250.0 L582.1,251.0 L581.9,251.8 L581.7,252.7 L581.4,253.5 L580.6,254.6 L580.0,255.3 L579.4,256.3 L579.2,257.5 L578.5,259.1 L577.8,260.2 L577.3,260.8 L576.5,261.4 L575.8,262.2 L574.8,263.3 L574.0,264.2 L574.0,265.0 L573.7,266.4 L573.7,267.6 L574.1,268.6 L574.4,269.9 L575.0,271.2 L575.3,272.0 L575.4,272.9 L575.7,274.3 L575.9,275.6 L576.1,276.8 L576.3,277.8 L576.8,276.9 L577.3,276.0 L577.9,275.4 L578.7,275.4 L579.5,275.1 L579.4,274.2 L579.5,273.4 L580.5,272.9 L581.4,272.4 L582.1,272.0 L582.5,271.2 L582.5,270.2 L582.9,269.4 L583.5,268.7 L584.6,268.6 L585.3,269.0 L585.9,268.4 L586.3,267.7 L587.1,267.0 L587.8,266.4 L589.0,266.1 L589.9,266.0 L591.0,266.0 L592.0,265.9 L593.3,265.7 L594.3,265.6 L595.1,265.6 L596.5,265.4 L598.1,265.3 L599.3,265.2 L600.2,265.1 L601.5,265.0 L602.4,264.9 L603.9,264.8 L605.4,264.6 L606.8,264.5 L608.0,264.4 L608.8,264.3 L609.6,264.3 L610.7,264.2 L611.7,264.1 L612.8,264.0 L613.8,263.9 L614.8,263.8 L615.8,263.8 L616.7,263.7 L617.6,263.6 L618.9,263.5 L619.7,263.5 L620.6,263.6 L621.5,263.7 L623.7,263.8 L624.6,263.9 L625.4,263.9 L626.6,264.0 L627.6,264.1 L628.9,264.2 L629.8,264.2 L630.7,264.3 L631.5,264.4 L632.5,264.4 L633.2,264.5 L634.3,264.6 L635.4,264.6 L636.2,264.7 L637.0,264.7 L638.4,264.8 L639.5,264.9 L641.8,265.5 L642.7,264.4 L643.2,263.6 L643.7,262.9 L644.1,262.1 L644.4,261.1 L645.1,260.3 L645.7,259.7 L645.7,258.7 L645.6,257.8 L645.7,257.0 L645.8,256.1 L645.6,255.0 L645.9,253.9 L646.1,253.0 L646.5,251.9 L647.4,250.8 L647.9,250.1 L648.5,249.4 L649.2,248.5 L650.0,247.5 L650.7,246.8 L651.2,246.1 L651.7,245.3 L651.9,244.2 L651.7,243.3 L652.0,242.4 L652.4,241.8 L653.0,240.9 L653.5,240.0 L653.7,239.0 L653.7,238.2 L654.2,237.4 L654.3,236.4 L653.3,233.9 L652.8,233.2 L653.0,232.4 L652.8,231.5 L652.7,230.6 L652.7,229.2 L652.9,228.4 L654.5,228.6 L655.3,228.8 L657.4,228.4 L658.4,228.8 L659.8,229.9 L660.2,230.6 L662.4,231.5 L663.6,231.9 L663.9,231.0 L665.3,230.2 L666.9,229.6 L667.9,228.4 L668.2,227.6 L669.5,226.5 L670.4,226.1 L672.3,223.6 L672.9,222.9 L674.0,222.2 L676.0,220.9 L677.1,220.8 L678.0,221.0 L679.5,221.1 L681.3,220.9 L681.1,220.0 L680.5,218.3 L679.7,216.6 L677.9,213.6 L677.2,211.3 L679.5,209.7 L679.9,208.5 L680.6,207.2 L681.2,206.4 L681.9,205.7 L683.8,204.8 L684.5,204.1 L685.1,201.4 L685.3,200.6 L686.1,199.7 L687.0,199.0 L687.8,197.9 L687.1,196.4 L686.3,195.3 L685.5,195.0 L683.9,194.7 L682.4,194.6 L681.1,194.4 L680.9,193.3 L682.1,192.2 L683.5,191.1 L685.2,189.8 L687.0,188.8 L689.0,187.3 L690.6,186.0 L691.5,184.9 L695.0,183.4 L695.9,182.2 L695.7,180.6 L695.0,179.4 L694.2,178.6 L693.1,177.7 L691.6,176.7 L690.0,175.9 L689.5,177.2 L686.8,178.8 L684.4,179.1 L682.5,178.3 L681.3,176.9 L680.7,175.0 Z" fill="#D946EF" fill-opacity="0.78" stroke="#ffffff" stroke-width="1.0"><title>Lower Dibang Valley</title></path>
+<path d="M513.0,257.3 L512.8,256.1 L512.7,255.2 L510.2,254.6 L508.1,253.7 L505.1,253.3 L502.3,252.6 L497.9,252.4 L493.1,250.7 L490.5,253.4 L489.4,255.7 L488.8,256.3 L488.1,256.7 L487.2,257.0 L486.4,258.9 L488.1,259.5 L489.2,259.6 L492.2,259.4 L493.0,260.2 L494.8,260.6 L495.7,261.0 L496.2,261.8 L497.2,262.0 L497.1,263.1 L496.9,264.4 L496.7,266.0 L495.6,267.0 L495.6,268.2 L495.7,268.9 L494.9,271.2 L494.5,271.9 L492.9,273.9 L492.7,275.1 L492.6,276.6 L491.2,277.3 L489.9,278.0 L490.3,279.6 L490.0,280.6 L490.4,281.3 L492.1,281.2 L493.2,281.7 L492.7,282.3 L491.4,283.4 L490.7,283.8 L489.9,284.0 L490.4,285.4 L489.3,286.2 L489.2,287.2 L484.1,289.1 L480.5,290.2 L478.5,291.5 L476.4,293.1 L470.7,295.0 L467.5,295.1 L466.2,293.4 L464.4,291.6 L463.5,286.8 L461.3,285.3 L459.0,284.3 L456.3,283.8 L453.5,282.8 L451.5,280.2 L446.8,279.6 L445.5,281.0 L443.8,281.9 L441.3,281.9 L437.7,282.9 L433.5,285.0 L432.4,284.5 L431.6,284.6 L430.6,284.7 L429.8,285.2 L429.1,284.8 L428.4,285.2 L427.7,285.7 L426.9,286.0 L426.2,286.4 L425.5,286.3 L425.1,287.0 L424.8,287.8 L424.5,288.5 L423.7,288.7 L423.0,288.9 L422.2,289.2 L421.4,289.2 L420.7,289.7 L419.8,289.9 L419.3,290.8 L418.6,291.0 L417.7,291.1 L416.8,291.0 L416.4,291.7 L415.8,292.4 L415.1,293.0 L414.4,293.8 L413.7,294.3 L413.0,294.8 L412.3,295.3 L411.4,296.0 L410.7,296.5 L409.9,296.9 L409.1,297.1 L408.6,296.3 L408.2,295.6 L407.8,294.9 L407.2,295.3 L406.9,296.0 L406.8,296.9 L406.6,297.7 L406.5,298.6 L406.5,299.4 L406.6,300.2 L407.3,300.8 L408.1,301.2 L408.8,301.8 L409.4,302.5 L410.2,302.8 L410.8,302.3 L411.4,301.7 L412.2,301.8 L412.7,302.5 L412.7,303.2 L412.5,304.0 L411.7,304.3 L410.6,304.7 L409.9,305.1 L409.2,305.6 L408.5,306.0 L407.7,306.2 L407.0,306.8 L406.6,307.6 L406.1,308.2 L405.5,308.8 L404.7,309.3 L404.0,309.8 L403.3,310.2 L402.7,310.8 L402.2,311.4 L401.4,311.8 L400.6,312.2 L399.9,312.6 L399.5,313.3 L399.0,313.9 L398.2,314.2 L397.1,314.8 L396.6,315.6 L395.9,316.2 L395.0,316.8 L394.5,317.7 L394.0,318.5 L393.4,319.4 L392.8,320.0 L392.4,320.7 L392.9,321.5 L393.7,321.1 L394.3,320.3 L394.8,319.7 L395.4,318.8 L395.7,317.9 L396.4,317.5 L397.2,317.3 L398.0,316.8 L398.7,317.0 L399.6,317.0 L400.0,317.7 L400.2,318.5 L399.5,319.0 L399.4,319.8 L398.6,320.1 L398.7,320.9 L399.5,321.3 L400.1,321.7 L401.0,322.2 L401.3,322.9 L401.4,323.9 L402.5,324.2 L403.2,324.4 L403.4,323.5 L404.0,322.9 L404.6,322.3 L405.3,322.7 L405.9,323.4 L406.2,324.1 L407.1,324.3 L407.9,324.4 L408.3,325.1 L409.1,324.8 L409.8,325.2 L410.1,326.0 L410.9,325.6 L411.6,326.1 L412.4,326.3 L413.2,326.3 L413.9,326.7 L414.7,326.7 L415.5,325.6 L416.4,325.6 L417.1,325.2 L417.7,324.5 L418.6,324.8 L419.4,324.9 L420.1,324.3 L420.7,323.7 L421.4,323.1 L422.3,322.8 L423.2,322.6 L423.4,323.7 L423.6,324.5 L424.3,325.4 L425.3,326.4 L426.1,327.1 L426.7,328.0 L426.8,328.8 L427.2,329.5 L428.5,328.8 L428.9,328.2 L429.3,327.4 L429.8,326.5 L431.0,326.6 L431.8,326.7 L432.7,327.1 L433.3,326.3 L434.0,325.9 L434.9,325.8 L435.6,325.3 L436.0,324.7 L436.6,324.0 L437.4,323.8 L438.3,323.5 L438.9,322.8 L439.6,322.5 L440.6,322.6 L441.5,322.0 L442.4,322.2 L443.4,322.0 L443.9,321.3 L444.3,320.6 L445.0,320.0 L445.9,319.7 L446.7,319.6 L447.4,319.3 L448.2,319.6 L448.9,319.0 L449.7,318.8 L450.3,318.2 L450.9,318.7 L451.9,318.7 L452.6,318.2 L453.2,317.4 L453.5,316.7 L454.3,316.3 L455.0,316.0 L455.7,315.5 L456.6,315.3 L457.3,315.1 L458.1,315.5 L458.9,315.0 L459.1,314.2 L458.8,313.4 L459.2,312.6 L460.1,312.8 L461.0,312.8 L462.3,313.6 L463.1,313.6 L463.6,313.0 L463.9,312.1 L464.6,311.7 L465.2,312.4 L466.0,312.6 L466.7,313.0 L467.5,313.1 L468.3,313.0 L469.2,312.7 L469.9,311.9 L470.2,311.1 L470.7,310.3 L471.7,310.0 L472.5,309.7 L473.1,309.3 L473.9,308.7 L474.1,307.9 L474.7,307.4 L475.4,307.7 L476.2,308.0 L477.0,307.8 L477.9,308.0 L478.8,307.5 L479.7,307.3 L480.9,306.6 L481.9,305.8 L481.9,304.9 L481.9,304.0 L482.2,303.3 L482.4,302.5 L483.2,302.1 L484.2,301.7 L485.0,301.4 L485.9,301.1 L487.2,300.6 L489.0,299.9 L489.7,299.7 L490.7,299.3 L491.5,299.0 L492.3,298.8 L502.5,295.3 L503.6,294.9 L504.4,294.6 L505.2,294.3 L506.1,294.0 L507.0,293.7 L507.9,293.3 L508.8,293.1 L509.6,292.8 L510.5,292.5 L511.4,292.2 L512.3,291.8 L513.2,291.5 L514.1,291.2 L515.0,290.9 L515.9,290.6 L516.9,290.2 L517.8,289.9 L518.7,289.6 L519.6,289.3 L520.5,289.0 L521.4,288.6 L522.4,288.3 L520.5,283.1 L519.4,281.8 L519.9,277.1 L520.2,274.3 L518.8,274.2 L515.3,273.3 L513.3,272.3 L513.8,268.5 L515.6,266.6 L515.7,264.1 L515.2,262.0 L513.6,260.5 Z" fill="#65A30D" fill-opacity="0.78" stroke="#ffffff" stroke-width="1.0"><title>Lower Siang</title></path>
+<path d="M354.5,336.8 L372.8,336.1 L377.6,331.5 L377.6,329.9 L369.6,325.4 L370.2,321.4 L369.1,321.4 L365.0,320.8 L358.3,318.7 L355.3,318.0 L354.3,316.6 L352.3,313.2 L351.9,307.9 L351.4,303.0 L347.3,299.9 L349.8,291.3 L347.7,288.3 L347.3,287.6 L345.0,288.3 L340.1,288.5 L335.5,290.0 L332.6,291.1 L330.1,292.5 L330.0,296.2 L329.7,299.6 L330.3,300.5 L330.1,301.9 L327.1,304.4 L323.7,306.2 L321.9,308.7 L318.8,308.7 L317.3,309.1 L315.0,311.9 L312.4,312.8 L310.4,314.6 L308.6,315.6 L307.6,316.4 L303.4,319.9 L298.5,319.2 L300.3,321.2 L301.2,322.3 L304.5,327.0 L309.0,333.4 L307.5,339.6 L306.0,340.3 L302.0,343.0 L300.2,346.1 L300.5,348.4 L302.2,349.2 L303.5,348.9 L305.9,354.3 L306.2,356.7 L306.5,359.6 L308.3,361.3 L310.9,360.8 L314.3,362.7 L315.8,364.6 L318.5,364.7 L322.2,363.0 L326.3,362.0 L330.0,363.0 L332.5,362.4 L335.5,359.1 L337.1,360.2 L338.4,361.2 L339.6,360.3 L339.6,355.7 L339.0,354.4 L338.5,353.3 L338.4,350.5 L341.6,348.1 L341.8,346.1 L342.0,344.1 L347.1,340.0 L350.7,338.2 Z" fill="#FF9933" fill-opacity="0.78" stroke="#ffffff" stroke-width="1.0"><title>Lower Subansiri</title></path>
+<path d="M674.6,281.3 L672.9,278.5 L670.8,278.7 L661.4,280.8 L650.6,282.8 L647.3,282.8 L637.7,288.0 L629.3,292.3 L627.9,293.2 L623.8,295.8 L619.7,298.3 L616.3,301.0 L614.4,301.4 L611.5,302.0 L610.8,302.5 L609.9,302.4 L609.1,302.6 L608.9,303.4 L609.5,303.9 L610.2,304.3 L610.4,305.0 L610.8,305.8 L610.9,306.6 L610.6,307.4 L610.7,308.2 L611.2,308.8 L611.9,309.1 L612.6,308.7 L613.3,309.2 L613.9,309.6 L613.4,310.2 L612.6,310.4 L612.0,311.0 L611.8,311.8 L611.7,312.6 L611.4,313.3 L611.8,314.1 L612.4,314.6 L613.0,315.1 L613.7,315.5 L614.5,315.7 L615.0,316.3 L614.3,316.7 L613.9,317.4 L614.1,318.2 L613.4,318.6 L612.6,318.6 L612.5,319.5 L613.1,320.1 L613.9,320.4 L614.2,321.2 L614.1,322.1 L614.4,322.8 L615.2,322.8 L615.9,322.6 L616.7,322.6 L617.5,322.7 L618.2,323.2 L617.8,323.9 L617.5,324.7 L617.3,325.5 L617.4,326.2 L618.0,326.8 L618.8,326.7 L619.3,327.3 L619.6,328.1 L620.1,328.7 L620.9,329.0 L621.7,329.0 L622.3,329.5 L623.0,330.1 L623.3,330.8 L623.8,331.4 L624.6,331.3 L625.4,331.3 L643.5,329.1 L645.9,327.9 L646.9,327.2 L648.2,325.8 L649.5,324.8 L650.4,324.5 L651.2,323.8 L651.6,322.6 L652.3,321.6 L654.0,321.4 L656.3,320.8 L657.2,320.5 L658.1,320.2 L661.4,319.5 L662.4,320.2 L662.0,321.1 L663.4,321.5 L666.3,322.5 L667.2,323.1 L669.2,324.2 L670.2,324.3 L671.3,325.3 L672.3,325.7 L673.1,326.2 L674.0,326.3 L674.6,326.8 L675.3,327.7 L676.2,328.0 L677.0,327.8 L677.8,328.4 L679.2,328.3 L680.1,328.5 L681.4,329.3 L682.5,329.2 L683.4,329.6 L684.3,329.7 L685.2,329.3 L686.9,328.1 L687.5,327.4 L683.8,323.4 L684.7,318.2 L681.6,314.4 L681.6,308.8 L680.3,303.6 L681.4,299.4 L682.3,294.1 L682.1,292.7 L678.6,287.0 Z" fill="#138808" fill-opacity="0.78" stroke="#ffffff" stroke-width="1.0"><title>Namsai</title></path>
+<path d="M268.6,361.7 L267.2,359.4 L264.3,354.5 L262.8,355.5 L249.6,358.0 L245.4,368.6 L232.7,374.4 L222.5,378.4 L220.0,383.1 L223.5,386.2 L227.0,386.2 L232.4,385.8 L233.6,388.4 L232.7,390.2 L231.9,390.9 L229.1,392.0 L226.4,393.2 L223.9,395.5 L222.9,394.9 L220.7,393.8 L218.0,393.0 L216.3,393.0 L213.3,393.9 L210.0,395.6 L207.5,396.8 L204.6,396.8 L202.1,395.8 L199.6,397.2 L198.1,392.4 L195.4,390.0 L194.3,389.7 L193.4,389.6 L192.6,389.7 L191.8,389.7 L191.1,389.1 L190.6,388.5 L189.9,387.8 L189.2,387.3 L188.3,387.1 L187.4,387.1 L186.3,387.5 L185.2,388.3 L184.1,388.8 L182.4,390.1 L179.7,390.7 L178.4,391.8 L177.0,392.1 L175.9,392.5 L175.1,393.0 L174.1,393.3 L173.0,394.0 L171.3,394.2 L170.6,394.7 L169.5,394.5 L168.4,394.9 L167.1,395.8 L167.0,398.2 L166.2,399.1 L166.3,400.9 L165.4,401.3 L166.1,402.7 L164.9,404.5 L164.6,405.6 L165.7,409.7 L166.7,411.1 L169.4,413.6 L171.0,414.3 L174.0,416.9 L174.8,415.3 L175.5,413.8 L176.2,413.1 L178.3,413.8 L179.7,414.5 L181.9,414.5 L183.3,415.2 L184.7,414.5 L186.1,414.5 L187.5,414.5 L188.9,413.8 L191.1,414.5 L192.5,414.5 L194.6,415.2 L197.4,416.7 L199.6,417.4 L202.1,417.9 L205.9,418.1 L206.6,418.4 L207.9,419.2 L208.7,419.7 L209.5,420.2 L210.4,420.7 L210.5,421.5 L210.3,422.3 L210.5,423.5 L211.1,424.3 L212.0,424.7 L212.9,425.2 L214.0,425.7 L215.3,426.3 L216.2,426.7 L216.9,427.1 L217.7,427.4 L218.6,427.8 L219.7,428.3 L220.6,429.0 L221.5,429.6 L222.3,430.1 L223.3,430.7 L224.0,431.1 L224.6,431.5 L225.3,431.9 L226.1,431.8 L227.0,431.6 L227.7,431.4 L228.6,431.1 L229.5,430.9 L230.3,430.7 L231.1,430.5 L232.1,430.9 L232.9,431.2 L233.8,431.5 L234.6,431.8 L235.4,431.2 L236.1,430.7 L236.8,430.3 L237.6,429.9 L238.6,429.8 L239.5,429.6 L240.4,429.5 L241.4,429.3 L242.3,429.2 L243.4,428.9 L244.3,428.7 L245.2,428.6 L246.0,428.4 L246.9,428.2 L247.9,427.9 L249.0,427.6 L249.9,427.3 L250.7,427.1 L251.7,426.9 L252.7,426.7 L253.4,426.6 L254.6,426.4 L255.6,426.2 L256.5,426.0 L257.8,425.8 L259.0,425.5 L259.8,425.5 L261.0,425.4 L261.9,425.3 L263.0,425.2 L264.0,425.1 L265.3,424.9 L266.6,424.7 L267.5,424.5 L268.4,424.5 L269.6,424.6 L270.8,424.5 L272.0,424.5 L272.9,424.6 L274.1,424.6 L275.5,424.6 L276.7,424.8 L277.9,424.9 L277.1,424.8 L277.2,424.0 L277.0,423.2 L276.7,422.4 L275.9,422.1 L275.4,421.5 L275.7,420.7 L274.9,420.6 L274.0,420.8 L273.2,420.8 L272.4,420.4 L271.5,419.9 L270.7,419.6 L270.0,419.3 L270.0,418.3 L269.9,417.1 L270.6,416.4 L270.1,415.5 L270.4,414.3 L270.0,413.0 L269.8,411.8 L269.5,411.0 L268.5,408.9 L267.6,408.3 L267.0,406.9 L266.1,405.5 L264.9,405.5 L264.3,406.0 L263.4,405.8 L262.3,404.6 L262.0,403.5 L261.3,402.8 L260.4,401.7 L258.2,400.9 L256.8,400.7 L256.0,400.6 L254.8,400.9 L254.0,400.5 L252.9,400.2 L252.2,399.8 L252.1,399.0 L251.9,397.5 L252.1,396.8 L252.8,396.1 L253.6,396.1 L254.7,395.5 L255.3,395.1 L255.7,394.4 L256.2,393.8 L257.1,393.4 L258.0,393.4 L258.7,393.6 L259.6,393.7 L260.5,393.1 L261.2,392.6 L261.9,392.2 L263.0,392.2 L263.8,391.9 L264.6,391.6 L265.1,391.0 L266.0,390.7 L265.2,390.4 L264.7,389.8 L264.4,388.8 L264.1,388.1 L263.4,387.7 L262.7,387.1 L262.3,386.4 L261.6,385.7 L261.0,384.9 L260.1,384.7 L259.3,384.9 L258.5,385.1 L257.8,385.5 L256.8,386.2 L256.0,386.4 L255.2,386.6 L254.4,386.7 L253.6,386.5 L253.4,385.7 L253.3,384.9 L253.1,384.1 L253.4,383.4 L253.9,382.8 L253.5,382.2 L253.7,381.4 L254.0,380.6 L254.7,380.1 L254.6,379.3 L253.9,378.5 L254.4,377.8 L255.3,377.5 L256.0,376.9 L256.7,376.3 L257.7,375.9 L257.4,375.2 L258.0,374.7 L259.0,374.2 L259.9,374.1 L260.5,373.7 L261.2,373.3 L261.9,372.9 L262.7,372.7 L263.3,372.2 L263.4,371.4 L263.4,370.6 L263.1,369.9 L263.5,369.2 L263.2,368.4 L263.2,367.5 L263.1,366.7 L262.7,366.0 L263.6,365.7 L264.1,365.1 L264.6,364.4 L265.2,363.6 L265.9,363.2 L266.8,362.7 L267.5,362.0 Z" fill="#0B1B3F" fill-opacity="0.78" stroke="#ffffff" stroke-width="1.0"><title>Pakke Kessang</title></path>
+<path d="M301.2,322.3 L300.3,321.2 L298.5,319.2 L294.5,314.6 L288.3,313.5 L284.8,313.1 L278.3,312.3 L274.3,311.8 L271.9,311.6 L268.5,311.5 L263.1,313.5 L257.1,319.3 L255.8,320.3 L255.3,321.0 L254.7,321.5 L254.3,322.2 L255.1,322.1 L255.9,322.1 L256.5,322.7 L257.5,323.2 L258.3,323.5 L259.1,323.6 L260.0,323.4 L260.5,324.0 L261.5,324.2 L262.2,324.7 L262.1,325.5 L261.8,326.2 L263.1,326.2 L263.9,326.0 L264.8,326.3 L265.1,327.0 L265.7,327.6 L266.6,327.9 L267.3,328.3 L267.9,328.8 L268.3,329.5 L268.6,330.2 L268.1,330.9 L267.4,331.1 L266.8,331.8 L266.7,333.0 L266.1,333.6 L265.4,334.0 L264.7,334.4 L263.9,334.7 L264.4,335.7 L264.8,336.4 L265.1,337.1 L265.5,337.8 L266.1,338.4 L266.3,339.2 L266.6,339.9 L267.1,340.5 L267.0,341.3 L267.2,342.1 L267.4,342.9 L267.5,343.7 L268.0,344.6 L267.8,345.4 L267.7,346.2 L267.4,346.9 L266.8,347.4 L267.3,348.0 L268.2,347.7 L268.9,348.2 L269.2,348.9 L269.8,349.4 L270.6,350.2 L271.3,350.6 L272.0,350.9 L272.9,351.1 L273.7,351.5 L274.2,352.1 L274.1,352.9 L273.9,353.6 L274.0,354.4 L274.5,355.1 L274.6,356.0 L274.5,356.8 L274.0,357.5 L274.2,358.4 L274.6,359.1 L273.8,359.7 L273.0,360.1 L272.3,360.4 L271.2,360.8 L270.5,361.1 L269.8,361.6 L268.9,361.6 L268.0,361.9 L267.0,362.5 L266.3,363.0 L265.5,363.5 L264.8,363.9 L264.5,364.6 L263.9,365.4 L263.2,365.8 L263.1,366.6 L263.2,367.5 L263.2,368.4 L263.5,369.2 L263.1,369.8 L263.4,370.6 L263.4,371.4 L263.3,372.2 L262.7,372.7 L261.9,372.9 L261.2,373.3 L260.5,373.7 L259.9,374.1 L259.0,374.2 L258.1,374.6 L257.5,375.2 L257.7,375.9 L256.7,376.3 L256.0,376.8 L255.3,377.5 L254.6,377.8 L253.9,378.2 L254.2,378.9 L254.8,379.5 L255.0,380.2 L254.2,380.5 L253.8,381.2 L253.5,382.0 L253.8,382.7 L253.4,383.4 L253.1,384.1 L253.3,384.9 L253.4,385.7 L253.6,386.5 L254.4,386.8 L255.2,386.6 L256.0,386.4 L256.8,386.2 L257.7,385.6 L258.3,385.1 L259.2,384.9 L260.0,384.7 L261.0,384.9 L261.6,385.5 L261.8,386.2 L262.4,386.7 L262.9,387.4 L263.7,387.9 L264.4,388.5 L264.2,389.2 L264.8,389.8 L265.4,390.4 L264.9,391.3 L264.1,391.8 L263.4,392.2 L262.5,392.1 L261.6,392.5 L260.9,392.8 L260.3,393.4 L259.0,393.7 L258.0,393.4 L257.1,393.4 L256.3,393.7 L255.8,394.3 L255.4,395.0 L254.7,395.5 L253.9,395.9 L253.0,396.0 L252.3,396.3 L252.0,397.0 L252.0,398.4 L252.1,399.2 L252.3,400.0 L253.5,400.4 L254.2,400.6 L255.3,400.6 L256.2,400.6 L257.6,400.8 L259.7,401.4 L261.3,402.8 L262.0,403.5 L262.3,404.6 L263.4,405.8 L264.3,406.0 L264.9,405.5 L266.1,405.5 L267.0,406.9 L267.6,408.3 L268.5,408.9 L269.5,411.0 L269.8,411.8 L270.0,413.0 L270.4,414.3 L270.1,415.5 L270.6,416.4 L269.9,417.1 L269.9,418.0 L270.1,418.8 L270.3,419.5 L271.3,419.8 L272.0,420.1 L272.6,420.6 L273.5,421.0 L274.3,420.8 L275.1,420.6 L275.9,420.9 L275.5,421.6 L276.1,422.2 L276.8,423.0 L277.3,423.7 L277.0,424.5 L277.9,424.9 L279.3,425.1 L280.2,425.3 L281.6,425.5 L282.8,425.6 L283.7,425.8 L284.7,425.9 L285.4,426.2 L286.1,426.9 L286.8,427.7 L287.8,428.1 L288.7,427.9 L290.5,427.3 L290.8,428.1 L292.0,427.8 L292.8,427.4 L293.6,427.0 L294.5,426.8 L295.2,426.5 L296.0,426.3 L297.1,426.3 L298.0,426.3 L298.8,425.9 L299.6,426.0 L300.5,425.9 L301.3,425.8 L302.2,425.8 L303.1,425.9 L303.9,426.0 L304.8,426.0 L305.6,425.7 L306.5,425.3 L307.4,424.9 L308.2,424.6 L309.1,424.4 L310.0,424.2 L310.9,424.0 L311.8,423.9 L312.8,423.8 L313.7,423.6 L314.6,423.5 L315.6,423.2 L316.4,422.7 L317.1,422.2 L317.8,421.5 L318.4,421.0 L319.0,420.5 L319.7,419.9 L320.2,419.1 L320.7,418.4 L321.2,417.7 L321.8,416.9 L322.5,416.1 L323.2,415.4 L323.8,414.8 L325.0,414.1 L326.2,413.9 L327.1,413.4 L328.0,412.9 L328.8,412.5 L329.7,412.1 L330.0,411.2 L330.0,410.1 L330.6,409.6 L330.5,408.7 L331.2,409.5 L331.4,410.3 L331.7,409.5 L331.9,408.8 L331.9,407.8 L332.3,408.8 L332.2,409.8 L333.1,410.1 L333.7,409.5 L333.7,408.6 L334.5,409.0 L334.4,408.2 L333.9,407.7 L333.7,406.8 L334.1,407.6 L334.7,408.2 L335.1,408.9 L335.8,408.7 L335.8,407.7 L336.6,408.2 L337.3,407.9 L338.1,407.4 L339.0,407.1 L339.5,406.5 L339.6,405.7 L339.5,404.8 L339.0,404.3 L338.8,403.3 L338.3,402.6 L338.3,401.8 L338.3,400.8 L338.1,399.9 L337.7,399.0 L337.0,398.7 L336.1,398.7 L336.3,397.8 L335.6,397.3 L334.8,397.1 L334.2,397.6 L333.9,396.9 L334.9,396.3 L335.3,395.5 L335.3,394.6 L336.1,393.8 L336.9,392.9 L337.7,391.9 L339.0,391.1 L339.8,390.8 L340.8,389.9 L341.6,389.0 L342.1,388.3 L343.0,387.3 L343.7,386.8 L344.1,386.1 L344.7,385.2 L345.5,384.2 L346.4,383.2 L347.0,382.4 L347.4,381.7 L348.0,381.0 L348.5,380.2 L349.2,379.6 L349.9,378.7 L350.5,378.0 L351.5,377.1 L352.1,376.6 L352.7,376.0 L353.4,375.2 L354.0,374.5 L354.6,373.8 L355.3,372.9 L355.9,372.1 L356.4,371.5 L357.2,370.7 L358.0,369.9 L358.6,369.3 L359.2,368.5 L359.9,367.7 L360.5,367.0 L361.0,366.4 L361.6,365.8 L362.6,365.3 L363.6,364.6 L364.3,364.3 L365.0,363.7 L365.7,363.2 L366.5,363.2 L367.2,362.6 L368.0,362.3 L369.0,361.7 L369.7,361.2 L370.5,360.7 L371.3,360.3 L371.8,359.4 L372.3,358.8 L372.7,358.1 L373.0,357.3 L373.2,356.5 L373.7,355.6 L374.5,354.5 L375.1,353.6 L375.7,353.1 L376.5,352.7 L377.3,352.4 L377.8,351.8 L378.2,351.1 L378.9,350.1 L379.6,349.5 L380.5,349.1 L380.9,348.4 L381.7,347.6 L382.6,347.0 L383.4,346.2 L384.1,345.6 L384.6,344.9 L385.0,344.0 L384.9,343.1 L385.5,342.3 L386.2,341.8 L387.0,341.5 L387.8,341.0 L388.6,340.7 L389.0,340.0 L389.7,339.6 L390.6,339.4 L391.5,339.5 L392.3,339.5 L392.7,338.6 L393.4,337.9 L392.4,336.6 L391.6,333.6 L389.5,332.8 L387.5,333.4 L383.9,333.7 L382.8,334.4 L382.2,336.3 L379.5,339.0 L375.9,341.2 L372.3,341.4 L369.1,338.7 L363.3,337.8 L354.5,336.8 L350.7,338.2 L347.1,339.9 L342.0,344.1 L341.8,346.1 L341.6,348.1 L338.4,350.5 L338.5,353.3 L339.0,354.4 L339.6,355.7 L339.6,360.3 L338.4,361.2 L337.1,360.2 L335.5,359.1 L332.5,362.4 L330.0,363.0 L326.3,362.0 L322.2,363.0 L318.5,364.7 L315.8,364.6 L314.3,362.7 L310.9,360.8 L308.3,361.3 L306.5,359.6 L306.2,356.7 L305.9,354.3 L303.5,348.9 L302.2,349.2 L300.5,348.4 L300.2,346.1 L302.0,343.0 L306.0,340.3 L307.5,339.6 L309.0,333.4 L304.5,327.0 Z" fill="#c0392b" fill-opacity="0.78" stroke="#ffffff" stroke-width="1.0"><title>Papum Pare</title></path>
+<path d="M430.9,196.0 L432.5,193.2 L433.0,190.1 L432.9,187.0 L433.0,185.6 L434.6,184.7 L437.8,184.1 L439.3,184.3 L439.0,182.3 L441.0,181.4 L441.4,179.9 L440.4,178.7 L439.1,177.3 L438.3,174.0 L438.3,171.3 L438.8,167.0 L438.0,165.2 L434.8,164.0 L430.3,163.4 L426.9,164.8 L426.0,161.0 L428.4,159.3 L430.2,153.0 L430.8,148.9 L429.7,146.7 L427.2,144.6 L426.0,142.6 L425.0,140.2 L423.7,138.8 L423.7,137.3 L424.9,135.2 L424.0,130.0 L422.2,129.5 L421.1,127.6 L420.6,125.7 L418.1,123.0 L416.5,119.1 L415.9,116.9 L416.3,115.1 L418.3,110.6 L414.3,106.7 L410.9,102.3 L407.7,101.1 L398.0,97.1 L389.0,93.6 L388.2,95.3 L387.6,96.5 L387.2,98.6 L387.3,101.1 L386.4,102.8 L385.3,104.0 L385.1,106.3 L384.8,107.0 L382.2,109.3 L379.9,110.9 L376.2,113.3 L374.1,114.8 L372.3,116.4 L371.2,117.7 L369.2,119.9 L367.8,122.0 L367.2,123.2 L365.1,123.5 L363.4,124.2 L362.3,125.1 L362.7,126.7 L363.0,128.5 L361.0,130.6 L360.9,132.0 L362.8,133.6 L363.2,135.6 L362.7,136.2 L361.6,137.2 L359.8,138.2 L358.5,139.4 L358.1,140.8 L358.1,143.9 L357.7,144.6 L357.4,145.5 L361.3,149.5 L362.2,150.3 L362.9,150.9 L364.0,152.0 L364.9,152.5 L366.0,155.3 L364.1,158.4 L363.6,160.0 L363.2,161.7 L363.0,164.9 L362.9,167.0 L365.7,168.9 L369.7,171.2 L370.8,171.5 L371.9,172.3 L372.7,173.1 L374.7,174.0 L375.6,173.7 L376.7,174.1 L377.2,175.3 L378.0,176.0 L377.8,177.4 L378.0,178.8 L377.5,179.7 L378.4,181.1 L378.8,183.2 L380.0,184.0 L381.4,187.1 L382.3,188.2 L384.0,189.5 L385.5,190.1 L386.3,190.1 L387.1,189.7 L388.6,190.6 L389.7,190.5 L390.8,190.2 L392.8,189.5 L394.4,190.0 L395.2,190.8 L396.0,189.9 L396.0,188.6 L396.7,187.8 L398.1,188.9 L399.6,189.6 L400.3,190.1 L401.3,190.4 L402.5,190.2 L403.8,190.7 L404.4,191.6 L405.2,192.3 L406.0,192.6 L405.1,195.9 L406.1,199.2 L407.0,199.6 L408.0,200.3 L408.4,201.4 L409.0,202.0 L410.1,201.9 L411.0,202.4 L414.4,202.7 L415.1,204.1 L415.6,204.7 L416.9,205.5 L419.1,204.8 L420.8,202.0 L423.8,199.5 L425.4,194.7 L428.3,195.6 Z" fill="#1E88E5" fill-opacity="0.78" stroke="#ffffff" stroke-width="1.0"><title>Shi Yomi</title></path>
+<path d="M424.8,117.0 L418.3,110.6 L416.3,115.1 L415.9,116.9 L416.5,119.1 L418.1,123.0 L420.6,125.7 L421.1,127.6 L422.2,129.5 L424.0,130.0 L424.9,135.2 L423.7,137.3 L423.7,138.8 L425.0,140.2 L426.0,142.6 L427.2,144.6 L429.7,146.7 L430.8,148.9 L430.2,153.0 L428.4,159.3 L426.0,161.0 L426.9,164.8 L430.3,163.4 L434.8,164.0 L438.0,165.2 L438.8,167.0 L438.3,171.3 L438.3,174.0 L439.1,177.3 L440.4,178.7 L441.4,179.9 L441.5,181.0 L439.0,182.3 L439.3,184.3 L437.8,184.1 L434.6,184.7 L433.0,185.6 L432.9,187.0 L433.0,190.1 L432.6,192.5 L430.9,196.0 L431.5,199.2 L433.9,203.5 L437.0,206.1 L440.7,206.1 L441.6,206.9 L443.8,213.1 L444.2,214.0 L446.5,214.9 L448.0,216.6 L448.9,218.0 L449.3,222.2 L448.8,224.8 L447.7,226.7 L449.3,229.8 L449.1,235.1 L451.2,234.4 L452.8,232.5 L454.2,229.1 L455.5,226.0 L457.4,225.3 L459.8,224.5 L461.7,224.2 L464.9,223.6 L467.8,226.0 L470.5,228.0 L471.6,229.2 L475.2,229.4 L480.2,224.1 L485.9,224.5 L488.4,223.8 L488.8,224.5 L489.4,225.3 L490.4,226.2 L490.9,226.9 L491.1,227.7 L490.6,230.1 L490.5,230.9 L490.4,232.7 L490.3,233.7 L490.8,234.6 L491.5,235.6 L493.5,235.9 L494.4,237.1 L496.0,238.4 L495.6,239.2 L495.2,240.7 L494.3,241.5 L493.7,242.6 L493.1,243.6 L491.3,244.4 L489.1,246.7 L490.7,248.1 L491.4,249.1 L492.5,250.1 L497.9,252.4 L502.3,252.6 L505.1,253.3 L507.9,253.7 L510.2,254.6 L512.7,255.2 L514.4,255.5 L516.1,255.2 L519.4,255.1 L521.6,254.0 L523.2,253.7 L524.8,252.6 L528.1,251.3 L531.4,250.5 L533.7,250.0 L534.7,251.3 L536.9,251.4 L540.0,248.1 L543.8,244.5 L543.7,242.5 L544.7,239.7 L540.0,235.9 L538.4,235.0 L535.6,234.3 L534.7,234.7 L532.9,234.4 L530.2,232.8 L529.0,231.2 L528.8,228.7 L528.2,227.9 L526.9,227.0 L525.0,226.8 L524.1,226.6 L522.5,226.6 L521.6,224.4 L522.7,222.5 L521.5,220.8 L518.2,217.0 L519.7,199.0 L517.9,198.7 L514.8,196.0 L514.7,192.9 L516.4,190.4 L517.9,188.2 L518.6,185.7 L517.5,182.0 L518.7,179.2 L515.0,175.1 L513.1,175.5 L508.6,176.9 L505.8,176.0 L501.6,174.7 L500.8,172.6 L499.3,168.9 L497.3,167.8 L494.7,168.3 L491.9,170.1 L489.4,171.6 L486.1,171.0 L483.2,169.2 L480.3,168.3 L477.9,168.5 L476.4,169.4 L475.6,171.1 L474.5,172.0 L471.4,173.7 L469.3,173.9 L469.8,171.8 L471.0,171.2 L471.9,169.9 L469.5,169.8 L467.6,165.3 L467.3,161.7 L467.8,153.1 L467.4,149.7 L465.2,147.3 L460.6,143.0 L451.8,136.9 L451.7,134.1 L449.8,132.6 L448.1,132.1 L445.9,132.9 L441.6,130.0 L438.7,130.0 L437.9,129.9 L436.5,129.7 L435.1,128.3 L435.3,125.8 L430.1,122.3 Z" fill="#7C3AED" fill-opacity="0.78" stroke="#ffffff" stroke-width="1.0"><title>Siang</title></path>
+<path d="M117.8,280.9 L116.6,280.7 L114.9,280.9 L111.5,281.5 L110.1,281.8 L108.6,282.6 L106.0,284.0 L103.9,284.9 L101.5,286.9 L98.8,289.2 L95.9,291.9 L93.9,294.1 L91.5,296.0 L89.8,297.3 L88.8,297.7 L87.3,297.7 L83.5,296.5 L82.0,296.0 L79.7,295.6 L79.0,296.4 L78.2,297.2 L77.2,298.6 L75.8,298.7 L74.9,300.5 L74.3,302.2 L72.7,303.3 L70.6,304.3 L69.1,302.6 L68.3,302.4 L66.3,302.9 L64.9,303.3 L64.5,302.6 L64.2,301.9 L62.4,300.9 L62.0,300.0 L61.3,297.3 L61.1,296.4 L60.3,294.7 L58.6,294.0 L58.3,292.6 L58.0,291.3 L57.9,289.6 L56.1,290.3 L54.5,289.4 L52.3,290.1 L50.9,290.3 L49.9,290.6 L48.1,290.6 L46.4,290.3 L43.9,289.5 L42.9,289.1 L41.2,288.7 L40.2,288.1 L39.1,287.3 L38.4,286.2 L37.0,283.8 L35.6,281.8 L34.6,281.5 L33.5,281.7 L31.7,282.2 L30.3,282.0 L28.9,281.6 L28.0,281.7 L26.9,282.2 L25.8,281.4 L25.0,280.9 L23.7,281.8 L22.7,280.9 L21.6,281.1 L20.9,282.4 L20.1,282.6 L19.2,281.5 L18.0,281.9 L18.3,283.3 L19.7,285.8 L20.3,287.4 L21.0,288.4 L22.1,288.8 L23.6,287.8 L25.7,287.5 L28.0,289.0 L29.8,290.7 L30.0,291.7 L30.1,293.5 L30.1,294.4 L30.2,295.3 L31.4,296.3 L31.5,297.5 L31.0,298.3 L30.0,299.2 L29.9,301.7 L29.1,304.3 L29.2,305.8 L28.1,306.4 L27.9,307.4 L27.2,307.9 L26.2,307.5 L25.3,307.9 L25.6,308.9 L24.7,309.4 L24.4,311.2 L21.2,314.3 L19.9,317.3 L20.6,319.5 L22.5,321.3 L22.6,322.7 L20.5,325.2 L21.1,326.6 L23.2,328.7 L24.6,331.6 L25.0,332.3 L26.0,332.1 L27.1,332.0 L28.0,335.0 L28.7,336.5 L29.7,337.3 L31.2,338.0 L32.0,338.7 L32.3,339.9 L32.4,341.0 L33.3,341.3 L34.3,340.8 L35.3,340.1 L36.2,339.5 L37.0,338.6 L38.4,338.2 L39.8,339.3 L41.3,340.0 L41.6,341.3 L41.8,342.8 L42.6,343.3 L44.5,343.3 L45.7,342.8 L46.8,342.7 L47.8,342.8 L48.6,343.9 L50.2,344.2 L52.3,343.5 L55.2,343.0 L56.4,343.4 L57.8,343.5 L59.4,342.5 L60.7,341.4 L62.7,341.5 L64.0,342.9 L66.6,342.9 L67.7,343.7 L69.1,343.2 L71.1,343.2 L72.3,344.2 L73.4,344.9 L74.8,344.9 L77.1,343.9 L78.1,344.2 L79.0,344.2 L80.4,342.7 L81.5,342.2 L83.5,341.5 L83.6,339.9 L84.5,338.2 L86.8,337.0 L88.6,335.9 L91.7,335.7 L94.8,335.7 L97.5,334.5 L99.2,332.3 L100.4,328.6 L103.1,326.2 L105.2,325.7 L107.5,325.6 L110.2,326.2 L111.1,325.8 L112.1,324.0 L113.0,322.2 L113.0,320.7 L112.9,318.3 L114.5,315.6 L116.1,314.5 L118.9,314.7 L122.0,314.1 L127.2,312.2 L129.9,311.1 L131.7,311.2 L135.1,312.1 L137.0,311.1 L138.9,307.2 L139.8,305.3 L139.2,303.9 L139.9,301.8 L140.3,300.2 L139.7,297.9 L141.0,296.1 L144.7,294.8 L146.1,294.3 L146.5,293.7 L147.5,291.8 L148.1,289.6 L147.5,288.5 L146.5,289.7 L145.8,290.4 L144.3,290.8 L142.0,289.0 L140.1,287.2 L139.1,287.4 L137.9,287.6 L135.7,288.4 L135.3,291.7 L133.9,291.9 L131.2,292.4 L128.2,293.5 L126.3,294.3 L125.1,294.2 L122.0,289.7 L120.9,286.8 L120.1,283.7 L119.5,282.3 L119.1,281.6 Z" fill="#0EA5E9" fill-opacity="0.78" stroke="#ffffff" stroke-width="1.0"><title>Tawang</title></path>
+<path d="M578.4,376.1 L577.7,376.5 L577.0,376.2 L576.3,376.9 L575.5,377.1 L575.0,376.5 L574.4,377.0 L574.4,377.8 L574.0,378.6 L573.2,379.0 L572.3,379.1 L571.6,379.6 L571.1,380.3 L570.5,380.9 L570.3,381.7 L569.6,382.5 L569.6,383.3 L568.9,383.7 L568.4,384.5 L567.6,384.7 L567.3,385.6 L567.6,386.5 L568.0,387.2 L568.0,388.0 L568.4,388.7 L568.5,389.6 L567.8,390.0 L568.2,390.7 L568.6,391.5 L568.3,392.3 L567.6,392.8 L566.9,393.1 L567.6,393.5 L568.1,394.3 L567.7,395.0 L567.3,395.7 L567.4,396.6 L567.0,397.3 L566.3,396.7 L565.5,396.7 L565.6,397.6 L565.0,398.1 L563.8,398.0 L563.0,398.1 L562.2,398.2 L561.0,399.1 L560.2,399.9 L559.6,400.5 L558.9,400.9 L557.9,401.1 L557.1,401.5 L556.9,402.2 L556.3,403.0 L557.6,404.7 L557.3,407.9 L557.8,411.0 L555.2,411.9 L553.8,413.0 L556.0,415.3 L556.1,416.4 L556.1,420.3 L555.7,423.0 L555.1,425.2 L554.9,427.1 L554.9,428.4 L556.1,430.1 L556.5,432.1 L557.3,432.6 L558.5,434.2 L560.3,436.4 L561.4,436.4 L565.1,439.3 L569.5,439.2 L574.1,437.8 L573.8,442.2 L573.1,444.9 L573.0,447.2 L574.2,450.1 L574.5,449.2 L575.0,448.5 L575.8,448.2 L576.6,447.8 L576.7,447.1 L577.1,446.2 L577.9,445.7 L578.7,445.4 L579.2,444.8 L580.0,444.6 L580.8,445.0 L581.5,445.3 L582.0,446.0 L582.6,447.0 L583.2,447.4 L584.2,447.4 L585.2,447.3 L586.1,447.5 L586.9,447.7 L587.6,448.2 L588.4,447.9 L589.0,447.1 L589.2,446.3 L589.8,445.7 L590.4,444.9 L590.7,444.1 L591.1,443.4 L591.2,442.5 L591.5,441.7 L591.6,440.9 L591.2,440.1 L591.8,439.5 L592.0,438.7 L592.4,438.0 L593.2,438.0 L593.8,437.3 L594.0,436.5 L594.7,436.1 L595.2,435.3 L595.9,434.9 L596.5,434.2 L597.5,433.7 L598.3,434.2 L599.7,433.5 L600.7,431.3 L600.6,428.5 L600.6,427.0 L599.0,424.2 L599.1,422.6 L598.9,420.5 L595.9,420.5 L593.5,419.6 L591.9,416.4 L591.6,413.9 L594.5,408.1 L594.4,406.4 L594.4,405.3 L593.7,403.8 L593.0,402.2 L593.8,400.4 L595.3,399.2 L595.9,398.6 L596.9,396.8 L597.5,394.3 L597.6,391.4 L597.1,389.7 L595.5,388.5 L593.2,387.4 L593.4,386.0 L593.2,384.9 L592.5,382.8 L592.2,381.5 L591.5,381.3 L590.7,381.3 L589.9,381.4 L589.1,381.5 L588.5,382.1 L587.8,382.5 L587.1,382.7 L586.2,382.6 L585.5,382.5 L585.1,381.8 L584.4,381.2 L583.9,380.7 L584.0,379.8 L583.4,379.2 L582.6,379.2 L581.8,378.7 L581.0,378.5 L580.7,377.8 L580.2,377.1 L579.4,376.9 Z" fill="#06A77D" fill-opacity="0.78" stroke="#ffffff" stroke-width="1.0"><title>Tirap</title></path>
+<path d="M656.2,26.5 L655.2,26.3 L653.7,26.4 L651.7,27.0 L650.1,28.3 L648.8,29.5 L647.5,31.0 L645.9,32.9 L644.2,34.4 L642.9,34.7 L642.1,35.2 L640.8,36.3 L639.1,38.3 L637.9,39.1 L634.8,38.8 L631.2,38.2 L628.4,37.7 L627.2,37.7 L626.4,38.6 L624.1,41.5 L622.6,42.9 L621.5,43.7 L619.6,43.4 L618.5,44.0 L616.2,46.0 L615.3,46.5 L614.5,46.2 L614.0,44.7 L613.4,43.3 L612.0,44.0 L610.9,45.1 L608.1,47.6 L607.9,49.7 L605.5,51.9 L603.9,52.5 L602.6,52.1 L601.4,53.1 L600.7,54.4 L599.4,55.9 L598.0,56.8 L596.1,57.8 L595.0,58.5 L593.7,59.2 L593.0,60.2 L592.1,60.4 L590.6,59.4 L588.4,58.2 L587.5,58.3 L586.7,59.5 L586.0,61.4 L585.7,63.7 L585.7,65.3 L584.8,65.4 L582.1,65.5 L580.0,65.7 L578.9,65.9 L578.9,66.8 L579.5,68.6 L580.0,71.3 L580.1,73.3 L580.2,74.8 L580.2,75.9 L580.2,76.8 L580.2,79.6 L579.0,79.2 L577.5,78.6 L575.6,77.9 L574.1,77.3 L573.1,77.7 L572.5,80.3 L572.5,82.6 L572.1,85.7 L571.6,87.9 L571.2,88.7 L569.9,89.5 L569.4,90.3 L568.7,91.3 L567.9,93.2 L567.2,94.2 L566.2,94.3 L565.0,94.1 L563.7,93.5 L562.6,93.5 L561.9,94.0 L561.0,94.6 L559.5,94.4 L557.4,94.0 L555.9,93.5 L551.9,92.7 L549.9,91.8 L548.1,91.2 L546.7,90.6 L545.9,90.0 L543.6,90.1 L542.4,90.5 L541.6,90.7 L540.8,90.8 L541.0,92.1 L541.9,92.7 L542.0,95.2 L541.3,95.6 L540.5,95.8 L539.1,98.6 L538.6,99.2 L537.7,99.5 L537.7,100.4 L537.7,101.3 L538.4,101.9 L539.2,102.5 L539.4,103.4 L539.3,104.4 L540.0,105.1 L539.6,106.0 L539.3,106.9 L539.7,107.7 L540.5,108.1 L541.2,108.5 L542.0,108.3 L542.9,108.2 L543.7,107.9 L544.4,107.3 L545.0,106.9 L545.9,106.5 L546.6,106.8 L546.7,107.6 L546.5,108.5 L547.2,109.0 L547.3,109.8 L547.8,110.5 L548.7,110.5 L549.2,111.2 L549.4,112.0 L549.1,112.8 L548.5,113.4 L548.7,114.2 L548.8,115.1 L549.1,116.0 L549.2,116.9 L548.4,117.5 L548.1,118.2 L548.5,119.0 L548.8,119.8 L548.6,120.5 L548.5,121.3 L549.0,122.1 L549.3,122.9 L548.7,123.4 L548.7,124.2 L549.1,124.9 L549.4,125.8 L550.2,126.0 L551.0,126.0 L551.3,126.8 L552.1,127.3 L553.0,127.3 L553.0,128.3 L553.2,129.3 L553.4,130.2 L553.5,131.0 L553.7,132.0 L553.9,132.9 L554.4,133.7 L555.2,134.1 L555.8,134.7 L555.9,135.7 L555.5,136.5 L555.7,137.3 L556.1,138.2 L556.7,138.9 L557.1,139.7 L557.9,139.9 L558.3,140.6 L558.0,141.4 L557.6,142.2 L556.8,142.7 L556.1,143.0 L555.7,143.8 L555.4,144.5 L554.7,145.3 L554.0,145.8 L553.1,146.4 L553.4,147.2 L553.7,148.1 L553.7,149.1 L553.8,149.9 L553.8,150.7 L553.9,151.8 L554.1,152.5 L554.0,153.5 L554.4,154.3 L554.6,155.1 L554.9,155.8 L555.0,156.9 L554.9,158.2 L554.7,159.0 L555.2,159.7 L555.8,160.4 L556.3,161.1 L556.3,162.0 L556.3,162.8 L556.5,163.8 L556.7,164.6 L556.9,165.4 L556.9,166.3 L557.0,167.4 L557.6,168.0 L558.4,168.2 L559.2,168.2 L559.9,168.6 L560.2,169.4 L560.5,170.1 L561.0,170.9 L560.8,171.7 L560.2,172.2 L559.7,172.9 L559.4,173.6 L558.7,174.3 L561.3,174.9 L562.5,175.2 L566.6,175.9 L570.4,177.0 L572.7,178.5 L575.5,178.9 L576.0,181.4 L577.3,182.5 L581.8,181.8 L584.7,185.2 L584.3,191.4 L583.1,197.9 L583.7,199.9 L586.4,200.7 L590.3,200.4 L593.2,201.7 L597.2,201.4 L598.2,201.3 L599.5,203.4 L604.2,204.8 L607.3,206.0 L609.9,207.0 L610.6,208.4 L615.0,208.7 L620.2,215.2 L626.6,210.8 L627.3,210.2 L626.2,208.1 L621.8,205.1 L622.2,202.2 L622.6,200.7 L625.8,198.4 L628.4,196.6 L630.8,195.4 L633.3,195.3 L636.1,194.9 L637.3,194.3 L638.1,193.2 L635.8,190.3 L636.0,187.2 L636.0,183.9 L636.4,182.2 L639.4,182.1 L643.2,181.1 L645.8,178.2 L648.8,179.5 L650.2,179.6 L652.7,178.9 L656.1,180.1 L658.2,181.1 L661.2,181.1 L663.7,180.7 L667.8,179.9 L668.5,177.0 L672.3,175.0 L675.3,174.1 L677.5,173.9 L678.6,173.0 L679.3,172.7 L680.3,173.3 L680.7,175.0 L681.3,176.9 L682.5,178.3 L684.4,179.1 L686.8,178.8 L689.5,177.6 L689.5,175.5 L689.3,174.7 L690.6,174.0 L691.7,172.0 L693.3,170.4 L695.6,169.9 L697.8,170.0 L698.9,170.1 L699.8,170.2 L700.6,169.9 L700.7,168.7 L700.6,167.7 L699.7,165.7 L700.8,165.1 L701.8,166.0 L702.9,166.6 L703.7,166.2 L704.6,164.7 L705.3,164.0 L706.0,163.2 L707.9,162.0 L710.0,160.6 L711.6,159.2 L712.9,158.1 L713.1,157.2 L712.5,156.1 L711.9,154.8 L711.5,153.8 L710.8,152.6 L710.3,151.5 L709.7,150.7 L711.6,150.1 L712.5,150.1 L713.6,149.4 L714.9,148.1 L716.9,146.8 L718.3,146.4 L722.2,146.4 L724.0,145.9 L725.9,144.8 L727.6,142.2 L729.2,139.8 L729.8,138.7 L730.0,137.9 L730.1,135.7 L729.4,133.9 L729.0,132.6 L728.4,131.6 L727.2,129.9 L725.7,128.9 L724.5,127.4 L723.2,125.6 L722.7,124.6 L722.2,123.4 L721.3,122.2 L720.4,120.4 L719.1,118.9 L718.9,116.8 L719.0,114.8 L719.3,113.0 L718.9,111.5 L718.1,110.4 L717.2,108.7 L717.1,107.5 L716.9,105.9 L716.5,105.0 L714.0,106.1 L712.9,106.4 L712.1,105.9 L711.7,104.7 L711.3,103.3 L710.7,101.3 L711.7,99.5 L712.3,98.7 L712.9,97.1 L713.8,95.3 L714.7,93.7 L715.6,91.9 L717.5,87.7 L716.5,87.8 L715.1,88.6 L714.0,89.0 L712.8,89.8 L710.7,90.7 L709.2,91.7 L708.2,93.0 L706.9,93.6 L704.9,94.3 L702.8,94.4 L700.5,94.7 L698.3,94.9 L695.5,94.7 L693.9,94.8 L692.4,95.1 L691.1,96.4 L688.9,98.2 L687.1,99.4 L686.0,99.9 L685.0,100.5 L684.0,101.6 L683.3,102.9 L681.4,104.9 L680.3,105.8 L679.6,106.8 L678.6,109.4 L675.7,111.5 L673.9,112.5 L672.4,113.2 L669.8,114.3 L668.2,115.5 L667.1,115.3 L666.9,114.0 L666.6,112.7 L665.5,111.7 L664.1,110.2 L664.8,109.3 L665.5,107.3 L666.5,106.7 L669.0,105.3 L669.6,103.8 L669.7,102.1 L669.0,100.3 L668.4,99.7 L667.4,98.2 L666.9,97.0 L666.3,94.4 L664.9,91.8 L662.9,89.9 L659.8,87.8 L661.2,87.4 L665.6,86.6 L667.6,86.3 L669.8,85.1 L671.9,83.3 L672.6,82.0 L673.1,81.0 L674.0,79.0 L674.3,78.2 L675.8,76.9 L677.2,76.6 L678.7,76.3 L679.7,75.7 L680.3,74.7 L681.2,74.6 L682.0,74.6 L684.6,74.4 L687.0,73.4 L690.5,73.2 L692.4,73.0 L694.1,71.3 L694.8,68.6 L695.2,67.2 L695.9,65.5 L697.2,64.1 L698.2,63.0 L698.8,61.0 L699.0,59.4 L698.2,58.2 L697.5,56.2 L696.5,55.0 L695.6,54.6 L694.8,54.7 L694.1,55.3 L693.1,56.9 L692.3,57.6 L688.8,58.5 L687.7,58.9 L684.9,62.6 L683.5,62.7 L681.1,62.5 L679.0,63.0 L678.0,62.7 L676.7,61.4 L675.6,58.8 L673.3,56.4 L672.4,53.4 L670.3,51.6 L669.5,50.9 L669.8,46.1 L669.9,45.3 L669.2,43.5 L668.5,42.1 L666.9,40.1 L666.0,39.1 L664.9,36.5 L663.4,35.1 L661.3,33.6 L659.8,32.0 L658.1,29.1 L656.9,27.4 Z" fill="#F59E0B" fill-opacity="0.78" stroke="#ffffff" stroke-width="1.0"><title>Upper Dibang Valley</title></path>
+<path d="M474.9,68.7 L475.1,66.4 L474.8,65.0 L474.1,63.8 L473.0,62.7 L472.2,61.5 L470.7,59.6 L468.2,57.4 L466.5,54.9 L463.0,51.4 L462.0,50.8 L460.7,49.8 L458.8,48.2 L458.2,47.6 L456.6,47.0 L453.2,44.5 L451.3,44.3 L450.7,44.8 L450.7,46.2 L450.3,48.4 L450.0,50.0 L448.9,51.8 L448.1,52.5 L446.5,53.6 L445.8,54.2 L445.1,54.8 L444.2,55.1 L443.7,56.0 L443.6,57.6 L443.4,59.9 L442.8,61.5 L441.4,63.4 L439.7,64.3 L437.9,65.0 L435.3,65.2 L432.5,65.3 L430.3,65.0 L428.7,64.5 L426.9,64.1 L425.1,63.9 L423.6,63.7 L422.9,64.2 L421.2,65.9 L419.2,67.2 L416.0,68.8 L415.4,69.5 L415.1,70.9 L414.7,73.3 L414.1,74.8 L413.2,75.5 L412.2,75.9 L409.6,75.9 L407.8,75.9 L406.3,75.8 L404.9,75.8 L403.5,76.2 L402.0,78.2 L400.8,79.6 L399.3,81.2 L397.6,82.6 L396.5,83.8 L395.8,84.5 L394.6,85.5 L393.2,86.4 L392.0,88.8 L391.0,90.2 L390.0,92.0 L389.0,93.6 L398.0,97.1 L407.7,101.1 L410.9,102.3 L414.3,106.7 L418.3,110.6 L424.8,117.0 L430.1,122.3 L435.3,125.8 L435.1,128.3 L436.5,129.7 L437.9,129.9 L438.7,130.0 L441.6,130.0 L445.9,132.9 L448.1,132.1 L449.8,132.6 L451.7,134.1 L451.8,136.9 L460.6,143.0 L465.2,147.3 L467.4,149.7 L467.8,153.1 L467.3,161.7 L467.6,165.3 L469.5,169.8 L471.9,169.9 L471.0,171.2 L469.8,171.8 L469.3,173.9 L471.4,173.7 L474.5,172.0 L475.6,171.1 L476.4,169.4 L477.9,168.5 L480.3,168.3 L483.2,169.2 L486.1,171.0 L489.4,171.6 L491.9,170.1 L494.7,168.3 L497.3,167.8 L499.3,168.9 L500.8,172.6 L501.6,174.7 L505.8,176.0 L508.6,176.9 L513.1,175.5 L515.0,175.1 L518.7,179.2 L517.5,182.0 L518.7,185.3 L517.9,188.2 L516.4,190.4 L514.7,192.9 L514.8,196.0 L517.9,198.7 L519.7,199.0 L518.2,217.0 L521.3,220.5 L522.7,222.5 L521.6,224.4 L522.4,226.4 L524.1,226.6 L525.0,226.8 L526.9,227.0 L528.2,227.9 L528.8,228.7 L529.0,231.2 L530.2,232.8 L532.9,234.4 L534.7,234.7 L536.3,234.0 L538.0,231.8 L539.7,230.5 L541.1,227.7 L542.4,226.8 L544.8,227.3 L545.8,226.7 L545.1,224.9 L546.1,223.3 L548.8,221.9 L551.2,220.0 L551.3,216.4 L551.8,213.7 L552.8,212.4 L556.3,209.9 L557.0,209.3 L556.5,208.7 L556.0,208.0 L555.9,207.3 L556.2,206.3 L555.6,205.5 L555.2,204.8 L554.9,203.9 L554.9,203.1 L555.3,202.4 L554.6,201.9 L553.5,201.9 L552.7,201.5 L551.8,201.2 L550.7,200.8 L550.7,200.0 L550.5,199.2 L550.7,198.3 L550.9,197.5 L550.7,196.7 L550.6,195.9 L550.7,195.1 L550.9,194.3 L550.4,193.5 L549.8,192.9 L549.3,192.3 L548.6,192.0 L548.2,191.2 L548.7,190.6 L549.5,190.2 L550.2,189.8 L550.6,189.1 L550.7,188.3 L550.6,187.4 L550.3,186.7 L550.5,185.8 L550.5,184.9 L550.3,184.0 L550.5,183.1 L551.1,182.5 L551.7,181.9 L552.5,181.1 L553.2,180.8 L553.9,180.5 L554.7,180.6 L555.1,179.8 L555.7,178.9 L556.0,178.0 L556.7,177.6 L557.4,177.6 L558.3,177.3 L558.8,176.6 L558.6,175.8 L558.9,175.1 L559.0,173.9 L559.5,173.2 L560.1,172.3 L560.8,171.7 L561.0,170.9 L560.5,170.1 L560.2,169.4 L559.9,168.6 L559.3,168.2 L558.4,168.2 L557.6,168.0 L557.0,167.4 L556.9,166.3 L556.9,165.5 L556.7,164.6 L556.5,163.8 L556.3,163.0 L556.3,162.2 L556.3,161.2 L555.8,160.4 L555.2,159.7 L554.7,159.0 L554.9,158.2 L554.9,157.1 L555.0,156.3 L554.6,155.3 L554.4,154.6 L553.9,153.9 L554.1,152.9 L553.9,151.9 L553.9,151.1 L553.7,150.3 L553.9,149.4 L553.7,148.5 L553.4,147.5 L553.0,146.6 L553.6,146.0 L554.4,145.5 L555.1,144.9 L555.5,144.1 L555.8,143.3 L556.4,142.8 L557.2,142.6 L557.7,141.9 L558.1,141.2 L558.0,140.4 L557.3,139.8 L556.9,139.1 L556.2,138.5 L555.9,137.7 L555.6,137.0 L555.9,135.7 L556.2,135.0 L555.6,134.5 L555.0,134.0 L554.2,133.5 L553.9,132.7 L553.6,131.8 L553.5,131.0 L553.4,129.9 L553.0,129.0 L553.1,128.0 L552.8,127.3 L551.8,127.2 L551.3,126.7 L550.9,126.0 L549.9,126.1 L549.2,125.5 L548.8,124.7 L548.5,123.9 L549.1,123.2 L549.3,122.4 L548.8,121.7 L548.7,120.7 L548.8,119.8 L548.5,119.0 L548.1,118.2 L548.4,117.5 L549.2,116.9 L549.1,116.0 L548.8,115.1 L548.8,114.3 L548.0,113.9 L548.6,113.2 L549.3,112.6 L549.4,111.7 L549.1,110.9 L548.3,110.5 L547.4,110.2 L547.4,109.3 L546.7,108.7 L546.6,107.7 L546.7,106.9 L545.9,106.5 L545.1,106.8 L544.4,107.3 L543.7,107.9 L542.9,108.2 L542.1,108.3 L541.2,108.5 L540.5,108.1 L539.7,107.7 L539.3,106.9 L539.6,106.0 L540.1,105.5 L539.7,104.8 L539.3,104.0 L539.4,103.0 L539.0,102.4 L538.3,101.8 L537.7,101.1 L537.7,100.2 L538.6,99.2 L539.1,98.6 L540.5,95.8 L541.3,95.6 L542.0,95.2 L541.9,92.7 L541.0,92.1 L540.8,90.8 L539.6,90.1 L538.5,89.1 L538.5,87.8 L538.7,86.3 L538.2,85.1 L538.6,82.5 L537.2,82.3 L533.8,82.7 L531.0,82.8 L528.3,82.7 L525.2,81.9 L523.9,81.5 L520.5,81.4 L519.4,80.6 L518.7,79.4 L517.8,77.6 L517.3,77.0 L514.4,76.7 L512.6,76.4 L511.1,76.0 L509.0,75.7 L507.6,74.9 L506.3,74.3 L505.0,73.3 L504.1,72.8 L503.1,72.4 L501.6,72.3 L502.3,73.5 L504.0,74.8 L504.9,75.7 L506.0,77.2 L507.0,78.7 L505.0,78.7 L504.1,78.3 L502.8,77.5 L501.6,76.6 L500.9,76.0 L499.4,75.0 L497.4,74.4 L494.8,74.3 L493.2,74.0 L492.1,74.1 L490.4,73.4 L488.4,71.9 L486.8,70.9 L485.5,70.5 L482.8,70.6 L481.9,70.7 L480.0,71.7 L478.2,72.7 L476.7,73.3 L475.1,73.7 L474.4,72.8 L474.4,71.1 Z" fill="#2563EB" fill-opacity="0.78" stroke="#ffffff" stroke-width="1.0"><title>Upper Siang</title></path>
+<path d="M361.3,149.5 L357.4,145.5 L356.9,146.9 L355.0,149.4 L353.8,151.3 L352.6,152.1 L351.6,152.3 L349.5,151.3 L344.0,147.0 L343.0,146.7 L341.8,146.5 L341.1,146.4 L339.9,146.9 L337.5,148.4 L334.5,150.7 L332.8,152.2 L331.4,152.6 L329.4,151.6 L327.5,150.3 L325.3,149.3 L324.4,149.5 L322.8,150.2 L320.8,150.8 L318.8,150.9 L316.5,152.1 L314.3,152.9 L312.2,153.7 L309.6,154.3 L307.8,154.6 L301.4,154.0 L297.5,154.1 L296.2,153.7 L295.6,153.0 L295.4,151.7 L294.1,150.8 L292.9,150.4 L292.1,150.1 L290.5,150.7 L289.8,151.5 L289.3,153.6 L289.1,154.9 L288.1,155.2 L287.5,154.4 L286.7,152.6 L285.1,151.4 L284.5,151.9 L282.9,153.6 L280.4,155.1 L277.3,155.6 L274.5,156.4 L273.4,157.0 L271.8,157.3 L270.6,157.1 L269.2,158.1 L269.0,159.7 L268.9,161.0 L268.6,162.2 L267.4,162.4 L266.3,162.9 L265.6,163.3 L264.7,163.6 L264.3,164.7 L265.1,167.2 L265.4,168.9 L264.3,170.2 L263.1,172.5 L262.1,176.0 L261.7,177.2 L261.3,178.6 L260.4,179.2 L259.4,179.9 L258.2,180.8 L255.6,182.2 L254.7,182.9 L253.7,184.1 L252.5,186.1 L251.7,187.0 L250.7,187.5 L249.2,188.3 L248.2,189.0 L247.9,190.1 L249.2,191.2 L251.2,192.3 L252.8,193.2 L254.2,194.0 L255.0,195.2 L253.7,198.9 L253.3,201.5 L253.7,204.7 L253.3,205.6 L254.0,204.8 L254.8,203.7 L255.8,203.1 L256.7,201.5 L258.7,200.5 L261.2,200.6 L261.9,200.9 L262.2,202.4 L262.7,203.5 L263.5,204.8 L264.8,204.6 L266.0,204.0 L267.2,203.3 L269.5,202.7 L270.1,203.6 L271.3,204.1 L272.5,204.1 L272.6,205.3 L272.9,206.4 L275.4,207.5 L275.4,208.5 L275.4,209.4 L276.2,209.7 L277.6,209.9 L278.4,209.7 L279.6,210.1 L279.9,211.7 L280.4,213.0 L281.9,213.9 L282.9,214.4 L283.6,213.9 L284.4,214.0 L285.9,215.7 L287.4,215.5 L288.5,215.1 L289.1,214.2 L291.3,214.9 L292.5,215.0 L293.1,215.8 L293.9,215.9 L294.7,216.0 L295.5,216.0 L296.3,216.0 L297.2,216.1 L298.1,216.4 L298.9,216.4 L299.4,217.0 L299.9,217.6 L300.7,217.5 L301.5,217.0 L301.8,217.7 L302.5,217.3 L303.1,216.7 L304.0,216.3 L304.7,216.2 L305.5,215.9 L306.4,215.9 L307.1,215.6 L307.9,215.8 L308.5,215.3 L308.8,214.4 L309.2,213.6 L309.8,212.8 L310.0,212.1 L310.3,211.2 L310.4,210.3 L311.1,209.9 L311.9,210.2 L312.7,210.6 L313.7,210.6 L314.6,210.5 L315.3,210.2 L315.7,209.4 L316.3,208.6 L317.0,208.3 L317.7,207.8 L319.8,209.4 L320.8,209.9 L323.6,212.6 L324.7,213.2 L326.5,213.3 L327.4,214.4 L328.7,216.2 L329.8,217.1 L331.0,217.6 L331.7,217.5 L332.7,218.0 L337.2,219.3 L337.9,219.7 L340.2,220.9 L340.3,222.4 L340.6,224.2 L341.1,225.9 L341.7,227.2 L345.3,233.3 L347.6,238.5 L345.9,238.9 L345.3,239.7 L345.3,240.6 L346.0,241.8 L344.7,243.1 L343.4,244.2 L342.2,245.7 L343.6,246.5 L345.1,247.3 L344.9,248.6 L344.8,249.5 L345.0,250.5 L346.3,251.8 L346.7,252.6 L349.4,253.8 L350.0,254.3 L350.4,255.9 L350.4,256.9 L353.0,258.1 L354.0,258.6 L354.6,259.1 L355.0,260.0 L355.0,260.8 L355.3,261.5 L355.9,262.1 L356.7,262.0 L357.5,262.2 L358.3,262.5 L359.1,262.7 L359.9,262.6 L361.0,262.9 L361.6,263.7 L362.2,264.2 L364.3,265.9 L365.2,266.2 L367.3,265.7 L368.1,265.8 L369.6,266.5 L370.5,267.1 L372.3,268.6 L370.7,271.3 L370.2,272.0 L369.4,272.6 L370.0,273.6 L370.9,276.9 L371.2,278.1 L371.1,279.7 L373.1,282.9 L374.9,282.3 L376.3,281.3 L377.1,281.1 L378.5,281.2 L379.8,280.9 L380.8,281.6 L381.8,280.9 L382.6,280.2 L383.6,280.3 L384.2,281.5 L384.3,282.5 L385.2,283.8 L386.6,283.6 L388.4,284.3 L389.7,285.0 L389.7,288.4 L391.3,288.8 L396.3,289.3 L398.2,289.5 L399.0,289.1 L399.8,288.9 L400.7,289.0 L401.4,289.5 L402.2,290.1 L402.9,290.6 L403.6,291.3 L404.3,291.9 L404.8,292.4 L405.4,292.9 L406.2,293.5 L407.0,294.2 L407.7,294.8 L408.2,295.6 L408.6,296.3 L408.9,297.0 L409.7,297.1 L410.4,296.6 L411.0,296.2 L411.7,295.6 L412.6,295.3 L413.1,294.6 L413.8,294.2 L414.6,293.5 L415.1,292.8 L415.9,292.2 L416.3,291.5 L416.9,290.9 L417.9,291.2 L418.6,290.9 L419.5,290.6 L420.3,289.9 L420.8,289.3 L421.6,289.1 L422.5,289.0 L423.2,289.0 L424.0,288.7 L424.6,288.1 L425.0,287.3 L425.0,286.5 L425.7,286.3 L426.5,286.2 L427.3,285.9 L428.0,285.5 L428.5,285.0 L429.3,285.0 L430.1,284.7 L431.0,284.7 L431.8,284.4 L433.5,285.0 L437.7,282.8 L441.3,281.8 L443.8,281.9 L445.5,281.0 L446.3,279.5 L446.2,277.9 L446.0,276.5 L445.3,276.0 L444.1,275.7 L442.3,275.1 L441.1,274.5 L440.6,273.2 L438.9,270.8 L438.3,269.6 L438.0,267.9 L437.3,266.5 L436.5,265.6 L436.1,264.3 L436.5,262.6 L437.5,261.2 L436.9,260.6 L436.4,259.7 L436.1,258.8 L434.8,256.5 L433.8,255.9 L430.7,255.5 L429.5,252.7 L428.3,251.2 L426.5,250.3 L424.4,249.3 L422.5,249.0 L421.4,248.4 L420.1,247.9 L419.3,246.8 L417.7,245.8 L418.2,244.8 L418.6,242.3 L417.0,239.7 L417.8,237.2 L417.7,236.4 L415.8,233.7 L415.3,232.2 L415.6,230.8 L415.3,230.1 L414.5,229.3 L413.4,228.6 L412.8,227.3 L413.9,226.1 L414.4,225.3 L414.2,223.8 L414.3,221.5 L414.6,220.1 L416.6,217.9 L418.5,218.3 L419.5,218.7 L420.3,218.7 L421.3,218.5 L420.5,218.2 L419.1,217.7 L418.1,217.0 L417.9,215.4 L417.5,214.6 L416.3,213.2 L415.4,212.0 L415.8,209.8 L417.0,208.5 L418.4,207.6 L419.4,206.8 L419.1,205.1 L416.9,205.5 L415.6,204.7 L415.1,204.1 L414.8,203.0 L411.0,202.4 L410.1,201.9 L409.0,202.0 L408.4,201.4 L408.0,200.3 L407.0,199.6 L406.1,199.2 L405.1,195.9 L406.1,193.0 L405.2,192.3 L404.4,191.6 L403.8,190.7 L402.5,190.2 L401.3,190.4 L400.3,190.1 L399.6,189.6 L398.1,188.9 L396.7,187.8 L396.0,188.6 L396.0,189.9 L395.2,190.8 L394.4,190.0 L393.5,189.5 L390.8,190.2 L389.7,190.5 L388.6,190.6 L387.1,189.7 L386.3,190.1 L385.5,190.1 L384.0,189.5 L382.3,188.2 L381.4,187.1 L380.5,184.6 L378.8,183.2 L378.4,181.1 L377.5,179.7 L378.0,178.8 L377.8,177.4 L378.0,176.0 L377.2,175.3 L376.7,174.1 L375.6,173.7 L374.7,174.0 L372.7,173.1 L371.9,172.3 L371.0,171.6 L369.7,171.2 L365.7,168.9 L362.9,167.0 L363.0,164.9 L363.2,161.7 L363.6,160.0 L364.1,158.4 L366.0,155.3 L365.2,153.0 L364.0,152.0 L363.3,151.5 L362.2,150.3 Z" fill="#D946EF" fill-opacity="0.78" stroke="#ffffff" stroke-width="1.0"><title>Upper Subansiri</title></path>
+<path d="M147.7,294.4 L146.5,293.7 L146.1,294.3 L144.7,294.8 L141.0,296.1 L139.7,297.9 L140.3,300.2 L139.9,301.8 L139.2,303.9 L139.8,305.3 L138.9,307.2 L137.0,311.1 L135.1,312.1 L131.7,311.2 L129.9,311.1 L127.2,312.2 L122.0,314.1 L119.6,314.9 L116.1,314.5 L114.5,315.6 L112.9,318.3 L113.0,320.7 L113.0,322.2 L112.1,324.0 L111.1,325.8 L110.2,326.2 L107.5,325.6 L105.2,325.7 L103.1,326.2 L100.7,328.3 L99.2,332.3 L97.5,334.5 L94.8,335.7 L91.7,335.7 L88.6,335.9 L86.8,337.0 L84.5,338.2 L83.6,339.9 L83.5,341.5 L84.5,341.8 L84.7,343.7 L84.3,345.3 L84.6,347.0 L85.3,347.9 L86.5,348.6 L87.3,348.7 L87.9,349.6 L88.1,350.5 L87.8,352.5 L88.5,353.5 L89.3,353.9 L88.9,356.1 L88.4,357.9 L88.4,359.6 L88.7,361.2 L89.9,362.7 L90.1,366.2 L91.3,367.6 L92.8,368.8 L96.3,370.3 L98.3,371.6 L98.8,372.5 L98.7,373.6 L98.0,374.7 L96.1,375.4 L95.2,374.8 L93.5,374.9 L92.8,374.3 L91.7,374.1 L88.7,375.0 L87.4,375.8 L87.5,376.6 L88.8,377.4 L89.2,378.2 L90.5,378.8 L91.1,380.1 L91.4,381.0 L91.6,382.6 L91.2,384.0 L90.7,384.9 L89.9,385.9 L89.7,388.1 L89.0,388.9 L87.6,389.4 L86.8,390.1 L85.4,390.9 L85.1,392.4 L85.2,393.7 L85.8,394.3 L87.0,396.2 L86.7,397.2 L85.8,398.6 L84.9,400.0 L85.0,401.0 L85.7,402.8 L85.8,404.8 L85.7,405.8 L86.4,406.4 L86.9,407.1 L86.5,407.9 L87.7,408.6 L88.1,410.0 L89.3,410.0 L90.8,410.0 L91.7,411.0 L92.6,411.9 L92.9,413.1 L93.0,415.0 L94.2,415.6 L95.5,416.8 L96.3,417.0 L96.1,421.0 L96.4,421.8 L97.7,422.1 L98.3,424.6 L97.5,426.3 L97.9,427.5 L98.2,429.0 L97.7,431.1 L97.1,433.0 L96.9,434.3 L97.0,435.1 L97.7,435.1 L98.6,435.8 L100.1,435.8 L100.9,435.8 L102.0,435.7 L102.8,435.6 L104.2,435.5 L105.1,435.4 L106.0,435.4 L106.9,435.5 L108.0,435.6 L109.1,435.7 L110.1,435.3 L111.4,434.7 L112.4,434.3 L113.2,434.0 L114.7,433.3 L115.8,433.0 L116.7,432.8 L117.6,432.5 L118.5,432.9 L119.3,433.3 L120.1,433.6 L121.5,433.5 L122.7,433.3 L124.3,432.9 L124.3,432.1 L124.2,430.5 L125.3,430.2 L126.2,429.9 L127.1,429.7 L129.1,429.3 L130.3,429.1 L132.1,428.7 L133.0,429.0 L133.8,429.6 L135.4,429.8 L136.8,430.0 L137.7,430.1 L138.3,429.2 L138.9,428.2 L139.6,427.3 L140.6,427.4 L141.5,427.5 L142.6,426.6 L144.1,425.1 L144.9,424.7 L146.0,424.5 L147.0,424.4 L148.2,424.3 L150.2,424.1 L151.0,424.0 L152.3,424.0 L154.3,424.3 L156.6,424.6 L159.6,424.9 L160.8,424.9 L163.1,424.7 L164.3,424.3 L166.1,423.4 L168.2,422.3 L169.3,421.8 L170.4,421.3 L172.3,420.3 L173.3,418.2 L173.9,417.0 L171.0,414.3 L169.4,413.6 L166.7,411.1 L165.7,409.7 L164.6,405.6 L164.9,404.5 L166.1,402.7 L165.2,401.5 L166.3,400.9 L166.2,399.1 L167.0,398.2 L167.0,396.5 L167.9,395.2 L169.5,394.5 L170.6,394.7 L171.3,394.2 L173.0,394.0 L174.1,393.3 L175.1,393.0 L175.9,392.5 L177.0,392.1 L178.4,391.8 L179.7,390.7 L182.4,390.1 L184.1,388.8 L185.2,388.3 L186.0,387.6 L186.9,387.3 L187.8,387.1 L188.7,387.2 L189.4,387.5 L190.0,388.0 L190.6,388.5 L191.2,389.3 L191.9,389.7 L192.8,389.6 L193.6,389.6 L194.7,389.8 L195.6,390.1 L196.2,389.1 L196.1,388.3 L196.2,387.5 L195.6,387.0 L195.3,386.3 L196.1,385.9 L196.6,385.3 L197.0,384.5 L197.7,384.1 L198.6,384.1 L198.8,383.3 L198.3,382.6 L198.4,381.8 L199.2,381.2 L198.6,380.7 L198.0,380.3 L197.5,379.5 L197.0,378.7 L196.7,377.9 L195.8,377.7 L194.9,377.5 L194.2,377.1 L194.2,376.3 L194.3,375.5 L194.7,374.8 L194.7,374.0 L194.8,373.2 L195.0,372.4 L195.0,371.6 L195.6,371.0 L196.1,371.6 L196.8,372.3 L197.6,372.5 L198.3,372.2 L199.2,372.0 L200.1,372.1 L200.4,371.4 L200.2,370.6 L199.8,369.9 L199.1,369.3 L198.5,368.8 L197.7,368.6 L197.0,368.3 L196.5,367.7 L196.1,367.0 L195.4,366.6 L195.0,365.9 L195.1,365.1 L194.8,364.4 L194.8,363.6 L194.6,362.9 L194.9,362.2 L194.9,361.3 L195.7,361.5 L196.3,360.9 L196.1,360.2 L195.9,359.4 L195.8,358.6 L195.9,357.8 L196.6,357.9 L197.2,357.4 L197.2,356.6 L197.1,355.5 L197.3,354.7 L197.2,353.6 L197.0,352.8 L196.7,352.1 L196.0,351.9 L195.2,351.9 L195.1,351.1 L195.7,350.4 L194.9,349.9 L195.0,349.1 L195.0,348.3 L194.8,347.4 L194.3,346.7 L193.4,346.4 L192.4,346.1 L191.7,346.2 L191.0,346.7 L190.7,347.5 L189.7,347.5 L189.0,347.1 L188.1,347.3 L187.2,347.1 L186.5,346.7 L185.7,346.6 L184.8,346.6 L183.8,346.0 L183.1,345.7 L182.4,346.1 L181.3,346.5 L180.2,346.5 L179.4,345.9 L178.8,345.0 L177.9,344.5 L178.0,343.6 L177.4,342.9 L176.4,342.4 L175.7,342.0 L175.0,341.6 L174.2,340.9 L173.5,339.9 L173.6,339.0 L173.9,336.2 L174.0,335.4 L174.1,334.5 L172.7,333.0 L172.2,331.8 L172.1,330.3 L170.5,329.9 L167.4,329.8 L166.9,328.6 L167.5,326.7 L168.8,324.7 L167.7,324.1 L167.0,323.0 L167.5,319.6 L166.8,318.8 L165.3,317.8 L163.8,318.2 L161.4,319.1 L159.2,319.6 L157.5,319.5 L156.3,318.0 L156.9,315.3 L156.7,312.4 L156.2,309.9 L154.0,306.4 L153.4,304.4 L153.6,302.2 L154.2,301.2 L149.4,295.5 Z" fill="#65A30D" fill-opacity="0.78" stroke="#ffffff" stroke-width="1.0"><title>West Kameng</title></path>
+<path d="M488.8,256.3 L489.4,255.7 L490.5,253.4 L493.4,251.3 L492.5,250.1 L491.6,249.3 L490.7,248.1 L489.1,246.7 L491.3,244.4 L493.1,243.6 L493.7,242.6 L494.3,241.5 L495.2,240.7 L495.4,239.9 L496.0,238.4 L494.4,237.1 L493.5,235.9 L491.5,235.6 L490.8,234.6 L490.3,233.7 L490.4,232.7 L490.5,230.9 L490.6,230.1 L491.1,227.7 L490.9,226.9 L490.4,226.2 L489.4,225.3 L488.8,224.5 L488.4,223.8 L485.9,224.5 L480.2,224.1 L475.2,229.4 L471.6,229.2 L470.5,228.0 L467.8,226.0 L464.9,223.6 L461.7,224.2 L459.8,224.5 L457.4,225.3 L455.5,226.0 L454.2,229.1 L452.8,232.5 L451.2,234.4 L449.1,235.1 L449.3,229.8 L447.7,226.7 L448.8,224.8 L449.3,222.2 L448.9,218.0 L448.0,216.6 L446.5,214.9 L444.2,214.0 L443.8,213.1 L441.6,206.9 L440.7,206.1 L437.0,206.1 L433.9,203.5 L431.5,199.2 L430.9,196.0 L428.3,195.6 L425.4,194.7 L423.9,199.1 L420.8,202.0 L419.1,205.1 L419.4,206.8 L418.4,207.6 L417.0,208.5 L415.8,209.8 L415.4,211.2 L416.3,213.2 L417.5,214.6 L417.9,215.4 L418.1,217.0 L419.1,217.7 L420.5,218.2 L421.3,218.5 L420.3,218.7 L419.5,218.7 L418.5,218.3 L416.6,217.9 L415.0,219.8 L414.3,221.5 L414.4,223.1 L414.4,225.3 L414.0,226.0 L412.8,227.3 L413.4,228.6 L414.5,229.3 L415.3,230.1 L415.6,230.8 L415.3,232.2 L415.8,233.7 L417.7,236.4 L417.8,237.2 L417.0,239.7 L418.6,242.3 L418.2,244.8 L417.7,245.8 L418.8,246.2 L419.9,247.4 L421.4,248.4 L422.5,249.0 L424.4,249.3 L426.5,250.3 L428.3,251.2 L429.5,252.7 L430.7,255.5 L431.5,253.5 L432.9,252.0 L433.8,250.1 L437.6,251.1 L442.4,251.1 L446.0,250.6 L447.4,249.2 L450.6,250.1 L452.7,252.0 L456.7,252.4 L461.0,255.9 L466.4,257.5 L468.4,257.1 L472.1,260.0 L473.8,261.0 L475.6,261.0 L477.9,261.2 L479.7,260.3 Z" fill="#FF9933" fill-opacity="0.78" stroke="#ffffff" stroke-width="1.0"><title>West Siang</title></path>
+<text x="759.6" y="248.5" text-anchor="middle" font-size="9" font-weight="700" fill="#1a1a1a" font-family="inherit" paint-order="stroke" stroke="#fff" stroke-width="3" stroke-linejoin="round">Anjaw</text>
+<text x="691.6" y="360.3" text-anchor="middle" font-size="9" font-weight="700" fill="#1a1a1a" font-family="inherit" paint-order="stroke" stroke="#fff" stroke-width="3" stroke-linejoin="round">Changlang</text>
+<text x="211.3" y="325.0" text-anchor="middle" font-size="9" font-weight="700" fill="#1a1a1a" font-family="inherit" paint-order="stroke" stroke="#fff" stroke-width="3" stroke-linejoin="round">East Kameng</text>
+<text x="557.1" y="260.0" text-anchor="middle" font-size="9" font-weight="700" fill="#1a1a1a" font-family="inherit" paint-order="stroke" stroke="#fff" stroke-width="3" stroke-linejoin="round">East Siang</text>
+<text x="375.5" y="295.0" text-anchor="middle" font-size="9" font-weight="700" fill="#1a1a1a" font-family="inherit" paint-order="stroke" stroke="#fff" stroke-width="3" stroke-linejoin="round">Kamle</text>
+<text x="319.8" y="258.6" text-anchor="middle" font-size="9" font-weight="700" fill="#1a1a1a" font-family="inherit" paint-order="stroke" stroke="#fff" stroke-width="3" stroke-linejoin="round">Kra Daadi</text>
+<text x="250.6" y="256.8" text-anchor="middle" font-size="9" font-weight="700" fill="#1a1a1a" font-family="inherit" paint-order="stroke" stroke="#fff" stroke-width="3" stroke-linejoin="round">Kurung Kumey</text>
+<text x="461.7" y="264.7" text-anchor="middle" font-size="9" font-weight="700" fill="#1a1a1a" font-family="inherit" paint-order="stroke" stroke="#fff" stroke-width="3" stroke-linejoin="round">Lepa Rada</text>
+<text x="674.5" y="267.9" text-anchor="middle" font-size="9" font-weight="700" fill="#1a1a1a" font-family="inherit" paint-order="stroke" stroke="#fff" stroke-width="3" stroke-linejoin="round">Lohit</text>
+<text x="549.3" y="441.2" text-anchor="middle" font-size="9" font-weight="700" fill="#1a1a1a" font-family="inherit" paint-order="stroke" stroke="#fff" stroke-width="3" stroke-linejoin="round">Longding</text>
+<text x="621.3" y="220.1" text-anchor="middle" font-size="9" font-weight="700" fill="#1a1a1a" font-family="inherit" paint-order="stroke" stroke="#fff" stroke-width="3" stroke-linejoin="round">Lower Dibang</text>
+<text x="621.3" y="232.1" text-anchor="middle" font-size="9" font-weight="700" fill="#1a1a1a" font-family="inherit" paint-order="stroke" stroke="#fff" stroke-width="3" stroke-linejoin="round">Valley</text>
+<text x="458.9" y="295.7" text-anchor="middle" font-size="9" font-weight="700" fill="#1a1a1a" font-family="inherit" paint-order="stroke" stroke="#fff" stroke-width="3" stroke-linejoin="round">Lower Siang</text>
+<text x="332.8" y="336.7" text-anchor="middle" font-size="9" font-weight="700" fill="#1a1a1a" font-family="inherit" paint-order="stroke" stroke="#fff" stroke-width="3" stroke-linejoin="round">Lower Subansiri</text>
+<text x="655.8" y="314.5" text-anchor="middle" font-size="9" font-weight="700" fill="#1a1a1a" font-family="inherit" paint-order="stroke" stroke="#fff" stroke-width="3" stroke-linejoin="round">Namsai</text>
+<text x="227.2" y="410.4" text-anchor="middle" font-size="9" font-weight="700" fill="#1a1a1a" font-family="inherit" paint-order="stroke" stroke="#fff" stroke-width="3" stroke-linejoin="round">Pakke Kessang</text>
+<text x="299.5" y="382.0" text-anchor="middle" font-size="9" font-weight="700" fill="#1a1a1a" font-family="inherit" paint-order="stroke" stroke="#fff" stroke-width="3" stroke-linejoin="round">Papum Pare</text>
+<text x="399.1" y="150.9" text-anchor="middle" font-size="9" font-weight="700" fill="#1a1a1a" font-family="inherit" paint-order="stroke" stroke="#fff" stroke-width="3" stroke-linejoin="round">Shi Yomi</text>
+<text x="480.7" y="186.6" text-anchor="middle" font-size="9" font-weight="700" fill="#1a1a1a" font-family="inherit" paint-order="stroke" stroke="#fff" stroke-width="3" stroke-linejoin="round">Siang</text>
+<text x="74.8" y="312.7" text-anchor="middle" font-size="9" font-weight="700" fill="#1a1a1a" font-family="inherit" paint-order="stroke" stroke="#fff" stroke-width="3" stroke-linejoin="round">Tawang</text>
+<text x="577.9" y="413.7" text-anchor="middle" font-size="9" font-weight="700" fill="#1a1a1a" font-family="inherit" paint-order="stroke" stroke="#fff" stroke-width="3" stroke-linejoin="round">Tirap</text>
+<text x="631.0" y="113.8" text-anchor="middle" font-size="9" font-weight="700" fill="#1a1a1a" font-family="inherit" paint-order="stroke" stroke="#fff" stroke-width="3" stroke-linejoin="round">Dibang Valley</text>
+<text x="491.3" y="126.2" text-anchor="middle" font-size="9" font-weight="700" fill="#1a1a1a" font-family="inherit" paint-order="stroke" stroke="#fff" stroke-width="3" stroke-linejoin="round">Upper Siang</text>
+<text x="353.2" y="212.6" text-anchor="middle" font-size="9" font-weight="700" fill="#1a1a1a" font-family="inherit" paint-order="stroke" stroke="#fff" stroke-width="3" stroke-linejoin="round">Upper Subansiri</text>
+<text x="136.5" y="370.7" text-anchor="middle" font-size="9" font-weight="700" fill="#1a1a1a" font-family="inherit" paint-order="stroke" stroke="#fff" stroke-width="3" stroke-linejoin="round">West Kameng</text>
+<text x="450.5" y="241.7" text-anchor="middle" font-size="9" font-weight="700" fill="#1a1a1a" font-family="inherit" paint-order="stroke" stroke="#fff" stroke-width="3" stroke-linejoin="round">West Siang</text>
+<text x="18" y="480" font-size="10" fill="#5b5b5b" font-style="italic">Source: datta07/INDIAN-SHAPEFILES · district GeoJSON requested for Arunachal Pradesh.</text>
+</svg>
+  </div>
+  <table class="bihar">
+    <thead><tr><th>#</th><th>District</th><th>Headquarters</th><th>DM/SP roster</th></tr></thead>
+    <tbody>
+        <tr><td class="r">1</td><td>Anjaw</td><td>Hawai</td><td><a href="https://arunachalpradesh.gov.in/" target="_blank" rel="noopener">District portal / LGD</a></td></tr>
+        <tr><td class="r">2</td><td>Changlang</td><td>Changlang</td><td><a href="https://arunachalpradesh.gov.in/" target="_blank" rel="noopener">District portal / LGD</a></td></tr>
+        <tr><td class="r">3</td><td>East Kameng</td><td>Seppa</td><td><a href="https://arunachalpradesh.gov.in/" target="_blank" rel="noopener">District portal / LGD</a></td></tr>
+        <tr><td class="r">4</td><td>East Siang</td><td>Pasighat</td><td><a href="https://arunachalpradesh.gov.in/" target="_blank" rel="noopener">District portal / LGD</a></td></tr>
+        <tr><td class="r">5</td><td>Kamle</td><td>Raga</td><td><a href="https://arunachalpradesh.gov.in/" target="_blank" rel="noopener">District portal / LGD</a></td></tr>
+        <tr><td class="r">6</td><td>Kra Daadi</td><td>Palin</td><td><a href="https://arunachalpradesh.gov.in/" target="_blank" rel="noopener">District portal / LGD</a></td></tr>
+        <tr><td class="r">7</td><td>Kurung Kumey</td><td>Koloriang</td><td><a href="https://arunachalpradesh.gov.in/" target="_blank" rel="noopener">District portal / LGD</a></td></tr>
+        <tr><td class="r">8</td><td>Lepa Rada</td><td>Basar</td><td><a href="https://arunachalpradesh.gov.in/" target="_blank" rel="noopener">District portal / LGD</a></td></tr>
+        <tr><td class="r">9</td><td>Lohit</td><td>Tezu</td><td><a href="https://arunachalpradesh.gov.in/" target="_blank" rel="noopener">District portal / LGD</a></td></tr>
+        <tr><td class="r">10</td><td>Longding</td><td>Longding</td><td><a href="https://arunachalpradesh.gov.in/" target="_blank" rel="noopener">District portal / LGD</a></td></tr>
+        <tr><td class="r">11</td><td>Lower Dibang Valley</td><td>Roing</td><td><a href="https://arunachalpradesh.gov.in/" target="_blank" rel="noopener">District portal / LGD</a></td></tr>
+        <tr><td class="r">12</td><td>Lower Siang</td><td>Likabali</td><td><a href="https://arunachalpradesh.gov.in/" target="_blank" rel="noopener">District portal / LGD</a></td></tr>
+        <tr><td class="r">13</td><td>Lower Subansiri</td><td>Ziro</td><td><a href="https://arunachalpradesh.gov.in/" target="_blank" rel="noopener">District portal / LGD</a></td></tr>
+        <tr><td class="r">14</td><td>Namsai</td><td>Namsai</td><td><a href="https://arunachalpradesh.gov.in/" target="_blank" rel="noopener">District portal / LGD</a></td></tr>
+        <tr><td class="r">15</td><td>Pakke Kessang</td><td>Lemmi</td><td><a href="https://arunachalpradesh.gov.in/" target="_blank" rel="noopener">District portal / LGD</a></td></tr>
+        <tr><td class="r">16</td><td>Papum Pare</td><td>Yupia</td><td><a href="https://arunachalpradesh.gov.in/" target="_blank" rel="noopener">District portal / LGD</a></td></tr>
+        <tr><td class="r">17</td><td>Shi Yomi</td><td>Tato</td><td><a href="https://arunachalpradesh.gov.in/" target="_blank" rel="noopener">District portal / LGD</a></td></tr>
+        <tr><td class="r">18</td><td>Siang</td><td>Pangin</td><td><a href="https://arunachalpradesh.gov.in/" target="_blank" rel="noopener">District portal / LGD</a></td></tr>
+        <tr><td class="r">19</td><td>Tawang</td><td>Tawang</td><td><a href="https://arunachalpradesh.gov.in/" target="_blank" rel="noopener">District portal / LGD</a></td></tr>
+        <tr><td class="r">20</td><td>Tirap</td><td>Khonsa</td><td><a href="https://arunachalpradesh.gov.in/" target="_blank" rel="noopener">District portal / LGD</a></td></tr>
+        <tr><td class="r">21</td><td>Upper Dibang Valley</td><td>Anini</td><td><a href="https://arunachalpradesh.gov.in/" target="_blank" rel="noopener">District portal / LGD</a></td></tr>
+        <tr><td class="r">22</td><td>Upper Siang</td><td>Yingkiong</td><td><a href="https://arunachalpradesh.gov.in/" target="_blank" rel="noopener">District portal / LGD</a></td></tr>
+        <tr><td class="r">23</td><td>Upper Subansiri</td><td>Daporijo</td><td><a href="https://arunachalpradesh.gov.in/" target="_blank" rel="noopener">District portal / LGD</a></td></tr>
+        <tr><td class="r">24</td><td>West Kameng</td><td>Bomdila</td><td><a href="https://arunachalpradesh.gov.in/" target="_blank" rel="noopener">District portal / LGD</a></td></tr>
+        <tr><td class="r">25</td><td>West Siang</td><td>Aalo</td><td><a href="https://arunachalpradesh.gov.in/" target="_blank" rel="noopener">District portal / LGD</a></td></tr>
+    </tbody>
+    <caption>Officer names are intentionally linked to live district/LGD registers rather than copied into a stale static table.</caption>
+  </table>
+  <p class="src">Sources: <a href="https://raw.githubusercontent.com/datta07/INDIAN-SHAPEFILES/master/STATES/ARUNACHAL%20PRADESH/ARUNACHAL%20PRADESH_DISTRICTS.geojson" target="_blank" rel="noopener">datta07 Arunachal Pradesh district GeoJSON</a>; <a href="https://lgdirectory.gov.in/" target="_blank" rel="noopener">Local Government Directory</a>; <a href="https://arunachalpradesh.gov.in/" target="_blank" rel="noopener">Arunachal Pradesh state portal</a>.</p><!-- END: DIST -->
+
+</section>
+
+<!-- =========================== PRI =========================== -->
+<section id="pri" class="lens-section">
+<!-- BEGIN: PRI — Panchayati Raj KPIs + registers. -->
+  <h1>🌾 Panchayati Raj</h1>
+  <p class="sec-sub">Rural local-government layer: Zilla Parishads, 99 blocks and about 1,786 Gram Panchayats, with live rosters maintained by official registers.</p>
+  <div class="kpis">
+    <div class="kpi"><div class="v">25</div><div class="l">Zilla Parishad layer</div><div class="sub">district-level PRI lens</div></div>
+    <div class="kpi"><div class="v">99</div><div class="l">Blocks</div><div class="sub">LGD development-block count</div></div>
+    <div class="kpi"><div class="v">1,786</div><div class="l">Gram Panchayats</div><div class="sub">LGD GP count</div></div>
+    <div class="kpi"><div class="v">5th Schedule</div><div class="l">Tribal-area status</div><div class="sub">local governance must be read with tribal protections</div></div>
+  </div>
+  <div class="role-grid">
+    <div class="role-card"><div class="role">Register</div><div class="name">Local Government Directory</div><div class="meta"><a href="https://lgdirectory.gov.in/" target="_blank" rel="noopener">Blocks, GPs and LGD codes</a></div></div>
+    <div class="role-card"><div class="role">Elections</div><div class="name">State Election Commission</div><div class="meta"><a href="https://secap.nic.in/" target="_blank" rel="noopener">PRI and municipal election notices</a></div></div>
+    <div class="role-card"><div class="role">Department</div><div class="name">Panchayati Raj, Arunachal Pradesh</div><div class="meta"><a href="https://panchayat.arunachal.gov.in/" target="_blank" rel="noopener">Department portal</a></div></div>
+  </div>
+  <p class="src">Sources: <a href="https://lgdirectory.gov.in/" target="_blank" rel="noopener">LG Directory</a>; <a href="https://secap.nic.in/" target="_blank" rel="noopener">State Election Commission Arunachal Pradesh</a>; <a href="https://panchayat.arunachal.gov.in/" target="_blank" rel="noopener">Panchayati Raj Department</a>.</p><!-- END: PRI -->
+
+</section>
+
+<!-- =========================== CONSTITUTIONAL BODIES =========================== -->
+<section id="bodies" class="lens-section">
+<!-- BEGIN: BODIES — Statutory bodies, commissions. -->
+  <h1>📊 Constitutional / Statutory Bodies</h1>
+  <p class="sec-sub">State-level watchdogs and commissions. Where current chair/member rosters are volatile or not published in stable HTML, this page links the live official register.</p>
+  <div class="role-grid">
+    <div class="role-card"><div class="role">Information Commission</div><div class="name">Arunachal Pradesh Information Commission</div><div class="meta">CIC: Maj Gen Jarken Gamlin (Retd.) · <a href="https://www.apic.arunachal.gov.in/about/directory" target="_blank" rel="noopener">directory</a></div></div>
+    <div class="role-card"><div class="role">Election Commission</div><div class="name">State Election Commission</div><div class="meta"><a href="https://secap.nic.in/" target="_blank" rel="noopener">secap.nic.in</a></div></div>
+    <div class="role-card"><div class="role">Public Service Commission</div><div class="name">Arunachal Pradesh PSC</div><div class="meta"><a href="https://appsc.gov.in/" target="_blank" rel="noopener">appsc.gov.in</a></div></div>
+    <div class="role-card"><div class="role">Women and Child Development</div><div class="name">State women's commission / WCD registers</div><div class="meta"><a href="https://arunachalpradesh.gov.in/" target="_blank" rel="noopener">state portal</a></div></div>
+    <div class="role-card"><div class="role">Accountability</div><div class="name">Lokayukta / Vigilance notices</div><div class="meta"><a href="https://arunachalpradesh.gov.in/" target="_blank" rel="noopener">state portal notifications</a></div></div>
+    <div class="role-card"><div class="role">Human rights</div><div class="name">NHRC / state grievance route</div><div class="meta"><a href="https://nhrc.nic.in/" target="_blank" rel="noopener">NHRC</a></div></div>
+  </div>
+  <p class="src">Sources: <a href="https://www.apic.arunachal.gov.in/about/directory" target="_blank" rel="noopener">APIC directory</a>; <a href="https://secap.nic.in/" target="_blank" rel="noopener">State Election Commission</a>; <a href="https://appsc.gov.in/" target="_blank" rel="noopener">APPSC</a>; <a href="https://arunachalpradesh.gov.in/" target="_blank" rel="noopener">Arunachal Pradesh state portal</a>.</p><!-- END: BODIES -->
+
+</section>
+
+<!-- =========================== SCOPE MEMO =========================== -->
+<section id="scope" class="lens-section">
+<!-- BEGIN: SCOPE — Scope memo math table. -->
+  <h1>📑 Scope memo — Arunachal Pradesh</h1>
+  <p class="sec-sub">Snapshot verified on 24-May-2026. Inline where the roster is small and stable; link out where names are high-volume, fast-changing or border/tribal-area sensitive.</p>
+  <table class="bihar">
+    <thead><tr><th>Layer</th><th>Node count</th><th>Decision</th><th>Reason</th></tr></thead>
+    <tbody>
+      <tr><td>Union ministers</td><td class="r">1</td><td>Inline</td><td>Small, nationally published roster.</td></tr>
+      <tr><td>Lok Sabha MPs</td><td class="r">2</td><td>Inline</td><td>Directly reconcilable with ECI and Sansad.</td></tr>
+      <tr><td>Rajya Sabha MPs</td><td class="r">1</td><td>Inline</td><td>Single member.</td></tr>
+      <tr><td>State cabinet</td><td class="r">12</td><td>Inline</td><td>State portal publishes the council list.</td></tr>
+      <tr><td>Vidhan Sabha</td><td class="r">60</td><td>Hybrid</td><td>Party tally inline; member-by-member details live on Assembly/ECI portals.</td></tr>
+      <tr><td>Judiciary</td><td class="r">3 bench judges</td><td>Inline</td><td>Itanagar Permanent Bench judge page is compact.</td></tr>
+      <tr><td>Districts</td><td class="r">25 map polygons</td><td>Hybrid</td><td>Map/table inline; officer names linked to live registers to avoid stale DM/SP names.</td></tr>
+      <tr><td>Blocks</td><td class="r">99</td><td>Link out</td><td>BDO/PRI rosters change; LGD is canonical.</td></tr>
+      <tr><td>Gram Panchayats</td><td class="r">~1,786</td><td>Link out</td><td>Too many elected names for one static HTML.</td></tr>
+      <tr><td>Border / tribal-area caveat</td><td class="r">statewide</td><td>Flag</td><td>India-China border sensitivity and 5th-Schedule tribal-area status make source discipline especially important.</td></tr>
+    </tbody>
+  </table>
+  <div class="callout warn"><strong>Sensitivity note:</strong> Arunachal Pradesh is a sensitive India-China border state. This page catalogues civilian governance offices only and does not infer security deployments or unpublished locations. Tribal-area protections under the Fifth Schedule should be read alongside local-government data.</div>
+  <p class="src">Sources: ECI, Digital Sansad, Arunachal Pradesh state portal, Gauhati High Court Itanagar Permanent Bench, LG Directory, State Election Commission; all checked for this static snapshot on 24-May-2026.</p><!-- END: SCOPE -->
+
+</section>
+
+
+</main>
+
+<footer>
+  Arunachal Pradesh Shasan · governance transparency experiment · drafted 24-May-2026 · skinned with the <code>bharat-sanchar-aesthetic</code> skill · zero external dependencies · data sources cited inline · live officials of district/PRI level are intentionally not embedded — see <a href="#scope">Scope memo</a>.
+</footer>
+
+<!-- JS 1: expand/collapse-all within a lens -->
+<script>
+(function(){
+  document.addEventListener('click', function(e){
+    var btn = e.target.closest('.ec-btn'); if(!btn) return;
+    e.preventDefault();
+    var root = document.getElementById(btn.getAttribute('data-scope')); if(!root) return;
+    var openVal = btn.getAttribute('data-ec') === 'expand';
+    root.querySelectorAll('details').forEach(function(d){ if(d!==root) d.open = openVal; });
+    if(root.tagName === 'DETAILS' && openVal) root.open = true;
+  });
+})();
+</script>
+
+<!-- JS 2: close mobile hamburger after a nav link tap -->
+<script>
+(function(){
+  var toggle = document.getElementById('navtoggle');
+  var nav = document.querySelector('header.topbar nav.lens');
+  if(!toggle || !nav) return;
+  nav.addEventListener('click', function(e){
+    var a = e.target.closest('a'); if(!a) return;
+    var href = a.getAttribute('href'); if(!href) return;
+    toggle.checked = false;
+    if(href.charAt(0) === '#' && href.length > 1){
+      requestAnimationFrame(function(){
+        requestAnimationFrame(function(){
+          var el = document.getElementById(href.slice(1)); if(!el) return;
+          var topbar = document.querySelector('header.topbar');
+          var offset = topbar ? topbar.getBoundingClientRect().height : 0;
+          var y = el.getBoundingClientRect().top + window.pageYOffset - offset - 4;
+          window.scrollTo({top: Math.max(0, y), behavior: 'auto'});
+        });
+      });
+    }
+  });
+})();
+</script>
+</body>
+</html>

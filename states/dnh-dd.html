@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DNH & DD Shasan — Governance Personnel Catalogue (Centre → Ward)</title>
+<meta name="description" content="Catalogue of Dadra & Nagar Haveli and Daman & Diu (UT): Administrator, MPs, Bombay High Court jurisdiction, 3 districts, PRI and municipal bodies.">
+<style>
+  :root {
+    --bg:#f7f7f5; --card:#fff; --ink:#1a1a1a; --muted:#5b5b5b;
+    --navy:#0B1B3F; --saffron:#FF9933; --green:#138808; --red:#c0392b;
+    --border:#e3e3df; --tag:#eef0f7;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-padding-top:115px;scroll-behavior:smooth;}
+  body{margin:0;font-family:'Segoe UI',Tahoma,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5;font-size:14px;}
+  a{color:var(--navy);}
+
+  /* ===== TOPBAR ===== */
+  header.topbar{background:linear-gradient(135deg,var(--saffron) 0%,#fff 50%,var(--green) 100%);padding:8px 20px 6px;border-bottom:2px solid var(--navy);position:sticky;top:0;z-index:10;text-align:center;}
+  header.topbar > *{text-align:left;}
+  header.topbar nav.lens{justify-content:center;display:inline-flex;}
+  .brand-row{display:flex;flex-direction:row;align-items:baseline;justify-content:center;gap:10px;flex-wrap:wrap;line-height:1.05;margin-bottom:4px;}
+  .brand{display:inline-block;font-size:1.2rem;font-weight:700;color:var(--navy);text-decoration:none;}
+  .brand:hover{color:var(--navy);text-decoration:none;}
+  .brand .hi{font-family:'Mangal','Nirmala UI',serif;margin-right:6px;color:var(--red);}
+  .tagline{font-size:0.65rem;color:var(--muted);font-weight:500;letter-spacing:0.3px;}
+  nav.lens{margin-top:4px;display:flex;flex-wrap:wrap;gap:2px;align-items:stretch;}
+  nav.lens > .lens-item{position:relative;}
+  nav.lens > .lens-item > a, nav.lens > a{display:inline-block;padding:4px 11px;background:rgba(255,255,255,0.75);border:1.5px solid var(--navy);color:var(--navy);text-decoration:none;border-radius:6px;font-weight:600;font-size:0.8rem;}
+  nav.lens > .lens-item > a:hover, nav.lens > a:hover, nav.lens > .lens-item:hover > a{background:var(--navy);color:#fff;}
+  nav.lens .caret{font-size:0.7rem;margin-left:4px;opacity:0.7;}
+
+  /* ===== MEGA-MENU DROPDOWN ===== */
+  .lens-drop{position:absolute;top:100%;left:0;display:none;background:var(--card);border:1.5px solid var(--navy);border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,0.25);padding:8px;min-width:280px;max-width:520px;max-height:60vh;overflow-y:auto;z-index:20;margin-top:0;}
+  .lens-item:hover .lens-drop, .lens-item:focus-within .lens-drop{display:block;}
+  .lens-item::after{content:"";position:absolute;top:100%;left:0;right:0;height:10px;display:none;}
+  .lens-item:hover::after, .lens-item:focus-within::after{display:block;}
+  .lens-drop .ld-head{font-size:0.7rem;text-transform:uppercase;letter-spacing:0.5px;color:var(--muted);padding:6px 8px;border-bottom:1px solid var(--border);margin-bottom:4px;font-weight:700;display:flex;justify-content:space-between;align-items:center;}
+  .lens-drop .ld-head a{font-size:0.72rem;color:var(--navy);text-decoration:none;font-weight:600;}
+  .lens-drop .ld-head a:hover{text-decoration:underline;}
+  .lens-drop .ld-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:2px;}
+  .lens-drop .ld-grid a{display:flex;justify-content:space-between;align-items:center;gap:6px;padding:5px 9px;font-size:0.8rem;color:var(--ink);text-decoration:none;border-radius:4px;}
+  .lens-drop .ld-grid a:hover{background:var(--tag);color:var(--navy);}
+  .lens-drop .ld-grid a .c{font-size:0.65rem;color:var(--muted);background:var(--tag);padding:1px 6px;border-radius:999px;font-weight:600;}
+  @media (max-width:700px){
+    .lens-drop{position:static;display:block;max-height:none;margin-top:0;border-radius:0;border:none;border-top:1px dashed var(--border);box-shadow:none;}
+  }
+
+  .help{padding:8px 20px;background:#fff7e8;border-bottom:1px solid var(--border);font-size:0.82rem;color:#5a3a00;}
+
+  main{max-width:1180px;margin:0 auto;padding:14px 20px 50px;}
+
+  /* ===== LENS ROUTING via :target ===== */
+  .lens-section{display:none;}
+  .lens-section:target, .lens-section:has(:target){display:block;}
+  body:not(:has(:target)) #h{display:block;}
+
+  details:target, details:has(:target){scroll-margin-top:120px;}
+  details:target > summary, details:has(:target) > summary{background:linear-gradient(90deg,rgba(255,153,51,0.18) 0%,transparent 100%);}
+
+  /* ===== JUMPBAR ===== */
+  .jumpbar{position:sticky;top:0;z-index:8;background:var(--card);border-bottom:1px solid var(--border);padding:6px 8px;margin:-14px -20px 14px;display:flex;gap:4px;overflow-x:auto;white-space:nowrap;}
+  .jumpbar a{flex:0 0 auto;font-size:0.72rem;padding:3px 9px;color:var(--ink);text-decoration:none;border-radius:999px;background:var(--tag);font-weight:600;}
+  .jumpbar a:hover{background:var(--navy);color:#fff;}
+  .jumpbar .jb-label{flex:0 0 auto;font-size:0.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;padding:4px 8px 4px 0;font-weight:700;}
+
+  /* ===== GOV INTRO + FLOWCHART BLOCKS ===== */
+  .gov-intro{background:linear-gradient(135deg,#fff7e8 0%,#e6f0ff 100%);border-left:4px solid var(--saffron);padding:10px 14px;border-radius:6px;margin:8px 0 14px;font-size:0.88rem;line-height:1.55;}
+  .gov-block{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin:14px 0;}
+  .gov-block h3{margin:0 0 6px;color:var(--navy);font-size:1.05rem;display:flex;align-items:center;gap:8px;}
+  .gov-block .lede{font-size:0.85rem;color:var(--muted);margin:0 0 12px;line-height:1.5;}
+  .gov-block svg{display:block;width:100%;height:auto;max-width:100%;background:transparent;}
+  .gov-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(360px,1fr));gap:12px;}
+  .gov-grid .gov-block{margin:0;}
+  .gov-notes{margin-top:10px;font-size:0.82rem;color:var(--muted);line-height:1.5;}
+  .gov-notes strong{color:var(--ink);}
+  .gov-legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;font-size:0.72rem;color:var(--muted);}
+  .gov-legend span{display:inline-flex;align-items:center;gap:5px;}
+  .gov-legend .sw{width:14px;height:14px;border-radius:3px;display:inline-block;border:1px solid var(--border);}
+  .gb-const{fill:#fde7d8;stroke:#c0392b;stroke-width:1.5;}
+  .gb-exec{fill:#e6f0ff;stroke:#0B1B3F;stroke-width:1.5;}
+  .gb-legis{fill:#fff7e8;stroke:#FF9933;stroke-width:1.5;}
+  .gb-judic{fill:#f5f0ff;stroke:#8338EC;stroke-width:1.5;}
+  .gb-state{fill:#e6f7e9;stroke:#138808;stroke-width:1.5;}
+  .gb-people{fill:#fde7d8;stroke:#c0392b;stroke-width:1.5;}
+  .gb-regu{fill:#e6f5f2;stroke:#06A77D;stroke-width:1.5;}
+
+  /* ===== INSIGHT (SWOT + radar) ===== */
+  .insight{background:linear-gradient(135deg,#f8fafc 0%,#fff7e8 100%);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin:8px 12px 12px;}
+  .insight-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:14px;align-items:start;}
+  @media (max-width:760px){.insight-grid{grid-template-columns:1fr;}}
+  .insight-meta{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px;}
+  .insight-meta .im{font-size:0.72rem;background:var(--tag);padding:2px 8px;border-radius:999px;color:var(--ink);}
+  .insight-meta .im strong{color:var(--navy);}
+  .insight h4{margin:6px 0 4px;color:var(--navy);font-size:0.85rem;}
+  .insight p.how{margin:0 0 8px;font-size:0.82rem;line-height:1.5;}
+  .swot{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+  .swot > div{background:var(--card);border:1px solid var(--border);border-left:3px solid;border-radius:6px;padding:8px 10px;}
+  .swot .str{border-left-color:var(--green);}
+  .swot .wkn{border-left-color:var(--red);}
+  .swot .pot{border-left-color:var(--saffron);grid-column:1/-1;}
+  .swot h5{margin:0 0 4px;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.4px;}
+  .swot .str h5{color:var(--green);}
+  .swot .wkn h5{color:var(--red);}
+  .swot .pot h5{color:#7a3a00;}
+  .swot ul{margin:0;padding-left:18px;font-size:0.78rem;line-height:1.45;}
+  .insight svg.radar{width:100%;height:auto;max-width:280px;display:block;margin:0 auto;}
+  .scores-label{font-size:0.7rem;color:var(--muted);text-align:center;margin-top:4px;}
+
+  /* ===== LENS-OVERVIEW (bar chart) ===== */
+  .lens-overview{background:linear-gradient(135deg,#eef2fb 0%,#fff7e8 100%);border:1px solid var(--border);border-radius:10px;padding:14px 18px;margin:8px 0 16px;}
+  .lens-overview .lo-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:18px;align-items:center;}
+  @media (max-width:780px){.lens-overview .lo-grid{grid-template-columns:1fr;}}
+  .lens-overview h3{margin:0 0 6px;color:var(--navy);font-size:0.95rem;}
+  .lens-overview p{margin:0 0 6px;font-size:0.85rem;line-height:1.5;}
+  .lens-overview .lo-rel{margin-top:8px;padding-top:6px;border-top:1px dashed var(--border);font-size:0.78rem;color:var(--muted);}
+  .lens-overview .lo-chart{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:10px;}
+  .lens-overview .lo-chart-title{font-size:0.72rem;text-transform:uppercase;letter-spacing:0.5px;color:var(--muted);font-weight:700;margin-bottom:4px;text-align:center;}
+
+  /* ===== RELMAP ===== */
+  .relmap{background:linear-gradient(135deg,#eef2fb 0%,#e6f7e9 100%);border:1px solid var(--border);border-radius:10px;padding:16px 20px;margin:14px 0;}
+  .relmap h2{margin:0 0 8px;color:var(--navy);}
+  .relmap p{font-size:0.88rem;line-height:1.55;margin:0 0 10px;}
+  .relmap svg.relflow{width:100%;height:auto;max-width:860px;display:block;margin:6px auto;}
+  .relmap svg.relflow text{fill:var(--ink);}
+
+  /* ===== EXPAND/COLLAPSE TOGGLE ===== */
+  .ec-toggle{display:flex;gap:8px;margin:6px 0 12px;align-items:center;flex-wrap:wrap;}
+  .ec-btn{cursor:pointer;font-size:0.78rem;padding:4px 10px;background:var(--card);border:1px solid var(--border);border-radius:6px;color:var(--navy);font-weight:600;font-family:inherit;}
+  .ec-btn:hover{background:var(--navy);color:#fff;}
+  .ec-hint{font-size:0.72rem;color:var(--muted);}
+
+  /* ===== HEADINGS / KPI / DIR ===== */
+  h1{color:var(--navy);font-size:1.3rem;margin:14px 0 6px;border-left:4px solid var(--red);padding-left:10px;}
+  h2{color:var(--navy);font-size:1.05rem;margin:18px 0 8px;}
+  .kpis{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px;margin:10px 0;}
+  @media (max-width:900px){ .kpis{grid-template-columns:repeat(auto-fit,minmax(140px,1fr));} }
+  .kpi{background:var(--card);border:1px solid var(--border);border-left:3px solid var(--red);border-radius:6px;padding:8px 12px;min-height:60px;display:flex;flex-direction:column;justify-content:center;}
+  .kpi .v{font-size:1.15rem;font-weight:700;color:var(--navy);}
+  .kpi .l{font-size:0.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.4px;}
+
+  .dir-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:6px;margin:8px 0 18px;}
+  .dir-tile{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:8px 12px;text-decoration:none;color:var(--ink);font-size:0.85rem;display:flex;justify-content:space-between;align-items:center;gap:8px;}
+  .dir-tile:hover{border-color:var(--navy);background:var(--tag);}
+  .dir-tile .dt-c{font-size:0.7rem;color:var(--muted);background:var(--tag);padding:1px 7px;border-radius:999px;}
+
+  /* ===== DETAILS / BRANCHES / CARDS ===== */
+  details{background:var(--card);border:1px solid var(--border);border-radius:8px;margin:8px 0;}
+  details > summary{cursor:pointer;padding:10px 14px;font-weight:600;color:var(--navy);list-style:none;display:flex;justify-content:space-between;align-items:center;gap:8px;}
+  details > summary::-webkit-details-marker{display:none;}
+  details > summary::before{content:"▸";color:var(--muted);font-size:0.85rem;margin-right:6px;}
+  details[open] > summary::before{content:"▾";}
+  details > summary .ct{font-size:0.72rem;color:var(--muted);background:var(--tag);padding:2px 9px;border-radius:999px;font-weight:600;}
+  details details{background:transparent;border:none;border-left:2px solid var(--border);margin:6px 0 6px 8px;border-radius:0;}
+  details details > summary{padding:6px 10px;font-weight:500;font-size:0.88rem;color:var(--ink);}
+  details details > summary .ct{background:#fff3e0;color:#7a3a00;}
+  .blurb{font-size:0.78rem;color:var(--muted);margin:0 14px 6px;}
+
+  .state-group:target, .min-group:target, .body-group:target{outline:2px solid var(--saffron);outline-offset:4px;border-radius:8px;}
+  .su-type{display:inline-block;font-size:0.65rem;font-weight:700;padding:2px 8px;border-radius:999px;margin-left:8px;letter-spacing:0.3px;text-transform:uppercase;}
+  .su-type.st{background:rgba(19,136,8,0.14);color:var(--green);border:1px solid rgba(19,136,8,0.45);}
+  .su-type.ut{background:rgba(255,153,51,0.14);color:#a55300;border:1px solid rgba(255,153,51,0.5);}
+
+  .card-list{padding:6px 10px 10px;display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:8px;align-items:start;}
+  .card{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:10px 12px;}
+  .card h3{margin:0 0 4px;font-size:0.95rem;line-height:1.3;}
+  .card h3 a{color:var(--ink);text-decoration:none;}
+  .card h3 a:hover{color:var(--navy);text-decoration:underline;}
+  .card .host{font-size:0.72rem;color:var(--muted);margin-bottom:6px;display:flex;flex-wrap:wrap;gap:6px;align-items:center;}
+  .card .hn{font-family:'Consolas','Monaco',monospace;}
+  .badge{font-size:0.65rem;padding:1px 6px;border-radius:4px;font-weight:600;}
+  .badge.official{background:#e6f7e9;color:var(--green);}
+  .badge.fresh{background:#e6f0ff;color:var(--navy);}
+  .badge.stale{background:#fdecea;color:var(--red);}
+  .lv{font-size:0.7rem;color:var(--muted);}
+  .desc{font-size:0.82rem;color:var(--muted);margin:4px 0;line-height:1.45;}
+  .meta{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px;}
+  .mchip{font-size:0.7rem;background:var(--tag);padding:1px 7px;border-radius:4px;color:var(--ink);}
+  .mchip.s{background:#fff3e0;color:#7a3a00;}
+  .mchip.m{background:#e6f0ff;color:var(--navy);}
+  .mchip.v{background:#f5f0ff;color:#5e35b1;}
+  .tags{display:flex;flex-wrap:wrap;gap:3px;margin-top:6px;}
+  .tag{font-size:0.65rem;background:var(--tag);padding:1px 6px;border-radius:3px;color:var(--muted);}
+  .children{margin-top:6px;background:transparent;border:none;border-left:none;}
+  .children > summary{padding:4px 0;font-size:0.78rem;color:var(--muted);font-weight:500;}
+  .children ul{margin:4px 0 0 18px;padding:0;font-size:0.78rem;}
+  .children li{margin-bottom:3px;}
+
+  footer{max-width:1180px;margin:30px auto 20px;padding:14px 20px;border-top:1px solid var(--border);font-size:0.78rem;color:var(--muted);}
+
+  /* ===== NIGHT-MODE TOGGLE (pure CSS, no JS) ===== */
+  #nightmode{position:fixed;top:0;left:0;opacity:0;pointer-events:none;width:0;height:0;clip:rect(0,0,0,0);}
+  .nm-toggle{position:absolute;top:8px;right:14px;z-index:11;display:inline-flex;align-items:center;gap:5px;cursor:pointer;font-size:0.72rem;font-weight:600;padding:4px 10px;background:rgba(255,255,255,0.85);border:1.5px solid var(--navy);color:var(--navy);border-radius:999px;user-select:none;line-height:1;}
+  .nm-toggle:hover{background:var(--navy);color:#fff;}
+  .nm-toggle .nm-ico-dark,.nm-toggle .nm-lbl-dark{display:inline;}
+  .nm-toggle .nm-ico-light,.nm-toggle .nm-lbl-light{display:none;}
+  @media (max-width:520px){ .nm-toggle .nm-lbl-dark,.nm-toggle .nm-lbl-light{display:none;} .nm-toggle{padding:4px 8px;} }
+
+  :root:has(#nightmode:checked){
+    --bg:#0e0f12; --card:#16181d; --ink:#e6e6e6; --muted:#9aa0a8;
+    --border:#262932; --tag:#1f232b; --navy:#7aa2ff;
+  }
+  :root:has(#nightmode:checked) header.topbar{background:linear-gradient(135deg,#5d3a14 0%,#1a1a1a 50%,#0f3a1c 100%);}
+  :root:has(#nightmode:checked) nav.lens > .lens-item > a,
+  :root:has(#nightmode:checked) nav.lens > a{background:rgba(255,255,255,0.08);}
+  :root:has(#nightmode:checked) .nm-toggle{background:rgba(255,255,255,0.08);}
+  :root:has(#nightmode:checked) .nm-toggle .nm-ico-dark,
+  :root:has(#nightmode:checked) .nm-toggle .nm-lbl-dark{display:none;}
+  :root:has(#nightmode:checked) .nm-toggle .nm-ico-light,
+  :root:has(#nightmode:checked) .nm-toggle .nm-lbl-light{display:inline;}
+  :root:has(#nightmode:checked) .help{background:#2a2316;color:#d9b779;}
+  :root:has(#nightmode:checked) .gov-intro{background:linear-gradient(135deg,#2a2316 0%,#172238 100%);}
+  :root:has(#nightmode:checked) .insight{background:linear-gradient(135deg,#16181d 0%,#2a2316 100%);}
+  :root:has(#nightmode:checked) .lens-overview{background:linear-gradient(135deg,#11192a 0%,#2a2316 100%);}
+  :root:has(#nightmode:checked) .relmap{background:linear-gradient(135deg,#11192a 0%,#0e2a14 100%);}
+  :root:has(#nightmode:checked) .badge.official{background:#0e2a14;color:#9fd1a8;}
+  :root:has(#nightmode:checked) .badge.fresh{background:#172238;color:#8aa6e2;}
+  :root:has(#nightmode:checked) .badge.stale{background:#3a1614;color:#e29a8a;}
+  :root:has(#nightmode:checked) .mchip.s{background:#3a2a14;color:#d9b779;}
+  :root:has(#nightmode:checked) .mchip.m{background:#172238;color:#8aa6e2;}
+  :root:has(#nightmode:checked) .mchip.v{background:#241a3a;color:#b39ad9;}
+  :root:has(#nightmode:checked) details details > summary .ct{background:#3a2a14;color:#d9b779;}
+  :root:has(#nightmode:checked) .swot .pot h5{color:#d9b779;}
+  :root:has(#nightmode:checked) .su-type.ut{color:#ffb866;}
+  :root:has(#nightmode:checked) .gb-const{fill:#3a2014;stroke:#e29a8a;}
+  :root:has(#nightmode:checked) .gb-exec{fill:#152238;stroke:#8aa6e2;}
+  :root:has(#nightmode:checked) .gb-legis{fill:#2a2316;stroke:#d9b779;}
+  :root:has(#nightmode:checked) .gb-judic{fill:#241a3a;stroke:#b39ad9;}
+  :root:has(#nightmode:checked) .gb-state{fill:#0e2a14;stroke:#9fd1a8;}
+  :root:has(#nightmode:checked) .gb-people{fill:#3a2014;stroke:#e29a8a;}
+  :root:has(#nightmode:checked) .gb-regu{fill:#0f2a24;stroke:#7fd1bf;}
+
+  /* ===== RESPONSIVE + HAMBURGER ===== */
+  img,iframe,svg{max-width:100%;height:auto;}
+  #navtoggle{position:fixed;top:0;left:0;opacity:0;pointer-events:none;width:0;height:0;clip:rect(0,0,0,0);}
+  .nav-burger{display:none;}
+  .nav-burger .burger-close{display:none;}
+  :root:has(#navtoggle:checked) .nav-burger .burger-open{display:none;}
+  :root:has(#navtoggle:checked) .nav-burger .burger-close{display:inline;}
+
+  @media (max-width:768px){
+    html{scroll-padding-top:110px;}
+    body{font-size:14px;overflow-x:hidden;}
+    header.topbar{padding:6px 8px;text-align:left;display:grid;grid-template-columns:auto 1fr auto;grid-template-areas:"burger brand toggle";gap:6px 8px;align-items:center;position:sticky;}
+    .nav-burger{grid-area:burger;position:static;display:inline-flex;align-items:center;justify-content:center;font-size:1rem;line-height:1;padding:6px 10px;min-width:40px;background:rgba(255,255,255,0.85);border:1.5px solid var(--navy);color:var(--navy);border-radius:8px;cursor:pointer;user-select:none;font-weight:700;}
+    :root:has(#nightmode:checked) .nav-burger{background:rgba(255,255,255,0.08);}
+    .nm-toggle{grid-area:toggle;position:static;top:auto;right:auto;}
+    .brand-row{grid-area:brand;justify-content:flex-start;gap:6px;margin-bottom:0;line-height:1.1;min-width:0;}
+    .brand{font-size:1.05rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+    .tagline{display:none;}
+    header.topbar nav.lens{display:none;}
+    :root:has(#navtoggle:checked) header.topbar nav.lens{display:flex;flex-direction:column;align-items:stretch;position:absolute;left:0;right:0;top:100%;width:100%;max-height:75vh;overflow-y:auto;flex-wrap:nowrap;gap:4px;padding:8px 10px 10px;margin:0;background:var(--card);border-top:1px solid var(--border);border-bottom:1px solid var(--border);box-shadow:0 10px 24px rgba(0,0,0,0.35);z-index:30;}
+    :root:has(#navtoggle:checked) header.topbar nav.lens > .lens-item,
+    :root:has(#navtoggle:checked) header.topbar nav.lens > a{width:100%;min-width:0;flex:0 0 auto;}
+    :root:has(#navtoggle:checked) header.topbar nav.lens > .lens-item > a,
+    :root:has(#navtoggle:checked) header.topbar nav.lens > a{display:block;width:100%;text-align:left;padding:9px 12px;font-size:0.85rem;}
+    .lens-drop,.lens-item:focus-within .lens-drop,.lens-item:hover .lens-drop{display:none !important;}
+    nav.lens .caret{display:none;}
+    main{padding:12px 14px 42px;max-width:100%;}
+    footer{padding:12px 14px;max-width:100%;}
+    .help{padding:8px 14px;font-size:0.78rem;}
+    .jumpbar{margin:-12px -14px 12px;padding:6px 10px;}
+    .kpis{grid-template-columns:repeat(auto-fit,minmax(130px,1fr));}
+    .dir-grid{grid-template-columns:repeat(auto-fit,minmax(150px,1fr));}
+    .card-list{grid-template-columns:1fr;padding:6px 8px 10px;}
+    .gov-grid,.insight-grid,.lens-overview .lo-grid{grid-template-columns:1fr;}
+    .ec-btn{min-height:40px;padding:8px 12px;}
+    .nm-toggle{font-size:0.7rem;padding:4px 8px;}
+  }
+  @media (max-width:480px){
+    html{scroll-padding-top:96px;}
+    .brand{font-size:1rem;}
+    h1{font-size:1.15rem;}
+    h2{font-size:1rem;}
+    .dir-grid,.kpis,.swot{grid-template-columns:1fr;}
+    .card{padding:9px 10px;}
+  }
+
+  /* ===== BIHAR EXTENSIONS — party pills · tables · branch details ===== */
+  :root{
+    --bjp:#FF9933; --jdu:#138808; --rjd:#2E7D32; --inc:#1E88E5;
+    --ljprv:#7C3AED; --hams:#0EA5E9; --rlm:#8B5CF6; --cpiml:#DC2626;
+    --aimim:#0F766E; --ind:#6B7280; --npp:#F59E0B; --npf:#7C2D12; --kpa:#2563EB; --pr:#6B7280;
+  }
+  .pill{display:inline-block;padding:1px 7px;border-radius:999px;font-size:0.65rem;font-weight:700;color:#fff;letter-spacing:0.3px;margin-left:4px;vertical-align:middle;}
+  .p-BJP,.p-bjp{background:var(--bjp);color:#1a1a1a;}
+  .p-JDU,.p-jdu{background:var(--jdu);} .p-RJD,.p-rjd{background:var(--rjd);} .p-INC,.p-inc{background:var(--inc);}
+  .p-LJPRV,.p-ljprv{background:var(--ljprv);} .p-HAMS,.p-hams{background:var(--hams);} .p-RLM,.p-rlm{background:var(--rlm);}
+  .p-CPIML,.p-cpiml{background:var(--cpiml);} .p-AIMIM,.p-aimim{background:var(--aimim);} .p-IND,.p-ind{background:var(--ind);}
+  .p-NPP,.p-npp{background:var(--npp);color:#1a1a1a;} .p-NPF,.p-npf{background:var(--npf);} .p-KPA,.p-kpa{background:var(--kpa);} .p-PR,.p-pr{background:var(--pr);}
+  .legend{display:flex;flex-wrap:wrap;gap:8px;font-size:0.72rem;margin:8px 0 14px;color:var(--muted);}
+  .legend > span{display:inline-flex;align-items:center;gap:2px;}
+
+  table.bihar{width:100%;border-collapse:collapse;font-size:0.84rem;background:var(--card);border:1px solid var(--border);border-radius:8px;overflow:hidden;margin:8px 0 14px;}
+  table.bihar th, table.bihar td{padding:7px 10px;text-align:left;border-bottom:1px solid var(--border);}
+  table.bihar th{background:var(--tag);font-weight:700;color:var(--navy);font-size:0.74rem;text-transform:uppercase;letter-spacing:0.4px;}
+  table.bihar tr:last-child td{border-bottom:none;}
+  table.bihar td.r{text-align:right;font-variant-numeric:tabular-nums;}
+  table.bihar caption{caption-side:bottom;font-size:0.72rem;color:var(--muted);padding-top:6px;text-align:left;}
+  :root:has(#nightmode:checked) table.bihar th{background:#1f232b;color:#9ab3ff;}
+
+  details.branch{background:var(--card);border:1px solid var(--border);border-radius:8px;margin:10px 0;}
+  details.branch > summary{padding:10px 14px;cursor:pointer;font-weight:700;color:var(--navy);font-size:0.95rem;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:8px;}
+  details.branch > summary::-webkit-details-marker{display:none;}
+  details.branch > summary::before{content:"▸ ";color:var(--saffron);}
+  details.branch[open] > summary::before{content:"▾ ";}
+  details.branch > .b-body{padding:6px 14px 14px;}
+  details.branch > table.bihar{margin:0 14px 14px;width:calc(100% - 28px);}
+  details.branch p.verify{font-size:0.7rem;color:var(--muted);font-style:italic;padding:0 14px 10px;margin:0;}
+
+  .role-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:10px 12px;font-size:0.85rem;}
+  .role-card .role{font-size:0.68rem;text-transform:uppercase;letter-spacing:0.5px;color:var(--muted);font-weight:700;}
+  .role-card .name{font-weight:700;color:var(--ink);margin:2px 0;}
+  .role-card .meta{font-size:0.75rem;color:var(--muted);}
+  .role-card .meta a{font-size:0.75rem;}
+  .role-grid{display:grid;gap:8px;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));margin:6px 0 12px;}
+
+  .callout{background:#fff7e8;border-left:4px solid var(--saffron);padding:10px 14px;border-radius:6px;margin:14px 0;font-size:0.86rem;color:#5a3a00;}
+  .callout.warn{background:#fdecea;border-left-color:var(--red);color:#7a1b13;}
+  .callout.ok{background:#e8f5e9;border-left-color:var(--green);color:#1b4d20;}
+  :root:has(#nightmode:checked) .callout{background:#2a2316;color:#d9b779;}
+  :root:has(#nightmode:checked) .callout.warn{background:#2a1715;color:#e8a097;}
+  :root:has(#nightmode:checked) .callout.ok{background:#142a17;color:#a7d9aa;}
+
+  h3.grp-h{font-size:1rem;color:var(--navy);margin:18px 0 6px;border-left:4px solid var(--green);padding-left:8px;}
+  .sec-sub{color:var(--muted);font-size:0.86rem;margin:0 0 14px;}
+  .kpi .sub{font-size:0.7rem;color:var(--muted);margin-top:2px;line-height:1.3;}
+
+  /* ===== PRINT ===== */
+  @media print{
+    header.topbar,.help,.jumpbar,nav.lens,.lens-drop,footer{display:none !important;}
+    .lens-section,.lens-section:target{display:block !important;}
+    details,details[open]{display:block !important;}
+    details > *{display:revert !important;}
+    details > summary{font-weight:700;color:#000;padding:6px 0;border-bottom:1px solid #999;cursor:default;}
+    details > summary::before{content:"" !important;}
+    .card{break-inside:avoid;border:1px solid #ccc;}
+    .card a[href]::after{content:" — " attr(href);font-size:0.7em;color:#555;}
+    body{background:#fff;color:#000;font-size:11pt;}
+    a{color:#000;text-decoration:none;}
+  }
+</style>
+</head>
+<body>
+
+<!-- Hidden checkboxes drive night-mode and mobile nav with no JS -->
+<input type="checkbox" id="nightmode" aria-label="Toggle night mode" tabindex="-1">
+<input type="checkbox" id="navtoggle" aria-label="Toggle navigation menu" tabindex="-1">
+
+<header class="topbar">
+  <label for="navtoggle" class="nav-burger" title="Menu"><span class="burger-open">☰</span><span class="burger-close">✕</span></label>
+  <label for="nightmode" class="nm-toggle" title="Toggle night mode (no JavaScript)">
+    <span class="nm-ico-dark" aria-hidden="true">🌙</span><span class="nm-lbl-dark">Night</span>
+    <span class="nm-ico-light" aria-hidden="true">☀</span><span class="nm-lbl-light">Day</span>
+  </label>
+  <div class="brand-row">
+    <a class="brand" href="#h"><span class="hi">द</span>DNH & DD Shasan</a>
+    <span class="tagline">💡 Transparency experiment · Centre → Administrator → District → Panchayat / Municipal Ward</span>
+  </div>
+  <nav class="lens">
+    <a href="#h">🏠 Home</a>
+    <a href="#how">🛠 How it works</a>
+    <a href="#centre">🇮🇳 DNH &amp; DD @ Centre</a>
+    <a href="#exec">🏛 Administrator</a>
+    <div class="lens-item">
+      <a href="#leg">🗳 Legislature <span class="caret">▾</span></a>
+      <div class="lens-drop">
+        <div class="ld-head"><span>Legislature</span><a href="#leg">View lens →</a></div>
+        <div class="ld-grid">
+          <a href="#leg-vs">Assembly status<span class="c">N/A</span></a>
+          <a href="#leg-off">Local democracy<span class="c">PRI/ULB</span></a>
+        </div>
+      </div>
+    </div>
+    <a href="#judic">⚖ Judiciary</a>
+    <a href="#dist">📍 Districts (3)</a>
+    <a href="#pri">🌾 PRI / 🏙 ULB</a>
+    <a href="#bodies">📊 Bodies</a>
+    <a href="#scope">📑 Scope memo</a>
+  </nav>
+</header>
+
+
+<main>
+
+
+
+<!-- =========================== HOME =========================== -->
+<section id="h" class="lens-section">
+  <h1>Dadra &amp; Nagar Haveli and Daman &amp; Diu (UT)'s Governance Chain — at a Glance</h1>
+  <p class="sec-sub">A merged, President-administered Union Territory: no Chief Minister, no Council of Ministers, no Legislative Assembly, and three non-contiguous parts linked through an Administrator and district administrations.</p>
+
+  <div class="callout warn">
+    <strong>2020 merger marker:</strong> Dadra &amp; Nagar Haveli and Daman &amp; Diu were separate Union Territories until the Dadra and Nagar Haveli and Daman and Diu (Merger of Union Territories) Act, 2019 took effect on 26-Jan-2020. Critics contested the merger as reducing local autonomy, so this page keeps the pre-merger identities visible in districts, Lok Sabha constituencies and local-body notes.
+  </div>
+
+  <h2>KPI tiles — by layer</h2>
+  <div class="kpis">
+    <div class="kpi"><div class="v">0</div><div class="l">Chief Minister</div><div class="sub">Administrator-run UT</div></div>
+    <div class="kpi"><div class="v">Praful Patel</div><div class="l">Administrator</div><div class="sub">Also Lakshadweep charge</div></div>
+    <div class="kpi"><div class="v">2</div><div class="l">Lok Sabha MPs</div><div class="sub">DNH + Daman-Diu</div></div>
+    <div class="kpi"><div class="v">0</div><div class="l">Rajya Sabha MPs</div><div class="sub">No RS allocation</div></div>
+    <div class="kpi"><div class="v">0</div><div class="l">MLAs / MLCs</div><div class="sub">No legislature</div></div>
+    <div class="kpi"><div class="v">3</div><div class="l">Districts</div><div class="sub">DNH · Daman · Diu</div></div>
+    <div class="kpi"><div class="v">3</div><div class="l">Non-contiguous parts</div><div class="sub">Dadra, Nagar Haveli, Daman/Diu coast-island</div></div>
+    <div class="kpi"><div class="v">Silvassa</div><div class="l">Capital</div><div class="sub">UT headquarters</div></div>
+    <div class="kpi"><div class="v">Bombay HC</div><div class="l">High Court</div><div class="sub">Jurisdiction</div></div>
+    <div class="kpi"><div class="v">PRI + ULB</div><div class="l">Local layer</div><div class="sub">DNH panchayats; Daman/Diu councils</div></div>
+  </div>
+
+  <h2>Pick a lens</h2>
+  <div class="dir-grid">
+    <a class="dir-tile" href="#centre" style="border-left:3px solid var(--saffron);">🇮🇳 UT @ Centre<span class="dt-c">2 LS</span></a>
+    <a class="dir-tile" href="#exec" style="border-left:3px solid var(--green);">🏛 Administrator<span class="dt-c">Praful Patel</span></a>
+    <a class="dir-tile" href="#leg" style="border-left:3px solid var(--navy);">🗳 Legislature status<span class="dt-c">N/A</span></a>
+    <a class="dir-tile" href="#judic" style="border-left:3px solid #8338EC;">⚖ Judiciary<span class="dt-c">Bombay HC</span></a>
+    <a class="dir-tile" href="#dist" style="border-left:3px solid var(--red);">📍 Districts<span class="dt-c">3</span></a>
+    <a class="dir-tile" href="#pri" style="border-left:3px solid var(--green);">🌾 PRI / 🏙 ULB<span class="dt-c">hybrid</span></a>
+    <a class="dir-tile" href="#bodies" style="border-left:3px solid #06A77D;">📊 Bodies<span class="dt-c">8+</span></a>
+    <a class="dir-tile" href="#scope" style="border-left:3px solid var(--muted);">📑 Scope memo<span class="dt-c">read</span></a>
+  </div>
+
+  <div class="legend">
+    <span><span class="pill p-BJP">BJP</span> Bharatiya Janata Party</span>
+    <span><span class="pill p-IND">IND</span> Independent</span>
+    <span><span class="pill p-IND">UT</span> President-administered Union Territory</span>
+  </div>
+
+  <h2>Relmap — how the chain connects</h2>
+  <div class="relmap">
+    <h2>🔗 Union → Administrator → District → PRI / Municipal Ward</h2>
+    <p>The chain is appointed at the top and locally elected at the bottom: Parliament represents the UT nationally, while the Administrator, Advisor and departments run executive administration.</p>
+    <svg viewBox="0 0 900 320" xmlns="http://www.w3.org/2000/svg" class="relflow" role="img" aria-label="DNH and DD governance chain">
+      <defs><marker id="bArr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#888"/></marker></defs>
+      <rect x="330" y="10" width="240" height="44" rx="6" class="gb-const"/>
+      <text x="450" y="32" text-anchor="middle" font-size="12" font-weight="700">🇮🇳 Union / President</text>
+      <text x="450" y="46" text-anchor="middle" font-size="10" fill="#666">MHA · Administrator appointment</text>
+      <rect x="330" y="88" width="240" height="44" rx="6" class="gb-exec"/>
+      <text x="450" y="110" text-anchor="middle" font-size="12" font-weight="700">🏛 Administrator + UT Secretariat</text>
+      <text x="450" y="124" text-anchor="middle" font-size="10" fill="#666">No CM · no cabinet · no Assembly</text>
+      <rect x="40" y="170" width="190" height="44" rx="6" class="gb-state"/>
+      <text x="135" y="192" text-anchor="middle" font-size="12" font-weight="700">📍 Districts (3)</text>
+      <text x="135" y="206" text-anchor="middle" font-size="10" fill="#666">Collectors / DMs</text>
+      <rect x="260" y="170" width="190" height="44" rx="6" class="gb-regu"/>
+      <text x="355" y="192" text-anchor="middle" font-size="12" font-weight="700">🌾 DNH PRI</text>
+      <text x="355" y="206" text-anchor="middle" font-size="10" fill="#666">District Panchayat · GPs</text>
+      <rect x="480" y="170" width="190" height="44" rx="6" class="gb-regu"/>
+      <text x="575" y="192" text-anchor="middle" font-size="12" font-weight="700">🏙 Daman / Diu ULBs</text>
+      <text x="575" y="206" text-anchor="middle" font-size="10" fill="#666">Municipal councils</text>
+      <rect x="700" y="170" width="160" height="44" rx="6" class="gb-legis"/>
+      <text x="780" y="192" text-anchor="middle" font-size="12" font-weight="700">⚖ Courts</text>
+      <text x="780" y="206" text-anchor="middle" font-size="10" fill="#666">Bombay HC</text>
+      <line x1="450" y1="54" x2="450" y2="84" stroke="#888" stroke-width="1.5" marker-end="url(#bArr)"/>
+      <line x1="450" y1="132" x2="135" y2="166" stroke="#888" stroke-width="1.5" marker-end="url(#bArr)"/>
+      <line x1="450" y1="132" x2="355" y2="166" stroke="#888" stroke-width="1.5" marker-end="url(#bArr)"/>
+      <line x1="450" y1="132" x2="575" y2="166" stroke="#888" stroke-width="1.5" marker-end="url(#bArr)"/>
+      <line x1="450" y1="132" x2="780" y2="166" stroke="#888" stroke-width="1.5" marker-end="url(#bArr)"/>
+      <rect x="340" y="260" width="220" height="40" rx="20" fill="#138808" opacity="0.18" stroke="#138808" stroke-width="1.5"/>
+      <text x="450" y="285" text-anchor="middle" font-size="13" font-weight="700">👥 Resident</text>
+    </svg>
+    <p style="font-size:0.82rem;color:var(--muted);"><strong>Reading it:</strong> a resident has one Lok Sabha MP, a district administration, and either DNH-style panchayat representation or Daman/Diu municipal representation; there is no MLA or Chief Minister layer.</p>
+  </div>
+</section>
+
+<!-- =========================== HOW IT WORKS =========================== -->
+<section id="how" class="lens-section">
+  <h1>🛠 How this catalogue works</h1>
+  <p class="sec-sub">A visual walkthrough of this small, merged UT's governance stack and the rule deciding what gets named inline vs linked to a live register.</p>
+
+  <div class="lens-overview">
+    <div class="lo-grid">
+      <div>
+        <h3>① The UT stack</h3>
+        <p>DNH &amp; DD is not a state and not Delhi-style NCT: it has national parliamentary representation and local bodies, but executive power runs through the President-appointed Administrator and the UT Administration.</p>
+        <p>Cards use the same colour key as other pages: 🟢 named inline · 🟠 linked to live register · 🔴 too volatile to embed.</p>
+      </div>
+      <div class="lo-chart">
+        <div class="lo-chart-title">DNH &amp; DD governance layers</div>
+        <svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="DNH and DD governance layers">
+          <g font-family="inherit" font-size="9">
+            <polygon points="160,15 200,15 220,45 140,45" fill="var(--green)" opacity="0.9"/>
+            <text x="180" y="33" text-anchor="middle" fill="#fff" font-weight="600">Union / MHA</text>
+            <polygon points="140,48 220,48 240,78 120,78" fill="var(--green)" opacity="0.85"/>
+            <text x="180" y="66" text-anchor="middle" fill="#fff" font-weight="600">MPs · 2 LS + 0 RS</text>
+            <polygon points="120,81 240,81 260,111 100,111" fill="var(--green)" opacity="0.8"/>
+            <text x="180" y="99" text-anchor="middle" fill="#fff" font-weight="600">Administrator + Advisor</text>
+            <polygon points="100,114 260,114 280,144 80,144" fill="var(--saffron)" opacity="0.85"/>
+            <text x="180" y="132" text-anchor="middle" fill="#fff" font-weight="600">Assembly / CM · N/A</text>
+            <polygon points="80,147 280,147 300,177 60,177" fill="var(--saffron)" opacity="0.8"/>
+            <text x="180" y="165" text-anchor="middle" fill="#fff" font-weight="600">Districts · 3</text>
+            <polygon points="60,180 300,180 320,205 40,205" fill="var(--red)" opacity="0.75"/>
+            <text x="180" y="197" text-anchor="middle" fill="#fff" font-weight="600">DNH Panchayats</text>
+            <polygon points="40,208 320,208 340,235 20,235" fill="var(--red)" opacity="0.85"/>
+            <text x="180" y="225" text-anchor="middle" fill="#fff" font-weight="600">Daman/Diu municipal wards</text>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <h3 class="grp-h">② The decision flow — inline or link?</h3>
+  <div class="callout">
+    <strong>Small enough to explain, too volatile to fully roster:</strong> Parliament seats, Administrator, Advisor, DIGP and Collectors are named inline. Panchayat and municipal ward-level rosters are linked because local-body seats and office-holders change through notifications, resignations and by-elections.
+  </div>
+
+  <h3 class="grp-h">③ Identity lens</h3>
+  <div class="callout ok">
+    <strong>Why the page keeps the old names:</strong> the merged UT has one administration, but the map, MPs and districts still expose the three-part geography and the Portuguese Estado da Índia legacy in Daman and Diu. Keeping those names visible is part of the audit trail.
+  </div>
+</section>
+
+<!-- =========================== CENTRE =========================== -->
+<section id="centre" class="lens-section">
+<!-- BEGIN: CENTRE — Union ministers + 2 LS MPs + no RS MPs. DNH-DD-specific roster. -->
+  <h1>🇮🇳 Dadra &amp; Nagar Haveli and Daman &amp; Diu's Representation at the Union</h1>
+  <p class="sec-sub">The merged UT has two Lok Sabha constituencies, no Rajya Sabha seats, and no Union minister from the UT in this snapshot.</p>
+
+  <details class="branch" open>
+    <summary><span>Union Council of Ministers from the UT</span><span class="ct">0 · Modi 3.0</span></summary>
+    <div class="b-body">
+      <p>No sitting Union Council minister is identified from Dadra &amp; Nagar Haveli and Daman &amp; Diu as of 24-May-2026.</p>
+    </div>
+  </details>
+
+  <details class="branch" open>
+    <summary><span>Lok Sabha — all 2 MPs from the merged UT</span><span class="ct">18ᵗʰ LS · 2024</span></summary>
+    <table class="bihar">
+      <thead><tr><th>#</th><th>Constituency</th><th>Member of Parliament</th><th>Party</th></tr></thead>
+      <tbody>
+        <tr><td class="r">1</td><td>Dadra and Nagar Haveli (ST)</td><td>Kalaben Mohanbhai Delkar</td><td><span class="pill p-BJP">BJP</span></td></tr>
+        <tr><td class="r">2</td><td>Daman and Diu</td><td>Umeshbhai Babubhai Patel</td><td><span class="pill p-IND">IND</span></td></tr>
+      </tbody>
+      <caption>Tally: BJP 1 + Independent 1 = <strong>2</strong>. Profiles: <a href="https://sansad.in/ls/members" target="_blank" rel="noopener">sansad.in/ls/members</a>.</caption>
+    </table>
+  </details>
+
+  <details class="branch">
+    <summary><span>Rajya Sabha — no allocation</span><span class="ct">0 seats</span></summary>
+    <div class="b-body"><p>The UT has <strong>0</strong> Rajya Sabha seats. There is therefore no RS roster to enumerate.</p></div>
+  </details>
+  <p class="src">Sources: Lok Sabha member roster — <a href="https://sansad.in/ls/members" target="_blank" rel="noopener">sansad.in/ls/members</a>; ECI / 2024 parliamentary result summaries for Dadra &amp; Nagar Haveli and for Daman &amp; Diu; seat-count cross-check via Parliament / Election Commission public materials.</p><!-- END: CENTRE -->
+
+</section>
+
+<!-- =========================== EXECUTIVE =========================== -->
+<section id="exec" class="lens-section">
+<!-- BEGIN: EXEC — Administrator + Advisor + apex police/election service; no CM or cabinet. -->
+  <h1>🏛 UT Executive — Administrator-led administration</h1>
+  <p class="sec-sub">DNH &amp; DD has no elected Chief Minister or Council of Ministers. Executive authority is exercised through the Administrator and UT Administration under the Union Government.</p>
+
+  <h3 class="grp-h">Top executive offices</h3>
+  <div class="role-grid">
+    <div class="role-card"><div class="role">Administrator</div><div class="name">Praful Khoda Patel</div><div class="meta">President-appointed Administrator for DNH &amp; DD; the official profile records his charge for Daman &amp; Diu from 29-Aug-2016, Dadra &amp; Nagar Haveli from 30-Dec-2016, and the merged UT from 26-Jan-2020. Also holds Lakshadweep charge.</div></div>
+    <div class="role-card"><div class="role">Advisor to the Administrator</div><div class="name">Ankur Garg, IAS</div><div class="meta">Official profile lists tenure from 05-Jan-2026 to till date · <a href="https://ddd.gov.in/advisor-to-honbleadministrator/" target="_blank" rel="noopener">ddd.gov.in</a></div></div>
+  </div>
+
+  <div class="callout warn">
+    <strong>No CM / Cabinet fence:</strong> this UT is closer to Chandigarh, Andaman &amp; Nicobar and Lakshadweep than to Delhi or Puducherry: the page intentionally omits Chief Minister, Cabinet and Vidhan Sabha rosters.
+  </div>
+
+  <h3 class="grp-h">Apex Civil, Police and Election Service</h3>
+  <div class="role-grid">
+    <div class="role-card"><div class="role">Administrator, DNH &amp; DD</div><div class="name">Praful Khoda Patel</div><div class="meta"><a href="https://ddd.gov.in/honble-administrator-2/" target="_blank" rel="noopener">Official profile</a></div></div>
+    <div class="role-card"><div class="role">Advisor to Administrator</div><div class="name">Ankur Garg, IAS</div><div class="meta"><a href="https://ddd.gov.in/advisor-to-honbleadministrator/" target="_blank" rel="noopener">Official profile</a></div></div>
+    <div class="role-card"><div class="role">Deputy Inspector General of Police</div><div class="name">Milind Mahadeo Dumbere, IPS</div><div class="meta">Overall in-charge of the UT Police force · <a href="https://police.ddd.gov.in/" target="_blank" rel="noopener">police.ddd.gov.in</a></div></div>
+    <div class="role-card"><div class="role">Chief Electoral Officer</div><div class="name">Dr. Arun T., IAS</div><div class="meta">CEO organisation page for the UT · <a href="https://ceodaman.nic.in/organization.aspx" target="_blank" rel="noopener">ceodaman.nic.in</a></div></div>
+  </div>
+  <p class="src">Sources: Administrator profile — <a href="https://ddd.gov.in/honble-administrator-2/" target="_blank" rel="noopener">ddd.gov.in</a>; Advisor profile — <a href="https://ddd.gov.in/advisor-to-honbleadministrator/" target="_blank" rel="noopener">ddd.gov.in/advisor</a>; Lakshadweep Administrator profile — <a href="https://lakshadweep.gov.in/about-lakshadweep/profile-administrator/" target="_blank" rel="noopener">lakshadweep.gov.in</a>; DNH &amp; DD Police — <a href="https://police.ddd.gov.in/" target="_blank" rel="noopener">police.ddd.gov.in</a>; CEO Daman — <a href="https://ceodaman.nic.in/organization.aspx" target="_blank" rel="noopener">ceodaman.nic.in</a>.</p><!-- END: EXEC -->
+
+</section>
+
+<!-- =========================== LEGISLATURE =========================== -->
+<section id="leg" class="lens-section">
+<!-- BEGIN: LEG — no Legislative Assembly or Legislative Council. -->
+  <h1>🗳 Legislature — N/A for this Union Territory</h1>
+  <p class="sec-sub">DNH &amp; DD has parliamentary representation and local bodies, but no elected UT legislature, no Chief Minister, no Cabinet, and no Leader of Opposition.</p>
+
+  <div class="jumpbar">
+    <span class="jb-label">Jump to</span>
+    <a href="#leg-vs">Assembly status</a>
+    <a href="#leg-off">Local democracy</a>
+    <a href="#leg-merge">Merger note</a>
+  </div>
+
+  <h3 class="grp-h" id="leg-vs">Vidhan Sabha / Legislative Council — not applicable</h3>
+  <table class="bihar">
+    <thead><tr><th>Institution</th><th class="r">Seats</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr><td>Legislative Assembly</td><td class="r">0</td><td>No Assembly for this UT</td></tr>
+      <tr><td>Legislative Council</td><td class="r">0</td><td>No Council</td></tr>
+      <tr><td>Chief Minister / Council of Ministers</td><td class="r">0</td><td>Administrator-led UT administration</td></tr>
+      <tr><td><strong>Total MLAs + MLCs</strong></td><td class="r"><strong>0</strong></td><td>Counts reconcile with JSON: VS=0, VP=0</td></tr>
+    </tbody>
+  </table>
+
+  <h3 class="grp-h" id="leg-off">Local democracy substitutes</h3>
+  <div class="role-grid">
+    <div class="role-card"><div class="role">Parliamentary representation</div><div class="name">2 Lok Sabha seats</div><div class="meta">Dadra and Nagar Haveli (ST); Daman and Diu</div></div>
+    <div class="role-card"><div class="role">DNH rural local government</div><div class="name">District Panchayat + Gram Panchayats</div><div class="meta">Standard PRI model in Dadra &amp; Nagar Haveli district; live rosters are linked in the PRI lens.</div></div>
+    <div class="role-card"><div class="role">Daman and Diu urban local government</div><div class="name">Municipal councils</div><div class="meta">Daman Municipal Council and Diu Municipal Council are the core local urban bodies.</div></div>
+  </div>
+
+  <div class="callout" id="leg-merge">
+    <strong>Representation caveat:</strong> the 2020 merger created one UT administration but did not collapse the two Lok Sabha constituencies. The page therefore treats local identity and parliamentary seats as two separate audit axes.
+  </div>
+  <p class="src">Sources: Dadra and Nagar Haveli and Daman and Diu (Merger of Union Territories) Act, 2019; UT Administration portal — <a href="https://ddd.gov.in/" target="_blank" rel="noopener">ddd.gov.in</a>; Lok Sabha roster — <a href="https://sansad.in/ls/members" target="_blank" rel="noopener">sansad.in</a>; CEO Daman election portal — <a href="https://ceodaman.nic.in/" target="_blank" rel="noopener">ceodaman.nic.in</a>.</p>
+<!-- END: LEG -->
+
+</section>
+
+<!-- =========================== JUDICIARY =========================== -->
+<section id="judic" class="lens-section">
+<!-- BEGIN: JUDIC — Bombay High Court jurisdiction + local court system. -->
+  <h1>⚖ Judiciary — High Court of Bombay jurisdiction</h1>
+  <p class="sec-sub">The merged UT falls under the High Court of Bombay. Subordinate courts operate through the DNH &amp; DD district judiciary / eCourts system.</p>
+
+  <div class="role-grid">
+    <div class="role-card"><div class="role">Chief Justice, High Court of Bombay</div><div class="name">Justice Shree Chandrashekhar</div><div class="meta">Official sitting-judges roster lists “SHREE CHANDRASHEKHAR, CJ.” · <a href="https://bombayhighcourt.nic.in/jshow.php" target="_blank" rel="noopener">bombayhighcourt.nic.in</a></div></div>
+    <div class="role-card"><div class="role">Senior sitting judge</div><div class="name">Justice Ravindra V. Ghuge</div><div class="meta">Official roster order changes by notification</div></div>
+    <div class="role-card"><div class="role">Sitting judge</div><div class="name">Justice A. S. Gadkari</div><div class="meta">Official roster</div></div>
+    <div class="role-card"><div class="role">Sitting judge</div><div class="name">Justice G. S. Kulkarni</div><div class="meta">Official roster</div></div>
+    <div class="role-card"><div class="role">Sitting judge</div><div class="name">Justice B. P. Colabawalla</div><div class="meta">Official roster</div></div>
+    <div class="role-card"><div class="role">UT courts</div><div class="name">Daman, Diu, Silvassa court establishments</div><div class="meta"><a href="https://services.ecourts.gov.in/ecourtindia_v6/" target="_blank" rel="noopener">eCourts services</a></div></div>
+  </div>
+
+  <details class="branch">
+    <summary><span>Jurisdiction note</span><span class="ct">Bombay HC</span></summary>
+    <div class="b-body"><p>Bombay High Court jurisdiction is the important top-level fact for the UT; judge rosters are not UT-specific, so this page names the Chief Justice and selected roster-order judges, then links the official court roster.</p></div>
+  </details>
+  <p class="src">Sources: High Court of Bombay sitting judges — <a href="https://bombayhighcourt.nic.in/jshow.php" target="_blank" rel="noopener">bombayhighcourt.nic.in/jshow.php</a>; official High Court site — <a href="https://bombayhighcourt.nic.in/" target="_blank" rel="noopener">bombayhighcourt.nic.in</a>; eCourts services — <a href="https://services.ecourts.gov.in/ecourtindia_v6/" target="_blank" rel="noopener">services.ecourts.gov.in</a>.</p><!-- END: JUDIC -->
+
+</section>
+
+<!-- =========================== DISTRICTS =========================== -->
+<section id="dist" class="lens-section">
+<!-- BEGIN: DIST — Combined DNH + Daman + Diu map and 3-row district table. -->
+  <h1>📍 District Administration — 3 Districts</h1>
+  <p class="sec-sub">The UT is geographically split into three non-contiguous parts: Dadra &amp; Nagar Haveli, Daman, and Diu. District collectors are the stable inline layer; lower postings are linked to live district directories.</p>
+
+  <div class="callout">
+    <strong>Map caveat:</strong> the public India GeoJSON still stores Daman &amp; Diu and Dadra &amp; Nagar Haveli separately. The inline map combines the Daman, Diu and DNH polygons into one merged-UT district view.
+  </div>
+
+  <h3 class="grp-h">🗺 District distribution — 3 districts</h3>
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:14px;">
+<svg viewBox="0 0 760 520" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Map of Dadra & Nagar Haveli and Daman & Diu showing 3 districts" style="width:100%;height:auto;display:block;background:#fffdf6;border-radius:6px;font-family:inherit;">
+<rect x="0" y="0" width="760" height="520" rx="6" fill="#fffdf6"/>
+<path d="M733.6,352.4 L732.8,352.6 L732.0,352.7 L731.1,352.6 L730.7,351.8 L730.1,351.2 L729.7,350.5 L728.8,350.2 L727.8,350.1 L726.7,349.7 L726.4,348.9 L726.4,347.8 L726.0,346.9 L725.9,345.9 L725.8,344.5 L725.7,343.7 L725.9,342.5 L726.0,341.3 L726.3,340.6 L726.9,340.0 L727.0,339.0 L727.3,338.2 L728.3,338.6 L729.3,338.5 L730.6,338.3 L731.6,338.6 L732.4,338.5 L734.4,336.7 L734.9,335.9 L735.6,334.5 L735.8,333.7 L736.0,332.5 L735.9,331.6 L735.0,330.7 L734.0,330.5 L732.9,330.0 L731.8,330.0 L730.8,329.1 L730.2,328.6 L729.1,327.9 L728.1,327.6 L727.5,328.1 L726.7,328.2 L725.7,328.4 L724.9,328.4 L724.5,329.1 L724.1,328.0 L723.5,326.9 L722.6,326.9 L721.8,327.1 L721.3,326.4 L720.9,325.6 L721.0,324.8 L720.8,323.9 L720.0,324.7 L718.5,326.1 L717.4,327.1 L716.1,325.5 L714.5,326.4 L713.7,325.9 L712.8,325.7 L711.8,325.1 L711.5,324.1 L710.1,324.7 L710.0,325.8 L709.9,326.7 L709.9,327.5 L710.0,328.6 L710.0,329.5 L710.1,330.3 L710.5,331.2 L711.2,331.6 L712.0,331.9 L712.2,332.8 L712.8,333.9 L712.1,334.4 L711.4,335.5 L711.0,336.3 L710.2,336.5 L708.7,335.2 L707.5,336.1 L706.4,336.4 L705.8,337.1 L706.0,338.0 L705.2,338.6 L704.7,339.5 L704.7,340.4 L705.0,341.4 L704.6,342.2 L703.8,341.7 L703.4,341.0 L702.5,340.3 L701.2,340.6 L700.4,340.8 L699.6,340.7 L698.5,339.9 L697.8,339.7 L697.1,339.4 L697.0,338.5 L696.5,337.2 L696.1,336.2 L695.0,335.6 L693.7,335.3 L693.4,336.1 L693.2,337.0 L692.9,337.7 L692.7,338.7 L692.2,340.1 L692.0,341.0 L691.1,341.0 L690.2,340.5 L689.5,340.1 L688.6,339.6 L688.0,338.9 L688.0,337.9 L688.4,336.8 L688.5,335.7 L688.6,334.8 L688.7,333.9 L688.6,332.8 L688.5,331.7 L688.3,330.7 L688.0,329.7 L687.8,328.8 L686.4,328.3 L685.5,327.8 L684.8,326.9 L684.6,326.1 L685.6,325.3 L686.1,324.4 L686.3,323.4 L686.6,322.3 L687.1,321.3 L687.4,320.6 L687.9,319.0 L688.7,318.8 L688.8,317.9 L689.8,317.3 L691.0,316.2 L691.9,316.9 L693.3,317.1 L695.4,317.4 L696.2,318.4 L697.0,318.4 L698.4,317.8 L699.3,317.6 L699.8,316.8 L699.5,316.0 L699.4,315.2 L699.2,314.3 L700.0,313.6 L700.6,312.8 L701.1,312.2 L701.9,311.6 L702.3,310.8 L702.9,310.1 L703.6,309.4 L704.2,308.4 L705.0,308.1 L705.9,308.1 L707.0,307.6 L707.8,307.5 L708.5,306.7 L708.8,305.7 L709.2,305.0 L709.3,304.2 L709.6,303.1 L710.6,303.1 L711.9,303.3 L712.7,302.7 L713.0,301.9 L713.0,300.7 L713.4,299.9 L713.5,299.0 L714.7,297.7 L715.7,297.2 L715.8,298.3 L716.1,299.1 L716.6,299.9 L717.6,300.5 L718.5,300.4 L719.3,300.1 L719.9,299.7 L720.1,298.9 L720.4,297.9 L720.1,296.6 L719.6,295.3 L720.0,293.7 L720.2,292.4 L720.2,291.5 L719.4,291.0 L718.6,291.3 L717.0,290.3 L715.7,288.7 L714.7,288.5 L713.7,288.5 L712.9,288.4 L711.8,288.7 L710.9,288.7 L710.0,288.4 L709.2,288.4 L708.5,289.4 L708.3,290.6 L707.9,291.3 L708.0,292.6 L707.3,293.0 L706.1,292.8 L705.3,292.5 L704.3,292.8 L703.5,293.0 L702.4,292.7 L701.7,293.2 L701.1,293.7 L700.4,293.2 L700.6,292.3 L700.8,291.2 L701.1,290.0 L701.3,289.2 L702.1,287.9 L702.5,286.9 L702.7,286.0 L702.5,285.1 L702.7,283.8 L703.3,282.9 L703.5,282.2 L702.8,281.7 L702.5,280.9 L702.3,280.1 L701.6,279.5 L701.7,278.5 L701.2,277.7 L700.8,276.9 L699.9,276.6 L699.7,275.6 L699.3,274.9 L698.3,274.9 L697.5,274.9 L696.8,275.5 L697.0,276.5 L696.9,277.5 L696.7,278.4 L697.1,279.2 L696.9,280.4 L696.4,281.3 L696.0,282.3 L695.6,283.6 L695.3,284.3 L694.6,285.0 L693.5,285.8 L693.2,286.7 L692.1,286.4 L691.2,286.1 L690.7,285.3 L690.0,284.6 L688.8,284.9 L687.4,285.4 L686.7,285.9 L685.4,286.3 L684.2,286.5 L682.9,286.0 L682.1,286.5 L681.5,287.6 L681.2,288.5 L681.1,289.6 L681.1,290.8 L680.8,291.8 L680.6,292.8 L680.5,294.3 L680.5,295.4 L680.5,296.3 L679.8,297.0 L678.7,297.3 L677.6,297.3 L676.7,297.0 L675.9,296.5 L674.9,296.3 L674.5,295.7 L674.7,294.6 L674.8,293.3 L674.9,292.4 L674.9,291.6 L674.3,291.0 L673.3,291.2 L672.9,290.4 L672.0,290.1 L672.1,290.9 L672.6,291.6 L672.5,292.8 L672.8,293.8 L672.9,294.8 L672.9,296.2 L672.6,297.0 L671.4,297.7 L670.5,297.2 L669.7,296.9 L668.6,296.8 L667.6,296.6 L666.8,296.8 L666.0,297.0 L665.1,297.9 L664.3,297.6 L663.9,298.3 L663.8,299.3 L663.7,300.3 L663.8,301.2 L663.7,302.0 L663.4,302.8 L662.5,303.0 L661.7,303.2 L661.0,303.8 L660.1,303.7 L659.3,303.6 L658.5,303.5 L658.0,302.6 L657.5,302.1 L657.1,301.4 L656.3,300.9 L656.0,299.8 L655.5,299.2 L654.8,298.9 L654.1,298.5 L653.4,298.1 L652.7,297.7 L652.2,297.0 L651.8,296.3 L651.0,296.1 L650.3,296.0 L649.4,296.2 L648.7,295.8 L648.5,296.5 L648.3,297.4 L647.8,298.1 L647.3,298.7 L646.6,299.0 L645.9,299.4 L645.3,299.9 L644.5,300.2 L644.5,301.0 L644.2,301.9 L643.5,302.0 L642.8,302.4 L642.8,303.3 L642.8,304.2 L643.4,305.0 L643.9,305.8 L644.6,306.6 L644.8,307.4 L645.1,308.1 L645.9,308.5 L646.7,309.0 L647.0,309.8 L647.5,310.7 L647.9,311.4 L648.4,312.2 L649.3,312.7 L650.5,312.5 L651.4,312.8 L652.1,313.2 L653.2,313.7 L654.3,314.0 L655.6,314.6 L656.1,315.2 L656.8,315.5 L657.3,316.5 L658.0,317.6 L659.1,318.5 L659.2,319.4 L659.2,320.5 L659.0,321.4 L659.0,322.3 L658.5,323.5 L657.8,323.8 L657.7,324.6 L657.5,326.0 L657.5,327.8 L657.9,328.9 L657.8,330.1 L657.8,331.3 L658.2,332.3 L659.6,332.0 L660.8,332.4 L661.8,332.5 L662.6,332.8 L662.5,333.6 L661.9,334.4 L661.5,335.3 L661.5,336.2 L661.6,337.1 L661.6,338.1 L661.8,339.2 L661.7,340.1 L661.2,340.9 L660.9,341.6 L660.1,342.7 L659.7,343.4 L659.2,344.1 L658.7,344.9 L658.4,345.6 L658.1,346.4 L657.8,347.1 L657.6,347.9 L657.9,348.9 L658.3,349.6 L658.7,350.4 L659.4,350.9 L660.1,351.3 L660.4,352.5 L660.5,353.3 L661.0,354.2 L661.9,354.5 L662.6,354.9 L663.1,354.1 L664.0,353.9 L665.0,353.7 L666.0,353.6 L666.8,353.6 L667.5,352.4 L667.6,351.5 L667.9,350.2 L668.1,349.3 L668.3,348.4 L668.1,347.1 L668.2,346.4 L668.7,345.7 L669.4,345.3 L670.4,345.9 L670.7,346.6 L671.3,347.4 L672.0,347.8 L672.9,347.7 L673.3,348.4 L673.3,349.2 L672.6,350.0 L671.5,350.5 L670.6,350.9 L669.8,351.5 L669.3,352.3 L669.4,353.2 L669.7,354.0 L669.8,354.8 L670.5,355.4 L671.9,356.2 L672.5,356.8 L673.0,357.5 L673.6,358.7 L673.7,359.5 L674.0,360.3 L674.9,361.0 L675.6,361.6 L676.3,362.2 L676.7,363.4 L677.1,364.6 L677.8,365.0 L678.7,365.5 L679.8,367.0 L680.6,368.3 L681.3,369.3 L682.6,370.0 L683.3,370.2 L684.1,369.9 L684.9,370.5 L685.5,369.4 L685.5,368.4 L685.7,366.8 L685.8,365.9 L685.7,364.9 L685.6,364.0 L685.7,363.0 L685.7,361.7 L686.0,360.6 L686.4,359.6 L688.0,359.4 L689.1,359.5 L690.2,360.2 L691.5,360.4 L692.3,360.5 L693.5,360.8 L694.6,361.6 L695.6,362.0 L696.4,362.1 L697.6,362.2 L698.7,362.5 L699.5,362.4 L700.4,362.3 L701.3,362.6 L701.8,363.4 L702.0,364.5 L701.9,365.7 L702.3,366.4 L703.2,367.3 L704.0,367.1 L704.9,366.8 L705.7,367.1 L706.0,366.2 L706.9,366.0 L707.7,365.8 L707.8,365.0 L708.6,364.7 L709.5,365.1 L710.1,364.1 L710.7,363.5 L711.4,363.8 L711.5,364.7 L711.2,365.5 L711.9,366.1 L712.6,365.6 L713.1,366.2 L713.5,367.1 L714.2,367.6 L714.9,367.3 L715.0,366.5 L716.1,366.6 L716.6,367.3 L716.1,367.9 L716.5,368.8 L716.7,369.6 L717.3,370.2 L717.4,371.1 L718.2,370.9 L718.9,371.3 L719.5,371.9 L719.7,372.9 L720.1,373.7 L720.9,373.5 L721.3,374.2 L722.6,374.8 L723.6,374.9 L723.8,375.6 L724.6,375.5 L725.4,375.1 L726.2,375.0 L727.1,375.0 L727.8,375.3 L728.2,374.2 L727.4,373.1 L726.6,372.4 L726.8,371.4 L726.8,370.2 L727.1,369.2 L727.1,368.2 L727.2,367.1 L727.1,366.3 L728.2,366.3 L728.8,366.8 L729.6,366.8 L730.2,366.3 L731.1,366.0 L732.1,365.5 L732.9,364.3 L733.6,363.6 L734.0,362.6 L734.3,360.7 L734.3,359.6 L734.4,358.2 L734.6,356.7 L734.8,355.3 L734.8,354.1 L734.9,353.1 L733.8,352.4 L733.6,352.4 Z" fill="#138808" fill-opacity="0.78" stroke="#ffffff" stroke-width="1.1"><title>Dadra &amp; Nagar Haveli</title></path>
+<path d="M615.2,272.2 L616.3,272.5 L617.2,272.6 L618.0,272.1 L618.6,271.5 L619.4,270.7 L620.8,270.4 L621.7,270.2 L622.7,269.9 L624.3,270.3 L625.3,270.6 L626.2,270.4 L627.3,270.1 L628.0,269.8 L628.6,270.5 L629.3,270.9 L630.5,271.0 L631.8,271.4 L632.8,271.3 L633.5,270.9 L634.5,270.6 L635.2,270.6 L636.2,270.6 L636.5,269.9 L637.2,269.1 L638.0,268.5 L637.6,267.9 L636.8,267.5 L635.5,266.7 L635.3,265.6 L634.3,264.8 L634.1,263.4 L634.0,262.6 L634.7,262.4 L635.3,261.8 L636.2,262.1 L637.0,261.8 L637.6,261.3 L638.6,261.0 L639.1,260.3 L639.9,259.9 L640.2,258.9 L639.9,258.0 L640.3,257.2 L639.6,256.5 L638.9,255.5 L638.2,255.0 L637.3,254.8 L636.5,255.2 L635.8,255.6 L634.6,255.5 L633.8,255.4 L633.3,256.0 L632.3,256.3 L631.5,256.6 L630.9,257.1 L630.1,257.2 L629.7,256.5 L628.8,256.2 L627.9,256.3 L626.5,255.8 L626.3,254.9 L626.6,254.2 L627.2,253.5 L627.5,252.7 L628.5,252.3 L629.5,250.8 L629.7,249.8 L630.0,248.9 L630.7,248.3 L631.2,247.6 L632.0,247.1 L632.7,247.9 L633.5,248.5 L634.8,249.1 L635.6,249.3 L636.3,249.0 L636.9,248.3 L637.5,247.7 L637.1,246.7 L636.2,246.1 L635.5,245.3 L635.3,244.5 L635.3,243.7 L635.5,242.5 L635.3,241.7 L634.4,241.5 L633.2,241.7 L632.3,241.7 L630.9,241.3 L629.9,241.2 L629.0,241.2 L627.9,241.0 L627.1,240.8 L625.8,239.9 L624.6,240.6 L623.9,241.1 L622.7,241.8 L622.1,242.3 L621.2,242.8 L620.5,243.9 L619.4,245.5 L618.8,246.4 L618.5,247.6 L618.1,248.3 L617.9,249.5 L617.6,250.4 L617.2,251.4 L617.3,252.7 L617.4,253.7 L617.6,255.6 L617.9,256.8 L618.2,258.1 L617.5,259.0 L617.3,259.9 L617.3,260.8 L617.4,263.1 L617.3,264.4 L617.2,265.2 L617.0,266.3 L616.5,267.0 L615.8,269.1 L615.4,270.4 L615.3,271.5 L615.2,272.2 Z" fill="#FF9933" fill-opacity="0.78" stroke="#ffffff" stroke-width="1.1"><title>Daman</title></path>
+<path d="M39.7,152.5 L39.0,152.1 L38.7,151.4 L38.0,151.0 L37.3,152.1 L36.7,152.8 L36.2,153.6 L35.3,153.9 L34.3,154.0 L33.5,154.4 L32.5,154.8 L31.4,155.2 L30.5,155.4 L29.4,155.5 L28.4,155.6 L27.5,155.8 L26.7,156.1 L26.0,156.6 L25.4,157.5 L25.3,158.4 L24.5,159.2 L24.1,160.4 L24.0,161.4 L25.1,161.3 L26.2,161.4 L27.3,161.5 L28.1,161.6 L29.2,162.0 L30.1,162.5 L30.7,163.0 L30.6,163.8 L31.0,164.5 L31.8,164.5 L32.6,164.4 L33.4,164.2 L34.3,164.2 L35.0,164.5 L35.8,164.4 L36.4,163.9 L35.9,163.1 L36.0,162.2 L36.6,161.6 L37.3,161.1 L38.3,160.8 L39.2,160.6 L40.1,160.5 L40.9,160.6 L41.9,160.8 L42.8,161.1 L42.9,161.9 L43.8,162.1 L44.6,162.4 L45.4,162.5 L46.2,162.2 L46.8,162.9 L47.5,163.2 L48.4,162.8 L49.1,162.5 L49.8,162.1 L50.4,162.5 L51.2,162.3 L52.3,162.1 L52.9,162.6 L53.5,163.2 L54.2,163.2 L55.0,163.1 L55.6,162.6 L56.3,162.1 L57.0,161.7 L57.7,161.3 L58.4,161.4 L59.1,161.0 L59.9,160.9 L60.4,160.2 L60.9,159.6 L59.9,159.3 L58.7,158.4 L57.9,158.3 L57.9,157.1 L58.4,156.5 L58.9,155.6 L59.5,154.6 L60.7,153.7 L61.6,153.0 L62.3,152.8 L63.3,152.4 L62.6,151.1 L61.7,150.8 L61.1,151.5 L60.4,151.9 L59.9,152.6 L59.2,152.9 L58.5,153.4 L57.6,153.7 L56.8,154.2 L56.5,155.1 L56.3,156.0 L56.2,156.8 L55.4,156.8 L54.7,156.2 L54.0,155.5 L52.9,155.1 L52.2,155.0 L51.3,155.0 L50.6,154.4 L50.5,153.6 L50.0,152.8 L49.1,152.7 L48.1,153.0 L47.2,153.2 L46.3,153.3 L45.3,153.3 L44.5,153.5 L43.7,153.8 L42.8,153.8 L42.0,153.3 L41.3,152.7 L40.3,152.5 L39.7,152.5 Z M107.9,145.2 L108.1,144.5 L107.5,145.1 L107.9,145.2 Z" fill="#0B1B3F" fill-opacity="0.78" stroke="#ffffff" stroke-width="1.1"><title>Diu</title></path>
+<text x="691.3" y="328.8" text-anchor="middle" font-size="12" font-weight="700" fill="#1a1a1a" paint-order="stroke" stroke="#ffffff" stroke-width="3" stroke-linejoin="round">Dadra &amp;</text>
+<text x="691.3" y="341.8" text-anchor="middle" font-size="12" font-weight="700" fill="#1a1a1a" paint-order="stroke" stroke="#ffffff" stroke-width="3" stroke-linejoin="round">Nagar Haveli</text>
+<text x="626.7" y="257.2" text-anchor="middle" font-size="12" font-weight="700" fill="#1a1a1a" paint-order="stroke" stroke="#ffffff" stroke-width="3" stroke-linejoin="round">Daman</text>
+<text x="42.7" y="158.1" text-anchor="middle" font-size="12" font-weight="700" fill="#1a1a1a" paint-order="stroke" stroke="#ffffff" stroke-width="3" stroke-linejoin="round">Diu</text>
+<text x="22" y="452" font-size="11" fill="#5b5b5b" font-style="italic">Three non-contiguous parts; Daman/Diu district polygons + DNH state polygon from datta07/INDIAN-SHAPEFILES.</text>
+<rect x="22" y="470" width="14" height="14" rx="2" fill="#138808" fill-opacity="0.78"/>
+<text x="42" y="482" font-size="12" fill="#1a1a1a">Dadra &amp; Nagar Haveli</text>
+<rect x="242" y="470" width="14" height="14" rx="2" fill="#FF9933" fill-opacity="0.78"/>
+<text x="262" y="482" font-size="12" fill="#1a1a1a">Daman</text>
+<rect x="462" y="470" width="14" height="14" rx="2" fill="#0B1B3F" fill-opacity="0.78"/>
+<text x="482" y="482" font-size="12" fill="#1a1a1a">Diu</text>
+</svg>
+
+  </div>
+
+  <h3 class="grp-h">Districts — Collector / DM snapshot</h3>
+  <table class="bihar">
+    <thead><tr><th>#</th><th>District</th><th>HQ</th><th>Collector / DM</th><th>Police / courts</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td class="r">1</td><td>Dadra &amp; Nagar Haveli</td><td>Silvassa</td><td>Priyank Kishore, IAS</td><td>UT Police district under DIGP</td><td>Capital / UT headquarters; DNH PRI layer</td></tr>
+      <tr><td class="r">2</td><td>Daman</td><td>Daman</td><td>Saurabh Mishra, IAS</td><td>UT Police district under DIGP</td><td>Coastal ex-Portuguese enclave; Daman Municipal Council</td></tr>
+      <tr><td class="r">3</td><td>Diu</td><td>Diu</td><td>Rahul Dev Boora, IAS</td><td>UT Police district under DIGP</td><td>Island/coastal ex-Portuguese enclave; Diu Municipal Council</td></tr>
+    </tbody>
+    <caption>Counts reconcile: 3 district rows = JSON districts_count 3. Police source says 3 police districts co-terminus with administrative districts.</caption>
+  </table>
+  <p class="src">Sources: UT portal and district quick links — <a href="https://ddd.gov.in/" target="_blank" rel="noopener">ddd.gov.in</a>, <a href="https://dnh.gov.in/" target="_blank" rel="noopener">dnh.gov.in</a>, <a href="https://diu.gov.in/" target="_blank" rel="noopener">diu.gov.in</a>; CEO / official directory references for Collectors — <a href="https://ceodaman.nic.in/organization.aspx" target="_blank" rel="noopener">ceodaman.nic.in</a>; UT Police district count — <a href="https://police.ddd.gov.in/" target="_blank" rel="noopener">police.ddd.gov.in</a>; GeoJSON from datta07/INDIAN-SHAPEFILES via <code>_make_dd_map.py</code>.</p><!-- END: DIST -->
+
+</section>
+
+<!-- =========================== PRI =========================== -->
+<section id="pri" class="lens-section">
+<!-- BEGIN: PRI — DNH PRI + Daman/Diu municipal councils. -->
+  <h1>🌾 Panchayati Raj and 🏙 Municipal Local Bodies</h1>
+  <p class="sec-sub">Local government is hybrid: Dadra &amp; Nagar Haveli uses a panchayat layer, while Daman and Diu rely on municipal councils for their principal urban local layer.</p>
+
+  <div class="kpis">
+    <div class="kpi"><div class="v">DNH</div><div class="l">PRI area</div><div class="sub">District Panchayat + GPs</div></div>
+    <div class="kpi"><div class="v">26</div><div class="l">DNH Gram Panchayats</div><div class="sub">LGD / public references</div></div>
+    <div class="kpi"><div class="v">20</div><div class="l">DNH DP wards</div><div class="sub">District Panchayat constituencies</div></div>
+    <div class="kpi"><div class="v">Daman</div><div class="l">Municipal Council</div><div class="sub">Urban local body</div></div>
+    <div class="kpi"><div class="v">Diu</div><div class="l">Municipal Council</div><div class="sub">Urban local body</div></div>
+  </div>
+
+  <table class="bihar">
+    <thead><tr><th>Area</th><th>Local model</th><th>What is inline</th><th>Live register / source</th></tr></thead>
+    <tbody>
+      <tr><td>Dadra &amp; Nagar Haveli</td><td>Standard Panchayati Raj</td><td>District-level summary only</td><td><a href="https://dnh.gov.in/" target="_blank" rel="noopener">DNH district portal</a> · <a href="https://lgdirectory.gov.in/" target="_blank" rel="noopener">LG Directory</a></td></tr>
+      <tr><td>Daman</td><td>Municipal Council</td><td>Council named; ward roster linked</td><td><a href="https://dmcdaman.in/" target="_blank" rel="noopener">Daman Municipal Council</a></td></tr>
+      <tr><td>Diu</td><td>Municipal Council</td><td>Council named; ward roster linked</td><td><a href="https://diu.gov.in/diu-municipal-council/" target="_blank" rel="noopener">Diu Municipal Council</a></td></tr>
+    </tbody>
+  </table>
+
+  <div class="role-grid">
+    <div class="role-card"><div class="role">DNH Panchayat live reference</div><div class="name">LG Directory / DNH portal</div><div class="meta">Use for GP-level current names and ward changes.</div></div>
+    <div class="role-card"><div class="role">Daman local body</div><div class="name">Daman Municipal Council</div><div class="meta"><a href="https://dmcdaman.in/" target="_blank" rel="noopener">dmcdaman.in</a></div></div>
+    <div class="role-card"><div class="role">Diu local body</div><div class="name">Diu Municipal Council</div><div class="meta"><a href="https://diu.gov.in/diu-municipal-council/" target="_blank" rel="noopener">diu.gov.in</a></div></div>
+  </div>
+  <p class="src">Sources: DNH district portal — <a href="https://dnh.gov.in/" target="_blank" rel="noopener">dnh.gov.in</a>; Local Government Directory — <a href="https://lgdirectory.gov.in/" target="_blank" rel="noopener">lgdirectory.gov.in</a>; Daman Municipal Council — <a href="https://dmcdaman.in/" target="_blank" rel="noopener">dmcdaman.in</a>; Diu Municipal Council — <a href="https://diu.gov.in/diu-municipal-council/" target="_blank" rel="noopener">diu.gov.in</a>.</p><!-- END: PRI -->
+
+</section>
+
+<!-- =========================== CONSTITUTIONAL BODIES =========================== -->
+<section id="bodies" class="lens-section">
+<!-- BEGIN: BODIES — UT bodies, departments and oversight institutions. -->
+  <h1>🧾 Statutory Bodies, Departments and Watchdogs</h1>
+  <p class="sec-sub">Because there is no state cabinet or legislature, many accountability functions sit in UT departments, the Election office, police, RTI channels and central audit/court structures.</p>
+  <div class="role-grid">
+    <div class="role-card"><div class="role">UT Administration portal</div><div class="name">ddd.gov.in</div><div class="meta"><a href="https://ddd.gov.in/" target="_blank" rel="noopener">Main portal, notices and directory</a></div></div>
+    <div class="role-card"><div class="role">Election machinery</div><div class="name">Chief Electoral Officer</div><div class="meta"><a href="https://ceodaman.nic.in/" target="_blank" rel="noopener">ceodaman.nic.in</a></div></div>
+    <div class="role-card"><div class="role">Police</div><div class="name">DNH &amp; DD Police</div><div class="meta"><a href="https://police.ddd.gov.in/" target="_blank" rel="noopener">police.ddd.gov.in</a></div></div>
+    <div class="role-card"><div class="role">RTI</div><div class="name">UT RTI Portal</div><div class="meta"><a href="http://rti.dddgov.in" target="_blank" rel="noopener">rti.dddgov.in</a></div></div>
+    <div class="role-card"><div class="role">Open data</div><div class="name">OGD DNH &amp; DD</div><div class="meta"><a href="https://data.gov.in/state_utes/Dadra%20and%20Nagar%20Haveli%20and%20Daman%20and%20Diu%20(UT)" target="_blank" rel="noopener">data.gov.in</a></div></div>
+    <div class="role-card"><div class="role">Industry / OIDC</div><div class="name">UT industrial development channel</div><div class="meta"><a href="https://swp.dddgov.in/" target="_blank" rel="noopener">Single Window Portal</a></div></div>
+    <div class="role-card"><div class="role">Municipal oversight</div><div class="name">Daman and Diu councils</div><div class="meta">Linked in the local-body lens</div></div>
+    <div class="role-card"><div class="role">Courts and audit</div><div class="name">Bombay HC / CAG Union audit trail</div><div class="meta">Judicial review via Bombay HC; financial audit via CAG channels</div></div>
+  </div>
+  <p class="src">Sources: official portals linked per body; UT quick links — <a href="https://ddd.gov.in/" target="_blank" rel="noopener">ddd.gov.in</a>; CEO Daman — <a href="https://ceodaman.nic.in/" target="_blank" rel="noopener">ceodaman.nic.in</a>; DNH &amp; DD Police — <a href="https://police.ddd.gov.in/" target="_blank" rel="noopener">police.ddd.gov.in</a>; Open Government Data state/UT page — <a href="https://data.gov.in/state_utes/Dadra%20and%20Nagar%20Haveli%20and%20Daman%20and%20Diu%20(UT)" target="_blank" rel="noopener">data.gov.in</a>.</p><!-- END: BODIES -->
+
+</section>
+
+<!-- =========================== SCOPE MEMO =========================== -->
+<section id="scope" class="lens-section">
+<!-- BEGIN: SCOPE — Math table adjusted for a no-legislature UT. -->
+  <h1>📐 Scope Memo — Why this page stops where it stops</h1>
+  <p class="sec-sub">DNH &amp; DD is compact, but its local-body registers are still volatile. The page names stable apex offices and points ward-level readers to live registers.</p>
+  <table class="bihar">
+    <thead><tr><th>Layer</th><th class="r">Node count</th><th>Inline or link?</th><th>Why</th></tr></thead>
+    <tbody>
+      <tr><td>Union ministers from UT</td><td class="r">0</td><td>Inline</td><td>Explicit zero prevents false positives.</td></tr>
+      <tr><td>Lok Sabha MPs</td><td class="r">2</td><td>Inline</td><td>Small, stable until election/bye-election.</td></tr>
+      <tr><td>Rajya Sabha MPs</td><td class="r">0</td><td>Inline</td><td>No allocation.</td></tr>
+      <tr><td>Administrator / Advisor / apex services</td><td class="r">4</td><td>Inline</td><td>Core executive chain.</td></tr>
+      <tr><td>Legislature / CM / Cabinet</td><td class="r">0</td><td>Inline N/A</td><td>No Assembly, no CM, no Cabinet.</td></tr>
+      <tr><td>Bombay HC roster</td><td class="r">50+</td><td>Hybrid</td><td>CJ and selected roster-order judges inline; full roster linked.</td></tr>
+      <tr><td>District collectors</td><td class="r">3</td><td>Inline</td><td>Tractable and high-value.</td></tr>
+      <tr><td>DNH PRI offices</td><td class="r">20+ / 26 GP</td><td>Hybrid</td><td>Aggregates inline; live roster linked.</td></tr>
+      <tr><td>Daman / Diu municipal wards</td><td class="r">Live</td><td>Link</td><td>Ward rosters are maintained by councils and SEC/CEO channels.</td></tr>
+      <tr><td>Statutory bodies</td><td class="r">8+</td><td>Inline links</td><td>Portals are more reliable than static chair/member names.</td></tr>
+    </tbody>
+  </table>
+  <ol class="verify-list">
+    <li><strong>Counts reconcile</strong> — LS=2, RS=0, VS=0, VP=0, districts=3.</li>
+    <li><strong>Merger made explicit</strong> — the page names the 26-Jan-2020 merger and keeps DNH, Daman and Diu identities visible.</li>
+    <li><strong>No invented offices</strong> — Chief Minister, Cabinet, Vidhan Sabha and Vidhan Parishad are marked N/A rather than filled with placeholder names.</li>
+    <li><strong>Map source limitation disclosed</strong> — the India GeoJSON stores DNH and DD separately; <code>_make_dd_map.py</code> combines them for this merged-UT page.</li>
+  </ol>
+  <p class="src">Sources: UT Administration portal, Administrator profile, CEO Daman, DNH &amp; DD Police, Bombay High Court roster, Local Government Directory, and district / municipal portals linked above. Data verified 24-May-2026.</p><!-- END: SCOPE -->
+
+</section>
+
+
+</main>
+
+<footer>
+  DNH &amp; DD Shasan · governance transparency experiment · drafted 24-May-2026 · skinned with the <code>bharat-sanchar-aesthetic</code> skill · zero external dependencies · data sources cited inline · merged-UT caveats, no-legislature status and the combined district map are documented in the Executive, Legislature, Districts and Scope lenses.
+</footer>
+
+<!-- JS 1: expand/collapse-all within a lens -->
+<script>
+(function(){
+  document.addEventListener('click', function(e){
+    var btn = e.target.closest('.ec-btn'); if(!btn) return;
+    e.preventDefault();
+    var root = document.getElementById(btn.getAttribute('data-scope')); if(!root) return;
+    var openVal = btn.getAttribute('data-ec') === 'expand';
+    root.querySelectorAll('details').forEach(function(d){ if(d!==root) d.open = openVal; });
+    if(root.tagName === 'DETAILS' && openVal) root.open = true;
+  });
+})();
+</script>
+
+<!-- JS 2: close mobile hamburger after a nav link tap -->
+<script>
+(function(){
+  var toggle = document.getElementById('navtoggle');
+  var nav = document.querySelector('header.topbar nav.lens');
+  if(!toggle || !nav) return;
+  nav.addEventListener('click', function(e){
+    var a = e.target.closest('a'); if(!a) return;
+    var href = a.getAttribute('href'); if(!href) return;
+    toggle.checked = false;
+    if(href.charAt(0) === '#' && href.length > 1){
+      requestAnimationFrame(function(){
+        requestAnimationFrame(function(){
+          var el = document.getElementById(href.slice(1)); if(!el) return;
+          var topbar = document.querySelector('header.topbar');
+          var offset = topbar ? topbar.getBoundingClientRect().height : 0;
+          var y = el.getBoundingClientRect().top + window.pageYOffset - offset - 4;
+          window.scrollTo({top: Math.max(0, y), behavior: 'auto'});
+        });
+      });
+    }
+  });
+})();
+</script>
+</body>
+</html>

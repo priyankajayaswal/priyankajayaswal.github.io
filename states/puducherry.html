@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Puducherry Shasan — Governance Personnel Catalogue (Centre → Ward)</title>
+<meta name="description" content="A link-anchored catalogue of Puducherry (UT)'s governance chain — Union representation, Lieutenant Governor, Cabinet, Legislative Assembly, Madras High Court, districts, local bodies and wards.">
+<style>
+  :root {
+    --bg:#f7f7f5; --card:#fff; --ink:#1a1a1a; --muted:#5b5b5b;
+    --navy:#0B1B3F; --saffron:#FF9933; --green:#138808; --red:#c0392b;
+    --border:#e3e3df; --tag:#eef0f7;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-padding-top:115px;scroll-behavior:smooth;}
+  body{margin:0;font-family:'Segoe UI',Tahoma,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5;font-size:14px;}
+  a{color:var(--navy);}
+
+  /* ===== TOPBAR ===== */
+  header.topbar{background:linear-gradient(135deg,var(--saffron) 0%,#fff 50%,var(--green) 100%);padding:8px 20px 6px;border-bottom:2px solid var(--navy);position:sticky;top:0;z-index:10;text-align:center;}
+  header.topbar > *{text-align:left;}
+  header.topbar nav.lens{justify-content:center;display:inline-flex;}
+  .brand-row{display:flex;flex-direction:row;align-items:baseline;justify-content:center;gap:10px;flex-wrap:wrap;line-height:1.05;margin-bottom:4px;}
+  .brand{display:inline-block;font-size:1.2rem;font-weight:700;color:var(--navy);text-decoration:none;}
+  .brand:hover{color:var(--navy);text-decoration:none;}
+  .brand .hi{font-family:'Mangal','Nirmala UI',serif;margin-right:6px;color:var(--red);}
+  .tagline{font-size:0.65rem;color:var(--muted);font-weight:500;letter-spacing:0.3px;}
+  nav.lens{margin-top:4px;display:flex;flex-wrap:wrap;gap:2px;align-items:stretch;}
+  nav.lens > .lens-item{position:relative;}
+  nav.lens > .lens-item > a, nav.lens > a{display:inline-block;padding:4px 11px;background:rgba(255,255,255,0.75);border:1.5px solid var(--navy);color:var(--navy);text-decoration:none;border-radius:6px;font-weight:600;font-size:0.8rem;}
+  nav.lens > .lens-item > a:hover, nav.lens > a:hover, nav.lens > .lens-item:hover > a{background:var(--navy);color:#fff;}
+  nav.lens .caret{font-size:0.7rem;margin-left:4px;opacity:0.7;}
+
+  /* ===== MEGA-MENU DROPDOWN ===== */
+  .lens-drop{position:absolute;top:100%;left:0;display:none;background:var(--card);border:1.5px solid var(--navy);border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,0.25);padding:8px;min-width:280px;max-width:520px;max-height:60vh;overflow-y:auto;z-index:20;margin-top:0;}
+  .lens-item:hover .lens-drop, .lens-item:focus-within .lens-drop{display:block;}
+  .lens-item::after{content:"";position:absolute;top:100%;left:0;right:0;height:10px;display:none;}
+  .lens-item:hover::after, .lens-item:focus-within::after{display:block;}
+  .lens-drop .ld-head{font-size:0.7rem;text-transform:uppercase;letter-spacing:0.5px;color:var(--muted);padding:6px 8px;border-bottom:1px solid var(--border);margin-bottom:4px;font-weight:700;display:flex;justify-content:space-between;align-items:center;}
+  .lens-drop .ld-head a{font-size:0.72rem;color:var(--navy);text-decoration:none;font-weight:600;}
+  .lens-drop .ld-head a:hover{text-decoration:underline;}
+  .lens-drop .ld-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:2px;}
+  .lens-drop .ld-grid a{display:flex;justify-content:space-between;align-items:center;gap:6px;padding:5px 9px;font-size:0.8rem;color:var(--ink);text-decoration:none;border-radius:4px;}
+  .lens-drop .ld-grid a:hover{background:var(--tag);color:var(--navy);}
+  .lens-drop .ld-grid a .c{font-size:0.65rem;color:var(--muted);background:var(--tag);padding:1px 6px;border-radius:999px;font-weight:600;}
+  @media (max-width:700px){
+    .lens-drop{position:static;display:block;max-height:none;margin-top:0;border-radius:0;border:none;border-top:1px dashed var(--border);box-shadow:none;}
+  }
+
+  .help{padding:8px 20px;background:#fff7e8;border-bottom:1px solid var(--border);font-size:0.82rem;color:#5a3a00;}
+
+  main{max-width:1180px;margin:0 auto;padding:14px 20px 50px;}
+
+  /* ===== LENS ROUTING via :target ===== */
+  .lens-section{display:none;}
+  .lens-section:target, .lens-section:has(:target){display:block;}
+  body:not(:has(:target)) #h{display:block;}
+
+  details:target, details:has(:target){scroll-margin-top:120px;}
+  details:target > summary, details:has(:target) > summary{background:linear-gradient(90deg,rgba(255,153,51,0.18) 0%,transparent 100%);}
+
+  /* ===== JUMPBAR ===== */
+  .jumpbar{position:sticky;top:0;z-index:8;background:var(--card);border-bottom:1px solid var(--border);padding:6px 8px;margin:-14px -20px 14px;display:flex;gap:4px;overflow-x:auto;white-space:nowrap;}
+  .jumpbar a{flex:0 0 auto;font-size:0.72rem;padding:3px 9px;color:var(--ink);text-decoration:none;border-radius:999px;background:var(--tag);font-weight:600;}
+  .jumpbar a:hover{background:var(--navy);color:#fff;}
+  .jumpbar .jb-label{flex:0 0 auto;font-size:0.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;padding:4px 8px 4px 0;font-weight:700;}
+
+  /* ===== GOV INTRO + FLOWCHART BLOCKS ===== */
+  .gov-intro{background:linear-gradient(135deg,#fff7e8 0%,#e6f0ff 100%);border-left:4px solid var(--saffron);padding:10px 14px;border-radius:6px;margin:8px 0 14px;font-size:0.88rem;line-height:1.55;}
+  .gov-block{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin:14px 0;}
+  .gov-block h3{margin:0 0 6px;color:var(--navy);font-size:1.05rem;display:flex;align-items:center;gap:8px;}
+  .gov-block .lede{font-size:0.85rem;color:var(--muted);margin:0 0 12px;line-height:1.5;}
+  .gov-block svg{display:block;width:100%;height:auto;max-width:100%;background:transparent;}
+  .gov-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(360px,1fr));gap:12px;}
+  .gov-grid .gov-block{margin:0;}
+  .gov-notes{margin-top:10px;font-size:0.82rem;color:var(--muted);line-height:1.5;}
+  .gov-notes strong{color:var(--ink);}
+  .gov-legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;font-size:0.72rem;color:var(--muted);}
+  .gov-legend span{display:inline-flex;align-items:center;gap:5px;}
+  .gov-legend .sw{width:14px;height:14px;border-radius:3px;display:inline-block;border:1px solid var(--border);}
+  .gb-const{fill:#fde7d8;stroke:#c0392b;stroke-width:1.5;}
+  .gb-exec{fill:#e6f0ff;stroke:#0B1B3F;stroke-width:1.5;}
+  .gb-legis{fill:#fff7e8;stroke:#FF9933;stroke-width:1.5;}
+  .gb-judic{fill:#f5f0ff;stroke:#8338EC;stroke-width:1.5;}
+  .gb-state{fill:#e6f7e9;stroke:#138808;stroke-width:1.5;}
+  .gb-people{fill:#fde7d8;stroke:#c0392b;stroke-width:1.5;}
+  .gb-regu{fill:#e6f5f2;stroke:#06A77D;stroke-width:1.5;}
+
+  /* ===== INSIGHT (SWOT + radar) ===== */
+  .insight{background:linear-gradient(135deg,#f8fafc 0%,#fff7e8 100%);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin:8px 12px 12px;}
+  .insight-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:14px;align-items:start;}
+  @media (max-width:760px){.insight-grid{grid-template-columns:1fr;}}
+  .insight-meta{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px;}
+  .insight-meta .im{font-size:0.72rem;background:var(--tag);padding:2px 8px;border-radius:999px;color:var(--ink);}
+  .insight-meta .im strong{color:var(--navy);}
+  .insight h4{margin:6px 0 4px;color:var(--navy);font-size:0.85rem;}
+  .insight p.how{margin:0 0 8px;font-size:0.82rem;line-height:1.5;}
+  .swot{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+  .swot > div{background:var(--card);border:1px solid var(--border);border-left:3px solid;border-radius:6px;padding:8px 10px;}
+  .swot .str{border-left-color:var(--green);}
+  .swot .wkn{border-left-color:var(--red);}
+  .swot .pot{border-left-color:var(--saffron);grid-column:1/-1;}
+  .swot h5{margin:0 0 4px;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.4px;}
+  .swot .str h5{color:var(--green);}
+  .swot .wkn h5{color:var(--red);}
+  .swot .pot h5{color:#7a3a00;}
+  .swot ul{margin:0;padding-left:18px;font-size:0.78rem;line-height:1.45;}
+  .insight svg.radar{width:100%;height:auto;max-width:280px;display:block;margin:0 auto;}
+  .scores-label{font-size:0.7rem;color:var(--muted);text-align:center;margin-top:4px;}
+
+  /* ===== LENS-OVERVIEW (bar chart) ===== */
+  .lens-overview{background:linear-gradient(135deg,#eef2fb 0%,#fff7e8 100%);border:1px solid var(--border);border-radius:10px;padding:14px 18px;margin:8px 0 16px;}
+  .lens-overview .lo-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:18px;align-items:center;}
+  @media (max-width:780px){.lens-overview .lo-grid{grid-template-columns:1fr;}}
+  .lens-overview h3{margin:0 0 6px;color:var(--navy);font-size:0.95rem;}
+  .lens-overview p{margin:0 0 6px;font-size:0.85rem;line-height:1.5;}
+  .lens-overview .lo-rel{margin-top:8px;padding-top:6px;border-top:1px dashed var(--border);font-size:0.78rem;color:var(--muted);}
+  .lens-overview .lo-chart{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:10px;}
+  .lens-overview .lo-chart-title{font-size:0.72rem;text-transform:uppercase;letter-spacing:0.5px;color:var(--muted);font-weight:700;margin-bottom:4px;text-align:center;}
+
+  /* ===== RELMAP ===== */
+  .relmap{background:linear-gradient(135deg,#eef2fb 0%,#e6f7e9 100%);border:1px solid var(--border);border-radius:10px;padding:16px 20px;margin:14px 0;}
+  .relmap h2{margin:0 0 8px;color:var(--navy);}
+  .relmap p{font-size:0.88rem;line-height:1.55;margin:0 0 10px;}
+  .relmap svg.relflow{width:100%;height:auto;max-width:860px;display:block;margin:6px auto;}
+  .relmap svg.relflow text{fill:var(--ink);}
+
+  /* ===== EXPAND/COLLAPSE TOGGLE ===== */
+  .ec-toggle{display:flex;gap:8px;margin:6px 0 12px;align-items:center;flex-wrap:wrap;}
+  .ec-btn{cursor:pointer;font-size:0.78rem;padding:4px 10px;background:var(--card);border:1px solid var(--border);border-radius:6px;color:var(--navy);font-weight:600;font-family:inherit;}
+  .ec-btn:hover{background:var(--navy);color:#fff;}
+  .ec-hint{font-size:0.72rem;color:var(--muted);}
+
+  /* ===== HEADINGS / KPI / DIR ===== */
+  h1{color:var(--navy);font-size:1.3rem;margin:14px 0 6px;border-left:4px solid var(--red);padding-left:10px;}
+  h2{color:var(--navy);font-size:1.05rem;margin:18px 0 8px;}
+  .kpis{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px;margin:10px 0;}
+  @media (max-width:900px){ .kpis{grid-template-columns:repeat(auto-fit,minmax(140px,1fr));} }
+  .kpi{background:var(--card);border:1px solid var(--border);border-left:3px solid var(--red);border-radius:6px;padding:8px 12px;min-height:60px;display:flex;flex-direction:column;justify-content:center;}
+  .kpi .v{font-size:1.15rem;font-weight:700;color:var(--navy);}
+  .kpi .l{font-size:0.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.4px;}
+
+  .dir-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:6px;margin:8px 0 18px;}
+  .dir-tile{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:8px 12px;text-decoration:none;color:var(--ink);font-size:0.85rem;display:flex;justify-content:space-between;align-items:center;gap:8px;}
+  .dir-tile:hover{border-color:var(--navy);background:var(--tag);}
+  .dir-tile .dt-c{font-size:0.7rem;color:var(--muted);background:var(--tag);padding:1px 7px;border-radius:999px;}
+
+  /* ===== DETAILS / BRANCHES / CARDS ===== */
+  details{background:var(--card);border:1px solid var(--border);border-radius:8px;margin:8px 0;}
+  details > summary{cursor:pointer;padding:10px 14px;font-weight:600;color:var(--navy);list-style:none;display:flex;justify-content:space-between;align-items:center;gap:8px;}
+  details > summary::-webkit-details-marker{display:none;}
+  details > summary::before{content:"▸";color:var(--muted);font-size:0.85rem;margin-right:6px;}
+  details[open] > summary::before{content:"▾";}
+  details > summary .ct{font-size:0.72rem;color:var(--muted);background:var(--tag);padding:2px 9px;border-radius:999px;font-weight:600;}
+  details details{background:transparent;border:none;border-left:2px solid var(--border);margin:6px 0 6px 8px;border-radius:0;}
+  details details > summary{padding:6px 10px;font-weight:500;font-size:0.88rem;color:var(--ink);}
+  details details > summary .ct{background:#fff3e0;color:#7a3a00;}
+  .blurb{font-size:0.78rem;color:var(--muted);margin:0 14px 6px;}
+
+  .state-group:target, .min-group:target, .body-group:target{outline:2px solid var(--saffron);outline-offset:4px;border-radius:8px;}
+  .su-type{display:inline-block;font-size:0.65rem;font-weight:700;padding:2px 8px;border-radius:999px;margin-left:8px;letter-spacing:0.3px;text-transform:uppercase;}
+  .su-type.st{background:rgba(19,136,8,0.14);color:var(--green);border:1px solid rgba(19,136,8,0.45);}
+  .su-type.ut{background:rgba(255,153,51,0.14);color:#a55300;border:1px solid rgba(255,153,51,0.5);}
+
+  .card-list{padding:6px 10px 10px;display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:8px;align-items:start;}
+  .card{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:10px 12px;}
+  .card h3{margin:0 0 4px;font-size:0.95rem;line-height:1.3;}
+  .card h3 a{color:var(--ink);text-decoration:none;}
+  .card h3 a:hover{color:var(--navy);text-decoration:underline;}
+  .card .host{font-size:0.72rem;color:var(--muted);margin-bottom:6px;display:flex;flex-wrap:wrap;gap:6px;align-items:center;}
+  .card .hn{font-family:'Consolas','Monaco',monospace;}
+  .badge{font-size:0.65rem;padding:1px 6px;border-radius:4px;font-weight:600;}
+  .badge.official{background:#e6f7e9;color:var(--green);}
+  .badge.fresh{background:#e6f0ff;color:var(--navy);}
+  .badge.stale{background:#fdecea;color:var(--red);}
+  .lv{font-size:0.7rem;color:var(--muted);}
+  .desc{font-size:0.82rem;color:var(--muted);margin:4px 0;line-height:1.45;}
+  .meta{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px;}
+  .mchip{font-size:0.7rem;background:var(--tag);padding:1px 7px;border-radius:4px;color:var(--ink);}
+  .mchip.s{background:#fff3e0;color:#7a3a00;}
+  .mchip.m{background:#e6f0ff;color:var(--navy);}
+  .mchip.v{background:#f5f0ff;color:#5e35b1;}
+  .tags{display:flex;flex-wrap:wrap;gap:3px;margin-top:6px;}
+  .tag{font-size:0.65rem;background:var(--tag);padding:1px 6px;border-radius:3px;color:var(--muted);}
+  .children{margin-top:6px;background:transparent;border:none;border-left:none;}
+  .children > summary{padding:4px 0;font-size:0.78rem;color:var(--muted);font-weight:500;}
+  .children ul{margin:4px 0 0 18px;padding:0;font-size:0.78rem;}
+  .children li{margin-bottom:3px;}
+
+  footer{max-width:1180px;margin:30px auto 20px;padding:14px 20px;border-top:1px solid var(--border);font-size:0.78rem;color:var(--muted);}
+
+  /* ===== NIGHT-MODE TOGGLE (pure CSS, no JS) ===== */
+  #nightmode{position:fixed;top:0;left:0;opacity:0;pointer-events:none;width:0;height:0;clip:rect(0,0,0,0);}
+  .nm-toggle{position:absolute;top:8px;right:14px;z-index:11;display:inline-flex;align-items:center;gap:5px;cursor:pointer;font-size:0.72rem;font-weight:600;padding:4px 10px;background:rgba(255,255,255,0.85);border:1.5px solid var(--navy);color:var(--navy);border-radius:999px;user-select:none;line-height:1;}
+  .nm-toggle:hover{background:var(--navy);color:#fff;}
+  .nm-toggle .nm-ico-dark,.nm-toggle .nm-lbl-dark{display:inline;}
+  .nm-toggle .nm-ico-light,.nm-toggle .nm-lbl-light{display:none;}
+  @media (max-width:520px){ .nm-toggle .nm-lbl-dark,.nm-toggle .nm-lbl-light{display:none;} .nm-toggle{padding:4px 8px;} }
+
+  :root:has(#nightmode:checked){
+    --bg:#0e0f12; --card:#16181d; --ink:#e6e6e6; --muted:#9aa0a8;
+    --border:#262932; --tag:#1f232b; --navy:#7aa2ff;
+  }
+  :root:has(#nightmode:checked) header.topbar{background:linear-gradient(135deg,#5d3a14 0%,#1a1a1a 50%,#0f3a1c 100%);}
+  :root:has(#nightmode:checked) nav.lens > .lens-item > a,
+  :root:has(#nightmode:checked) nav.lens > a{background:rgba(255,255,255,0.08);}
+  :root:has(#nightmode:checked) .nm-toggle{background:rgba(255,255,255,0.08);}
+  :root:has(#nightmode:checked) .nm-toggle .nm-ico-dark,
+  :root:has(#nightmode:checked) .nm-toggle .nm-lbl-dark{display:none;}
+  :root:has(#nightmode:checked) .nm-toggle .nm-ico-light,
+  :root:has(#nightmode:checked) .nm-toggle .nm-lbl-light{display:inline;}
+  :root:has(#nightmode:checked) .help{background:#2a2316;color:#d9b779;}
+  :root:has(#nightmode:checked) .gov-intro{background:linear-gradient(135deg,#2a2316 0%,#172238 100%);}
+  :root:has(#nightmode:checked) .insight{background:linear-gradient(135deg,#16181d 0%,#2a2316 100%);}
+  :root:has(#nightmode:checked) .lens-overview{background:linear-gradient(135deg,#11192a 0%,#2a2316 100%);}
+  :root:has(#nightmode:checked) .relmap{background:linear-gradient(135deg,#11192a 0%,#0e2a14 100%);}
+  :root:has(#nightmode:checked) .badge.official{background:#0e2a14;color:#9fd1a8;}
+  :root:has(#nightmode:checked) .badge.fresh{background:#172238;color:#8aa6e2;}
+  :root:has(#nightmode:checked) .badge.stale{background:#3a1614;color:#e29a8a;}
+  :root:has(#nightmode:checked) .mchip.s{background:#3a2a14;color:#d9b779;}
+  :root:has(#nightmode:checked) .mchip.m{background:#172238;color:#8aa6e2;}
+  :root:has(#nightmode:checked) .mchip.v{background:#241a3a;color:#b39ad9;}
+  :root:has(#nightmode:checked) details details > summary .ct{background:#3a2a14;color:#d9b779;}
+  :root:has(#nightmode:checked) .swot .pot h5{color:#d9b779;}
+  :root:has(#nightmode:checked) .su-type.ut{color:#ffb866;}
+  :root:has(#nightmode:checked) .gb-const{fill:#3a2014;stroke:#e29a8a;}
+  :root:has(#nightmode:checked) .gb-exec{fill:#152238;stroke:#8aa6e2;}
+  :root:has(#nightmode:checked) .gb-legis{fill:#2a2316;stroke:#d9b779;}
+  :root:has(#nightmode:checked) .gb-judic{fill:#241a3a;stroke:#b39ad9;}
+  :root:has(#nightmode:checked) .gb-state{fill:#0e2a14;stroke:#9fd1a8;}
+  :root:has(#nightmode:checked) .gb-people{fill:#3a2014;stroke:#e29a8a;}
+  :root:has(#nightmode:checked) .gb-regu{fill:#0f2a24;stroke:#7fd1bf;}
+
+  /* ===== RESPONSIVE + HAMBURGER ===== */
+  img,iframe,svg{max-width:100%;height:auto;}
+  #navtoggle{position:fixed;top:0;left:0;opacity:0;pointer-events:none;width:0;height:0;clip:rect(0,0,0,0);}
+  .nav-burger{display:none;}
+  .nav-burger .burger-close{display:none;}
+  :root:has(#navtoggle:checked) .nav-burger .burger-open{display:none;}
+  :root:has(#navtoggle:checked) .nav-burger .burger-close{display:inline;}
+
+  @media (max-width:768px){
+    html{scroll-padding-top:110px;}
+    body{font-size:14px;overflow-x:hidden;}
+    header.topbar{padding:6px 8px;text-align:left;display:grid;grid-template-columns:auto 1fr auto;grid-template-areas:"burger brand toggle";gap:6px 8px;align-items:center;position:sticky;}
+    .nav-burger{grid-area:burger;position:static;display:inline-flex;align-items:center;justify-content:center;font-size:1rem;line-height:1;padding:6px 10px;min-width:40px;background:rgba(255,255,255,0.85);border:1.5px solid var(--navy);color:var(--navy);border-radius:8px;cursor:pointer;user-select:none;font-weight:700;}
+    :root:has(#nightmode:checked) .nav-burger{background:rgba(255,255,255,0.08);}
+    .nm-toggle{grid-area:toggle;position:static;top:auto;right:auto;}
+    .brand-row{grid-area:brand;justify-content:flex-start;gap:6px;margin-bottom:0;line-height:1.1;min-width:0;}
+    .brand{font-size:1.05rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+    .tagline{display:none;}
+    header.topbar nav.lens{display:none;}
+    :root:has(#navtoggle:checked) header.topbar nav.lens{display:flex;flex-direction:column;align-items:stretch;position:absolute;left:0;right:0;top:100%;width:100%;max-height:75vh;overflow-y:auto;flex-wrap:nowrap;gap:4px;padding:8px 10px 10px;margin:0;background:var(--card);border-top:1px solid var(--border);border-bottom:1px solid var(--border);box-shadow:0 10px 24px rgba(0,0,0,0.35);z-index:30;}
+    :root:has(#navtoggle:checked) header.topbar nav.lens > .lens-item,
+    :root:has(#navtoggle:checked) header.topbar nav.lens > a{width:100%;min-width:0;flex:0 0 auto;}
+    :root:has(#navtoggle:checked) header.topbar nav.lens > .lens-item > a,
+    :root:has(#navtoggle:checked) header.topbar nav.lens > a{display:block;width:100%;text-align:left;padding:9px 12px;font-size:0.85rem;}
+    .lens-drop,.lens-item:focus-within .lens-drop,.lens-item:hover .lens-drop{display:none !important;}
+    nav.lens .caret{display:none;}
+    main{padding:12px 14px 42px;max-width:100%;}
+    footer{padding:12px 14px;max-width:100%;}
+    .help{padding:8px 14px;font-size:0.78rem;}
+    .jumpbar{margin:-12px -14px 12px;padding:6px 10px;}
+    .kpis{grid-template-columns:repeat(auto-fit,minmax(130px,1fr));}
+    .dir-grid{grid-template-columns:repeat(auto-fit,minmax(150px,1fr));}
+    .card-list{grid-template-columns:1fr;padding:6px 8px 10px;}
+    .gov-grid,.insight-grid,.lens-overview .lo-grid{grid-template-columns:1fr;}
+    .ec-btn{min-height:40px;padding:8px 12px;}
+    .nm-toggle{font-size:0.7rem;padding:4px 8px;}
+  }
+  @media (max-width:480px){
+    html{scroll-padding-top:96px;}
+    .brand{font-size:1rem;}
+    h1{font-size:1.15rem;}
+    h2{font-size:1rem;}
+    .dir-grid,.kpis,.swot{grid-template-columns:1fr;}
+    .card{padding:9px 10px;}
+  }
+
+  /* ===== BIHAR EXTENSIONS — party pills · tables · branch details ===== */
+  :root{
+    --bjp:#FF9933; --jdu:#138808; --rjd:#2E7D32; --inc:#1E88E5;
+    --ljprv:#7C3AED; --hams:#0EA5E9; --rlm:#8B5CF6; --cpiml:#DC2626;
+    --aimim:#0F766E; --ind:#6B7280; --ainrc:#7C3AED; --dmk:#111827; --aiadmk:#16A34A;
+  }
+  .pill{display:inline-block;padding:1px 7px;border-radius:999px;font-size:0.65rem;font-weight:700;color:#fff;letter-spacing:0.3px;margin-left:4px;vertical-align:middle;}
+  .p-BJP,.p-bjp{background:var(--bjp);color:#1a1a1a;}
+  .p-JDU{background:var(--jdu);} .p-RJD{background:var(--rjd);} .p-INC,.p-inc{background:var(--inc);}
+  .p-LJPRV{background:var(--ljprv);} .p-HAMS{background:var(--hams);} .p-RLM{background:var(--rlm);}
+  .p-CPIML{background:var(--cpiml);} .p-AIMIM{background:var(--aimim);} .p-IND,.p-ind{background:var(--ind);}
+  .p-AINRC,.p-ainrc{background:var(--ainrc);} .p-DMK,.p-dmk{background:var(--dmk);} .p-AIADMK,.p-aiadmk{background:var(--aiadmk);}
+  .legend{display:flex;flex-wrap:wrap;gap:8px;font-size:0.72rem;margin:8px 0 14px;color:var(--muted);}
+  .legend > span{display:inline-flex;align-items:center;gap:2px;}
+
+  table.bihar{width:100%;border-collapse:collapse;font-size:0.84rem;background:var(--card);border:1px solid var(--border);border-radius:8px;overflow:hidden;margin:8px 0 14px;}
+  table.bihar th, table.bihar td{padding:7px 10px;text-align:left;border-bottom:1px solid var(--border);}
+  table.bihar th{background:var(--tag);font-weight:700;color:var(--navy);font-size:0.74rem;text-transform:uppercase;letter-spacing:0.4px;}
+  table.bihar tr:last-child td{border-bottom:none;}
+  table.bihar td.r{text-align:right;font-variant-numeric:tabular-nums;}
+  table.bihar caption{caption-side:bottom;font-size:0.72rem;color:var(--muted);padding-top:6px;text-align:left;}
+  :root:has(#nightmode:checked) table.bihar th{background:#1f232b;color:#9ab3ff;}
+
+  details.branch{background:var(--card);border:1px solid var(--border);border-radius:8px;margin:10px 0;}
+  details.branch > summary{padding:10px 14px;cursor:pointer;font-weight:700;color:var(--navy);font-size:0.95rem;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:8px;}
+  details.branch > summary::-webkit-details-marker{display:none;}
+  details.branch > summary::before{content:"▸ ";color:var(--saffron);}
+  details.branch[open] > summary::before{content:"▾ ";}
+  details.branch > .b-body{padding:6px 14px 14px;}
+  details.branch > table.bihar{margin:0 14px 14px;width:calc(100% - 28px);}
+  details.branch p.verify{font-size:0.7rem;color:var(--muted);font-style:italic;padding:0 14px 10px;margin:0;}
+
+  .role-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:10px 12px;font-size:0.85rem;}
+  .role-card .role{font-size:0.68rem;text-transform:uppercase;letter-spacing:0.5px;color:var(--muted);font-weight:700;}
+  .role-card .name{font-weight:700;color:var(--ink);margin:2px 0;}
+  .role-card .meta{font-size:0.75rem;color:var(--muted);}
+  .role-card .meta a{font-size:0.75rem;}
+  .role-grid{display:grid;gap:8px;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));margin:6px 0 12px;}
+
+  .callout{background:#fff7e8;border-left:4px solid var(--saffron);padding:10px 14px;border-radius:6px;margin:14px 0;font-size:0.86rem;color:#5a3a00;}
+  .callout.warn{background:#fdecea;border-left-color:var(--red);color:#7a1b13;}
+  .callout.ok{background:#e8f5e9;border-left-color:var(--green);color:#1b4d20;}
+  :root:has(#nightmode:checked) .callout{background:#2a2316;color:#d9b779;}
+  :root:has(#nightmode:checked) .callout.warn{background:#2a1715;color:#e8a097;}
+  :root:has(#nightmode:checked) .callout.ok{background:#142a17;color:#a7d9aa;}
+
+  h3.grp-h{font-size:1rem;color:var(--navy);margin:18px 0 6px;border-left:4px solid var(--green);padding-left:8px;}
+  .sec-sub{color:var(--muted);font-size:0.86rem;margin:0 0 14px;}
+  .kpi .sub{font-size:0.7rem;color:var(--muted);margin-top:2px;line-height:1.3;}
+
+  /* ===== PRINT ===== */
+  @media print{
+    header.topbar,.help,.jumpbar,nav.lens,.lens-drop,footer{display:none !important;}
+    .lens-section,.lens-section:target{display:block !important;}
+    details,details[open]{display:block !important;}
+    details > *{display:revert !important;}
+    details > summary{font-weight:700;color:#000;padding:6px 0;border-bottom:1px solid #999;cursor:default;}
+    details > summary::before{content:"" !important;}
+    .card{break-inside:avoid;border:1px solid #ccc;}
+    .card a[href]::after{content:" — " attr(href);font-size:0.7em;color:#555;}
+    body{background:#fff;color:#000;font-size:11pt;}
+    a{color:#000;text-decoration:none;}
+  }
+</style>
+</head>
+<body>
+
+<!-- Hidden checkboxes drive night-mode and mobile nav with no JS -->
+<input type="checkbox" id="nightmode" aria-label="Toggle night mode" tabindex="-1">
+<input type="checkbox" id="navtoggle" aria-label="Toggle navigation menu" tabindex="-1">
+
+<header class="topbar">
+  <label for="navtoggle" class="nav-burger" title="Menu"><span class="burger-open">☰</span><span class="burger-close">✕</span></label>
+  <label for="nightmode" class="nm-toggle" title="Toggle night mode (no JavaScript)">
+    <span class="nm-ico-dark" aria-hidden="true">🌙</span><span class="nm-lbl-dark">Night</span>
+    <span class="nm-ico-light" aria-hidden="true">☀</span><span class="nm-lbl-light">Day</span>
+  </label>
+  <div class="brand-row">
+    <a class="brand" href="#h"><span class="hi">पु</span>Puducherry Shasan</a>
+    <span class="tagline">💡 Transparency experiment · Centre → LG → Cabinet → Legislature → District → Panchayat → Ward</span>
+  </div>
+  <nav class="lens">
+    <a href="#h">🏠 Home</a>
+    <a href="#how">🛠 How it works</a>
+    <a href="#centre">🇮🇳 Puducherry @ Centre</a>
+    <a href="#exec">🏛 UT Executive</a>
+    <div class="lens-item">
+      <a href="#leg">🗳 Legislature <span class="caret">▾</span></a>
+      <div class="lens-drop">
+        <div class="ld-head"><span>Legislature</span><a href="#leg">View lens →</a></div>
+        <div class="ld-grid">
+          <a href="#leg-vs">Vidhan Sabha<span class="c">33</span></a>
+          <a href="#leg-nom">Nominated MLAs<span class="c">3</span></a>
+          <a href="#leg-off">Office-bearers<span class="c">4</span></a>
+        </div>
+      </div>
+    </div>
+    <a href="#judic">⚖ Judiciary</a>
+    <a href="#dist">📍 Districts (4)</a>
+    <a href="#pri">🏙 Local Bodies</a>
+    <a href="#bodies">📊 Statutory Bodies</a>
+    <a href="#scope">📑 Scope memo</a>
+  </nav>
+</header>
+
+
+<main>
+
+
+
+<!-- =========================== HOME =========================== -->
+<section id="h" class="lens-section">
+  <h1>Puducherry (UT)'s Governance Chain — at a Glance</h1>
+  <p class="sec-sub">A Union Territory with a Legislative Assembly under Article 239A: elected ministers govern transferred subjects, while the Lieutenant Governor remains the Union's constitutional channel.</p>
+
+  <h2>KPI tiles — by layer</h2>
+  <div class="kpis">
+    <div class="kpi"><div class="v">0</div><div class="l">Union ministers</div><div class="sub">No Puducherry MP in Council snapshot</div></div>
+    <div class="kpi"><div class="v">1</div><div class="l">Lok Sabha MP</div><div class="sub">Single UT constituency</div></div>
+    <div class="kpi"><div class="v">1</div><div class="l">Rajya Sabha MP</div><div class="sub">Elected by MLAs</div></div>
+    <div class="kpi"><div class="v">CM + LG</div><div class="l">Dual executive</div><div class="sub">N. Rangasamy · K. Kailashnathan</div></div>
+    <div class="kpi"><div class="v">33</div><div class="l">Assembly seats</div><div class="sub">30 elected + 3 nominated</div></div>
+    <div class="kpi"><div class="v">17</div><div class="l">Majority mark</div><div class="sub">Effective House strength 33</div></div>
+    <div class="kpi"><div class="v">0</div><div class="l">Vidhan Parishad</div><div class="sub">No Legislative Council</div></div>
+    <div class="kpi"><div class="v">4</div><div class="l">Districts</div><div class="sub">Non-contiguous UT</div></div>
+    <div class="kpi"><div class="v">3</div><div class="l">Neighbouring states</div><div class="sub">TN · Kerala · Andhra Pradesh</div></div>
+    <div class="kpi"><div class="v">5</div><div class="l">Municipal bodies</div><div class="sub">2 municipalities + 3 commune panchayats</div></div>
+    <div class="kpi"><div class="v">108</div><div class="l">Village panchayats</div><div class="sub">Live PR register controls detail</div></div>
+    <div class="kpi"><div class="v">239A</div><div class="l">Constitutional base</div><div class="sub">UT legislature powers</div></div>
+  </div>
+
+  <h2>Pick a lens</h2>
+  <div class="dir-grid">
+    <a class="dir-tile" href="#centre" style="border-left:3px solid var(--saffron);">🇮🇳 Puducherry @ Centre<span class="dt-c">2 MPs</span></a>
+    <a class="dir-tile" href="#exec" style="border-left:3px solid var(--green);">🏛 UT Executive<span class="dt-c">CM + LG</span></a>
+    <a class="dir-tile" href="#leg" style="border-left:3px solid var(--navy);">🗳 Legislative Assembly<span class="dt-c">33</span></a>
+    <a class="dir-tile" href="#judic" style="border-left:3px solid #8338EC;">⚖ Judiciary<span class="dt-c">Madras HC</span></a>
+    <a class="dir-tile" href="#dist" style="border-left:3px solid var(--red);">📍 Districts<span class="dt-c">4</span></a>
+    <a class="dir-tile" href="#pri" style="border-left:3px solid var(--green);">🏙 Local Bodies<span class="dt-c">urban + rural</span></a>
+    <a class="dir-tile" href="#bodies" style="border-left:3px solid #06A77D;">📊 Statutory Bodies<span class="dt-c">8+</span></a>
+    <a class="dir-tile" href="#scope" style="border-left:3px solid var(--muted);">📑 Scope memo<span class="dt-c">read</span></a>
+  </div>
+
+  <div class="legend">
+    <span><span class="pill p-AINRC">AINRC</span> All India N.R. Congress</span>
+    <span><span class="pill p-BJP">BJP</span> Bharatiya Janata Party</span>
+    <span><span class="pill p-DMK">DMK</span> Dravida Munnetra Kazhagam</span>
+    <span><span class="pill p-INC">INC</span> Indian National Congress</span>
+    <span><span class="pill p-AIADMK">AIADMK</span> AIADMK</span>
+    <span><span class="pill p-IND">IND</span> Independent</span>
+  </div>
+
+  <h2>Relmap — how the chain connects</h2>
+  <div class="relmap">
+    <h2>🔗 Union/LG → Elected UT Government → District/Region → Local Body → Ward</h2>
+    <p>Puducherry is smaller than Delhi but structurally similar as a UT-with-legislature. Article 239A gives an elected Assembly and ministry, while the LG remains the Union's administrator and exercises statutory discretion where law requires.</p>
+    <svg viewBox="0 0 900 320" xmlns="http://www.w3.org/2000/svg" class="relflow" role="img" aria-label="Puducherry governance chain">
+      <defs><marker id="bArr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#888"/></marker></defs>
+      <rect x="330" y="10" width="240" height="44" rx="6" class="gb-const"/><text x="450" y="32" text-anchor="middle" font-size="12" font-weight="700">🇮🇳 Union / LG track</text><text x="450" y="46" text-anchor="middle" font-size="10" fill="#666">Article 239A · reserved/discretionary powers</text>
+      <rect x="330" y="90" width="240" height="44" rx="6" class="gb-exec"/><text x="450" y="112" text-anchor="middle" font-size="12" font-weight="700">🏛 Elected UT Government</text><text x="450" y="126" text-anchor="middle" font-size="10" fill="#666">CM + Council · 33-member Assembly</text>
+      <rect x="30" y="170" width="190" height="44" rx="6" class="gb-state"/><text x="125" y="192" text-anchor="middle" font-size="12" font-weight="700">📍 District/region (4)</text><text x="125" y="206" text-anchor="middle" font-size="10" fill="#666">Puducherry · Karaikal · Mahe · Yanam</text>
+      <rect x="245" y="170" width="190" height="44" rx="6" class="gb-state"/><text x="340" y="192" text-anchor="middle" font-size="12" font-weight="700">🏙 Municipal/commune</text><text x="340" y="206" text-anchor="middle" font-size="10" fill="#666">urban + rural local government</text>
+      <rect x="460" y="170" width="190" height="44" rx="6" class="gb-regu"/><text x="555" y="192" text-anchor="middle" font-size="12" font-weight="700">🌾 Village panchayat</text><text x="555" y="206" text-anchor="middle" font-size="10" fill="#666">live PR register</text>
+      <rect x="675" y="170" width="195" height="44" rx="6" class="gb-legis"/><text x="772" y="192" text-anchor="middle" font-size="12" font-weight="700">🏘 Ward / councillor</text><text x="772" y="206" text-anchor="middle" font-size="10" fill="#666">local elected representative</text>
+      <line x1="450" y1="54" x2="450" y2="86" stroke="#888" stroke-width="1.5" marker-end="url(#bArr)"/><line x1="450" y1="134" x2="125" y2="166" stroke="#888" stroke-width="1.5" marker-end="url(#bArr)"/><line x1="450" y1="134" x2="340" y2="166" stroke="#888" stroke-width="1.5" marker-end="url(#bArr)"/><line x1="450" y1="134" x2="555" y2="166" stroke="#888" stroke-width="1.5" marker-end="url(#bArr)"/><line x1="450" y1="134" x2="772" y2="166" stroke="#888" stroke-width="1.5" marker-end="url(#bArr)"/>
+      <rect x="340" y="260" width="220" height="40" rx="20" fill="#138808" opacity="0.18" stroke="#138808" stroke-width="1.5"/><text x="450" y="285" text-anchor="middle" font-size="13" font-weight="700">👥 Resident</text>
+    </svg>
+    <p style="font-size:0.82rem;color:var(--muted);"><strong>Reading it:</strong> the same UT government administers four separated enclaves: Puducherry and Karaikal in Tamil Nadu surroundings, Mahe in Kerala, and Yanam in Andhra Pradesh.</p>
+  </div>
+</section>
+
+<!-- =========================== HOW IT WORKS =========================== -->
+<section id="how" class="lens-section">
+  <h1>🛠 How this catalogue works</h1>
+  <p class="sec-sub">A compact visual map of Puducherry's UT-with-legislature stack and the rule deciding what is named inline vs linked to live registers.</p>
+  <div class="lens-overview"><div class="lo-grid"><div>
+    <h3>① The Puducherry stack</h3>
+    <p>Puducherry has a 33-member Legislative Assembly under Article 239A, a Chief Minister and Council of Ministers, and a Lieutenant Governor. Its geography is unusual: four small enclaves are administered as one UT.</p>
+    <p>Cards use the same colour key as other state pages: 🟢 named inline · 🟠 tally + link · 🔴 live register only.</p>
+  </div><div class="lo-chart"><div class="lo-chart-title">Puducherry governance layers</div>
+    <svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Puducherry governance layers"><g font-family="inherit" font-size="9">
+      <polygon points="160,15 200,15 220,45 140,45" fill="var(--green)" opacity="0.9"/><text x="180" y="33" text-anchor="middle" fill="#fff" font-weight="600">Union/LG · 1</text>
+      <polygon points="140,48 220,48 240,78 120,78" fill="var(--green)" opacity="0.85"/><text x="180" y="66" text-anchor="middle" fill="#fff" font-weight="600">MPs (LS+RS) · 2</text>
+      <polygon points="120,81 240,81 260,111 100,111" fill="var(--green)" opacity="0.8"/><text x="180" y="99" text-anchor="middle" fill="#fff" font-weight="600">Council of Ministers</text>
+      <polygon points="100,114 260,114 280,144 80,144" fill="var(--saffron)" opacity="0.85"/><text x="180" y="132" text-anchor="middle" fill="#fff" font-weight="600">Assembly · 33</text>
+      <polygon points="80,147 280,147 300,177 60,177" fill="var(--saffron)" opacity="0.8"/><text x="180" y="165" text-anchor="middle" fill="#fff" font-weight="600">Districts · 4</text>
+      <polygon points="60,180 300,180 320,205 40,205" fill="var(--red)" opacity="0.75"/><text x="180" y="197" text-anchor="middle" fill="#fff" font-weight="600">Local bodies · live rosters</text>
+      <polygon points="40,208 320,208 340,235 20,235" fill="var(--red)" opacity="0.85"/><text x="180" y="225" text-anchor="middle" fill="#fff" font-weight="600">Wards · volatile</text>
+    </g></svg>
+  </div></div></div>
+  <h3 class="grp-h">② Research rule</h3>
+  <div class="callout ok"><strong>Inline</strong> small stable rosters (MPs, CM/LG, ministers, office-bearers, districts). <strong>Link out</strong> live rosters where transfers/elections make names volatile (all MLAs, local councillors, line officers).</div>
+  <h3 class="grp-h">③ Special UT cautions</h3>
+  <div class="callout warn"><strong>Do not read Puducherry like an ordinary state.</strong> The Assembly exists under Article 239A; the LG can reserve matters for the President and the Union retains a stronger channel than in states. Unlike Delhi's Article 239AA text, Puducherry does not have the same explicit Land/Police/Public Order carve-out, but central control and LG discretion have repeatedly mattered in practice.</div>
+</section>
+
+<!-- =========================== CENTRE =========================== -->
+<section id="centre" class="lens-section">
+<!-- BEGIN: CENTRE — Union ministers + 1 Lok Sabha MP + 1 Rajya Sabha MP; Puducherry-specific roster. -->
+  <h1>🇮🇳 Puducherry (UT)'s Representation at the Union</h1>
+  <p class="sec-sub">One Lok Sabha MP, one Rajya Sabha MP, and no Union Council minister from Puducherry in this point-in-time snapshot.</p>
+  <details class="branch" open><summary><span>Union Council of Ministers from Puducherry</span><span class="ct">0</span></summary><div class="b-body"><p>No Puducherry MP is listed as a member of the Union Council of Ministers in the current Government of India roster used for this snapshot.</p></div></details>
+  <details class="branch" open><summary><span>Lok Sabha — Puducherry constituency</span><span class="ct">18ᵗʰ LS · 2024</span></summary><table class="bihar"><thead><tr><th>#</th><th>Constituency</th><th>Member of Parliament</th><th>Party</th></tr></thead><tbody><tr><td class="r">1</td><td>Puducherry</td><td>V. Vaithilingam</td><td><span class="pill p-INC">INC</span></td></tr></tbody><caption>Count reconciles with JSON: 1 Lok Sabha seat.</caption></table></details>
+  <details class="branch" open><summary><span>Rajya Sabha — Puducherry</span><span class="ct">1</span></summary><table class="bihar"><thead><tr><th>#</th><th>Member</th><th>Party</th><th>Term note</th></tr></thead><tbody><tr><td class="r">1</td><td>S. Selvaganabathy</td><td><span class="pill p-BJP">BJP</span></td><td>Current RS member listed for Puducherry</td></tr></tbody><caption>Count reconciles with JSON: 1 Rajya Sabha seat.</caption></table></details>
+  <p class="src">Sources: Puducherry Government MP roster — <a href="https://www.py.gov.in/mps" target="_blank" rel="noopener">py.gov.in/mps</a>; Parliament member directories — <a href="https://sansad.in/ls/members" target="_blank" rel="noopener">sansad.in/ls</a>, <a href="https://sansad.in/rs/member" target="_blank" rel="noopener">sansad.in/rs</a>; Union Council roster — <a href="https://www.india.gov.in/my-government/whos-who/council-ministers" target="_blank" rel="noopener">india.gov.in</a>.</p><!-- END: CENTRE -->
+
+</section>
+
+<!-- =========================== EXECUTIVE =========================== -->
+<section id="exec" class="lens-section">
+<!-- BEGIN: EXEC — CM + senior BJP minister/deputy-CM caveat + LG + cabinet portfolio table + apex civil/police/election service. -->
+  <h1>🏛 UT Executive — N. Rangasamy Ministry</h1>
+  <p class="sec-sub">Puducherry's elected ministry runs transferred departments; the Lieutenant Governor is the Union-appointed administrator for the UT.</p>
+  <h3 class="grp-h">Triumvirate</h3>
+  <div class="role-grid">
+    <div class="role-card"><div class="role">Chief Minister</div><div class="name">N. Rangasamy<span class="pill p-AINRC">AINRC</span></div><div class="meta">Chief Minister; portfolio list maintained by Government of Puducherry</div></div>
+    <div class="role-card"><div class="role">Senior Minister / Deputy CM watch</div><div class="name">A. Namassivayam<span class="pill p-BJP">BJP</span></div><div class="meta">Home/Education/Industries portfolio holder in official rosters; note: verify any Deputy-CM designation against the latest gazette/official order before reuse</div></div>
+    <div class="role-card"><div class="role">Lieutenant Governor</div><div class="name">K. Kailashnathan</div><div class="meta">Lieutenant Governor of Puducherry; Union-appointed administrator</div></div>
+  </div>
+  <div class="callout warn"><strong>LG-CM friction history:</strong> Puducherry's Article 239A design has produced recurring Centre-vs-elected-government disputes, most visibly during Lt Governor Kiran Bedi's tenure. Court rulings and later practice confirm that day-to-day administration is not identical to an ordinary state model.</div>
+  <h3 class="grp-h">Council of Ministers — portfolio map</h3>
+  <table class="bihar"><thead><tr><th>Minister</th><th>Party</th><th>Portfolio notes</th></tr></thead><tbody>
+    <tr><td>N. Rangasamy</td><td><span class="pill p-AINRC">AINRC</span></td><td>Chief Minister; finance/revenue/local administration and unallocated subjects per official portfolio publications</td></tr>
+    <tr><td>A. Namassivayam</td><td><span class="pill p-BJP">BJP</span></td><td>Home; Electricity; Industries; Education; Sports and related departments</td></tr>
+    <tr><td>K. Lakshminarayanan</td><td><span class="pill p-AINRC">AINRC</span></td><td>Public Works and allied infrastructure/local portfolios in the current ministry roster</td></tr>
+    <tr><td>C. Djeacoumar</td><td><span class="pill p-AINRC">AINRC</span></td><td>Agriculture, Animal Husbandry and welfare-linked portfolios in the ministry roster</td></tr>
+    <tr><td>A. K. Sai J. Saravanan Kumar</td><td><span class="pill p-BJP">BJP</span></td><td>Civil supplies / welfare / law-linked portfolios as notified in official rosters</td></tr>
+  </tbody><caption>Portfolio labels are a point-in-time digest; use the official Council of Ministers page for latest notifications.</caption></table>
+  <h3 class="grp-h">Apex Civil, Police and Election Service</h3>
+  <div class="role-grid">
+    <div class="role-card"><div class="role">Chief Secretary / CVO</div><div class="name">Dr Sharat Chauhan, IAS</div><div class="meta"><a href="https://www.py.gov.in/secretaries" target="_blank" rel="noopener">Official secretaries roster</a></div></div>
+    <div class="role-card"><div class="role">DGP, Puducherry</div><div class="name">Shalini Singh, IPS</div><div class="meta">Police chief; verify live transfer orders through Puducherry Police / Home Department</div></div>
+    <div class="role-card"><div class="role">Chief Electoral Officer</div><div class="name">P. Jawahar, IAS</div><div class="meta"><a href="https://www.py.gov.in/secretaries" target="_blank" rel="noopener">py.gov.in secretaries roster</a></div></div>
+  </div>
+  <p class="src">Sources: Government of Puducherry — <a href="https://www.py.gov.in/council-ministers" target="_blank" rel="noopener">Council of Ministers</a>, <a href="https://www.py.gov.in/secretaries" target="_blank" rel="noopener">Secretaries</a>; LG/Raj Nivas official communications; Puducherry Police and Home Department transfer/appointment updates; Article 239A via India Code; Kiran Bedi-era LG/CM litigation and Supreme Court/Madras High Court coverage.</p><!-- END: EXEC -->
+
+</section>
+
+<!-- =========================== LEGISLATURE =========================== -->
+<section id="leg" class="lens-section">
+<!-- BEGIN: LEG — Vidhan Sabha tally + nominated MLAs status + officers; no Vidhan Parishad. -->
+  <h1>🗳 Puducherry Legislative Assembly — 33 seats under Article 239A</h1>
+  <div class="jumpbar"><span class="jb-label">Jump to</span><a href="#leg-vs">Vidhan Sabha</a><a href="#leg-nom">Nominated MLAs</a><a href="#leg-off">Office-bearers</a><a href="#leg-split">Power split</a></div>
+  <h3 class="grp-h" id="leg-vs">Vidhan Sabha — 30 elected + 3 nominated; majority mark 17</h3>
+  <table class="bihar"><thead><tr><th>Party / group</th><th class="r">Seats</th><th>Notes</th></tr></thead><tbody>
+    <tr><td>All India N.R. Congress <span class="pill p-AINRC">AINRC</span></td><td class="r">10</td><td>Chief Minister's party; NDA coalition</td></tr>
+    <tr><td>Bharatiya Janata Party <span class="pill p-BJP">BJP</span></td><td class="r">9</td><td>6 elected + 3 nominated members</td></tr>
+    <tr><td>Dravida Munnetra Kazhagam <span class="pill p-DMK">DMK</span></td><td class="r">6</td><td>Principal opposition bloc</td></tr>
+    <tr><td>Indian National Congress <span class="pill p-INC">INC</span></td><td class="r">2</td><td>Opposition</td></tr>
+    <tr><td>Independents <span class="pill p-IND">IND</span></td><td class="r">6</td><td>Independent MLAs</td></tr>
+    <tr><td><strong>Total</strong></td><td class="r"><strong>33</strong></td><td>10 + 9 + 6 + 2 + 6 = 33</td></tr>
+  </tbody><caption>Assembly strength is shown inclusive of the 3 nominated members, matching the JSON count and majority mark.</caption></table>
+  <h3 class="grp-h" id="leg-nom">Three nominated MLAs — court-contested but counted in House strength</h3>
+  <div class="callout"><strong>Current status note:</strong> Puducherry's three nominated MLAs have voting rights in the Assembly. The nominations and voting rights were litigated in the K. Lakshminarayanan line of cases; the Supreme Court upheld the validity of Centre-nominated MLAs and their participation, so this page counts 30 elected + 3 nominated = 33.</div>
+  <h3 class="grp-h" id="leg-off">Key office-bearers — Puducherry Vidhan Sabha</h3>
+  <div class="role-grid">
+    <div class="role-card"><div class="role">Speaker</div><div class="name">Embalam R. Selvam<span class="pill p-BJP">BJP</span></div><div class="meta">Assembly office-bearer; verify live roster for changes</div></div>
+    <div class="role-card"><div class="role">Deputy Speaker</div><div class="name">P. Rajavelu<span class="pill p-AINRC">AINRC</span></div><div class="meta">Assembly office-bearer</div></div>
+    <div class="role-card"><div class="role">Leader of the House</div><div class="name">N. Rangasamy<span class="pill p-AINRC">AINRC</span></div><div class="meta">Chief Minister</div></div>
+    <div class="role-card"><div class="role">Leader of Opposition</div><div class="name">R. Siva<span class="pill p-DMK">DMK</span></div><div class="meta">Listed opposition leader in current Assembly references</div></div>
+  </div>
+  <div class="callout warn" id="leg-split"><strong>UT power split:</strong> Puducherry's Assembly is created under Article 239A and has less textual protection than Delhi's Article 239AA model. Delhi explicitly excludes land, police and public order; Puducherry's legal boundary is different, but LG/Union control and the ability to reserve matters still limit state-like autonomy.</div>
+  <p class="src">Sources: Puducherry Legislative Assembly — <a href="https://puducherryassembly.py.gov.in/" target="_blank" rel="noopener">puducherryassembly.py.gov.in</a>; ECI Puducherry Assembly result; Supreme Court decision in the Puducherry nominated-MLA litigation; PRS/Assembly office-bearer references; Constitution Article 239A via India Code.</p><!-- END: LEG -->
+
+</section>
+
+<!-- =========================== JUDICIARY =========================== -->
+<section id="judic" class="lens-section">
+<!-- BEGIN: JUDIC — Madras High Court jurisdiction + current CJ + district judiciary links. -->
+  <h1>⚖ Judiciary — Madras High Court has jurisdiction over Puducherry</h1>
+  <p class="sec-sub">Puducherry does not have a separate High Court. The Madras High Court exercises jurisdiction over Tamil Nadu and the Union Territory of Puducherry.</p>
+  <div class="role-grid">
+    <div class="role-card"><div class="role">High Court</div><div class="name">Madras High Court</div><div class="meta"><a href="https://www.hcmadras.tn.nic.in/" target="_blank" rel="noopener">hcmadras.tn.nic.in</a></div></div>
+    <div class="role-card"><div class="role">Chief Justice</div><div class="name">Justice S. A. Dharmadhikari</div><div class="meta">Point-in-time CJ used for 24-May-2026 snapshot; verify against official CJ/sitting judges page</div></div>
+    <div class="role-card"><div class="role">Subordinate courts</div><div class="name">Puducherry District Judiciary</div><div class="meta"><a href="https://puducherry.dcourts.gov.in/" target="_blank" rel="noopener">District Court portal</a></div></div>
+  </div>
+  <details class="branch"><summary><span>Why not list all Madras HC judges here?</span><span class="ct">large roster</span></summary><div class="b-body"><p>The Madras High Court roster is shared across Tamil Nadu and Puducherry and changes with appointments, transfers and retirements. This page names the CJ and links the official sitting-judges roster as the source of record.</p></div></details>
+  <p class="src">Sources: Madras High Court — <a href="https://www.hcmadras.tn.nic.in/" target="_blank" rel="noopener">official website</a> and sitting judges page; Department of Justice High Court jurisdiction references; eCourts / Puducherry District Judiciary — <a href="https://puducherry.dcourts.gov.in/" target="_blank" rel="noopener">puducherry.dcourts.gov.in</a>.</p><!-- END: JUDIC -->
+
+</section>
+
+<!-- =========================== DISTRICTS =========================== -->
+<section id="dist" class="lens-section">
+<!-- BEGIN: DIST — District map + 4-row districts table; non-contiguous geography called out. -->
+  <h1>📍 District Administration — 4 non-contiguous districts</h1>
+  <p class="sec-sub">Puducherry is one UT made of four separated former French settlements: Puducherry and Karaikal are surrounded by Tamil Nadu, Mahe by Kerala, and Yanam by Andhra Pradesh.</p>
+  <div class="callout warn"><strong>Non-contiguous geography:</strong> field administration cannot be read as one contiguous map. Mahe and Yanam are far from Puducherry/Karaikal and rely on regional administrators plus UT-wide departments.</div>
+  <h3 class="grp-h">🗺 District distribution — 4 districts</h3>
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:14px;">
+<svg viewBox="0 0 760 520" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Map of Puducherry showing four non-contiguous districts" style="width:100%;height:auto;display:block;background:#fffdf6;border-radius:6px;font-family:inherit;">
+<rect x="0" y="0" width="760" height="520" rx="6" fill="#fffdf6"/>
+<path d="M444.1,480.2 L443.3,480.2 L443.4,481.0 L443.8,481.7 L443.9,482.5 L444.5,483.0 L444.0,483.6 L443.3,483.8 L443.0,483.0 L442.3,482.8 L441.4,482.8 L441.3,483.7 L441.8,484.2 L442.5,483.8 L442.1,484.5 L441.6,485.1 L441.6,485.9 L442.4,486.1 L443.1,486.8 L443.8,487.2 L444.2,487.9 L444.2,488.7 L444.9,488.9 L445.6,488.4 L445.7,487.6 L446.5,487.6 L446.9,488.4 L446.1,488.6 L446.9,488.8 L447.7,489.0 L448.4,489.3 L449.2,489.5 L448.5,489.8 L449.1,490.3 L449.2,491.1 L448.4,491.4 L448.4,492.2 L449.1,492.6 L449.7,493.1 L449.8,494.0 L450.6,494.0 L451.3,493.9 L451.4,493.1 L451.5,492.2 L451.4,491.4 L451.4,490.5 L451.4,489.7 L451.4,488.9 L451.4,488.0 L451.4,487.2 L451.4,486.4 L451.5,485.3 L451.5,484.4 L451.5,483.5 L451.5,482.7 L451.5,481.9 L451.3,481.1 L450.4,480.7 L449.8,480.2 L449.1,480.4 L448.2,480.4 L447.7,481.0 L447.3,481.7 L446.6,481.4 L446.4,480.7 L445.6,480.6 L444.8,480.6 Z" fill="#138808" fill-opacity="0.78" stroke="#ffffff" stroke-width="1.1"><title>Karaikal</title></path>
+<path d="M121.2,425.3 L121.0,424.4 L120.3,424.9 Z M120.9,420.2 L120.6,421.0 L121.1,421.6 L121.1,422.4 L120.3,422.7 L120.1,423.5 L120.4,424.3 L120.8,423.6 L121.6,423.8 L122.2,423.3 L121.7,422.7 L121.3,421.9 L121.4,421.1 Z" fill="#06A77D" fill-opacity="0.78" stroke="#ffffff" stroke-width="1.1"><title>Mahe</title></path>
+<path d="M438.2,416.1 L437.8,417.0 L438.6,417.2 Z M442.6,413.9 L442.0,414.4 L442.2,415.3 L442.4,416.0 L441.6,416.5 L441.5,417.3 L440.7,417.8 L441.2,418.4 L442.0,418.7 L442.8,418.8 L443.5,419.2 L444.1,418.6 L444.6,418.0 L445.1,418.6 L445.9,418.8 L446.8,418.4 L447.2,417.6 L447.3,416.8 L447.5,416.1 L447.7,415.2 L447.5,414.5 L447.3,415.3 L446.5,415.0 L445.7,414.8 L445.3,415.5 L444.7,414.8 L444.0,414.4 Z M436.2,413.9 L435.6,414.4 L435.4,415.2 L435.6,416.0 L436.5,416.2 L437.5,416.1 L437.2,415.4 L436.7,414.7 Z M434.4,410.9 L434.0,410.1 L433.4,410.7 L432.8,411.2 L432.1,410.8 L432.2,411.7 L432.2,412.6 L433.0,412.4 L433.6,411.9 L434.1,412.5 L434.8,413.1 L435.5,413.3 L436.4,413.2 L436.8,412.5 L436.4,411.8 L435.8,411.2 L435.2,410.6 Z M438.7,403.6 L438.0,404.0 L437.1,404.0 L436.7,404.8 L437.2,405.5 L438.0,405.5 L438.5,404.8 Z M444.0,401.2 L443.2,401.0 L442.6,401.6 L441.9,402.1 L441.1,402.5 L440.6,403.2 L440.9,403.9 L440.2,404.2 L439.5,404.5 L439.1,405.3 L439.5,406.0 L440.2,406.5 L440.4,405.6 L441.1,405.8 L441.2,406.6 L441.4,407.4 L442.0,408.0 L442.5,408.6 L442.1,409.2 L442.1,410.0 L441.3,410.1 L440.5,410.1 L440.3,409.3 L440.2,408.5 L441.1,408.3 L440.4,407.9 L439.5,407.9 L439.4,408.7 L439.4,409.5 L438.7,410.0 L437.8,410.1 L437.7,410.8 L438.5,410.9 L439.3,410.5 L440.3,410.3 L440.4,411.1 L440.4,411.8 L440.8,412.5 L441.6,412.4 L442.3,412.1 L443.0,412.5 L443.0,413.3 L443.8,413.4 L443.8,412.6 L444.2,411.7 L444.9,411.3 L445.0,412.1 L444.8,412.9 L444.7,413.7 L445.1,414.3 L445.6,413.7 L446.0,413.0 L446.9,413.0 L447.6,413.1 L447.9,413.9 L448.3,413.2 L448.6,412.4 L448.9,411.6 L449.2,410.7 L449.4,409.8 L449.6,408.9 L449.8,408.1 L450.1,407.3 L450.2,406.5 L450.3,405.7 L450.2,405.0 L449.4,404.6 L449.1,403.9 L448.7,403.2 L448.0,403.7 L447.8,404.4 L447.6,405.2 L446.9,404.8 L446.1,404.9 L445.5,405.5 L444.8,405.9 L444.4,406.6 L444.1,407.3 L443.5,406.7 L443.5,405.9 L443.3,405.1 L443.2,404.4 L442.4,404.0 L441.6,403.8 L441.7,402.9 L442.4,403.2 L443.3,402.8 L444.0,402.4 L444.5,401.8 Z M445.5,409.0 L446.3,409.5 L447.1,409.4 L447.0,410.2 L446.8,410.9 L446.4,411.6 L445.9,412.3 L445.8,411.5 L445.4,410.8 Z M434.2,399.0 L434.3,400.0 L433.7,400.6 L433.5,401.4 L433.9,402.2 L433.7,402.9 L433.6,403.7 L434.1,404.3 L434.3,405.1 L434.1,405.9 L433.5,406.4 L433.5,407.3 L434.2,407.7 L434.2,408.6 L434.5,409.3 L435.2,408.8 L436.1,408.8 L436.7,408.4 L437.4,407.8 L437.5,406.9 L436.7,406.5 L436.4,405.7 L435.6,405.9 L435.3,405.1 L435.7,404.4 L435.2,403.8 L434.9,403.0 L435.1,402.2 L435.4,401.4 L435.7,400.5 L436.0,399.8 L435.4,399.3 Z M439.4,398.7 L438.9,399.3 L438.1,399.8 L437.6,400.7 L436.8,400.6 L436.6,401.3 L436.4,402.1 L437.2,402.2 L438.0,402.5 L438.8,402.3 L439.6,402.2 L440.4,402.1 L441.2,402.1 L440.7,401.4 L440.2,400.9 L440.0,400.0 L440.1,399.0 Z M451.8,401.0 L452.1,400.2 L452.5,399.5 L452.8,398.7 L452.5,397.9 L451.7,397.6 L450.9,398.3 L450.7,399.2 L450.6,400.1 Z" fill="#FF9933" fill-opacity="0.78" stroke="#ffffff" stroke-width="1.1"><title>Puducherry</title></path>
+<path d="M633.7,26.4 L632.9,26.2 L632.3,26.7 L631.8,27.3 L631.5,28.0 L630.7,28.0 L630.7,28.9 L631.5,29.4 L632.5,29.4 L633.4,29.4 L634.2,29.5 L634.9,30.1 L635.6,30.7 L636.2,31.2 L637.0,31.0 L637.8,30.7 L638.6,30.3 L639.3,29.8 L639.8,29.1 L639.9,28.3 L639.5,27.4 L638.7,27.9 L638.3,28.6 L637.4,28.6 L636.7,29.0 L635.9,29.1 L635.1,29.0 L634.2,28.9 L633.5,28.6 L632.8,28.2 L632.7,27.4 Z" fill="#8b5cf6" fill-opacity="0.78" stroke="#ffffff" stroke-width="1.1"><title>Yanam</title></path>
+<text x="447.6" y="485.7" text-anchor="middle" font-size="12" font-weight="700" fill="#1a1a1a" paint-order="stroke" stroke="#ffffff" stroke-width="3" stroke-linejoin="round">Karaikal</text>
+<text x="121.1" y="422.7" text-anchor="middle" font-size="12" font-weight="700" fill="#1a1a1a" paint-order="stroke" stroke="#ffffff" stroke-width="3" stroke-linejoin="round">Mahe</text>
+<text x="444.8" y="408.2" text-anchor="middle" font-size="12" font-weight="700" fill="#1a1a1a" paint-order="stroke" stroke="#ffffff" stroke-width="3" stroke-linejoin="round">Puducherry</text>
+<text x="635.6" y="29.1" text-anchor="middle" font-size="12" font-weight="700" fill="#1a1a1a" paint-order="stroke" stroke="#ffffff" stroke-width="3" stroke-linejoin="round">Yanam</text>
+<text x="20" y="416" font-size="12" fill="#5b5b5b">Puducherry is non-contiguous: Puducherry/Karaikal in Tamil Nadu, Mahe in Kerala, Yanam in Andhra Pradesh.</text>
+<rect x="20" y="438" width="14" height="14" fill="#138808" fill-opacity="0.78" stroke="#ffffff" stroke-width="0.6"/>
+<text x="40" y="450" font-size="12" fill="#1a1a1a">Karaikal</text>
+<rect x="190" y="438" width="14" height="14" fill="#06A77D" fill-opacity="0.78" stroke="#ffffff" stroke-width="0.6"/>
+<text x="210" y="450" font-size="12" fill="#1a1a1a">Mahe</text>
+<rect x="360" y="438" width="14" height="14" fill="#FF9933" fill-opacity="0.78" stroke="#ffffff" stroke-width="0.6"/>
+<text x="380" y="450" font-size="12" fill="#1a1a1a">Puducherry</text>
+<rect x="530" y="438" width="14" height="14" fill="#8b5cf6" fill-opacity="0.78" stroke="#ffffff" stroke-width="0.6"/>
+<text x="550" y="450" font-size="12" fill="#1a1a1a">Yanam</text>
+<text x="20" y="504" font-size="10" fill="#5b5b5b" font-style="italic">Source: datta07/INDIAN-SHAPEFILES · district boundaries</text>
+</svg>
+  </div>
+  <h3 class="grp-h">District table</h3>
+  <table class="bihar"><thead><tr><th>#</th><th>District</th><th>Surrounded by / coast</th><th>HQ / administrator</th><th>Live site</th></tr></thead><tbody>
+    <tr><td class="r">1</td><td>Puducherry (Pondicherry)</td><td>Tamil Nadu surroundings; Coromandel coast</td><td>Puducherry · Collector Kulothungan A, IAS</td><td><a href="https://puducherry-dt.gov.in/" target="_blank" rel="noopener">district site</a></td></tr>
+    <tr><td class="r">2</td><td>Karaikal</td><td>Tamil Nadu surroundings; Cauvery delta coast</td><td>Karaikal · Collector Ishita Rathi, IAS</td><td><a href="https://karaikal.gov.in/" target="_blank" rel="noopener">district site</a></td></tr>
+    <tr><td class="r">3</td><td>Mahe</td><td>Kerala surroundings; Malabar coast</td><td>Mahe · Regional Administrator live roster</td><td><a href="https://mahe.gov.in/" target="_blank" rel="noopener">district site</a></td></tr>
+    <tr><td class="r">4</td><td>Yanam</td><td>Andhra Pradesh surroundings; Godavari delta coast</td><td>Yanam · Regional Administrator Ankit Kumar, IAS</td><td><a href="https://yanam.gov.in/" target="_blank" rel="noopener">district site</a></td></tr>
+  </tbody><caption>Count reconciles with JSON: 4 districts. Collector/administrator names are point-in-time from Government of Puducherry secretaries roster where available.</caption></table>
+  <p class="src">Sources: Government of Puducherry district page — <a href="https://www.py.gov.in/districts" target="_blank" rel="noopener">py.gov.in/districts</a>; secretaries/collector roster — <a href="https://www.py.gov.in/secretaries" target="_blank" rel="noopener">py.gov.in/secretaries</a>; district portals for Puducherry, Karaikal, Mahe and Yanam; map generated from <a href="https://raw.githubusercontent.com/datta07/INDIAN-SHAPEFILES/master/STATES/PUDUCHERRY/PUDUCHERRY_DISTRICTS.geojson" target="_blank" rel="noopener">datta07/INDIAN-SHAPEFILES</a>.</p><!-- END: DIST -->
+
+</section>
+
+<!-- =========================== PRI =========================== -->
+<section id="pri" class="lens-section">
+<!-- BEGIN: PRI — local-government KPI tiles + tier table + register cards. -->
+  <h1>🏙 Local Bodies — Municipalities, commune panchayats and village panchayats</h1>
+  <p class="sec-sub">Puducherry mixes urban local bodies with rural village panchayats; live rosters are more reliable than static councillor/member lists.</p>
+  <div class="kpis"><div class="kpi"><div class="v">5</div><div class="l">Urban/commune bodies</div><div class="sub">2 municipalities + 3 commune panchayats</div></div><div class="kpi"><div class="v">108</div><div class="l">Village panchayats</div><div class="sub">Rural register</div></div><div class="kpi"><div class="v">812</div><div class="l">Local wards</div><div class="sub">Snapshot count in JSON</div></div><div class="kpi"><div class="v">SEC</div><div class="l">Elections</div><div class="sub">State Election Commission</div></div></div>
+  <table class="bihar"><thead><tr><th>Layer</th><th>Inline?</th><th>Why</th><th>Source/register</th></tr></thead><tbody>
+    <tr><td>Municipalities / commune panchayats</td><td>Aggregate only</td><td>Ward-level rosters change after elections, vacancies and delimitation</td><td><a href="https://sec.py.gov.in/" target="_blank" rel="noopener">SEC Puducherry</a></td></tr>
+    <tr><td>Village panchayats</td><td>Aggregate only</td><td>108 is tractable as a count, not as a static roster of all members</td><td><a href="https://drdpr.py.gov.in/" target="_blank" rel="noopener">DRDPR</a></td></tr>
+    <tr><td>Ward members / councillors</td><td>Link out</td><td>High-volatility local elected layer</td><td>SEC notifications and local-body registers</td></tr>
+  </tbody></table>
+  <div class="role-grid"><div class="role-card"><div class="role">Election authority</div><div class="name">State Election Commission, Puducherry</div><div class="meta"><a href="https://sec.py.gov.in/" target="_blank" rel="noopener">sec.py.gov.in</a></div></div><div class="role-card"><div class="role">Rural development</div><div class="name">DRDPR, Puducherry</div><div class="meta"><a href="https://drdpr.py.gov.in/" target="_blank" rel="noopener">drdpr.py.gov.in</a></div></div></div>
+  <p class="src">Sources: State Election Commission Puducherry — <a href="https://sec.py.gov.in/" target="_blank" rel="noopener">sec.py.gov.in</a>; Department of Rural Development and Panchayat Raj — <a href="https://drdpr.py.gov.in/" target="_blank" rel="noopener">drdpr.py.gov.in</a>; LG Directory / eGramSwaraj registers for local-government counts.</p><!-- END: PRI -->
+
+</section>
+
+<!-- =========================== CONSTITUTIONAL BODIES =========================== -->
+<section id="bodies" class="lens-section">
+<!-- BEGIN: BODIES — statutory/constitutional bodies and live-register links. -->
+  <h1>📊 Constitutional / Statutory Bodies</h1>
+  <p class="sec-sub">Small UT bodies are named at institution level; chairs/members are linked to official pages because appointments change.</p>
+  <div class="role-grid">
+    <div class="role-card"><div class="role">Election</div><div class="name">Chief Electoral Officer, Puducherry</div><div class="meta"><a href="https://ceopuducherry.py.gov.in/" target="_blank" rel="noopener">CEO portal</a></div></div>
+    <div class="role-card"><div class="role">Local elections</div><div class="name">State Election Commission</div><div class="meta"><a href="https://sec.py.gov.in/" target="_blank" rel="noopener">sec.py.gov.in</a></div></div>
+    <div class="role-card"><div class="role">Information rights</div><div class="name">RTI / Information Commission channel</div><div class="meta"><a href="https://www.py.gov.in/" target="_blank" rel="noopener">UT portal</a></div></div>
+    <div class="role-card"><div class="role">Vigilance</div><div class="name">Chief Vigilance Officer / Vigilance Department</div><div class="meta">Chief Secretary is listed as CVO in the secretaries roster</div></div>
+    <div class="role-card"><div class="role">Women / child welfare</div><div class="name">Women &amp; Child Development Department</div><div class="meta"><a href="https://wcd.py.gov.in/" target="_blank" rel="noopener">department portal</a></div></div>
+    <div class="role-card"><div class="role">Social justice</div><div class="name">Adi Dravidar / Social Welfare channels</div><div class="meta">department rosters via UT portal</div></div>
+    <div class="role-card"><div class="role">Audit</div><div class="name">Accountant General / CAG channel</div><div class="meta"><a href="https://cag.gov.in/" target="_blank" rel="noopener">cag.gov.in</a></div></div>
+    <div class="role-card"><div class="role">Public service recruitment</div><div class="name">UPSC / UT recruitment channel</div><div class="meta">Puducherry uses UT/central recruitment arrangements for many services</div></div>
+  </div>
+  <p class="src">Sources: Government of Puducherry portal — <a href="https://www.py.gov.in/" target="_blank" rel="noopener">py.gov.in</a>; CEO Puducherry; SEC Puducherry; CAG; department pages linked above; secretaries roster for CVO reference.</p><!-- END: BODIES -->
+
+</section>
+
+<!-- =========================== SCOPE MEMO =========================== -->
+<section id="scope" class="lens-section">
+<!-- BEGIN: SCOPE — Math table — counts + drill-deeper links. -->
+  <h1>📑 Scope memo — why this page is one HTML</h1>
+  <p class="sec-sub">The page names stable, small rosters and links volatile registries. Counts reconcile with the JSON summary: VS 33, LS 1, RS 1, districts 4.</p>
+  <table class="bihar"><thead><tr><th>Layer</th><th class="r">Count</th><th>Decision</th><th>Reason</th></tr></thead><tbody>
+    <tr><td>Union ministers from Puducherry</td><td class="r">0</td><td>Inline</td><td>Small and stable</td></tr>
+    <tr><td>Lok Sabha MPs</td><td class="r">1</td><td>Inline</td><td>One constituency</td></tr>
+    <tr><td>Rajya Sabha MPs</td><td class="r">1</td><td>Inline</td><td>One seat</td></tr>
+    <tr><td>CM/LG/ministry/apex officers</td><td class="r">~10</td><td>Inline + cite</td><td>Small roster; transfers noted</td></tr>
+    <tr><td>Legislative Assembly</td><td class="r">33</td><td>Tally + office-bearers</td><td>Full member directory is better as live link</td></tr>
+    <tr><td>Vidhan Parishad</td><td class="r">0</td><td>Omitted</td><td>has_vidhan_parishad is false</td></tr>
+    <tr><td>Judiciary</td><td class="r">Madras HC</td><td>CJ + link</td><td>Shared HC roster changes often</td></tr>
+    <tr><td>Districts</td><td class="r">4</td><td>Inline</td><td>Small and central to non-contiguous geography</td></tr>
+    <tr><td>Local bodies / wards</td><td class="r">900+</td><td>Aggregate + link</td><td>Too volatile for static HTML</td></tr>
+    <tr><td>Statutory bodies</td><td class="r">8+</td><td>Institution cards</td><td>Member/chair rosters link to official pages</td></tr>
+  </tbody></table>
+  <ol>
+    <li><strong>Snapshot date:</strong> 24-May-2026.</li>
+    <li><strong>UT caveat:</strong> Article 239A creates a legislature, but not ordinary state autonomy.</li>
+    <li><strong>Geography caveat:</strong> four districts are separated across Tamil Nadu, Kerala and Andhra Pradesh surroundings.</li>
+  </ol><!-- END: SCOPE -->
+
+</section>
+
+
+</main>
+
+<footer>
+  Puducherry Shasan · governance transparency experiment · drafted 24-May-2026 · skinned with the <code>bharat-sanchar-aesthetic</code> skill · zero external dependencies · data sources cited inline · live officials of district/PRI level are intentionally not embedded — see <a href="#scope">Scope memo</a>.
+</footer>
+
+<!-- JS 1: expand/collapse-all within a lens -->
+<script>
+(function(){
+  document.addEventListener('click', function(e){
+    var btn = e.target.closest('.ec-btn'); if(!btn) return;
+    e.preventDefault();
+    var root = document.getElementById(btn.getAttribute('data-scope')); if(!root) return;
+    var openVal = btn.getAttribute('data-ec') === 'expand';
+    root.querySelectorAll('details').forEach(function(d){ if(d!==root) d.open = openVal; });
+    if(root.tagName === 'DETAILS' && openVal) root.open = true;
+  });
+})();
+</script>
+
+<!-- JS 2: close mobile hamburger after a nav link tap -->
+<script>
+(function(){
+  var toggle = document.getElementById('navtoggle');
+  var nav = document.querySelector('header.topbar nav.lens');
+  if(!toggle || !nav) return;
+  nav.addEventListener('click', function(e){
+    var a = e.target.closest('a'); if(!a) return;
+    var href = a.getAttribute('href'); if(!href) return;
+    toggle.checked = false;
+    if(href.charAt(0) === '#' && href.length > 1){
+      requestAnimationFrame(function(){
+        requestAnimationFrame(function(){
+          var el = document.getElementById(href.slice(1)); if(!el) return;
+          var topbar = document.querySelector('header.topbar');
+          var offset = topbar ? topbar.getBoundingClientRect().height : 0;
+          var y = el.getBoundingClientRect().top + window.pageYOffset - offset - 4;
+          window.scrollTo({top: Math.max(0, y), behavior: 'auto'});
+        });
+      });
+    }
+  });
+})();
+</script>
+</body>
+</html>

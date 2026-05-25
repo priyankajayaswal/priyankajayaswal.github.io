@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meghalaya Shasan — Governance Personnel Catalogue (Centre → Sixth Schedule Councils)</title>
+<meta name="description" content="A link-anchored catalogue of Meghalaya's governance chain — Union representation, State cabinet, Legislature, Judiciary, 12 districts, and Sixth Schedule Autonomous District Councils (KHADC, JHADC, GHADC).">
+<style>
+  :root {
+    --bg:#f7f7f5; --card:#fff; --ink:#1a1a1a; --muted:#5b5b5b;
+    --navy:#0B1B3F; --saffron:#FF9933; --green:#138808; --red:#c0392b;
+    --border:#e3e3df; --tag:#eef0f7;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-padding-top:115px;scroll-behavior:smooth;}
+  body{margin:0;font-family:'Segoe UI',Tahoma,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5;font-size:14px;}
+  a{color:var(--navy);}
+
+  /* ===== TOPBAR ===== */
+  header.topbar{background:linear-gradient(135deg,var(--saffron) 0%,#fff 50%,var(--green) 100%);padding:8px 20px 6px;border-bottom:2px solid var(--navy);position:sticky;top:0;z-index:10;text-align:center;}
+  header.topbar > *{text-align:left;}
+  header.topbar nav.lens{justify-content:center;display:inline-flex;}
+  .brand-row{display:flex;flex-direction:row;align-items:baseline;justify-content:center;gap:10px;flex-wrap:wrap;line-height:1.05;margin-bottom:4px;}
+  .brand{display:inline-block;font-size:1.2rem;font-weight:700;color:var(--navy);text-decoration:none;}
+  .brand:hover{color:var(--navy);text-decoration:none;}
+  .brand .hi{font-family:'Mangal','Nirmala UI',serif;margin-right:6px;color:var(--red);}
+  .tagline{font-size:0.65rem;color:var(--muted);font-weight:500;letter-spacing:0.3px;}
+  nav.lens{margin-top:4px;display:flex;flex-wrap:wrap;gap:2px;align-items:stretch;}
+  nav.lens > .lens-item{position:relative;}
+  nav.lens > .lens-item > a, nav.lens > a{display:inline-block;padding:4px 11px;background:rgba(255,255,255,0.75);border:1.5px solid var(--navy);color:var(--navy);text-decoration:none;border-radius:6px;font-weight:600;font-size:0.8rem;}
+  nav.lens > .lens-item > a:hover, nav.lens > a:hover, nav.lens > .lens-item:hover > a{background:var(--navy);color:#fff;}
+  nav.lens .caret{font-size:0.7rem;margin-left:4px;opacity:0.7;}
+
+  /* ===== MEGA-MENU DROPDOWN ===== */
+  .lens-drop{position:absolute;top:100%;left:0;display:none;background:var(--card);border:1.5px solid var(--navy);border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,0.25);padding:8px;min-width:280px;max-width:520px;max-height:60vh;overflow-y:auto;z-index:20;margin-top:0;}
+  .lens-item:hover .lens-drop, .lens-item:focus-within .lens-drop{display:block;}
+  .lens-item::after{content:"";position:absolute;top:100%;left:0;right:0;height:10px;display:none;}
+  .lens-item:hover::after, .lens-item:focus-within::after{display:block;}
+  .lens-drop .ld-head{font-size:0.7rem;text-transform:uppercase;letter-spacing:0.5px;color:var(--muted);padding:6px 8px;border-bottom:1px solid var(--border);margin-bottom:4px;font-weight:700;display:flex;justify-content:space-between;align-items:center;}
+  .lens-drop .ld-head a{font-size:0.72rem;color:var(--navy);text-decoration:none;font-weight:600;}
+  .lens-drop .ld-head a:hover{text-decoration:underline;}
+  .lens-drop .ld-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:2px;}
+  .lens-drop .ld-grid a{display:flex;justify-content:space-between;align-items:center;gap:6px;padding:5px 9px;font-size:0.8rem;color:var(--ink);text-decoration:none;border-radius:4px;}
+  .lens-drop .ld-grid a:hover{background:var(--tag);color:var(--navy);}
+  .lens-drop .ld-grid a .c{font-size:0.65rem;color:var(--muted);background:var(--tag);padding:1px 6px;border-radius:999px;font-weight:600;}
+  @media (max-width:700px){
+    .lens-drop{position:static;display:block;max-height:none;margin-top:0;border-radius:0;border:none;border-top:1px dashed var(--border);box-shadow:none;}
+  }
+
+  .help{padding:8px 20px;background:#fff7e8;border-bottom:1px solid var(--border);font-size:0.82rem;color:#5a3a00;}
+
+  main{max-width:1180px;margin:0 auto;padding:14px 20px 50px;}
+
+  /* ===== LENS ROUTING via :target ===== */
+  .lens-section{display:none;}
+  .lens-section:target, .lens-section:has(:target){display:block;}
+  body:not(:has(:target)) #h{display:block;}
+
+  details:target, details:has(:target){scroll-margin-top:120px;}
+  details:target > summary, details:has(:target) > summary{background:linear-gradient(90deg,rgba(255,153,51,0.18) 0%,transparent 100%);}
+
+  /* ===== JUMPBAR ===== */
+  .jumpbar{position:sticky;top:0;z-index:8;background:var(--card);border-bottom:1px solid var(--border);padding:6px 8px;margin:-14px -20px 14px;display:flex;gap:4px;overflow-x:auto;white-space:nowrap;}
+  .jumpbar a{flex:0 0 auto;font-size:0.72rem;padding:3px 9px;color:var(--ink);text-decoration:none;border-radius:999px;background:var(--tag);font-weight:600;}
+  .jumpbar a:hover{background:var(--navy);color:#fff;}
+  .jumpbar .jb-label{flex:0 0 auto;font-size:0.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;padding:4px 8px 4px 0;font-weight:700;}
+
+  /* ===== GOV INTRO + FLOWCHART BLOCKS ===== */
+  .gov-intro{background:linear-gradient(135deg,#fff7e8 0%,#e6f0ff 100%);border-left:4px solid var(--saffron);padding:10px 14px;border-radius:6px;margin:8px 0 14px;font-size:0.88rem;line-height:1.55;}
+  .gov-block{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin:14px 0;}
+  .gov-block h3{margin:0 0 6px;color:var(--navy);font-size:1.05rem;display:flex;align-items:center;gap:8px;}
+  .gov-block .lede{font-size:0.85rem;color:var(--muted);margin:0 0 12px;line-height:1.5;}
+  .gov-block svg{display:block;width:100%;height:auto;max-width:100%;background:transparent;}
+  .gov-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(360px,1fr));gap:12px;}
+  .gov-grid .gov-block{margin:0;}
+  .gov-notes{margin-top:10px;font-size:0.82rem;color:var(--muted);line-height:1.5;}
+  .gov-notes strong{color:var(--ink);}
+  .gov-legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;font-size:0.72rem;color:var(--muted);}
+  .gov-legend span{display:inline-flex;align-items:center;gap:5px;}
+  .gov-legend .sw{width:14px;height:14px;border-radius:3px;display:inline-block;border:1px solid var(--border);}
+  .gb-const{fill:#fde7d8;stroke:#c0392b;stroke-width:1.5;}
+  .gb-exec{fill:#e6f0ff;stroke:#0B1B3F;stroke-width:1.5;}
+  .gb-legis{fill:#fff7e8;stroke:#FF9933;stroke-width:1.5;}
+  .gb-judic{fill:#f5f0ff;stroke:#8338EC;stroke-width:1.5;}
+  .gb-state{fill:#e6f7e9;stroke:#138808;stroke-width:1.5;}
+  .gb-people{fill:#fde7d8;stroke:#c0392b;stroke-width:1.5;}
+  .gb-regu{fill:#e6f5f2;stroke:#06A77D;stroke-width:1.5;}
+
+  /* ===== INSIGHT (SWOT + radar) ===== */
+  .insight{background:linear-gradient(135deg,#f8fafc 0%,#fff7e8 100%);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin:8px 12px 12px;}
+  .insight-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:14px;align-items:start;}
+  @media (max-width:760px){.insight-grid{grid-template-columns:1fr;}}
+  .insight-meta{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px;}
+  .insight-meta .im{font-size:0.72rem;background:var(--tag);padding:2px 8px;border-radius:999px;color:var(--ink);}
+  .insight-meta .im strong{color:var(--navy);}
+  .insight h4{margin:6px 0 4px;color:var(--navy);font-size:0.85rem;}
+  .insight p.how{margin:0 0 8px;font-size:0.82rem;line-height:1.5;}
+  .swot{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+  .swot > div{background:var(--card);border:1px solid var(--border);border-left:3px solid;border-radius:6px;padding:8px 10px;}
+  .swot .str{border-left-color:var(--green);}
+  .swot .wkn{border-left-color:var(--red);}
+  .swot .pot{border-left-color:var(--saffron);grid-column:1/-1;}
+  .swot h5{margin:0 0 4px;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.4px;}
+  .swot .str h5{color:var(--green);}
+  .swot .wkn h5{color:var(--red);}
+  .swot .pot h5{color:#7a3a00;}
+  .swot ul{margin:0;padding-left:18px;font-size:0.78rem;line-height:1.45;}
+  .insight svg.radar{width:100%;height:auto;max-width:280px;display:block;margin:0 auto;}
+  .scores-label{font-size:0.7rem;color:var(--muted);text-align:center;margin-top:4px;}
+
+  /* ===== LENS-OVERVIEW (bar chart) ===== */
+  .lens-overview{background:linear-gradient(135deg,#eef2fb 0%,#fff7e8 100%);border:1px solid var(--border);border-radius:10px;padding:14px 18px;margin:8px 0 16px;}
+  .lens-overview .lo-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:18px;align-items:center;}
+  @media (max-width:780px){.lens-overview .lo-grid{grid-template-columns:1fr;}}
+  .lens-overview h3{margin:0 0 6px;color:var(--navy);font-size:0.95rem;}
+  .lens-overview p{margin:0 0 6px;font-size:0.85rem;line-height:1.5;}
+  .lens-overview .lo-rel{margin-top:8px;padding-top:6px;border-top:1px dashed var(--border);font-size:0.78rem;color:var(--muted);}
+  .lens-overview .lo-chart{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:10px;}
+  .lens-overview .lo-chart-title{font-size:0.72rem;text-transform:uppercase;letter-spacing:0.5px;color:var(--muted);font-weight:700;margin-bottom:4px;text-align:center;}
+
+  /* ===== RELMAP ===== */
+  .relmap{background:linear-gradient(135deg,#eef2fb 0%,#e6f7e9 100%);border:1px solid var(--border);border-radius:10px;padding:16px 20px;margin:14px 0;}
+  .relmap h2{margin:0 0 8px;color:var(--navy);}
+  .relmap p{font-size:0.88rem;line-height:1.55;margin:0 0 10px;}
+  .relmap svg.relflow{width:100%;height:auto;max-width:860px;display:block;margin:6px auto;}
+  .relmap svg.relflow text{fill:var(--ink);}
+
+  /* ===== EXPAND/COLLAPSE TOGGLE ===== */
+  .ec-toggle{display:flex;gap:8px;margin:6px 0 12px;align-items:center;flex-wrap:wrap;}
+  .ec-btn{cursor:pointer;font-size:0.78rem;padding:4px 10px;background:var(--card);border:1px solid var(--border);border-radius:6px;color:var(--navy);font-weight:600;font-family:inherit;}
+  .ec-btn:hover{background:var(--navy);color:#fff;}
+  .ec-hint{font-size:0.72rem;color:var(--muted);}
+
+  /* ===== HEADINGS / KPI / DIR ===== */
+  h1{color:var(--navy);font-size:1.3rem;margin:14px 0 6px;border-left:4px solid var(--red);padding-left:10px;}
+  h2{color:var(--navy);font-size:1.05rem;margin:18px 0 8px;}
+  .kpis{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px;margin:10px 0;}
+  @media (max-width:900px){ .kpis{grid-template-columns:repeat(auto-fit,minmax(140px,1fr));} }
+  .kpi{background:var(--card);border:1px solid var(--border);border-left:3px solid var(--red);border-radius:6px;padding:8px 12px;min-height:60px;display:flex;flex-direction:column;justify-content:center;}
+  .kpi .v{font-size:1.15rem;font-weight:700;color:var(--navy);}
+  .kpi .l{font-size:0.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.4px;}
+
+  .dir-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:6px;margin:8px 0 18px;}
+  .dir-tile{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:8px 12px;text-decoration:none;color:var(--ink);font-size:0.85rem;display:flex;justify-content:space-between;align-items:center;gap:8px;}
+  .dir-tile:hover{border-color:var(--navy);background:var(--tag);}
+  .dir-tile .dt-c{font-size:0.7rem;color:var(--muted);background:var(--tag);padding:1px 7px;border-radius:999px;}
+
+  /* ===== DETAILS / BRANCHES / CARDS ===== */
+  details{background:var(--card);border:1px solid var(--border);border-radius:8px;margin:8px 0;}
+  details > summary{cursor:pointer;padding:10px 14px;font-weight:600;color:var(--navy);list-style:none;display:flex;justify-content:space-between;align-items:center;gap:8px;}
+  details > summary::-webkit-details-marker{display:none;}
+  details > summary::before{content:"▸";color:var(--muted);font-size:0.85rem;margin-right:6px;}
+  details[open] > summary::before{content:"▾";}
+  details > summary .ct{font-size:0.72rem;color:var(--muted);background:var(--tag);padding:2px 9px;border-radius:999px;font-weight:600;}
+  details details{background:transparent;border:none;border-left:2px solid var(--border);margin:6px 0 6px 8px;border-radius:0;}
+  details details > summary{padding:6px 10px;font-weight:500;font-size:0.88rem;color:var(--ink);}
+  details details > summary .ct{background:#fff3e0;color:#7a3a00;}
+  .blurb{font-size:0.78rem;color:var(--muted);margin:0 14px 6px;}
+
+  .state-group:target, .min-group:target, .body-group:target{outline:2px solid var(--saffron);outline-offset:4px;border-radius:8px;}
+  .su-type{display:inline-block;font-size:0.65rem;font-weight:700;padding:2px 8px;border-radius:999px;margin-left:8px;letter-spacing:0.3px;text-transform:uppercase;}
+  .su-type.st{background:rgba(19,136,8,0.14);color:var(--green);border:1px solid rgba(19,136,8,0.45);}
+  .su-type.ut{background:rgba(255,153,51,0.14);color:#a55300;border:1px solid rgba(255,153,51,0.5);}
+
+  .card-list{padding:6px 10px 10px;display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:8px;align-items:start;}
+  .card{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:10px 12px;}
+  .card h3{margin:0 0 4px;font-size:0.95rem;line-height:1.3;}
+  .card h3 a{color:var(--ink);text-decoration:none;}
+  .card h3 a:hover{color:var(--navy);text-decoration:underline;}
+  .card .host{font-size:0.72rem;color:var(--muted);margin-bottom:6px;display:flex;flex-wrap:wrap;gap:6px;align-items:center;}
+  .card .hn{font-family:'Consolas','Monaco',monospace;}
+  .badge{font-size:0.65rem;padding:1px 6px;border-radius:4px;font-weight:600;}
+  .badge.official{background:#e6f7e9;color:var(--green);}
+  .badge.fresh{background:#e6f0ff;color:var(--navy);}
+  .badge.stale{background:#fdecea;color:var(--red);}
+  .lv{font-size:0.7rem;color:var(--muted);}
+  .desc{font-size:0.82rem;color:var(--muted);margin:4px 0;line-height:1.45;}
+  .meta{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px;}
+  .mchip{font-size:0.7rem;background:var(--tag);padding:1px 7px;border-radius:4px;color:var(--ink);}
+  .mchip.s{background:#fff3e0;color:#7a3a00;}
+  .mchip.m{background:#e6f0ff;color:var(--navy);}
+  .mchip.v{background:#f5f0ff;color:#5e35b1;}
+  .tags{display:flex;flex-wrap:wrap;gap:3px;margin-top:6px;}
+  .tag{font-size:0.65rem;background:var(--tag);padding:1px 6px;border-radius:3px;color:var(--muted);}
+  .children{margin-top:6px;background:transparent;border:none;border-left:none;}
+  .children > summary{padding:4px 0;font-size:0.78rem;color:var(--muted);font-weight:500;}
+  .children ul{margin:4px 0 0 18px;padding:0;font-size:0.78rem;}
+  .children li{margin-bottom:3px;}
+
+  footer{max-width:1180px;margin:30px auto 20px;padding:14px 20px;border-top:1px solid var(--border);font-size:0.78rem;color:var(--muted);}
+
+  /* ===== NIGHT-MODE TOGGLE (pure CSS, no JS) ===== */
+  #nightmode{position:fixed;top:0;left:0;opacity:0;pointer-events:none;width:0;height:0;clip:rect(0,0,0,0);}
+  .nm-toggle{position:absolute;top:8px;right:14px;z-index:11;display:inline-flex;align-items:center;gap:5px;cursor:pointer;font-size:0.72rem;font-weight:600;padding:4px 10px;background:rgba(255,255,255,0.85);border:1.5px solid var(--navy);color:var(--navy);border-radius:999px;user-select:none;line-height:1;}
+  .nm-toggle:hover{background:var(--navy);color:#fff;}
+  .nm-toggle .nm-ico-dark,.nm-toggle .nm-lbl-dark{display:inline;}
+  .nm-toggle .nm-ico-light,.nm-toggle .nm-lbl-light{display:none;}
+  @media (max-width:520px){ .nm-toggle .nm-lbl-dark,.nm-toggle .nm-lbl-light{display:none;} .nm-toggle{padding:4px 8px;} }
+
+  :root:has(#nightmode:checked){
+    --bg:#0e0f12; --card:#16181d; --ink:#e6e6e6; --muted:#9aa0a8;
+    --border:#262932; --tag:#1f232b; --navy:#7aa2ff;
+  }
+  :root:has(#nightmode:checked) header.topbar{background:linear-gradient(135deg,#5d3a14 0%,#1a1a1a 50%,#0f3a1c 100%);}
+  :root:has(#nightmode:checked) nav.lens > .lens-item > a,
+  :root:has(#nightmode:checked) nav.lens > a{background:rgba(255,255,255,0.08);}
+  :root:has(#nightmode:checked) .nm-toggle{background:rgba(255,255,255,0.08);}
+  :root:has(#nightmode:checked) .nm-toggle .nm-ico-dark,
+  :root:has(#nightmode:checked) .nm-toggle .nm-lbl-dark{display:none;}
+  :root:has(#nightmode:checked) .nm-toggle .nm-ico-light,
+  :root:has(#nightmode:checked) .nm-toggle .nm-lbl-light{display:inline;}
+  :root:has(#nightmode:checked) .help{background:#2a2316;color:#d9b779;}
+  :root:has(#nightmode:checked) .gov-intro{background:linear-gradient(135deg,#2a2316 0%,#172238 100%);}
+  :root:has(#nightmode:checked) .insight{background:linear-gradient(135deg,#16181d 0%,#2a2316 100%);}
+  :root:has(#nightmode:checked) .lens-overview{background:linear-gradient(135deg,#11192a 0%,#2a2316 100%);}
+  :root:has(#nightmode:checked) .relmap{background:linear-gradient(135deg,#11192a 0%,#0e2a14 100%);}
+  :root:has(#nightmode:checked) .badge.official{background:#0e2a14;color:#9fd1a8;}
+  :root:has(#nightmode:checked) .badge.fresh{background:#172238;color:#8aa6e2;}
+  :root:has(#nightmode:checked) .badge.stale{background:#3a1614;color:#e29a8a;}
+  :root:has(#nightmode:checked) .mchip.s{background:#3a2a14;color:#d9b779;}
+  :root:has(#nightmode:checked) .mchip.m{background:#172238;color:#8aa6e2;}
+  :root:has(#nightmode:checked) .mchip.v{background:#241a3a;color:#b39ad9;}
+  :root:has(#nightmode:checked) details details > summary .ct{background:#3a2a14;color:#d9b779;}
+  :root:has(#nightmode:checked) .swot .pot h5{color:#d9b779;}
+  :root:has(#nightmode:checked) .su-type.ut{color:#ffb866;}
+  :root:has(#nightmode:checked) .gb-const{fill:#3a2014;stroke:#e29a8a;}
+  :root:has(#nightmode:checked) .gb-exec{fill:#152238;stroke:#8aa6e2;}
+  :root:has(#nightmode:checked) .gb-legis{fill:#2a2316;stroke:#d9b779;}
+  :root:has(#nightmode:checked) .gb-judic{fill:#241a3a;stroke:#b39ad9;}
+  :root:has(#nightmode:checked) .gb-state{fill:#0e2a14;stroke:#9fd1a8;}
+  :root:has(#nightmode:checked) .gb-people{fill:#3a2014;stroke:#e29a8a;}
+  :root:has(#nightmode:checked) .gb-regu{fill:#0f2a24;stroke:#7fd1bf;}
+
+  /* ===== RESPONSIVE + HAMBURGER ===== */
+  img,iframe,svg{max-width:100%;height:auto;}
+  #navtoggle{position:fixed;top:0;left:0;opacity:0;pointer-events:none;width:0;height:0;clip:rect(0,0,0,0);}
+  .nav-burger{display:none;}
+  .nav-burger .burger-close{display:none;}
+  :root:has(#navtoggle:checked) .nav-burger .burger-open{display:none;}
+  :root:has(#navtoggle:checked) .nav-burger .burger-close{display:inline;}
+
+  @media (max-width:768px){
+    html{scroll-padding-top:110px;}
+    body{font-size:14px;overflow-x:hidden;}
+    header.topbar{padding:6px 8px;text-align:left;display:grid;grid-template-columns:auto 1fr auto;grid-template-areas:"burger brand toggle";gap:6px 8px;align-items:center;position:sticky;}
+    .nav-burger{grid-area:burger;position:static;display:inline-flex;align-items:center;justify-content:center;font-size:1rem;line-height:1;padding:6px 10px;min-width:40px;background:rgba(255,255,255,0.85);border:1.5px solid var(--navy);color:var(--navy);border-radius:8px;cursor:pointer;user-select:none;font-weight:700;}
+    :root:has(#nightmode:checked) .nav-burger{background:rgba(255,255,255,0.08);}
+    .nm-toggle{grid-area:toggle;position:static;top:auto;right:auto;}
+    .brand-row{grid-area:brand;justify-content:flex-start;gap:6px;margin-bottom:0;line-height:1.1;min-width:0;}
+    .brand{font-size:1.05rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+    .tagline{display:none;}
+    header.topbar nav.lens{display:none;}
+    :root:has(#navtoggle:checked) header.topbar nav.lens{display:flex;flex-direction:column;align-items:stretch;position:absolute;left:0;right:0;top:100%;width:100%;max-height:75vh;overflow-y:auto;flex-wrap:nowrap;gap:4px;padding:8px 10px 10px;margin:0;background:var(--card);border-top:1px solid var(--border);border-bottom:1px solid var(--border);box-shadow:0 10px 24px rgba(0,0,0,0.35);z-index:30;}
+    :root:has(#navtoggle:checked) header.topbar nav.lens > .lens-item,
+    :root:has(#navtoggle:checked) header.topbar nav.lens > a{width:100%;min-width:0;flex:0 0 auto;}
+    :root:has(#navtoggle:checked) header.topbar nav.lens > .lens-item > a,
+    :root:has(#navtoggle:checked) header.topbar nav.lens > a{display:block;width:100%;text-align:left;padding:9px 12px;font-size:0.85rem;}
+    .lens-drop,.lens-item:focus-within .lens-drop,.lens-item:hover .lens-drop{display:none !important;}
+    nav.lens .caret{display:none;}
+    main{padding:12px 14px 42px;max-width:100%;}
+    footer{padding:12px 14px;max-width:100%;}
+    .help{padding:8px 14px;font-size:0.78rem;}
+    .jumpbar{margin:-12px -14px 12px;padding:6px 10px;}
+    .kpis{grid-template-columns:repeat(auto-fit,minmax(130px,1fr));}
+    .dir-grid{grid-template-columns:repeat(auto-fit,minmax(150px,1fr));}
+    .card-list{grid-template-columns:1fr;padding:6px 8px 10px;}
+    .gov-grid,.insight-grid,.lens-overview .lo-grid{grid-template-columns:1fr;}
+    .ec-btn{min-height:40px;padding:8px 12px;}
+    .nm-toggle{font-size:0.7rem;padding:4px 8px;}
+  }
+  @media (max-width:480px){
+    html{scroll-padding-top:96px;}
+    .brand{font-size:1rem;}
+    h1{font-size:1.15rem;}
+    h2{font-size:1rem;}
+    .dir-grid,.kpis,.swot{grid-template-columns:1fr;}
+    .card{padding:9px 10px;}
+  }
+
+  /* ===== MEGHALAYA EXTENSIONS — party pills · tables · branch details ===== */
+  :root{
+    --bjp:#FF9933; --inc:#1E88E5; --tmc:#14B8A6; --npp:#7C3AED;
+    --udp-meg:#138808; --vpp:#c0392b; --hspdp:#8B5CF6; --ind:#6B7280;
+  }
+  .pill{display:inline-block;padding:1px 7px;border-radius:999px;font-size:0.65rem;font-weight:700;color:#fff;letter-spacing:0.3px;margin-left:4px;vertical-align:middle;}
+  .p-bjp,.p-BJP{background:var(--bjp);color:#1a1a1a;} .p-inc,.p-INC{background:var(--inc);} .p-tmc,.p-TMC{background:var(--tmc);}
+  .p-npp,.p-NPP{background:var(--npp);} .p-upd-meg,.p-UDP-MEG{background:var(--udp-meg);} .p-vpp,.p-VPP{background:var(--vpp);}
+  .p-hspdp,.p-HSPDP{background:var(--hspdp);} .p-ind,.p-IND{background:var(--ind);}
+  .legend{display:flex;flex-wrap:wrap;gap:8px;font-size:0.72rem;margin:8px 0 14px;color:var(--muted);}
+  .legend > span{display:inline-flex;align-items:center;gap:2px;}
+
+  table.bihar{width:100%;border-collapse:collapse;font-size:0.84rem;background:var(--card);border:1px solid var(--border);border-radius:8px;overflow:hidden;margin:8px 0 14px;}
+  table.bihar th, table.bihar td{padding:7px 10px;text-align:left;border-bottom:1px solid var(--border);}
+  table.bihar th{background:var(--tag);font-weight:700;color:var(--navy);font-size:0.74rem;text-transform:uppercase;letter-spacing:0.4px;}
+  table.bihar tr:last-child td{border-bottom:none;}
+  table.bihar td.r{text-align:right;font-variant-numeric:tabular-nums;}
+  table.bihar caption{caption-side:bottom;font-size:0.72rem;color:var(--muted);padding-top:6px;text-align:left;}
+  :root:has(#nightmode:checked) table.bihar th{background:#1f232b;color:#9ab3ff;}
+
+  details.branch{background:var(--card);border:1px solid var(--border);border-radius:8px;margin:10px 0;}
+  details.branch > summary{padding:10px 14px;cursor:pointer;font-weight:700;color:var(--navy);font-size:0.95rem;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:8px;}
+  details.branch > summary::-webkit-details-marker{display:none;}
+  details.branch > summary::before{content:"▸ ";color:var(--saffron);}
+  details.branch[open] > summary::before{content:"▾ ";}
+  details.branch > .b-body{padding:6px 14px 14px;}
+  details.branch > table.bihar{margin:0 14px 14px;width:calc(100% - 28px);}
+  details.branch p.verify{font-size:0.7rem;color:var(--muted);font-style:italic;padding:0 14px 10px;margin:0;}
+
+  .role-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:10px 12px;font-size:0.85rem;}
+  .role-card .role{font-size:0.68rem;text-transform:uppercase;letter-spacing:0.5px;color:var(--muted);font-weight:700;}
+  .role-card .name{font-weight:700;color:var(--ink);margin:2px 0;}
+  .role-card .meta{font-size:0.75rem;color:var(--muted);}
+  .role-card .meta a{font-size:0.75rem;}
+  .role-grid{display:grid;gap:8px;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));margin:6px 0 12px;}
+
+  .callout{background:#fff7e8;border-left:4px solid var(--saffron);padding:10px 14px;border-radius:6px;margin:14px 0;font-size:0.86rem;color:#5a3a00;}
+  .callout.warn{background:#fdecea;border-left-color:var(--red);color:#7a1b13;}
+  .callout.ok{background:#e8f5e9;border-left-color:var(--green);color:#1b4d20;}
+  :root:has(#nightmode:checked) .callout{background:#2a2316;color:#d9b779;}
+  :root:has(#nightmode:checked) .callout.warn{background:#2a1715;color:#e8a097;}
+  :root:has(#nightmode:checked) .callout.ok{background:#142a17;color:#a7d9aa;}
+
+  .src{font-size:0.72rem;color:var(--muted);font-style:italic;margin:8px 0 0;}
+  .src a{font-size:0.72rem;}
+
+  h3.grp-h{font-size:1rem;color:var(--navy);margin:18px 0 6px;border-left:4px solid var(--green);padding-left:8px;}
+  .sec-sub{color:var(--muted);font-size:0.86rem;margin:0 0 14px;}
+  .kpi .sub{font-size:0.7rem;color:var(--muted);margin-top:2px;line-height:1.3;}
+
+  /* ===== PRINT ===== */
+  @media print{
+    header.topbar,.help,.jumpbar,nav.lens,.lens-drop,footer{display:none !important;}
+    .lens-section,.lens-section:target{display:block !important;}
+    details,details[open]{display:block !important;}
+    details > *{display:revert !important;}
+    details > summary{font-weight:700;color:#000;padding:6px 0;border-bottom:1px solid #999;cursor:default;}
+    details > summary::before{content:"" !important;}
+    .card{break-inside:avoid;border:1px solid #ccc;}
+    .card a[href]::after{content:" — " attr(href);font-size:0.7em;color:#555;}
+    body{background:#fff;color:#000;font-size:11pt;}
+    a{color:#000;text-decoration:none;}
+  }
+</style>
+</head>
+<body>
+
+<!-- Hidden checkboxes drive night-mode and mobile nav with no JS -->
+<input type="checkbox" id="nightmode" aria-label="Toggle night mode" tabindex="-1">
+<input type="checkbox" id="navtoggle" aria-label="Toggle navigation menu" tabindex="-1">
+
+<header class="topbar">
+  <label for="navtoggle" class="nav-burger" title="Menu"><span class="burger-open">☰</span><span class="burger-close">✕</span></label>
+  <label for="nightmode" class="nm-toggle" title="Toggle night mode (no JavaScript)">
+    <span class="nm-ico-dark" aria-hidden="true">🌙</span><span class="nm-lbl-dark">Night</span>
+    <span class="nm-ico-light" aria-hidden="true">☀</span><span class="nm-lbl-light">Day</span>
+  </label>
+  <div class="brand-row">
+    <a class="brand" href="#h"><span class="hi">मे</span>Meghalaya Shasan</a>
+    <span class="tagline">💡 Transparency experiment · Centre → Cabinet → Legislature → District → Autonomous District Councils → Village</span>
+  </div>
+  <nav class="lens">
+    <a href="#h">🏠 Home</a>
+    <a href="#how">🛠 How it works</a>
+    <a href="#centre">🇮🇳 Meghalaya @ Centre</a>
+    <a href="#exec">🏛 State Cabinet</a>
+    <div class="lens-item">
+      <a href="#leg">🗳 Legislature <span class="caret">▾</span></a>
+      <div class="lens-drop">
+        <div class="ld-head"><span>Legislature</span><a href="#leg">View lens →</a></div>
+        <div class="ld-grid">
+          <a href="#leg-vs">Vidhan Sabha<span class="c">60</span></a>
+                <a href="#leg-off">Office-bearers<span class="c">4</span></a>
+        </div>
+      </div>
+    </div>
+    <a href="#judic">⚖ Judiciary</a>
+    <a href="#dist">📍 Districts (12)</a>
+    <a href="#pri">🌾 Sixth Schedule ADCs</a>
+    <a href="#bodies">📊 Constitutional Bodies</a>
+    <a href="#scope">📑 Scope memo</a>
+  </nav>
+</header>
+
+
+<main>
+
+
+
+<!-- =========================== HOME =========================== -->
+<section id="h" class="lens-section">
+  <h1>Meghalaya's Governance Chain — at a Glance</h1>
+  <p class="sec-sub">Every elected/appointed office in Meghalaya, by layer. The local-government lens is different: in most of the state, ordinary PRIs are replaced by Sixth Schedule Autonomous District Councils.</p>
+
+  <h2>KPI tiles — by layer</h2>
+  <div class="kpis">
+    <div class="kpi"><div class="v">0</div><div class="l">Union ministers</div><div class="sub">No Meghalaya MP in Union Council</div></div>
+    <div class="kpi"><div class="v">2</div><div class="l">Lok Sabha MPs</div><div class="sub">Shillong + Tura · 2024</div></div>
+    <div class="kpi"><div class="v">1</div><div class="l">Rajya Sabha MP</div><div class="sub">Elected by MLAs</div></div>
+    <div class="kpi"><div class="v">12</div><div class="l">State ministry</div><div class="sub">CM + 2 Dy CMs + ministers</div></div>
+    <div class="kpi"><div class="v">60</div><div class="l">MLAs</div><div class="sub">Majority mark 31</div></div>
+    <div class="kpi"><div class="v">0</div><div class="l">MLCs</div><div class="sub">No Vidhan Parishad</div></div>
+    <div class="kpi"><div class="v">12</div><div class="l">Districts</div><div class="sub">DC + SP chain</div></div>
+    <div class="kpi"><div class="v">3</div><div class="l">Autonomous District Councils</div><div class="sub">KHADC · JHADC · GHADC</div></div>
+    <div class="kpi"><div class="v">90</div><div class="l">Elected MDC seats</div><div class="sub">30 in each ADC</div></div>
+    <div class="kpi"><div class="v">46</div><div class="l">C&amp;RD blocks</div><div class="sub">Development administration</div></div>
+    <div class="kpi"><div class="v">6th</div><div class="l">Schedule state</div><div class="sub">Land, forest, customs powers</div></div>
+    <div class="kpi"><div class="v">24-May-2026</div><div class="l">Verified date</div><div class="sub">Point-in-time snapshot</div></div>
+  </div>
+
+  <h2>Pick a lens</h2>
+  <div class="dir-grid">
+    <a class="dir-tile" href="#centre" style="border-left:3px solid var(--saffron);">🇮🇳 Meghalaya @ Centre<span class="dt-c">3 MPs</span></a>
+    <a class="dir-tile" href="#exec" style="border-left:3px solid var(--green);">🏛 State Ministry<span class="dt-c">12</span></a>
+    <a class="dir-tile" href="#leg" style="border-left:3px solid var(--navy);">🗳 Legislature<span class="dt-c">60</span></a>
+    <a class="dir-tile" href="#judic" style="border-left:3px solid #8338EC;">⚖ Judiciary<span class="dt-c">4 HC judges</span></a>
+    <a class="dir-tile" href="#dist" style="border-left:3px solid var(--red);">📍 Districts<span class="dt-c">12</span></a>
+    <a class="dir-tile" href="#pri" style="border-left:3px solid var(--green);">🏞 Autonomous District Councils<span class="dt-c">3 × 30</span></a>
+    <a class="dir-tile" href="#bodies" style="border-left:3px solid #06A77D;">📊 Constitutional Bodies<span class="dt-c">10+</span></a>
+    <a class="dir-tile" href="#scope" style="border-left:3px solid var(--muted);">📑 Scope memo<span class="dt-c">read</span></a>
+  </div>
+
+  <div class="legend">
+    <span><span class="pill p-npp">NPP</span> National People's Party</span>
+    <span><span class="pill p-upd-meg">UDP</span> United Democratic Party</span>
+    <span><span class="pill p-vpp">VPP</span> Voice of the People Party</span>
+    <span><span class="pill p-bjp">BJP</span> Bharatiya Janata Party</span>
+    <span><span class="pill p-inc">INC</span> Indian National Congress</span>
+    <span><span class="pill p-tmc">TMC</span> All India Trinamool Congress</span>
+    <span><span class="pill p-hspdp">HSPDP</span> Hill State People's Democratic Party</span>
+    <span><span class="pill p-ind">IND</span> Independent</span>
+  </div>
+
+  <h2>Relmap — how the chain connects</h2>
+  <div class="relmap">
+    <h2>🔗 Centre → State → District → Autonomous District Council → Village</h2>
+    <p>Meghalaya's local-government stack is shaped by the Sixth Schedule. KHADC, JHADC and GHADC are not advisory bodies: they are elected district councils with CEM-led executive committees and law-making powers over specified tribal-area subjects.</p>
+    <svg viewBox="0 0 900 320" xmlns="http://www.w3.org/2000/svg" class="relflow" role="img" aria-label="Meghalaya governance chain">
+      <defs><marker id="bArr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#888"/></marker></defs>
+      <rect x="360" y="10" width="180" height="44" rx="6" class="gb-const"/><text x="450" y="32" text-anchor="middle" font-size="12" font-weight="700">🇮🇳 Union</text><text x="450" y="46" text-anchor="middle" font-size="10" fill="#666">2 LS · 1 RS</text>
+      <rect x="360" y="90" width="180" height="44" rx="6" class="gb-exec"/><text x="450" y="112" text-anchor="middle" font-size="12" font-weight="700">🏛 State</text><text x="450" y="126" text-anchor="middle" font-size="10" fill="#666">CM + 12 ministry · 60 MLAs</text>
+      <rect x="30" y="170" width="190" height="44" rx="6" class="gb-state"/><text x="125" y="192" text-anchor="middle" font-size="12" font-weight="700">📍 District (12)</text><text x="125" y="206" text-anchor="middle" font-size="10" fill="#666">DC · SP · line depts.</text>
+      <rect x="245" y="170" width="190" height="44" rx="6" class="gb-regu"/><text x="340" y="192" text-anchor="middle" font-size="12" font-weight="700">🏞 ADCs (3)</text><text x="340" y="206" text-anchor="middle" font-size="10" fill="#666">KHADC · JHADC · GHADC</text>
+      <rect x="460" y="170" width="190" height="44" rx="6" class="gb-legis"/><text x="555" y="192" text-anchor="middle" font-size="12" font-weight="700">🗳 MDCs (90)</text><text x="555" y="206" text-anchor="middle" font-size="10" fill="#666">30 elected per ADC</text>
+      <rect x="675" y="170" width="195" height="44" rx="6" class="gb-people"/><text x="772" y="192" text-anchor="middle" font-size="12" font-weight="700">🏘 Village bodies</text><text x="772" y="206" text-anchor="middle" font-size="10" fill="#666">Traditional/customary institutions</text>
+      <line x1="450" y1="54" x2="450" y2="86" stroke="#888" stroke-width="1.5" marker-end="url(#bArr)"/><line x1="450" y1="134" x2="125" y2="166" stroke="#888" stroke-width="1.5" marker-end="url(#bArr)"/><line x1="450" y1="134" x2="340" y2="166" stroke="#888" stroke-width="1.5" marker-end="url(#bArr)"/><line x1="340" y1="214" x2="555" y2="166" stroke="#888" stroke-width="1.5" marker-end="url(#bArr)"/><line x1="555" y1="214" x2="772" y2="166" stroke="#888" stroke-width="1.5" marker-end="url(#bArr)"/>
+      <rect x="340" y="260" width="220" height="40" rx="20" fill="#138808" opacity="0.18" stroke="#138808" stroke-width="1.5"/><text x="450" y="285" text-anchor="middle" font-size="13" font-weight="700">👥 Citizen</text>
+    </svg>
+    <p style="font-size:0.82rem;color:var(--muted);"><strong>Reading it:</strong> a Meghalayan citizen has MLA/MP representation and, in most tribal areas, an MDC in a Sixth Schedule council instead of a standard ZP-Block-GP PRI chain.</p>
+  </div>
+</section>
+
+<!-- =========================== HOW IT WORKS =========================== -->
+<section id="how" class="lens-section">
+  <h1>🛠 How this catalogue works</h1>
+  <p class="sec-sub">This page keeps the Meghalaya visual grammar but changes the local-government model: Meghalaya's Sixth Schedule ADCs carry the #pri lens.</p>
+  <div class="lens-overview"><div class="lo-grid"><div>
+    <h3>① The governance pyramid</h3>
+    <p>For Meghalaya the count jumps are small at the top (3 MPs, 60 MLAs, 12 ministers) and structurally different at the bottom: <strong>3 Autonomous District Councils</strong> with <strong>90 elected MDCs</strong>, CEMs and executive committees.</p>
+    <p>Cards use the same rule: 🟢 stable/small enough to name inline · 🟠 tally plus links · 🔴 hand off to live government registers.</p>
+  </div><div class="lo-chart"><div class="lo-chart-title">Meghalaya layers (not to scale)</div>
+    <svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Meghalaya governance pyramid">
+      <g font-family="inherit" font-size="9">
+        <polygon points="160,15 200,15 220,45 140,45" fill="var(--green)" opacity="0.9"/><text x="180" y="33" text-anchor="middle" fill="#fff" font-weight="600">Union ministers · 0</text>
+        <polygon points="140,48 220,48 240,78 120,78" fill="var(--green)" opacity="0.85"/><text x="180" y="66" text-anchor="middle" fill="#fff" font-weight="600">MPs · 3</text>
+        <polygon points="120,81 240,81 260,111 100,111" fill="var(--green)" opacity="0.8"/><text x="180" y="99" text-anchor="middle" fill="#fff" font-weight="600">State ministry · 12</text>
+        <polygon points="100,114 260,114 280,144 80,144" fill="var(--saffron)" opacity="0.85"/><text x="180" y="132" text-anchor="middle" fill="#fff" font-weight="600">MLAs · 60</text>
+        <polygon points="80,147 280,147 300,177 60,177" fill="var(--saffron)" opacity="0.8"/><text x="180" y="165" text-anchor="middle" fill="#fff" font-weight="600">Districts · 12</text>
+        <polygon points="60,180 300,180 320,205 40,205" fill="var(--red)" opacity="0.75"/><text x="180" y="197" text-anchor="middle" fill="#fff" font-weight="600">ADCs · 3 councils / 90 MDCs</text>
+        <polygon points="40,208 320,208 340,235 20,235" fill="var(--red)" opacity="0.85"/><text x="180" y="225" text-anchor="middle" fill="#fff" font-weight="600">Village customary institutions</text>
+      </g>
+    </svg>
+  </div></div></div>
+  <h3 class="grp-h">② Decision rule</h3>
+  <div class="callout ok"><strong>Local adaptation:</strong> the page does not pretend Meghalaya has the usual Zilla Parishad → Panchayat Samiti → Gram Panchayat chain across the state. It names the three ADCs and their current CEMs, then links to council/government registers for MDC rosters and village-level customary institutions.</div>
+</section>
+
+<!-- =========================== CENTRE =========================== -->
+<section id="centre" class="lens-section">
+<!-- BEGIN: CENTRE — Union ministers + LS MPs (2 rows) + RS MP (1 row). -->
+  <h1>🇮🇳 Meghalaya's Representation at the Union</h1>
+  <p class="sec-sub">No Union Council minister from Meghalaya in the current Modi 3.0 ministry; all 2 Lok Sabha MPs and the single Rajya Sabha MP are listed below.</p>
+
+  <details class="branch" open>
+    <summary><span>Union Council of Ministers from Meghalaya</span><span class="ct">0</span></summary>
+    <div class="b-body"><p>No sitting MP from Meghalaya is listed in the Union Council of Ministers as of 24-May-2026.</p></div>
+    <p class="src">Source: <a href="https://www.india.gov.in/my-government/whos-who/council-ministers" target="_blank" rel="noopener">India.gov.in Council of Ministers</a>.</p>
+  </details>
+
+  <details class="branch" open>
+    <summary><span>Lok Sabha — all 2 MPs from Meghalaya</span><span class="ct">18th LS · 2024</span></summary>
+    <table class="bihar"><thead><tr><th>#</th><th>Constituency</th><th>Member of Parliament</th><th>Party</th></tr></thead><tbody>
+      <tr><td class="r">1</td><td>Shillong (ST)</td><td>Dr. Ricky Andrew J. Syngkon</td><td><span class="pill p-vpp">VPP</span></td></tr>
+      <tr><td class="r">2</td><td>Tura (ST)</td><td>Saleng A. Sangma</td><td><span class="pill p-inc">INC</span></td></tr>
+    </tbody><caption>Count reconciles to LS seats = 2.</caption></table>
+    <p class="src">Sources: <a href="https://sansad.in/ls/members" target="_blank" rel="noopener">Sansad Lok Sabha members</a>; <a href="https://meghalaya.gov.in/key-contacts/mp" target="_blank" rel="noopener">Meghalaya MP contacts</a>.</p>
+  </details>
+
+  <details class="branch" open>
+    <summary><span>Rajya Sabha — Meghalaya's 1 seat</span><span class="ct">NPP</span></summary>
+    <table class="bihar"><thead><tr><th>#</th><th>Member</th><th>Party</th><th>Term note</th></tr></thead><tbody>
+      <tr><td class="r">1</td><td>Dr. Wanweiroy Kharlukhi</td><td><span class="pill p-npp">NPP</span></td><td>Term continuing through 19-Jun-2026</td></tr>
+    </tbody><caption>Count reconciles to RS seats = 1.</caption></table>
+    <p class="src">Sources: <a href="https://sansad.in/rs/member" target="_blank" rel="noopener">Sansad Rajya Sabha members</a>; <a href="https://meghalaya.gov.in/rajyasabha/37102" target="_blank" rel="noopener">Meghalaya portal profile</a>.</p>
+  </details><!-- END: CENTRE -->
+
+</section>
+
+<!-- =========================== EXECUTIVE =========================== -->
+<section id="exec" class="lens-section">
+<!-- BEGIN: EXEC — Triumvirate + cabinet portfolio table + apex civil service. -->
+  <h1>🏛 State Executive — Conrad K. Sangma Ministry</h1>
+  <p class="sec-sub">MDA 2.0 ministry led by NPP Chief Minister Conrad K. Sangma, with two Deputy Chief Ministers.</p>
+
+  <h3 class="grp-h">Triumvirate</h3>
+  <div class="role-grid">
+    <div class="role-card"><div class="role">Chief Minister</div><div class="name">Conrad K. Sangma<span class="pill p-npp">NPP</span></div><div class="meta">Finance, Home (Political), Forests &amp; Environment, Cabinet Affairs and unallocated portfolios</div></div>
+    <div class="role-card"><div class="role">Deputy Chief Minister</div><div class="name">Prestone Tynsong<span class="pill p-npp">NPP</span></div><div class="meta">District Council Affairs, Home (Police), Parliamentary Affairs, PWD (Roads/Buildings)</div></div>
+    <div class="role-card"><div class="role">Deputy Chief Minister</div><div class="name">Sniawbhalang Dhar<span class="pill p-npp">NPP</span></div><div class="meta">Commerce &amp; Industries, Prisons, Transport, Urban Affairs</div></div>
+  </div>
+
+  <h3 class="grp-h">Council of Ministers — Portfolio map</h3>
+  <table class="bihar"><thead><tr><th>Minister</th><th>Party</th><th>Portfolio(s)</th></tr></thead><tbody>
+    <tr><td>Conrad K. Sangma</td><td><span class="pill p-npp">NPP</span></td><td>Cabinet Affairs; Elections; Finance; Forests &amp; Environment; Home (Political); IT; Mining &amp; Geology; Personnel; Planning; Programme Implementation; unallocated</td></tr>
+    <tr><td>Prestone Tynsong</td><td><span class="pill p-npp">NPP</span></td><td>District Council Affairs; Home (Police); Parliamentary Affairs; PWD (R/B)</td></tr>
+    <tr><td>Sniawbhalang Dhar</td><td><span class="pill p-npp">NPP</span></td><td>Commerce &amp; Industries; Prisons; Transport; Urban Affairs</td></tr>
+    <tr><td>Marcuise N. Marak</td><td><span class="pill p-npp">NPP</span></td><td>Housing; Public Health Engineering; Soil &amp; Water Conservation</td></tr>
+    <tr><td>Metbah Lyngdoh</td><td><span class="pill p-upd-meg">UDP</span></td><td>Power; Textiles; Water Resources; Taxation</td></tr>
+    <tr><td>Timothy D. Shira</td><td><span class="pill p-npp">NPP</span></td><td>Agriculture &amp; Farmers' Welfare; Fisheries; Tourism</td></tr>
+    <tr><td>Brening A. Sangma</td><td><span class="pill p-npp">NPP</span></td><td>Border Areas Development; Civil Defence &amp; Home Guards; Excise</td></tr>
+    <tr><td>Lahkmen Rymbui</td><td><span class="pill p-upd-meg">UDP</span></td><td>Education; IPR; Law; Revenue &amp; Disaster Management</td></tr>
+    <tr><td>Sanbor Shullai</td><td><span class="pill p-bjp">BJP</span></td><td>Animal Husbandry &amp; Veterinary; Arts &amp; Culture; Legal Metrology; Printing &amp; Stationery</td></tr>
+    <tr><td>Sosthenes Sohtun</td><td><span class="pill p-npp">NPP</span></td><td>Community &amp; Rural Development; General Administration; Secretariat Administration</td></tr>
+    <tr><td>Wailadmiki Shylla</td><td><span class="pill p-npp">NPP</span></td><td>Health &amp; Family Welfare; Home (Passport); Sports &amp; Youth Affairs</td></tr>
+    <tr><td>Methodius Dkhar</td><td><span class="pill p-npp">NPP</span></td><td>Cooperation; Labour, Employment &amp; Skill Development; Food Civil Supplies &amp; Consumer Affairs; Registration &amp; Stamps</td></tr>
+  </tbody><caption>12-member ministry on Meghalaya portal.</caption></table>
+
+  <h3 class="grp-h">Apex Civil Service</h3>
+  <div class="role-grid">
+    <div class="role-card"><div class="role">Governor</div><div class="name">C. H. Vijayashankar</div><div class="meta">Constitutional head · <a href="https://meggovernor.gov.in/" target="_blank" rel="noopener">Lok Bhavan</a></div></div>
+    <div class="role-card"><div class="role">Chief Secretary</div><div class="name">Dr. Shakil P. Ahammed, IAS</div><div class="meta">State Secretariat apex civil servant</div></div>
+    <div class="role-card"><div class="role">DGP / Head of Police Force</div><div class="name">Idashisha Nongrang, IPS</div><div class="meta"><a href="https://meghalaya.gov.in/node/46728" target="_blank" rel="noopener">Appointment notification</a></div></div>
+    <div class="role-card"><div class="role">Chief Electoral Officer</div><div class="name">B. D. R. Tiwari, IAS</div><div class="meta"><a href="https://ceomeghalaya.nic.in/" target="_blank" rel="noopener">CEO Meghalaya</a></div></div>
+  </div>
+  <p class="src">Sources: <a href="https://meghalaya.gov.in/key-contacts/council-of-ministers" target="_blank" rel="noopener">Meghalaya Council of Ministers</a>; <a href="https://meggovernor.gov.in/" target="_blank" rel="noopener">Lok Bhavan Meghalaya</a>; <a href="https://meghalaya.gov.in/node/46728" target="_blank" rel="noopener">DGP notification</a>.</p><!-- END: EXEC -->
+
+</section>
+
+<!-- =========================== LEGISLATURE =========================== -->
+<section id="leg" class="lens-section">
+<!-- BEGIN: LEG — Vidhan Sabha tally + officers; no Vidhan Parishad. -->
+  <h1>🗳 Meghalaya Legislature — Unicameral</h1>
+  <div class="jumpbar"><span class="jb-label">Jump to</span><a href="#leg-vs">Vidhan Sabha</a><a href="#leg-off">Office-bearers</a></div>
+  <h3 class="grp-h" id="leg-vs">Vidhan Sabha — 60 seats</h3>
+  <table class="bihar"><thead><tr><th>Alliance / Party</th><th class="r">Seats</th><th>Notes</th></tr></thead><tbody>
+    <tr><td><strong>MDA 2.0</strong> — NPP <span class="pill p-npp">NPP</span></td><td class="r">33</td><td>Ruling party; includes later accessions shown on official MLA roster</td></tr>
+    <tr><td>MDA — UDP <span class="pill p-upd-meg">UDP</span></td><td class="r">12</td><td>Coalition partner</td></tr>
+    <tr><td>MDA — BJP <span class="pill p-bjp">BJP</span></td><td class="r">2</td><td>Coalition partner</td></tr>
+    <tr><td>MDA — HSPDP <span class="pill p-hspdp">HSPDP</span></td><td class="r">2</td><td>Coalition partner</td></tr>
+    <tr><td>MDA — Independents <span class="pill p-ind">IND</span></td><td class="r">2</td><td>Supporting MLAs</td></tr>
+    <tr><td><strong>MDA total</strong></td><td class="r"><strong>51</strong></td><td>Majority mark: 31</td></tr>
+    <tr><td>AITC / TMC <span class="pill p-tmc">TMC</span></td><td class="r">5</td><td>Leader of Opposition party</td></tr>
+    <tr><td>Voice of the People Party <span class="pill p-vpp">VPP</span></td><td class="r">4</td><td>Opposition</td></tr>
+    <tr><td><strong>Total</strong></td><td class="r"><strong>60</strong></td><td>Unicameral legislature; no Vidhan Parishad</td></tr>
+  </tbody><caption>Counts parsed from the official Meghalaya MLA roster pages as of the verification date.</caption></table>
+
+  <h3 class="grp-h" id="leg-off">Key office-bearers</h3>
+  <div class="role-grid">
+    <div class="role-card"><div class="role">Speaker</div><div class="name">Thomas A. Sangma<span class="pill p-npp">NPP</span></div><div class="meta">Presiding officer</div></div>
+    <div class="role-card"><div class="role">Leader of the House</div><div class="name">Conrad K. Sangma<span class="pill p-npp">NPP</span></div><div class="meta">Chief Minister</div></div>
+    <div class="role-card"><div class="role">Leader of Opposition</div><div class="name">Dr. Mukul Sangma<span class="pill p-tmc">TMC</span></div><div class="meta">Recognised from 28-Aug-2024</div></div>
+    <div class="role-card"><div class="role">Deputy Speaker</div><div class="name">Office-bearer roster</div><div class="meta"><a href="https://megassembly.gov.in/" target="_blank" rel="noopener">Assembly site</a></div></div>
+  </div>
+  <div class="callout"><strong>No Vidhan Parishad:</strong> Meghalaya has a 60-seat Legislative Assembly and no Legislative Council.</div>
+  <p class="src">Sources: <a href="https://meghalaya.gov.in/key-contacts/mla" target="_blank" rel="noopener">Meghalaya MLA roster</a>; <a href="https://megassembly.gov.in/" target="_blank" rel="noopener">Meghalaya Legislative Assembly</a>; ECI results for the 2023 Assembly baseline.</p><!-- END: LEG -->
+
+</section>
+
+<!-- =========================== JUDICIARY =========================== -->
+<section id="judic" class="lens-section">
+<!-- BEGIN: JUDIC — HC Chief Justice + judges + judicial administration. -->
+  <h1>⚖ Judiciary — High Court of Meghalaya at Shillong</h1>
+  <p class="sec-sub">The High Court of Meghalaya sits at Shillong. The official Who's Who lists the Chief Justice, three companion judges and registry officers.</p>
+  <div class="role-grid">
+    <div class="role-card"><div class="role">Chief Justice</div><div class="name">Hon'ble Mrs. Justice Revati Mohite Dere</div><div class="meta"><a href="http://meghalayahighcourt.nic.in/whos-who" target="_blank" rel="noopener">High Court Who's Who</a></div></div>
+    <div class="role-card"><div class="role">Judge</div><div class="name">Hon'ble Mr. Justice Hamarsan Singh Thangkhiew</div><div class="meta">High Court of Meghalaya</div></div>
+    <div class="role-card"><div class="role">Judge</div><div class="name">Hon'ble Mr. Justice Wanlura Diengdoh</div><div class="meta">High Court of Meghalaya</div></div>
+    <div class="role-card"><div class="role">Judge</div><div class="name">Hon'ble Mr. Justice Biswadeep Bhattacharjee</div><div class="meta">High Court of Meghalaya</div></div>
+    <div class="role-card"><div class="role">Registrar General</div><div class="name">Shri E. Kharumnuid, MHJS</div><div class="meta">Registry administration</div></div>
+    <div class="role-card"><div class="role">Advocate General</div><div class="name">State Law Department roster</div><div class="meta"><a href="https://meghalaya.gov.in/departments/law-department" target="_blank" rel="noopener">Law Department</a></div></div>
+  </div>
+  <details class="branch"><summary><span>District judiciary</span><span class="ct">12 districts</span></summary><div class="b-body"><p>District &amp; Sessions Courts operate through the eCourts services layer and district court pages; the High Court controls subordinate judiciary postings.</p><p><a href="https://districts.ecourts.gov.in/meghalaya" target="_blank" rel="noopener">eCourts Meghalaya district courts</a></p></div></details>
+  <p class="src">Sources: <a href="http://meghalayahighcourt.nic.in/whos-who" target="_blank" rel="noopener">High Court of Meghalaya Who's Who</a>; <a href="https://services.ecourts.gov.in/ecourtindia_v6/" target="_blank" rel="noopener">eCourts</a>.</p><!-- END: JUDIC -->
+
+</section>
+
+<!-- =========================== DISTRICTS =========================== -->
+<section id="dist" class="lens-section">
+<!-- BEGIN: DIST — District map from public GeoJSON + 12-row districts table. -->
+  <h1>📍 District Administration — 12 Districts</h1>
+  <p class="sec-sub">Each district is headed by a Deputy Commissioner and Superintendent of Police. District names, headquarters, area and population are from the Meghalaya portal's district table.</p>
+  <div class="callout">The source GeoJSON contains 11 district features and predates the separate Eastern West Khasi Hills boundary. The generated map uses the source features and adds a marked Mairang label so the table still reconciles to the current 12 districts.</div>
+  <h3 class="grp-h">🗺 District distribution — coloured by ADC hill region</h3>
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:14px;"><svg viewBox="0 0 760 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Map of Meghalaya showing district boundaries grouped by Khasi, Jaintia and Garo Hills autonomous council regions" style="width:100%;height:auto;display:block;background:#fffdf6;border-radius:6px;font-family:inherit;">
+<rect x="0" y="0" width="760" height="460" rx="6" fill="#fffdf6"/>
+<path d="M505.2,83.6 L504.2,84.1 L503.8,84.8 L503.5,85.6 L502.7,86.4 L502.0,87.3 L501.5,88.0 L501.4,88.8 L500.6,89.1 L500.0,89.9 L499.4,89.0 L498.6,89.8 L498.1,90.7 L497.6,91.4 L497.2,92.1 L496.7,92.9 L495.9,93.1 L495.2,92.2 L494.4,91.7 L493.6,91.7 L493.1,92.3 L492.5,92.9 L492.0,93.6 L491.5,94.3 L490.9,94.9 L490.3,95.5 L490.0,96.2 L489.3,96.5 L488.7,97.0 L488.0,97.5 L487.3,97.9 L486.4,97.9 L485.6,98.1 L484.8,98.8 L483.9,99.1 L483.1,99.4 L482.4,99.8 L482.9,100.5 L483.7,100.4 L483.2,101.3 L482.8,102.0 L482.5,102.8 L481.6,103.1 L480.9,103.4 L480.8,104.3 L480.6,105.4 L480.4,106.2 L480.5,107.3 L480.7,108.2 L480.9,109.1 L480.9,109.9 L480.9,110.7 L480.4,111.5 L480.1,112.3 L480.1,113.1 L480.1,114.7 L480.0,115.5 L479.9,116.4 L479.7,117.1 L479.6,118.0 L480.1,118.8 L479.8,119.5 L479.7,120.6 L479.9,121.4 L479.9,122.4 L479.9,123.3 L480.0,124.1 L479.6,124.8 L480.2,125.4 L479.7,126.2 L479.9,127.1 L479.8,127.9 L479.2,128.7 L478.7,129.4 L478.3,130.1 L477.7,130.9 L476.9,131.2 L476.1,131.3 L475.5,131.9 L475.1,132.6 L474.5,133.2 L474.1,133.9 L473.6,134.6 L473.0,135.2 L472.4,135.8 L472.0,136.5 L471.6,137.4 L470.6,137.6 L469.7,138.2 L469.3,139.0 L468.8,139.7 L468.4,140.4 L467.8,140.9 L467.0,141.2 L466.4,140.6 L465.6,140.5 L464.8,140.7 L464.0,140.8 L463.2,140.9 L462.5,140.2 L462.0,139.6 L461.3,139.0 L460.8,138.2 L460.3,137.6 L459.7,137.1 L459.0,136.6 L458.2,136.5 L457.8,135.8 L456.8,135.6 L456.4,134.8 L455.9,134.1 L455.2,133.8 L454.4,133.5 L453.9,132.8 L453.1,132.6 L452.9,131.9 L453.2,131.1 L453.8,130.6 L454.7,130.6 L455.5,130.6 L456.3,130.6 L456.9,131.1 L457.6,131.0 L457.7,130.0 L458.1,129.1 L458.2,128.2 L458.5,127.4 L458.9,126.5 L459.4,125.9 L460.3,125.7 L460.2,124.9 L459.5,124.2 L459.0,123.5 L458.3,123.0 L457.8,122.4 L457.5,121.6 L457.5,120.8 L457.3,119.9 L456.9,118.9 L457.6,118.5 L457.9,117.5 L457.6,116.8 L457.5,115.9 L457.7,115.0 L458.0,114.1 L458.5,113.5 L458.5,112.7 L458.4,111.9 L458.3,111.0 L458.2,110.2 L457.6,109.6 L456.7,109.5 L456.0,109.1 L455.2,108.7 L454.4,108.8 L453.4,109.0 L452.8,109.4 L451.9,109.6 L451.0,109.8 L450.5,110.4 L449.7,110.6 L449.2,110.0 L448.7,109.1 L448.3,108.4 L447.9,107.7 L447.2,107.3 L446.3,107.1 L445.6,106.8 L445.0,107.6 L444.2,108.1 L443.7,108.7 L443.3,109.4 L443.3,110.2 L443.2,111.0 L443.9,111.5 L443.3,112.2 L442.6,112.7 L442.1,113.3 L441.7,114.0 L442.0,114.8 L441.2,115.3 L440.9,116.2 L440.4,117.2 L440.1,118.0 L439.5,118.6 L439.2,119.4 L438.9,120.7 L438.8,121.6 L438.2,122.1 L437.4,122.1 L436.7,122.9 L435.8,123.3 L435.2,124.0 L434.9,125.0 L435.0,125.8 L434.2,125.7 L433.4,126.1 L432.5,126.0 L431.9,126.5 L431.0,126.4 L430.5,127.1 L430.7,128.2 L430.7,129.2 L431.0,130.0 L431.1,131.0 L431.0,131.8 L430.1,131.4 L430.0,132.2 L429.7,132.9 L429.7,133.7 L428.9,133.9 L428.3,134.5 L427.7,135.0 L427.2,135.6 L426.9,136.4 L426.8,137.3 L427.3,137.9 L427.2,138.7 L427.5,139.5 L428.0,138.7 L428.5,138.1 L429.4,137.9 L430.1,137.5 L430.9,136.9 L431.5,136.2 L432.1,135.6 L432.9,135.4 L433.5,134.8 L434.3,134.5 L434.8,133.6 L435.2,132.9 L435.3,133.9 L434.8,134.5 L434.4,135.4 L433.6,135.7 L433.2,136.3 L432.5,136.7 L431.8,137.3 L431.4,138.0 L430.6,138.2 L430.2,138.9 L428.9,139.5 L428.3,140.2 L427.6,140.4 L427.2,141.3 L427.1,142.2 L426.6,142.9 L426.1,143.6 L426.8,144.2 L427.4,144.7 L426.5,144.9 L425.7,144.4 L424.8,143.8 L423.9,143.9 L422.9,144.3 L422.2,144.7 L421.7,145.3 L421.1,146.1 L421.0,147.4 L420.8,148.3 L420.3,149.2 L420.6,150.0 L420.8,150.8 L421.7,151.1 L422.8,151.4 L423.9,151.5 L424.8,151.5 L425.7,151.5 L426.5,152.0 L427.6,151.8 L428.7,151.8 L429.6,151.7 L430.0,150.9 L430.7,150.3 L431.3,149.5 L431.6,148.7 L431.8,147.7 L431.6,146.7 L432.1,145.9 L432.6,145.0 L433.5,145.3 L434.2,145.6 L434.8,146.4 L434.0,147.2 L433.7,148.0 L434.0,149.0 L433.9,149.8 L432.9,149.7 L431.9,149.8 L431.0,150.5 L430.3,151.4 L429.8,152.1 L428.7,152.2 L427.8,152.1 L427.0,152.2 L426.3,152.7 L425.4,152.3 L424.6,152.3 L423.6,152.4 L422.5,152.1 L421.9,152.7 L421.2,153.7 L420.4,153.9 L419.6,153.6 L418.7,153.6 L418.0,154.0 L417.3,154.2 L416.6,155.1 L415.4,156.0 L414.8,156.6 L413.9,157.3 L413.9,158.1 L413.2,158.7 L412.4,158.3 L411.6,158.0 L410.8,157.7 L410.0,156.8 L409.5,156.1 L409.1,155.5 L408.3,155.1 L407.2,154.8 L406.3,154.9 L405.4,155.0 L404.6,155.4 L403.8,155.8 L402.9,155.6 L402.0,156.0 L400.8,156.5 L399.5,156.7 L398.6,156.8 L397.8,157.0 L396.9,157.1 L395.9,156.9 L395.3,157.5 L394.8,158.1 L394.0,158.6 L393.1,158.4 L392.3,158.4 L391.5,158.6 L390.8,159.0 L389.4,158.7 L388.8,159.3 L388.1,162.8 L390.5,165.3 L392.4,167.6 L393.5,167.6 L395.3,168.7 L397.4,169.1 L399.5,168.1 L400.9,168.0 L405.4,168.7 L406.6,168.5 L407.7,171.2 L409.6,171.5 L411.3,171.4 L412.3,170.7 L413.2,171.4 L415.0,171.2 L416.1,170.7 L416.3,172.5 L418.4,172.3 L419.3,172.0 L420.3,171.6 L421.5,170.3 L424.0,170.3 L425.6,169.7 L427.3,170.0 L429.9,169.6 L434.0,168.9 L435.5,169.7 L438.3,167.8 L440.2,167.2 L445.6,166.6 L447.5,166.2 L448.6,167.0 L449.8,168.0 L450.6,166.7 L453.2,166.8 L455.9,166.6 L458.3,166.7 L460.3,167.6 L461.4,168.3 L462.5,167.1 L464.3,166.3 L465.0,165.5 L468.0,166.4 L471.7,166.9 L474.3,168.1 L475.9,166.0 L476.6,164.0 L480.6,162.1 L484.0,161.6 L486.9,162.1 L489.6,165.1 L491.9,167.0 L494.0,170.8 L496.1,171.9 L496.2,174.2 L494.1,178.4 L494.0,179.2 L490.7,182.9 L491.4,184.6 L492.4,184.3 L492.7,185.5 L494.2,186.1 L495.2,185.8 L495.0,187.2 L496.2,187.5 L498.4,187.8 L499.9,187.4 L501.1,187.3 L501.8,188.4 L502.7,190.6 L502.3,194.8 L503.9,195.6 L505.9,199.3 L505.4,202.2 L506.0,203.3 L507.3,211.3 L516.6,211.0 L523.0,210.8 L524.7,210.7 L528.2,210.6 L537.1,210.6 L539.9,210.6 L541.2,210.5 L542.9,210.6 L554.8,211.4 L562.5,212.0 L567.7,212.2 L570.4,212.2 L579.7,212.0 L579.3,211.3 L580.1,211.5 L580.7,212.1 L581.6,211.8 L582.4,211.5 L583.1,211.1 L583.6,210.4 L583.4,209.6 L583.6,208.8 L584.1,209.9 L584.4,210.7 L585.2,210.3 L585.3,209.4 L585.1,208.5 L584.9,207.6 L584.5,206.9 L583.9,206.3 L583.8,205.4 L583.9,204.6 L584.3,203.9 L585.0,203.5 L585.8,203.0 L586.2,202.3 L586.3,201.4 L586.4,200.5 L585.9,199.8 L585.5,199.1 L585.3,198.2 L585.5,197.3 L584.9,196.6 L585.0,195.8 L585.0,195.0 L584.7,194.2 L583.9,194.1 L583.2,193.6 L582.8,192.9 L582.5,192.1 L582.7,191.2 L583.0,190.5 L583.3,189.6 L584.1,189.4 L584.9,189.5 L585.4,188.7 L585.9,188.0 L586.3,186.9 L586.8,186.2 L586.9,185.4 L586.9,184.6 L586.4,184.0 L585.9,183.3 L585.3,182.6 L585.0,181.9 L585.2,180.9 L584.6,180.4 L584.3,179.4 L584.0,178.6 L583.8,177.8 L583.7,177.0 L583.4,176.3 L584.2,175.9 L584.4,175.1 L583.8,174.7 L583.3,174.0 L583.3,173.1 L583.3,172.2 L583.6,171.4 L583.8,170.6 L583.5,169.6 L583.6,168.6 L583.5,167.8 L584.0,167.1 L584.4,166.4 L584.2,165.4 L584.4,164.6 L585.2,164.3 L585.5,163.6 L586.2,164.0 L586.5,163.1 L586.8,162.4 L586.5,161.6 L586.7,160.8 L586.8,160.0 L587.6,159.9 L588.2,159.2 L588.9,158.6 L589.0,157.8 L589.2,157.0 L589.3,156.2 L589.9,155.7 L590.6,155.1 L590.5,154.0 L590.9,153.3 L590.5,152.7 L590.4,151.7 L590.2,150.9 L590.3,150.0 L591.0,149.5 L591.8,148.9 L592.6,148.7 L593.4,148.1 L594.0,147.4 L594.7,146.8 L595.2,146.2 L595.7,145.5 L596.4,145.1 L597.2,144.8 L598.0,144.7 L598.7,144.2 L599.6,143.8 L599.6,143.0 L600.1,142.3 L600.9,142.5 L601.4,141.8 L601.5,140.9 L602.0,140.3 L601.5,139.7 L600.7,139.5 L599.9,139.6 L598.9,139.9 L598.0,139.8 L597.3,140.1 L596.7,140.6 L595.9,140.2 L595.1,139.9 L594.5,139.3 L594.9,138.6 L595.0,137.7 L594.1,138.2 L593.3,138.6 L592.7,138.1 L592.0,138.7 L591.5,139.5 L590.8,139.7 L590.3,140.4 L589.5,140.5 L588.6,140.0 L587.7,139.9 L586.9,139.5 L586.0,139.7 L585.1,139.6 L585.0,138.8 L585.5,138.0 L585.7,137.1 L586.2,136.5 L586.3,135.5 L586.3,134.8 L586.2,133.9 L586.3,133.1 L585.5,132.7 L585.0,132.1 L584.4,131.5 L584.4,130.6 L585.2,129.8 L585.6,129.1 L585.7,128.2 L586.5,127.9 L587.1,127.1 L586.7,126.5 L586.7,125.5 L586.8,124.6 L587.2,123.9 L587.9,123.4 L588.5,122.8 L589.4,122.8 L590.2,122.3 L590.8,121.7 L591.1,120.8 L591.2,119.9 L592.1,119.5 L593.0,119.8 L593.7,119.4 L594.7,119.1 L595.5,118.9 L595.1,118.2 L595.3,117.2 L596.2,117.0 L596.6,116.2 L596.8,115.4 L597.5,115.8 L598.2,116.2 L598.4,115.5 L598.7,114.6 L599.5,114.4 L600.4,114.6 L601.1,114.0 L601.9,114.1 L602.5,113.5 L603.2,113.5 L604.0,113.2 L604.4,112.5 L605.2,112.0 L605.7,111.4 L606.4,111.1 L606.4,110.3 L606.9,109.6 L607.6,109.5 L608.1,108.8 L608.6,108.1 L609.5,107.9 L610.3,107.4 L611.2,106.9 L611.7,106.2 L611.3,105.3 L610.8,104.8 L611.6,104.2 L612.4,104.2 L612.9,103.2 L612.8,102.4 L612.3,101.7 L611.5,101.3 L611.4,100.4 L611.9,99.8 L612.8,99.4 L613.1,98.5 L613.9,98.3 L613.2,97.8 L612.6,97.4 L611.9,97.8 L611.0,97.9 L610.3,98.3 L609.5,98.4 L608.7,98.6 L608.0,98.5 L606.9,98.6 L606.2,98.8 L605.4,99.0 L604.7,98.5 L603.8,98.4 L603.0,98.3 L602.6,97.6 L601.8,97.4 L601.1,96.9 L600.3,97.0 L599.5,97.3 L598.7,97.1 L597.9,96.7 L597.4,97.3 L596.4,97.1 L595.6,97.1 L594.8,97.2 L594.0,97.4 L593.3,97.5 L592.5,97.1 L591.7,97.1 L591.1,96.6 L590.5,97.2 L590.3,96.4 L590.2,95.7 L590.9,95.2 L590.3,94.7 L589.5,94.8 L588.7,94.8 L588.0,95.2 L587.4,95.7 L586.7,96.2 L586.0,96.8 L585.4,97.2 L584.7,97.6 L584.0,98.3 L583.5,98.9 L582.9,99.4 L582.4,100.2 L581.7,100.7 L580.9,100.9 L580.2,101.4 L580.0,102.2 L579.9,103.0 L579.6,103.7 L578.9,103.4 L578.0,103.6 L577.3,103.9 L576.6,103.4 L575.7,103.2 L575.1,102.8 L574.4,102.3 L573.7,102.1 L572.9,102.3 L572.1,102.4 L571.1,102.4 L570.3,102.6 L569.5,103.0 L568.6,103.5 L567.8,103.8 L567.1,104.2 L566.3,104.4 L565.6,105.0 L564.9,105.5 L564.2,105.8 L563.5,106.3 L562.7,106.4 L561.9,106.3 L561.1,106.5 L560.4,106.8 L559.6,106.8 L558.8,106.6 L558.1,106.3 L557.4,105.9 L556.5,105.9 L556.0,105.4 L555.2,105.2 L554.4,105.1 L553.6,105.4 L552.8,105.3 L552.1,105.1 L551.5,105.7 L550.8,105.3 L550.1,105.8 L549.4,105.5 L548.6,105.8 L547.9,106.1 L547.2,105.8 L546.4,105.5 L545.6,105.4 L544.8,105.3 L544.7,106.1 L544.3,106.8 L544.1,107.6 L543.7,108.3 L543.0,108.5 L542.2,108.4 L541.5,108.9 L541.1,109.6 L540.3,109.8 L539.5,109.9 L538.7,110.3 L538.0,110.5 L537.2,110.9 L536.4,111.2 L535.8,111.7 L535.0,111.5 L534.2,112.2 L533.4,112.4 L532.6,112.6 L531.8,112.7 L531.0,112.3 L530.5,113.1 L530.5,113.9 L530.1,114.7 L529.7,115.4 L529.1,115.9 L528.2,116.3 L527.4,116.1 L526.7,115.8 L526.4,115.0 L526.5,114.2 L525.9,113.7 L526.5,113.2 L525.9,112.6 L526.6,112.1 L526.6,111.4 L526.9,110.6 L526.4,110.0 L525.6,109.9 L524.9,109.6 L524.2,109.3 L523.3,109.4 L522.5,109.2 L521.8,108.7 L521.1,108.5 L520.3,108.2 L519.5,108.4 L518.7,108.2 L518.3,107.5 L518.2,106.6 L517.6,106.1 L517.1,105.4 L516.9,104.6 L516.7,103.7 L515.9,104.3 L515.7,103.5 L516.1,102.8 L516.5,102.1 L516.1,101.3 L516.2,100.4 L516.4,99.5 L516.6,98.6 L516.7,97.8 L517.0,97.0 L517.3,96.1 L517.6,95.2 L517.6,94.5 L517.9,93.6 L517.8,92.8 L517.9,92.0 L517.7,91.1 L518.0,90.4 L518.3,89.6 L517.7,89.0 L516.9,88.6 L516.0,88.8 L515.2,88.5 L514.4,88.0 L513.6,87.9 L512.7,87.4 L511.9,86.9 L511.2,86.5 L510.3,86.4 L509.6,86.2 L508.8,85.8 L508.1,85.5 L507.5,84.9 L507.0,84.3 L506.0,83.7 Z" fill="#138808" fill-opacity="0.78" stroke="#ffffff" stroke-width="1.1"><title>Ribhoi (Khasi Hills)</title></path>
+<path d="M486.9,162.1 L484.0,161.6 L480.6,162.1 L476.6,164.0 L475.9,166.0 L474.3,168.1 L471.7,166.9 L468.0,166.4 L465.0,165.5 L464.3,166.3 L462.5,167.1 L461.4,168.3 L460.3,167.6 L458.3,166.7 L455.9,166.6 L453.6,166.8 L450.6,166.7 L449.8,168.0 L448.6,167.0 L447.5,166.2 L445.6,166.6 L440.2,167.2 L438.3,167.8 L435.5,169.7 L434.0,168.9 L429.9,169.6 L427.3,170.0 L425.6,169.7 L424.0,170.3 L421.5,170.3 L420.3,171.6 L419.3,172.0 L418.4,172.3 L416.3,172.5 L416.1,170.7 L415.0,171.2 L413.2,171.4 L412.3,170.7 L411.3,171.4 L409.6,171.5 L407.7,171.2 L407.0,169.1 L405.4,168.7 L400.9,168.0 L399.5,168.1 L397.4,169.1 L395.3,168.7 L393.5,167.6 L392.4,167.6 L390.5,165.3 L388.1,162.8 L388.2,159.3 L387.4,159.1 L386.7,158.5 L386.2,159.1 L386.1,160.0 L385.8,160.9 L385.3,161.6 L384.5,162.5 L383.7,163.3 L383.2,164.0 L383.1,164.8 L382.7,165.5 L382.2,166.2 L381.5,166.8 L381.3,167.6 L380.7,168.4 L380.5,169.2 L380.0,170.0 L379.5,170.7 L379.1,171.4 L378.6,172.1 L378.4,172.9 L377.9,173.4 L377.4,174.1 L376.9,174.7 L376.7,175.6 L376.2,176.2 L375.5,176.7 L375.5,177.6 L375.3,178.4 L374.7,179.1 L374.1,179.6 L373.5,180.2 L372.9,180.8 L372.6,181.6 L372.0,182.3 L370.9,183.2 L369.4,183.9 L364.7,187.3 L359.2,190.2 L356.2,189.4 L353.8,186.6 L351.4,183.4 L351.0,182.7 L351.1,181.8 L351.1,180.8 L350.9,180.0 L351.1,179.1 L350.5,178.6 L349.8,178.2 L350.0,177.4 L349.7,176.6 L349.0,176.1 L348.5,175.5 L348.6,174.6 L349.2,174.0 L349.4,173.1 L349.5,172.3 L349.7,171.5 L349.8,170.7 L349.9,169.9 L350.1,169.1 L350.6,168.3 L350.8,167.5 L351.1,166.7 L351.4,166.0 L350.8,165.4 L350.4,164.5 L350.7,163.7 L351.1,163.0 L351.8,162.5 L352.4,161.9 L352.3,161.1 L352.4,160.2 L353.1,159.8 L353.5,159.0 L354.2,158.5 L354.6,157.8 L353.9,156.9 L353.3,156.4 L353.0,155.5 L353.2,154.7 L352.8,154.1 L352.8,153.2 L352.1,153.9 L351.6,154.7 L351.1,155.5 L350.3,155.8 L349.5,156.4 L349.1,157.2 L348.1,157.5 L347.3,157.4 L346.4,157.0 L345.5,156.6 L344.7,156.3 L344.0,156.0 L343.1,155.8 L342.1,155.7 L341.0,155.8 L340.3,156.3 L339.6,156.9 L338.9,157.4 L338.2,157.9 L337.0,157.9 L336.2,158.5 L335.7,159.1 L335.1,159.8 L334.6,160.5 L333.4,160.7 L331.7,160.8 L330.7,160.8 L329.6,160.9 L328.3,161.0 L327.4,161.1 L326.1,161.2 L325.0,161.4 L324.0,161.6 L323.1,161.9 L322.2,162.2 L321.5,162.5 L320.6,163.5 L319.6,163.2 L318.9,162.8 L317.8,162.0 L317.1,161.5 L317.8,161.0 L318.7,161.0 L319.5,160.5 L319.6,159.6 L320.5,159.3 L321.2,159.0 L322.0,159.3 L322.9,158.7 L322.9,157.9 L323.0,157.0 L323.3,156.3 L324.0,155.8 L323.2,155.8 L322.6,156.3 L321.9,156.8 L321.1,156.6 L320.3,156.8 L319.5,156.6 L318.7,156.3 L317.7,156.3 L316.8,156.2 L316.5,157.1 L316.0,157.7 L315.5,158.4 L315.0,159.2 L314.0,159.8 L313.1,160.0 L312.8,160.8 L312.1,161.2 L311.4,162.1 L310.9,162.7 L310.2,163.2 L309.3,163.4 L308.5,163.6 L307.7,163.9 L306.7,163.9 L305.8,163.0 L305.0,163.4 L304.8,164.4 L304.2,164.9 L303.8,165.8 L302.9,166.3 L302.5,166.9 L301.9,167.5 L301.4,168.1 L301.1,169.0 L300.8,170.0 L299.8,170.1 L299.3,170.9 L298.8,171.7 L298.3,172.5 L297.6,173.1 L297.1,173.8 L296.7,174.5 L296.0,175.1 L295.3,175.6 L294.6,175.8 L293.9,176.3 L293.0,176.2 L292.4,176.8 L291.8,177.3 L291.3,178.0 L290.9,178.8 L290.9,179.6 L290.4,180.3 L290.9,181.1 L291.4,181.8 L292.2,181.9 L293.2,181.0 L293.9,180.7 L294.4,181.9 L294.9,182.6 L295.6,183.0 L296.4,182.9 L299.3,182.7 L300.1,183.2 L300.9,183.5 L301.3,184.5 L300.8,185.3 L300.2,185.8 L299.6,186.5 L298.9,186.8 L298.5,187.6 L298.1,188.2 L298.0,189.0 L297.2,189.3 L296.5,189.7 L296.1,190.5 L296.1,191.3 L295.9,192.1 L295.1,192.4 L294.6,193.1 L294.2,193.7 L293.9,194.5 L294.0,195.3 L293.4,195.9 L293.1,196.6 L292.8,197.3 L292.7,198.2 L292.6,199.0 L292.0,199.7 L291.3,200.0 L290.5,200.2 L289.7,200.5 L289.4,201.3 L289.4,202.1 L288.7,202.5 L288.5,203.3 L288.1,203.9 L287.5,204.4 L287.3,205.1 L287.1,206.0 L286.3,206.3 L285.6,206.8 L285.4,207.7 L284.8,208.2 L284.1,208.6 L283.3,208.9 L283.3,209.7 L283.5,210.6 L283.1,211.3 L282.9,212.1 L282.4,212.8 L281.8,213.3 L281.0,213.4 L280.2,213.2 L279.6,213.7 L279.3,214.4 L278.5,214.9 L278.1,215.6 L277.7,216.4 L277.0,217.0 L276.4,217.5 L276.0,218.2 L276.0,219.0 L275.9,219.8 L275.6,220.6 L274.8,220.4 L274.5,221.1 L274.2,222.0 L273.5,222.4 L272.7,222.3 L272.0,222.2 L271.2,222.6 L270.7,223.2 L270.0,223.5 L269.3,223.7 L269.0,224.5 L268.2,224.7 L267.3,224.7 L266.7,225.3 L265.9,225.6 L265.2,226.1 L264.5,225.8 L263.8,225.4 L263.0,225.7 L262.4,226.3 L261.7,226.5 L261.5,227.3 L261.2,228.1 L260.6,228.8 L260.2,229.5 L259.3,229.3 L259.0,228.5 L258.7,227.8 L258.3,227.0 L257.5,226.5 L257.1,227.2 L256.8,228.0 L256.3,228.7 L255.5,228.3 L255.0,229.0 L255.1,229.9 L254.9,230.6 L254.0,231.3 L253.6,230.5 L253.4,229.7 L253.0,228.9 L252.6,228.3 L252.5,227.4 L251.6,227.6 L251.1,228.1 L250.5,228.8 L249.9,229.6 L249.5,230.3 L249.4,231.1 L249.5,231.9 L248.9,232.5 L248.4,233.2 L249.0,233.8 L249.6,234.3 L248.9,234.8 L248.2,235.4 L247.6,236.1 L248.1,236.8 L248.8,237.2 L248.6,238.0 L249.1,238.6 L249.7,239.3 L250.5,239.4 L250.9,240.1 L251.7,240.9 L251.9,241.8 L251.8,242.7 L251.6,243.6 L252.3,244.1 L252.6,244.8 L253.3,245.4 L252.3,245.8 L252.8,246.6 L253.3,247.3 L254.0,247.7 L254.3,248.5 L253.6,249.2 L253.3,250.1 L253.1,251.3 L253.7,252.0 L254.3,252.5 L254.3,253.8 L253.6,254.2 L253.0,254.8 L253.0,255.7 L251.7,256.0 L250.9,256.1 L250.6,257.0 L250.4,258.0 L251.1,258.6 L252.3,258.2 L253.2,258.2 L254.1,258.4 L254.1,259.2 L253.7,260.0 L252.4,260.4 L251.3,261.0 L250.3,261.7 L250.5,262.5 L249.8,262.8 L248.6,262.5 L247.5,261.4 L246.5,261.5 L245.6,262.4 L245.1,263.1 L245.9,263.9 L246.7,263.9 L247.4,264.5 L247.6,265.5 L247.3,266.6 L246.6,267.8 L246.1,268.5 L246.4,269.3 L247.1,269.8 L247.3,270.8 L247.2,271.7 L248.0,272.1 L247.8,273.0 L247.7,274.1 L247.3,274.8 L247.8,275.7 L247.7,276.5 L247.7,277.3 L246.7,277.8 L245.8,278.3 L245.4,279.1 L244.4,279.4 L243.9,280.4 L244.1,281.6 L244.2,282.4 L245.0,282.7 L245.8,282.5 L246.6,282.7 L247.1,283.3 L247.8,283.9 L248.0,284.8 L248.4,285.6 L249.2,285.7 L250.0,285.7 L250.9,285.7 L251.1,286.6 L251.9,286.6 L252.7,286.4 L253.6,286.0 L254.3,285.6 L255.2,285.5 L256.1,285.3 L256.8,285.1 L257.6,285.4 L258.5,285.4 L259.3,285.7 L260.1,285.8 L260.5,286.7 L260.5,287.5 L261.4,287.6 L262.1,288.1 L262.8,288.6 L263.5,289.0 L264.1,288.4 L264.7,289.0 L265.4,288.6 L266.1,289.0 L266.7,289.7 L266.7,290.5 L267.5,290.8 L267.4,291.6 L266.8,292.3 L266.4,293.0 L266.0,293.9 L266.4,294.6 L266.4,295.5 L266.3,296.2 L266.5,297.0 L265.9,297.5 L266.0,298.4 L266.2,299.2 L266.6,299.9 L266.0,300.6 L266.2,301.5 L269.4,300.5 L270.9,298.8 L273.0,295.6 L274.7,294.6 L276.8,295.0 L277.4,295.5 L279.1,295.8 L280.2,294.6 L280.7,292.8 L283.6,292.0 L284.6,291.9 L285.6,290.7 L286.8,289.9 L288.1,291.3 L289.2,292.2 L291.5,291.1 L294.6,292.2 L296.2,293.0 L299.3,293.0 L299.3,290.6 L298.3,288.1 L299.6,287.3 L301.9,286.2 L302.3,284.4 L301.6,283.6 L302.6,282.4 L305.3,283.4 L305.8,284.8 L306.9,286.8 L307.1,288.4 L308.5,289.6 L309.0,290.4 L311.3,293.3 L315.2,293.3 L317.4,292.3 L321.0,293.8 L323.0,296.5 L326.0,298.3 L328.5,297.3 L329.1,295.5 L327.7,292.7 L326.7,291.6 L328.0,289.1 L327.0,288.0 L328.2,286.8 L330.9,283.9 L334.7,280.8 L337.3,279.2 L338.7,277.0 L336.1,274.7 L333.2,273.2 L331.0,269.2 L331.0,267.1 L338.1,263.4 L343.4,260.5 L346.2,259.1 L347.7,259.5 L347.4,261.9 L348.9,263.9 L349.7,262.3 L351.7,260.4 L353.9,260.8 L356.0,260.4 L356.5,262.7 L359.2,263.8 L359.3,262.4 L359.3,260.6 L361.1,260.1 L363.5,264.0 L367.0,268.9 L370.2,274.3 L374.1,273.6 L374.5,271.3 L376.8,268.2 L379.3,267.9 L380.0,266.7 L380.1,264.9 L383.3,264.6 L386.9,263.1 L395.0,261.0 L399.2,261.5 L404.4,261.3 L407.6,259.6 L411.5,260.1 L412.4,261.5 L417.5,262.6 L424.9,262.7 L430.6,261.8 L431.7,260.3 L432.7,258.4 L433.4,255.5 L436.9,254.6 L438.3,254.8 L438.3,252.9 L437.7,251.9 L436.4,250.3 L436.9,249.1 L436.5,247.0 L437.8,247.1 L438.2,246.0 L441.4,245.6 L446.2,244.4 L452.3,240.2 L454.2,238.8 L456.1,239.7 L457.7,238.8 L458.6,237.7 L458.8,236.8 L460.2,236.8 L462.3,236.3 L463.6,236.0 L464.0,237.0 L464.6,238.9 L464.8,242.4 L466.3,242.9 L467.6,244.0 L470.2,243.7 L472.2,243.0 L473.3,241.8 L474.3,241.5 L474.9,241.0 L473.9,238.5 L474.5,237.5 L478.0,235.6 L478.4,234.1 L479.8,233.7 L480.5,232.7 L482.0,232.9 L482.7,232.0 L482.9,229.8 L484.4,230.1 L492.1,227.0 L492.8,226.1 L494.5,225.9 L495.4,224.4 L499.0,220.5 L499.1,219.4 L498.5,218.0 L498.8,215.6 L500.8,213.6 L501.1,211.4 L501.8,208.8 L501.1,207.3 L502.1,206.4 L505.6,204.5 L506.0,203.3 L505.4,202.2 L505.9,199.3 L503.9,195.6 L502.3,194.8 L502.7,190.6 L501.8,188.4 L501.1,187.3 L499.9,187.4 L498.4,187.8 L496.9,187.3 L495.0,187.2 L495.2,185.8 L494.2,186.1 L492.7,185.5 L492.4,184.3 L491.4,184.6 L490.7,182.9 L493.4,179.4 L494.1,178.4 L496.2,174.2 L496.1,171.9 L494.0,170.8 L491.9,167.0 L489.6,165.1 Z" fill="#138808" fill-opacity="0.78" stroke="#ffffff" stroke-width="1.1"><title>West Khasi Hills (Khasi Hills)</title></path>
+<path d="M688.5,257.5 L687.1,258.3 L686.7,259.0 L685.3,259.7 L684.5,259.8 L684.8,260.6 L685.1,261.5 L684.0,261.9 L682.7,261.7 L681.7,261.3 L680.7,260.9 L679.7,261.2 L679.4,262.5 L679.1,263.4 L678.6,264.3 L677.9,265.1 L677.8,266.0 L677.2,267.1 L676.6,267.6 L675.7,267.6 L675.0,267.1 L674.1,267.0 L673.9,266.1 L672.9,265.9 L672.1,266.4 L671.3,265.6 L670.5,265.5 L669.7,265.3 L668.9,265.6 L667.9,265.6 L667.1,265.6 L666.2,265.8 L665.3,266.1 L664.5,266.6 L664.2,267.4 L663.4,267.8 L662.7,267.9 L662.1,268.6 L661.5,269.0 L660.5,269.6 L659.7,269.8 L658.7,269.7 L657.8,269.8 L657.3,270.4 L656.6,271.0 L655.9,270.5 L654.9,270.5 L654.5,271.2 L653.6,271.3 L652.7,271.5 L651.9,271.7 L651.0,271.8 L650.2,272.1 L649.2,272.2 L648.4,272.2 L647.6,272.4 L646.7,272.7 L646.0,273.0 L645.2,273.2 L644.4,273.3 L643.6,273.8 L642.8,274.0 L641.9,274.2 L641.1,274.5 L640.3,274.6 L639.3,274.9 L638.6,275.1 L637.8,275.3 L636.8,275.3 L636.2,274.7 L635.3,274.5 L634.8,275.2 L634.1,275.4 L633.3,275.6 L632.4,275.7 L631.7,276.0 L630.8,276.0 L630.0,276.3 L629.2,276.6 L628.4,276.8 L627.6,276.6 L627.0,277.1 L626.2,277.4 L612.6,277.9 L607.8,279.8 L607.1,280.2 L606.9,281.2 L606.7,282.1 L605.5,282.2 L604.6,282.3 L603.9,283.2 L603.3,283.8 L602.3,283.9 L601.1,284.4 L599.9,284.7 L599.0,285.2 L598.0,285.4 L597.3,285.8 L596.6,286.2 L595.8,286.0 L595.2,286.6 L594.0,286.6 L593.3,287.3 L592.6,287.9 L591.7,288.0 L590.9,288.4 L590.4,289.0 L589.6,289.3 L589.4,290.6 L589.4,292.1 L589.0,293.3 L589.3,294.3 L590.2,294.7 L590.2,295.6 L590.3,296.5 L590.7,297.2 L591.1,297.9 L591.4,298.6 L591.9,299.4 L592.6,300.0 L592.8,301.0 L593.4,301.4 L594.2,302.1 L594.1,302.9 L593.5,303.3 L594.0,304.0 L594.7,304.6 L595.5,305.6 L595.6,307.1 L596.2,307.7 L596.1,308.8 L595.6,309.8 L595.4,310.6 L595.5,311.8 L595.6,312.9 L596.2,314.3 L596.3,315.4 L597.2,323.2 L600.7,323.8 L602.4,325.9 L604.4,330.6 L604.2,334.8 L602.0,340.3 L598.0,344.7 L598.5,345.6 L597.3,347.3 L595.9,350.6 L597.6,350.9 L600.6,351.6 L601.9,352.4 L601.4,353.3 L599.6,353.3 L598.2,354.2 L599.1,355.0 L601.3,356.8 L603.1,358.1 L605.0,358.9 L606.6,359.7 L608.7,360.3 L611.0,361.3 L612.6,362.0 L613.9,362.4 L615.0,363.1 L616.2,363.6 L617.8,364.2 L619.5,364.9 L620.7,365.0 L622.2,364.9 L623.3,364.5 L624.5,363.8 L625.9,362.5 L627.1,362.0 L628.3,362.1 L630.1,363.3 L630.5,365.1 L630.8,366.4 L630.7,367.7 L630.5,369.3 L631.0,370.7 L632.1,371.2 L634.0,371.3 L635.9,370.9 L637.1,372.1 L638.6,372.4 L640.5,372.4 L641.8,373.0 L642.9,373.8 L644.8,375.2 L646.4,375.3 L648.1,375.0 L649.8,376.1 L650.8,376.3 L651.6,376.2 L652.0,375.2 L653.2,374.9 L653.8,374.4 L653.9,373.4 L653.7,372.5 L654.5,372.1 L655.3,372.2 L656.0,372.8 L656.6,373.3 L657.5,373.5 L658.3,373.7 L659.0,374.3 L659.8,374.2 L659.8,373.4 L660.0,372.6 L659.5,371.9 L659.3,371.1 L658.6,371.5 L658.3,370.4 L658.2,369.7 L658.8,369.0 L659.5,369.5 L659.8,368.7 L660.3,368.1 L660.5,367.3 L661.0,366.6 L661.7,366.3 L661.9,365.4 L661.7,364.6 L661.6,363.8 L662.3,363.4 L662.7,362.6 L663.2,362.0 L663.3,361.2 L663.4,360.3 L663.1,359.5 L663.2,358.5 L663.2,357.7 L663.3,356.9 L663.6,355.9 L663.9,355.1 L664.8,355.0 L665.9,355.2 L666.7,355.3 L667.4,354.9 L668.7,355.2 L669.5,355.7 L670.8,356.2 L672.2,356.1 L673.1,355.7 L674.2,356.1 L675.4,356.3 L675.8,357.0 L676.8,357.6 L677.8,357.7 L677.8,356.8 L677.4,356.0 L677.1,355.2 L676.5,354.4 L676.1,353.7 L675.6,352.8 L675.2,351.9 L674.7,351.2 L674.2,350.4 L674.1,349.5 L674.1,348.5 L673.6,347.6 L674.1,346.8 L674.5,347.7 L676.1,348.1 L676.9,348.3 L677.9,348.4 L679.1,349.0 L679.9,349.1 L680.9,349.4 L681.6,350.0 L682.4,350.0 L683.0,349.3 L683.9,349.3 L685.1,349.8 L685.9,349.3 L686.8,349.2 L687.6,349.1 L688.4,349.7 L689.2,349.7 L690.4,349.8 L691.1,350.4 L691.6,351.4 L692.9,351.2 L693.9,351.1 L694.8,351.2 L695.6,351.7 L696.1,352.3 L696.8,353.1 L697.7,353.4 L698.4,352.8 L698.9,351.6 L699.4,350.8 L699.8,350.0 L699.5,349.2 L699.6,348.4 L699.6,347.5 L700.1,346.8 L700.6,346.1 L701.4,345.7 L701.9,344.8 L702.6,344.4 L703.4,343.9 L704.2,343.8 L705.1,343.4 L706.0,343.0 L706.8,341.9 L707.0,340.7 L706.9,339.9 L707.1,338.9 L707.0,338.0 L707.8,337.3 L708.5,336.8 L709.2,337.5 L709.6,336.7 L710.2,336.2 L710.8,335.6 L711.6,335.2 L712.3,335.5 L713.0,336.0 L713.9,335.8 L714.9,336.2 L715.9,335.7 L716.6,334.9 L717.3,333.9 L718.1,333.5 L718.9,333.3 L719.6,332.8 L720.4,332.2 L721.0,331.6 L722.0,331.3 L722.9,330.9 L723.8,330.8 L724.7,330.6 L725.7,330.5 L726.5,330.1 L726.9,329.3 L727.5,328.7 L728.4,328.8 L729.0,329.3 L729.9,329.8 L730.9,330.1 L731.9,330.0 L732.6,329.9 L733.4,329.6 L734.1,329.9 L734.8,330.4 L735.5,330.6 L736.5,329.9 L737.1,329.4 L737.6,328.5 L738.3,327.9 L739.1,327.7 L740.1,327.9 L740.9,327.3 L741.5,326.8 L742.0,326.2 L741.8,325.3 L741.0,324.9 L740.2,324.5 L739.6,324.0 L738.8,323.9 L737.8,323.1 L736.9,322.4 L736.1,322.4 L735.0,322.6 L734.3,322.1 L734.2,321.2 L733.9,320.3 L733.3,319.6 L732.7,318.9 L732.1,318.0 L732.4,317.2 L733.1,316.5 L733.9,316.6 L734.7,316.8 L735.4,316.2 L735.7,315.3 L735.8,314.6 L735.0,313.7 L734.3,313.2 L733.7,312.7 L734.5,312.0 L735.4,311.8 L736.0,311.2 L736.6,310.7 L738.0,310.6 L738.7,309.8 L739.0,309.0 L739.5,308.3 L739.0,307.4 L738.4,306.6 L738.2,305.8 L738.3,304.9 L737.8,304.1 L737.2,303.5 L736.9,302.7 L736.8,301.8 L737.3,301.1 L737.9,300.3 L737.8,299.1 L737.7,298.3 L737.5,297.4 L737.4,296.3 L737.2,295.4 L736.8,294.7 L736.0,294.5 L735.2,294.0 L734.2,293.4 L733.4,293.9 L732.8,294.4 L732.0,294.7 L731.4,294.2 L730.9,293.6 L730.5,292.9 L730.1,292.1 L729.3,291.9 L729.1,291.1 L729.2,290.2 L728.9,289.4 L728.5,288.6 L728.1,287.8 L727.2,287.6 L726.5,286.6 L726.5,285.8 L725.3,285.5 L725.1,284.1 L725.6,283.3 L726.2,282.8 L725.3,282.2 L724.2,282.2 L723.3,282.4 L722.4,282.6 L721.9,283.8 L721.0,283.7 L720.7,282.8 L719.8,281.5 L719.3,280.8 L718.0,281.0 L717.2,280.9 L716.4,280.2 L716.1,279.4 L715.8,278.3 L715.3,277.4 L714.6,276.9 L713.8,276.1 L713.0,275.6 L712.3,275.2 L711.5,274.6 L711.1,273.8 L710.7,273.0 L709.8,272.9 L708.8,273.3 L708.6,274.1 L708.2,275.0 L707.2,274.6 L706.5,273.7 L706.1,272.9 L705.6,272.2 L705.2,270.8 L705.3,269.8 L705.5,268.9 L706.0,268.0 L704.9,268.5 L704.3,269.2 L703.8,270.1 L703.1,270.7 L702.9,271.7 L702.0,271.8 L701.6,270.5 L701.6,269.6 L700.9,268.8 L700.2,268.3 L699.5,267.6 L699.0,268.4 L699.6,270.1 L699.5,270.9 L698.8,271.2 L698.0,270.9 L697.1,270.7 L696.4,271.3 L696.0,272.2 L695.0,273.2 L694.1,272.9 L693.9,271.8 L694.1,270.9 L694.6,269.7 L694.3,268.9 L693.7,268.0 L693.6,266.8 L693.7,265.5 L693.7,264.5 L693.8,263.7 L692.6,263.5 L692.4,261.8 L692.5,261.0 L692.7,260.2 L693.0,259.4 L692.5,258.5 L691.8,257.9 L690.9,257.9 L689.8,258.6 L689.0,259.2 Z" fill="#FF9933" fill-opacity="0.78" stroke="#ffffff" stroke-width="1.1"><title>East Jaintia Hills (Jaintia Hills)</title></path>
+<path d="M507.3,211.3 L506.0,203.3 L505.6,204.5 L502.3,205.7 L501.1,207.3 L501.8,208.8 L501.1,211.4 L500.8,213.6 L498.8,215.6 L498.5,218.0 L499.1,219.4 L499.0,220.5 L495.4,224.4 L494.5,225.9 L492.8,226.1 L492.1,227.0 L484.4,230.1 L482.9,229.8 L482.7,232.0 L482.0,232.9 L480.5,232.7 L479.8,233.7 L478.4,234.1 L478.0,235.6 L474.5,237.5 L473.9,238.5 L474.9,241.0 L474.3,241.5 L473.3,241.8 L472.2,243.0 L470.2,243.7 L467.6,244.0 L466.3,242.9 L464.8,242.4 L464.6,238.9 L464.0,237.0 L463.6,236.0 L462.3,236.3 L460.2,236.8 L458.8,236.8 L458.6,237.7 L457.7,238.8 L456.1,239.7 L454.2,238.8 L452.3,240.2 L446.2,244.4 L441.4,245.6 L438.2,246.0 L437.8,247.1 L436.5,247.0 L436.9,249.1 L436.4,250.3 L437.5,251.6 L438.3,252.9 L438.3,254.8 L438.4,256.1 L438.8,256.8 L440.0,262.6 L440.1,264.7 L439.5,266.4 L440.1,267.3 L439.9,269.0 L438.2,270.6 L437.6,271.6 L437.7,273.2 L436.7,275.0 L436.3,276.5 L436.3,279.7 L435.5,282.4 L435.9,283.8 L435.5,284.9 L433.6,288.5 L432.5,289.2 L432.3,290.5 L432.5,291.7 L433.5,292.1 L436.0,294.2 L437.6,294.5 L438.4,295.5 L438.1,296.6 L439.1,298.2 L438.3,300.4 L439.1,302.4 L438.6,303.5 L438.0,307.2 L437.0,309.2 L434.3,310.0 L433.1,309.0 L431.8,309.4 L425.4,308.1 L423.7,309.3 L423.4,311.4 L422.6,313.1 L421.3,313.5 L420.0,312.9 L419.7,311.9 L418.5,311.4 L417.2,312.1 L414.3,311.2 L411.4,310.9 L407.7,313.9 L405.1,313.1 L404.0,313.4 L402.8,313.4 L401.8,315.4 L400.8,316.7 L399.1,318.2 L398.6,319.9 L396.2,318.8 L395.2,319.0 L393.7,321.2 L391.9,321.0 L391.1,321.3 L391.0,322.7 L393.2,329.1 L397.3,336.7 L399.3,338.5 L401.3,339.0 L403.1,339.6 L404.4,339.3 L405.5,337.9 L406.7,338.6 L407.2,339.5 L408.0,340.4 L409.9,342.4 L410.9,342.6 L411.7,343.4 L413.3,344.0 L414.5,344.0 L415.9,343.6 L417.5,343.6 L418.4,344.1 L418.5,345.4 L419.4,347.7 L421.0,348.0 L422.9,348.0 L424.7,348.1 L426.5,347.4 L427.3,346.7 L427.4,345.7 L428.3,345.3 L429.5,345.4 L431.0,345.5 L433.2,345.3 L435.4,344.9 L436.5,344.5 L437.9,344.2 L439.4,343.6 L440.2,342.8 L441.2,341.8 L443.1,341.1 L444.4,340.3 L444.8,339.3 L445.7,338.5 L446.9,338.3 L448.9,338.1 L451.3,337.6 L452.6,338.0 L451.0,339.5 L451.0,341.2 L451.5,343.2 L450.9,344.8 L451.9,345.8 L453.0,345.4 L454.1,344.9 L455.1,344.9 L456.4,345.7 L457.0,346.8 L457.4,349.1 L459.0,350.4 L460.8,350.8 L462.0,350.2 L462.9,349.1 L464.3,349.0 L465.4,349.5 L466.4,349.0 L468.0,347.4 L469.5,347.2 L470.6,347.4 L472.2,347.1 L473.4,346.5 L474.3,345.5 L475.5,343.9 L476.0,342.1 L477.6,341.8 L478.8,342.0 L480.0,342.3 L481.3,343.2 L482.3,343.5 L483.8,343.9 L485.5,344.3 L486.4,342.9 L486.3,341.9 L486.0,340.8 L485.5,339.3 L486.2,338.1 L487.6,338.5 L488.7,338.8 L490.8,339.3 L492.3,339.4 L493.9,339.2 L494.9,339.0 L496.2,339.0 L498.1,339.0 L499.5,338.8 L500.6,338.8 L502.0,338.2 L503.0,338.2 L504.4,337.5 L506.4,337.5 L507.8,336.5 L509.0,336.2 L511.6,337.1 L513.4,337.2 L516.4,337.2 L517.5,336.9 L519.1,336.6 L521.4,335.8 L523.0,335.7 L524.7,335.6 L526.5,335.1 L529.9,335.2 L531.9,335.1 L534.7,335.0 L536.0,335.2 L537.7,335.6 L538.8,336.0 L540.1,336.8 L541.4,337.9 L543.4,338.2 L544.4,337.2 L545.3,335.6 L546.5,334.7 L548.0,333.8 L550.1,333.4 L551.4,333.8 L552.3,333.0 L552.8,331.2 L552.6,330.0 L551.4,329.3 L550.0,328.7 L549.3,328.2 L548.0,325.8 L546.8,324.3 L546.4,322.1 L544.7,319.9 L543.9,318.3 L543.9,316.5 L543.4,315.5 L542.9,314.4 L543.1,313.4 L543.3,312.5 L543.4,311.2 L543.8,310.5 L544.5,309.3 L545.0,308.4 L545.7,307.7 L546.6,307.3 L547.3,306.5 L547.9,305.7 L548.1,304.8 L548.4,303.9 L549.4,303.7 L550.3,303.4 L551.1,302.8 L551.6,301.7 L552.1,301.1 L552.9,300.8 L553.9,300.3 L554.7,300.1 L555.6,299.7 L556.2,299.0 L557.1,298.8 L557.9,298.6 L558.5,298.1 L559.3,298.0 L560.2,298.0 L560.5,298.7 L560.4,299.6 L561.2,300.0 L561.8,299.2 L562.7,299.0 L563.7,298.7 L564.6,299.0 L564.9,299.8 L565.7,299.9 L566.7,299.9 L567.5,300.1 L568.0,300.8 L569.1,300.3 L569.8,299.8 L570.2,300.5 L570.8,301.2 L572.0,302.2 L572.8,302.4 L573.8,302.2 L574.7,301.9 L574.9,301.1 L575.2,300.1 L575.4,299.3 L575.3,298.4 L575.2,297.6 L575.8,297.1 L575.8,296.3 L576.3,295.5 L575.4,295.1 L574.8,294.5 L574.3,293.7 L574.8,292.8 L575.0,291.9 L574.8,291.1 L574.4,290.3 L573.8,289.9 L573.4,289.1 L573.6,288.3 L573.9,287.4 L574.4,286.7 L574.3,285.8 L574.3,284.9 L574.4,284.1 L574.6,283.3 L574.5,282.6 L574.4,281.7 L574.1,280.9 L573.4,279.9 L573.0,278.9 L572.6,278.0 L572.1,277.2 L572.5,276.5 L573.4,276.1 L574.1,275.5 L574.8,274.4 L574.8,273.6 L574.2,272.2 L574.1,271.3 L574.1,270.4 L573.8,269.5 L572.9,269.0 L572.4,268.0 L572.4,267.1 L572.6,266.2 L572.4,265.4 L571.9,264.5 L571.1,264.2 L570.5,263.4 L570.6,262.6 L571.6,261.4 L572.3,260.9 L572.8,260.1 L573.2,259.3 L573.7,258.6 L573.9,257.7 L573.6,256.8 L573.6,256.0 L573.4,255.0 L572.7,254.4 L571.8,254.1 L571.0,253.6 L570.6,252.8 L570.5,251.9 L570.7,251.0 L571.1,250.3 L571.4,249.4 L571.8,248.7 L571.7,247.9 L571.8,247.0 L571.1,246.3 L571.4,245.5 L572.2,245.0 L573.1,244.3 L573.4,243.4 L573.3,242.5 L573.5,241.7 L573.6,240.8 L573.7,239.9 L574.3,239.4 L574.9,238.8 L575.1,238.0 L574.9,237.2 L574.1,236.5 L573.5,236.0 L573.2,235.3 L573.3,234.6 L573.1,233.7 L573.2,233.0 L573.4,232.2 L574.1,231.7 L574.1,230.9 L574.5,230.1 L575.0,229.5 L575.6,229.0 L576.1,227.8 L576.9,227.7 L577.1,226.9 L576.8,226.2 L576.7,225.4 L576.9,224.5 L577.7,224.1 L577.1,223.2 L576.9,222.5 L576.8,221.5 L577.4,220.8 L578.0,220.0 L578.8,219.7 L579.2,219.1 L579.6,218.0 L580.2,217.3 L580.8,216.9 L581.0,216.1 L580.6,215.3 L580.1,214.7 L580.0,213.9 L580.1,213.0 L579.7,212.1 L570.4,212.2 L567.7,212.2 L562.5,212.0 L554.8,211.4 L542.9,210.6 L541.2,210.5 L539.9,210.6 L537.1,210.6 L528.2,210.6 L524.7,210.7 L523.0,210.8 L516.6,211.0 Z" fill="#138808" fill-opacity="0.78" stroke="#ffffff" stroke-width="1.1"><title>East Khasi Hills (Khasi Hills)</title></path>
+<path d="M247.9,235.7 L246.9,236.0 L244.7,237.1 L243.0,238.5 L239.9,241.0 L233.0,248.0 L227.5,254.9 L222.7,262.8 L221.8,266.5 L219.2,272.5 L218.0,272.7 L216.1,271.8 L212.9,270.9 L209.6,270.1 L203.5,271.0 L201.4,269.3 L196.7,267.8 L188.7,267.8 L184.6,266.4 L183.4,264.9 L182.5,264.8 L181.7,264.5 L181.0,264.1 L179.5,263.6 L178.5,263.6 L177.5,263.0 L176.6,262.7 L175.6,262.6 L174.7,262.0 L173.7,261.8 L172.9,261.4 L171.6,261.3 L170.7,260.9 L169.9,260.5 L168.7,260.6 L167.8,260.7 L166.9,260.8 L165.9,260.7 L165.1,260.9 L164.2,260.8 L163.6,261.5 L162.6,262.1 L161.7,261.5 L161.1,260.6 L160.3,260.8 L159.4,261.2 L158.5,261.3 L157.7,261.3 L156.9,261.7 L156.1,261.4 L155.4,260.9 L154.6,261.0 L153.8,261.0 L153.0,261.1 L152.1,261.5 L151.1,261.4 L150.0,261.3 L149.2,261.0 L148.2,260.8 L147.4,260.5 L146.8,261.1 L145.9,261.5 L144.0,261.5 L143.2,261.3 L142.5,260.8 L141.9,260.3 L141.0,260.2 L140.4,259.6 L137.5,267.4 L136.6,271.8 L139.0,281.0 L137.8,286.1 L134.5,289.3 L131.2,292.9 L126.4,298.0 L125.0,301.5 L125.0,309.7 L123.0,316.1 L122.4,316.8 L118.6,321.1 L118.3,325.6 L119.6,329.5 L121.1,329.8 L122.9,330.4 L124.8,331.5 L126.1,331.7 L127.7,331.4 L128.7,331.3 L129.8,331.1 L131.3,331.7 L132.1,332.3 L133.6,333.4 L134.9,333.7 L135.9,333.8 L136.9,334.0 L137.9,334.0 L139.3,333.8 L141.5,333.4 L143.4,332.7 L144.5,333.7 L146.0,335.4 L147.4,336.5 L148.3,337.5 L149.8,338.4 L151.7,339.4 L153.6,340.2 L154.5,340.8 L156.0,341.2 L157.4,341.4 L159.5,341.7 L162.2,342.3 L163.7,343.6 L164.9,343.9 L166.0,344.6 L167.2,344.9 L168.5,345.1 L170.7,345.6 L172.1,344.7 L172.7,343.8 L173.9,343.3 L176.1,343.2 L177.5,342.8 L179.4,342.2 L180.4,341.3 L181.7,340.8 L183.5,340.1 L186.7,339.0 L188.9,338.9 L195.4,338.3 L198.3,338.4 L201.9,338.0 L207.6,337.6 L211.3,337.5 L213.2,337.9 L215.7,337.9 L217.2,337.7 L217.3,336.4 L219.0,336.0 L220.4,335.5 L220.8,334.4 L221.0,333.1 L221.7,332.4 L224.1,334.7 L224.6,336.3 L225.0,337.9 L226.5,339.2 L227.8,338.6 L228.8,339.5 L229.9,341.0 L231.0,341.3 L232.9,341.3 L234.7,340.8 L236.2,340.0 L237.6,340.0 L239.1,341.3 L240.4,342.7 L241.7,343.0 L242.4,342.0 L242.2,340.8 L242.6,339.9 L245.4,339.9 L247.3,339.9 L248.8,338.5 L249.9,336.4 L250.8,335.3 L252.0,334.9 L254.5,335.3 L255.8,336.3 L257.1,337.9 L259.0,339.3 L261.6,340.3 L265.2,340.7 L266.8,340.8 L270.1,341.4 L273.6,341.4 L275.5,340.7 L277.9,339.5 L279.0,339.6 L280.8,340.0 L283.1,340.7 L284.5,340.4 L287.0,339.9 L289.5,339.2 L291.9,338.8 L294.5,338.5 L296.9,338.2 L297.9,337.9 L298.4,332.8 L297.7,330.2 L295.4,329.5 L294.5,327.3 L293.1,326.6 L293.1,325.6 L294.0,324.5 L293.9,322.9 L295.0,322.2 L295.5,321.2 L295.3,318.0 L294.7,317.0 L294.3,316.3 L293.9,315.5 L293.3,315.1 L292.5,314.5 L291.7,314.0 L291.0,313.6 L290.8,312.9 L290.3,312.0 L289.6,311.1 L289.2,310.5 L288.8,309.7 L288.2,309.1 L287.5,309.3 L286.7,309.4 L285.8,309.5 L284.9,309.8 L285.0,308.8 L284.7,307.8 L284.0,307.3 L283.1,306.6 L282.4,305.8 L282.0,305.1 L281.5,304.4 L280.6,304.4 L279.1,304.4 L278.1,304.5 L277.1,304.9 L276.1,305.2 L275.4,305.5 L274.3,306.0 L273.6,306.2 L272.9,305.5 L272.1,305.3 L271.3,305.3 L270.4,305.2 L269.7,304.8 L269.2,304.1 L268.6,303.4 L268.1,302.8 L268.1,302.0 L267.2,302.1 L266.2,301.8 L266.1,300.9 L266.5,300.1 L266.2,299.4 L266.1,298.6 L265.9,297.7 L266.5,297.1 L266.2,296.3 L266.5,295.6 L266.4,294.6 L266.0,293.9 L266.4,293.0 L266.8,292.3 L266.8,291.5 L267.7,291.5 L267.3,290.7 L266.8,290.1 L266.3,289.5 L266.0,288.8 L265.1,288.9 L264.3,288.7 L263.5,289.0 L262.8,288.6 L262.1,288.1 L261.5,287.6 L260.7,288.0 L260.5,286.7 L260.2,285.9 L259.3,285.7 L258.5,285.4 L257.6,285.4 L256.8,285.1 L256.1,285.3 L255.2,285.5 L254.4,285.4 L253.6,286.0 L252.7,286.4 L251.9,286.6 L251.1,286.6 L250.9,285.7 L250.0,285.7 L249.2,285.7 L248.4,285.6 L248.0,284.8 L248.2,284.0 L247.4,283.8 L246.9,282.9 L246.2,282.4 L245.5,282.8 L244.6,282.4 L244.1,281.7 L243.9,280.8 L244.0,279.7 L244.8,279.3 L245.6,278.5 L246.1,278.0 L247.3,277.9 L247.7,276.9 L247.8,276.1 L247.3,275.2 L247.5,274.5 L247.7,273.3 L248.0,272.5 L247.5,271.9 L247.3,270.8 L247.1,269.8 L246.4,269.3 L246.1,268.5 L246.6,267.8 L246.9,267.1 L247.4,266.1 L247.6,265.1 L247.2,264.2 L245.9,263.9 L245.1,263.4 L245.6,262.4 L246.2,261.8 L246.9,261.2 L248.1,262.0 L249.5,262.7 L250.2,263.0 L250.2,262.1 L250.6,261.3 L252.4,260.4 L253.2,260.1 L253.9,259.6 L254.3,258.9 L253.7,258.3 L252.7,258.1 L251.6,258.3 L250.7,258.8 L250.5,257.4 L250.6,256.6 L251.3,256.1 L252.4,255.9 L252.9,255.3 L253.4,254.5 L254.1,254.0 L254.4,253.3 L254.2,252.3 L253.2,251.8 L253.2,250.9 L253.4,249.7 L253.9,248.9 L254.5,248.2 L253.9,247.6 L253.2,247.2 L252.7,246.5 L252.1,246.0 L252.8,245.6 L252.6,244.8 L252.3,244.1 L251.6,243.6 L251.8,242.7 L251.9,241.8 L251.8,241.0 L251.3,240.3 L250.8,239.7 L250.0,239.3 L249.3,239.0 L248.8,238.3 L248.7,237.4 L248.1,236.8 Z" fill="#0EA5E9" fill-opacity="0.78" stroke="#ffffff" stroke-width="1.1"><title>South Garo Hills (Garo Hills)</title></path>
+<path d="M161.2,113.3 L159.9,112.3 L158.3,112.4 L156.5,112.5 L153.2,112.6 L152.4,112.9 L150.8,113.3 L149.9,113.6 L148.9,114.0 L147.8,114.6 L147.5,115.4 L147.1,116.1 L146.4,116.7 L146.0,117.5 L145.6,118.6 L144.8,119.0 L143.9,119.1 L143.3,119.7 L143.1,120.6 L142.8,121.5 L142.5,122.4 L141.7,122.8 L140.8,123.1 L139.8,123.4 L139.0,123.5 L137.9,123.8 L136.4,124.2 L135.4,124.6 L134.2,124.9 L133.3,125.1 L132.0,125.5 L130.2,125.9 L128.6,126.3 L127.8,126.5 L125.9,126.8 L124.6,126.9 L123.5,127.1 L121.9,127.5 L120.7,127.6 L119.4,127.8 L117.9,127.9 L116.8,128.1 L115.4,128.2 L114.4,128.4 L114.3,127.6 L113.9,126.8 L113.4,126.2 L112.6,126.3 L111.8,126.7 L111.3,127.3 L110.4,127.4 L109.6,127.7 L109.3,128.6 L108.7,129.0 L108.3,129.8 L108.6,130.5 L107.8,130.2 L107.3,129.6 L106.9,128.9 L106.4,128.2 L105.9,127.5 L105.9,126.7 L105.1,126.8 L104.3,127.1 L103.2,127.5 L102.3,127.2 L101.4,127.2 L100.9,126.6 L100.5,125.9 L100.1,125.2 L99.6,124.6 L99.0,125.2 L98.5,125.9 L97.9,126.4 L97.1,126.3 L97.1,127.1 L96.3,127.1 L95.4,126.9 L94.3,126.9 L93.4,127.3 L92.6,127.6 L92.2,127.0 L91.4,127.1 L90.8,127.7 L90.3,128.3 L89.8,128.9 L89.1,129.3 L88.8,130.1 L88.6,130.9 L87.8,131.0 L87.6,131.8 L86.9,132.3 L86.2,132.4 L85.4,132.2 L85.5,133.1 L85.6,133.9 L85.8,134.6 L85.0,135.0 L84.4,135.6 L83.7,135.8 L83.8,136.6 L83.7,137.4 L82.9,137.7 L82.2,138.2 L81.4,138.5 L80.9,137.9 L80.1,137.6 L79.8,138.3 L79.3,139.0 L78.4,138.9 L77.6,139.0 L78.2,139.6 L77.5,140.1 L77.1,140.8 L76.5,141.3 L76.5,142.1 L75.8,142.6 L75.0,142.5 L74.4,143.3 L73.6,143.8 L73.6,144.6 L73.4,145.4 L72.7,145.6 L72.1,145.0 L71.3,144.7 L70.8,144.0 L69.9,143.9 L69.2,143.7 L68.6,144.2 L67.8,144.6 L67.4,145.2 L66.9,145.8 L66.4,146.5 L65.6,146.9 L65.0,147.5 L64.5,148.1 L65.2,148.8 L65.8,149.4 L66.5,150.1 L67.6,149.8 L68.3,150.3 L68.7,151.1 L68.7,152.2 L68.5,153.0 L68.1,153.7 L67.2,154.2 L67.3,155.1 L66.7,155.9 L65.9,156.4 L65.3,157.1 L64.2,157.2 L63.2,157.0 L62.8,157.8 L63.9,158.2 L63.4,159.1 L62.6,159.5 L61.6,159.8 L60.7,160.0 L59.6,160.1 L58.7,159.9 L58.0,160.3 L57.6,161.2 L57.5,162.0 L56.7,162.0 L55.8,162.3 L55.1,161.8 L54.8,160.9 L54.1,161.2 L54.3,162.0 L54.8,162.7 L55.2,163.5 L54.4,163.5 L53.7,164.0 L52.8,163.9 L51.9,163.7 L51.8,162.9 L52.4,162.4 L53.0,161.9 L52.2,162.0 L51.5,162.2 L50.7,162.4 L50.7,163.2 L51.2,163.8 L51.1,164.6 L50.6,165.3 L51.5,165.8 L52.3,166.4 L52.3,167.1 L52.2,167.9 L52.4,168.7 L52.9,169.4 L52.4,170.0 L52.2,170.7 L52.3,171.7 L52.0,172.5 L52.4,173.2 L52.9,174.0 L53.2,174.8 L52.6,175.2 L52.8,176.0 L52.3,176.7 L52.3,177.7 L51.8,178.5 L51.1,179.0 L50.5,179.7 L49.8,180.2 L49.3,180.8 L48.3,181.3 L47.3,181.6 L47.5,182.4 L47.9,183.1 L48.0,184.0 L47.3,184.4 L46.6,184.9 L45.9,185.5 L45.1,185.9 L44.3,185.8 L43.5,185.5 L42.7,185.1 L41.8,184.9 L41.1,184.5 L40.4,184.1 L39.6,183.8 L38.8,183.6 L38.0,183.8 L37.5,184.5 L37.3,185.4 L37.5,186.2 L37.5,187.1 L37.9,187.9 L38.6,188.4 L38.7,189.3 L39.5,189.5 L40.0,190.3 L40.2,191.1 L40.6,191.8 L41.2,192.5 L41.9,193.3 L42.2,194.0 L42.9,194.5 L43.5,195.2 L43.8,196.2 L44.3,196.9 L44.5,197.6 L45.2,198.0 L46.1,198.4 L46.9,198.7 L47.7,199.1 L47.8,199.9 L48.5,200.4 L49.1,201.0 L49.6,201.8 L49.5,202.9 L49.2,203.6 L50.0,204.1 L49.8,204.9 L50.2,205.5 L50.1,206.5 L50.5,207.2 L51.0,208.0 L51.7,208.7 L52.5,209.1 L53.2,209.4 L53.9,209.7 L54.5,210.5 L55.3,210.9 L56.1,211.5 L56.7,212.0 L57.5,212.4 L58.1,212.9 L58.4,213.7 L58.7,214.5 L58.9,215.3 L59.4,215.9 L60.2,216.3 L61.0,216.6 L61.9,216.5 L62.5,217.1 L63.4,216.7 L63.8,215.9 L64.4,216.4 L64.5,217.2 L65.1,217.9 L65.6,218.6 L66.1,219.6 L66.7,220.0 L67.5,220.0 L67.3,220.9 L71.8,221.1 L73.4,221.7 L76.0,222.3 L77.0,222.5 L78.4,222.9 L80.2,223.6 L81.7,224.3 L82.6,224.8 L83.4,225.3 L84.2,225.8 L85.0,226.3 L85.6,226.9 L86.2,227.4 L86.8,228.1 L87.3,229.2 L87.7,230.1 L88.1,230.8 L88.7,231.5 L89.7,232.1 L90.1,232.8 L90.5,233.6 L92.0,233.7 L92.8,233.3 L93.5,232.6 L94.3,232.8 L94.8,233.5 L95.1,234.2 L94.5,235.8 L93.9,236.6 L93.8,237.5 L93.7,238.6 L93.7,239.4 L94.5,239.9 L95.7,239.3 L96.3,239.9 L96.6,239.0 L96.2,237.9 L96.7,237.0 L97.1,235.9 L98.1,236.3 L98.8,237.0 L98.8,237.8 L99.8,237.6 L100.5,236.9 L101.3,236.6 L102.1,236.8 L102.9,237.3 L103.7,237.6 L104.5,237.9 L103.9,241.1 L103.8,245.6 L103.2,249.9 L101.7,254.2 L103.0,255.6 L102.8,258.2 L103.2,259.8 L102.4,262.6 L100.8,265.3 L100.8,266.6 L101.6,267.9 L101.0,270.1 L101.3,273.3 L100.1,277.1 L102.4,279.9 L99.8,283.5 L71.6,291.8 L70.6,294.5 L61.6,298.2 L61.2,301.4 L57.0,303.8 L57.7,305.1 L57.7,306.4 L58.4,307.6 L61.1,309.2 L62.6,309.8 L64.0,310.6 L65.4,311.2 L67.6,312.0 L70.7,313.3 L73.6,313.9 L75.7,314.6 L77.6,315.5 L79.1,317.0 L80.6,318.7 L81.9,319.7 L82.8,320.0 L84.2,320.1 L85.8,320.3 L87.5,321.2 L88.9,323.0 L90.3,324.0 L91.9,324.3 L93.1,324.3 L94.9,323.9 L96.8,323.8 L99.6,324.1 L101.7,324.2 L104.0,324.7 L106.1,325.5 L108.5,326.2 L110.5,327.1 L112.1,327.8 L113.3,328.5 L115.0,329.7 L116.6,329.8 L117.7,329.8 L119.6,329.5 L118.3,325.6 L118.6,321.1 L122.4,316.8 L123.0,316.1 L125.0,309.7 L125.0,301.5 L126.4,298.0 L131.2,292.9 L134.5,289.3 L137.8,286.1 L139.0,281.0 L136.6,271.8 L137.5,267.4 L140.4,259.5 L140.0,258.7 L139.6,257.9 L139.9,257.2 L140.3,256.4 L141.0,255.6 L141.6,254.8 L141.8,253.9 L142.4,253.3 L143.0,252.5 L143.9,252.0 L144.3,251.2 L144.6,250.3 L144.9,249.4 L145.4,248.7 L145.8,247.9 L146.5,247.1 L147.1,246.5 L147.7,245.7 L148.4,245.2 L149.0,244.6 L149.8,244.3 L150.3,245.2 L151.5,244.9 L152.3,244.6 L152.6,243.8 L153.5,243.8 L154.1,243.2 L153.5,242.5 L153.7,241.7 L154.4,241.2 L155.0,240.4 L155.9,240.1 L156.7,240.0 L157.1,239.1 L157.3,238.2 L157.5,237.1 L157.3,236.3 L157.2,235.5 L157.7,234.8 L157.2,233.9 L156.4,233.5 L156.1,232.6 L155.9,231.8 L156.2,230.8 L156.2,229.9 L156.4,229.2 L156.5,228.3 L155.9,227.7 L155.6,226.9 L155.6,226.1 L156.0,225.3 L156.3,224.3 L156.4,223.2 L156.6,222.3 L157.2,221.3 L157.3,220.5 L157.6,219.7 L157.8,218.9 L157.3,218.0 L157.0,217.3 L157.5,216.7 L158.2,216.3 L158.9,215.8 L159.3,215.1 L159.1,214.4 L158.7,213.5 L158.2,212.7 L158.0,211.9 L158.6,211.2 L159.1,210.4 L159.6,209.8 L160.5,209.3 L160.9,208.6 L161.7,208.5 L162.5,208.4 L163.1,207.8 L162.9,207.0 L162.9,206.2 L162.8,205.4 L162.4,204.7 L162.0,204.0 L161.8,202.9 L161.9,201.8 L162.2,200.9 L162.8,200.3 L162.9,199.4 L163.1,198.4 L163.2,197.4 L162.7,196.5 L162.4,195.5 L161.8,194.8 L161.3,194.0 L161.1,193.0 L161.5,192.2 L161.7,191.3 L161.6,190.4 L161.3,189.5 L160.9,188.8 L160.1,188.3 L159.6,187.7 L159.7,186.9 L159.4,186.1 L159.1,185.3 L158.4,184.9 L157.7,185.2 L157.0,184.8 L157.2,184.0 L157.0,183.2 L157.7,182.5 L158.2,181.5 L159.1,181.1 L159.0,180.2 L159.7,179.8 L160.5,179.9 L159.9,178.1 L158.6,171.0 L158.0,169.7 L154.0,168.6 L145.6,168.7 L145.2,168.1 L146.0,161.8 L147.7,160.8 L152.2,161.0 L155.1,160.1 L156.1,158.4 L155.7,151.2 L163.5,136.4 L165.5,128.2 L166.1,125.9 L167.3,122.7 L168.2,120.7 L168.2,118.0 L167.4,118.5 L166.5,118.6 L165.6,118.6 L164.8,118.1 L163.9,117.8 L163.8,116.9 L163.7,116.0 L162.7,115.6 Z" fill="#0EA5E9" fill-opacity="0.78" stroke="#ffffff" stroke-width="1.1"><title>West Garo Hills (Garo Hills)</title></path>
+<path d="M264.6,164.1 L263.2,163.9 L258.8,164.8 L251.8,165.4 L248.4,166.9 L241.3,171.3 L237.6,172.6 L230.8,172.5 L227.6,173.9 L220.0,181.2 L216.3,185.8 L214.2,186.5 L209.4,185.9 L206.8,184.6 L204.8,181.3 L201.0,175.7 L197.3,174.4 L194.5,174.3 L191.5,176.4 L190.9,180.6 L185.4,191.2 L183.2,193.1 L178.6,191.9 L175.7,189.4 L171.9,185.4 L168.1,184.2 L165.6,182.0 L160.9,179.9 L159.7,179.8 L159.0,180.2 L159.1,181.1 L158.2,181.5 L157.9,182.3 L157.0,182.7 L157.1,183.5 L157.0,184.3 L157.5,185.0 L158.3,185.0 L159.0,185.2 L159.3,186.0 L159.9,186.5 L159.6,187.3 L159.7,188.0 L160.4,188.5 L161.1,189.0 L161.4,189.9 L161.6,190.7 L161.6,191.6 L161.4,192.5 L161.2,193.5 L161.5,194.4 L161.9,195.2 L162.4,196.0 L162.8,196.8 L163.2,197.7 L163.0,198.6 L162.8,199.9 L162.5,200.7 L162.0,201.4 L161.8,202.6 L161.8,203.5 L162.1,204.2 L162.5,204.9 L162.8,205.7 L162.9,206.6 L163.2,207.4 L162.9,208.2 L162.1,208.4 L161.3,208.6 L160.7,209.1 L160.0,209.7 L159.3,210.0 L158.9,210.7 L158.4,211.4 L158.0,212.2 L158.3,212.9 L158.8,213.7 L159.2,214.5 L159.2,215.3 L158.7,216.0 L157.9,216.4 L157.3,216.9 L157.0,217.7 L157.5,218.3 L157.8,219.1 L157.5,219.9 L157.3,220.7 L157.0,221.7 L156.5,222.8 L156.3,223.7 L156.3,224.8 L155.7,225.9 L155.6,226.9 L155.9,227.7 L156.5,228.3 L156.4,229.2 L156.2,229.9 L156.2,230.8 L155.9,231.5 L156.0,232.5 L156.3,233.2 L156.9,233.8 L157.6,234.2 L157.6,235.0 L157.1,235.6 L157.4,236.4 L157.5,237.5 L157.1,238.7 L157.0,239.7 L156.3,240.1 L155.4,240.3 L154.7,240.8 L154.0,241.5 L153.6,242.2 L154.0,243.0 L153.7,243.8 L152.8,243.7 L152.4,244.5 L151.5,244.9 L150.7,245.2 L150.2,244.6 L149.4,244.3 L148.7,244.8 L148.1,245.4 L147.6,245.9 L147.0,246.6 L146.2,247.4 L145.7,248.2 L145.1,249.1 L144.6,250.2 L144.3,251.2 L143.9,252.0 L143.0,252.5 L142.4,253.3 L141.8,253.9 L141.6,254.8 L141.0,255.6 L140.6,256.3 L140.0,257.0 L139.6,257.8 L140.0,258.7 L140.4,259.5 L140.8,260.2 L141.6,260.2 L142.5,260.8 L143.2,261.3 L144.0,261.5 L145.2,261.4 L146.3,261.5 L147.2,260.7 L147.9,260.5 L148.9,261.0 L149.8,261.1 L150.6,261.5 L151.4,261.4 L152.3,261.5 L153.2,261.1 L154.3,261.0 L155.2,260.9 L156.1,261.4 L156.9,261.7 L157.7,261.3 L158.5,261.3 L159.4,261.2 L160.3,260.8 L161.1,260.6 L161.7,261.5 L162.3,262.1 L163.4,261.7 L163.9,260.9 L164.9,260.9 L165.9,260.7 L166.9,260.8 L167.8,260.7 L168.7,260.6 L169.7,260.5 L170.5,260.7 L171.3,261.2 L172.3,261.3 L173.3,261.6 L174.1,261.9 L175.0,262.1 L175.8,262.6 L176.8,262.9 L177.9,263.2 L178.8,263.7 L180.2,263.8 L181.3,264.2 L182.1,264.6 L182.9,264.9 L184.6,266.4 L188.7,267.8 L196.7,267.8 L201.4,269.3 L203.5,271.0 L209.6,270.1 L212.9,270.9 L216.1,271.8 L218.0,272.7 L219.2,272.5 L221.8,266.5 L222.7,262.8 L227.5,254.9 L233.0,248.0 L239.9,241.0 L243.0,238.5 L244.7,237.1 L246.9,236.0 L247.9,235.6 L248.4,234.9 L249.3,234.8 L249.0,233.9 L248.4,233.3 L248.8,232.6 L249.4,232.0 L249.3,231.2 L249.5,230.4 L249.9,229.7 L250.4,228.8 L251.1,228.1 L251.6,227.6 L252.5,227.4 L252.5,228.2 L253.0,228.9 L253.4,229.7 L253.6,230.5 L253.5,231.4 L254.3,230.9 L255.1,230.4 L255.0,229.6 L254.9,228.7 L255.9,228.7 L256.6,228.3 L257.2,227.4 L256.8,226.7 L257.6,226.6 L258.4,227.1 L258.7,228.0 L259.1,228.7 L259.6,229.5 L260.3,229.1 L260.8,228.5 L261.5,228.0 L261.5,227.2 L261.9,226.4 L262.6,226.0 L263.4,225.7 L264.2,225.5 L264.7,226.1 L265.5,225.8 L266.3,225.6 L267.0,225.0 L267.7,224.6 L268.6,224.8 L269.0,224.0 L269.7,223.5 L270.5,223.4 L271.0,222.9 L271.4,222.2 L272.2,222.3 L273.0,222.4 L273.8,222.2 L274.4,221.6 L274.4,220.8 L275.3,220.9 L275.6,220.1 L275.9,219.4 L275.9,218.6 L276.2,217.8 L276.8,217.3 L277.5,216.9 L277.8,216.2 L278.1,215.5 L278.6,214.8 L279.3,214.4 L279.7,213.5 L280.4,213.4 L281.3,213.3 L282.0,213.1 L282.7,212.7 L283.1,211.9 L283.2,211.1 L283.5,210.4 L283.4,209.6 L283.5,208.8 L284.3,208.5 L284.9,207.9 L285.2,207.2 L285.9,206.7 L286.4,206.1 L287.1,205.8 L287.3,205.0 L287.5,204.3 L288.3,203.9 L288.5,203.2 L288.7,202.4 L289.4,202.0 L289.5,201.2 L289.8,200.4 L290.6,200.2 L291.4,199.9 L292.2,199.5 L292.6,198.7 L292.8,197.9 L292.8,197.1 L293.2,196.4 L293.6,195.7 L293.9,195.0 L294.1,194.2 L294.4,193.5 L294.7,192.7 L295.5,192.4 L295.9,191.7 L296.1,190.9 L296.4,190.1 L297.0,189.5 L297.9,189.1 L298.1,188.2 L298.5,187.6 L298.9,186.8 L299.6,186.5 L300.2,185.8 L300.8,185.3 L301.3,184.5 L301.0,183.7 L300.1,183.2 L299.4,182.8 L296.9,182.7 L296.2,182.9 L295.3,182.9 L294.5,182.2 L294.3,181.1 L293.6,180.7 L292.8,181.5 L291.9,181.9 L291.1,181.6 L288.5,182.6 L283.7,182.1 L278.8,180.5 L275.2,177.7 L271.9,174.2 L267.4,168.1 Z" fill="#0EA5E9" fill-opacity="0.78" stroke="#ffffff" stroke-width="1.1"><title>East Garo Hills (Garo Hills)</title></path>
+<path d="M640.6,181.6 L640.1,182.3 L639.6,182.9 L638.8,182.9 L638.0,182.7 L637.4,183.4 L636.7,183.9 L636.3,184.7 L636.0,185.4 L635.7,186.2 L634.9,186.4 L634.1,186.0 L633.5,185.6 L632.8,186.3 L632.3,186.9 L631.7,187.7 L631.3,188.4 L630.4,188.7 L629.6,189.0 L628.9,189.3 L628.2,189.8 L627.3,189.6 L626.5,189.6 L625.6,189.7 L624.7,190.2 L623.9,190.1 L623.4,189.4 L622.9,188.7 L622.1,189.2 L621.4,189.9 L620.7,190.6 L619.9,190.7 L619.2,191.2 L618.5,191.8 L617.6,191.7 L616.8,191.9 L616.0,191.8 L615.2,192.1 L614.3,192.3 L613.7,192.9 L613.0,193.3 L612.1,193.6 L611.4,193.7 L610.5,193.3 L609.7,193.1 L608.9,192.8 L608.0,193.1 L607.3,192.7 L606.6,193.1 L605.8,193.3 L605.1,193.6 L604.5,194.2 L603.9,193.6 L603.9,192.7 L603.5,191.9 L602.7,191.8 L601.9,192.0 L601.2,192.5 L600.8,193.4 L600.4,194.2 L600.0,194.9 L599.4,195.5 L598.7,196.2 L598.1,196.8 L597.5,197.6 L596.8,198.0 L596.0,198.5 L595.5,199.2 L595.1,199.9 L594.2,200.0 L593.3,200.3 L592.7,200.8 L592.2,201.3 L591.5,201.8 L590.9,202.4 L590.5,203.1 L589.6,203.1 L589.3,203.8 L589.1,204.6 L588.5,205.2 L587.4,205.2 L586.6,204.7 L586.0,204.2 L585.4,203.7 L584.5,203.7 L583.9,204.4 L583.7,205.3 L583.9,206.1 L584.5,206.8 L584.9,207.6 L585.1,208.5 L585.3,209.4 L585.2,210.3 L584.8,211.0 L584.3,210.3 L584.0,209.3 L583.5,209.9 L583.5,210.8 L582.8,211.3 L582.0,211.5 L581.3,211.9 L580.5,212.0 L579.8,211.3 L579.7,212.0 L580.0,212.8 L580.1,213.7 L580.1,214.5 L580.4,215.2 L581.0,215.8 L580.8,216.7 L580.2,217.3 L579.6,218.0 L579.1,218.6 L579.1,219.5 L578.4,219.8 L577.8,220.3 L577.3,221.0 L576.8,221.7 L576.9,222.8 L577.3,223.5 L577.6,224.2 L576.9,224.7 L576.8,225.7 L576.9,226.6 L577.3,227.4 L576.6,227.8 L575.7,228.2 L575.6,229.0 L574.9,229.5 L574.5,230.3 L574.1,231.0 L573.7,232.0 L573.4,232.7 L573.1,233.5 L573.3,234.3 L573.1,235.1 L573.4,235.9 L574.1,236.5 L574.7,237.1 L575.0,237.8 L574.9,238.7 L574.3,239.4 L573.7,239.9 L573.6,240.8 L573.5,241.7 L573.3,242.5 L573.4,243.4 L573.1,244.3 L572.2,245.0 L571.4,245.5 L571.1,246.2 L571.8,247.0 L571.9,247.7 L571.9,248.5 L571.4,249.2 L571.0,249.8 L571.0,250.7 L570.5,251.4 L570.6,252.4 L570.8,253.3 L571.4,253.9 L572.3,254.2 L573.1,254.7 L573.6,255.3 L573.6,256.3 L573.8,257.4 L573.8,258.3 L573.2,259.3 L572.8,260.1 L572.3,260.9 L571.6,261.4 L571.0,262.0 L570.5,262.8 L570.9,263.8 L571.6,264.4 L572.3,264.8 L572.4,265.6 L572.6,266.4 L572.4,267.4 L572.7,268.6 L573.5,269.4 L574.1,269.9 L574.1,270.7 L574.1,271.7 L574.6,273.0 L574.9,273.9 L574.5,274.9 L573.9,275.8 L572.8,276.3 L572.2,276.9 L572.6,278.0 L573.0,278.9 L573.3,279.6 L573.8,280.4 L574.3,281.2 L574.5,282.1 L574.4,282.9 L574.5,283.9 L574.3,284.9 L574.3,285.8 L574.4,286.6 L573.9,287.4 L573.7,288.2 L573.4,288.9 L573.5,289.7 L574.3,290.0 L574.7,290.8 L575.0,291.7 L575.1,292.5 L574.4,293.2 L574.4,294.0 L574.9,294.7 L575.6,295.1 L576.4,295.1 L575.9,295.9 L575.8,296.8 L575.3,297.4 L575.3,298.4 L575.4,299.2 L575.2,300.0 L575.0,300.8 L574.9,301.7 L573.8,302.2 L573.1,302.4 L572.3,302.3 L571.4,301.7 L570.5,301.0 L570.3,300.1 L569.3,300.1 L568.6,300.7 L567.7,300.6 L567.3,299.9 L566.3,299.9 L565.4,299.9 L564.8,299.2 L563.9,298.7 L563.2,298.9 L562.2,299.1 L561.5,299.7 L560.7,300.0 L560.5,298.9 L560.2,298.0 L559.3,298.0 L558.5,298.1 L557.9,298.6 L557.1,298.8 L556.2,299.0 L555.6,299.7 L554.7,300.1 L553.9,300.3 L552.9,300.8 L552.1,301.1 L551.6,301.7 L551.1,302.8 L550.3,303.4 L549.4,303.7 L548.6,303.8 L548.1,304.5 L548.0,305.4 L547.3,306.5 L546.8,307.1 L545.7,307.7 L545.0,308.4 L544.5,309.3 L543.8,310.5 L543.4,311.2 L543.3,312.2 L543.1,313.4 L542.9,314.4 L543.2,315.3 L543.9,316.5 L543.9,318.3 L544.7,319.9 L546.4,322.1 L546.8,324.3 L548.0,325.8 L549.3,328.2 L550.0,328.7 L551.4,329.3 L552.6,330.0 L552.8,331.2 L552.3,333.0 L551.4,333.6 L553.9,334.9 L554.8,335.0 L556.1,334.5 L557.1,334.6 L558.8,335.3 L560.0,334.9 L561.4,334.1 L562.6,333.8 L565.6,334.2 L567.2,334.9 L568.7,335.8 L570.3,336.6 L571.6,337.1 L572.9,337.6 L574.6,338.5 L577.2,339.7 L580.1,342.1 L580.3,345.8 L581.3,346.2 L583.8,347.3 L585.8,348.4 L587.2,349.2 L588.3,350.1 L590.1,351.1 L592.0,351.6 L593.5,351.4 L593.1,349.8 L592.2,348.5 L593.0,347.7 L594.0,348.1 L594.8,349.5 L595.9,350.6 L597.3,347.3 L598.5,345.6 L598.0,344.7 L602.0,340.3 L604.2,334.8 L604.4,330.6 L602.4,325.9 L600.7,323.8 L597.2,323.2 L596.1,315.7 L596.2,314.3 L595.8,313.3 L595.5,312.5 L595.6,311.2 L595.4,310.4 L596.0,309.0 L596.3,308.1 L595.7,307.4 L595.8,306.2 L595.2,305.2 L594.0,304.0 L593.4,303.5 L594.1,302.9 L594.2,302.1 L593.7,301.4 L592.8,301.2 L592.6,300.0 L591.9,299.5 L591.5,298.8 L591.1,297.9 L590.7,297.2 L590.3,296.5 L590.2,295.6 L590.5,294.8 L589.3,294.3 L589.0,293.3 L589.0,292.5 L589.6,291.3 L589.6,290.0 L589.7,289.2 L590.6,288.9 L591.3,288.2 L592.2,287.9 L593.0,287.8 L593.6,286.8 L594.5,286.6 L595.4,286.5 L596.4,286.1 L597.3,285.8 L598.0,285.4 L599.0,285.2 L599.9,284.7 L600.9,284.5 L601.8,283.8 L602.6,284.1 L603.7,283.4 L604.1,282.7 L605.0,282.3 L606.0,282.2 L606.8,281.9 L607.1,280.2 L607.8,279.8 L612.6,277.9 L625.9,277.5 L626.7,277.2 L627.4,276.8 L628.3,276.8 L629.1,276.7 L629.7,276.2 L630.6,276.1 L631.4,276.2 L632.2,275.8 L633.3,275.6 L634.1,275.4 L634.8,275.2 L635.3,274.5 L636.1,274.7 L636.6,275.3 L637.5,275.3 L638.3,275.2 L639.2,274.9 L640.0,274.7 L640.7,274.6 L641.5,274.3 L642.3,274.1 L643.1,273.9 L644.0,273.5 L644.7,273.2 L645.5,273.0 L646.4,272.9 L647.1,272.6 L647.9,272.3 L648.9,272.2 L649.8,272.1 L650.6,272.0 L651.6,271.8 L652.3,271.5 L653.1,271.4 L654.0,271.3 L654.6,270.7 L655.5,270.5 L656.2,270.8 L657.0,270.7 L657.6,270.0 L658.4,269.7 L659.3,269.8 L660.1,269.6 L660.8,269.3 L661.6,269.0 L662.4,268.3 L663.0,267.8 L664.0,267.7 L664.2,266.9 L665.0,266.4 L665.7,266.0 L666.5,265.7 L667.4,265.6 L668.4,265.7 L669.2,265.5 L670.0,265.4 L670.9,265.5 L671.8,266.1 L672.6,266.1 L673.5,265.8 L674.0,266.6 L674.9,267.0 L675.5,267.7 L676.6,267.6 L677.2,267.1 L677.8,266.0 L677.9,265.1 L678.6,264.3 L679.1,263.4 L679.4,262.5 L679.5,261.5 L680.2,260.8 L681.2,261.2 L682.2,261.5 L683.5,261.9 L684.5,261.8 L685.1,261.3 L684.6,260.3 L684.4,259.4 L684.2,258.1 L684.2,257.0 L684.7,256.1 L685.0,255.1 L685.7,254.3 L686.4,253.1 L687.0,252.2 L687.7,251.6 L688.7,251.1 L689.8,250.4 L690.5,249.8 L691.4,249.4 L692.2,249.3 L692.7,248.4 L694.2,247.6 L694.8,246.9 L695.8,246.5 L696.6,246.1 L697.7,245.6 L698.2,245.0 L699.0,244.3 L699.6,243.9 L700.0,243.0 L700.7,242.4 L701.5,242.1 L702.3,241.4 L703.1,240.7 L703.3,239.6 L703.0,238.8 L703.2,237.9 L703.3,236.9 L703.9,235.6 L704.0,234.7 L705.0,234.4 L705.7,234.0 L706.5,233.6 L706.7,232.7 L706.7,231.6 L707.2,230.8 L707.0,230.0 L707.1,229.1 L706.8,228.1 L706.3,227.3 L706.1,226.4 L705.8,225.6 L705.0,225.2 L704.1,225.6 L703.2,226.0 L702.6,226.6 L701.7,227.4 L701.2,228.1 L700.7,228.9 L700.5,229.8 L700.2,230.7 L699.3,231.2 L698.6,232.1 L697.7,232.5 L696.7,232.8 L695.8,233.1 L694.8,233.2 L693.9,233.2 L693.2,233.8 L693.2,234.6 L692.8,235.3 L692.1,235.7 L691.3,236.0 L690.4,235.8 L689.6,236.1 L689.0,235.7 L688.7,234.8 L687.8,234.5 L687.0,234.2 L686.3,234.6 L685.7,234.0 L684.9,233.6 L684.5,232.8 L684.0,232.2 L683.2,231.5 L682.5,231.0 L682.5,230.0 L682.3,229.2 L682.8,228.6 L682.4,227.8 L681.9,227.0 L681.8,225.9 L682.0,225.1 L681.9,224.3 L681.7,223.6 L681.4,222.8 L682.1,222.5 L682.1,221.6 L682.1,220.3 L681.7,219.6 L680.8,219.4 L679.9,219.5 L679.0,219.6 L678.2,220.0 L677.5,219.5 L676.8,219.1 L676.1,219.2 L675.3,218.9 L674.4,218.9 L673.5,218.9 L672.7,219.0 L672.4,218.3 L671.6,218.4 L670.9,218.9 L670.1,218.7 L670.1,217.9 L669.8,217.1 L669.0,217.0 L668.1,216.6 L667.5,215.6 L667.0,214.3 L666.3,213.1 L665.7,211.8 L665.4,211.1 L665.1,210.4 L664.4,209.0 L664.1,208.2 L663.7,207.5 L663.1,206.4 L662.6,205.4 L662.1,204.2 L661.5,203.0 L660.1,202.0 L659.7,201.3 L658.2,200.5 L657.2,200.1 L656.3,199.9 L654.7,199.0 L654.2,198.3 L653.7,196.3 L653.6,195.3 L653.8,194.4 L654.6,194.1 L655.6,194.1 L655.9,193.4 L655.6,192.7 L655.5,191.9 L655.2,191.2 L654.6,190.7 L654.0,190.1 L653.0,189.4 L652.2,188.8 L652.1,187.9 L651.2,187.6 L650.2,187.9 L649.4,188.0 L648.5,188.3 L647.5,188.3 L646.8,187.7 L646.7,186.9 L647.2,186.2 L647.8,185.6 L647.4,184.9 L646.5,185.0 L646.1,184.3 L645.3,184.4 L644.5,185.0 L643.6,185.4 L642.7,185.1 L641.9,184.5 L641.2,184.4 L640.5,184.9 L640.0,184.1 L640.3,183.3 L640.9,182.7 Z" fill="#FF9933" fill-opacity="0.78" stroke="#ffffff" stroke-width="1.1"><title>West Jaintia Hills (Jaintia Hills)</title></path>
+<path d="M438.3,254.8 L436.9,254.6 L433.4,255.5 L432.7,258.4 L431.7,260.3 L430.6,261.8 L424.9,262.7 L417.5,262.6 L412.4,261.5 L411.5,260.1 L407.6,259.6 L404.4,261.3 L399.2,261.5 L395.0,261.0 L386.9,263.1 L383.3,264.6 L380.1,264.9 L380.0,266.7 L379.3,267.9 L376.8,268.2 L374.5,271.3 L374.1,273.6 L370.2,274.3 L367.0,268.9 L363.5,264.0 L361.1,260.1 L359.3,260.6 L359.3,262.4 L359.2,263.8 L356.5,262.7 L356.0,260.4 L353.9,260.8 L351.7,260.4 L349.7,262.3 L348.9,263.9 L347.4,261.9 L347.7,259.5 L346.2,259.1 L343.4,260.5 L338.1,263.4 L331.0,267.1 L331.0,269.2 L333.2,273.2 L336.1,274.7 L338.7,277.0 L337.3,279.2 L334.7,280.8 L330.9,283.9 L328.2,286.8 L327.0,288.0 L328.0,289.1 L326.7,291.6 L327.7,292.7 L329.1,295.5 L328.5,297.3 L326.0,298.3 L323.0,296.5 L321.0,293.8 L317.4,292.3 L315.2,293.3 L312.0,293.3 L309.0,290.4 L308.5,289.6 L307.7,288.8 L306.9,286.8 L305.8,284.8 L305.3,283.4 L302.6,282.4 L301.6,283.6 L302.3,284.4 L301.9,286.2 L299.6,287.3 L298.3,288.1 L299.3,290.6 L299.3,293.0 L296.2,293.0 L294.6,292.2 L291.9,291.5 L289.2,292.2 L288.1,291.3 L287.3,290.0 L285.6,290.7 L284.6,291.9 L283.6,292.0 L280.7,292.8 L280.2,294.6 L279.1,295.8 L277.4,295.5 L276.8,295.0 L274.7,294.6 L273.0,295.6 L270.9,298.8 L269.4,300.5 L266.2,301.7 L267.0,302.1 L267.9,302.0 L268.1,302.8 L268.6,303.4 L269.2,304.1 L269.7,304.7 L270.3,305.3 L271.2,305.3 L272.1,305.3 L272.9,305.5 L273.5,306.0 L274.3,306.0 L275.0,305.6 L276.0,305.4 L277.1,304.9 L278.1,304.5 L279.1,304.4 L280.6,304.4 L281.5,304.4 L282.0,305.1 L282.4,305.8 L283.1,306.6 L283.8,307.2 L284.6,307.5 L284.8,308.4 L284.9,309.6 L285.8,309.5 L286.6,309.4 L287.5,309.3 L288.2,309.1 L288.8,309.7 L289.2,310.5 L289.6,311.1 L290.3,312.0 L290.8,312.9 L291.0,313.6 L291.7,314.0 L292.4,314.5 L293.0,314.9 L293.9,315.4 L294.2,316.1 L294.7,316.8 L295.3,318.0 L295.5,321.2 L295.0,322.2 L293.9,322.9 L294.0,324.5 L293.1,325.6 L293.1,326.6 L294.5,327.3 L295.4,329.5 L297.7,330.2 L298.4,332.8 L297.9,337.9 L299.2,337.5 L300.7,337.2 L302.4,336.8 L304.3,336.4 L305.7,336.0 L307.4,335.6 L308.7,335.2 L310.1,334.9 L311.3,334.3 L313.9,333.6 L316.2,333.1 L317.4,332.9 L318.7,332.9 L319.7,332.6 L320.7,332.6 L321.8,332.0 L322.8,331.1 L325.0,330.0 L326.6,330.3 L328.1,330.4 L329.3,330.8 L331.3,331.6 L333.2,332.0 L334.6,332.2 L335.6,332.4 L337.9,332.4 L339.5,332.2 L341.5,331.5 L343.8,331.3 L345.7,331.8 L347.4,331.9 L349.1,331.6 L350.2,330.9 L352.1,330.6 L356.9,330.4 L359.1,330.9 L361.1,331.2 L363.9,331.4 L366.3,331.2 L367.3,330.5 L369.4,328.7 L371.7,329.3 L372.8,330.2 L374.5,331.2 L375.7,332.2 L375.9,334.0 L376.9,334.5 L378.3,334.7 L379.7,334.8 L380.9,334.8 L381.9,334.6 L383.0,334.5 L384.4,335.1 L384.7,336.6 L386.1,337.2 L387.3,337.6 L388.9,337.9 L390.6,337.0 L391.6,336.6 L393.1,336.9 L394.5,337.7 L395.5,338.6 L396.5,339.3 L398.1,339.2 L399.3,338.5 L397.3,336.7 L393.2,329.1 L391.0,322.7 L391.1,321.3 L391.9,321.0 L393.7,321.2 L395.2,319.0 L396.2,318.8 L398.6,319.9 L399.1,318.2 L400.8,316.7 L401.8,315.4 L402.8,313.4 L404.0,313.4 L405.1,313.1 L407.7,313.9 L411.4,310.9 L414.3,311.2 L417.2,312.1 L418.5,311.4 L419.7,311.9 L420.0,312.9 L421.3,313.5 L422.6,313.1 L423.4,311.4 L423.7,309.3 L425.4,308.1 L431.8,309.4 L433.1,309.0 L434.3,310.0 L437.0,309.2 L438.0,307.2 L438.6,303.5 L439.1,302.4 L438.3,300.4 L439.1,298.2 L438.1,296.6 L438.4,295.5 L437.6,294.5 L436.0,294.2 L433.5,292.1 L432.5,291.7 L432.3,290.5 L432.5,289.2 L433.6,288.5 L435.5,284.9 L435.9,283.8 L435.5,282.4 L436.3,279.7 L436.3,276.5 L436.7,275.0 L437.7,273.2 L437.6,271.6 L438.2,270.6 L439.9,269.0 L440.1,267.3 L439.5,266.4 L440.1,264.7 L440.0,262.6 L438.8,256.8 L438.4,256.1 Z" fill="#138808" fill-opacity="0.78" stroke="#ffffff" stroke-width="1.1"><title>South West Khasi Hills (Khasi Hills)</title></path>
+<path d="M181.4,114.8 L178.4,113.1 L176.9,113.9 L175.4,114.6 L173.5,115.6 L172.5,115.9 L171.5,116.4 L170.5,116.7 L169.9,117.2 L169.2,117.7 L168.2,118.0 L168.2,120.7 L167.3,122.7 L166.1,125.9 L165.5,128.2 L164.8,131.0 L163.5,136.4 L155.7,151.2 L156.1,158.4 L155.1,160.1 L152.2,161.0 L147.7,160.8 L146.0,161.8 L145.3,167.3 L145.6,168.7 L154.0,168.6 L158.0,169.7 L158.6,171.0 L159.9,178.1 L160.4,179.6 L165.6,182.0 L168.1,184.2 L171.9,185.4 L175.7,189.4 L178.6,191.9 L183.2,193.1 L185.4,191.2 L190.9,180.6 L191.5,176.4 L194.5,174.3 L197.3,174.4 L201.0,175.7 L204.8,181.3 L206.8,184.6 L209.4,185.9 L214.2,186.5 L216.3,185.8 L220.0,181.2 L227.6,173.9 L230.8,172.5 L237.6,172.6 L241.3,171.3 L248.4,166.9 L251.8,165.4 L258.8,164.8 L263.2,163.9 L264.6,164.1 L267.4,168.1 L271.9,174.2 L275.2,177.7 L278.8,180.5 L283.7,182.1 L288.5,182.6 L290.8,181.3 L290.5,180.5 L290.9,179.7 L290.9,178.9 L291.3,178.2 L291.6,177.5 L292.0,176.8 L292.8,176.4 L293.6,176.5 L294.0,175.8 L294.9,175.8 L295.5,175.3 L296.3,174.9 L296.9,174.3 L297.2,173.4 L298.0,172.7 L298.6,172.1 L299.3,170.9 L299.8,170.1 L300.8,170.0 L301.1,169.0 L301.4,168.1 L301.9,167.5 L302.5,166.9 L302.9,166.3 L303.8,165.8 L304.1,165.0 L304.8,164.4 L305.0,163.4 L305.6,162.7 L306.1,162.0 L306.4,161.2 L307.0,160.6 L307.2,159.3 L307.8,158.7 L308.1,157.8 L308.1,157.0 L308.8,156.6 L308.7,155.4 L308.7,154.6 L308.9,153.8 L309.5,153.2 L310.3,152.6 L311.0,152.1 L311.4,151.2 L312.1,150.6 L312.3,149.6 L312.4,148.7 L312.5,147.5 L312.7,146.6 L312.0,146.0 L311.4,145.5 L310.7,146.0 L309.9,146.5 L308.6,146.7 L307.5,146.7 L306.7,146.4 L305.8,146.3 L305.1,145.8 L302.5,145.6 L299.5,145.3 L298.3,146.3 L297.5,145.9 L297.1,145.0 L297.5,143.0 L297.7,141.9 L297.5,140.6 L297.4,139.7 L297.2,138.7 L296.8,138.1 L296.2,137.0 L296.0,136.0 L295.9,135.2 L295.5,134.1 L294.9,133.1 L294.1,132.5 L293.5,132.0 L292.6,131.9 L292.1,131.1 L292.2,130.2 L290.7,129.8 L290.2,130.7 L289.6,131.7 L288.5,131.5 L287.6,131.3 L286.8,131.0 L286.0,130.9 L285.2,130.6 L284.9,131.7 L284.7,132.7 L284.8,133.5 L284.8,134.4 L284.5,135.6 L284.7,136.7 L285.1,137.5 L285.8,138.4 L285.0,138.6 L284.3,137.6 L283.6,137.1 L283.0,136.3 L282.5,135.3 L281.7,134.6 L280.2,134.3 L280.2,132.9 L279.6,132.3 L278.6,132.3 L278.5,130.9 L277.8,130.5 L277.5,129.5 L276.8,128.9 L276.2,129.6 L276.5,130.4 L275.6,129.8 L274.3,129.6 L274.5,130.4 L272.4,130.9 L269.2,130.6 L267.6,130.2 L267.1,131.2 L266.3,131.4 L265.7,132.5 L265.3,131.9 L265.6,130.8 L265.7,130.0 L264.9,130.2 L264.1,129.8 L263.1,129.4 L262.8,130.3 L262.2,129.8 L261.6,129.1 L260.8,129.4 L259.9,128.7 L259.2,128.5 L258.9,129.3 L258.3,130.2 L255.9,131.6 L254.9,133.1 L253.8,134.7 L253.1,135.8 L252.9,136.5 L252.7,137.5 L252.3,138.7 L252.3,139.5 L251.5,140.2 L250.4,140.3 L248.7,140.5 L247.8,140.4 L246.4,139.6 L247.0,138.6 L247.2,137.2 L246.0,137.1 L245.3,137.4 L244.0,138.3 L243.6,139.4 L242.6,138.8 L242.0,138.2 L244.0,137.5 L244.0,136.7 L244.0,135.9 L245.2,135.3 L245.7,134.6 L245.8,133.5 L245.1,133.8 L244.0,134.8 L243.3,133.7 L242.8,132.8 L242.4,131.9 L243.0,131.2 L243.8,130.3 L244.2,129.5 L243.7,128.9 L243.9,128.0 L244.3,127.3 L243.5,127.7 L243.0,126.9 L241.7,127.6 L241.9,128.4 L240.9,128.4 L240.1,128.8 L239.2,129.5 L238.5,130.0 L237.4,129.4 L237.3,128.6 L237.2,127.9 L236.4,128.4 L235.1,128.5 L233.9,128.7 L232.8,129.0 L231.9,129.0 L230.9,129.2 L230.0,129.3 L229.0,130.1 L228.4,130.9 L227.3,132.1 L226.0,133.2 L223.9,134.0 L222.6,134.5 L221.1,135.1 L220.2,135.4 L219.5,135.7 L217.9,136.3 L216.9,136.7 L216.0,137.2 L215.3,137.8 L214.9,138.6 L214.7,139.9 L215.8,140.0 L215.8,140.8 L215.3,141.6 L214.8,142.5 L213.8,143.0 L212.9,142.9 L211.7,142.7 L211.1,141.4 L210.9,140.5 L210.4,139.3 L210.0,138.5 L210.2,137.2 L210.7,136.4 L211.4,135.6 L212.0,135.1 L212.7,134.4 L213.3,133.7 L214.0,133.1 L214.4,132.3 L213.5,131.7 L212.1,131.1 L211.3,130.8 L210.4,130.5 L209.6,129.9 L209.0,128.8 L208.7,128.0 L207.5,127.7 L206.1,127.5 L205.4,126.9 L204.5,127.5 L204.0,128.1 L203.5,128.7 L203.1,129.6 L202.8,130.6 L202.9,131.8 L202.7,132.6 L201.9,133.4 L200.8,134.1 L199.3,134.9 L198.0,135.6 L196.9,136.4 L196.0,136.8 L195.3,136.3 L194.9,137.0 L195.9,137.4 L196.1,138.4 L194.8,138.6 L193.4,138.8 L193.0,139.7 L191.5,140.7 L190.6,141.2 L189.8,142.3 L189.3,142.9 L187.8,143.6 L186.9,143.1 L186.2,142.1 L186.9,141.2 L187.5,140.3 L188.1,139.1 L188.5,138.3 L188.9,137.0 L189.2,135.5 L189.8,134.7 L190.6,133.7 L191.7,133.1 L192.4,132.1 L192.7,130.6 L192.6,129.2 L192.0,127.8 L190.7,126.0 L189.9,124.8 L189.1,123.6 L188.4,122.9 L187.6,122.2 L186.5,120.9 L185.7,119.2 L184.8,118.0 L183.5,116.5 Z" fill="#0EA5E9" fill-opacity="0.78" stroke="#ffffff" stroke-width="1.1"><title>North Garo Hills (Garo Hills)</title></path>
+<path d="M72.4,221.3 L67.9,221.1 L67.3,221.7 L67.1,222.6 L66.3,222.4 L65.7,223.0 L65.7,224.0 L65.3,224.6 L64.5,225.5 L64.0,226.4 L63.4,227.0 L62.4,226.9 L61.6,226.5 L60.9,225.9 L60.1,225.4 L59.0,225.4 L58.5,226.0 L57.8,226.6 L57.6,227.5 L57.5,228.3 L57.1,229.0 L56.8,229.7 L56.1,230.2 L55.3,230.0 L54.4,230.1 L53.6,230.0 L52.9,230.4 L52.0,230.9 L51.2,230.9 L50.4,231.0 L49.5,231.3 L48.8,231.6 L48.1,232.3 L47.1,232.7 L46.2,232.7 L45.4,232.7 L44.6,232.6 L43.7,232.7 L42.8,232.8 L42.1,232.9 L41.3,233.3 L40.5,233.5 L39.9,233.9 L39.0,234.1 L38.3,233.8 L37.8,234.4 L37.1,234.9 L36.3,235.2 L35.4,235.1 L34.5,235.6 L33.6,236.4 L33.2,237.1 L32.8,237.8 L32.9,238.6 L33.5,239.4 L33.0,240.1 L32.3,240.8 L31.6,241.4 L31.0,242.0 L31.0,243.0 L31.1,243.8 L31.9,244.1 L31.9,244.8 L32.7,245.0 L33.4,244.7 L34.2,245.0 L34.7,245.8 L35.1,246.6 L35.4,247.5 L34.6,248.0 L33.8,248.0 L33.0,248.0 L32.7,248.7 L32.9,249.5 L33.1,250.3 L33.2,251.1 L32.9,252.3 L32.5,253.2 L32.1,254.4 L31.8,255.5 L31.8,256.4 L30.7,257.3 L30.0,257.8 L29.1,258.2 L28.3,258.6 L27.4,259.8 L26.3,261.5 L24.8,263.4 L23.9,265.4 L22.9,267.4 L22.4,268.8 L22.0,270.2 L21.7,271.3 L21.5,272.9 L21.3,274.4 L20.9,275.8 L19.3,277.7 L18.4,279.9 L18.0,284.9 L18.3,286.6 L19.5,290.9 L21.1,294.6 L21.7,295.6 L23.2,296.6 L24.0,297.6 L24.3,298.7 L24.3,300.2 L23.6,302.4 L23.1,304.7 L24.3,305.3 L25.5,305.3 L26.9,305.6 L28.2,306.1 L29.7,306.5 L31.4,307.1 L32.7,307.1 L34.9,306.1 L36.6,304.9 L37.3,303.8 L38.8,302.3 L40.8,301.6 L42.2,301.9 L43.9,302.6 L45.9,303.8 L48.9,303.8 L50.9,303.6 L53.9,303.7 L56.3,303.4 L61.2,301.4 L61.6,298.2 L70.6,294.5 L71.6,291.8 L99.8,283.5 L102.4,279.9 L100.1,277.1 L101.3,273.3 L101.0,270.1 L101.6,267.9 L100.8,266.6 L100.8,265.3 L102.4,262.6 L103.2,259.8 L102.8,258.2 L103.0,255.6 L101.7,254.2 L103.2,249.9 L103.8,245.6 L103.9,241.1 L104.5,237.9 L103.7,237.6 L102.9,237.3 L102.4,236.7 L101.6,236.7 L100.6,236.6 L100.2,237.5 L99.4,237.7 L98.8,237.2 L98.3,236.6 L97.8,235.8 L97.0,236.3 L96.5,237.4 L96.3,238.3 L96.8,239.5 L95.9,239.3 L95.0,239.7 L94.0,239.5 L93.7,238.6 L93.8,237.5 L93.9,236.6 L94.5,235.8 L95.0,234.9 L95.0,234.0 L94.6,233.2 L93.8,232.6 L92.8,233.3 L92.0,233.7 L90.9,233.6 L90.1,232.8 L89.7,232.1 L88.7,231.5 L88.1,230.8 L87.7,230.1 L87.3,229.3 L86.8,228.1 L86.2,227.4 L85.6,226.9 L85.0,226.3 L84.2,225.8 L83.4,225.3 L82.6,224.8 L81.7,224.3 L80.7,223.8 L79.0,223.1 L77.3,222.7 L76.0,222.3 L73.4,221.7 Z" fill="#0EA5E9" fill-opacity="0.78" stroke="#ffffff" stroke-width="1.1"><title>South West Garo Hills (Garo Hills)</title></path>
+<text x="519.9" y="142.2" text-anchor="middle" font-size="10" font-weight="700" fill="#1a1a1a" font-family="inherit" paint-order="stroke" stroke="#fff" stroke-width="3" stroke-linejoin="round">Ribhoi</text>
+<text x="351.0" y="217.8" text-anchor="middle" font-size="10" font-weight="700" fill="#1a1a1a" font-family="inherit" paint-order="stroke" stroke="#fff" stroke-width="3" stroke-linejoin="round">W.</text>
+<text x="351.0" y="228.8" text-anchor="middle" font-size="10" font-weight="700" fill="#1a1a1a" font-family="inherit" paint-order="stroke" stroke="#fff" stroke-width="3" stroke-linejoin="round">Khasi</text>
+<text x="351.0" y="239.8" text-anchor="middle" font-size="10" font-weight="700" fill="#1a1a1a" font-family="inherit" paint-order="stroke" stroke="#fff" stroke-width="3" stroke-linejoin="round">Hills</text>
+<text x="671.1" y="314.8" text-anchor="middle" font-size="10" font-weight="700" fill="#1a1a1a" font-family="inherit" paint-order="stroke" stroke="#fff" stroke-width="3" stroke-linejoin="round">E.</text>
+<text x="671.1" y="325.8" text-anchor="middle" font-size="10" font-weight="700" fill="#1a1a1a" font-family="inherit" paint-order="stroke" stroke="#fff" stroke-width="3" stroke-linejoin="round">Jaintia</text>
+<text x="671.1" y="336.8" text-anchor="middle" font-size="10" font-weight="700" fill="#1a1a1a" font-family="inherit" paint-order="stroke" stroke="#fff" stroke-width="3" stroke-linejoin="round">Hills</text>
+<text x="518.4" y="283.8" text-anchor="middle" font-size="10" font-weight="700" fill="#1a1a1a" font-family="inherit" paint-order="stroke" stroke="#fff" stroke-width="3" stroke-linejoin="round">E.</text>
+<text x="518.4" y="294.8" text-anchor="middle" font-size="10" font-weight="700" fill="#1a1a1a" font-family="inherit" paint-order="stroke" stroke="#fff" stroke-width="3" stroke-linejoin="round">Khasi</text>
+<text x="518.4" y="305.8" text-anchor="middle" font-size="10" font-weight="700" fill="#1a1a1a" font-family="inherit" paint-order="stroke" stroke="#fff" stroke-width="3" stroke-linejoin="round">Hills</text>
+<text x="204.1" y="313.1" text-anchor="middle" font-size="10" font-weight="700" fill="#1a1a1a" font-family="inherit" paint-order="stroke" stroke="#fff" stroke-width="3" stroke-linejoin="round">South</text>
+<text x="204.1" y="324.1" text-anchor="middle" font-size="10" font-weight="700" fill="#1a1a1a" font-family="inherit" paint-order="stroke" stroke="#fff" stroke-width="3" stroke-linejoin="round">Garo</text>
+<text x="204.1" y="335.1" text-anchor="middle" font-size="10" font-weight="700" fill="#1a1a1a" font-family="inherit" paint-order="stroke" stroke="#fff" stroke-width="3" stroke-linejoin="round">Hills</text>
+<text x="100.6" y="210.8" text-anchor="middle" font-size="10" font-weight="700" fill="#1a1a1a" font-family="inherit" paint-order="stroke" stroke="#fff" stroke-width="3" stroke-linejoin="round">W.</text>
+<text x="100.6" y="221.8" text-anchor="middle" font-size="10" font-weight="700" fill="#1a1a1a" font-family="inherit" paint-order="stroke" stroke="#fff" stroke-width="3" stroke-linejoin="round">Garo</text>
+<text x="100.6" y="232.8" text-anchor="middle" font-size="10" font-weight="700" fill="#1a1a1a" font-family="inherit" paint-order="stroke" stroke="#fff" stroke-width="3" stroke-linejoin="round">Hills</text>
+<text x="220.0" y="220.6" text-anchor="middle" font-size="10" font-weight="700" fill="#1a1a1a" font-family="inherit" paint-order="stroke" stroke="#fff" stroke-width="3" stroke-linejoin="round">E.</text>
+<text x="220.0" y="231.6" text-anchor="middle" font-size="10" font-weight="700" fill="#1a1a1a" font-family="inherit" paint-order="stroke" stroke="#fff" stroke-width="3" stroke-linejoin="round">Garo</text>
+<text x="220.0" y="242.6" text-anchor="middle" font-size="10" font-weight="700" fill="#1a1a1a" font-family="inherit" paint-order="stroke" stroke="#fff" stroke-width="3" stroke-linejoin="round">Hills</text>
+<text x="616.7" y="246.6" text-anchor="middle" font-size="10" font-weight="700" fill="#1a1a1a" font-family="inherit" paint-order="stroke" stroke="#fff" stroke-width="3" stroke-linejoin="round">W.</text>
+<text x="616.7" y="257.6" text-anchor="middle" font-size="10" font-weight="700" fill="#1a1a1a" font-family="inherit" paint-order="stroke" stroke="#fff" stroke-width="3" stroke-linejoin="round">Jaintia</text>
+<text x="616.7" y="268.6" text-anchor="middle" font-size="10" font-weight="700" fill="#1a1a1a" font-family="inherit" paint-order="stroke" stroke="#fff" stroke-width="3" stroke-linejoin="round">Hills</text>
+<text x="356.2" y="312.0" text-anchor="middle" font-size="10" font-weight="700" fill="#1a1a1a" font-family="inherit" paint-order="stroke" stroke="#fff" stroke-width="3" stroke-linejoin="round">SW</text>
+<text x="356.2" y="323.0" text-anchor="middle" font-size="10" font-weight="700" fill="#1a1a1a" font-family="inherit" paint-order="stroke" stroke="#fff" stroke-width="3" stroke-linejoin="round">Khasi</text>
+<text x="356.2" y="334.0" text-anchor="middle" font-size="10" font-weight="700" fill="#1a1a1a" font-family="inherit" paint-order="stroke" stroke="#fff" stroke-width="3" stroke-linejoin="round">Hills</text>
+<text x="224.1" y="146.4" text-anchor="middle" font-size="10" font-weight="700" fill="#1a1a1a" font-family="inherit" paint-order="stroke" stroke="#fff" stroke-width="3" stroke-linejoin="round">N.</text>
+<text x="224.1" y="157.4" text-anchor="middle" font-size="10" font-weight="700" fill="#1a1a1a" font-family="inherit" paint-order="stroke" stroke="#fff" stroke-width="3" stroke-linejoin="round">Garo</text>
+<text x="224.1" y="168.4" text-anchor="middle" font-size="10" font-weight="700" fill="#1a1a1a" font-family="inherit" paint-order="stroke" stroke="#fff" stroke-width="3" stroke-linejoin="round">Hills</text>
+<text x="53.4" y="276.6" text-anchor="middle" font-size="10" font-weight="700" fill="#1a1a1a" font-family="inherit" paint-order="stroke" stroke="#fff" stroke-width="3" stroke-linejoin="round">SW</text>
+<text x="53.4" y="287.6" text-anchor="middle" font-size="10" font-weight="700" fill="#1a1a1a" font-family="inherit" paint-order="stroke" stroke="#fff" stroke-width="3" stroke-linejoin="round">Garo</text>
+<text x="53.4" y="298.6" text-anchor="middle" font-size="10" font-weight="700" fill="#1a1a1a" font-family="inherit" paint-order="stroke" stroke="#fff" stroke-width="3" stroke-linejoin="round">Hills</text>
+<circle cx="457.9" cy="233.8" r="5" fill="#c0392b" stroke="#fff" stroke-width="2"><title>Eastern West Khasi Hills — Mairang (district created after source boundary vintage)</title></circle>
+<text x="519.9" y="225.8" text-anchor="middle" font-size="10" font-weight="700" fill="#1a1a1a" font-family="inherit" paint-order="stroke" stroke="#fff" stroke-width="3" stroke-linejoin="round">Eastern W. Khasi</text>
+<line x1="462.9" y1="233.8" x2="492.9" y2="227.8" stroke="#c0392b" stroke-width="1.2"/>
+<g font-size="11" fill="#1a1a1a" font-family="inherit">
+<rect x="18" y="362" width="14" height="14" rx="2" fill="#138808" fill-opacity="0.78"/><text x="40" y="373">Khasi Hills / KHADC area</text>
+<rect x="18" y="384" width="14" height="14" rx="2" fill="#FF9933" fill-opacity="0.78"/><text x="40" y="395">Jaintia Hills / JHADC area</text>
+<rect x="18" y="406" width="14" height="14" rx="2" fill="#0EA5E9" fill-opacity="0.78"/><text x="40" y="417">Garo Hills / GHADC area</text>
+<circle cx="25" cy="437" r="5" fill="#c0392b" stroke="#fff" stroke-width="2"/><text x="40" y="441">Eastern West Khasi Hills marker</text>
+</g>
+<text x="18" y="454" font-size="9" fill="#5b5b5b" font-style="italic">Source: datta07/INDIAN-SHAPEFILES · source boundary vintage has 11 features; EW Khasi marker added for the 12th district.</text>
+</svg></div>
+  <h3 class="grp-h">District directory</h3>
+  <table class="bihar"><thead><tr><th>#</th><th>District</th><th>ADC / hills region</th><th>HQ</th><th class="r">Area sq km</th><th class="r">Population</th></tr></thead><tbody>
+    <tr><td class="r">1</td><td><a href="http://eastgarohills.gov.in/" target="_blank" rel="noopener">East Garo Hills</a></td><td>GHADC / Garo Hills</td><td>Williamnagar</td><td class="r">1,443</td><td class="r">1,45,798</td></tr>
+    <tr><td class="r">2</td><td><a href="http://northgarohills.gov.in" target="_blank" rel="noopener">North Garo Hills</a></td><td>GHADC / Garo Hills</td><td>Resubelpara</td><td class="r">1,160</td><td class="r">1,72,119</td></tr>
+    <tr><td class="r">3</td><td><a href="http://southgarohills.gov.in/" target="_blank" rel="noopener">South Garo Hills</a></td><td>GHADC / Garo Hills</td><td>Baghmara</td><td class="r">1,887</td><td class="r">1,42,334</td></tr>
+    <tr><td class="r">4</td><td><a href="http://westgarohills.gov.in" target="_blank" rel="noopener">West Garo Hills</a></td><td>GHADC / Garo Hills</td><td>Tura</td><td class="r">2,811</td><td class="r">4,65,735</td></tr>
+    <tr><td class="r">5</td><td><a href="http://southwestgarohills.gov.in" target="_blank" rel="noopener">South West Garo Hills</a></td><td>GHADC / Garo Hills</td><td>Ampati</td><td class="r">866</td><td class="r">1,77,556</td></tr>
+    <tr><td class="r">6</td><td><a href="https://eastkhasihills.gov.in/" target="_blank" rel="noopener">East Khasi Hills</a></td><td>KHADC / Khasi Hills</td><td>Shillong</td><td class="r">2,748</td><td class="r">8,25,922</td></tr>
+    <tr><td class="r">7</td><td><a href="https://westjaintiahills.gov.in/" target="_blank" rel="noopener">West Jaintia Hills</a></td><td>JHADC / Jaintia Hills</td><td>Jowai</td><td class="r">1,779</td><td class="r">2,72,185</td></tr>
+    <tr><td class="r">8</td><td><a href="https://eastjaintiahills.gov.in/" target="_blank" rel="noopener">East Jaintia Hills</a></td><td>JHADC / Jaintia Hills</td><td>Khliehriat</td><td class="r">2,040</td><td class="r">1,22,939</td></tr>
+    <tr><td class="r">9</td><td><a href="https://southwestkhasihills.gov.in/" target="_blank" rel="noopener">South West Khasi Hills</a></td><td>KHADC / Khasi Hills</td><td>Mawkyrwat</td><td class="r">1,401</td><td class="r">99,171</td></tr>
+    <tr><td class="r">10</td><td><a href="https://westkhasihills.gov.in/" target="_blank" rel="noopener">West Khasi Hills</a></td><td>KHADC / Khasi Hills</td><td>Nongstoin</td><td class="r">WKH + EWKH: 3,846</td><td class="r">WKH + EWKH: 2,84,290</td></tr>
+    <tr><td class="r">11</td><td>Eastern West Khasi Hills</td><td>KHADC / Khasi Hills</td><td>Mairang</td><td class="r">WKH + EWKH: 3,846</td><td class="r">WKH + EWKH: 2,84,290</td></tr>
+    <tr><td class="r">12</td><td><a href="https://ribhoi.gov.in/" target="_blank" rel="noopener">Ri Bhoi</a></td><td>KHADC / Khasi Hills</td><td>Nongpoh</td><td class="r">2,448</td><td class="r">2,58,840</td></tr>
+  </tbody><caption>12 district rows; WKH/EWKH combined area/population is as published by the state portal.</caption></table>
+  <p class="src">Sources: <a href="https://meghalaya.gov.in/districts" target="_blank" rel="noopener">Meghalaya district table</a>; <a href="https://raw.githubusercontent.com/datta07/INDIAN-SHAPEFILES/master/STATES/MEGHALAYA/MEGHALAYA_DISTRICTS.geojson" target="_blank" rel="noopener">datta07 Meghalaya district GeoJSON</a>.</p><!-- END: DIST -->
+
+</section>
+
+<!-- =========================== PRI =========================== -->
+<section id="pri" class="lens-section">
+<!-- BEGIN: PRI — Meghalaya Sixth Schedule ADC adaptation. -->
+  <h1>🏞 Local Self-Government — Sixth Schedule Autonomous District Councils</h1>
+  <p class="sec-sub">Meghalaya is the exception to the standard PRI story. In nearly the entire state, the local self-government lens is KHADC, JHADC and GHADC rather than Zilla Parishad → Block Panchayat → Gram Panchayat.</p>
+  <div class="callout ok"><strong>Sixth Schedule callout:</strong> the Autonomous District Councils can legislate on specified tribal-area subjects including land, forest (other than reserved forest), shifting cultivation, village administration, inheritance, marriage, social customs and traditional chiefs/headmen.</div>
+  <div class="kpis">
+    <div class="kpi"><div class="v">3</div><div class="l">ADCs</div><div class="sub">Khasi, Jaintia, Garo Hills</div></div>
+    <div class="kpi"><div class="v">30</div><div class="l">KHADC elected MDCs</div><div class="sub">Khasi Hills</div></div>
+    <div class="kpi"><div class="v">30</div><div class="l">JHADC elected MDCs</div><div class="sub">Jaintia Hills</div></div>
+    <div class="kpi"><div class="v">30</div><div class="l">GHADC elected MDCs</div><div class="sub">Garo Hills</div></div>
+  </div>
+  <h3 class="grp-h">Autonomous District Councils — current executive heads</h3>
+  <table class="bihar"><thead><tr><th>Council</th><th>Territorial focus</th><th>CEM</th><th>Chairman / presiding officer</th><th>Executive structure</th></tr></thead><tbody>
+    <tr><td>KHADC</td><td>Khasi Hills</td><td>Winston Tony Lyngdoh <span class="pill p-vpp">VPP</span></td><td>Strong Pillar Kharjana <span class="pill p-vpp">VPP</span></td><td>CEM + Executive Members accountable to the elected council</td></tr>
+    <tr><td>JHADC</td><td>Jaintia Hills</td><td>Thombor Shiwat <span class="pill p-npp">NPP</span></td><td>Dr. Sankey Shangpung <span class="pill p-npp">NPP</span></td><td>CEM + Executive Members accountable to the elected council</td></tr>
+    <tr><td>GHADC</td><td>Garo Hills</td><td>Dhormonath Ch. Sangma</td><td>Live council roster</td><td>CEM + Executive Members; Deputy CEM named in executive-member notification</td></tr>
+  </tbody><caption>Each ADC has 30 elected seats per the task brief; names are included only where a source was found.</caption></table>
+  <h3 class="grp-h">Why this replaces standard #pri</h3>
+  <div class="role-grid">
+    <div class="role-card"><div class="role">Legislative role</div><div class="name">District Council laws</div><div class="meta">Subject to Sixth Schedule limits and Governor assent</div></div>
+    <div class="role-card"><div class="role">Executive role</div><div class="name">CEM + Executive Committee</div><div class="meta">Council cabinet equivalent for ADC subjects</div></div>
+    <div class="role-card"><div class="role">Administrative link</div><div class="name">District Council Affairs Department</div><div class="meta"><a href="https://www.megdca.gov.in/index.html" target="_blank" rel="noopener">megdca.gov.in</a></div></div>
+  </div>
+  <p class="src">Sources: <a href="https://www.megdca.gov.in/index.html" target="_blank" rel="noopener">Meghalaya District Council Affairs Department</a>; <a href="https://theshillongtimes.com/2025/03/01/khadc-gets-new-cem-chairman/" target="_blank" rel="noopener">KHADC CEM/Chairman report</a>; <a href="https://hubnetwork.in/winston-tony-lyngdoh-elected-unopposed-as-new-khadc-cem/" target="_blank" rel="noopener">Winston Tony Lyngdoh CEM report</a>; <a href="https://meghalayamonitor.com/guv-nod-to-list-of-ghadc-executive-members/" target="_blank" rel="noopener">GHADC executive-member notification report</a>.</p><!-- END: PRI -->
+
+</section>
+
+<!-- =========================== CONSTITUTIONAL BODIES =========================== -->
+<section id="bodies" class="lens-section">
+<!-- BEGIN: BODIES — State constitutional and statutory bodies. -->
+  <h1>📊 State Constitutional &amp; Statutory Bodies</h1>
+  <p class="sec-sub">Oversight bodies and independent authorities with state-level jurisdiction. Names are linked or marked as live roster where the official source, not a static snapshot, is the safer authority.</p>
+  <div class="role-grid">
+    <div class="role-card"><div class="role">Meghalaya Public Service Commission</div><div class="name">Chairperson + members</div><div class="meta"><a href="https://mpsc.nic.in/" target="_blank" rel="noopener">mpsc.nic.in</a></div></div>
+    <div class="role-card"><div class="role">State Election Commission</div><div class="name">State Election Commissioner</div><div class="meta">ADC/ULB/local elections · <a href="https://meghalayasec.nic.in/" target="_blank" rel="noopener">meghalayasec.nic.in</a></div></div>
+    <div class="role-card"><div class="role">Chief Electoral Officer</div><div class="name">B. D. R. Tiwari, IAS</div><div class="meta">LS / VS electoral rolls · <a href="https://ceomeghalaya.nic.in/" target="_blank" rel="noopener">ceomeghalaya.nic.in</a></div></div>
+    <div class="role-card"><div class="role">Meghalaya State Information Commission</div><div class="name">Chief Information Commissioner</div><div class="meta">RTI appeals · <a href="https://megsic.gov.in/" target="_blank" rel="noopener">megsic.gov.in</a></div></div>
+    <div class="role-card"><div class="role">Meghalaya Lokayukta</div><div class="name">Lokayukta / members</div><div class="meta"><a href="https://meglokayukta.gov.in/" target="_blank" rel="noopener">meglokayukta.gov.in</a></div></div>
+    <div class="role-card"><div class="role">Meghalaya Human Rights Commission</div><div class="name">Chairperson / members</div><div class="meta"><a href="https://meghalaya.gov.in/" target="_blank" rel="noopener">State portal</a></div></div>
+    <div class="role-card"><div class="role">Meghalaya State Commission for Women</div><div class="name">Chairperson</div><div class="meta"><a href="https://mscw.nic.in/" target="_blank" rel="noopener">mscw.nic.in</a></div></div>
+    <div class="role-card"><div class="role">District Council Affairs Department</div><div class="name">Administrative department for KHADC/JHADC/GHADC</div><div class="meta"><a href="https://www.megdca.gov.in/index.html" target="_blank" rel="noopener">megdca.gov.in</a></div></div>
+    <div class="role-card"><div class="role">Accountant General, Meghalaya (CAG)</div><div class="name">Indian Audit &amp; Accounts Service</div><div class="meta"><a href="https://cag.gov.in/ag/meghalaya/en" target="_blank" rel="noopener">cag.gov.in/ag/meghalaya</a></div></div>
+    <div class="role-card"><div class="role">Meghalaya State Finance Commission</div><div class="name">Finance devolution body</div><div class="meta">State Finance Department</div></div>
+  </div>
+  <p class="src">Sources: official body portals linked in each card; <a href="https://meghalaya.gov.in/" target="_blank" rel="noopener">Meghalaya Government Portal</a>; <a href="https://www.megdca.gov.in/index.html" target="_blank" rel="noopener">District Council Affairs Department</a>.</p><!-- END: BODIES -->
+
+</section>
+
+<!-- =========================== SCOPE MEMO =========================== -->
+<section id="scope" class="lens-section">
+<!-- BEGIN: SCOPE — Math table — counts + drill-deeper links. -->
+  <h3 class="grp-h">The math</h3>
+  <table class="bihar"><thead><tr><th>Layer</th><th class="r">Office-holders</th><th>In-HTML?</th><th>Drill deeper</th></tr></thead><tbody>
+    <tr><td>Union ministers from Meghalaya</td><td class="r">0</td><td>✅ inline</td><td><a href="#centre">↑ Centre lens</a> · <a href="https://www.india.gov.in/my-government/whos-who/council-ministers" target="_blank" rel="noopener">Council of Ministers</a></td></tr>
+    <tr><td>Lok Sabha MPs</td><td class="r">2</td><td>✅ inline</td><td><a href="#centre">↑ Centre lens</a> · <a href="https://sansad.in/ls/members" target="_blank" rel="noopener">Sansad LS</a></td></tr>
+    <tr><td>Rajya Sabha MPs</td><td class="r">1</td><td>✅ inline</td><td><a href="#centre">↑ Centre lens</a> · <a href="https://sansad.in/rs/member" target="_blank" rel="noopener">Sansad RS</a></td></tr>
+    <tr><td>State ministry</td><td class="r">12</td><td>✅ inline</td><td><a href="#exec">↑ Executive lens</a> · <a href="https://meghalaya.gov.in/key-contacts/council-of-ministers" target="_blank" rel="noopener">Council of Ministers</a></td></tr>
+    <tr><td>MLAs</td><td class="r">60</td><td>⚠ tally + officers</td><td><a href="#leg">↑ Legislature lens</a> · <a href="https://meghalaya.gov.in/key-contacts/mla" target="_blank" rel="noopener">MLA roster</a></td></tr>
+    <tr><td>MLCs</td><td class="r">0</td><td>✅ omitted</td><td>No Legislative Council</td></tr>
+    <tr><td>HC judges</td><td class="r">4</td><td>✅ inline</td><td><a href="http://meghalayahighcourt.nic.in/whos-who" target="_blank" rel="noopener">High Court Who's Who</a></td></tr>
+    <tr><td>District officers (DC + SP)</td><td class="r">~24+</td><td>⛓ link per district</td><td><a href="#dist">↑ District lens</a> · district portals</td></tr>
+    <tr><td>Autonomous District Councils</td><td class="r">3 councils</td><td>✅ inline</td><td><a href="#pri">↑ ADC lens</a> · <a href="https://www.megdca.gov.in/index.html" target="_blank" rel="noopener">District Council Affairs</a></td></tr>
+    <tr><td>Elected MDCs</td><td class="r">90</td><td>⚠ leadership inline</td><td>KHADC/JHADC/GHADC rosters and election notifications</td></tr>
+    <tr><td>C&amp;RD blocks</td><td class="r">46</td><td>⛓ link</td><td>Community &amp; Rural Development Department / district portals</td></tr>
+    <tr><td>Traditional village institutions</td><td class="r">large / customary</td><td>⛓ link</td><td>ADC acts, village administration and district records</td></tr>
+  </tbody><caption>Decision rule: Meghalaya uses a Sixth Schedule hand-off below district level, not a standard PRI bulk roster.</caption></table>
+  <h3 class="grp-h">Recommendation</h3>
+  <div class="callout ok"><strong>Hybrid remains the honest answer, but the hand-off changes.</strong> This page can name the top ~120 actors and all three ADC leadership rows. Below that, the authoritative path is the District Council Affairs Department, each ADC, district portals and election notifications, not an all-India GP register narrative.</div>
+  <h3 class="grp-h">Suggested next iterations</h3>
+  <ol style="font-size:0.88rem;line-height:1.55;"><li><strong>ADC subpages</strong> — one page each for KHADC, JHADC and GHADC with elected MDC lists, committees and acts.</li><li><strong>District pages</strong> — 12 pages listing DC/SP/SDO/C&amp;RD block contacts and ADC territorial overlap.</li><li><strong>Customary institution explainer</strong> — a separate page for Nokma/Sordar/Doloi/Syiem and village administration roles.</li></ol>
+  <p class="src">Sources: <a href="https://www.megdca.gov.in/index.html" target="_blank" rel="noopener">District Council Affairs Department</a>; <a href="https://meghalaya.gov.in/key-contacts/mla" target="_blank" rel="noopener">MLA roster</a>; <a href="https://meghalaya.gov.in/districts" target="_blank" rel="noopener">District table</a>.</p><!-- END: SCOPE -->
+
+</section>
+
+
+</main>
+
+<footer>
+  Meghalaya Shasan · governance transparency experiment · drafted 24-May-2026 · skinned with the <code>bharat-sanchar-aesthetic</code> skill · zero external dependencies · data sources cited inline · Sixth Schedule ADC leadership is intentionally separated from ordinary PRI language — see <a href="#pri">ADC lens</a> and <a href="#scope">Scope memo</a>.
+</footer>
+
+<!-- JS 1: expand/collapse-all within a lens -->
+<script>
+(function(){
+  document.addEventListener('click', function(e){
+    var btn = e.target.closest('.ec-btn'); if(!btn) return;
+    e.preventDefault();
+    var root = document.getElementById(btn.getAttribute('data-scope')); if(!root) return;
+    var openVal = btn.getAttribute('data-ec') === 'expand';
+    root.querySelectorAll('details').forEach(function(d){ if(d!==root) d.open = openVal; });
+    if(root.tagName === 'DETAILS' && openVal) root.open = true;
+  });
+})();
+</script>
+
+<!-- JS 2: close mobile hamburger after a nav link tap -->
+<script>
+(function(){
+  var toggle = document.getElementById('navtoggle');
+  var nav = document.querySelector('header.topbar nav.lens');
+  if(!toggle || !nav) return;
+  nav.addEventListener('click', function(e){
+    var a = e.target.closest('a'); if(!a) return;
+    var href = a.getAttribute('href'); if(!href) return;
+    toggle.checked = false;
+    if(href.charAt(0) === '#' && href.length > 1){
+      requestAnimationFrame(function(){
+        requestAnimationFrame(function(){
+          var el = document.getElementById(href.slice(1)); if(!el) return;
+          var topbar = document.querySelector('header.topbar');
+          var offset = topbar ? topbar.getBoundingClientRect().height : 0;
+          var y = el.getBoundingClientRect().top + window.pageYOffset - offset - 4;
+          window.scrollTo({top: Math.max(0, y), behavior: 'auto'});
+        });
+      });
+    }
+  });
+})();
+</script>
+</body>
+</html>

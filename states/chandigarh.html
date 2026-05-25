@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chandigarh UT Shasan — Governance Personnel Catalogue (Centre → Ward)</title>
+<meta name="description" content="A link-anchored catalogue of Chandigarh (UT)'s governance chain — Union representation, Administrator, Punjab & Haryana High Court, 1 district, Municipal Corporation and 35 wards.">
+<style>
+  :root {
+    --bg:#f7f7f5; --card:#fff; --ink:#1a1a1a; --muted:#5b5b5b;
+    --navy:#0B1B3F; --saffron:#FF9933; --green:#138808; --red:#c0392b;
+    --border:#e3e3df; --tag:#eef0f7;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-padding-top:115px;scroll-behavior:smooth;}
+  body{margin:0;font-family:'Segoe UI',Tahoma,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5;font-size:14px;}
+  a{color:var(--navy);}
+
+  /* ===== TOPBAR ===== */
+  header.topbar{background:linear-gradient(135deg,var(--saffron) 0%,#fff 50%,var(--green) 100%);padding:8px 20px 6px;border-bottom:2px solid var(--navy);position:sticky;top:0;z-index:10;text-align:center;}
+  header.topbar > *{text-align:left;}
+  header.topbar nav.lens{justify-content:center;display:inline-flex;}
+  .brand-row{display:flex;flex-direction:row;align-items:baseline;justify-content:center;gap:10px;flex-wrap:wrap;line-height:1.05;margin-bottom:4px;}
+  .brand{display:inline-block;font-size:1.2rem;font-weight:700;color:var(--navy);text-decoration:none;}
+  .brand:hover{color:var(--navy);text-decoration:none;}
+  .brand .hi{font-family:'Mangal','Nirmala UI',serif;margin-right:6px;color:var(--red);}
+  .tagline{font-size:0.65rem;color:var(--muted);font-weight:500;letter-spacing:0.3px;}
+  nav.lens{margin-top:4px;display:flex;flex-wrap:wrap;gap:2px;align-items:stretch;}
+  nav.lens > .lens-item{position:relative;}
+  nav.lens > .lens-item > a, nav.lens > a{display:inline-block;padding:4px 11px;background:rgba(255,255,255,0.75);border:1.5px solid var(--navy);color:var(--navy);text-decoration:none;border-radius:6px;font-weight:600;font-size:0.8rem;}
+  nav.lens > .lens-item > a:hover, nav.lens > a:hover, nav.lens > .lens-item:hover > a{background:var(--navy);color:#fff;}
+  nav.lens .caret{font-size:0.7rem;margin-left:4px;opacity:0.7;}
+
+  /* ===== MEGA-MENU DROPDOWN ===== */
+  .lens-drop{position:absolute;top:100%;left:0;display:none;background:var(--card);border:1.5px solid var(--navy);border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,0.25);padding:8px;min-width:280px;max-width:520px;max-height:60vh;overflow-y:auto;z-index:20;margin-top:0;}
+  .lens-item:hover .lens-drop, .lens-item:focus-within .lens-drop{display:block;}
+  .lens-item::after{content:"";position:absolute;top:100%;left:0;right:0;height:10px;display:none;}
+  .lens-item:hover::after, .lens-item:focus-within::after{display:block;}
+  .lens-drop .ld-head{font-size:0.7rem;text-transform:uppercase;letter-spacing:0.5px;color:var(--muted);padding:6px 8px;border-bottom:1px solid var(--border);margin-bottom:4px;font-weight:700;display:flex;justify-content:space-between;align-items:center;}
+  .lens-drop .ld-head a{font-size:0.72rem;color:var(--navy);text-decoration:none;font-weight:600;}
+  .lens-drop .ld-head a:hover{text-decoration:underline;}
+  .lens-drop .ld-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:2px;}
+  .lens-drop .ld-grid a{display:flex;justify-content:space-between;align-items:center;gap:6px;padding:5px 9px;font-size:0.8rem;color:var(--ink);text-decoration:none;border-radius:4px;}
+  .lens-drop .ld-grid a:hover{background:var(--tag);color:var(--navy);}
+  .lens-drop .ld-grid a .c{font-size:0.65rem;color:var(--muted);background:var(--tag);padding:1px 6px;border-radius:999px;font-weight:600;}
+  @media (max-width:700px){
+    .lens-drop{position:static;display:block;max-height:none;margin-top:0;border-radius:0;border:none;border-top:1px dashed var(--border);box-shadow:none;}
+  }
+
+  .help{padding:8px 20px;background:#fff7e8;border-bottom:1px solid var(--border);font-size:0.82rem;color:#5a3a00;}
+
+  main{max-width:1180px;margin:0 auto;padding:14px 20px 50px;}
+
+  /* ===== LENS ROUTING via :target ===== */
+  .lens-section{display:none;}
+  .lens-section:target, .lens-section:has(:target){display:block;}
+  body:not(:has(:target)) #h{display:block;}
+
+  details:target, details:has(:target){scroll-margin-top:120px;}
+  details:target > summary, details:has(:target) > summary{background:linear-gradient(90deg,rgba(255,153,51,0.18) 0%,transparent 100%);}
+
+  /* ===== JUMPBAR ===== */
+  .jumpbar{position:sticky;top:0;z-index:8;background:var(--card);border-bottom:1px solid var(--border);padding:6px 8px;margin:-14px -20px 14px;display:flex;gap:4px;overflow-x:auto;white-space:nowrap;}
+  .jumpbar a{flex:0 0 auto;font-size:0.72rem;padding:3px 9px;color:var(--ink);text-decoration:none;border-radius:999px;background:var(--tag);font-weight:600;}
+  .jumpbar a:hover{background:var(--navy);color:#fff;}
+  .jumpbar .jb-label{flex:0 0 auto;font-size:0.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;padding:4px 8px 4px 0;font-weight:700;}
+
+  /* ===== GOV INTRO + FLOWCHART BLOCKS ===== */
+  .gov-intro{background:linear-gradient(135deg,#fff7e8 0%,#e6f0ff 100%);border-left:4px solid var(--saffron);padding:10px 14px;border-radius:6px;margin:8px 0 14px;font-size:0.88rem;line-height:1.55;}
+  .gov-block{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin:14px 0;}
+  .gov-block h3{margin:0 0 6px;color:var(--navy);font-size:1.05rem;display:flex;align-items:center;gap:8px;}
+  .gov-block .lede{font-size:0.85rem;color:var(--muted);margin:0 0 12px;line-height:1.5;}
+  .gov-block svg{display:block;width:100%;height:auto;max-width:100%;background:transparent;}
+  .gov-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(360px,1fr));gap:12px;}
+  .gov-grid .gov-block{margin:0;}
+  .gov-notes{margin-top:10px;font-size:0.82rem;color:var(--muted);line-height:1.5;}
+  .gov-notes strong{color:var(--ink);}
+  .gov-legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;font-size:0.72rem;color:var(--muted);}
+  .gov-legend span{display:inline-flex;align-items:center;gap:5px;}
+  .gov-legend .sw{width:14px;height:14px;border-radius:3px;display:inline-block;border:1px solid var(--border);}
+  .gb-const{fill:#fde7d8;stroke:#c0392b;stroke-width:1.5;}
+  .gb-exec{fill:#e6f0ff;stroke:#0B1B3F;stroke-width:1.5;}
+  .gb-legis{fill:#fff7e8;stroke:#FF9933;stroke-width:1.5;}
+  .gb-judic{fill:#f5f0ff;stroke:#8338EC;stroke-width:1.5;}
+  .gb-state{fill:#e6f7e9;stroke:#138808;stroke-width:1.5;}
+  .gb-people{fill:#fde7d8;stroke:#c0392b;stroke-width:1.5;}
+  .gb-regu{fill:#e6f5f2;stroke:#06A77D;stroke-width:1.5;}
+
+  /* ===== INSIGHT (SWOT + radar) ===== */
+  .insight{background:linear-gradient(135deg,#f8fafc 0%,#fff7e8 100%);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin:8px 12px 12px;}
+  .insight-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:14px;align-items:start;}
+  @media (max-width:760px){.insight-grid{grid-template-columns:1fr;}}
+  .insight-meta{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px;}
+  .insight-meta .im{font-size:0.72rem;background:var(--tag);padding:2px 8px;border-radius:999px;color:var(--ink);}
+  .insight-meta .im strong{color:var(--navy);}
+  .insight h4{margin:6px 0 4px;color:var(--navy);font-size:0.85rem;}
+  .insight p.how{margin:0 0 8px;font-size:0.82rem;line-height:1.5;}
+  .swot{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+  .swot > div{background:var(--card);border:1px solid var(--border);border-left:3px solid;border-radius:6px;padding:8px 10px;}
+  .swot .str{border-left-color:var(--green);}
+  .swot .wkn{border-left-color:var(--red);}
+  .swot .pot{border-left-color:var(--saffron);grid-column:1/-1;}
+  .swot h5{margin:0 0 4px;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.4px;}
+  .swot .str h5{color:var(--green);}
+  .swot .wkn h5{color:var(--red);}
+  .swot .pot h5{color:#7a3a00;}
+  .swot ul{margin:0;padding-left:18px;font-size:0.78rem;line-height:1.45;}
+  .insight svg.radar{width:100%;height:auto;max-width:280px;display:block;margin:0 auto;}
+  .scores-label{font-size:0.7rem;color:var(--muted);text-align:center;margin-top:4px;}
+
+  /* ===== LENS-OVERVIEW (bar chart) ===== */
+  .lens-overview{background:linear-gradient(135deg,#eef2fb 0%,#fff7e8 100%);border:1px solid var(--border);border-radius:10px;padding:14px 18px;margin:8px 0 16px;}
+  .lens-overview .lo-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:18px;align-items:center;}
+  @media (max-width:780px){.lens-overview .lo-grid{grid-template-columns:1fr;}}
+  .lens-overview h3{margin:0 0 6px;color:var(--navy);font-size:0.95rem;}
+  .lens-overview p{margin:0 0 6px;font-size:0.85rem;line-height:1.5;}
+  .lens-overview .lo-rel{margin-top:8px;padding-top:6px;border-top:1px dashed var(--border);font-size:0.78rem;color:var(--muted);}
+  .lens-overview .lo-chart{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:10px;}
+  .lens-overview .lo-chart-title{font-size:0.72rem;text-transform:uppercase;letter-spacing:0.5px;color:var(--muted);font-weight:700;margin-bottom:4px;text-align:center;}
+
+  /* ===== RELMAP ===== */
+  .relmap{background:linear-gradient(135deg,#eef2fb 0%,#e6f7e9 100%);border:1px solid var(--border);border-radius:10px;padding:16px 20px;margin:14px 0;}
+  .relmap h2{margin:0 0 8px;color:var(--navy);}
+  .relmap p{font-size:0.88rem;line-height:1.55;margin:0 0 10px;}
+  .relmap svg.relflow{width:100%;height:auto;max-width:860px;display:block;margin:6px auto;}
+  .relmap svg.relflow text{fill:var(--ink);}
+
+  /* ===== EXPAND/COLLAPSE TOGGLE ===== */
+  .ec-toggle{display:flex;gap:8px;margin:6px 0 12px;align-items:center;flex-wrap:wrap;}
+  .ec-btn{cursor:pointer;font-size:0.78rem;padding:4px 10px;background:var(--card);border:1px solid var(--border);border-radius:6px;color:var(--navy);font-weight:600;font-family:inherit;}
+  .ec-btn:hover{background:var(--navy);color:#fff;}
+  .ec-hint{font-size:0.72rem;color:var(--muted);}
+
+  /* ===== HEADINGS / KPI / DIR ===== */
+  h1{color:var(--navy);font-size:1.3rem;margin:14px 0 6px;border-left:4px solid var(--red);padding-left:10px;}
+  h2{color:var(--navy);font-size:1.05rem;margin:18px 0 8px;}
+  .kpis{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px;margin:10px 0;}
+  @media (max-width:900px){ .kpis{grid-template-columns:repeat(auto-fit,minmax(140px,1fr));} }
+  .kpi{background:var(--card);border:1px solid var(--border);border-left:3px solid var(--red);border-radius:6px;padding:8px 12px;min-height:60px;display:flex;flex-direction:column;justify-content:center;}
+  .kpi .v{font-size:1.15rem;font-weight:700;color:var(--navy);}
+  .kpi .l{font-size:0.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.4px;}
+
+  .dir-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:6px;margin:8px 0 18px;}
+  .dir-tile{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:8px 12px;text-decoration:none;color:var(--ink);font-size:0.85rem;display:flex;justify-content:space-between;align-items:center;gap:8px;}
+  .dir-tile:hover{border-color:var(--navy);background:var(--tag);}
+  .dir-tile .dt-c{font-size:0.7rem;color:var(--muted);background:var(--tag);padding:1px 7px;border-radius:999px;}
+
+  /* ===== DETAILS / BRANCHES / CARDS ===== */
+  details{background:var(--card);border:1px solid var(--border);border-radius:8px;margin:8px 0;}
+  details > summary{cursor:pointer;padding:10px 14px;font-weight:600;color:var(--navy);list-style:none;display:flex;justify-content:space-between;align-items:center;gap:8px;}
+  details > summary::-webkit-details-marker{display:none;}
+  details > summary::before{content:"▸";color:var(--muted);font-size:0.85rem;margin-right:6px;}
+  details[open] > summary::before{content:"▾";}
+  details > summary .ct{font-size:0.72rem;color:var(--muted);background:var(--tag);padding:2px 9px;border-radius:999px;font-weight:600;}
+  details details{background:transparent;border:none;border-left:2px solid var(--border);margin:6px 0 6px 8px;border-radius:0;}
+  details details > summary{padding:6px 10px;font-weight:500;font-size:0.88rem;color:var(--ink);}
+  details details > summary .ct{background:#fff3e0;color:#7a3a00;}
+  .blurb{font-size:0.78rem;color:var(--muted);margin:0 14px 6px;}
+
+  .state-group:target, .min-group:target, .body-group:target{outline:2px solid var(--saffron);outline-offset:4px;border-radius:8px;}
+  .su-type{display:inline-block;font-size:0.65rem;font-weight:700;padding:2px 8px;border-radius:999px;margin-left:8px;letter-spacing:0.3px;text-transform:uppercase;}
+  .su-type.st{background:rgba(19,136,8,0.14);color:var(--green);border:1px solid rgba(19,136,8,0.45);}
+  .su-type.ut{background:rgba(255,153,51,0.14);color:#a55300;border:1px solid rgba(255,153,51,0.5);}
+
+  .card-list{padding:6px 10px 10px;display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:8px;align-items:start;}
+  .card{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:10px 12px;}
+  .card h3{margin:0 0 4px;font-size:0.95rem;line-height:1.3;}
+  .card h3 a{color:var(--ink);text-decoration:none;}
+  .card h3 a:hover{color:var(--navy);text-decoration:underline;}
+  .card .host{font-size:0.72rem;color:var(--muted);margin-bottom:6px;display:flex;flex-wrap:wrap;gap:6px;align-items:center;}
+  .card .hn{font-family:'Consolas','Monaco',monospace;}
+  .badge{font-size:0.65rem;padding:1px 6px;border-radius:4px;font-weight:600;}
+  .badge.official{background:#e6f7e9;color:var(--green);}
+  .badge.fresh{background:#e6f0ff;color:var(--navy);}
+  .badge.stale{background:#fdecea;color:var(--red);}
+  .lv{font-size:0.7rem;color:var(--muted);}
+  .desc{font-size:0.82rem;color:var(--muted);margin:4px 0;line-height:1.45;}
+  .meta{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px;}
+  .mchip{font-size:0.7rem;background:var(--tag);padding:1px 7px;border-radius:4px;color:var(--ink);}
+  .mchip.s{background:#fff3e0;color:#7a3a00;}
+  .mchip.m{background:#e6f0ff;color:var(--navy);}
+  .mchip.v{background:#f5f0ff;color:#5e35b1;}
+  .tags{display:flex;flex-wrap:wrap;gap:3px;margin-top:6px;}
+  .tag{font-size:0.65rem;background:var(--tag);padding:1px 6px;border-radius:3px;color:var(--muted);}
+  .children{margin-top:6px;background:transparent;border:none;border-left:none;}
+  .children > summary{padding:4px 0;font-size:0.78rem;color:var(--muted);font-weight:500;}
+  .children ul{margin:4px 0 0 18px;padding:0;font-size:0.78rem;}
+  .children li{margin-bottom:3px;}
+
+  footer{max-width:1180px;margin:30px auto 20px;padding:14px 20px;border-top:1px solid var(--border);font-size:0.78rem;color:var(--muted);}
+
+  /* ===== NIGHT-MODE TOGGLE (pure CSS, no JS) ===== */
+  #nightmode{position:fixed;top:0;left:0;opacity:0;pointer-events:none;width:0;height:0;clip:rect(0,0,0,0);}
+  .nm-toggle{position:absolute;top:8px;right:14px;z-index:11;display:inline-flex;align-items:center;gap:5px;cursor:pointer;font-size:0.72rem;font-weight:600;padding:4px 10px;background:rgba(255,255,255,0.85);border:1.5px solid var(--navy);color:var(--navy);border-radius:999px;user-select:none;line-height:1;}
+  .nm-toggle:hover{background:var(--navy);color:#fff;}
+  .nm-toggle .nm-ico-dark,.nm-toggle .nm-lbl-dark{display:inline;}
+  .nm-toggle .nm-ico-light,.nm-toggle .nm-lbl-light{display:none;}
+  @media (max-width:520px){ .nm-toggle .nm-lbl-dark,.nm-toggle .nm-lbl-light{display:none;} .nm-toggle{padding:4px 8px;} }
+
+  :root:has(#nightmode:checked){
+    --bg:#0e0f12; --card:#16181d; --ink:#e6e6e6; --muted:#9aa0a8;
+    --border:#262932; --tag:#1f232b; --navy:#7aa2ff;
+  }
+  :root:has(#nightmode:checked) header.topbar{background:linear-gradient(135deg,#5d3a14 0%,#1a1a1a 50%,#0f3a1c 100%);}
+  :root:has(#nightmode:checked) nav.lens > .lens-item > a,
+  :root:has(#nightmode:checked) nav.lens > a{background:rgba(255,255,255,0.08);}
+  :root:has(#nightmode:checked) .nm-toggle{background:rgba(255,255,255,0.08);}
+  :root:has(#nightmode:checked) .nm-toggle .nm-ico-dark,
+  :root:has(#nightmode:checked) .nm-toggle .nm-lbl-dark{display:none;}
+  :root:has(#nightmode:checked) .nm-toggle .nm-ico-light,
+  :root:has(#nightmode:checked) .nm-toggle .nm-lbl-light{display:inline;}
+  :root:has(#nightmode:checked) .help{background:#2a2316;color:#d9b779;}
+  :root:has(#nightmode:checked) .gov-intro{background:linear-gradient(135deg,#2a2316 0%,#172238 100%);}
+  :root:has(#nightmode:checked) .insight{background:linear-gradient(135deg,#16181d 0%,#2a2316 100%);}
+  :root:has(#nightmode:checked) .lens-overview{background:linear-gradient(135deg,#11192a 0%,#2a2316 100%);}
+  :root:has(#nightmode:checked) .relmap{background:linear-gradient(135deg,#11192a 0%,#0e2a14 100%);}
+  :root:has(#nightmode:checked) .badge.official{background:#0e2a14;color:#9fd1a8;}
+  :root:has(#nightmode:checked) .badge.fresh{background:#172238;color:#8aa6e2;}
+  :root:has(#nightmode:checked) .badge.stale{background:#3a1614;color:#e29a8a;}
+  :root:has(#nightmode:checked) .mchip.s{background:#3a2a14;color:#d9b779;}
+  :root:has(#nightmode:checked) .mchip.m{background:#172238;color:#8aa6e2;}
+  :root:has(#nightmode:checked) .mchip.v{background:#241a3a;color:#b39ad9;}
+  :root:has(#nightmode:checked) details details > summary .ct{background:#3a2a14;color:#d9b779;}
+  :root:has(#nightmode:checked) .swot .pot h5{color:#d9b779;}
+  :root:has(#nightmode:checked) .su-type.ut{color:#ffb866;}
+  :root:has(#nightmode:checked) .gb-const{fill:#3a2014;stroke:#e29a8a;}
+  :root:has(#nightmode:checked) .gb-exec{fill:#152238;stroke:#8aa6e2;}
+  :root:has(#nightmode:checked) .gb-legis{fill:#2a2316;stroke:#d9b779;}
+  :root:has(#nightmode:checked) .gb-judic{fill:#241a3a;stroke:#b39ad9;}
+  :root:has(#nightmode:checked) .gb-state{fill:#0e2a14;stroke:#9fd1a8;}
+  :root:has(#nightmode:checked) .gb-people{fill:#3a2014;stroke:#e29a8a;}
+  :root:has(#nightmode:checked) .gb-regu{fill:#0f2a24;stroke:#7fd1bf;}
+
+  /* ===== RESPONSIVE + HAMBURGER ===== */
+  img,iframe,svg{max-width:100%;height:auto;}
+  #navtoggle{position:fixed;top:0;left:0;opacity:0;pointer-events:none;width:0;height:0;clip:rect(0,0,0,0);}
+  .nav-burger{display:none;}
+  .nav-burger .burger-close{display:none;}
+  :root:has(#navtoggle:checked) .nav-burger .burger-open{display:none;}
+  :root:has(#navtoggle:checked) .nav-burger .burger-close{display:inline;}
+
+  @media (max-width:768px){
+    html{scroll-padding-top:110px;}
+    body{font-size:14px;overflow-x:hidden;}
+    header.topbar{padding:6px 8px;text-align:left;display:grid;grid-template-columns:auto 1fr auto;grid-template-areas:"burger brand toggle";gap:6px 8px;align-items:center;position:sticky;}
+    .nav-burger{grid-area:burger;position:static;display:inline-flex;align-items:center;justify-content:center;font-size:1rem;line-height:1;padding:6px 10px;min-width:40px;background:rgba(255,255,255,0.85);border:1.5px solid var(--navy);color:var(--navy);border-radius:8px;cursor:pointer;user-select:none;font-weight:700;}
+    :root:has(#nightmode:checked) .nav-burger{background:rgba(255,255,255,0.08);}
+    .nm-toggle{grid-area:toggle;position:static;top:auto;right:auto;}
+    .brand-row{grid-area:brand;justify-content:flex-start;gap:6px;margin-bottom:0;line-height:1.1;min-width:0;}
+    .brand{font-size:1.05rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+    .tagline{display:none;}
+    header.topbar nav.lens{display:none;}
+    :root:has(#navtoggle:checked) header.topbar nav.lens{display:flex;flex-direction:column;align-items:stretch;position:absolute;left:0;right:0;top:100%;width:100%;max-height:75vh;overflow-y:auto;flex-wrap:nowrap;gap:4px;padding:8px 10px 10px;margin:0;background:var(--card);border-top:1px solid var(--border);border-bottom:1px solid var(--border);box-shadow:0 10px 24px rgba(0,0,0,0.35);z-index:30;}
+    :root:has(#navtoggle:checked) header.topbar nav.lens > .lens-item,
+    :root:has(#navtoggle:checked) header.topbar nav.lens > a{width:100%;min-width:0;flex:0 0 auto;}
+    :root:has(#navtoggle:checked) header.topbar nav.lens > .lens-item > a,
+    :root:has(#navtoggle:checked) header.topbar nav.lens > a{display:block;width:100%;text-align:left;padding:9px 12px;font-size:0.85rem;}
+    .lens-drop,.lens-item:focus-within .lens-drop,.lens-item:hover .lens-drop{display:none !important;}
+    nav.lens .caret{display:none;}
+    main{padding:12px 14px 42px;max-width:100%;}
+    footer{padding:12px 14px;max-width:100%;}
+    .help{padding:8px 14px;font-size:0.78rem;}
+    .jumpbar{margin:-12px -14px 12px;padding:6px 10px;}
+    .kpis{grid-template-columns:repeat(auto-fit,minmax(130px,1fr));}
+    .dir-grid{grid-template-columns:repeat(auto-fit,minmax(150px,1fr));}
+    .card-list{grid-template-columns:1fr;padding:6px 8px 10px;}
+    .gov-grid,.insight-grid,.lens-overview .lo-grid{grid-template-columns:1fr;}
+    .ec-btn{min-height:40px;padding:8px 12px;}
+    .nm-toggle{font-size:0.7rem;padding:4px 8px;}
+  }
+  @media (max-width:480px){
+    html{scroll-padding-top:96px;}
+    .brand{font-size:1rem;}
+    h1{font-size:1.15rem;}
+    h2{font-size:1rem;}
+    .dir-grid,.kpis,.swot{grid-template-columns:1fr;}
+    .card{padding:9px 10px;}
+  }
+
+  /* ===== BIHAR EXTENSIONS — party pills · tables · branch details ===== */
+  :root{
+    --bjp:#FF9933; --jdu:#138808; --rjd:#2E7D32; --inc:#1E88E5;
+    --ljprv:#7C3AED; --hams:#0EA5E9; --rlm:#8B5CF6; --cpiml:#DC2626;
+    --aimim:#0F766E; --ind:#6B7280;
+  }
+  .pill{display:inline-block;padding:1px 7px;border-radius:999px;font-size:0.65rem;font-weight:700;color:#fff;letter-spacing:0.3px;margin-left:4px;vertical-align:middle;}
+  .p-BJP{background:var(--bjp);color:#1a1a1a;}
+  .p-JDU{background:var(--jdu);} .p-RJD{background:var(--rjd);} .p-INC{background:var(--inc);}
+  .p-LJPRV{background:var(--ljprv);} .p-HAMS{background:var(--hams);} .p-RLM{background:var(--rlm);}
+  .p-CPIML{background:var(--cpiml);} .p-AIMIM{background:var(--aimim);} .p-IND{background:var(--ind);}
+  .legend{display:flex;flex-wrap:wrap;gap:8px;font-size:0.72rem;margin:8px 0 14px;color:var(--muted);}
+  .legend > span{display:inline-flex;align-items:center;gap:2px;}
+
+  table.bihar{width:100%;border-collapse:collapse;font-size:0.84rem;background:var(--card);border:1px solid var(--border);border-radius:8px;overflow:hidden;margin:8px 0 14px;}
+  table.bihar th, table.bihar td{padding:7px 10px;text-align:left;border-bottom:1px solid var(--border);}
+  table.bihar th{background:var(--tag);font-weight:700;color:var(--navy);font-size:0.74rem;text-transform:uppercase;letter-spacing:0.4px;}
+  table.bihar tr:last-child td{border-bottom:none;}
+  table.bihar td.r{text-align:right;font-variant-numeric:tabular-nums;}
+  table.bihar caption{caption-side:bottom;font-size:0.72rem;color:var(--muted);padding-top:6px;text-align:left;}
+  :root:has(#nightmode:checked) table.bihar th{background:#1f232b;color:#9ab3ff;}
+
+  details.branch{background:var(--card);border:1px solid var(--border);border-radius:8px;margin:10px 0;}
+  details.branch > summary{padding:10px 14px;cursor:pointer;font-weight:700;color:var(--navy);font-size:0.95rem;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:8px;}
+  details.branch > summary::-webkit-details-marker{display:none;}
+  details.branch > summary::before{content:"▸ ";color:var(--saffron);}
+  details.branch[open] > summary::before{content:"▾ ";}
+  details.branch > .b-body{padding:6px 14px 14px;}
+  details.branch > table.bihar{margin:0 14px 14px;width:calc(100% - 28px);}
+  details.branch p.verify{font-size:0.7rem;color:var(--muted);font-style:italic;padding:0 14px 10px;margin:0;}
+
+  .role-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:10px 12px;font-size:0.85rem;}
+  .role-card .role{font-size:0.68rem;text-transform:uppercase;letter-spacing:0.5px;color:var(--muted);font-weight:700;}
+  .role-card .name{font-weight:700;color:var(--ink);margin:2px 0;}
+  .role-card .meta{font-size:0.75rem;color:var(--muted);}
+  .role-card .meta a{font-size:0.75rem;}
+  .role-grid{display:grid;gap:8px;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));margin:6px 0 12px;}
+
+  .callout{background:#fff7e8;border-left:4px solid var(--saffron);padding:10px 14px;border-radius:6px;margin:14px 0;font-size:0.86rem;color:#5a3a00;}
+  .callout.warn{background:#fdecea;border-left-color:var(--red);color:#7a1b13;}
+  .callout.ok{background:#e8f5e9;border-left-color:var(--green);color:#1b4d20;}
+  :root:has(#nightmode:checked) .callout{background:#2a2316;color:#d9b779;}
+  :root:has(#nightmode:checked) .callout.warn{background:#2a1715;color:#e8a097;}
+  :root:has(#nightmode:checked) .callout.ok{background:#142a17;color:#a7d9aa;}
+
+  h3.grp-h{font-size:1rem;color:var(--navy);margin:18px 0 6px;border-left:4px solid var(--green);padding-left:8px;}
+  .sec-sub{color:var(--muted);font-size:0.86rem;margin:0 0 14px;}
+  .kpi .sub{font-size:0.7rem;color:var(--muted);margin-top:2px;line-height:1.3;}
+
+  /* ===== PRINT ===== */
+  @media print{
+    header.topbar,.help,.jumpbar,nav.lens,.lens-drop,footer{display:none !important;}
+    .lens-section,.lens-section:target{display:block !important;}
+    details,details[open]{display:block !important;}
+    details > *{display:revert !important;}
+    details > summary{font-weight:700;color:#000;padding:6px 0;border-bottom:1px solid #999;cursor:default;}
+    details > summary::before{content:"" !important;}
+    .card{break-inside:avoid;border:1px solid #ccc;}
+    .card a[href]::after{content:" — " attr(href);font-size:0.7em;color:#555;}
+    body{background:#fff;color:#000;font-size:11pt;}
+    a{color:#000;text-decoration:none;}
+  }
+</style>
+</head>
+<body>
+
+<!-- Hidden checkboxes drive night-mode and mobile nav with no JS -->
+<input type="checkbox" id="nightmode" aria-label="Toggle night mode" tabindex="-1">
+<input type="checkbox" id="navtoggle" aria-label="Toggle navigation menu" tabindex="-1">
+
+<header class="topbar">
+  <label for="navtoggle" class="nav-burger" title="Menu"><span class="burger-open">☰</span><span class="burger-close">✕</span></label>
+  <label for="nightmode" class="nm-toggle" title="Toggle night mode (no JavaScript)">
+    <span class="nm-ico-dark" aria-hidden="true">🌙</span><span class="nm-lbl-dark">Night</span>
+    <span class="nm-ico-light" aria-hidden="true">☀</span><span class="nm-lbl-light">Day</span>
+  </label>
+  <div class="brand-row">
+    <a class="brand" href="#h"><span class="hi">चं</span>Chandigarh UT Shasan</a>
+    <span class="tagline">💡 Transparency experiment · Centre → Administrator → District → Municipal Corporation → Ward</span>
+  </div>
+  <nav class="lens">
+    <a href="#h">🏠 Home</a>
+    <a href="#how">🛠 How it works</a>
+    <a href="#centre">🇮🇳 Chandigarh @ Centre</a>
+    <a href="#exec">🏛 Administrator</a>
+    <div class="lens-item">
+      <a href="#leg">🏙 Municipal Corporation <span class="caret">▾</span></a>
+      <div class="lens-drop">
+        <div class="ld-head"><span>Municipal substitute for legislature</span><a href="#leg">View lens →</a></div>
+        <div class="ld-grid">
+          <a href="#leg-note">UT status<span class="c">0 MLAs</span></a>
+          <a href="#leg-mc">MC House<span class="c">35 wards</span></a>
+          <a href="#leg-off">Mayor team<span class="c">2026</span></a>
+        </div>
+      </div>
+    </div>
+    <a href="#judic">⚖ Judiciary</a>
+    <a href="#dist">📍 District (1)</a>
+    <a href="#pri">🏘 Wards</a>
+    <a href="#bodies">📊 Bodies</a>
+    <a href="#scope">📑 Scope memo</a>
+  </nav>
+</header>
+
+
+<main>
+
+
+
+<!-- =========================== HOME =========================== -->
+<section id="h" class="lens-section">
+  <h1>Chandigarh (UT)'s Governance Chain — at a Glance</h1>
+  <p class="sec-sub">A point-in-time catalogue for a Union Territory without a legislature: Union MP → Administrator → district administration → Municipal Corporation → ward.</p>
+
+  <h2>KPI tiles — by layer</h2>
+  <div class="kpis">
+    <div class="kpi"><div class="v">0</div><div class="l">Union ministers</div><div class="sub">No Chandigarh-linked minister found</div></div>
+    <div class="kpi"><div class="v">1</div><div class="l">Lok Sabha MP</div><div class="sub">Chandigarh constituency</div></div>
+    <div class="kpi"><div class="v">0</div><div class="l">Rajya Sabha MPs</div><div class="sub">UT has no RS seats</div></div>
+    <div class="kpi"><div class="v">0</div><div class="l">MLAs</div><div class="sub">No Legislative Assembly</div></div>
+    <div class="kpi"><div class="v">1</div><div class="l">Administrator</div><div class="sub">Punjab Governor by convention</div></div>
+    <div class="kpi"><div class="v">1</div><div class="l">District</div><div class="sub">Chandigarh district</div></div>
+    <div class="kpi"><div class="v">35</div><div class="l">MC wards</div><div class="sub">Municipal Corporation Chandigarh</div></div>
+    <div class="kpi"><div class="v">0</div><div class="l">Blocks / GPs</div><div class="sub">Urban UT model</div></div>
+    <div class="kpi"><div class="v">3</div><div class="l">Identities</div><div class="sub">UT + Punjab capital + Haryana capital</div></div>
+    <div class="kpi"><div class="v">60:40</div><div class="l">Staffing convention</div><div class="sub">Punjab:Haryana deputation share</div></div>
+  </div>
+
+  <h2>Pick a lens</h2>
+  <div class="dir-grid">
+    <a class="dir-tile" href="#centre" style="border-left:3px solid var(--saffron);">🇮🇳 Chandigarh @ Centre<span class="dt-c">1 LS</span></a>
+    <a class="dir-tile" href="#exec" style="border-left:3px solid var(--green);">🏛 Administrator<span class="dt-c">UT</span></a>
+    <a class="dir-tile" href="#leg" style="border-left:3px solid var(--navy);">🏙 Municipal Corporation<span class="dt-c">35 wards</span></a>
+    <a class="dir-tile" href="#judic" style="border-left:3px solid #8338EC;">⚖ Judiciary<span class="dt-c">P&H HC</span></a>
+    <a class="dir-tile" href="#dist" style="border-left:3px solid var(--red);">📍 District<span class="dt-c">1</span></a>
+    <a class="dir-tile" href="#pri" style="border-left:3px solid var(--green);">🏘 Wards<span class="dt-c">35</span></a>
+    <a class="dir-tile" href="#bodies" style="border-left:3px solid #06A77D;">📊 Bodies<span class="dt-c">UT</span></a>
+    <a class="dir-tile" href="#scope" style="border-left:3px solid var(--muted);">📑 Scope memo<span class="dt-c">read</span></a>
+  </div>
+
+  <div class="legend">
+    <span><span class="pill p-bjp">BJP</span> Bharatiya Janata Party</span>
+    <span><span class="pill p-inc">INC</span> Indian National Congress</span>
+    <span><span class="pill p-aap">AAP</span> Aam Aadmi Party</span>
+  </div>
+
+  <div class="callout" id="leg-note">
+    <strong>UT without legislature:</strong> Chandigarh has no Chief Minister, Cabinet, Vidhan Sabha or Vidhan Parishad. It is administered directly by an Administrator appointed under the Union Territory framework; by convention, that Administrator is the Governor of Punjab.
+  </div>
+
+  <h2>Relmap — how the chain connects</h2>
+  <div class="relmap">
+    <h2>🔗 Union → Administrator → District → Municipal Corporation → Ward</h2>
+    <p>Chandigarh is simultaneously a Union Territory, the capital of Punjab, and the capital of Haryana. The elected civic layer is municipal, not legislative.</p>
+    <svg viewBox="0 0 900 300" xmlns="http://www.w3.org/2000/svg" class="relflow" role="img" aria-label="Chandigarh UT governance chain">
+      <defs><marker id="chArr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#888"/></marker></defs>
+      <rect x="330" y="10" width="240" height="44" rx="6" class="gb-const"/><text x="450" y="32" text-anchor="middle" font-size="12" font-weight="700">🇮🇳 Union / President</text><text x="450" y="46" text-anchor="middle" font-size="10" fill="#666">Article 239 + Article 240 route</text>
+      <rect x="330" y="80" width="240" height="44" rx="6" class="gb-exec"/><text x="450" y="102" text-anchor="middle" font-size="12" font-weight="700">🏛 Administrator</text><text x="450" y="116" text-anchor="middle" font-size="10" fill="#666">Punjab Governor by convention</text>
+      <rect x="60" y="160" width="180" height="44" rx="6" class="gb-state"/><text x="150" y="182" text-anchor="middle" font-size="12" font-weight="700">📍 District (1)</text><text x="150" y="196" text-anchor="middle" font-size="10" fill="#666">DC / DM</text>
+      <rect x="280" y="160" width="180" height="44" rx="6" class="gb-regu"/><text x="370" y="182" text-anchor="middle" font-size="12" font-weight="700">🏙 Municipal Corporation</text><text x="370" y="196" text-anchor="middle" font-size="10" fill="#666">Mayor + Commissioner</text>
+      <rect x="500" y="160" width="180" height="44" rx="6" class="gb-legis"/><text x="590" y="182" text-anchor="middle" font-size="12" font-weight="700">🏘 35 wards</text><text x="590" y="196" text-anchor="middle" font-size="10" fill="#666">Councillors</text>
+      <rect x="700" y="160" width="150" height="44" rx="6" class="gb-judic"/><text x="775" y="182" text-anchor="middle" font-size="12" font-weight="700">⚖ P&H High Court</text><text x="775" y="196" text-anchor="middle" font-size="10" fill="#666">Common HC</text>
+      <line x1="450" y1="54" x2="450" y2="76" stroke="#888" stroke-width="1.5" marker-end="url(#chArr)"/>
+      <line x1="450" y1="124" x2="150" y2="156" stroke="#888" stroke-width="1.5" marker-end="url(#chArr)"/>
+      <line x1="450" y1="124" x2="370" y2="156" stroke="#888" stroke-width="1.5" marker-end="url(#chArr)"/>
+      <line x1="370" y1="204" x2="590" y2="204" stroke="#888" stroke-width="1.5" marker-end="url(#chArr)"/>
+      <line x1="450" y1="124" x2="775" y2="156" stroke="#888" stroke-width="1.5" marker-end="url(#chArr)"/>
+      <rect x="340" y="242" width="220" height="40" rx="20" fill="#138808" opacity="0.18" stroke="#138808" stroke-width="1.5"/><text x="450" y="267" text-anchor="middle" font-size="13" font-weight="700">👥 Resident</text>
+    </svg>
+  </div>
+</section>
+
+<!-- =========================== HOW IT WORKS =========================== -->
+<section id="how" class="lens-section">
+  <h1>🛠 How this catalogue works</h1>
+  <p class="sec-sub">Chandigarh uses a Ladakh-style deviation from the state-page template: the Chief Minister, Cabinet and Legislature lenses are replaced by the Administrator and Municipal Corporation lenses.</p>
+  <div class="lens-overview"><div class="lo-grid"><div>
+    <h3>① The Chandigarh stack</h3>
+    <p>The constitutional chain is Union → Administrator → UT Administration. Article 240 permits the President to make regulations for several Union Territories, including Chandigarh. Local electoral accountability is primarily through the Lok Sabha seat and the 35-ward Municipal Corporation.</p>
+    <p>The page therefore omits CM, Cabinet, Vidhan Sabha and Vidhan Parishad rosters instead of showing empty state-style tables.</p>
+  </div><div class="lo-chart"><div class="lo-chart-title">Chandigarh layers</div>
+    <svg viewBox="0 0 360 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Chandigarh governance layers"><g font-family="inherit" font-size="10">
+      <polygon points="160,15 200,15 220,45 140,45" fill="var(--green)" opacity="0.9"/><text x="180" y="33" text-anchor="middle" fill="#fff" font-weight="600">Lok Sabha · 1</text>
+      <polygon points="135,50 225,50 248,82 112,82" fill="var(--green)" opacity="0.85"/><text x="180" y="70" text-anchor="middle" fill="#fff" font-weight="600">Administrator · 1</text>
+      <polygon points="108,87 252,87 278,119 82,119" fill="var(--saffron)" opacity="0.85"/><text x="180" y="107" text-anchor="middle" fill="#fff" font-weight="600">District · 1</text>
+      <polygon points="80,124 280,124 308,156 52,156" fill="var(--saffron)" opacity="0.8"/><text x="180" y="144" text-anchor="middle" fill="#fff" font-weight="600">MC · 35 wards</text>
+      <polygon points="52,161 308,161 338,196 22,196" fill="var(--red)" opacity="0.75"/><text x="180" y="183" text-anchor="middle" fill="#fff" font-weight="600">VS / RS / GP · N/A</text>
+    </g></svg>
+  </div></div></div>
+  <div class="callout ok"><strong>Deviation report:</strong> all state-only branches are intentionally absent. The Municipal Corporation and Mayor are the civic substitute for the legislature / panchayat slots, while the Administrator lens carries executive authority.</div>
+</section>
+
+<!-- =========================== CENTRE =========================== -->
+<section id="centre" class="lens-section">
+<!-- BEGIN: CENTRE — Union ministers + LS MP (1 row) + RS MPs (0 rows). Chandigarh-specific roster. -->
+  <h1>🇮🇳 Chandigarh's Representation at the Union</h1>
+  <p class="sec-sub">Chandigarh has one Lok Sabha constituency and no Rajya Sabha seat.</p>
+  <details class="branch" open><summary><span>Union Council of Ministers from Chandigarh</span><span class="ct">0</span></summary><div class="b-body"><p>No current Union Council minister is elected from, or specifically listed for, Chandigarh in this snapshot.</p></div></details>
+  <details class="branch" open><summary><span>Lok Sabha — Chandigarh constituency</span><span class="ct">18ᵗʰ LS · 2024</span></summary>
+    <table class="bihar"><thead><tr><th>#</th><th>Constituency</th><th>Member of Parliament</th><th>Party</th></tr></thead><tbody>
+      <tr><td class="r">1</td><td>Chandigarh</td><td>Manish Tewari</td><td><span class="pill p-inc">INC</span></td></tr>
+    </tbody><caption>Tally: INC 1 = <strong>1</strong>. Profiles: <a href="https://sansad.in/ls/members" target="_blank" rel="noopener">sansad.in/ls/members</a>.</caption></table>
+  </details>
+  <details class="branch"><summary><span>Rajya Sabha — no UT allocation</span><span class="ct">0</span></summary><div class="b-body"><p>Chandigarh has no Legislative Assembly and no Rajya Sabha representation.</p></div></details>
+  <p class="src">Sources: Lok Sabha member roster — <a href="https://sansad.in/ls/members" target="_blank" rel="noopener">sansad.in/ls/members</a>; ECI 2024 Chandigarh parliamentary result; Union Council roster — <a href="https://www.india.gov.in/my-government/whos-who/council-ministers" target="_blank" rel="noopener">india.gov.in</a>.</p><!-- END: CENTRE -->
+
+</section>
+
+<!-- =========================== EXECUTIVE =========================== -->
+<section id="exec" class="lens-section">
+<!-- BEGIN: EXEC — UT Administrator + apex civil/police/election service; no CM or Cabinet. -->
+  <h1>🏛 UT Executive — Administrator-led Administration</h1>
+  <p class="sec-sub">Chandigarh has no Chief Minister or Council of Ministers. Executive authority is exercised through the Administrator and the UT Administration.</p>
+  <div class="callout warn"><strong>UT without legislature; administered directly by Administrator.</strong> The Punjab Governor conventionally serves as Administrator of Chandigarh; as of this snapshot the Administrator is Shri Gulab Chand Kataria.</div>
+  <h3 class="grp-h">Apex executive offices</h3>
+  <div class="role-grid">
+    <div class="role-card"><div class="role">Administrator, UT Chandigarh</div><div class="name">Shri Gulab Chand Kataria</div><div class="meta">Governor of Punjab; Administrator by convention · <a href="https://chandigarh.gov.in/administration/administrator/profile-of-the-administrator" target="_blank" rel="noopener">profile</a></div></div>
+    <div class="role-card"><div class="role">Chief Secretary, UT Chandigarh</div><div class="name">Shri H. Rajesh Prasad, IAS</div><div class="meta"><a href="https://chandigarh.gov.in/about-us/whos-who" target="_blank" rel="noopener">Chandigarh who’s-who</a></div></div>
+    <div class="role-card"><div class="role">Home Secretary</div><div class="name">Mandip Singh Brar, IAS</div><div class="meta">Home, Revenue, Police, Law &amp; Justice and related departments</div></div>
+    <div class="role-card"><div class="role">Finance Secretary</div><div class="name">Diprava Lakra, IAS</div><div class="meta">Finance, transport, estate, planning and urban planning</div></div>
+    <div class="role-card"><div class="role">Deputy Commissioner / District Magistrate</div><div class="name">Nishant Kumar Yadav, IAS</div><div class="meta">Also Estate Officer, Labour Commissioner and Additional CEO</div></div>
+    <div class="role-card"><div class="role">Senior Superintendent of Police</div><div class="name">Kanwardeep Kaur, IPS</div><div class="meta">Chandigarh Police · tenure extended through 2027 in 2026 reporting</div></div>
+    <div class="role-card"><div class="role">Chief Electoral Officer</div><div class="name">Swapnil M. Naik, IAS</div><div class="meta">Official Chandigarh who’s-who lists CEO charge under Secretary Swapnil M. Naik</div></div>
+  </div>
+  <div class="callout"><strong>60:40 staffing convention:</strong> Chandigarh Administration deputation posts are conventionally shared between Punjab and Haryana in a 60:40 ratio, a political-administrative marker of the joint-capital settlement.</div>
+  <p class="src">Sources: Administrator profile and who’s-who — <a href="https://chandigarh.gov.in/administration/administrator/profile-of-the-administrator" target="_blank" rel="noopener">chandigarh.gov.in administrator profile</a>, <a href="https://chandigarh.gov.in/about-us/whos-who" target="_blank" rel="noopener">Chandigarh who’s-who</a>; Punjab Raj Bhavan Governor profile — <a href="https://punjabrajbhavan.gov.in/home/governor" target="_blank" rel="noopener">punjabrajbhavan.gov.in</a>; Chandigarh Police / 2026 SSP extension reporting; Ministry of Home Affairs / personnel convention references for 60:40 staffing.</p><!-- END: EXEC -->
+
+</section>
+
+<!-- =========================== LEGISLATURE =========================== -->
+<section id="leg" class="lens-section">
+<!-- BEGIN: LEG — No Vidhan Sabha; Municipal Corporation is the local electoral substitute. -->
+  <h1>🏙 No Legislature — Municipal Corporation as Local Electoral Layer</h1>
+  <div class="callout warn"><strong>UT without legislature; administered directly by Administrator.</strong> Chandigarh has 0 Vidhan Sabha seats, 0 Vidhan Parishad seats and 0 Rajya Sabha seats. This lens is intentionally not a Vidhan Sabha roster.</div>
+  <h3 class="grp-h" id="leg-mc">Municipal Corporation Chandigarh — 35 wards</h3>
+  <table class="bihar"><thead><tr><th>Institution</th><th class="r">Seats / wards</th><th>Role</th></tr></thead><tbody>
+    <tr><td>Municipal Corporation Chandigarh</td><td class="r">35</td><td>Urban local government; councillors plus mayoral offices</td></tr>
+    <tr><td>Vidhan Sabha</td><td class="r">N/A</td><td>No Legislative Assembly for Chandigarh</td></tr>
+    <tr><td>Vidhan Parishad</td><td class="r">N/A</td><td>No Legislative Council</td></tr>
+    <tr><td>Rajya Sabha</td><td class="r">0</td><td>No RS allocation</td></tr>
+  </tbody><caption>VS columns are marked N/A because Chandigarh is a non-legislature UT.</caption></table>
+  <h3 class="grp-h" id="leg-off">Mayor and presiding civic offices — 2026</h3>
+  <div class="role-grid">
+    <div class="role-card"><div class="role">Mayor</div><div class="name">Saurabh Joshi<span class="pill p-bjp">BJP</span></div><div class="meta">Elected at the 357th General House meeting, 29-Jan-2026</div></div>
+    <div class="role-card"><div class="role">Senior Deputy Mayor</div><div class="name">Jasmanpreet Singh<span class="pill p-bjp">BJP</span></div><div class="meta">2026 General House election</div></div>
+    <div class="role-card"><div class="role">Deputy Mayor</div><div class="name">Suman Sharma<span class="pill p-bjp">BJP</span></div><div class="meta">2026 General House election</div></div>
+    <div class="role-card"><div class="role">Municipal Commissioner</div><div class="name">Amit Kumar, IAS</div><div class="meta">Also CEO, Chandigarh Smart City Ltd. · <a href="https://chandigarh.gov.in/about-us/whos-who" target="_blank" rel="noopener">who’s-who</a></div></div>
+  </div>
+  <p class="src">Sources: Municipal Corporation Chandigarh official website and General House minutes — <a href="https://mcchandigarh.gov.in/" target="_blank" rel="noopener">mcchandigarh.gov.in</a>; councillor / 35-ward directory; Chandigarh Administration who’s-who for Municipal Commissioner — <a href="https://chandigarh.gov.in/about-us/whos-who" target="_blank" rel="noopener">chandigarh.gov.in/about-us/whos-who</a>.</p><!-- END: LEG -->
+
+</section>
+
+<!-- =========================== JUDICIARY =========================== -->
+<section id="judic" class="lens-section">
+<!-- BEGIN: JUDIC — Punjab and Haryana High Court at Chandigarh + district judiciary. -->
+  <h1>⚖ Judiciary — Punjab and Haryana High Court at Chandigarh</h1>
+  <p class="sec-sub">The High Court of Punjab and Haryana is the common High Court for Punjab, Haryana and the Union Territory of Chandigarh.</p>
+  <div class="role-grid">
+    <div class="role-card"><div class="role">Chief Justice</div><div class="name">Justice Sheel Nagu</div><div class="meta"><a href="https://highcourtchd.gov.in/" target="_blank" rel="noopener">High Court of Punjab and Haryana</a></div></div>
+    <div class="role-card"><div class="role">Court identity</div><div class="name">Common High Court</div><div class="meta">Serves Punjab, Haryana and Chandigarh</div></div>
+    <div class="role-card"><div class="role">District judiciary</div><div class="name">Chandigarh District Court</div><div class="meta"><a href="https://chandigarhdistrict.dcourts.gov.in/" target="_blank" rel="noopener">District Court portal</a></div></div>
+  </div>
+  <div class="callout"><strong>Le Corbusier grid and Capitol Complex:</strong> the High Court building is part of Chandigarh’s Capitol Complex and the wider modernist urban plan associated with Le Corbusier.</div>
+  <p class="src">Sources: High Court of Punjab and Haryana official site — <a href="https://highcourtchd.gov.in/" target="_blank" rel="noopener">highcourtchd.gov.in</a>; High Court about page noting common jurisdiction and Le Corbusier-designed complex; district court portal — <a href="https://chandigarhdistrict.dcourts.gov.in/" target="_blank" rel="noopener">chandigarhdistrict.dcourts.gov.in</a>.</p><!-- END: JUDIC -->
+
+</section>
+
+<!-- =========================== DISTRICTS =========================== -->
+<section id="dist" class="lens-section">
+<!-- BEGIN: DIST — Single-district map + Chandigarh district table. -->
+  <h1>📍 District Administration — 1 Revenue District</h1>
+  <p class="sec-sub">The UT is a single revenue district with three sub-divisions listed by Chandigarh Administration.</p>
+  <h3 class="grp-h">🗺 District outline — Chandigarh</h3>
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:14px;"><svg viewBox="0 0 420 420" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Map of Chandigarh showing its single revenue district" style="width:100%;height:auto;display:block;background:#fffdf6;border-radius:6px;font-family:inherit;">
+<rect x="0" y="0" width="420" height="420" rx="6" fill="#fffdf6"/>
+<path d="M196.6,28.8 L195.9,28.0 L195.1,28.3 L193.8,28.9 L193.0,29.2 L192.2,29.6 L190.8,30.4 L188.5,31.5 L188.1,30.0 L186.0,30.8 L183.4,32.2 L181.3,33.3 L179.2,34.8 L177.4,35.7 L176.2,36.3 L174.8,37.0 L173.7,37.6 L172.1,38.6 L170.8,39.6 L170.0,40.3 L169.5,41.3 L169.2,42.0 L168.6,42.8 L167.1,43.6 L166.1,44.4 L165.1,45.5 L164.1,46.5 L164.6,47.6 L164.8,48.4 L163.8,49.8 L160.6,51.4 L158.4,52.5 L155.8,54.1 L152.3,56.1 L151.5,56.6 L149.6,57.8 L149.0,58.2 L147.9,58.9 L148.7,60.5 L149.1,61.3 L149.5,62.2 L149.8,64.8 L149.2,65.3 L149.7,66.8 L148.7,67.5 L149.1,68.4 L149.3,69.5 L149.1,70.4 L148.2,70.7 L147.0,70.9 L146.1,71.1 L144.9,71.8 L144.3,72.5 L143.4,73.5 L142.9,74.3 L141.8,75.0 L140.9,75.6 L138.7,77.7 L136.7,78.6 L135.9,78.9 L135.1,79.2 L134.3,79.6 L133.4,79.9 L132.9,79.1 L130.3,80.7 L128.3,82.0 L129.8,83.8 L131.3,86.0 L131.9,89.5 L132.0,91.0 L132.5,91.9 L132.3,92.6 L131.5,93.6 L130.3,93.7 L130.2,94.9 L128.7,95.0 L128.9,96.8 L129.3,99.9 L126.7,100.5 L124.9,101.3 L124.2,101.6 L120.9,103.1 L119.0,103.8 L117.5,104.3 L113.6,105.7 L110.6,107.3 L106.3,109.5 L104.7,110.4 L103.5,110.7 L102.5,110.9 L99.4,112.4 L96.7,113.3 L94.5,113.6 L93.7,113.7 L92.2,113.7 L88.9,112.9 L86.2,112.6 L86.1,111.6 L85.4,110.8 L82.6,110.7 L81.3,111.1 L80.1,111.9 L77.0,113.4 L75.1,114.3 L73.8,115.0 L73.9,116.2 L73.2,116.5 L72.1,117.0 L69.1,118.1 L68.5,117.0 L65.4,118.2 L64.5,118.2 L63.1,119.0 L60.6,120.2 L59.1,120.9 L57.6,121.3 L56.6,121.6 L53.6,122.1 L50.6,122.9 L49.9,123.3 L49.2,123.9 L48.3,124.7 L47.4,125.4 L46.9,126.1 L47.1,127.3 L44.2,130.0 L42.0,131.5 L40.4,132.8 L37.9,135.1 L36.3,136.9 L35.8,137.5 L34.9,138.7 L35.7,139.7 L36.6,140.3 L37.7,141.9 L38.6,142.9 L39.6,144.1 L40.1,145.1 L40.2,146.0 L40.2,146.9 L40.4,148.8 L40.6,149.7 L40.8,150.8 L41.9,152.9 L42.4,154.2 L42.7,155.1 L41.5,156.1 L41.0,157.1 L40.1,157.8 L40.2,160.0 L39.0,160.5 L39.6,161.9 L38.8,162.2 L37.0,162.8 L36.6,163.6 L37.1,165.4 L37.4,166.3 L38.5,169.6 L38.4,170.9 L38.1,171.6 L37.1,173.0 L36.0,174.4 L34.8,175.7 L36.4,178.3 L38.6,182.7 L40.3,185.2 L42.2,184.9 L45.4,183.3 L48.3,182.1 L50.7,181.4 L52.8,180.7 L54.5,182.6 L56.7,181.4 L56.9,182.2 L57.1,183.7 L58.2,186.3 L59.5,189.9 L59.8,190.6 L60.2,191.4 L62.0,194.0 L63.2,195.1 L63.4,195.9 L64.0,197.0 L64.9,198.8 L67.2,203.1 L70.2,206.8 L72.5,210.1 L73.9,212.3 L75.9,214.4 L78.6,216.7 L79.8,217.0 L82.6,216.8 L84.2,219.0 L84.8,218.3 L87.3,220.8 L88.5,222.5 L90.6,225.4 L94.1,230.6 L96.3,228.8 L97.8,230.4 L97.5,235.9 L97.1,237.1 L96.7,238.7 L97.3,243.3 L97.5,245.1 L97.9,247.2 L97.6,248.1 L96.3,249.0 L95.1,249.7 L92.0,252.1 L95.3,257.4 L96.8,259.4 L98.4,261.4 L96.9,262.5 L94.3,263.3 L92.9,263.7 L94.3,270.1 L95.5,274.0 L95.2,277.7 L98.7,277.9 L103.6,278.7 L107.6,280.0 L110.0,280.6 L113.5,280.7 L114.3,280.7 L115.1,280.7 L117.2,280.7 L117.6,281.5 L118.5,283.0 L117.3,285.4 L117.2,286.7 L117.1,287.8 L117.8,296.1 L115.4,297.0 L114.6,297.4 L115.0,298.9 L115.4,299.7 L115.8,300.5 L117.2,302.2 L118.3,302.1 L118.4,305.5 L118.2,310.4 L117.5,311.5 L117.6,312.6 L117.7,315.8 L117.7,316.6 L118.5,317.3 L119.3,317.4 L120.2,317.2 L123.0,316.3 L124.3,315.9 L125.6,315.5 L127.1,314.9 L131.9,312.6 L133.3,311.7 L134.0,311.2 L135.3,310.3 L136.8,309.7 L137.2,314.0 L137.4,315.6 L137.5,316.6 L138.0,322.1 L138.3,324.9 L137.8,325.4 L137.9,326.4 L138.6,328.3 L138.8,329.8 L138.1,330.9 L138.2,332.2 L139.1,332.3 L140.4,331.9 L141.8,330.9 L143.5,330.0 L146.3,334.0 L147.7,335.7 L148.6,338.2 L149.6,340.8 L150.8,340.1 L152.4,339.7 L153.3,339.7 L154.0,339.3 L155.0,339.0 L157.1,338.2 L158.4,337.6 L159.3,337.1 L159.6,336.2 L164.0,335.9 L165.0,335.3 L166.8,335.6 L167.9,336.0 L168.7,336.1 L170.6,335.4 L171.7,334.9 L172.7,334.7 L173.6,335.4 L174.1,336.0 L175.4,335.1 L177.1,336.0 L177.7,335.5 L178.4,336.4 L179.2,337.4 L180.0,338.6 L180.6,339.9 L181.1,341.0 L182.4,343.2 L183.7,345.2 L184.8,346.7 L188.5,350.4 L190.1,351.9 L191.2,353.1 L192.0,354.0 L192.4,355.1 L192.9,356.5 L192.9,357.3 L192.8,358.1 L194.7,359.9 L194.9,360.6 L195.2,361.4 L196.0,362.4 L196.5,363.2 L196.1,363.9 L196.6,365.4 L197.4,366.1 L198.1,366.6 L199.0,367.7 L199.7,369.2 L200.8,371.4 L201.9,373.7 L202.3,375.7 L203.8,376.3 L205.2,376.8 L206.1,377.0 L206.7,378.7 L207.5,379.0 L208.3,380.7 L209.4,380.8 L210.5,380.3 L212.7,378.6 L213.5,378.3 L214.2,377.6 L215.1,376.4 L215.5,375.8 L215.0,374.8 L215.7,374.1 L217.8,372.4 L217.7,371.3 L218.3,370.6 L219.5,369.6 L220.2,370.2 L220.7,371.1 L221.6,370.7 L223.7,369.9 L225.0,369.5 L227.7,369.8 L228.6,369.3 L229.8,368.5 L231.0,368.2 L232.5,368.1 L233.7,368.0 L235.9,367.4 L236.7,367.1 L237.8,366.7 L239.0,366.1 L240.2,365.9 L241.1,366.4 L241.7,367.4 L242.6,368.3 L242.9,369.1 L243.3,370.2 L243.8,372.1 L244.0,373.2 L245.6,375.1 L247.1,376.7 L248.7,378.9 L249.8,380.5 L250.6,382.3 L250.8,383.1 L252.5,384.9 L253.5,385.9 L254.6,386.9 L256.2,388.3 L257.2,388.9 L258.5,387.8 L259.7,386.7 L260.9,385.6 L262.7,383.9 L265.3,381.5 L266.1,381.7 L266.9,383.0 L267.2,384.2 L268.7,386.6 L268.3,387.9 L270.1,389.8 L270.4,391.1 L271.2,391.6 L272.6,392.0 L273.7,391.9 L274.7,391.9 L275.6,391.7 L278.8,389.6 L279.9,389.5 L281.6,390.0 L282.4,390.3 L283.4,389.6 L284.3,389.1 L285.2,389.2 L286.0,389.3 L287.1,387.5 L287.9,387.1 L289.4,385.5 L290.9,383.9 L292.3,382.4 L293.0,381.6 L293.8,381.1 L296.0,379.9 L296.8,381.1 L298.1,380.4 L299.2,380.0 L301.0,379.3 L304.8,377.8 L305.0,376.2 L305.5,373.6 L306.2,373.2 L307.5,372.8 L309.4,371.7 L312.4,369.7 L315.6,367.9 L315.6,367.0 L315.6,365.5 L315.9,363.8 L315.8,362.4 L315.7,360.3 L318.1,357.9 L319.7,356.9 L320.5,356.2 L323.3,354.0 L326.0,351.8 L331.4,347.4 L334.2,351.0 L335.8,350.8 L336.9,349.7 L336.0,348.0 L337.2,348.4 L338.3,347.8 L337.9,347.0 L341.8,344.8 L342.5,344.3 L341.0,342.1 L339.0,339.7 L338.0,338.6 L337.0,337.7 L335.9,337.0 L335.2,336.0 L333.7,333.6 L332.2,331.8 L328.7,334.6 L327.5,332.1 L326.2,330.2 L327.5,329.2 L329.0,328.7 L330.3,327.5 L331.7,326.3 L332.0,325.2 L331.6,324.1 L331.1,322.2 L331.2,320.9 L331.6,319.7 L333.9,318.6 L335.0,317.8 L337.3,316.5 L338.5,315.5 L336.2,313.7 L334.5,312.1 L336.1,310.6 L337.8,308.3 L340.6,304.3 L343.4,300.9 L344.6,299.8 L345.9,297.8 L346.4,297.0 L346.8,295.9 L347.5,295.1 L348.8,294.3 L349.8,293.5 L350.8,292.6 L351.2,291.6 L351.4,290.4 L351.0,289.3 L351.1,288.2 L351.4,286.9 L353.4,285.4 L354.3,284.7 L355.1,284.1 L355.7,283.5 L356.4,282.7 L357.1,281.9 L357.8,281.2 L359.1,280.4 L359.8,280.1 L360.8,279.8 L362.0,279.4 L362.9,279.2 L365.5,277.6 L366.3,277.0 L367.2,276.6 L368.0,276.1 L368.7,275.7 L369.4,275.1 L370.6,274.9 L371.7,274.4 L372.3,273.8 L372.6,273.0 L372.9,271.8 L373.2,271.0 L373.6,269.6 L374.3,268.6 L374.9,268.1 L375.5,267.5 L376.4,266.6 L377.9,265.0 L378.9,263.7 L379.8,262.3 L379.9,261.4 L380.0,260.1 L380.3,259.2 L380.7,258.4 L381.6,257.5 L382.2,256.8 L382.5,255.5 L382.5,254.5 L381.7,252.5 L380.4,251.0 L379.0,249.6 L380.6,248.5 L381.8,248.0 L384.0,246.2 L385.2,245.3 L384.6,244.1 L382.5,244.9 L380.4,245.8 L378.6,246.4 L377.1,247.1 L374.9,248.1 L373.3,247.1 L372.4,245.7 L371.6,244.4 L370.9,242.7 L373.0,240.6 L373.5,239.7 L374.7,238.9 L374.0,236.9 L374.8,236.1 L375.9,234.9 L376.9,234.0 L378.4,233.2 L380.9,232.3 L383.3,231.5 L384.3,231.0 L385.1,230.9 L384.5,229.8 L383.5,227.1 L382.0,224.0 L380.7,220.5 L378.9,216.2 L378.2,214.5 L377.8,213.1 L378.7,213.2 L380.2,212.5 L381.6,211.8 L382.3,211.3 L380.4,208.2 L379.3,208.2 L377.9,207.8 L377.0,207.6 L376.1,207.4 L370.2,209.1 L369.0,207.4 L367.7,205.5 L367.0,204.5 L364.7,203.7 L362.9,203.0 L361.7,202.4 L360.2,202.1 L359.5,201.7 L357.9,201.6 L357.1,201.7 L355.5,202.5 L354.9,201.4 L354.3,200.3 L353.3,198.8 L352.7,198.2 L351.4,195.8 L348.9,193.0 L347.1,189.8 L346.1,188.2 L345.6,187.5 L342.7,187.8 L341.6,185.4 L344.6,183.8 L346.1,182.7 L349.2,180.6 L352.4,178.1 L354.2,176.8 L354.2,175.6 L352.8,176.8 L350.6,178.4 L349.5,177.8 L348.8,175.4 L348.5,174.2 L348.0,173.0 L347.4,171.7 L347.1,170.4 L347.0,169.0 L346.6,167.8 L346.4,166.2 L346.4,164.7 L347.1,163.5 L347.3,162.2 L347.2,160.8 L347.3,156.2 L348.5,154.5 L353.2,148.3 L357.1,143.1 L357.6,142.1 L357.1,143.1 L354.9,141.3 L351.8,138.5 L346.6,133.8 L344.9,132.3 L342.2,130.0 L341.0,128.9 L337.4,125.3 L336.6,124.6 L332.7,120.9 L329.5,117.7 L324.4,120.9 L324.0,123.9 L321.0,124.3 L320.0,124.4 L317.0,124.5 L314.2,124.6 L313.6,125.2 L313.5,126.1 L313.2,127.4 L313.0,128.2 L312.4,129.6 L311.9,130.7 L311.3,132.1 L310.5,133.5 L310.0,134.1 L309.5,134.9 L309.2,136.3 L309.0,137.2 L308.3,140.8 L308.4,142.7 L307.1,144.3 L306.3,145.0 L305.1,145.9 L304.0,146.4 L303.0,146.9 L301.9,147.4 L301.3,146.9 L298.4,143.1 L290.5,131.8 L284.1,122.2 L282.6,120.3 L281.5,118.9 L280.2,117.3 L279.2,115.7 L277.5,113.0 L277.6,112.3 L278.2,111.4 L279.1,110.2 L279.9,109.8 L281.8,108.5 L282.8,107.7 L283.7,107.7 L284.4,107.4 L286.1,106.4 L287.9,105.6 L291.1,103.9 L292.3,103.3 L293.2,103.4 L294.0,103.6 L295.1,103.2 L295.9,103.1 L296.7,102.1 L297.7,101.6 L298.6,101.5 L299.8,100.7 L301.1,99.8 L301.7,99.3 L302.2,98.4 L303.4,97.7 L305.5,96.8 L306.3,96.7 L307.6,96.2 L308.5,95.9 L309.4,94.6 L310.8,92.4 L311.4,91.3 L311.7,90.5 L311.9,89.8 L312.3,88.5 L312.6,87.5 L312.8,86.8 L312.9,85.6 L312.2,84.9 L311.3,84.9 L310.4,84.9 L308.7,85.1 L307.5,85.6 L308.0,84.9 L308.9,84.3 L309.4,83.4 L309.2,81.9 L309.0,81.1 L309.3,79.8 L309.7,78.7 L309.9,77.9 L310.1,76.9 L309.5,76.3 L307.7,75.9 L305.5,75.7 L302.0,75.4 L301.0,74.4 L300.3,73.3 L299.7,72.5 L298.8,71.5 L298.0,71.0 L297.1,70.6 L295.5,72.0 L295.0,72.6 L294.3,73.4 L293.1,72.7 L291.7,72.0 L290.7,71.6 L289.8,72.2 L288.5,72.8 L287.5,74.2 L286.8,74.7 L286.1,75.6 L285.5,76.2 L285.0,76.8 L284.3,77.5 L283.2,78.3 L282.6,77.8 L281.7,78.5 L280.9,78.1 L281.2,79.1 L280.0,79.7 L279.1,80.2 L278.4,80.7 L277.5,80.1 L276.5,80.3 L275.8,80.9 L275.1,81.5 L274.4,82.0 L273.1,82.3 L272.2,82.8 L271.2,83.3 L270.2,84.1 L269.5,84.6 L268.1,85.8 L267.2,86.9 L266.8,87.9 L266.5,88.8 L265.5,89.4 L264.5,89.7 L263.9,90.3 L263.0,91.1 L262.3,91.5 L261.2,91.7 L260.2,92.0 L259.3,92.3 L259.1,93.1 L259.6,94.0 L260.2,95.2 L255.2,96.1 L254.5,96.4 L249.6,99.2 L246.2,101.2 L245.0,101.9 L244.5,103.1 L244.1,106.4 L243.7,104.0 L243.6,102.9 L241.8,98.5 L241.2,97.0 L236.7,97.2 L232.8,97.2 L228.4,97.3 L225.3,97.3 L224.2,97.3 L223.0,97.2 L218.4,86.0 L217.1,82.5 L216.5,80.9 L214.9,76.8 L217.1,75.7 L221.0,74.7 L223.6,73.9 L225.1,73.5 L226.4,73.1 L227.9,72.8 L231.5,72.3 L233.6,72.3 L233.3,71.1 L233.0,70.3 L232.2,68.2 L230.8,64.6 L228.9,59.6 L227.1,55.3 L226.0,52.5 L225.6,51.7 L225.3,50.8 L224.3,47.9 L223.3,45.1 L222.3,45.1 L221.3,45.2 L220.5,45.4 L219.3,45.0 L218.6,44.5 L217.5,44.4 L216.3,43.8 L215.5,43.5 L214.6,43.2 L213.2,42.8 L211.6,42.4 L209.6,42.3 L208.0,42.0 L207.3,41.8 L206.7,41.2 L205.9,41.3 L205.0,40.7 L203.0,38.7 L201.5,36.9 L200.1,34.8 L199.3,33.4 L197.9,31.0 L196.6,28.8 Z" fill="#FF9933" fill-opacity="0.78" stroke="#ffffff" stroke-width="1.4"><title>Chandigarh</title></path>
+<text x="217.8" y="214.2" text-anchor="middle" font-size="18" font-weight="700" fill="#1a1a1a" font-family="inherit" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">Chandigarh</text>
+<rect x="18" y="360" width="14" height="14" rx="2" fill="#FF9933" fill-opacity="0.78" stroke="#ffffff" stroke-width="0.6"/>
+<text x="38" y="372" font-size="12" fill="#1a1a1a" font-family="inherit">Chandigarh district</text>
+<text x="18" y="400" font-size="10" fill="#5b5b5b" font-style="italic">Source: datta07/INDIAN-SHAPEFILES · fallback single-outline if unavailable</text>
+</svg></div>
+  <table class="bihar"><thead><tr><th>#</th><th>District</th><th>HQ</th><th>Key officer</th><th>Sub-divisions</th></tr></thead><tbody>
+    <tr><td class="r">1</td><td>Chandigarh</td><td>Chandigarh</td><td>Nishant Kumar Yadav, IAS — Deputy Commissioner / District Magistrate</td><td>Central · East · South</td></tr>
+  </tbody><caption>Official portal lists 1 district and 3 sub-divisions.</caption></table>
+  <p class="src">Sources: Chandigarh Administration at-a-glance — <a href="https://chandigarh.gov.in/" target="_blank" rel="noopener">chandigarh.gov.in</a>; Deputy Commissioner and SDM roster — <a href="https://chandigarh.gov.in/about-us/whos-who" target="_blank" rel="noopener">Chandigarh who’s-who</a>; district map GeoJSON from datta07/INDIAN-SHAPEFILES.</p><!-- END: DIST -->
+
+</section>
+
+<!-- =========================== PRI =========================== -->
+<section id="pri" class="lens-section">
+<!-- BEGIN: PRI — Chandigarh replacement: Municipal wards and urban registers, no GP/block layer. -->
+  <h1>🏘 Local Government — Municipal Corporation + 35 Wards</h1>
+  <p class="sec-sub">Chandigarh’s local layer is urban and municipal. There are no Gram Panchayat or Panchayat Samiti rosters to inline.</p>
+  <div class="kpis">
+    <div class="kpi"><div class="v">1</div><div class="l">Municipality</div><div class="sub">Municipal Corporation Chandigarh</div></div>
+    <div class="kpi"><div class="v">35</div><div class="l">Wards</div><div class="sub">Elected councillors</div></div>
+    <div class="kpi"><div class="v">0</div><div class="l">Blocks</div><div class="sub">N/A</div></div>
+    <div class="kpi"><div class="v">0</div><div class="l">Gram Panchayats</div><div class="sub">N/A</div></div>
+  </div>
+  <h3 class="grp-h">Live registers</h3>
+  <div class="role-grid">
+    <div class="role-card"><div class="role">Councillor directory</div><div class="name">Ward-wise elected councillors</div><div class="meta"><a href="https://www.mcchandigarh.gov.in/Page.aspx?id=CZA6UBnjBVR48Nm/tqmk2Q==&amp;t=188" target="_blank" rel="noopener">MC Chandigarh councillors</a></div></div>
+    <div class="role-card"><div class="role">Municipal Commissioner</div><div class="name">Amit Kumar, IAS</div><div class="meta">Commissioner, Municipal Corporation Chandigarh</div></div>
+    <div class="role-card"><div class="role">Mayor</div><div class="name">Saurabh Joshi<span class="pill p-bjp">BJP</span></div><div class="meta">Mayor for 2026</div></div>
+  </div>
+  <p class="src">Sources: Municipal Corporation Chandigarh — <a href="https://mcchandigarh.gov.in/" target="_blank" rel="noopener">mcchandigarh.gov.in</a>; ward-wise councillor directory; Chandigarh Administration who’s-who for Commissioner.</p><!-- END: PRI -->
+
+</section>
+
+<!-- =========================== CONSTITUTIONAL BODIES =========================== -->
+<section id="bodies" class="lens-section">
+<!-- BEGIN: BODIES — Chandigarh statutory, civic and oversight bodies. -->
+  <h1>📊 Statutory / Civic Bodies and Registers</h1>
+  <div class="role-grid">
+    <div class="role-card"><div class="role">Election</div><div class="name">Chief Electoral Officer, Chandigarh</div><div class="meta"><a href="https://ceochandigarh.gov.in/" target="_blank" rel="noopener">ceochandigarh.gov.in</a></div></div>
+    <div class="role-card"><div class="role">Municipal government</div><div class="name">Municipal Corporation Chandigarh</div><div class="meta"><a href="https://mcchandigarh.gov.in/" target="_blank" rel="noopener">mcchandigarh.gov.in</a></div></div>
+    <div class="role-card"><div class="role">Housing</div><div class="name">Chandigarh Housing Board</div><div class="meta"><a href="https://chbonline.in/" target="_blank" rel="noopener">chbonline.in</a></div></div>
+    <div class="role-card"><div class="role">Estate / land administration</div><div class="name">Estate Office Chandigarh</div><div class="meta"><a href="https://estateoffice.chd.gov.in/" target="_blank" rel="noopener">estateoffice.chd.gov.in</a></div></div>
+    <div class="role-card"><div class="role">Smart city</div><div class="name">Chandigarh Smart City Ltd.</div><div class="meta">CEO charge listed with MC Commissioner in who’s-who</div></div>
+    <div class="role-card"><div class="role">Urban planning</div><div class="name">Department of Urban Planning</div><div class="meta">Finance Secretary portfolio on Chandigarh who’s-who</div></div>
+  </div>
+  <p class="src">Sources: Chandigarh Administration who’s-who — <a href="https://chandigarh.gov.in/about-us/whos-who" target="_blank" rel="noopener">chandigarh.gov.in/about-us/whos-who</a>; linked official body portals.</p><!-- END: BODIES -->
+
+</section>
+
+<!-- =========================== SCOPE MEMO =========================== -->
+<section id="scope" class="lens-section">
+<!-- BEGIN: SCOPE — Math table adjusted for non-legislature UT and 35-ward municipal model. -->
+  <h1>📑 Scope Memo — Chandigarh Deviations</h1>
+  <table class="bihar"><thead><tr><th>Layer</th><th class="r">Node count</th><th>Inline?</th><th>Decision</th></tr></thead><tbody>
+    <tr><td>Union ministers from Chandigarh</td><td class="r">0</td><td>Inline</td><td>State explicitly that none are listed.</td></tr>
+    <tr><td>Lok Sabha</td><td class="r">1</td><td>Inline</td><td>One MP: Manish Tewari.</td></tr>
+    <tr><td>Rajya Sabha</td><td class="r">0</td><td>Inline</td><td>No RS allocation.</td></tr>
+    <tr><td>Chief Minister / Cabinet</td><td class="r">N/A</td><td>Omit</td><td>UT without legislature; replaced by Administrator lens.</td></tr>
+    <tr><td>Vidhan Sabha / Vidhan Parishad</td><td class="r">N/A</td><td>Omit</td><td>Explanatory callout; comparison table marks VS as N/A.</td></tr>
+    <tr><td>Administrator + apex officers</td><td class="r">7</td><td>Inline</td><td>Small, high-value roster sourced from official who’s-who.</td></tr>
+    <tr><td>District</td><td class="r">1</td><td>Inline</td><td>Single district map and officer row.</td></tr>
+    <tr><td>Municipal Corporation</td><td class="r">35</td><td>Hybrid</td><td>Mayor team inline; councillor roster linked.</td></tr>
+    <tr><td>Gram Panchayat / block</td><td class="r">N/A</td><td>Omit</td><td>Urban UT model.</td></tr>
+  </tbody></table>
+  <div class="callout ok"><strong>Final deviation report:</strong> Chandigarh follows the Ladakh-style non-legislature pattern. No CM, Cabinet, VS or VP content is generated; Article 240 / Administrator context and MC Chandigarh are the substitute civic layers.</div>
+  <p class="src">Sources: Constitution of India Articles 239 and 240 via India Code; Chandigarh Administration official portal and who’s-who; Municipal Corporation Chandigarh ward and mayor records; High Court and Lok Sabha official rosters. Verification date: 24-May-2026.</p><!-- END: SCOPE -->
+
+</section>
+
+
+</main>
+
+<footer>
+  Chandigarh UT Shasan · governance transparency experiment · drafted 24-May-2026 · skinned with the <code>bharat-sanchar-aesthetic</code> skill · zero external dependencies · data sources cited inline · live officials of district/PRI level are intentionally not embedded — see <a href="#scope">Scope memo</a>.
+</footer>
+
+<!-- JS 1: expand/collapse-all within a lens -->
+<script>
+(function(){
+  document.addEventListener('click', function(e){
+    var btn = e.target.closest('.ec-btn'); if(!btn) return;
+    e.preventDefault();
+    var root = document.getElementById(btn.getAttribute('data-scope')); if(!root) return;
+    var openVal = btn.getAttribute('data-ec') === 'expand';
+    root.querySelectorAll('details').forEach(function(d){ if(d!==root) d.open = openVal; });
+    if(root.tagName === 'DETAILS' && openVal) root.open = true;
+  });
+})();
+</script>
+
+<!-- JS 2: close mobile hamburger after a nav link tap -->
+<script>
+(function(){
+  var toggle = document.getElementById('navtoggle');
+  var nav = document.querySelector('header.topbar nav.lens');
+  if(!toggle || !nav) return;
+  nav.addEventListener('click', function(e){
+    var a = e.target.closest('a'); if(!a) return;
+    var href = a.getAttribute('href'); if(!href) return;
+    toggle.checked = false;
+    if(href.charAt(0) === '#' && href.length > 1){
+      requestAnimationFrame(function(){
+        requestAnimationFrame(function(){
+          var el = document.getElementById(href.slice(1)); if(!el) return;
+          var topbar = document.querySelector('header.topbar');
+          var offset = topbar ? topbar.getBoundingClientRect().height : 0;
+          var y = el.getBoundingClientRect().top + window.pageYOffset - offset - 4;
+          window.scrollTo({top: Math.max(0, y), behavior: 'auto'});
+        });
+      });
+    }
+  });
+})();
+</script>
+</body>
+</html>
