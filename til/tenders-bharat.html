@@ -5,7 +5,18 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>निविदा — Nivida · Bharat Tender Atlas</title>
 <meta name="description" content="One-stop aggregator for government tenders across India — Centre ministries, PSUs, all 28 states & 8 UTs, with sector, value and deadline filters.">
-<style>
+<script>
+// Set data-theme before CSS paints to avoid FOUC and to make all
+// :root[data-theme="dark"] rules apply on first load (not only after toggle).
+(function(){
+  try{
+    var saved=localStorage.getItem("nivida-theme");
+    var prefersDark=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;
+    var theme=saved||(prefersDark?"dark":"light");
+    document.documentElement.setAttribute("data-theme",theme);
+  }catch(e){}
+})();
+</script><style>
 :root{--bg:#f7f7f5;--card:#fff;--ink:#1a1a1a;--muted:#5b5b5b;--navy:#0B1B3F;--saffron:#FF9933;--green:#138808;--red:#c0392b;--border:#e3e3df;--tag:#eef0f7;}
 :root[data-theme="dark"]{--bg:#0e0f12;--card:#16181d;--ink:#e6e6e6;--muted:#9aa0a8;--border:#262932;--tag:#1f232b;--navy:#7aa2ff;}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#0e0f12;--card:#16181d;--ink:#e6e6e6;--muted:#9aa0a8;--border:#262932;--tag:#1f232b;--navy:#7aa2ff;}}
@@ -205,7 +216,8 @@ details.collapsible > .det-body{padding:10px 0 0;}
 </style>
 </head>
 <body>
-<input type="checkbox" id="nightmode" aria-label="Toggle dark mode" onchange="document.documentElement.setAttribute('data-theme', this.checked ? 'dark' : 'light')">
+<input type="checkbox" id="nightmode" aria-label="Toggle dark mode" onchange="document.documentElement.setAttribute('data-theme', this.checked ? 'dark' : 'light');try{localStorage.setItem('nivida-theme', this.checked ? 'dark' : 'light');}catch(e){}">
+<script>document.getElementById('nightmode').checked=(document.documentElement.getAttribute('data-theme')==='dark');</script>
 <input type="checkbox" id="navtoggle" aria-label="Toggle navigation">
 <header class="topbar">
   <label for="navtoggle" class="nav-burger" aria-label="Open menu">☰</label>
