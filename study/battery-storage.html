@@ -4554,7 +4554,19 @@ if (typeof switchTab === 'function') {
     btn.textContent = '⎘ Copy';
     btn.addEventListener('click', function (e) {
       e.preventDefault(); e.stopPropagation();
-      var t = (host.tagName === 'PRE') ? (host.innerText || host.textContent) : text;
+      var t;
+      if (host.tagName === 'PRE') {
+        // Clone the host and strip the copy button so:
+        //   (a) the button's "⎘ Copy" / "✓ Copied" text doesn't leak into the clipboard
+        //   (b) Chrome's layout-aware innerText doesn't drop characters the absolutely-
+        //       positioned button visually overlays at the top-right of the <pre>.
+        var clone = host.cloneNode(true);
+        var btnInClone = clone.querySelector('.copy-btn');
+        if (btnInClone) btnInClone.remove();
+        t = clone.innerText || clone.textContent || '';
+      } else {
+        t = text;
+      }
       function done() {
         btn.textContent = '✓ Copied';
         btn.classList.add('copied');
