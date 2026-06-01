@@ -12,8 +12,8 @@
 
   /* ── Toolbar ── */
   #toolbar {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 10;
-    background: rgba(13,17,23,0.92); backdrop-filter: blur(8px);
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: #0d1117;
     padding: 0 24px; display: flex; align-items: stretch; gap: 0;
     border-bottom: 1px solid #30363d; height: 50px;
   }
@@ -2003,14 +2003,13 @@ if (C.sourceLink) {
   sl.style.display = '';
 }
 
-// Learning path button visibility
-if (C.learningPath && C.learningPath.length) {
-  document.getElementById('btn-path').style.display = '';
-}
-
 // Show first tab
 let currentTab = tabs.length ? tabs[0].id : null;
 if (currentTab) document.getElementById('view-' + currentTab).classList.add('active');
+
+// Learning path button visibility (only on the topic-graph tab)
+document.getElementById('btn-path').style.display =
+  (currentTab === 'graph' && C.learningPath && C.learningPath.length) ? '' : 'none';
 
 // ═══════════════════════════════════════════════════════════════════════
 // TAB SWITCHING
