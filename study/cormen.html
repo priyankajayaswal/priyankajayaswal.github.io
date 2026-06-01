@@ -518,8 +518,8 @@
   .glossary-cat-pills button.active { background: var(--pill-bg, #1f6feb22); border-color: var(--pill-color, #58a6ff); color: var(--pill-color, #58a6ff); }
   .glossary-count { font-size: 11px; color: #8b949e; margin-left: auto; }
   .glossary-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 14px; max-width: 1400px; margin: 0 auto; }
-  .glossary-card { background: #161b22; border: 1px solid #30363d; border-radius: 10px; padding: 14px; transition: border-color .15s, box-shadow .15s, transform .15s; }
-  .glossary-card:hover { border-color: var(--cat-color, #58a6ff); box-shadow: 0 4px 14px rgba(0,0,0,0.35); }
+  .glossary-card { background: linear-gradient(180deg, #161b22 0%, #131820 100%); border: 1px solid #30363d; border-left: 3px solid var(--cat-color, #58a6ff); border-radius: 10px; padding: 14px 14px 12px; transition: border-color .15s, box-shadow .15s, transform .15s; }
+  .glossary-card:hover { border-color: var(--cat-color, #58a6ff); border-left-color: var(--cat-color, #58a6ff); box-shadow: 0 4px 18px rgba(0,0,0,0.4); transform: translateY(-1px); }
   .glossary-card.flash {
     animation: glossary-flash 2.6s cubic-bezier(.4,0,.2,1) 1 forwards;
     position: relative;
@@ -587,18 +587,22 @@
     }
   }
   .glossary-term-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-  .glossary-term { font-size: 16px; font-weight: 700; color: #e6edf3; }
-  .glossary-cat-badge { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; padding: 2px 7px; border-radius: 10px; border: 1px solid var(--cat-color, #58a6ff); color: var(--cat-color, #58a6ff); background: rgba(0,0,0,0.2); }
+  .glossary-term { font-size: 15px; font-weight: 700; color: #e6edf3; letter-spacing: .1px; }
+  .glossary-cat-badge { font-size: 9.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .6px; padding: 2px 7px; border-radius: 10px; border: 1px solid var(--cat-color, #58a6ff); color: var(--cat-color, #58a6ff); background: color-mix(in srgb, var(--cat-color, #58a6ff) 12%, transparent); }
   .glossary-aka { font-size: 11px; color: #8b949e; font-style: italic; margin-top: 3px; }
   .glossary-short { font-size: 13px; color: #c9d1d9; margin-top: 8px; line-height: 1.5; }
+  .glossary-example { font-size: 12px; color: #8b949e; margin-top: 8px; line-height: 1.5; padding: 7px 10px; background: rgba(13,17,23,0.55); border-left: 2px solid color-mix(in srgb, var(--cat-color, #58a6ff) 60%, #30363d); border-radius: 0 6px 6px 0; }
+  .glossary-example::before { content: '💡 '; opacity: .85; }
+  .glossary-example em { color: #c9d1d9; font-style: normal; font-weight: 600; }
+  .glossary-example code { background: #0d1117; border: 1px solid #21262d; border-radius: 4px; padding: 1px 5px; font-family: 'Cascadia Code', monospace; font-size: 11.5px; color: #d2a8ff; }
   .glossary-long { font-size: 13px; color: #8b949e; margin-top: 8px; line-height: 1.55; display: none; }
   .glossary-long code { background: #0d1117; border: 1px solid #21262d; border-radius: 4px; padding: 1px 5px; font-family: 'Cascadia Code', monospace; font-size: 12px; color: #d2a8ff; }
   .glossary-card.expanded .glossary-long { display: block; }
   .glossary-toggle { background: none; border: none; color: #58a6ff; font-size: 11px; cursor: pointer; padding: 6px 0 0; }
   .glossary-toggle:hover { text-decoration: underline; }
-  .glossary-links { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+  .glossary-links { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; padding-top: 10px; border-top: 1px dashed #21262d; }
   .glossary-links button { background: #0d1117; border: 1px solid #30363d; color: #c9d1d9; padding: 3px 9px; border-radius: 10px; font-size: 11px; cursor: pointer; transition: all .15s; }
-  .glossary-links button:hover { border-color: #58a6ff; color: #58a6ff; }
+  .glossary-links button:hover { border-color: var(--cat-color, #58a6ff); color: var(--cat-color, #58a6ff); transform: translateY(-1px); }
   /* graph-node pulse when jumped to from glossary */
   @keyframes glossary-pulse {
     0%   { stroke-opacity: 1; stroke-width: 14; }
@@ -732,7 +736,8 @@
   <div id="toolbar-menu">
     <div class="tab-group" id="tab-group"></div>
     <div class="actions">
-      <button class="btn" id="btn-pdf" onclick="openReferencePdf()" style="display:none;background:#21262d;border-color:#f85149;color:#ff7b72">📕 Reference PDF</button>
+      <button class="btn" id="btn-pdf" onclick="openReferencePdf()" style="display:none;background:transparent;border-color:#30363d;color:#8b949e;font-size:11px;padding:5px 9px" title="Open reference textbook PDF">📕 PDF</button>
+      <a class="btn" href="https://www.bigocheatsheet.com/" target="_blank" rel="noopener" style="background:transparent;border-color:#30363d;color:#8b949e;font-size:11px;padding:5px 9px;text-decoration:none" title="Big-O complexity reference for common algorithms & data structures (opens in new tab)">📊 Big-O</a>
       <button class="btn" onclick="toggleTracker()">📊 Tracker</button>
       <button class="btn" id="btn-path" onclick="togglePathPanel()" style="display:none;background:#1f6feb;border-color:#58a6ff;color:#fff">🧭 Learning Path</button>
     </div>
@@ -3996,12 +4001,68 @@ const COURSE_CONFIG = {
             text: "For monotonic f, ∫ f bounds Σ f within ±f(1) or ±f(n)."
           }
         ]
+      },
+      {
+        id: "dd-bigo-cheatsheet",
+        num: "Reference Card",
+        title: "Big-O Cheat Sheet — Visual Reference",
+        desc: "The canonical at-a-glance complexity poster: best/avg/worst time + space for every common data structure and sorting algorithm.",
+        color: "#79c0ff",
+        icon: "📊",
+        svg: function(w, h){
+      // Embed the external poster image inside the SVG viewport.
+      // preserveAspectRatio keeps the whole poster visible and centred.
+      var url = "https://www.bigocheatsheet.com/img/big-o-cheat-sheet-poster.png";
+      return '<svg viewBox="0 0 '+w+' '+h+'" xmlns="http://www.w3.org/2000/svg" '
+        + 'xmlns:xlink="http://www.w3.org/1999/xlink" style="background:#0d1117">'
+        + '<image href="'+url+'" xlink:href="'+url+'" x="0" y="0" width="'+w+'" height="'+(h-22)+'" '
+        +   'preserveAspectRatio="xMidYMid meet" />'
+        + '<a href="'+url+'" target="_blank">'
+        +   '<text x="'+(w/2)+'" y="'+(h-6)+'" text-anchor="middle" fill="#58a6ff" '
+        +     'font-size="11" style="cursor:pointer; text-decoration:underline">'
+        +     'Open full-resolution poster &#8599;'
+        +   '</text>'
+        + '</a>'
+        + '</svg>';
+    },
+        sections: [
+          {
+            title: "Intuition",
+            text: "The Big-O cheat sheet poster collapses years of CLRS into one printable wall reference: every common data structure across the top (Array, Stack, Linked List, Hash Table, BST, B-Tree, RB-Tree, AVL, Skip List, Heap, …) with its average and worst-case complexities for Access / Search / Insert / Delete; and every common sort (Quick, Merge, Heap, Bubble, Insertion, Selection, Tree, Cubesort, Shell, Radix, Counting, …) with best/average/worst time and worst-case space. Glance, find row, read column — done."
+          },
+          {
+            title: "How to read it",
+            text: "Each cell is colour-coded by complexity class: deep green = Θ(1), light green = Θ(log n), yellow = Θ(n), orange = Θ(n log n), red = Θ(n²) or worse. This makes structural patterns jump out instantly — e.g. notice that hash tables collapse to red in the *worst* case (degenerate hashing), or that B-trees stay green even for worst-case Delete because their balance is guaranteed by construction. The complexity-class chart at the top shows growth curves for n up to 100."
+          },
+          {
+            title: "Why have it open while studying",
+            text: "When working through CLRS exercises, the cheat sheet is the fastest sanity check: if you derive an O(n) bound for hash-table search worst case, the poster reminds you that's only the average — the worst is O(n). When designing a system, scan the sort table to pick the right algorithm for your constraint (need stable? in-place? near-sorted input? bounded range integers?). It's the algorithmic equivalent of a periodic table."
+          },
+          {
+            title: "Limitations & honest caveats",
+            text: "The poster shows asymptotic complexity, not real-world wall-clock performance. Quicksort beats heapsort in practice despite identical Θ(n log n) bounds because of cache locality. Hash tables beat balanced trees for typical loads despite same average bound because of constant factors. Treat the poster as a starting filter, not a final answer — always benchmark on your actual data distribution. Also: 'Cubesort' is rare in practice; the poster is comprehensive, not opinionated."
+          }
+        ],
+        keypoints: [
+          {
+            title: "Colour code",
+            text: "Green = constant/log, yellow = linear, orange = linearithmic, red = polynomial+."
+          },
+          {
+            title: "Two halves",
+            text: "Top = data-structure ops (Access/Search/Insert/Delete); bottom = sorting algorithms (best/avg/worst time + space)."
+          },
+          {
+            title: "Avg vs worst",
+            text: "Hash tables are O(1) avg but O(n) worst — the poster shows both side-by-side so you don't forget."
+          },
+          {
+            title: "Use as filter",
+            text: "Eliminate structures with the wrong complexity class first; then benchmark the survivors on your real workload."
+          }
+        ]
       }
     ],
-
-  // ═══════════════════════════════════════════════════════════════════════
-  // USE CASES — applied scenarios
-  // ═══════════════════════════════════════════════════════════════════════
   useCases: [
       {
         title: "Autocomplete & Type-Ahead Search",
@@ -4011,15 +4072,35 @@ const COURSE_CONFIG = {
         steps: [
           {
             title: "Algorithms in play",
-            text: "Trie (Ch 12-flavour BST generalisation) stores all strings in O(total length) space, supports prefix lookup in O(|prefix|). A min-heap (Ch 6) tracks the top-k completions by ranking score so the API returns 10 suggestions in O(k log n). Damerau-Levenshtein edit distance (Ch 15 DP) tolerates typos via 'fuzzy' matches when exact prefix has few hits."
+            component: "Trie + Min-Heap + DP",
+            proto: "O(|prefix|) lookup",
+            text: "Trie (Ch 12-flavour BST generalisation) stores all strings in O(total length) space, supports prefix lookup in O(|prefix|). A min-heap (Ch 6) tracks the top-k completions by ranking score so the API returns 10 suggestions in O(k log n). Damerau-Levenshtein edit distance (Ch 15 DP) tolerates typos via 'fuzzy' matches when exact prefix has few hits.",
+            code: "// Trie node — O(|prefix|) descent, independent of dictionary size\nclass TrieNode {\n  children = new Map(); // char → TrieNode\n  topK = [];            // min-heap of (score, completion) — cached at this prefix\n  isWord = false;\n}\n\n// Insert: O(|word|)        Search: O(|prefix| + k log n)\n// Space: O(Σ|word|)         Memory layout: ~30 bytes/node (ASCII)",
+            refs: [
+              { label: "CLRS Ch 12 — Trees", url: "https://mitpress.mit.edu/9780262046305/introduction-to-algorithms/" },
+              { label: "Google: Search autocomplete", url: "https://blog.google/products/search/google-search-autocomplete/" }
+            ]
           },
           {
             title: "Why these algorithms",
-            text: "Hash maps are too rigid for prefix queries (no ordering). Sorted arrays support binary search but not constant-time insert. The trie is the unique structure that gives O(|prefix|) lookup independent of dictionary size, and the heap converts unstructured candidate scores into a sorted top-k in optimal time."
+            component: "Trade-off analysis",
+            proto: "Why not hash / sorted array?",
+            text: "Hash maps are too rigid for prefix queries (no ordering). Sorted arrays support binary search but not constant-time insert. The trie is the unique structure that gives O(|prefix|) lookup independent of dictionary size, and the heap converts unstructured candidate scores into a sorted top-k in optimal time.",
+            code: "// Structure       | Prefix lookup | Insert  | Memory | Ordered?\n// hash map         | O(n)  worst   | O(1)    | low    | no\n// sorted array     | O(log n + k)  | O(n)    | low    | yes\n// trie             | O(|prefix|)   | O(|w|)  | high   | yes  ← winner\n// suffix array     | O(|p| log n)  | offline | mid    | yes",
+            refs: [
+              { label: "DAT — Double-Array Trie (compressed)", url: "https://en.wikipedia.org/wiki/Double-array_trie" }
+            ]
           },
           {
             title: "Production scale",
-            text: "Google Search handles ~99k QPS with sub-50ms p99 latency. Autocomplete must respond in <20ms to feel snappy; backed by a per-language trie holding ~10M queries with rolling 28-day weights. Edge caches return cached prefixes in <5ms; only cold prefixes hit the trie."
+            component: "Google Search / Lucene / Elasticsearch",
+            proto: "<20ms p99",
+            text: "Google Search handles ~99k QPS with sub-50ms p99 latency. Autocomplete must respond in <20ms to feel snappy; backed by a per-language trie holding ~10M queries with rolling 28-day weights. Edge caches return cached prefixes in <5ms; only cold prefixes hit the trie.",
+            code: "# Lucene FST (Finite-State Transducer) — production trie variant\nGET /index/_search?suggest_field=title.suggest&suggest_text=algo\n# returns top-10 in ~5ms from in-memory FST (~20MB per 10M terms)",
+            refs: [
+              { label: "Lucene FST suggester", url: "https://lucene.apache.org/core/9_0_0/suggest/org/apache/lucene/search/suggest/document/SuggestField.html" },
+              { label: "Elastic completion suggester", url: "https://www.elastic.co/guide/en/elasticsearch/reference/current/search-suggesters.html" }
+            ]
           }
         ]
       },
@@ -4031,15 +4112,35 @@ const COURSE_CONFIG = {
         steps: [
           {
             title: "Algorithms in play",
-            text: "Dijkstra's (Ch 24) is the textbook starting point with a Fibonacci heap (Ch 19). Real systems layer Contraction Hierarchies on top: pre-compute shortcut edges over weeks of offline processing so queries take milliseconds instead of seconds. A* search uses Euclidean distance as the heuristic (admissible since road distance ≥ straight-line). Bidirectional search halves the search radius."
+            component: "Dijkstra + Fib-Heap + A* + CH",
+            proto: "SSSP, non-negative weights",
+            text: "Dijkstra's (Ch 24) is the textbook starting point with a Fibonacci heap (Ch 19). Real systems layer Contraction Hierarchies on top: pre-compute shortcut edges over weeks of offline processing so queries take milliseconds instead of seconds. A* search uses Euclidean distance as the heuristic (admissible since road distance ≥ straight-line). Bidirectional search halves the search radius.",
+            code: "// Dijkstra core — O((V+E) log V) with binary heap, O(E + V log V) with Fib-heap\nwhile (!pq.empty()) {\n  let u = pq.extractMin();           // O(log V)\n  for (let (v, w) of adj[u]) {\n    if (dist[u] + w < dist[v]) {\n      dist[v] = dist[u] + w;\n      pq.decreaseKey(v, dist[v]);   // O(1) amortised with Fib-heap\n    }\n  }\n}\n\n// A* swaps priority: f(v) = g(v) + h(v),  h = straight-line distance",
+            refs: [
+              { label: "CLRS Ch 24 — Single-Source Shortest Paths", url: "https://mitpress.mit.edu/9780262046305/introduction-to-algorithms/" },
+              { label: "Geisberger et al. — Contraction Hierarchies (2008)", url: "https://algo2.iti.kit.edu/schultes/hwy/contract.pdf" }
+            ]
           },
           {
             title: "Why these algorithms",
-            text: "Bellman-Ford handles negative weights but takes O(VE); roads have non-negative weights so Dijkstra wins. For a continental graph (V ≈ 50M intersections), straight Dijkstra is too slow per query — CH preprocessing trades RAM for query speed. The heuristic makes A* explore only the relevant corridor."
+            component: "Algorithm selection",
+            proto: "Why not Bellman-Ford / plain Dijkstra?",
+            text: "Bellman-Ford handles negative weights but takes O(VE); roads have non-negative weights so Dijkstra wins. For a continental graph (V ≈ 50M intersections), straight Dijkstra is too slow per query — CH preprocessing trades RAM for query speed. The heuristic makes A* explore only the relevant corridor.",
+            code: "// Continental graph: V ≈ 50M, E ≈ 120M\n// Plain Dijkstra:       ~3 s   per query  (touches ~30% of nodes)\n// Bidirectional Dijkstra: ~800 ms          (touches ~10%)\n// A* + Euclidean h():    ~400 ms          (touches ~3%)\n// Contraction Hierarchies: ~1 ms          (touches <0.1%, after 6h preproc)",
+            refs: [
+              { label: "OSRM — Open Source Routing Machine", url: "https://project-osrm.org/" }
+            ]
           },
           {
             title: "Production scale",
-            text: "Google Maps serves ~1B users; OSRM/Valhalla open-source planners answer 100ms queries on commodity boxes. Pre-processing OSM Europe takes ~6 hours and produces ~30 GB of CH data; queries touch <0.1% of edges. ETA is then re-ranked with live traffic."
+            component: "Google Maps / OSRM / Valhalla",
+            proto: "<100ms door-to-door",
+            text: "Google Maps serves ~1B users; OSRM/Valhalla open-source planners answer 100ms queries on commodity boxes. Pre-processing OSM Europe takes ~6 hours and produces ~30 GB of CH data; queries touch <0.1% of edges. ETA is then re-ranked with live traffic.",
+            code: "# OSRM HTTP API — bidirectional CH under the hood\ncurl 'https://router.project-osrm.org/route/v1/driving/13.39,52.52;13.42,52.50?overview=false'\n# {\"routes\":[{\"distance\":3045.3,\"duration\":412.8,...}],\"code\":\"Ok\"}",
+            refs: [
+              { label: "Valhalla routing engine", url: "https://valhalla.github.io/valhalla/" },
+              { label: "Microsoft Research — CRP (Customizable Route Planning)", url: "https://www.microsoft.com/en-us/research/publication/customizable-route-planning/" }
+            ]
           }
         ]
       },
@@ -4051,15 +4152,36 @@ const COURSE_CONFIG = {
         steps: [
           {
             title: "Algorithms in play",
-            text: "Direct 2-D convolution costs O(n²·k²) for an n×n image with k×k kernel. The convolution theorem (Ch 30) says convolution in space = pointwise multiplication in frequency. So: 2-D FFT image O(n² log n), 2-D FFT kernel O(k² log k) → pad to n×n, pointwise multiply in O(n²), inverse FFT → O(n² log n). Wins when k ≳ log n (large kernels)."
+            component: "FFT + Convolution Theorem",
+            proto: "Time ↔ Frequency",
+            text: "Direct 2-D convolution costs O(n²·k²) for an n×n image with k×k kernel. The convolution theorem (Ch 30) says convolution in space = pointwise multiplication in frequency. So: 2-D FFT image O(n² log n), 2-D FFT kernel O(k² log k) → pad to n×n, pointwise multiply in O(n²), inverse FFT → O(n² log n). Wins when k ≳ log n (large kernels).",
+            code: "# NumPy: FFT-based 2-D convolution\nimport numpy as np\nfrom scipy.signal import fftconvolve\nimg    = np.random.rand(4096, 4096)\nkernel = gaussian_kernel(sigma=40)        # ~241×241\nblurred = fftconvolve(img, kernel, mode='same')   # ~150 ms\n# Direct cv2.filter2D(...) on same kernel: ~10 s",
+            refs: [
+              { label: "CLRS Ch 30 — Polynomials and the FFT", url: "https://mitpress.mit.edu/9780262046305/introduction-to-algorithms/" },
+              { label: "Wikipedia: Convolution theorem", url: "https://en.wikipedia.org/wiki/Convolution_theorem" }
+            ]
           },
           {
             title: "Why these algorithms",
-            text: "For small 3×3 kernels (Sobel, Gauss-3) direct convolution wins because constants and cache behaviour favour it. For Gaussian blur with σ > 20 (k ≈ 60), or for de-convolution / wavelet transforms, FFT is dramatically faster. Modern deep-learning libs (cuDNN) dispatch between Winograd, direct, and FFT-based conv based on kernel size."
+            component: "Kernel-size dispatch",
+            proto: "Direct vs Winograd vs FFT",
+            text: "For small 3×3 kernels (Sobel, Gauss-3) direct convolution wins because constants and cache behaviour favour it. For Gaussian blur with σ > 20 (k ≈ 60), or for de-convolution / wavelet transforms, FFT is dramatically faster. Modern deep-learning libs (cuDNN) dispatch between Winograd, direct, and FFT-based conv based on kernel size.",
+            code: "// cuDNN heuristic (approximate):\n//   k ≤ 5  → direct (im2col + GEMM)\n//   k = 3, stride 1 → Winograd F(2×2, 3×3)  (2.25× fewer mults)\n//   k ≥ 7 or large input → FFT (cuFFT)\n// Crossover: FFT wins once k²·log(k) < n²/k²  ⇒  k ≳ log n",
+            refs: [
+              { label: "Lavin & Gray — Fast Algorithms for Convolutional Neural Networks (Winograd)", url: "https://arxiv.org/abs/1509.09308" },
+              { label: "cuDNN convolution algorithms", url: "https://docs.nvidia.com/deeplearning/cudnn/api/index.html#cudnnConvolutionFwdAlgo_t" }
+            ]
           },
           {
             title: "Production scale",
-            text: "Photoshop's Smart Blur on a 24-megapixel image with σ=40 runs FFT-based in ~150ms vs direct ~10s. SIRIUS and DRT astronomy pipelines deconvolve gigapixel images using 2-D FFT chains. Neural-network inference on diffusion models uses FFT-based convolution for the upsampling layers."
+            component: "Photoshop / SIRIUS / Diffusion models",
+            proto: "Gigapixel pipelines",
+            text: "Photoshop's Smart Blur on a 24-megapixel image with σ=40 runs FFT-based in ~150ms vs direct ~10s. SIRIUS and DRT astronomy pipelines deconvolve gigapixel images using 2-D FFT chains. Neural-network inference on diffusion models uses FFT-based convolution for the upsampling layers.",
+            code: "# Stable-Diffusion U-Net upsample block (PyTorch, simplified)\nimport torch.fft\nF_x = torch.fft.rfft2(x)                     # O(n² log n)\nF_k = torch.fft.rfft2(kernel, s=x.shape[-2:])\nout = torch.fft.irfft2(F_x * F_k, s=x.shape[-2:])",
+            refs: [
+              { label: "FFTW — Fastest Fourier Transform in the West", url: "https://www.fftw.org/" },
+              { label: "Mathematica Image Convolution docs", url: "https://reference.wolfram.com/language/ref/ImageConvolve.html" }
+            ]
           }
         ]
       },
@@ -4071,15 +4193,35 @@ const COURSE_CONFIG = {
         steps: [
           {
             title: "Algorithms in play",
-            text: "Build an interference graph: vertices = variables alive at some point, edges between vars alive simultaneously. Want a k-colouring (Ch 34: graph k-colouring is NP-hard for k≥3). LLVM uses Chaitin-Briggs: iteratively remove low-degree (<k) nodes, push on stack, recolour on the way back; if stuck, spill a variable. Linear-scan allocator (faster) approximates with intervals."
+            component: "Interference Graph + Chaitin-Briggs",
+            proto: "k-Colouring (NP-hard)",
+            text: "Build an interference graph: vertices = variables alive at some point, edges between vars alive simultaneously. Want a k-colouring (Ch 34: graph k-colouring is NP-hard for k≥3). LLVM uses Chaitin-Briggs: iteratively remove low-degree (<k) nodes, push on stack, recolour on the way back; if stuck, spill a variable. Linear-scan allocator (faster) approximates with intervals.",
+            code: "// Chaitin-Briggs skeleton\nfn allocate(G: InterferenceGraph, k: usize) -> Coloring {\n  let mut stack = vec![];\n  while let Some(v) = G.find_node(|n| n.degree() < k) {\n    stack.push(v);  G.remove(v);\n  }\n  if !G.is_empty() {\n    let spill = pick_spill(&G);   // highest cost / degree ratio\n    G.remove(spill); stack.push(spill);   // mark to spill\n  }\n  // Recolour in reverse order — each node sees < k coloured neighbours\n  while let Some(v) = stack.pop() { assign_lowest_free_color(v, k); }\n}",
+            refs: [
+              { label: "Chaitin et al. — Register Allocation via Coloring (1981)", url: "https://dl.acm.org/doi/10.1145/800020.808476" },
+              { label: "LLVM Register Allocation pass", url: "https://llvm.org/docs/CodeGenerator.html#register-allocation" }
+            ]
           },
           {
             title: "Why these algorithms",
-            text: "Optimal allocation = optimal graph colouring = NP-hard. So compilers use heuristics whose worst case is bad but average case is fast and near-optimal. The Chaitin-Briggs heuristic exploits the observation that real programs have small treewidth and most variables are low-degree."
+            component: "Heuristic vs exact",
+            proto: "NP-hard → heuristic",
+            text: "Optimal allocation = optimal graph colouring = NP-hard. So compilers use heuristics whose worst case is bad but average case is fast and near-optimal. The Chaitin-Briggs heuristic exploits the observation that real programs have small treewidth and most variables are low-degree.",
+            code: "// Algorithm      | Quality      | Compile speed | Used in\n// Chaitin-Briggs | near-optimal | O(V²) worst   | GCC, LLVM -O2/3\n// Linear scan    | ~5% worse    | O(V log V)    | V8, HotSpot, LLVM -O0\n// PBQP           | optimal-ish  | ILP-style     | LLVM (experimental)\n// SSA-based      | provably opt | linear        | Hack, modern LLVM",
+            refs: [
+              { label: "Briggs — Register Allocation via Graph Coloring (PhD, 1992)", url: "https://www.cs.utexas.edu/~mckinley/380C/lecs/briggs-thesis-1992.pdf" }
+            ]
           },
           {
             title: "Production scale",
-            text: "GCC, LLVM, V8, HotSpot all run register allocation per function. Compiling Chromium (~12M LOC C++) takes ~30 minutes; register allocation is ~10% of that. JIT compilers (V8, JVM) use linear scan because they need millisecond compile times."
+            component: "GCC / LLVM / V8 / HotSpot",
+            proto: "AOT vs JIT trade-off",
+            text: "GCC, LLVM, V8, HotSpot all run register allocation per function. Compiling Chromium (~12M LOC C++) takes ~30 minutes; register allocation is ~10% of that. JIT compilers (V8, JVM) use linear scan because they need millisecond compile times.",
+            code: "# Inspect LLVM register allocation choices\nclang -O2 -S -mllvm -print-after=greedy hot.c 2>&1 | head -50\n# llc -regalloc=greedy   (Chaitin-Briggs-style)\n# llc -regalloc=fast     (linear scan, JIT-friendly)\n# llc -regalloc=pbqp     (partitioned boolean quadratic programming)",
+            refs: [
+              { label: "Poletto & Sarkar — Linear Scan (1999)", url: "https://web.cs.ucla.edu/~palsberg/course/cs132/linearscan.pdf" },
+              { label: "V8 register allocator design", url: "https://v8.dev/docs/turbofan" }
+            ]
           }
         ]
       },
@@ -4091,15 +4233,36 @@ const COURSE_CONFIG = {
         steps: [
           {
             title: "Algorithms in play",
-            text: "Consistent hashing places keys to nodes via a hash ring (Ch 11 hashing extended); adding/removing nodes shifts only K/N keys. Disjoint-Set Union (Ch 21) tracks which keys belong to the same shard. Gossip protocols + vector clocks propagate membership changes in O(log N) rounds. Raft / Paxos achieve consensus on the membership view."
+            component: "Consistent Hashing + DSU + Gossip",
+            proto: "Hash ring, α(n) merges",
+            text: "Consistent hashing places keys to nodes via a hash ring (Ch 11 hashing extended); adding/removing nodes shifts only K/N keys. Disjoint-Set Union (Ch 21) tracks which keys belong to the same shard. Gossip protocols + vector clocks propagate membership changes in O(log N) rounds. Raft / Paxos achieve consensus on the membership view.",
+            code: "// Consistent hashing — Karger et al. 1997\nfn node_for(key: &str, ring: &BTreeMap<u64, NodeId>) -> NodeId {\n  let h = hash(key);                    // e.g. SHA-1 or xxhash\n  ring.range(h..).next()                // first node clockwise\n     .or_else(|| ring.iter().next())    // wrap-around\n     .map(|(_, n)| *n).unwrap()\n}\n// With V virtual nodes per real node: load std-dev ≈ O(1/√V)",
+            refs: [
+              { label: "CLRS Ch 21 — Data Structures for Disjoint Sets", url: "https://mitpress.mit.edu/9780262046305/introduction-to-algorithms/" },
+              { label: "Karger et al. — Consistent Hashing (STOC 1997)", url: "https://dl.acm.org/doi/10.1145/258533.258660" }
+            ]
           },
           {
             title: "Why these algorithms",
-            text: "DHTs (Chord, Cassandra, DynamoDB) use consistent hashing because rehashing all data on resize would kill availability. Union-Find handles partition merges in α(n) — practically constant. Without these structures, every cluster reconfiguration would be O(N²) in disruption."
+            component: "Failure-mode reasoning",
+            proto: "Why not modulo / central coordinator?",
+            text: "DHTs (Chord, Cassandra, DynamoDB) use consistent hashing because rehashing all data on resize would kill availability. Union-Find handles partition merges in α(n) — practically constant. Without these structures, every cluster reconfiguration would be O(N²) in disruption.",
+            code: "// hash(key) mod N           → 100% remap when N changes (catastrophic)\n// rendezvous (HRW) hashing  → ~K/N remap, O(N) per lookup\n// consistent hashing ring   → ~K/N remap, O(log N) per lookup ← winner\n// jump consistent hash      → ~K/N remap, O(log N), zero memory (Google 2014)",
+            refs: [
+              { label: "Lamping & Veach — Jump Consistent Hash (2014)", url: "https://arxiv.org/abs/1406.2294" },
+              { label: "DeCandia et al. — Dynamo (SOSP 2007)", url: "https://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf" }
+            ]
           },
           {
             title: "Production scale",
-            text: "Amazon DynamoDB serves ~10M req/sec across thousands of nodes using consistent hashing variants; Cassandra's gossiper runs every second; ZooKeeper uses Zab (Paxos-like) for membership; Redis Sentinel uses Raft for failover. All trace back to graph + hashing primitives in CLRS."
+            component: "DynamoDB / Cassandra / ZooKeeper / Redis",
+            proto: "~10M req/sec",
+            text: "Amazon DynamoDB serves ~10M req/sec across thousands of nodes using consistent hashing variants; Cassandra's gossiper runs every second; ZooKeeper uses Zab (Paxos-like) for membership; Redis Sentinel uses Raft for failover. All trace back to graph + hashing primitives in CLRS.",
+            code: "# Cassandra: inspect token ring (consistent hashing)\nnodetool ring\n# Address          Status  State    Load     Token\n# 10.0.0.1         Up      Normal   12.3 GB  -9223372036854775808\n# 10.0.0.2         Up      Normal   11.8 GB  -3074457345618258603\n# 10.0.0.3         Up      Normal  13.1 GB   3074457345618258602",
+            refs: [
+              { label: "Apache Cassandra architecture", url: "https://cassandra.apache.org/doc/latest/cassandra/architecture/overview.html" },
+              { label: "Raft consensus", url: "https://raft.github.io/" }
+            ]
           }
         ]
       }
@@ -4112,6 +4275,7 @@ const COURSE_CONFIG = {
       {
         term: "Asymptotic notation",
         category: "Notation",
+        long: "Tight-bound vocabulary (O, Ω, Θ, o, ω) introduced by Knuth (TAOCP) that abstracts away constants and low-order terms so algorithms can be compared independently of hardware. The Master Theorem, amortised analysis, and competitive analysis all output asymptotic claims; assume input n grows large enough that hidden constants stop mattering.",
         definition: "Family of symbols (O, Ω, Θ, o, ω) describing how functions grow as their argument tends to infinity; the language of algorithm analysis.",
         example: "3n² + 5n + 7 = Θ(n²); the lower-order terms and constants vanish at scale.",
         related: [
@@ -4123,6 +4287,7 @@ const COURSE_CONFIG = {
       {
         term: "Big-O",
         category: "Notation",
+        long: "Worst-case upper bound — f(n)=O(g(n)) iff ∃ c,n₀ such that f(n) ≤ c·g(n) for all n ≥ n₀. Common informal usage conflates it with Θ; CLRS is strict about the distinction. O(n log n) covers comparison sorts; O(n) is the linear barrier for selection/search on unordered data.",
         definition: "Upper bound on growth: f(n)=O(g(n)) iff ∃ c,n₀ such that 0 ≤ f(n) ≤ c·g(n) for all n ≥ n₀.",
         example: "Binary search is O(log n); the worst case never exceeds c log n comparisons.",
         related: [
@@ -4133,6 +4298,7 @@ const COURSE_CONFIG = {
       {
         term: "Theta (Θ)",
         category: "Notation",
+        long: "Tight bound — Θ(g) = O(g) ∩ Ω(g). When you can prove both an upper and matching lower bound, write Θ; this is the strongest asymptotic claim. Merge sort is Θ(n log n); quicksort is Θ(n log n) <em>expected</em> but Θ(n²) worst.",
         definition: "Tight bound: f=Θ(g) iff f=O(g) AND f=Ω(g) — sandwiched between two constants times g.",
         example: "Merge sort is Θ(n log n) — both upper and lower bounded by c·n log n.",
         related: [
@@ -4143,6 +4309,7 @@ const COURSE_CONFIG = {
       {
         term: "Loop invariant",
         category: "Proof",
+        long: "A predicate proved by induction at three points — Initialisation (true at entry), Maintenance (preserved per iteration), Termination (combined with the loop exit gives correctness). CLRS uses this scaffold for every iterative algorithm; it's the imperative equivalent of recursion's inductive hypothesis and the safety net for off-by-one bugs.",
         definition: "A predicate true before each iteration, used to prove correctness via Initialization, Maintenance, Termination.",
         example: "Insertion sort: 'A[1..j-1] is sorted at start of iteration j'.",
         related: [
@@ -4152,6 +4319,7 @@ const COURSE_CONFIG = {
       {
         term: "Recurrence",
         category: "Analysis",
+        long: "Equation defining T(n) in terms of T of smaller inputs — solved via substitution, recursion tree, Akra-Bazzi, or the Master Theorem. The shape T(n) = aT(n/b) + f(n) covers most D&C algorithms; T(n)=T(n-1)+f(n) covers iterative reductions like insertion sort.",
         definition: "Equation expressing T(n) in terms of T of smaller values; solved by substitution, recursion tree, or master theorem.",
         example: "T(n) = 2T(n/2) + Θ(n) → Θ(n log n) (merge sort).",
         related: [
@@ -4161,6 +4329,7 @@ const COURSE_CONFIG = {
       {
         term: "Master theorem",
         category: "Analysis",
+        long: "Closed-form solver for T(n)=aT(n/b)+f(n). Three cases compare f(n) to n^{log_b a}: if f is smaller, T=Θ(n^{log_b a}); if equal (modulo polylog), T=Θ(n^{log_b a}·log n); if larger and regularity holds, T=Θ(f). Akra-Bazzi handles ragged splits the Master Theorem can't.",
         definition: "Closed-form solution to T(n)=aT(n/b)+f(n) by comparing f to n^(log_b a); three cases.",
         example: "Strassen: T(n)=7T(n/2)+Θ(n²) → Case 1 → Θ(n^2.807).",
         related: [
@@ -4171,6 +4340,7 @@ const COURSE_CONFIG = {
       {
         term: "Stable sort",
         category: "Sorting",
+        long: "Two equal-key elements retain their original relative order. Critical when sorting by a secondary key after a primary (radix sort relies on stability of its inner pass). Insertion, merge, counting, bubble are stable; heapsort, quicksort, Shell sort are not (without tie-breaking).",
         definition: "Preserves the relative order of equal-key elements; required when sort-by-multiple-fields chained.",
         example: "Merge sort and counting sort are stable; quicksort and heapsort are not.",
         related: [
@@ -4181,6 +4351,7 @@ const COURSE_CONFIG = {
       {
         term: "In-place",
         category: "Sorting",
+        long: "Uses O(1) extra memory besides the input. Insertion, heap, quicksort (with care) are in-place; merge sort isn't. Modern caches blur the picture — quicksort beats merge sort partly because in-place means better locality.",
         definition: "Uses O(1) extra memory beyond the input; trades memory for constants.",
         example: "Quicksort is in-place; merge sort is not (Θ(n) auxiliary array).",
         related: [
@@ -4191,6 +4362,7 @@ const COURSE_CONFIG = {
       {
         term: "Decision tree",
         category: "Lower bounds",
+        long: "Model an algorithm as a binary tree whose internal nodes are comparisons and leaves are output permutations. Any correct comparison sort must distinguish n! permutations, so the tree has ≥ n! leaves, giving height Ω(log n!) = Ω(n log n) — the comparison-sort lower bound.",
         definition: "Tree modelling all comparison sequences a comparison-based algorithm could make.",
         example: "Sorting n items has ≥ n! leaves → height ≥ log(n!) = Ω(n log n).",
         related: [
@@ -4200,6 +4372,7 @@ const COURSE_CONFIG = {
       {
         term: "Indicator random variable",
         category: "Probability",
+        long: "X_A = 1 if event A occurs, else 0. Then E[X_A] = Pr[A]. Combined with linearity of expectation, IRVs trivialise complex expected-value calculations (hiring problem, hat-check, randomized quicksort comparisons) by decomposing a sum into per-event probabilities.",
         definition: "X_A = 1 if event A occurs, else 0; E[X_A] = Pr{A}. Powers linearity-of-expectation proofs.",
         example: "Expected hires in hiring problem = Σ 1/i = H_n.",
         related: [
@@ -4209,6 +4382,7 @@ const COURSE_CONFIG = {
       {
         term: "Linearity of expectation",
         category: "Probability",
+        long: "E[X+Y] = E[X]+E[Y] regardless of independence. The single most useful identity in randomised algorithm analysis: it lets you swap a sum and an expectation freely, making sums of indicator RVs the standard CLRS attack pattern.",
         definition: "E[X+Y] = E[X]+E[Y] for ANY random variables, dependent or not.",
         example: "Coupon collector: E[draws] = Σ_{i=1}^n n/(n-i+1) = nH_n.",
         related: [
@@ -4218,6 +4392,7 @@ const COURSE_CONFIG = {
       {
         term: "Hash function",
         category: "Hashing",
+        long: "Maps keys to integers in [0..m-1], ideally distributing them uniformly. Common: division (h=k mod m, m prime), multiplication (h=⌊m(kA mod 1)⌋ with A=φ⁻¹), Murmur/CityHash for byte strings. Adversaries can defeat fixed h; universal hashing randomises h to make worst-case input vanish in expectation.",
         definition: "Maps a key from large universe U to a slot in {0..m-1}; chosen to minimise collisions.",
         example: "h(k) = k mod m with prime m; or universal h_{a,b}(k) = ((ak+b) mod p) mod m.",
         related: [
@@ -4228,6 +4403,7 @@ const COURSE_CONFIG = {
       {
         term: "Load factor",
         category: "Hashing",
+        long: "α = n/m (elements / buckets). Chaining: expected chain length = α, expected operations = O(1+α) — resize when α > some threshold (Python dict: 2/3, Java HashMap: 3/4). Open addressing requires α < 1 strictly; performance collapses as α → 1.",
         definition: "α = n/m where n is # keys stored, m is # slots; expected chain length under uniform hashing.",
         example: "Chaining performs well up to α≈1; open addressing degrades past α≈0.75.",
         related: [
@@ -4237,6 +4413,7 @@ const COURSE_CONFIG = {
       {
         term: "BST property",
         category: "Trees",
+        long: "For every node x: left subtree keys ≤ x.key ≤ right subtree keys. In-order traversal then yields a sorted sequence. Search/insert/delete cost = O(h); h can be Θ(n) for adversarial inputs, motivating self-balancing variants (red-black, AVL, splay).",
         definition: "Every node's left subtree has keys ≤ its key; right subtree has keys ≥ its key.",
         example: "Enables in-order traversal to yield sorted output in Θ(n).",
         related: [
@@ -4246,6 +4423,7 @@ const COURSE_CONFIG = {
       {
         term: "Red-black tree",
         category: "Trees",
+        long: "Self-balancing BST with five colour invariants that keep h ≤ 2·log(n+1). Operations are O(log n) worst case with O(1) amortised structural changes per update. Underlies std::map, java.util.TreeMap, Linux's CFS scheduler, and the epoll interval tree.",
         definition: "Self-balancing BST: nodes coloured red/black with 5 rules guaranteeing height ≤ 2 log(n+1).",
         example: "Java TreeMap, Linux's CFS scheduler, C++ std::map.",
         related: [
@@ -4256,6 +4434,7 @@ const COURSE_CONFIG = {
       {
         term: "Rotation",
         category: "Trees",
+        long: "Local pointer surgery that re-shapes a BST while preserving the in-order sequence and BST property. Left-rotate(x): x's right child becomes its parent. Building block of RB-tree, AVL, splay, treap rebalancing — each fix-up uses O(1) rotations.",
         definition: "Local restructuring of a BST that preserves the BST property; pivot a node up at the cost of one of its children.",
         example: "LEFT-ROTATE(x): x.right becomes x's parent; takes O(1).",
         related: [
@@ -4265,6 +4444,7 @@ const COURSE_CONFIG = {
       {
         term: "Augmented DS",
         category: "Data structures",
+        long: "Take a standard structure (RB-tree, list, heap) and store extra info at each node (subtree size, sum, max). CLRS lists four steps: choose underlying DS, decide what extra info, prove it can be maintained on update in O(log n), implement new ops. Order-statistic tree and interval tree are the canonical examples.",
         definition: "Existing structure + extra fields maintained during operations to support new queries.",
         example: "Order-statistic tree = RB-tree + subtree size; supports SELECT(k) in O(log n).",
         related: [
@@ -4275,6 +4455,7 @@ const COURSE_CONFIG = {
       {
         term: "Optimal substructure",
         category: "DP",
+        long: "An optimal solution to the problem is composed of optimal solutions to sub-problems. This is the foundational property both DP and greedy require; absence kills both approaches. Shortest paths have it; longest simple paths don't (NP-hard precisely because of it).",
         definition: "Optimal solution to a problem contains optimal solutions to subproblems; precondition for DP and greedy.",
         example: "Shortest path: any prefix of a shortest path is itself a shortest path.",
         related: [
@@ -4284,6 +4465,7 @@ const COURSE_CONFIG = {
       {
         term: "Overlapping subproblems",
         category: "DP",
+        long: "The recursive decomposition revisits the same sub-problems exponentially many times — fib, edit distance, LCS, matrix-chain. Adding memoisation (top-down) or tabulation (bottom-up) collapses runtime from exponential to polynomial in the number of distinct sub-problems.",
         definition: "Naive recursion repeatedly solves the same subproblem; memoisation reduces redundancy.",
         example: "Naive Fibonacci has Θ(φⁿ) calls; with memoisation, Θ(n).",
         related: [
@@ -4293,6 +4475,7 @@ const COURSE_CONFIG = {
       {
         term: "Greedy-choice property",
         category: "Greedy",
+        long: "There exists an optimal solution containing the locally-best choice at the first step. Combined with optimal substructure ⇒ greedy works. Proved by exchange argument (any optimal solution can be massaged to start with the greedy choice without increasing cost) — see Huffman, activity selection, MST.",
         definition: "A globally optimal solution can be reached by making locally optimal choices; not always true.",
         example: "Activity selection: pick earliest-finishing compatible activity → always optimal.",
         related: [
@@ -4302,6 +4485,7 @@ const COURSE_CONFIG = {
       {
         term: "Matroid",
         category: "Greedy",
+        long: "Pair (S, ℐ) where ℐ is a family of independent subsets of S satisfying hereditary and exchange axioms. Greedy on a weighted matroid finds a max-weight independent set. Forests of a graph (graphic matroid), linearly-independent vectors (linear matroid), uniform-1-out-of-n all qualify — explains why Kruskal's works.",
         definition: "Pair (S, I) where I is hereditary and satisfies exchange; greedy on weights is optimal iff structure is a weighted matroid.",
         example: "Graphic matroid: spanning forests; greedy = Kruskal.",
         related: [
@@ -4311,6 +4495,7 @@ const COURSE_CONFIG = {
       {
         term: "Amortised analysis",
         category: "Analysis",
+        long: "Replaces a worst-case per-op bound with a worst-case bound on a sequence of n ops, divided by n. Three flavours: aggregate (sum then divide), accounting (charge credits), potential (define Φ). Lets you say dynamic arrays push in O(1) even though some pushes copy n elements.",
         definition: "Bound the average cost per operation across a sequence, even when individual ops vary widely.",
         example: "Dynamic-array push: real cost spikes to n on doublings; amortised O(1).",
         related: [
@@ -4321,6 +4506,7 @@ const COURSE_CONFIG = {
       {
         term: "Potential method",
         category: "Analysis",
+        long: "Pick a potential function Φ(D) ≥ 0 with Φ(D₀)=0; the amortised cost of op i is ĉᵢ = cᵢ + Φᵢ − Φᵢ₋₁, and Σĉᵢ ≥ Σcᵢ. The art is choosing Φ so expensive ops are paid for by accumulated potential — Fibonacci heap and splay tree analyses are the classics.",
         definition: "Define Φ(D)≥0 with Φ(D_0)=0; amortised cost ĉᵢ = cᵢ + Φᵢ - Φᵢ₋₁ bounds the true total.",
         example: "Dynamic table: Φ=2·num-size; doubling releases stored Φ exactly equal to copy cost.",
         related: [
@@ -4330,6 +4516,7 @@ const COURSE_CONFIG = {
       {
         term: "B-tree",
         category: "Disk DS",
+        long: "Self-balancing search tree where each node holds t-1..2t-1 keys (large branching factor t ≈ disk-block size), keeping height ≈ log_t n. Designed to minimise disk seeks: a tree over 10⁹ keys is only 4-5 levels deep with t≈1000. B+ tree variant (data in leaves only) powers PostgreSQL, MySQL InnoDB, SQLite, every relational DB.",
         definition: "Self-balancing tree with high branching factor (t≥2 keys/node); minimises disk seeks.",
         example: "PostgreSQL, MySQL InnoDB, SQLite use B+ tree variants.",
         related: [
@@ -4339,6 +4526,7 @@ const COURSE_CONFIG = {
       {
         term: "Disjoint-Set Union",
         category: "Data structures",
+        long: "Maintains a partition of n elements under MAKE-SET, FIND, UNION. Represented as a forest where each tree is one set; element points to root. With union-by-rank + path compression, m operations cost O(m·α(n)) — practically linear (α(n) ≤ 4 for n ≤ 2^65536). Kruskal's MST, Tarjan's SCC, image segmentation all depend on it.",
         definition: "Maintains partition with MAKE-SET, FIND-SET, UNION; O(α(n)) amortised with rank + path compression.",
         example: "Kruskal's MST and image segmentation depend on it.",
         related: [
@@ -4348,6 +4536,7 @@ const COURSE_CONFIG = {
       {
         term: "Topological sort",
         category: "Graphs",
+        long: "Linear ordering of a DAG's vertices such that u→v ⇒ u precedes v. Two algorithms: DFS post-order reversed (O(V+E)), or Kahn's BFS on in-degree-0 frontier (also O(V+E)). Used by build systems (make, bazel), task schedulers, course-prerequisite planners.",
         definition: "Linear ordering of DAG vertices so that every edge goes from earlier to later.",
         example: "Build systems (make), package installers (apt), course prerequisites.",
         related: [
@@ -4358,6 +4547,7 @@ const COURSE_CONFIG = {
       {
         term: "Strongly connected component",
         category: "Graphs",
+        long: "Maximal set of vertices where every pair is mutually reachable. Tarjan's algorithm and Kosaraju's both find all SCCs in O(V+E). Condensation graph (SCCs as super-nodes) is always a DAG — central to 2-SAT, model checking, dependency cycle analysis.",
         definition: "Maximal set of vertices in a directed graph mutually reachable from one another.",
         example: "Tarjan's and Kosaraju's compute all SCCs in O(V+E).",
         related: [
@@ -4367,6 +4557,7 @@ const COURSE_CONFIG = {
       {
         term: "Minimum spanning tree",
         category: "Graphs",
+        long: "Subset of edges connecting all V vertices with minimum total weight. Two greedy algorithms work: Kruskal's (sort edges, add via DSU) O(E log E); Prim's (Dijkstra-like grow from root) O(E + V log V) with Fib-heap. Cut property + cycle property justify both.",
         definition: "Subset of edges forming a tree that connects all vertices with minimum total weight.",
         example: "Kruskal's, Prim's, Borůvka's. Network design, clustering.",
         related: [
@@ -4376,6 +4567,7 @@ const COURSE_CONFIG = {
       {
         term: "Edge relaxation",
         category: "Graphs",
+        long: "RELAX(u,v,w): if d[v] > d[u]+w(u,v), update d[v] and parent[v]. Single primitive shared by Dijkstra, Bellman-Ford, A*, DAG shortest paths — they differ only in the order of relaxations and termination criteria. Invariant: d[v] is always an over-estimate that monotonically decreases.",
         definition: "Atomic update: if d[v] > d[u]+w(u,v) then d[v]=d[u]+w(u,v), π[v]=u.",
         example: "Used in Dijkstra, Bellman-Ford, DAG-SP, A*.",
         related: [
@@ -4385,6 +4577,7 @@ const COURSE_CONFIG = {
       {
         term: "Flow network",
         category: "Graphs",
+        long: "Directed graph with capacities c(u,v) ≥ 0 on edges plus source s and sink t. A flow f obeys capacity (f ≤ c) and conservation (in = out except at s,t); value |f| = net flow out of s. Models pipelines, bipartite matching, image segmentation, project selection.",
         definition: "Directed graph with edge capacities c(u,v)≥0, source s, sink t; flow conserved at intermediate nodes.",
         example: "Bipartite matching, image segmentation, project selection.",
         related: [
@@ -4394,6 +4587,7 @@ const COURSE_CONFIG = {
       {
         term: "Max-flow min-cut",
         category: "Graphs",
+        long: "The value of any maximum flow equals the capacity of any minimum s-t cut (Ford-Fulkerson, 1956). LP duality in disguise. Yields bipartite-matching = König's theorem, vertex-connectivity = Menger's theorem, image segmentation as cut.",
         definition: "|max s-t flow| = min capacity over all s-t cuts (strong LP duality).",
         example: "Edmonds-Karp finds max flow in O(VE²).",
         related: [
@@ -4403,6 +4597,7 @@ const COURSE_CONFIG = {
       {
         term: "FFT",
         category: "Numerical",
+        long: "Fast Fourier Transform computes the n-point DFT in Θ(n log n) instead of Θ(n²) by recursively splitting evens/odds (Cooley-Tukey, 1965). Multiplies two degree-n polynomials in Θ(n log n); foundational for signal processing, error-correcting codes, big-integer multiplication (Schönhage-Strassen).",
         definition: "Fast Fourier Transform; evaluates polynomial of degree n-1 at n-th roots of unity in Θ(n log n).",
         example: "Polynomial multiplication, signal processing, JPEG/MP3.",
         related: [
@@ -4412,6 +4607,7 @@ const COURSE_CONFIG = {
       {
         term: "Modular exponentiation",
         category: "Number theory",
+        long: "Compute a^b mod n in O(log b) multiplications via repeated squaring. Standard primitive in RSA, Diffie-Hellman, Miller-Rabin primality. Square-and-multiply: scan bits of b high-to-low; square accumulator, multiply by a when bit=1; reduce mod n each step.",
         definition: "Compute a^b mod n in O(log b) multiplications via repeated squaring.",
         example: "Used in RSA encrypt/decrypt and Miller-Rabin primality test.",
         related: [
@@ -4421,6 +4617,7 @@ const COURSE_CONFIG = {
       {
         term: "RSA",
         category: "Crypto",
+        long: "Public-key cryptosystem (Rivest-Shamir-Adleman, 1977). Pick primes p,q; n=pq; choose e coprime to φ(n)=(p-1)(q-1); d = e⁻¹ mod φ(n). Encrypt: c = m^e mod n; decrypt: m = c^d mod n. Security rests on the hardness of factoring n; key sizes ≥ 2048 bits today, headed to 3072 as factoring improves.",
         definition: "Public-key cryptosystem: encrypt c=m^e mod n; decrypt m=c^d mod n. Security relies on hardness of factoring n=pq.",
         example: "TLS certificates, SSH keys, code-signing (mostly being replaced by ECDSA).",
         related: [
@@ -4430,6 +4627,7 @@ const COURSE_CONFIG = {
       {
         term: "KMP prefix function",
         category: "Strings",
+        long: "π[i] = length of the longest proper prefix of P[0..i] that is also a suffix. Precomputed in O(m); used to slide the pattern without re-comparing already-matched characters, giving O(n+m) total. The π function alone solves periodicity questions about strings (Lyndon-Schützenberger).",
         definition: "π[q] = longest proper prefix of P[1..q] that's also a suffix; built in O(m).",
         example: "Knuth-Morris-Pratt achieves O(n+m) matching by never backing up in text.",
         related: [
@@ -4439,6 +4637,7 @@ const COURSE_CONFIG = {
       {
         term: "Convex hull",
         category: "Geometry",
+        long: "Smallest convex polygon enclosing a set of points. Graham scan: sort by polar angle, single linear scan with stack of last 3 — O(n log n). Andrew's monotone chain is simpler; Quickhull is the analogue of quicksort. Used in collision detection, pattern recognition, robot motion planning.",
         definition: "Smallest convex polygon containing a set of points.",
         example: "Graham scan computes it in O(n log n); Jarvis march in O(nh).",
         related: [
@@ -4448,6 +4647,7 @@ const COURSE_CONFIG = {
       {
         term: "P",
         category: "Complexity",
+        long: "Decision problems solvable by a deterministic Turing machine in polynomial time. Intuitively, problems with efficient algorithms. PRIMES ∈ P (AKS 2002, surprise result); LP ∈ P (Khachiyan 1979, ellipsoid); LINEAR-PROGRAMMING ∈ P but Simplex is exponential worst-case.",
         definition: "Class of decision problems solvable by a deterministic Turing machine in polynomial time.",
         example: "Sorting, MST, max-flow, primality (AKS 2002).",
         related: [
@@ -4458,6 +4658,7 @@ const COURSE_CONFIG = {
       {
         term: "NP",
         category: "Complexity",
+        long: "Decision problems whose YES-instances have a polynomial-size certificate verifiable in poly time. Equivalently, solvable by a non-deterministic TM in poly time. SAT ∈ NP, Hamiltonian-cycle ∈ NP, factoring ∈ NP ∩ co-NP (interestingly not known NP-complete).",
         definition: "Class of decision problems verifiable in polynomial time given a certificate.",
         example: "SAT (verify by plugging in), Hamiltonian cycle, clique.",
         related: [
@@ -4468,6 +4669,7 @@ const COURSE_CONFIG = {
       {
         term: "NP-complete",
         category: "Complexity",
+        long: "Hardest problems in NP: every NP problem reduces to them in poly time. Cook-Levin (1971) proved SAT is NP-complete; thousands of problems reduced from SAT since (3-SAT, Vertex Cover, TSP, Knapsack, …). Solving any NPC problem in poly time would imply P=NP.",
         definition: "In NP AND NP-hard; the hardest problems in NP — solving one in poly time solves all.",
         example: "SAT, 3-SAT, vertex cover, TSP-decision, clique.",
         related: [
@@ -4478,6 +4680,7 @@ const COURSE_CONFIG = {
       {
         term: "Reduction",
         category: "Complexity",
+        long: "Polynomial-time mapping f from problem A to problem B such that x ∈ A ⇔ f(x) ∈ B. If A ≤_p B and B ∈ P then A ∈ P; contrapositively, if A is hard then so is B. The basic tool for NP-hardness proofs and lower-bound arguments.",
         definition: "Polynomial-time mapping from instances of problem A to instances of problem B with same yes/no answer.",
         example: "3-SAT ≤_p Clique: clause variables become vertices, non-conflicting literals get edges.",
         related: [
@@ -4487,6 +4690,7 @@ const COURSE_CONFIG = {
       {
         term: "Approximation ratio",
         category: "Approximation",
+        long: "ρ(n) such that for all instances of size n, ALG(I) / OPT(I) ≤ ρ(n) (minimisation) or OPT(I)/ALG(I) ≤ ρ(n) (maximisation). Vertex Cover greedy: ρ=2. Set Cover greedy: ρ=H_n ≈ ln n (tight, Feige 1998). TSP (metric): Christofides 1.5, recently improved to 1.5-ε (Karlin-Klein-Oveis Gharan 2020).",
         definition: "ρ = worst-case ratio of algorithm cost to OPT (≥1 for both min and max).",
         example: "Vertex cover greedy: ρ=2. Set cover greedy: ρ=H_n=ln n.",
         related: [
@@ -4497,10 +4701,497 @@ const COURSE_CONFIG = {
       {
         term: "PTAS / FPTAS",
         category: "Approximation",
+        long: "PTAS: family of algorithms parameterised by ε; runs in poly time for any fixed ε > 0 giving (1±ε)-approximation. FPTAS: also polynomial in 1/ε. Knapsack has FPTAS; Bin-Packing has APTAS; general TSP has neither (unless P=NP).",
         definition: "Polynomial-Time Approximation Scheme; FPTAS is also polynomial in 1/ε.",
         example: "Subset Sum has FPTAS; general Knapsack has PTAS but no FPTAS unless P=NP.",
         related: [
           "Approximation ratio"
+        ]
+      },
+      {
+        term: "Insertion sort",
+        category: "Sorting",
+        long: "Build sorted prefix incrementally; for each new element scan left and shift larger ones right. Best Θ(n) on sorted input, average/worst Θ(n²). Used as the base case in introsort/timsort below ~16-32 elements because cache locality and zero overhead beat asymptotically-better algorithms at small n.",
+        definition: "Build the sorted prefix one element at a time by shifting larger elements right.",
+        example: "Best Θ(n) on already-sorted input; worst Θ(n²); in-place, stable, near-optimal for n ≲ 50.",
+        related: [
+          "Stable sort",
+          "In-place",
+          "Loop invariant"
+        ]
+      },
+      {
+        term: "Merge sort",
+        category: "Sorting",
+        long: "Recursively halve, sort each half, merge. T(n)=2T(n/2)+Θ(n) ⇒ Θ(n log n) worst-case, stable, needs Θ(n) auxiliary space. The external-sort default (sorting data bigger than RAM) and the basis for Python's timsort. Variants: bottom-up iterative, in-place merge (complex, slow).",
+        definition: "Divide array in halves, recursively sort, then merge — Θ(n log n) worst-case.",
+        example: "External sort default; needs Θ(n) auxiliary space; stable; the canonical D&C illustration.",
+        related: [
+          "Divide-and-conquer",
+          "Recurrence",
+          "Stable sort"
+        ]
+      },
+      {
+        term: "Divide-and-conquer",
+        category: "Analysis",
+        long: "Three-step template: divide problem into sub-problems, conquer recursively, combine results. Yields a recurrence T(n)=aT(n/b)+f(n) solvable by Master Theorem. Powers merge sort, quicksort, Strassen, FFT, closest pair, and binary search; parallelises naturally since sub-problems are independent.",
+        definition: "Solve by recursively splitting into subproblems, conquering each, combining results.",
+        example: "Merge sort, Quicksort, Strassen, FFT — all yield recurrences solvable by Master Theorem.",
+        related: [
+          "Master theorem",
+          "Recurrence",
+          "Merge sort"
+        ]
+      },
+      {
+        term: "Big-Omega (Ω)",
+        category: "Notation",
+        long: "Worst-case lower bound. Decision-tree arguments yield Ω lower bounds (e.g. Ω(n log n) for comparison sorting); adversary and information-theoretic arguments give others. Without an Ω, you only know the algorithm <em>could</em> be slow — not that <em>any</em> algorithm must be.",
+        definition: "Asymptotic lower bound: f(n)=Ω(g(n)) iff ∃ c,n₀ with f(n) ≥ c·g(n) for n ≥ n₀.",
+        example: "Comparison sort: Ω(n log n). Searching unsorted array: Ω(n).",
+        related: [
+          "Big-O",
+          "Theta (Θ)",
+          "Asymptotic notation"
+        ]
+      },
+      {
+        term: "little-o / little-ω",
+        category: "Notation",
+        long: "Strict (non-tight) versions: f=o(g) iff f/g → 0; f=ω(g) iff f/g → ∞. Used when separating growth rates, e.g. proving an algorithm is asymptotically faster than another rather than just no worse. Less common in code-review chatter but central in lower-bound proofs.",
+        definition: "Strict bounds: o(g) grows strictly slower than g; ω(g) strictly faster.",
+        example: "n = o(n²), n log n = ω(n). Useful for separating polynomial degrees.",
+        related: [
+          "Big-O",
+          "Asymptotic notation"
+        ]
+      },
+      {
+        term: "Recursion tree",
+        category: "Analysis",
+        long: "Draw the recurrence as a tree: root cost f(n), children represent the sub-calls. Sum each level, then sum levels. Useful to guess a solution before formal verification by substitution; especially helpful for non-Master-Theorem recurrences like T(n)=T(n/3)+T(2n/3)+n.",
+        definition: "Visualise a recurrence as a tree where each node's cost is summed per level then across levels.",
+        example: "T(n)=2T(n/2)+n → log n levels × n work = Θ(n log n). Quick sanity check before Master Theorem.",
+        related: [
+          "Master theorem",
+          "Recurrence",
+          "Divide-and-conquer"
+        ]
+      },
+      {
+        term: "Hiring problem",
+        category: "Probability",
+        long: "Interview n candidates online and hire whenever you see one better than all so far. With random arrival order, expected hires = H_n = 1 + 1/2 + ... + 1/n ≈ ln n. The canonical illustration of IRV + linearity of expectation, and a template for online-algorithm reasoning.",
+        definition: "Interview n candidates online; hire whenever you see one better — expected hires = H_n ≈ ln n.",
+        example: "Online algorithm template: random arrival order + indicator RVs + linearity ⇒ tight Θ(log n) bound.",
+        related: [
+          "Indicator random variable",
+          "Linearity of expectation"
+        ]
+      },
+      {
+        term: "Heap",
+        category: "Data structures",
+        long: "Array-backed near-complete binary tree where each parent dominates its children (max-heap) or is dominated by them (min-heap). Indexing: parent(i)=⌊i/2⌋, left(i)=2i, right(i)=2i+1 (1-indexed). BUILD-MAX-HEAP runs in Θ(n) by sifting from ⌊n/2⌋ down to 1 — tighter than the naive n·log n bound.",
+        definition: "Array-backed near-complete binary tree obeying the heap property (parent ≥ or ≤ children).",
+        example: "Max-heap stores max at root; parent(i)=⌊i/2⌋, children(i)={2i,2i+1}. Build-Heap: Θ(n).",
+        related: [
+          "Heapify",
+          "Priority queue"
+        ]
+      },
+      {
+        term: "Heapify",
+        category: "Sorting",
+        long: "Sift a node down toward the leaves, swapping with its larger (for max-heap) child until the heap property holds locally. O(log n) per call. Called once by EXTRACT-MAX (after promoting last element to root) and n/2 times by BUILD-MAX-HEAP.",
+        definition: "Restore heap property at a node by sifting it down — O(log n) per call.",
+        example: "MAX-HEAPIFY(A,i): swap with larger child until heap-ordered. Called n times by HEAPSORT.",
+        related: [
+          "Heap",
+          "Priority queue"
+        ]
+      },
+      {
+        term: "Priority queue",
+        category: "Data structures",
+        definition: "Abstract set with INSERT, EXTRACT-MAX/MIN, INCREASE-KEY in O(log n) via a heap.",
+        example: "Job scheduler, Dijkstra's open set, A* frontier. Fib-heap: DECREASE-KEY in O(1) amortised.",
+        related: [
+          "Heap",
+          "Fibonacci heap"
+        ]
+      },
+      {
+        term: "Quicksort",
+        category: "Sorting",
+        long: "Pick pivot, partition into <pivot / >pivot, recurse on each side. Expected Θ(n log n) with random pivot; worst Θ(n²) when partition is unbalanced. In-place, cache-friendly, not stable. Real-world implementations switch to insertion sort at small n and to heapsort if recursion depth exceeds 2·log n (introsort — Musser 1997).",
+        definition: "Partition around a pivot, recurse on halves — expected Θ(n log n), worst Θ(n²).",
+        example: "In-place; cache-friendly; std::sort, Java DualPivotQuicksort. Randomised pivot makes worst-case vanish in practice.",
+        related: [
+          "Partition",
+          "Stable sort",
+          "Recurrence"
+        ]
+      },
+      {
+        term: "Partition",
+        category: "Sorting",
+        long: "Rearrange A[p..r] so all elements ≤ pivot lie left, all > pivot lie right, pivot ends in its final sorted slot. Lomuto uses one walking index and is simpler to teach; Hoare uses two converging indices, makes fewer swaps, and is what most production sorts implement. Three-way (Dutch flag) partition handles equal keys gracefully.",
+        definition: "Rearrange A[p..r] around a pivot so smaller go left, larger right; pivot lands in its final slot.",
+        example: "Lomuto: one walking index, simpler. Hoare: two converging indices, fewer swaps.",
+        related: [
+          "Quicksort",
+          "In-place"
+        ]
+      },
+      {
+        term: "Counting sort",
+        category: "Sorting",
+        long: "Allocate a bucket per key value in [0..k], count occurrences, then write back in order. Θ(n+k) time, Θ(n+k) memory, stable. Doesn't compare keys — bypasses the Ω(n log n) bound. The inner workhorse of radix sort.",
+        definition: "Stable Θ(n+k) sort over integer keys in [0..k] using a count array — no comparisons.",
+        example: "Used as the inner pass of Radix sort. Memory Θ(n+k) limits k to roughly O(n).",
+        related: [
+          "Radix sort",
+          "Stable sort",
+          "Decision tree"
+        ]
+      },
+      {
+        term: "Radix sort",
+        category: "Sorting",
+        long: "Stable-sort by least-significant digit, then next, etc. For d-digit base-k numbers: Θ(d(n+k)). 32-bit integers with k=2¹⁶ ⇒ d=2 passes ⇒ effectively Θ(n) and faster than quicksort on uniform data. Used inside high-throughput key-value stores and column databases.",
+        definition: "Sort d-digit numbers by stable-sorting one digit at a time, LSD-first — Θ(d(n+k)).",
+        example: "32-bit ints with k=2¹⁶ digits ⇒ d=2 passes ⇒ Θ(n) sort, faster than quicksort on uniform data.",
+        related: [
+          "Counting sort",
+          "Stable sort"
+        ]
+      },
+      {
+        term: "Bucket sort",
+        category: "Sorting",
+        long: "Distribute n values uniformly across n buckets, insertion-sort each, concatenate. Expected Θ(n) for uniform [0,1) input; degrades to Θ(n²) if input clumps. Conceptually similar to a hash sort; classic illustration of distribution-based sorting.",
+        definition: "Split [0,1) into n equal buckets, insertion-sort each, concatenate — Θ(n) expected on uniform input.",
+        example: "Hash-style sort; relies on input distribution. Falls back to Θ(n²) on adversarial input.",
+        related: [
+          "Counting sort",
+          "Hash function"
+        ]
+      },
+      {
+        term: "Median of medians",
+        category: "Sorting",
+        long: "Deterministic linear-time selection (Blum-Floyd-Pratt-Rivest-Tarjan, 1973). Split into groups of 5, take each group's median, recursively find the median of those n/5 medians, use it as the pivot. Recurrence T(n) ≤ T(n/5)+T(7n/10)+O(n) solves to O(n). Galactic in practice — randomised quickselect crushes it on real workloads.",
+        definition: "Deterministic O(n) selection: groups of 5, recurse on medians' median for a safe pivot.",
+        example: "SELECT(A,i): T(n) ≤ T(n/5)+T(7n/10)+O(n) ⇒ T(n)=O(n). Linear time, despite worst-case input.",
+        related: [
+          "Quicksort",
+          "Partition"
+        ]
+      },
+      {
+        term: "Stack",
+        category: "Data structures",
+        long: "LIFO container with O(1) PUSH/POP/TOP. Array-backed (resizing) or linked-list (unbounded). Powers function call frames, undo, DFS, expression evaluation, balanced-bracket checking. Java/Python/C++ all expose it; the call stack itself is the most-used data structure on any machine.",
+        definition: "LIFO container with O(1) PUSH/POP — function call frames, undo, DFS, expression evaluation.",
+        example: "Array-backed when size known; linked-list for unbounded. Call stack = the canonical example.",
+        related: [
+          "Queue",
+          "Linked list"
+        ]
+      },
+      {
+        term: "Queue",
+        category: "Data structures",
+        long: "FIFO container with O(1) ENQUEUE/DEQUEUE. Circular array or doubly-linked deque. Drives BFS, scheduling, IPC message buffers, request queues. Deque (double-ended) is the Python/Java/C++ default (collections.deque, ArrayDeque, std::deque).",
+        definition: "FIFO container with O(1) ENQUEUE/DEQUEUE — BFS, scheduling, message buffers.",
+        example: "Circular array or deque; deque (double-ended) is the std::deque / collections.deque variant.",
+        related: [
+          "Stack",
+          "BFS"
+        ]
+      },
+      {
+        term: "Linked list",
+        category: "Data structures",
+        long: "Sequence of nodes connected by pointers; O(1) insert/delete given the node, O(n) search. Doubly-linked enables O(1) deletion from either end and is the backbone of LRU caches (combined with a hash table for O(1) get/put). Sentinel (nil) nodes simplify edge-case logic dramatically.",
+        definition: "Sequence of nodes connected by pointers — O(1) insert/delete given the node, O(n) search.",
+        example: "Singly vs doubly linked; sentinel nodes simplify edge cases; LRU cache = doubly-linked + hash.",
+        related: [
+          "Stack",
+          "Queue",
+          "Augmented DS"
+        ]
+      },
+      {
+        term: "Chaining",
+        category: "Hashing",
+        long: "Each bucket holds a linked list of all keys hashing to it. Expected search = O(1+α) under simple uniform hashing; worst case = O(n) if all keys collide. Simple, robust to high load factors, but uses pointers (worse cache locality than open addressing).",
+        definition: "Collision resolution by storing colliding keys in a linked list per bucket.",
+        example: "Expected search O(1+α) under simple uniform hashing; α=n/m is the load factor.",
+        related: [
+          "Open addressing",
+          "Hash function",
+          "Load factor"
+        ]
+      },
+      {
+        term: "Open addressing",
+        category: "Hashing",
+        long: "Store keys directly in the table; on collision, probe to the next slot per a fixed sequence — linear probing (h+i), quadratic (h+i²), double hashing (h₁+i·h₂). Cache-friendly but requires α < 1, careful deletion (tombstones), and good h₂ to avoid clustering.",
+        definition: "Collision resolution by probing the table itself — linear, quadratic, or double hashing.",
+        example: "Robin Hood hashing, cuckoo hashing variants; cache-friendly but α must stay < 1.",
+        related: [
+          "Chaining",
+          "Hash function",
+          "Load factor"
+        ]
+      },
+      {
+        term: "Universal hashing",
+        category: "Hashing",
+        long: "Pick h uniformly from a family H so that Pr[h(x)=h(y)] ≤ 1/m for any x≠y. The Carter-Wegman construction h_{a,b}(x) = ((ax+b) mod p) mod m (p prime > m, a∈[1,p-1], b∈[0,p-1]) gives this guarantee — making the adversary unable to construct a worst-case input.",
+        definition: "Randomly pick h from a family H so Pr[h(x)=h(y)] ≤ 1/m for x≠y — defeats adversarial input.",
+        example: "h_{a,b}(x) = ((a·x+b) mod p) mod m with p prime > m, a∈[1,p-1], b∈[0,p-1].",
+        related: [
+          "Hash function",
+          "Chaining"
+        ]
+      },
+      {
+        term: "Memoization",
+        category: "DP",
+        long: "Top-down DP: implement the natural recursion and cache results in a dict/array keyed by sub-problem state. Cleaner than bottom-up tabulation when state graph is sparse or the natural order isn't obvious; pythonic via @functools.cache. Costs the call-stack depth, so deep recursions may need conversion.",
+        definition: "Top-down DP — cache recursive results in a table indexed by subproblem state.",
+        example: "fib(n) memoised: O(n) time vs O(φⁿ) naive. Pythonic decorator: @functools.cache.",
+        related: [
+          "Optimal substructure",
+          "Overlapping subproblems"
+        ]
+      },
+      {
+        term: "Huffman coding",
+        category: "Greedy",
+        long: "Build optimal prefix code by greedy bottom-up merging: pick two min-frequency nodes, replace with their parent (sum freq), repeat. O(n log n) with a priority queue. Optimal among all prefix codes; matches Shannon entropy on Bernoulli sources to within 1 bit. Powers DEFLATE/zlib/gzip/PNG.",
+        definition: "Build optimal prefix code by repeatedly merging the two lowest-frequency nodes — O(n log n).",
+        example: "DEFLATE / zlib / gzip use Huffman + LZ77. Optimal among prefix codes; Shannon-bound matched on Bernoulli sources.",
+        related: [
+          "Greedy-choice property",
+          "Priority queue"
+        ]
+      },
+      {
+        term: "Aggregate method",
+        category: "Analysis",
+        long: "Bound the total cost T(n) of any sequence of n operations directly, then declare the amortised cost per op = T(n)/n. Simplest of the three amortisation techniques; works when the global pattern is easier to see than per-op credits.",
+        definition: "Bound total worst-case cost T(n) of n ops, then per-op amortised = T(n)/n.",
+        example: "Stack with MULTIPOP: n ops cost ≤ 2n total ⇒ amortised O(1) per op.",
+        related: [
+          "Amortised analysis",
+          "Potential method"
+        ]
+      },
+      {
+        term: "Accounting method",
+        category: "Analysis",
+        long: "Assign a fixed amortised charge to each operation; if it exceeds the real cost, save the difference as a credit on the data structure that funds later expensive ops. The invariant is that credits are always ≥ 0; if so, total amortised ≥ total real cost.",
+        definition: "Charge each op an amortised cost; bank the surplus to pay later expensive ops.",
+        example: "Dynamic array push: pay 3 per push — 1 actual + 2 credit; credits fund the doubling copies.",
+        related: [
+          "Amortised analysis",
+          "Potential method"
+        ]
+      },
+      {
+        term: "Fibonacci heap",
+        category: "Trees",
+        long: "Mergeable heap supporting O(1) amortised INSERT, DECREASE-KEY, UNION; O(log n) EXTRACT-MIN. The DECREASE-KEY speedup drops Dijkstra to O(E + V log V) and Prim's MST to the same. Notoriously slow in practice (large constants, lots of pointers) — pairing heaps usually win.",
+        definition: "Mergeable heap with O(1) amortised INSERT and DECREASE-KEY, O(log n) EXTRACT-MIN.",
+        example: "Dropped Dijkstra to O(E + V log V); rarely used in practice (large constants, complex pointers).",
+        related: [
+          "Priority queue",
+          "Heap",
+          "Amortised analysis"
+        ]
+      },
+      {
+        term: "van Emde Boas tree",
+        category: "Trees",
+        long: "Recursive integer data structure on a universe of size u; supports MIN/MAX/PRED/SUCC/INSERT/DELETE in O(log log u). Beats balanced BSTs when keys come from a bounded universe (e.g. 32-bit ints ⇒ 5 levels). Uses Θ(u) space baseline; y-fast and x-fast tries hit O(log log u) with Θ(n) space.",
+        definition: "Recursive structure on a universe of size u; supports predecessor/successor in O(log log u).",
+        example: "Beats binary trees when u is bounded (e.g., 32-bit keys ⇒ 5 levels). Space Θ(u) baseline.",
+        related: [
+          "BST property",
+          "Recurrence"
+        ]
+      },
+      {
+        term: "Path compression",
+        category: "Data structures",
+        long: "On every FIND(x) in DSU, after locating the root, repoint every node on the path directly to the root — flattens the tree aggressively. Combined with union-by-rank, m DSU ops on n elements run in O(m·α(n)) — Tarjan's amortised bound (1975), where α is the inverse Ackermann function.",
+        definition: "DSU optimisation: during FIND, point every node on the path directly to the root.",
+        example: "Combined with union by rank: m ops on n elements run in O(m·α(n)) — essentially linear.",
+        related: [
+          "Disjoint-Set Union",
+          "Amortised analysis"
+        ]
+      },
+      {
+        term: "BFS",
+        category: "Graphs",
+        long: "Explores the graph in layers from a source: visit s, then all neighbours of s, then their neighbours, etc., using a queue. Visits every vertex once ⇒ O(V+E). Computes shortest paths in unweighted graphs; the foundation of bipartite testing, level-order traversal, two-colouring.",
+        definition: "Breadth-First Search — explores by layer using a queue; finds shortest path in unweighted graphs.",
+        example: "O(V+E). Two-colouring, bipartite test, level-order tree traversal, web crawl frontier.",
+        related: [
+          "DFS",
+          "Queue",
+          "Topological sort"
+        ]
+      },
+      {
+        term: "DFS",
+        category: "Graphs",
+        long: "Explores as deep as possible from each branch before backtracking, using recursion (implicit stack) or an explicit stack. O(V+E). Classifies edges (tree/back/forward/cross) — a back edge means cycle. Basis of topological sort, SCC (Tarjan/Kosaraju), articulation points, bridges, Euler tour.",
+        definition: "Depth-First Search — recurses via stack, classifies edges (tree, back, forward, cross).",
+        example: "O(V+E). Basis for topological sort, SCC, cycle detection, articulation points.",
+        related: [
+          "BFS",
+          "Stack",
+          "Strongly connected component",
+          "Topological sort"
+        ]
+      },
+      {
+        term: "Kruskal's algorithm",
+        category: "Graphs",
+        long: "Sort all edges by weight; greedily add each if its endpoints lie in different components (test via DSU). O(E log E). Correctness from the cut property: the lightest edge crossing any cut is in some MST. Beats Prim's on sparse graphs.",
+        definition: "Sort edges by weight, add each if it doesn't form a cycle (use DSU) — O(E log E) MST.",
+        example: "Cut property guarantees correctness. Wins on sparse graphs where E ≈ V.",
+        related: [
+          "Minimum spanning tree",
+          "Disjoint-Set Union"
+        ]
+      },
+      {
+        term: "Prim's algorithm",
+        category: "Graphs",
+        long: "Grow MST from an arbitrary root: repeatedly add the lightest edge from the tree to a non-tree vertex. With Fibonacci heap, O(E + V log V); with binary heap, O((V+E) log V). Same big-picture as Dijkstra's, different key. Wins on dense graphs.",
+        definition: "Grow MST from a root by repeatedly adding the lightest crossing edge — O(E + V log V) with Fib-heap.",
+        example: "Dijkstra-like loop with a priority queue keyed by min-edge weight to tree.",
+        related: [
+          "Minimum spanning tree",
+          "Priority queue"
+        ]
+      },
+      {
+        term: "Dijkstra's algorithm",
+        category: "Graphs",
+        long: "SSSP on non-negative edges: repeatedly extract the vertex with the smallest tentative distance, settle it, relax its outgoing edges. O(E + V log V) with Fibonacci heap; O((V+E) log V) with binary heap. Foundation of OSPF, Google Maps, A*. Fails silently on negative edges — switch to Bellman-Ford.",
+        definition: "SSSP for non-negative weights; relax edges from the closest unsettled vertex — O(E + V log V).",
+        example: "Routing protocols (OSPF), maps, A* foundation. Fails on negative edges (use Bellman-Ford).",
+        related: [
+          "Edge relaxation",
+          "Priority queue",
+          "Bellman-Ford"
+        ]
+      },
+      {
+        term: "Bellman-Ford",
+        category: "Graphs",
+        long: "SSSP that tolerates negative edges: relax every edge V-1 times; if any relaxation succeeds on iteration V, a negative cycle is reachable from s. O(V·E). Used in distance-vector routing (RIP) and to detect currency-arbitrage opportunities.",
+        definition: "SSSP that handles negative weights; relax all E edges V-1 times — O(V·E), detects negative cycles.",
+        example: "Currency arbitrage detection, BGP-like routing. Slower than Dijkstra but more general.",
+        related: [
+          "Edge relaxation",
+          "Dijkstra's algorithm"
+        ]
+      },
+      {
+        term: "Floyd-Warshall",
+        category: "Graphs",
+        long: "All-pairs shortest paths: dp[k][i][j] = min(dp[k-1][i][j], dp[k-1][i][k]+dp[k-1][k][j]), where k indexes the allowed intermediate vertex set. Θ(V³) time, Θ(V²) space (collapse k dimension). Handles negative edges, no negative cycles. Beats V·Dijkstra when V³ < V·E·log V (dense graphs).",
+        definition: "All-pairs shortest paths via dp[k][i][j] = min(dp[k-1][i][j], dp[k-1][i][k]+dp[k-1][k][j]) — Θ(V³).",
+        example: "Dense graphs, transitive closure, regex equivalence — beats V·Dijkstra when V³ < V·E·log V.",
+        related: [
+          "Dijkstra's algorithm",
+          "Optimal substructure"
+        ]
+      },
+      {
+        term: "Ford-Fulkerson",
+        category: "Graphs",
+        long: "Generic max-flow framework: while ∃ augmenting path s→t in residual graph, push min-capacity flow along it. With BFS for path selection ⇒ Edmonds-Karp, O(V·E²); with blocking flows ⇒ Dinic's, O(V²·E). Termination requires integer or rational capacities (irrational can loop forever).",
+        definition: "Repeatedly send flow along augmenting paths in the residual graph until none exist.",
+        example: "Edmonds-Karp variant: BFS for path ⇒ O(V·E²). Dinic's algorithm: O(V²·E).",
+        related: [
+          "Flow network",
+          "Max-flow min-cut"
+        ]
+      },
+      {
+        term: "Strassen's algorithm",
+        category: "Numerical",
+        long: "Multiplies two n×n matrices in 7 instead of 8 sub-products via a clever identity, yielding T(n) = 7T(n/2)+Θ(n²) = Θ(n^{log₂7}) ≈ Θ(n^2.807) (Strassen, 1969). Crossover with naive Θ(n³) is n ≈ 100 in tuned BLAS. Subsequent improvements (Coppersmith-Winograd, Le Gall, etc.) have driven ω down to ≈ 2.371; only Strassen is practical.",
+        definition: "Multiply two n×n matrices in Θ(n^{log₂7}) ≈ Θ(n^2.807) using 7 instead of 8 sub-multiplications.",
+        example: "Crossover point ~ n=128 in tuned BLAS. Improved repeatedly; current best ≈ Θ(n^2.371).",
+        related: [
+          "Divide-and-conquer",
+          "FFT"
+        ]
+      },
+      {
+        term: "Simplex method",
+        category: "Complexity",
+        long: "LP solver that pivots between vertices of the feasibility polytope, each pivot increasing the objective, until optimum. Dantzig (1947). Klee-Minty cube shows worst-case exponential pivots; Smoothed analysis (Spielman-Teng, 2001) proved expected polynomial under random perturbations, explaining its real-world dominance.",
+        definition: "Pivot along vertices of the LP polytope to improve the objective until optimal.",
+        example: "Exponential worst-case (Klee-Minty cube) but polynomial in practice. Dual simplex + interior-point are alternatives.",
+        related: [
+          "P",
+          "NP"
+        ]
+      },
+      {
+        term: "Euclidean algorithm",
+        category: "Number theory",
+        long: "gcd(a,b) = gcd(b, a mod b); base case gcd(a,0)=a. Runs in O(log(min(a,b))) steps (Lamé 1844 — first algorithm with proven complexity bound). Extended form yields integers s,t with sa+tb=gcd(a,b), giving modular inverses and Bezout coefficients — the engine of RSA key generation.",
+        definition: "gcd(a,b) = gcd(b, a mod b); terminates in O(log(min(a,b))) — extended form yields Bezout coefficients.",
+        example: "Foundation for modular inverse (and thus RSA decrypt), CRT, continued fractions.",
+        related: [
+          "Modular exponentiation",
+          "RSA"
+        ]
+      },
+      {
+        term: "Rabin-Karp",
+        category: "Strings",
+        long: "Rolling polynomial hash of pattern P over text T windows of length m. Expected O(n+m), worst O(nm). Killer feature: multi-pattern matching — hash the set, scan T once. Plagiarism detectors, code clones, virus signature matching all use rolling hashes.",
+        definition: "Sliding hash on pattern P of length m over text T — expected O(n+m), worst O(nm).",
+        example: "Rolling polynomial hash; multi-pattern matching by hashing the set; basis for plagiarism detectors.",
+        related: [
+          "KMP prefix function",
+          "Hash function"
+        ]
+      },
+      {
+        term: "Sweep line",
+        category: "Geometry",
+        long: "Move an imaginary line across the plane in one coordinate, maintaining an ordered set of active objects (status structure) and an event queue of upcoming changes. Segment intersection (Bentley-Ottmann, O((n+k) log n)), closest pair, Voronoi diagrams (Fortune's), rectangle union all fit the template.",
+        definition: "Move an imaginary line across the plane, maintaining an ordered structure of active events.",
+        example: "Segment intersection (Bentley-Ottmann), closest pair, rectangle union — typically O((n+k) log n).",
+        related: [
+          "Convex hull"
+        ]
+      },
+      {
+        term: "3-SAT",
+        category: "Complexity",
+        long: "SAT restricted to clauses of exactly 3 literals. NP-complete (reduced from SAT via clause-splitting). The favourite reduction source — countless NP-hardness proofs go 3-SAT → X. Easier than general SAT only in form, not in worst-case complexity.",
+        definition: "Decide satisfiability of a Boolean formula in 3-CNF — the canonical NP-complete problem (Cook 1971).",
+        example: "Reduction target: prove X ∈ NP-complete by polynomially reducing 3-SAT to X.",
+        related: [
+          "NP-complete",
+          "Reduction"
         ]
       }
     ],
@@ -5422,6 +6113,9 @@ function toggleMobileLegend(id) {
 }
 
 function switchTab(tab) {
+  // Close the PDF viewer if it's open — tabs should always navigate back to the page.
+  const pdfV = document.getElementById('pdf-viewer');
+  if (pdfV && pdfV.classList.contains('open')) closePdfViewer();
   currentTab = tab;
   document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.view === tab));
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
@@ -6740,6 +7434,13 @@ if (typeof switchTab === 'function') {
   const gloss = (C && C.glossary) || [];
   if (!gloss.length) return;
 
+  // Mirror renderGlossary's id synthesis so legacy entries (term-only, no id)
+  // still participate in graph/mindmap cross-references. Mutates g.id in place
+  // so both this IIFE and renderGlossary agree on the canonical id.
+  const slug = (s) => String(s || '').toLowerCase().trim()
+    .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+  gloss.forEach(g => { if (!g.id) g.id = slug(g.term); });
+
   // 1. Build id → entry maps and "label/aka" → id reverse map.
   const byId = {};
   const byLabel = {}; // lowercased term/aka → id
@@ -6843,16 +7544,74 @@ let _glossSearchTimer = null;
 let _glossBuilt = false;
 
 const GLOSS_CAT_COLORS = {
+  // ml.html palette (preserved for backwards compatibility)
   hardware:    '#58a6ff',
   software:    '#7ee787',
   numerics:    '#79c0ff',
   systems:     '#d2a8ff',
   performance: '#f778ba',
-  concepts:    '#ffa657'
+  concepts:    '#ffa657',
+  // CLRS / algo categories — explicit pins
+  notation:        '#79c0ff',
+  proof:           '#bc8cff',
+  analysis:        '#ffa657',
+  sorting:         '#58a6ff',
+  'lower bounds':  '#ff7b72',
+  probability:     '#d2a8ff',
+  hashing:         '#7ee787',
+  trees:           '#3fb950',
+  'data structures':'#a5d6ff',
+  dp:              '#ffd33d',
+  greedy:          '#ff9e64',
+  'disk ds':       '#56d4dd',
+  graphs:          '#f778ba',
+  numerical:       '#79c0ff',
+  'number theory': '#bc8cff',
+  crypto:          '#ff7b72',
+  strings:         '#7ee787',
+  geometry:        '#56d4dd',
+  complexity:      '#ffa657',
+  approximation:   '#9ee493'
 };
+// Curated 16-color palette used to auto-assign distinct colors to any
+// category not explicitly mapped above. Deterministic per category name.
+const _GLOSS_AUTO_PALETTE = [
+  '#58a6ff','#7ee787','#ffa657','#d2a8ff','#79c0ff','#f778ba',
+  '#ff7b72','#bc8cff','#3fb950','#a5d6ff','#ffd33d','#ff9e64',
+  '#56d4dd','#9ee493','#e3b341','#db61a2'
+];
+function glossCatColor(cat) {
+  if (cat == null) return '#58a6ff';
+  const key = String(cat).toLowerCase().trim();
+  if (GLOSS_CAT_COLORS[key]) return GLOSS_CAT_COLORS[key];
+  // FNV-1a-ish hash → deterministic palette pick
+  let h = 0x811c9dc5;
+  for (let i = 0; i < key.length; i++) {
+    h ^= key.charCodeAt(i);
+    h = (h * 0x01000193) >>> 0;
+  }
+  return _GLOSS_AUTO_PALETTE[h % _GLOSS_AUTO_PALETTE.length];
+}
 
 function renderGlossary() {
-  const data = (C.glossary || []).slice().sort((a, b) =>
+  // Normalize entries: synthesize id from term, alias definition→short, example→long,
+  // related→seeAlso (matched back to other terms' synthetic ids).
+  const slug = (s) => String(s || '').toLowerCase().trim()
+    .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+  const rawData = (C.glossary || []);
+  const termToId = new Map();
+  rawData.forEach(d => { termToId.set((d.term || '').toLowerCase().trim(), d.id || slug(d.term)); });
+  const data = rawData.map(d => {
+    const id = d.id || slug(d.term);
+    const short = d.short || d.definition || '';
+    const example = d.example || '';
+    const long = d.long || '';
+    let seeAlso = d.seeAlso;
+    if (!seeAlso && Array.isArray(d.related)) {
+      seeAlso = d.related.map(t => termToId.get(String(t).toLowerCase().trim()) || slug(t));
+    }
+    return Object.assign({}, d, { id, short, long, example, seeAlso: seeAlso || [] });
+  }).sort((a, b) =>
     a.term.toLowerCase().localeCompare(b.term.toLowerCase()));
   const list = document.getElementById('glossary-list');
   const pillBar = document.getElementById('glossary-cat-pills');
@@ -6870,7 +7629,7 @@ function renderGlossary() {
       btn.textContent = cat === 'all' ? `All (${data.length})` :
         `${cat} (${data.filter(d => d.category === cat).length})`;
       btn.dataset.cat = cat;
-      const color = cat === 'all' ? '#58a6ff' : (GLOSS_CAT_COLORS[cat] || '#58a6ff');
+      const color = cat === 'all' ? '#58a6ff' : glossCatColor(cat);
       btn.style.setProperty('--pill-color', color);
       btn.style.setProperty('--pill-bg', color + '22');
       if (cat === _glossSelectedCat) btn.classList.add('active');
@@ -6912,7 +7671,7 @@ function renderGlossary() {
 
   list.innerHTML = '';
   visible.forEach(d => {
-    const color = GLOSS_CAT_COLORS[d.category] || '#58a6ff';
+    const color = glossCatColor(d.category);
     const card = document.createElement('div');
     card.className = 'glossary-card';
     card.dataset.id = d.id;
@@ -6942,6 +7701,13 @@ function renderGlossary() {
     shortEl.className = 'glossary-short';
     shortEl.textContent = d.short || '';
     card.appendChild(shortEl);
+
+    if (d.example) {
+      const exEl = document.createElement('div');
+      exEl.className = 'glossary-example';
+      exEl.innerHTML = d.example;
+      card.appendChild(exEl);
+    }
 
     if (d.long) {
       const longEl = document.createElement('div');
@@ -7063,13 +7829,18 @@ window.glossaryJumpToGraphNode = function(id) {
 
 window.glossaryJumpToMindmapNode = function(label) {
   if (typeof switchTab === 'function') switchTab('mindmap');
-  const target = (label || '').replace(/\n/g, ' ').trim().toLowerCase();
+  // Mindmap nodes render multi-line names as adjacent <tspan>s with no
+  // separator, so g.textContent collapses "Ch 7\nQuicksort" to "Ch 7Quicksort".
+  // Compare with ALL whitespace stripped on both sides so the label normalisation
+  // ("\n" → " ") and the DOM concatenation still match.
+  const squish = (s) => (s || '').replace(/\s+/g, '').toLowerCase();
+  const target = squish(label);
   const tryFlash = (attempt) => {
     const groups = document.querySelectorAll('#canvas g');
     let hit = null;
     groups.forEach(g => {
       if (hit) return;
-      const txt = (g.textContent || '').replace(/\s+/g, ' ').trim().toLowerCase();
+      const txt = squish(g.textContent);
       if (txt === target) hit = g;
     });
     if (!hit) {
@@ -7187,6 +7958,23 @@ if (typeof switchTab === 'function') {
   }
   #tooltip.pinned .tt-close { display: block; }
   #tooltip .tt-close:hover { color: #f85149; background: rgba(248,81,73,0.1); }
+
+/* === copy-buttons v1 css === */
+.copy-host { position: relative; }
+.copy-btn {
+  position: absolute; top: 4px; right: 4px;
+  background: rgba(48,54,61,0.85); color: #c9d1d9;
+  border: 1px solid #30363d; border-radius: 4px;
+  padding: 2px 7px; font-size: 11px; cursor: pointer;
+  opacity: 0; transition: opacity .15s, background .15s;
+  font-family: 'Segoe UI', system-ui, sans-serif; line-height: 1.3;
+  z-index: 5;
+}
+.copy-host:hover .copy-btn { opacity: 1; }
+.copy-btn:hover { background: #1f6feb; color: #fff; border-color: #58a6ff; }
+.copy-btn.copied { background: #238636; color: #fff; border-color: #7ee787; opacity: 1; }
+/* === END copy-buttons v1 css === */
+
 </style>
 <script>
 (function(){
@@ -7313,5 +8101,61 @@ if (typeof switchTab === 'function') {
 })();
 </script>
 <!-- END tooltip-pin -->
+
+<script>
+// ── Copy-on-hover for code blocks (copy-buttons v1) ──────────────────
+(function () {
+  if (window._copyButtonsInstalled) return;
+  window._copyButtonsInstalled = true;
+  function wrapForCopy(el) {
+    if (el.closest('.copy-host')) return;
+    if (el.dataset.noCopy === '1') return;
+    var text = el.innerText || el.textContent || '';
+    if (text.trim().length < 3) return;
+    if (/^[-\u2013\u2014\s]+$/.test(text.trim())) return;
+    var host = (el.tagName === 'CODE' && el.parentElement && el.parentElement.tagName === 'PRE')
+               ? el.parentElement : el;
+    if (host.classList.contains('copy-host')) return;
+    host.classList.add('copy-host');
+    var btn = document.createElement('button');
+    btn.className = 'copy-btn';
+    btn.type = 'button';
+    btn.textContent = '⎘ Copy';
+    btn.addEventListener('click', function (e) {
+      e.preventDefault(); e.stopPropagation();
+      var t = (host.tagName === 'PRE') ? (host.innerText || host.textContent) : text;
+      function done() {
+        btn.textContent = '✓ Copied';
+        btn.classList.add('copied');
+        setTimeout(function () { btn.textContent = '⎘ Copy'; btn.classList.remove('copied'); }, 1200);
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(t).then(done).catch(fallback);
+      } else { fallback(); }
+      function fallback() {
+        var ta = document.createElement('textarea');
+        ta.value = t; document.body.appendChild(ta); ta.select();
+        try { document.execCommand('copy'); done(); } catch (err) { btn.textContent = '✗ Fail'; }
+        document.body.removeChild(ta);
+      }
+    });
+    host.appendChild(btn);
+  }
+  function scan() {
+    document.querySelectorAll('pre, .dd-formula, .uc-step pre, .uc-code, code').forEach(function (el) {
+      if (el.tagName === 'CODE' && !(el.parentElement && el.parentElement.tagName === 'PRE')) {
+        var t = (el.innerText || el.textContent || '').trim();
+        if (t.length < 10 || (t.indexOf('\n') < 0 && t.length < 20)) return;
+      }
+      wrapForCopy(el);
+    });
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', scan);
+  else scan();
+  var obs = new MutationObserver(function () { scan(); });
+  obs.observe(document.body, { childList: true, subtree: true });
+})();
+</script>
+
 </body>
 </html>

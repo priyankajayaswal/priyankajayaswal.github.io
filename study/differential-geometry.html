@@ -3675,6 +3675,23 @@ if (typeof switchTab === 'function') {
   }
   #tooltip.pinned .tt-close { display: block; }
   #tooltip .tt-close:hover { color: #f85149; background: rgba(248,81,73,0.1); }
+
+/* === copy-buttons v1 css === */
+.copy-host { position: relative; }
+.copy-btn {
+  position: absolute; top: 4px; right: 4px;
+  background: rgba(48,54,61,0.85); color: #c9d1d9;
+  border: 1px solid #30363d; border-radius: 4px;
+  padding: 2px 7px; font-size: 11px; cursor: pointer;
+  opacity: 0; transition: opacity .15s, background .15s;
+  font-family: 'Segoe UI', system-ui, sans-serif; line-height: 1.3;
+  z-index: 5;
+}
+.copy-host:hover .copy-btn { opacity: 1; }
+.copy-btn:hover { background: #1f6feb; color: #fff; border-color: #58a6ff; }
+.copy-btn.copied { background: #238636; color: #fff; border-color: #7ee787; opacity: 1; }
+/* === END copy-buttons v1 css === */
+
 </style>
 <script>
 (function(){
@@ -4481,6 +4498,62 @@ if (typeof switchTab === 'function') {
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
   else boot();
+})();
+</script>
+
+
+<script>
+// ── Copy-on-hover for code blocks (copy-buttons v1) ──────────────────
+(function () {
+  if (window._copyButtonsInstalled) return;
+  window._copyButtonsInstalled = true;
+  function wrapForCopy(el) {
+    if (el.closest('.copy-host')) return;
+    if (el.dataset.noCopy === '1') return;
+    var text = el.innerText || el.textContent || '';
+    if (text.trim().length < 3) return;
+    if (/^[-\u2013\u2014\s]+$/.test(text.trim())) return;
+    var host = (el.tagName === 'CODE' && el.parentElement && el.parentElement.tagName === 'PRE')
+               ? el.parentElement : el;
+    if (host.classList.contains('copy-host')) return;
+    host.classList.add('copy-host');
+    var btn = document.createElement('button');
+    btn.className = 'copy-btn';
+    btn.type = 'button';
+    btn.textContent = '⎘ Copy';
+    btn.addEventListener('click', function (e) {
+      e.preventDefault(); e.stopPropagation();
+      var t = (host.tagName === 'PRE') ? (host.innerText || host.textContent) : text;
+      function done() {
+        btn.textContent = '✓ Copied';
+        btn.classList.add('copied');
+        setTimeout(function () { btn.textContent = '⎘ Copy'; btn.classList.remove('copied'); }, 1200);
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(t).then(done).catch(fallback);
+      } else { fallback(); }
+      function fallback() {
+        var ta = document.createElement('textarea');
+        ta.value = t; document.body.appendChild(ta); ta.select();
+        try { document.execCommand('copy'); done(); } catch (err) { btn.textContent = '✗ Fail'; }
+        document.body.removeChild(ta);
+      }
+    });
+    host.appendChild(btn);
+  }
+  function scan() {
+    document.querySelectorAll('pre, .dd-formula, .uc-step pre, .uc-code, code').forEach(function (el) {
+      if (el.tagName === 'CODE' && !(el.parentElement && el.parentElement.tagName === 'PRE')) {
+        var t = (el.innerText || el.textContent || '').trim();
+        if (t.length < 10 || (t.indexOf('\n') < 0 && t.length < 20)) return;
+      }
+      wrapForCopy(el);
+    });
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', scan);
+  else scan();
+  var obs = new MutationObserver(function () { scan(); });
+  obs.observe(document.body, { childList: true, subtree: true });
 })();
 </script>
 

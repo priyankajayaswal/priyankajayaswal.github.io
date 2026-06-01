@@ -696,6 +696,8 @@
   <div id="toolbar-menu">
     <div class="tab-group" id="tab-group"></div>
     <div class="actions">
+      <button class="btn" id="btn-pdf" onclick="openReferencePdf()" style="display:none;background:transparent;border-color:#30363d;color:#8b949e;font-size:11px;padding:5px 9px" title="Open reference textbook PDF">📕 PDF</button>
+      <a class="btn" href="https://www.bigocheatsheet.com/" target="_blank" rel="noopener" style="background:transparent;border-color:#30363d;color:#8b949e;font-size:11px;padding:5px 9px;text-decoration:none" title="Big-O complexity reference for common algorithms & data structures (opens in new tab)">📊 Big-O</a>
       <button class="btn" onclick="toggleTracker()">📊 Tracker</button>
       <button class="btn" id="btn-path" onclick="togglePathPanel()" style="display:none;background:#1f6feb;border-color:#58a6ff;color:#fff">🧭 Learning Path</button>
     </div>
@@ -848,6 +850,7 @@ const C = {
   course: { code: "CP4", title: "Competitive Programming 4", term: "Steven & Felix Halim" },
   storageKey: "cp4",
   sourceLink: { url: "https://cpbook.net/", label: "📖 cpbook.net" },
+  pdfReference: { path: "references/algo/Steven-Halim.pdf", label: "📕 Competitive Programming — Steven Halim" },
   depthColors: ["#58a6ff","#f778ba","#7ee787","#ffa657","#d2a8ff","#79c0ff","#ff7b72"],
 
   mindmap: {
@@ -2013,6 +2016,21 @@ if (C.sourceLink) {
   sl.style.display = '';
 }
 
+// Reference PDF wire-up — exposes a header button that opens the local PDF
+// in the existing inline viewer (with scribble overlay).
+if (C.pdfReference && C.pdfReference.path) {
+  const btn = document.getElementById('btn-pdf');
+  if (btn) {
+    btn.style.display = '';
+    btn.title = C.pdfReference.label || 'Open reference PDF';
+  }
+}
+function openReferencePdf() {
+  if (C && C.pdfReference && C.pdfReference.path) {
+    openPdfViewer(C.pdfReference.path, C.pdfReference.label || '📕 Reference PDF');
+  }
+}
+
 // Show first tab
 let currentTab = tabs.length ? tabs[0].id : null;
 if (currentTab) document.getElementById('view-' + currentTab).classList.add('active');
@@ -2027,6 +2045,9 @@ document.getElementById('btn-path').style.display =
 let graphInitialized = false;
 
 function switchTab(tab) {
+  // Close the PDF viewer if it's open — tabs should always navigate back to the page.
+  const pdfV = document.getElementById('pdf-viewer');
+  if (pdfV && pdfV.classList.contains('open')) closePdfViewer();
   currentTab = tab;
   document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.view === tab));
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
@@ -3371,13 +3392,54 @@ let _glossSearchTimer = null;
 let _glossBuilt = false;
 
 const GLOSS_CAT_COLORS = {
+  // ml.html palette (preserved for backwards compatibility)
   hardware:    '#58a6ff',
   software:    '#7ee787',
   numerics:    '#79c0ff',
   systems:     '#d2a8ff',
   performance: '#f778ba',
-  concepts:    '#ffa657'
+  concepts:    '#ffa657',
+  // CLRS / algo categories — explicit pins
+  notation:        '#79c0ff',
+  proof:           '#bc8cff',
+  analysis:        '#ffa657',
+  sorting:         '#58a6ff',
+  'lower bounds':  '#ff7b72',
+  probability:     '#d2a8ff',
+  hashing:         '#7ee787',
+  trees:           '#3fb950',
+  'data structures':'#a5d6ff',
+  dp:              '#ffd33d',
+  greedy:          '#ff9e64',
+  'disk ds':       '#56d4dd',
+  graphs:          '#f778ba',
+  numerical:       '#79c0ff',
+  'number theory': '#bc8cff',
+  crypto:          '#ff7b72',
+  strings:         '#7ee787',
+  geometry:        '#56d4dd',
+  complexity:      '#ffa657',
+  approximation:   '#9ee493'
 };
+// Curated 16-color palette used to auto-assign distinct colors to any
+// category not explicitly mapped above. Deterministic per category name.
+const _GLOSS_AUTO_PALETTE = [
+  '#58a6ff','#7ee787','#ffa657','#d2a8ff','#79c0ff','#f778ba',
+  '#ff7b72','#bc8cff','#3fb950','#a5d6ff','#ffd33d','#ff9e64',
+  '#56d4dd','#9ee493','#e3b341','#db61a2'
+];
+function glossCatColor(cat) {
+  if (cat == null) return '#58a6ff';
+  const key = String(cat).toLowerCase().trim();
+  if (GLOSS_CAT_COLORS[key]) return GLOSS_CAT_COLORS[key];
+  // FNV-1a-ish hash → deterministic palette pick
+  let h = 0x811c9dc5;
+  for (let i = 0; i < key.length; i++) {
+    h ^= key.charCodeAt(i);
+    h = (h * 0x01000193) >>> 0;
+  }
+  return _GLOSS_AUTO_PALETTE[h % _GLOSS_AUTO_PALETTE.length];
+}
 
 function renderGlossary() {
   const data = (C.glossary || []).slice().sort((a, b) =>
@@ -3398,7 +3460,7 @@ function renderGlossary() {
       btn.textContent = cat === 'all' ? `All (${data.length})` :
         `${cat} (${data.filter(d => d.category === cat).length})`;
       btn.dataset.cat = cat;
-      const color = cat === 'all' ? '#58a6ff' : (GLOSS_CAT_COLORS[cat] || '#58a6ff');
+      const color = cat === 'all' ? '#58a6ff' : glossCatColor(cat);
       btn.style.setProperty('--pill-color', color);
       btn.style.setProperty('--pill-bg', color + '22');
       if (cat === _glossSelectedCat) btn.classList.add('active');
@@ -3440,7 +3502,7 @@ function renderGlossary() {
 
   list.innerHTML = '';
   visible.forEach(d => {
-    const color = GLOSS_CAT_COLORS[d.category] || '#58a6ff';
+    const color = glossCatColor(d.category);
     const card = document.createElement('div');
     card.className = 'glossary-card';
     card.dataset.id = d.id;
@@ -3715,6 +3777,23 @@ if (typeof switchTab === 'function') {
   }
   #tooltip.pinned .tt-close { display: block; }
   #tooltip .tt-close:hover { color: #f85149; background: rgba(248,81,73,0.1); }
+
+/* === copy-buttons v1 css === */
+.copy-host { position: relative; }
+.copy-btn {
+  position: absolute; top: 4px; right: 4px;
+  background: rgba(48,54,61,0.85); color: #c9d1d9;
+  border: 1px solid #30363d; border-radius: 4px;
+  padding: 2px 7px; font-size: 11px; cursor: pointer;
+  opacity: 0; transition: opacity .15s, background .15s;
+  font-family: 'Segoe UI', system-ui, sans-serif; line-height: 1.3;
+  z-index: 5;
+}
+.copy-host:hover .copy-btn { opacity: 1; }
+.copy-btn:hover { background: #1f6feb; color: #fff; border-color: #58a6ff; }
+.copy-btn.copied { background: #238636; color: #fff; border-color: #7ee787; opacity: 1; }
+/* === END copy-buttons v1 css === */
+
 </style>
 <script>
 (function(){
@@ -4179,6 +4258,62 @@ if (typeof switchTab === 'function') {
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
   else boot();
+})();
+</script>
+
+
+<script>
+// ── Copy-on-hover for code blocks (copy-buttons v1) ──────────────────
+(function () {
+  if (window._copyButtonsInstalled) return;
+  window._copyButtonsInstalled = true;
+  function wrapForCopy(el) {
+    if (el.closest('.copy-host')) return;
+    if (el.dataset.noCopy === '1') return;
+    var text = el.innerText || el.textContent || '';
+    if (text.trim().length < 3) return;
+    if (/^[-\u2013\u2014\s]+$/.test(text.trim())) return;
+    var host = (el.tagName === 'CODE' && el.parentElement && el.parentElement.tagName === 'PRE')
+               ? el.parentElement : el;
+    if (host.classList.contains('copy-host')) return;
+    host.classList.add('copy-host');
+    var btn = document.createElement('button');
+    btn.className = 'copy-btn';
+    btn.type = 'button';
+    btn.textContent = '⎘ Copy';
+    btn.addEventListener('click', function (e) {
+      e.preventDefault(); e.stopPropagation();
+      var t = (host.tagName === 'PRE') ? (host.innerText || host.textContent) : text;
+      function done() {
+        btn.textContent = '✓ Copied';
+        btn.classList.add('copied');
+        setTimeout(function () { btn.textContent = '⎘ Copy'; btn.classList.remove('copied'); }, 1200);
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(t).then(done).catch(fallback);
+      } else { fallback(); }
+      function fallback() {
+        var ta = document.createElement('textarea');
+        ta.value = t; document.body.appendChild(ta); ta.select();
+        try { document.execCommand('copy'); done(); } catch (err) { btn.textContent = '✗ Fail'; }
+        document.body.removeChild(ta);
+      }
+    });
+    host.appendChild(btn);
+  }
+  function scan() {
+    document.querySelectorAll('pre, .dd-formula, .uc-step pre, .uc-code, code').forEach(function (el) {
+      if (el.tagName === 'CODE' && !(el.parentElement && el.parentElement.tagName === 'PRE')) {
+        var t = (el.innerText || el.textContent || '').trim();
+        if (t.length < 10 || (t.indexOf('\n') < 0 && t.length < 20)) return;
+      }
+      wrapForCopy(el);
+    });
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', scan);
+  else scan();
+  var obs = new MutationObserver(function () { scan(); });
+  obs.observe(document.body, { childList: true, subtree: true });
 })();
 </script>
 
