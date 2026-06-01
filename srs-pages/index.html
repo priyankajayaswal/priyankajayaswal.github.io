@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>🧠 SRS — Self-Hosted Spaced Repetition</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --bg:#0d1117; --panel:#161b22; --panel2:#21262d; --border:#30363d;
+    --fg:#e6edf3; --dim:#8b949e; --mute:#6e7681;
+    --blue:#58a6ff; --green:#7ee787; --pink:#f778ba; --orange:#ffa657; --red:#f85149; --purple:#d2a8ff;
+  }
+  html,body{height:100%}
+  body{background:var(--bg);color:var(--fg);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;line-height:1.55;padding:20px;display:flex;flex-direction:column;align-items:center;-webkit-tap-highlight-color:transparent}
+  header{width:100%;max-width:860px;display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;flex-wrap:wrap;gap:12px}
+  h1{font-size:1.3rem;font-weight:700;background:linear-gradient(135deg,var(--blue),var(--pink));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+  .stats{display:flex;gap:14px;font-size:.85rem}
+  .stat{padding:4px 12px;border-radius:14px;background:var(--panel);border:1px solid var(--border)}
+  .stat b{color:var(--blue)}
+  .stat.new b{color:var(--green)}
+  .stat.due b{color:var(--orange)}
+  .stat.done b{color:var(--mute)}
+  .card{width:100%;max-width:860px;background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:36px 32px;min-height:280px;display:flex;flex-direction:column;justify-content:center;box-shadow:0 4px 24px rgba(0,0,0,.3)}
+  .face{font-size:1.15rem;line-height:1.6}
+  .face.front{color:var(--fg);font-weight:500}
+  .face.back{color:var(--dim);font-size:1.02rem;margin-top:20px;padding-top:20px;border-top:1px solid var(--border)}
+  .face.back b{color:var(--green)}
+  .tags{margin-top:16px;display:flex;gap:6px;flex-wrap:wrap}
+  .tag{font-size:.72rem;color:var(--mute);background:var(--panel2);padding:2px 8px;border-radius:8px;border:1px solid var(--border)}
+  .actions{width:100%;max-width:860px;margin-top:18px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+  button{background:var(--panel);color:var(--fg);border:1px solid var(--border);padding:14px 22px;border-radius:10px;font-size:.95rem;font-weight:600;cursor:pointer;transition:all .15s;min-width:120px;touch-action:manipulation}
+  button:active:not(:disabled){transform:scale(.96)}
+  button:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 4px 14px rgba(0,0,0,.4)}
+  button:disabled{opacity:.4;cursor:not-allowed}
+  button.show{background:var(--blue);color:#0d1117;border-color:var(--blue);min-width:200px}
+  button.again{border-color:var(--red);color:var(--red)}
+  button.hard{border-color:var(--orange);color:var(--orange)}
+  button.good{border-color:var(--green);color:var(--green)}
+  button.easy{border-color:var(--purple);color:var(--purple)}
+  .btn-label{display:block;font-size:.95rem}
+  .btn-interval{display:block;font-size:.7rem;color:var(--mute);font-weight:400;margin-top:2px}
+  .deck-picker{margin-bottom:24px;display:flex;gap:10px;flex-wrap:wrap;width:100%;max-width:860px}
+  .deck-btn{flex:1;min-width:200px;background:var(--panel);padding:14px;border-radius:10px;cursor:pointer;border:1px solid var(--border);text-align:left}
+  .deck-btn:hover{border-color:var(--blue)}
+  .deck-btn .name{font-weight:700;font-size:1.05rem;color:var(--fg);margin-bottom:4px}
+  .deck-btn .meta{font-size:.78rem;color:var(--mute)}
+  .toolbar{width:100%;max-width:860px;display:flex;gap:8px;justify-content:flex-end;margin-top:14px;font-size:.78rem}
+  .toolbar button{padding:6px 12px;min-width:auto;font-size:.78rem;font-weight:500}
+  .empty{text-align:center;padding:60px 20px;color:var(--dim)}
+  .empty .big{font-size:3rem;margin-bottom:14px}
+  pre,code{font-family:'SF Mono',Consolas,monospace;font-size:.86em}
+  pre{background:var(--bg);border:1px solid var(--border);padding:10px;border-radius:6px;overflow-x:auto;margin:8px 0}
+  code{background:var(--bg);padding:1px 6px;border-radius:3px;color:var(--green)}
+  .progress{width:100%;max-width:860px;height:4px;background:var(--panel);border-radius:2px;overflow:hidden;margin-top:14px}
+  .progress > div{height:100%;background:linear-gradient(90deg,var(--blue),var(--green));transition:width .3s}
+  @media (max-width:600px){
+    body{padding-left:12px;padding-right:12px}
+    h1{font-size:1.05rem}
+    .card{padding:22px 18px;min-height:220px}
+    .face{font-size:1.05rem}
+    .face.back{font-size:.95rem}
+    button{flex:1 1 calc(50% - 8px);min-width:0;padding:16px 8px}
+    button.show{flex:1 1 100%}
+    .actions{gap:8px}
+    .stats{gap:6px;flex-wrap:wrap}
+    .stat{padding:3px 8px;font-size:.75rem}
+    .toolbar button{flex:0 0 auto;padding:8px 12px}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🧠 SRS — Spaced Repetition (self-hosted)</h1>
+  <div class="stats" id="stats"></div>
+</header>
+
+<div id="deck-picker" class="deck-picker"></div>
+<div id="card-container"></div>
+<div id="actions" class="actions"></div>
+<div id="progress" class="progress" style="display:none"><div></div></div>
+<div id="toolbar" class="toolbar" style="display:none"></div>
+
+<script>
+// ─── SM-2 algorithm (Anki's original SRS scheduler) ──────────────────
+// State per card: { reps, ef, interval, due }
+//   reps     = number of successful reviews in a row
+//   ef       = ease factor (≥1.3)
+//   interval = days until next review
+//   due      = ISO date string when next due
+function schedule(state, quality) {
+  // quality: 1=Again, 3=Hard, 4=Good, 5=Easy
+  state = state || { reps: 0, ef: 2.5, interval: 0, due: null };
+  if (quality < 3) {
+    state.reps = 0;
+    state.interval = 1;
+  } else {
+    if (state.reps === 0) state.interval = 1;
+    else if (state.reps === 1) state.interval = 6;
+    else state.interval = Math.round(state.interval * state.ef);
+    state.reps += 1;
+    state.ef = Math.max(1.3, state.ef + 0.1 - (5 - quality) * (0.08 + (5 - quality) * 0.02));
+  }
+  if (quality === 5) state.interval = Math.round(state.interval * 1.3);
+  const next = new Date(); next.setDate(next.getDate() + state.interval);
+  state.due = next.toISOString().slice(0, 10);
+  return state;
+}
+
+function previewIntervals(state) {
+  return [1,3,4,5].map(q => {
+    const s = schedule(JSON.parse(JSON.stringify(state || {reps:0,ef:2.5,interval:0,due:null})), q);
+    return s.interval;
+  });
+}
+
+// ─── State ──────────────────────────────────────────────────────────
+const STORAGE_PREFIX = 'srs.v1.';
+let currentDeck = null;
+let cards = [];          // [{front, back, tags, state, idx}]
+let queue = [];          // card indices to review now
+let currentIdx = null;
+let isShowingBack = false;
+let newPerDay = 10;
+let maxReviews = 200;
+
+// ─── Storage helpers ────────────────────────────────────────────────
+function loadState(deckId) {
+  const raw = localStorage.getItem(STORAGE_PREFIX + deckId);
+  return raw ? JSON.parse(raw) : {};
+}
+function saveState(deckId, state) {
+  localStorage.setItem(STORAGE_PREFIX + deckId, JSON.stringify(state));
+}
+
+// ─── Deck loading ───────────────────────────────────────────────────
+async function loadDeckIndex() {
+  const r = await fetch('decks/index.json');
+  const data = await r.json();
+  return data.decks;
+}
+async function loadDeck(deck) {
+  const r = await fetch('decks/' + deck.file);
+  const data = await r.json();
+  currentDeck = { ...deck, ...data };
+  const saved = loadState(deck.id);
+  cards = data.cards.map((c, i) => ({
+    ...c, idx: i, state: saved[i] || null
+  }));
+  buildQueue();
+  render();
+}
+
+// ─── Queue building (today's session) ───────────────────────────────
+function buildQueue() {
+  const today = new Date().toISOString().slice(0, 10);
+  const due = cards.filter(c => c.state && c.state.due <= today);
+  const newCards = cards.filter(c => !c.state).slice(0, newPerDay);
+  queue = [...due.slice(0, maxReviews), ...newCards].map(c => c.idx);
+  // shuffle within the queue (interleaving)
+  for (let i = queue.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [queue[i], queue[j]] = [queue[j], queue[i]];
+  }
+  currentIdx = queue.length ? queue[0] : null;
+  isShowingBack = false;
+}
+
+// ─── Review action ──────────────────────────────────────────────────
+function review(quality) {
+  if (currentIdx === null) return;
+  const card = cards[currentIdx];
+  card.state = schedule(card.state, quality);
+  // persist
+  const all = loadState(currentDeck.id);
+  all[currentIdx] = card.state;
+  saveState(currentDeck.id, all);
+  // advance
+  queue.shift();
+  if (quality < 3) queue.push(currentIdx); // re-queue at end if "Again"
+  currentIdx = queue.length ? queue[0] : null;
+  isShowingBack = false;
+  render();
+}
+
+// ─── Rendering ──────────────────────────────────────────────────────
+function render() {
+  // Stats
+  const today = new Date().toISOString().slice(0, 10);
+  const newCount = cards.filter(c => !c.state).length;
+  const dueCount = cards.filter(c => c.state && c.state.due <= today).length;
+  const doneCount = cards.filter(c => c.state && c.state.due > today).length;
+  document.getElementById('stats').innerHTML = `
+    <div class="stat new">new <b>${newCount}</b></div>
+    <div class="stat due">due <b>${dueCount}</b></div>
+    <div class="stat done">scheduled <b>${doneCount}</b></div>
+    <div class="stat">queue <b>${queue.length}</b></div>
+  `;
+  // Progress bar
+  const progEl = document.getElementById('progress');
+  progEl.style.display = 'block';
+  const totalToday = newPerDay + Math.min(maxReviews, dueCount);
+  const remaining = queue.length;
+  const done = Math.max(0, totalToday - remaining);
+  progEl.firstElementChild.style.width = (totalToday ? (done / totalToday) * 100 : 0) + '%';
+
+  // Card
+  const container = document.getElementById('card-container');
+  const actions = document.getElementById('actions');
+  if (!currentIdx && currentIdx !== 0) {
+    container.innerHTML = `<div class="card empty">
+      <div class="big">🎉</div>
+      <div>All caught up! Come back tomorrow.</div>
+      <div style="margin-top:14px;font-size:.85rem;color:var(--mute)">Spaced repetition works <i>between</i> sessions — resist the urge to over-study.</div>
+    </div>`;
+    actions.innerHTML = '';
+    return;
+  }
+  const card = cards[currentIdx];
+  container.innerHTML = `<div class="card">
+    <div class="face front">${card.front}</div>
+    ${isShowingBack ? `<div class="face back">${card.back}</div>` : ''}
+    ${card.tags && card.tags.length ? `<div class="tags">${card.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>` : ''}
+  </div>`;
+
+  if (!isShowingBack) {
+    actions.innerHTML = `<button class="show" onclick="showBack()">Show Answer  &nbsp;<small style="font-weight:400;opacity:.6">(space)</small></button>`;
+  } else {
+    const intervals = previewIntervals(card.state);
+    const fmt = d => d < 1 ? '<1d' : d + 'd';
+    actions.innerHTML = `
+      <button class="again" onclick="review(1)"><span class="btn-label">Again</span><span class="btn-interval">${fmt(intervals[0])}</span></button>
+      <button class="hard"  onclick="review(3)"><span class="btn-label">Hard</span><span class="btn-interval">${fmt(intervals[1])}</span></button>
+      <button class="good"  onclick="review(4)"><span class="btn-label">Good</span><span class="btn-interval">${fmt(intervals[2])}</span></button>
+      <button class="easy"  onclick="review(5)"><span class="btn-label">Easy</span><span class="btn-interval">${fmt(intervals[3])}</span></button>
+    `;
+  }
+  renderToolbar();
+}
+
+function showBack() { isShowingBack = true; render(); }
+
+function renderToolbar() {
+  const t = document.getElementById('toolbar');
+  t.style.display = 'flex';
+  t.innerHTML = `
+    <button onclick="exportProgress()">⬇ Export progress</button>
+    <button onclick="document.getElementById('import-input').click()">⬆ Import progress</button>
+    <button onclick="if(confirm('Reset all progress for ' + currentDeck.name + '?')) { localStorage.removeItem(STORAGE_PREFIX + currentDeck.id); selectDeck(currentDeck); }">🗑 Reset deck</button>
+    <button onclick="selectDeck(null)">← Decks</button>
+    <input type="file" id="import-input" style="display:none" accept=".json" onchange="importProgress(event)">
+  `;
+}
+
+function exportProgress() {
+  const data = { deckId: currentDeck.id, exportedAt: new Date().toISOString(), state: loadState(currentDeck.id) };
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'srs-' + currentDeck.id + '-' + new Date().toISOString().slice(0,10) + '.json';
+  a.click();
+}
+function importProgress(e) {
+  const file = e.target.files[0]; if (!file) return;
+  const r = new FileReader();
+  r.onload = () => {
+    try {
+      const data = JSON.parse(r.result);
+      if (data.deckId !== currentDeck.id) { alert('Deck mismatch: ' + data.deckId); return; }
+      saveState(currentDeck.id, data.state);
+      selectDeck(currentDeck);
+    } catch (err) { alert('Bad file: ' + err.message); }
+  };
+  r.readAsText(file);
+}
+
+// ─── Deck picker ────────────────────────────────────────────────────
+async function selectDeck(deck) {
+  const picker = document.getElementById('deck-picker');
+  if (!deck) {
+    document.getElementById('card-container').innerHTML = '';
+    document.getElementById('actions').innerHTML = '';
+    document.getElementById('toolbar').style.display = 'none';
+    document.getElementById('progress').style.display = 'none';
+    document.getElementById('stats').innerHTML = '';
+    picker.style.display = 'flex';
+    const decks = await loadDeckIndex();
+    picker.innerHTML = decks.map(d => `
+      <div class="deck-btn" onclick='selectDeck(${JSON.stringify(d).replace(/'/g,"&#39;")})'>
+        <div class="name">${d.icon || '📚'} ${d.title}</div>
+        <div class="meta">${d.count} cards</div>
+      </div>
+    `).join('');
+    return;
+  }
+  picker.style.display = 'none';
+  await loadDeck(deck);
+}
+
+// ─── Keyboard shortcuts ─────────────────────────────────────────────
+document.addEventListener('keydown', e => {
+  if (currentIdx === null || currentIdx === undefined) return;
+  if (!isShowingBack && (e.key === ' ' || e.key === 'Enter')) { e.preventDefault(); showBack(); }
+  else if (isShowingBack) {
+    if (e.key === '1') review(1);
+    else if (e.key === '2') review(3);
+    else if (e.key === '3' || e.key === ' ' || e.key === 'Enter') review(4);
+    else if (e.key === '4') review(5);
+  }
+});
+
+// ─── Boot ───────────────────────────────────────────────────────────
+selectDeck(null);
+</script>
+
+</body>
+</html>

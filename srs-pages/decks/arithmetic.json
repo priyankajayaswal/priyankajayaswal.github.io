@@ -1,0 +1,3191 @@
+{
+  "name": "Arithmetic & Numerics",
+  "description": "370 cards",
+  "cards": [
+    {
+      "front": "Physics: The unit ladder",
+      "back": "<p class=\"tldr\" style=\"font-family:var(--mono);font-size:.9em\"> 1 cm  = 10⁻² m<br> 1 mm  = 10⁻³ m  = 10,000 µm<br> 1 µm  = 10⁻⁶ m  = 1,000 nm<br> 1 nm  = 10⁻⁹ m  = 10 Å = 1,000 pm<br> 1 pm  = 10⁻¹² m = 0.01 Å<br> 1 fm  = 10⁻¹⁵ m (proton)</p>       <p class=\"tldr\">Each row down = 1/1000 the size. <b>cm → nm is a million-fold jump</b>, the same ratio as a football field to a pinhead.</p>",
+      "tags": [
+        "arithmetic",
+        "physics"
+      ]
+    },
+    {
+      "front": "What \"3 nm\" actually is",
+      "back": "<p class=\"tldr\">A silicon atom is ~0.22 nm across. So \"3 nm\" ≈ <b>13 silicon atoms lined up</b>. The oxide gate dielectric inside is only ~1 nm = <b>4-5 atoms thick</b>.</p>       <p class=\"tldr\">But — and this is key — <b>\"3 nm\" is a marketing name</b>, not a real feature size. The actual transistor gate is ~16-20 nm; \"3 nm\" refers to density class. See §Scale \"Sidebar · What is 4 nm process?\" for details.</p>",
+      "tags": [
+        "arithmetic",
+        "physics"
+      ]
+    },
+    {
+      "front": "Physics: Why this matters",
+      "back": "<p class=\"tldr\">Below ~1 nm, <b>quantum tunneling</b> (see card 1 below) makes transistors leak no matter what. We're already within 5× of the atomic limit. That's why Moore's Law is slowing — not engineering laziness, <b>physics</b>.</p>       <p class=\"tldr\">The reason nobody builds chips at 0.5 nm isn't money. It's that <i>the universe doesn't allow it with silicon</i>.</p>",
+      "tags": [
+        "arithmetic",
+        "physics"
+      ]
+    },
+    {
+      "front": "Physics: Perspective",
+      "back": "<p class=\"tldr\">If a single silicon atom were the size of a <b>marble (1 cm)</b>:</p>       <ul style=\"margin:4px 0 0;padding-left:22px;font-size:.9em\">         <li>Modern \"3 nm\" gate = ~60 marbles wide</li>         <li>A virus = a 30 m-long skyscraper</li>         <li>A red blood cell = 300 m across (football pitch)</li>         <li>A human hair = 3 km wide</li>         <li>A 1 mm grain of sand = 30 km wide</li>         <li>An iPhone (15 cm tall) = <b>450,000 km</b> — more than Earth-to-Moon</li>       </ul>",
+      "tags": [
+        "arithmetic",
+        "physics"
+      ]
+    },
+    {
+      "front": "\"8 atoms\" vs \"3 atomic layers\"",
+      "back": "<p class=\"tldr\">You'll see both phrasings used for the same oxide thickness — they are <b>not the same count</b>.</p>       <p class=\"tldr\"><b>\"Atoms wide\"</b> — counts atomic <i>diameters</i> laid end-to-end, as if packing marbles.<br>Silicon atom ≈ <b>0.22 nm</b> across.<br>So 2 nm oxide ≈ <b>2 / 0.22 ≈ 9 atoms wide</b>.</p>       <p class=\"tldr\"><b>\"Atomic layers\"</b> — counts <i>crystal repeat units</i> stacked like pancakes. Each layer = one atom <i>plus the bond gap</i> to the next layer.<br>Si-Si layer spacing ≈ <b>0.27 nm</b>. SiO₂ layer spacing ≈ <b>0.35 nm</b>.<br>So 1 nm oxide ≈ <b>1 / 0.35 ≈ 3 atomic layers</b>.</p>       <div style=\"font-family:var(--mono);white-space:pre;line-height:1.45;background:#0a0e14;color:#c9d1d9;padding:10px;border-radius:6px;margin-top:8px;font-size:.82em\"> <span style=\"color:var(--mute)\">Side view of an oxide — atoms as ● and bonds as │</span>   \"atoms-wide\" count:       \"atomic-layer\" count:  ●─●─●─●─●─●─●─●            ●●●●●●●●   ← layer 1  ├ 8 atom diameters ┤       ──gap──                             ●●●●●●●●   ← layer 2                             ──gap──                             ●●●●●●●●   ← layer 3                             ├ 3 layers ┤  <span style=\"color:var(--mute)\">Same thickness, different unit — like saying \"3 m\" vs \"10 floorboards\".</span> </div>       <p class=\"tldr\" style=\"margin-top:8px\"><b>Rule of thumb:</b> \"N atomic layers\" ≈ <b>1.3× to 1.6×</b> as much thickness as \"N atoms wide,\" because layers include bond spacing. When chip-makers say \"the gate oxide is 3 atomic layers,\" they mean ~1 nm of dielectric — the physical limit before tunneling ruins everything.</p>       <div class=\"meta\"><span>Solid-state physics · lattice constants</span><a href=\"https://en.wikipedia.org/wiki/Lattice_constant\">Wikipedia ↗</a></div>",
+      "tags": [
+        "arithmetic",
+        "physics"
+      ]
+    },
+    {
+      "front": "Physics: Å — the ångström",
+      "back": "<p class=\"tldr\"><b>1 Å = 10⁻¹⁰ m = 0.1 nm = 100 pm.</b> Named after Swedish physicist <b>Anders Jonas Ångström</b> (1814-1874), founder of spectroscopy. The letter is Swedish: \"a with a ring on top\".</p>       <p class=\"tldr\"><b>Why it exists:</b> it's the natural ruler of atoms.</p>       <ul style=\"margin:4px 0 0;padding-left:22px;font-size:.9em\">         <li>Hydrogen atom ≈ <b>1 Å</b></li>         <li>Silicon atom ≈ <b>2.2 Å</b></li>         <li>Si-Si bond ≈ <b>2.35 Å</b></li>         <li>DNA double helix ≈ <b>20 Å</b></li>         <li>Visible light wavelength ≈ <b>4,000-7,000 Å</b></li>         <li>X-rays ≈ <b>0.1-100 Å</b></li>       </ul>       <p class=\"tldr\" style=\"margin-top:6px\"><b>Not SI:</b> formally deprecated in 1960 in favour of nm and pm. But physicists, crystallographers, and spectroscopists still use it everywhere because <i>one typical atom = one unit</i>. Clean.</p>       <p class=\"tldr\"><b>In this dashboard:</b> the Si atom is shown at \"100 pm\" on the size ladder — that's 1 Å. When chip-makers say \"1 nm gate oxide = 3 atomic layers,\" that's literally <b>10 Å = 3 layers of ~3.3 Å</b>.</p>       <span class=\"eg\">Fun: the only physics unit whose <i>symbol</i> carries a diacritic. Even Unicode had two codepoints for it (U+212B ANGSTROM SIGN vs U+00C5 Å) before standardizing.</span>       <div class=\"meta\"><span>Non-SI · still everywhere in atomic-scale science</span><a href=\"https://en.wikipedia.org/wiki/Angstrom\">Wikipedia ↗</a></div>",
+      "tags": [
+        "arithmetic",
+        "physics"
+      ]
+    },
+    {
+      "front": "0 · MOSFET — the switch itself",
+      "back": "<p class=\"tldr\"><b>MOSFET</b> = <b>M</b>etal-<b>O</b>xide-<b>S</b>emiconductor <b>F</b>ield-<b>E</b>ffect <b>T</b>ransistor. It's a tiny voltage-controlled valve for electric current — the single invention (1959, Atalla &amp; Kahng at Bell Labs) that all digital computing is built on. A modern Blackwell GPU = <b>208 billion of them</b>.</p>       <p class=\"tldr\"><b>3 terminals:</b></p>       <ul style=\"margin:4px 0 0;padding-left:22px;font-size:.9em\">         <li><b>Source</b> — where electrons come <i>from</i></li>         <li><b>Drain</b> — where electrons go <i>to</i></li>         <li><b>Gate</b> — the control knob (doesn't touch the channel — separated by a thin oxide insulator)</li>       </ul>       <div style=\"font-family:var(--mono);white-space:pre;line-height:1.5;background:#0a0e14;color:#c9d1d9;padding:10px;border-radius:6px;margin-top:8px;font-size:.85em\">         <span style=\"color:var(--orange)\">Gate</span> (control)            │         ┌──┴──┐        <span style=\"color:var(--mute)\">← thin oxide (insulator, ~1 nm)</span>   <span style=\"color:var(--green)\">Source</span> ═════════ <span style=\"color:var(--pink)\">Drain</span>         <span style=\"color:var(--blue)\">▲▲▲▲▲▲▲▲</span>      <span style=\"color:var(--mute)\">← channel (opens when gate is on)</span>         silicon body</div>       <p class=\"tldr\" style=\"margin-top:8px\"><b>How it switches:</b> apply +voltage to the gate → electric field pulls electrons into the channel → current flows source→drain (<b>ON = 1</b>). Remove the voltage → channel empties, current stops (<b>OFF = 0</b>).</p>       <p class=\"tldr\"><b>Why \"field-effect\":</b> the gate doesn't inject any current — it just creates an <i>electric field</i> that herds electrons below. So the gate uses almost zero power (just capacitor charging). This is the trick that makes billions-of-transistors chips possible.</p>       <span class=\"eg\">Garden-hose analogy: source → drain is the hose. The gate is your hand squeezing the hose. Squeeze harder (more voltage) → more flow. Release → flow stops. Your hand doesn't touch the water.</span>       <p class=\"tldr\"><b>Two flavours, always paired (CMOS):</b></p>       <ul style=\"margin:4px 0 0;padding-left:22px;font-size:.9em\">         <li><b>NMOS</b> — turns <i>on</i> with +gate voltage (electrons carry current)</li>         <li><b>PMOS</b> — turns <i>on</i> with −gate voltage (holes carry current)</li>         <li>One NMOS + one PMOS = <b>CMOS inverter</b>, the base cell of every digital chip</li>       </ul>       <p class=\"tldr\"><b>Modern variants:</b> planar MOSFET → FinFET (2011, gate wraps 3 sides) → GAAFET / Nanosheet (2022-25, gate wraps all 4 sides). Each change was to fight leakage as gates shrank — see cards 1 and 4 for why.</p>       <div class=\"meta\"><span>1959 · Atalla &amp; Kahng (Bell Labs) · the most-manufactured human artifact ever</span><a href=\"https://en.wikipedia.org/wiki/MOSFET\">Wikipedia ↗</a></div>",
+      "tags": [
+        "arithmetic",
+        "physics"
+      ]
+    },
+    {
+      "front": "Physics: 1 · Quantum tunneling",
+      "back": "<p class=\"tldr\">In classical physics, an electron can't cross an insulator unless it has enough energy. In <b>quantum</b> physics, it can simply <em>appear on the other side</em> with some probability. That probability grows <b>exponentially</b> as the insulator gets thinner.</p>       <p class=\"tldr\">In a MOSFET, the <b>gate oxide</b> separates the gate from the channel. At 2003's 90 nm nodes the oxide was ~2 nm thick — 8 atoms. At 1 nm it's about <b>3 atomic layers</b>. Below that, electrons tunnel through <em>all the time</em>, even when the transistor should be off.</p>       <span class=\"eg\">Intel's 45 nm node (2007) moved from SiO₂ to hafnium-oxide (HfO₂) — a thicker high-k material with the same electrical effect — specifically to fight tunneling.</span>       <p class=\"tldr\"><b>Why this is a hard limit:</b> you can't just \"shield\" against quantum tunneling. It's not a defect — it's how the universe works. Once leakage current exceeds switching current, the transistor stops being a switch. That's why Moore's Law is really slowing down, not just getting expensive.</p>       <div class=\"meta\"><span>Sets the ~1 nm floor for classical CMOS</span><a href=\"https://en.wikipedia.org/wiki/Quantum_tunnelling\">Wikipedia ↗</a></div>",
+      "tags": [
+        "arithmetic",
+        "physics"
+      ]
+    },
+    {
+      "front": "2 · Why ternary is thermodynamically worse",
+      "back": "<p class=\"tldr\">Naïve intuition: if 2 voltage levels (0 V, 1 V) can store 1 bit, then 3 levels (0 V, 0.5 V, 1 V) should store log₂(3) ≈ 1.58 bits — free information! <b>But it's a trap.</b></p>       <p class=\"tldr\"><b>The catch:</b> you still only have the same 0→1 V voltage range to work with. Adding a middle level <b>halves the gap</b> between adjacent levels — so the \"noise budget\" (how much a signal can wobble before being misread) drops from 0.5 V to 0.25 V. Four levels → 0.17 V. Eight levels → 0.07 V.</p>       <span class=\"eg\">Shannon-Hartley: channel capacity ∝ log₂(1 + SNR). Doubling levels adds 1 bit but needs <b>4×</b> signal-to-noise ratio → 4× the energy per bit.</span>       <p class=\"tldr\"><b>Thermodynamic cost:</b> at smaller noise margins, you need <i>more capacitance, higher voltage, or lower temperature</i> to reach the same error rate. Every bit-per-signal you squeeze out costs <b>exponentially</b> more energy.</p>       <p class=\"tldr\"><b>Binary wins</b> because it's the <i>extreme corner</i>: maximum noise margin per level, simplest circuits (just \"is it on?\"), and gates that restore signals at every stage. Ternary makes sense only where noise is negligible — inside a clean analog audio rack, not on a chip with a million switching neighbours.</p>       <p class=\"tldr\"><b>Exceptions that prove the rule:</b> NAND flash uses 2-8 levels per cell (MLC/TLC/QLC) — but accepts much higher error rates and fixes them with heavy ECC. PAM-4 signaling in PCIe 6.0 uses 4 levels — but on a short, shielded, well-characterized channel with equalization.</p>       <div class=\"meta\"><span>Information theory · Shannon 1948 · MLC flash · PAM-4</span><a href=\"https://en.wikipedia.org/wiki/Shannon%E2%80%93Hartley_theorem\">Shannon-Hartley ↗</a></div>",
+      "tags": [
+        "arithmetic",
+        "physics"
+      ]
+    },
+    {
+      "front": "3 · \"200 ps to cross a chip\"",
+      "back": "<p class=\"tldr\"><b>1 / 5 GHz = 200 picoseconds per clock cycle.</b> That's the entire time budget for one tick of the clock. Within those 200 ps, signals must travel from flip-flop to flip-flop across combinational logic and <b>arrive stable</b> before the next edge.</p>       <p class=\"tldr\"><b>The physics:</b> electromagnetic signals in a chip travel at ~½ the speed of light in vacuum (through copper and silicon dioxide dielectric). Roughly <b>15 cm/ns</b>, or <b>3 cm in 200 ps</b>.</p>       <p class=\"tldr\">A modern CPU die is ~20 mm wide. So light itself can barely cross the chip <b>once</b> per cycle. Real signals — slowed by wire resistance, gate delays, buffers — cross only a small region before the next tick.</p>       <span class=\"eg\">Rule of thumb: a signal can pass through ~20-30 gate delays in one 200 ps cycle. Everything else must be pipelined.</span>       <p class=\"tldr\"><b>Consequences this creates:</b></p>       <ul style=\"margin:4px 0 0;padding-left:22px;font-size:.9em\">         <li><b>Pipelines</b> — break a computation into tiny stages, each fitting in 200 ps</li>         <li><b>Cache hierarchies</b> — L1 must be tiny (within 1-2 ns reach), L2 larger but slower</li>         <li><b>Clock domains</b> — a big chip can't share one clock edge; it's split into regions</li>         <li><b>Wire delay &gt; gate delay</b> — at modern nodes, moving a signal across the die costs more time than the logic itself</li>       </ul>       <div class=\"meta\"><span>c/2 ≈ 15 cm/ns · wire delay · pipeline stages</span></div>",
+      "tags": [
+        "arithmetic",
+        "physics"
+      ]
+    },
+    {
+      "front": "4 · Why clocks stopped at ~5 GHz",
+      "back": "<p class=\"tldr\"><b>Dennard scaling (1974):</b> Robert Dennard showed that as you shrink a transistor by ½, you can also drop voltage by ½ — giving you 4× more transistors at the <i>same</i> power. This is what let clocks rise 386 (16 MHz, 1985) → Pentium 4 (3.8 GHz, 2004) — <b>240× in 20 years</b>.</p>       <p class=\"tldr\"><b>It broke around 2005-2006.</b> Below ~90 nm, voltage couldn't drop further because:</p>       <ul style=\"margin:4px 0 0;padding-left:22px;font-size:.9em\">         <li><b>Threshold voltage floor</b> — below ~0.3 V, transistors don't reliably switch on/off</li>         <li><b>Leakage current explodes</b> — static power (even when idle) became as big as dynamic power</li>         <li><b>Quantum tunneling</b> (see card 1) makes thin oxides leak no matter the voltage</li>       </ul>       <p class=\"tldr\"><b>Power scales as P = C·V²·f.</b> Once V stopped falling, every extra GHz of f meant more heat. At 4-5 GHz a ~200 W CPU already needs a big heatsink; pushing to 6-10 GHz would need liquid nitrogen. Not commercially viable.</p>       <span class=\"eg\">Intel Pentium 4 \"Tejas\" was designed for 10 GHz. <b>Cancelled in May 2004</b> — would have drawn 300+ W. That's the moment the industry pivoted to multicore.</span>       <p class=\"tldr\"><b>The pivot:</b> instead of faster cores, <b>more cores</b>. Core 2 Duo (2006) → Core i7 quad-core (2008) → EPYC 192-core (2024). Clock frequencies have barely moved in 20 years (3-6 GHz), but performance keeps climbing via <b>parallelism, SIMD, and specialized units</b> (tensor cores, AV1 decoders, neural engines).</p>       <p class=\"tldr\"><b>Occasional record stunts:</b> overclockers with liquid nitrogen hit 9.1 GHz (AMD FX-8350, 2022), but that's one core at -196 °C drawing extreme power — not useful for servers.</p>       <div class=\"meta\"><span>End of Dennard scaling · power wall · multicore era</span><a href=\"https://en.wikipedia.org/wiki/Dennard_scaling\">Wikipedia ↗</a></div>",
+      "tags": [
+        "arithmetic",
+        "physics"
+      ]
+    },
+    {
+      "front": "Clocks: The piezoelectric trick",
+      "back": "<p class=\"tldr\">Quartz is <b>piezoelectric</b>: squeeze it → voltage appears. Apply voltage → it deforms. A precisely-cut quartz bar has a mechanical resonance — like a tuning fork — and the voltage oscillates at <b>exactly that frequency</b>.</p>       <p class=\"tldr\">Cut a quartz slab into a <b>tuning-fork shape</b> tuned to 32,768 Hz (2¹⁵), mount it in a vacuum-sealed can, and you have the heartbeat of every wristwatch since 1969 (Seiko Astron).</p>       <span class=\"eg\">Why 32,768? It's 2¹⁵ — dividing by 2 fifteen times gives exactly 1 Hz. Perfect for digital logic.</span>",
+      "tags": [
+        "arithmetic",
+        "clocks"
+      ]
+    },
+    {
+      "front": "Clocks: Accuracy vs temperature",
+      "back": "<p class=\"tldr\">A regular quartz is ±20 parts per million — about <b>10 seconds drift per week</b>. Temperature-compensated variants (TCXO) hit 0.1 ppm. Oven-controlled (OCXO, kept at constant 70 °C inside the can) hit 0.001 ppm — ~1 s per year.</p>       <p class=\"tldr\">Almost every chip you own — Wi-Fi, Bluetooth, phone modem, USB controller, your CPU — starts life with a small quartz crystal soldered nearby.</p>",
+      "tags": [
+        "arithmetic",
+        "clocks"
+      ]
+    },
+    {
+      "front": "Why one crystal is enough",
+      "back": "<ul style=\"margin:6px 0 0;padding-left:20px;line-height:1.55\">         <li><b>Phase-locking</b> — a PLL's output is forced (by feedback) to stay exactly N× the reference. Any ppm drift in the crystal drifts <i>everything</i> proportionally → domains stay coherent.</li>         <li><b>Cheap &amp; tiny</b> — a PLL is ~0.01 mm². Dozens cost nothing. A second crystal would cost a package pin, a PCB trace, and more than the PLL itself.</li>         <li><b>Scaling = just change N</b> — Turbo Boost, <code>cpupower</code>, DVFS P-states all just write a new multiplier register. Crystal never changes → frequency can shift in <b>microseconds</b>.</li>         <li><b>Isolation</b> — a noisy 5 GHz core can't contaminate the 48 MHz USB clock, because they share only the clean reference, not the VCOs.</li>         <li><b>Jitter control</b> — each PLL has its own loop filter tuned for its domain (memory wants low jitter, USB tolerates more). One crystal, many noise budgets.</li>       </ul>",
+      "tags": [
+        "arithmetic",
+        "clocks"
+      ]
+    },
+    {
+      "front": "Typical multiplier table (25 MHz ref)",
+      "back": "<div class=\"tt\"> ref   = 25 MHz crystal  Domain          ×N     Result ──────────────  ───    ───────── CPU core base   ×200   5.0 GHz P-core turbo    ×232   5.8 GHz Ring / L3       ×180   4.5 GHz Memory ctrl     ×160   4.0 GHz PCIe 5.0 ref    ×128   3.2 GHz Display pixel   ×var   533 MHz (4K) USB 2.0         ×variant 48 MHz Audio SPDIF     ×variant 24.576 MHz       </div>       <div class=\"meta\">All derived from <b>one</b> crystal via on-chip PLLs.</div>",
+      "tags": [
+        "arithmetic",
+        "clocks"
+      ]
+    },
+    {
+      "front": "Clocks: Orchestra analogy",
+      "back": "<p>One conductor's metronome = crystal. Each instrument = a PLL. Violin plays 4 notes per tick, cello 2, piano ½. If the conductor speeds up, every instrument speeds up proportionally — the orchestra stays in sync.</p>       <p style=\"margin-top:6px\">The conductor doesn't need to know any instrument's tempo; the instruments just count ticks.</p>",
+      "tags": [
+        "arithmetic",
+        "clocks"
+      ]
+    },
+    {
+      "front": "Clocks: Hierarchy in real SoCs",
+      "back": "<p>Modern SoCs rarely run dozens of PLLs straight off the 25 MHz crystal — jitter would be bad at the highest frequencies. Instead they use a <b>tree</b>:</p>       <div class=\"tt\"> 25 MHz crystal     │     ▼ Master PLL (3.2 GHz, ultra-low-jitter)     ├──▶ core PLL     ×1.56  → 5.0 GHz     ├──▶ ring PLL     ×1.40  → 4.5 GHz     ├──▶ mem PLL      ×1.25  → 4.0 GHz     ├──▶ PCIe PLL     ×1.00  → 3.2 GHz     └──▶ fixed divs   ÷N     → USB / I²C / SPI       </div>       <p style=\"margin-top:6px\">Each branch's PLL only needs a narrow multiplier range — simpler, lower-noise.</p>",
+      "tags": [
+        "arithmetic",
+        "clocks"
+      ]
+    },
+    {
+      "front": "What about servers & multi-socket?",
+      "back": "<p>Every socket and every PCIe endpoint still has its own crystal(s) — they don't physically share one. Synchronization happens at a higher protocol layer:</p>       <ul style=\"margin:4px 0 0;padding-left:20px;line-height:1.5\">         <li><b>PCIe Gen3+</b> can use <b>SSC (Spread Spectrum Clocking)</b> or \"common clock\" mode where endpoints lock to the root-complex PLL via the link itself.</li>         <li><b>UPI / Infinity Fabric</b> between sockets uses SerDes training to align clocks on boot.</li>         <li><b>PTP (IEEE 1588)</b> distributes time across a <i>network</i> of servers to &lt;100 ns.</li>       </ul>",
+      "tags": [
+        "arithmetic",
+        "clocks"
+      ]
+    },
+    {
+      "front": "Clocks: Consequences you can observe",
+      "back": "<ul style=\"margin:6px 0 0;padding-left:20px;line-height:1.55\">         <li>Overclock the <b>BCLK</b> (reference) by 3% → <i>everything</i> — CPU, RAM, PCIe — overclocks by 3%. USB cameras lose frames. This is why BCLK overclocking is rare now; modern chips lock USB/PCIe to separate dividers.</li>         <li>A cheap crystal with ±50 ppm error means a 5 GHz core is actually 5.000 ± 0.00025 GHz. Good enough — software schedulers don't care.</li>         <li>Turn on Turbo Boost: the core PLL's multiplier register jumps from ×200 to ×232 in under <b>10 µs</b>. No crystal involved.</li>         <li><code>cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq</code> is literally reading that multiplier × the reference.</li>       </ul>",
+      "tags": [
+        "arithmetic",
+        "clocks"
+      ]
+    },
+    {
+      "front": "Clocks: Cesium-133",
+      "back": "<p class=\"tldr\">Since 1967, <b>one second = 9,192,631,770 oscillations of the radiation emitted by a cesium-133 atom</b> transitioning between two hyperfine energy levels. No reference to astronomy — the second is an atomic quantity.</p>       <p class=\"tldr\">A cesium fountain clock (NIST-F2) loses or gains <b>less than 1 second in 300 million years</b>. That's ~10⁻¹⁶ relative accuracy.</p>       <span class=\"eg\">Louis Essen built the first practical cesium clock at NPL (UK) in 1955.</span>",
+      "tags": [
+        "arithmetic",
+        "clocks"
+      ]
+    },
+    {
+      "front": "Why atoms?",
+      "back": "<p class=\"tldr\">Every cesium-133 atom in the universe has <b>identical</b> energy levels — physics says so. Unlike a quartz crystal (shaped by a human, aging over time), an atom is a perfect universal reference. Clocks made on Earth, Mars, or Alpha Centauri would agree — if stationary and at the same gravitational potential.</p>",
+      "tags": [
+        "arithmetic",
+        "clocks"
+      ]
+    },
+    {
+      "front": "Clocks: Optical lattice clocks",
+      "back": "<p class=\"tldr\">Strontium-87 or Ytterbium-171 atoms cooled to μK and held in a laser-trap lattice. Transitions are in the <b>optical</b> band (500 THz), so one \"tick\" is 10⁵× faster than cesium microwave.</p>       <p class=\"tldr\"><b>Accuracy:</b> ~10⁻¹⁸ — one second in 30 billion years (older than the universe). Can detect gravitational time dilation from <b>1 cm height difference</b>. Expected to redefine the SI second around 2030.</p>",
+      "tags": [
+        "arithmetic",
+        "clocks"
+      ]
+    },
+    {
+      "front": "Clocks: GPS depends on this",
+      "back": "<p class=\"tldr\">GPS satellites carry rubidium + cesium clocks. Your phone calculates position from the <b>time difference</b> between signals from 4+ satellites. A 1 ns timing error = <b>30 cm position error</b>. A 1 μs error = 300 m.</p>       <p class=\"tldr\"><b>Relativity matters:</b> satellite clocks tick ~38 μs/day faster than ground clocks (gravitational + velocity effects). This is corrected in the onboard oscillator — without the correction, GPS would be wrong by ~11 km after one day.</p>",
+      "tags": [
+        "arithmetic",
+        "clocks"
+      ]
+    },
+    {
+      "front": "Clocks: UTC",
+      "back": "<p class=\"tldr\">Universal Coordinated Time — averaged from ~400 atomic clocks worldwide, steered to match Earth rotation via occasional leap seconds.</p>",
+      "tags": [
+        "arithmetic",
+        "clocks"
+      ]
+    },
+    {
+      "front": "Clocks: NTP",
+      "back": "<p class=\"tldr\">Network Time Protocol — syncs computers over the internet to ~10 ms. Used by every OS on Earth.</p>",
+      "tags": [
+        "arithmetic",
+        "clocks"
+      ]
+    },
+    {
+      "front": "Clocks: PTP (IEEE 1588)",
+      "back": "<p class=\"tldr\">Precision Time Protocol — syncs LAN devices to &lt;1 μs. Used in finance (timestamping trades), broadcast, 5G.</p>",
+      "tags": [
+        "arithmetic",
+        "clocks"
+      ]
+    },
+    {
+      "front": "Clocks: GPS disciplining",
+      "back": "<p class=\"tldr\">A local OCXO <i>locked</i> to GPS time gives atomic-clock stability without owning an atomic clock. Used in every cell tower.</p>",
+      "tags": [
+        "arithmetic",
+        "clocks"
+      ]
+    },
+    {
+      "front": "Clocks: Leap second",
+      "back": "<p class=\"tldr\">Earth rotation is irregular — UTC adds/removes a second occasionally. Scheduled to be abolished by 2035. Has caused real outages (Reddit 2012, Cloudflare 2017).</p>",
+      "tags": [
+        "arithmetic",
+        "clocks"
+      ]
+    },
+    {
+      "front": "Clocks: TAI vs UTC",
+      "back": "<p class=\"tldr\">TAI = pure atomic time, no leap seconds. Currently UTC = TAI − 37 s. GPS time = TAI − 19 s. Lots of off-by-N-seconds bugs in software.</p>",
+      "tags": [
+        "arithmetic",
+        "clocks"
+      ]
+    },
+    {
+      "front": "Why bias?",
+      "back": "<p class=\"tldr\">Exponents need to be <b>negative</b> (for very small numbers) and <b>positive</b> (for very large). But storing signed ints needs two's complement — which breaks sorting floats as ints.</p>       <p class=\"tldr\"><b>Fix:</b> store <code>E_stored = E_true + bias</code>, always as unsigned. For FP32, real exponent −127…+128 → stored 0…255.</p>       <span class=\"eg\">Bonus: floats compare correctly with integer compare when both positive. Key to GPU sorting kernels.</span>",
+      "tags": [
+        "arithmetic",
+        "ieee754"
+      ]
+    },
+    {
+      "front": "Why implicit leading 1?",
+      "back": "<p class=\"tldr\">In binary scientific notation, the mantissa is always <code>1.xxxxx</code> (normalized). So the <b>leading 1 is never stored</b> — you get it for free.</p>       <p class=\"tldr\">FP32 stores 23 mantissa bits but actually has <b>24 bits of precision</b>. Same trick in every IEEE format except subnormals.</p>       <span class=\"eg\">\"The hidden bit\" — one of the cleverest encoding tricks in computer history.</span>",
+      "tags": [
+        "arithmetic",
+        "ieee754"
+      ]
+    },
+    {
+      "front": "Signed zero?",
+      "back": "<p class=\"tldr\">Yes, <code>+0 == −0</code> compares true, but their bit patterns differ. Matters for <code>1/+0 = +∞</code> vs <code>1/−0 = −∞</code>, and for complex-function branch cuts.</p>",
+      "tags": [
+        "arithmetic",
+        "ieee754"
+      ]
+    },
+    {
+      "front": "IEEE 754: Subnormals",
+      "back": "<p class=\"tldr\">Without subnormals, there'd be a gap around 0 where <code>a − b</code> could underflow abruptly. Subnormals fill that gap linearly — <i>gradual</i> precision loss, not a cliff. Cost: often slow in hardware (FTZ/DAZ flags disable them).</p>",
+      "tags": [
+        "arithmetic",
+        "ieee754"
+      ]
+    },
+    {
+      "front": "IEEE 754: Quiet vs signalling NaN",
+      "back": "<p class=\"tldr\">qNaN propagates silently (MSB of mantissa = 1). sNaN raises a CPU exception (MSB = 0). Most languages only use qNaN. The 22 remaining mantissa bits are a <b>payload</b> — used for diagnostic codes.</p>",
+      "tags": [
+        "arithmetic",
+        "ieee754"
+      ]
+    },
+    {
+      "front": "IEEE 754: Rounding modes",
+      "back": "<p class=\"tldr\">IEEE 754 mandates 5: <b>round-to-nearest-even</b> (default), round-toward-0 (truncate), round-toward-+∞, round-toward-−∞, round-to-nearest-away. Financial code often prefers away-from-zero; statistical code uses banker's rounding (nearest-even).</p>",
+      "tags": [
+        "arithmetic",
+        "ieee754"
+      ]
+    },
+    {
+      "front": "IEEE 754: William Kahan",
+      "back": "<p class=\"tldr\">Berkeley professor, architect of IEEE 754. Before 754, every CPU had its own float format — a Cray float meant nothing on a VAX. Kahan pushed for a universal standard with <b>reproducible</b> results.</p>       <div class=\"meta\"><span>Drafted 1985 · revised 2008, 2019</span></div>",
+      "tags": [
+        "arithmetic",
+        "ieee754"
+      ]
+    },
+    {
+      "front": "IEEE 754: 8087 coprocessor",
+      "back": "<p class=\"tldr\">First hardware implementation of draft IEEE 754. Plug-in chip for the 8086. Before it, floats were done in software — 100× slower. Every CPU since has built-in float.</p>",
+      "tags": [
+        "arithmetic",
+        "ieee754"
+      ]
+    },
+    {
+      "front": "IEEE 754: Why it's a miracle",
+      "back": "<p class=\"tldr\">Every phone, laptop, GPU, and supercomputer on Earth agrees on the exact bit-for-bit meaning of every float. <b>That's not true of most of computing.</b> Endianness varies, integer sizes vary, char sets vary — but <code>0x40490FDB</code> is π on all of them.</p>",
+      "tags": [
+        "arithmetic",
+        "ieee754"
+      ]
+    },
+    {
+      "front": "IEEE 754: The exceptions",
+      "back": "<p class=\"tldr\">NVIDIA's TF32 (19 bits, non-standard), AMD's FP24, Google TPU's bfloat16 (now standardized), Posit/Unum (John Gustafson's rival). All extensions or alternatives, none has displaced IEEE 754.</p>",
+      "tags": [
+        "arithmetic",
+        "ieee754"
+      ]
+    },
+    {
+      "front": "Fractions: 1 · Floating-point",
+      "back": "<p class=\"tldr\">Already covered in §Floats. <b><code>sign · mantissa · 2^exponent</code></b> in <i>binary</i>. Fast (hardware), huge range, but most decimals aren't exact in base 2.</p>       <span class=\"eg\">0.1 binary = 0.0001100110011... (repeats forever) → gets chopped at 23 or 52 bits</span>       <p class=\"tldr\" style=\"margin-top:6px\"><b>Exact only when:</b> denominator is a power of 2 (½, ¼, ⅛, ⅜, …). Everything else is rounded.</p>       <div class=\"meta\"><span>C <code>float</code>/<code>double</code>, Python <code>float</code>, GPU math</span><a href=\"https://en.wikipedia.org/wiki/Floating-point_arithmetic\">Wikipedia ↗</a></div>",
+      "tags": [
+        "arithmetic",
+        "fractions"
+      ]
+    },
+    {
+      "front": "Fractions: 2 · Fixed-point",
+      "back": "<p class=\"tldr\">Use a regular integer but <b>pretend the decimal point lives at a fixed position</b>. So <code>12345</code> with 2-decimal scaling means <code>123.45</code>. Do integer math, interpret the result.</p>       <span class=\"eg\">Format \"16.16\" → 32-bit int · top 16 bits = whole part · bottom 16 = fraction</span>       <p class=\"tldr\" style=\"margin-top:6px\"><b>Perfectly exact</b> within its range. No rounding surprises. Fast — just integer arithmetic.</p>       <p class=\"tldr\"><b>Downside:</b> no auto-scaling. Overflow becomes your problem.</p>       <div class=\"meta\"><span>Banking · PS1 games · DSPs · blockchain (wei = 10⁻¹⁸ ETH)</span><a href=\"https://en.wikipedia.org/wiki/Fixed-point_arithmetic\">Wikipedia ↗</a></div>",
+      "tags": [
+        "arithmetic",
+        "fractions"
+      ]
+    },
+    {
+      "front": "3 · Rational (p / q)",
+      "back": "<p class=\"tldr\">Store numerator and denominator as <b>separate integers</b>. <code>1/3</code> is literally the pair <code>(1, 3)</code>. Add, multiply, simplify.</p>       <span class=\"eg\">Python: Fraction(1,3) + Fraction(1,3) + Fraction(1,3) == 1 exactly</span>       <p class=\"tldr\" style=\"margin-top:6px\"><b>Perfectly exact</b> for any rational. Bignum means arbitrary precision.</p>       <p class=\"tldr\"><b>Downside:</b> slow (GCD on every op), memory grows, no hardware support, still can't do √2 or π.</p>       <div class=\"meta\"><span>Mathematica · SymPy · Lean · proof assistants · CAS</span><a href=\"https://en.wikipedia.org/wiki/Rational_data_type\">Wikipedia ↗</a></div>",
+      "tags": [
+        "arithmetic",
+        "fractions"
+      ]
+    },
+    {
+      "front": "Fractions: 4 · Decimal float",
+      "back": "<p class=\"tldr\">Like FP32/FP64 but in <b>base 10</b>. So <code>0.1</code> is <i>exactly</i> 0.1, not an approximation. Standardized as <b>IEEE 754-2008</b> (decimal32/64/128).</p>       <span class=\"eg\">Python Decimal('0.1') + Decimal('0.2') == Decimal('0.3') ✓</span>       <p class=\"tldr\" style=\"margin-top:6px\"><b>IBM mainframes have hardware decimal-float</b> — POWER, z/Architecture. That's how credit-card processors do billions of transactions with cent-exact rounding.</p>       <div class=\"meta\"><span>Java <code>BigDecimal</code> · C# <code>decimal</code> · Python <code>decimal</code> · SQL NUMERIC</span><a href=\"https://en.wikipedia.org/wiki/Decimal_floating_point\">Wikipedia ↗</a></div>",
+      "tags": [
+        "arithmetic",
+        "fractions"
+      ]
+    },
+    {
+      "front": "Graphics / games / physics",
+      "back": "<p class=\"tldr\"><b>FP32</b>. Speed wins, rounding is invisible in pixels.</p>",
+      "tags": [
+        "arithmetic",
+        "fractions"
+      ]
+    },
+    {
+      "front": "Fractions: Scientific simulation, CFD",
+      "back": "<p class=\"tldr\"><b>FP64</b>. Errors compound across millions of steps.</p>",
+      "tags": [
+        "arithmetic",
+        "fractions"
+      ]
+    },
+    {
+      "front": "Fractions: Money, invoicing, tax",
+      "back": "<p class=\"tldr\"><b>Decimal</b> or <b>fixed-point</b>. Never <code>float</code>. Regulators demand exact cent rounding.</p>",
+      "tags": [
+        "arithmetic",
+        "fractions"
+      ]
+    },
+    {
+      "front": "Fractions: Blockchain / crypto",
+      "back": "<p class=\"tldr\"><b>Fixed-point big integers</b>. Ethereum uses 18-decimal wei (10⁻¹⁸ ETH).</p>",
+      "tags": [
+        "arithmetic",
+        "fractions"
+      ]
+    },
+    {
+      "front": "Fractions: Symbolic math, proof assistants",
+      "back": "<p class=\"tldr\"><b>Rational</b>. Wolfram, SymPy, Lean, Coq.</p>",
+      "tags": [
+        "arithmetic",
+        "fractions"
+      ]
+    },
+    {
+      "front": "Embedded / DSP / no FPU",
+      "back": "<p class=\"tldr\"><b>Fixed-point</b>. PlayStation 1 did all 3D in 16.16 fixed because it had no float hardware.</p>",
+      "tags": [
+        "arithmetic",
+        "fractions"
+      ]
+    },
+    {
+      "front": "Fractions: AI training",
+      "back": "<p class=\"tldr\"><b>BF16 / FP8</b>. Gradients are noisy anyway; ditch precision, gain throughput.</p>",
+      "tags": [
+        "arithmetic",
+        "fractions"
+      ]
+    },
+    {
+      "front": "Fractions: AI inference",
+      "back": "<p class=\"tldr\"><b>FP8 / FP4 / INT8</b>. At FP4 there are only <i>16 values total</i>. Works because neural nets tolerate noise.</p>",
+      "tags": [
+        "arithmetic",
+        "fractions"
+      ]
+    },
+    {
+      "front": "GCC · The GNU Compiler Collection",
+      "back": "<p class=\"tldr\"><b>GCC</b> — written by Richard Stallman as the cornerstone of GNU. Built Linux, BSD, most of Unix. Monolithic by design (political: prevent proprietary front-ends). Compiles <b>C, C++, Fortran, Go, Ada, D, Objective-C</b>. GPLv3 licensed.</p>     <p class=\"tldr\"><b>IR:</b> GIMPLE (high-level) and RTL (low-level, register-transfer). Internal, rarely touched by outsiders.</p>     <p class=\"tldr\"><b>Strengths:</b> unmatched target coverage (40+ ISAs: AVR, MSP430, SPARC, m68k, s390x, …), battle-tested since 1987, Fortran + embedded Linux ecosystems, often slightly better runtime perf on x86 integer code.</p>     <span class=\"eg\">gcc -O3 -march=native hello.c -o hello</span>     <div class=\"meta\"><span>Used by: Linux kernel (officially), glibc, Debian, Android kernel, embedded/automotive, AOSP NDK alternative</span><a href=\"https://gcc.gnu.org/\">gcc.gnu.org ↗</a></div>",
+      "tags": [
+        "arithmetic",
+        "toolchain"
+      ]
+    },
+    {
+      "front": "LLVM & GCC: LLVM + Clang",
+      "back": "<p class=\"tldr\"><b>LLVM</b> (Low Level Virtual Machine, though nothing virtual about it now) — started as Chris Lattner's Master's thesis at UIUC, adopted by Apple in 2005. <b>Clang</b> is its C/C++/ObjC front-end; <b>LLVM</b> is the optimizer + back-end.</p>     <p class=\"tldr\"><b>IR:</b> <code>LLVM IR</code> — text or bitcode, <b>first-class API</b>. Any tool can generate IR and get optimization + codegen for free. This is the killer feature.</p>     <p class=\"tldr\"><b>Strengths:</b> modular (libraries not monolith), permissive Apache 2 license (allowed in proprietary compilers), superb diagnostics (that friendly <code>note: did you mean…?</code> is Clang), fast link-time optimization, drives every non-GCC modern compiler.</p>     <span class=\"eg\">clang -O3 -march=native hello.c -o hello</span>     <div class=\"meta\"><span>Used by: Apple (Xcode, Swift), Google (Chrome, Android), Rust, Julia, Zig, Crystal, CUDA, ROCm, ISPC, WebAssembly, PyTorch JIT</span><a href=\"https://llvm.org/\">llvm.org ↗</a></div>",
+      "tags": [
+        "arithmetic",
+        "toolchain"
+      ]
+    },
+    {
+      "front": "LLVM & GCC: Constant folding",
+      "back": "<p class=\"tldr\"><code>2 + 3</code> → <code>5</code> at compile time.</p>",
+      "tags": [
+        "arithmetic",
+        "toolchain"
+      ]
+    },
+    {
+      "front": "LLVM & GCC: Dead code elimination",
+      "back": "<p class=\"tldr\">Unreachable branches, unused variables — removed.</p>",
+      "tags": [
+        "arithmetic",
+        "toolchain"
+      ]
+    },
+    {
+      "front": "LLVM & GCC: CSE",
+      "back": "<p class=\"tldr\">Compute <code>a*b</code> once, reuse.</p>",
+      "tags": [
+        "arithmetic",
+        "toolchain"
+      ]
+    },
+    {
+      "front": "LLVM & GCC: Inlining",
+      "back": "<p class=\"tldr\">Paste small function bodies into callers. Enables cascading optimizations.</p>",
+      "tags": [
+        "arithmetic",
+        "toolchain"
+      ]
+    },
+    {
+      "front": "LLVM & GCC: Loop unrolling",
+      "back": "<p class=\"tldr\"><code>for i in 0..4: a[i]=0</code> → 4 stores, no loop overhead.</p>",
+      "tags": [
+        "arithmetic",
+        "toolchain"
+      ]
+    },
+    {
+      "front": "LLVM & GCC: Loop-invariant code motion",
+      "back": "<p class=\"tldr\">Hoist work that doesn't depend on loop var out of the loop.</p>",
+      "tags": [
+        "arithmetic",
+        "toolchain"
+      ]
+    },
+    {
+      "front": "LLVM & GCC: Auto-vectorization",
+      "back": "<p class=\"tldr\">Turn scalar loops into AVX/NEON wide-register ops — 4×–16× speedup on math.</p>",
+      "tags": [
+        "arithmetic",
+        "toolchain"
+      ]
+    },
+    {
+      "front": "LLVM & GCC: SROA",
+      "back": "<p class=\"tldr\">Turn tiny structs into registers. Eliminates most struct overhead.</p>",
+      "tags": [
+        "arithmetic",
+        "toolchain"
+      ]
+    },
+    {
+      "front": "LLVM & GCC: Mem2reg / SSA",
+      "back": "<p class=\"tldr\">Convert stack variables to SSA registers — foundation of almost every other pass.</p>",
+      "tags": [
+        "arithmetic",
+        "toolchain"
+      ]
+    },
+    {
+      "front": "LLVM & GCC: Register allocation",
+      "back": "<p class=\"tldr\">Map unlimited virtual registers onto 16-32 physical ones. NP-hard in theory; heuristic in practice.</p>",
+      "tags": [
+        "arithmetic",
+        "toolchain"
+      ]
+    },
+    {
+      "front": "LLVM & GCC: Instruction scheduling",
+      "back": "<p class=\"tldr\">Reorder instructions to avoid pipeline stalls. CPU-specific.</p>",
+      "tags": [
+        "arithmetic",
+        "toolchain"
+      ]
+    },
+    {
+      "front": "LLVM & GCC: Link-time optimization",
+      "back": "<p class=\"tldr\">Optimize <i>across</i> translation units at link time. Used for Chrome, Firefox, Linux kernel.</p>",
+      "tags": [
+        "arithmetic",
+        "toolchain"
+      ]
+    },
+    {
+      "front": "LLVM & GCC: Linux kernel",
+      "back": "<p class=\"tldr\">Built with GCC for 30+ years. Clang-built kernel (<a href=\"https://clangbuiltlinux.github.io/\">ClangBuiltLinux</a>) is production-ready for Android and ChromeOS since ~2019, but vanilla upstream still defaults to GCC.</p>",
+      "tags": [
+        "arithmetic",
+        "toolchain"
+      ]
+    },
+    {
+      "front": "LLVM & GCC: Apple everything",
+      "back": "<p class=\"tldr\">Xcode uses Clang for all C/C++/ObjC. Swift compiler emits LLVM IR. iOS, macOS, watchOS, tvOS — all LLVM. Apple is the largest funder of LLVM development.</p>",
+      "tags": [
+        "arithmetic",
+        "toolchain"
+      ]
+    },
+    {
+      "front": "LLVM & GCC: Android",
+      "back": "<p class=\"tldr\">NDK and platform code switched from GCC to Clang in 2018. All of AOSP now built with LLVM.</p>",
+      "tags": [
+        "arithmetic",
+        "toolchain"
+      ]
+    },
+    {
+      "front": "Rust, Swift, Julia, Zig, Crystal",
+      "back": "<p class=\"tldr\">Every major new systems language since ~2010 builds on LLVM. None on GCC. That's the permissive-license + reusable-library moat in action.</p>",
+      "tags": [
+        "arithmetic",
+        "toolchain"
+      ]
+    },
+    {
+      "front": "LLVM & GCC: NVIDIA CUDA",
+      "back": "<p class=\"tldr\"><code>nvcc</code> is a Clang fork. GPU kernels → NVPTX (an LLVM back-end) → PTX → SASS. ROCm (AMD) is also LLVM-based.</p>",
+      "tags": [
+        "arithmetic",
+        "toolchain"
+      ]
+    },
+    {
+      "front": "LLVM & GCC: Embedded / automotive",
+      "back": "<p class=\"tldr\">AVR, MSP430, old ARM Cortex-M ports — GCC dominates because it has ports no one has re-done for LLVM. Also AUTOSAR certification favours GCC variants.</p>",
+      "tags": [
+        "arithmetic",
+        "toolchain"
+      ]
+    },
+    {
+      "front": "LLVM & GCC: MSVC",
+      "back": "<p class=\"tldr\">Windows' own C/C++ compiler. Not GCC or LLVM-based, but since 2018 ships an optional Clang front-end. Most Windows games are still MSVC.</p>",
+      "tags": [
+        "arithmetic",
+        "toolchain"
+      ]
+    },
+    {
+      "front": "LLVM & GCC: Intel oneAPI / ICX",
+      "back": "<p class=\"tldr\">Intel abandoned their proprietary ICC in 2021 and rebased on Clang/LLVM. Even Intel's own compiler is now LLVM underneath.</p>",
+      "tags": [
+        "arithmetic",
+        "toolchain"
+      ]
+    },
+    {
+      "front": "The AI era: FP32",
+      "back": "<p class=\"tldr\" style=\"font-family:var(--mono);font-size:.85em\"><b style=\"color:var(--pink)\">S</b>│<b style=\"color:var(--orange)\">EEEEEEEE</b>│<b style=\"color:var(--green)\">MMMMMMMMMMMMMMMMMMMMMMM</b><br><span style=\"color:var(--mute)\">1  ·  8 bits  ·  23 bits mantissa</span></p>       <p class=\"tldr\"><b>Range:</b> ±10³⁸ · <b>Precision:</b> ~7 decimal digits.</p>       <p class=\"tldr\">The <b>scientific computing default</b> since 1985. Used for graphics, physics, CAD, almost all classical ML before 2017. Every CPU and GPU has native FP32 math.</p>       <span class=\"eg\">3.14 → 0x40490FDB (exact stored value 3.1400001049…)</span>",
+      "tags": [
+        "arithmetic",
+        "ai"
+      ]
+    },
+    {
+      "front": "The AI era: FP16",
+      "back": "<p class=\"tldr\" style=\"font-family:var(--mono);font-size:.85em\"><b style=\"color:var(--pink)\">S</b>│<b style=\"color:var(--orange)\">EEEEE</b>│<b style=\"color:var(--green)\">MMMMMMMMMM</b><br><span style=\"color:var(--mute)\">1  ·  5 bits  ·  10 bits mantissa</span></p>       <p class=\"tldr\"><b>Range:</b> ±65,504 (tiny!) · <b>Precision:</b> ~3-4 digits.</p>       <p class=\"tldr\"><b>Problem:</b> exponent only 5 bits — gradients in deep nets frequently overflow or underflow. \"Loss scaling\" tricks (multiply loss by 2¹⁵ before backprop, divide after) are needed. Painful.</p>       <span class=\"eg\">Introduced by NVIDIA Pascal (2016). Made FP16 training possible but fragile.</span>",
+      "tags": [
+        "arithmetic",
+        "ai"
+      ]
+    },
+    {
+      "front": "The AI era: BF16 · \"Brain Float\"",
+      "back": "<p class=\"tldr\" style=\"font-family:var(--mono);font-size:.85em\"><b style=\"color:var(--pink)\">S</b>│<b style=\"color:var(--orange)\">EEEEEEEE</b>│<b style=\"color:var(--green)\">MMMMMMM</b><br><span style=\"color:var(--mute)\">1  ·  8 bits  ·  7 bits mantissa</span></p>       <p class=\"tldr\"><b>Range:</b> ±10³⁸ (same as FP32!) · <b>Precision:</b> ~2-3 digits.</p>       <p class=\"tldr\"><b>The insight:</b> keep FP32's 8-bit exponent (wide range), sacrifice mantissa instead. Neural nets care about <i>range</i>, not <i>precision</i>. <b>No loss scaling needed.</b> Drop-in replacement for FP32 in training.</p>       <span class=\"eg\">Invented for Google TPU. Now standard on A100, H100, MI300X, TPU v4+, everything.</span>",
+      "tags": [
+        "arithmetic",
+        "ai"
+      ]
+    },
+    {
+      "front": "The AI era: TF32",
+      "back": "<p class=\"tldr\" style=\"font-family:var(--mono);font-size:.85em\"><b style=\"color:var(--pink)\">S</b>│<b style=\"color:var(--orange)\">EEEEEEEE</b>│<b style=\"color:var(--green)\">MMMMMMMMMM</b>│<span style=\"color:var(--mute)\">xxxxxxxxxxxxx</span><br><span style=\"color:var(--mute)\">1  ·  8 bits  ·  10 bits  ·  13 bits ignored</span></p>       <p class=\"tldr\"><b>Not a storage format</b> — data is stored as FP32, but tensor cores <i>read</i> only the top 19 bits during matmul. Invisible speed boost.</p>       <p class=\"tldr\">Ampere (A100) default for <code>torch.matmul</code>. ~10× faster than true FP32, no code changes. Loses 13 mantissa bits during matmul only.</p>       <span class=\"eg\">Why? Mantissa bits in matmul are mostly noise after accumulation — 10 is plenty.</span>",
+      "tags": [
+        "arithmetic",
+        "ai"
+      ]
+    },
+    {
+      "front": "The AI era: FP8 E4M3",
+      "back": "<p class=\"tldr\" style=\"font-family:var(--mono);font-size:.85em\"><b style=\"color:var(--pink)\">S</b>│<b style=\"color:var(--orange)\">EEEE</b>│<b style=\"color:var(--green)\">MMM</b><br><span style=\"color:var(--mute)\">1  ·  4 bits  ·  3 bits mantissa</span></p>       <p class=\"tldr\"><b>Range:</b> ±448 · <b>Precision:</b> ~1-2 digits. Only <b>256 distinct values</b> total.</p>       <p class=\"tldr\">Used for <b>forward pass</b>: weights and activations. Needs per-tensor or per-block scaling factors (dynamic scaling kept separately) to make the tiny range usable across layers.</p>       <span class=\"eg\">Hopper H100 Transformer Engine auto-manages scales layer-by-layer.</span>",
+      "tags": [
+        "arithmetic",
+        "ai"
+      ]
+    },
+    {
+      "front": "The AI era: FP8 E5M2",
+      "back": "<p class=\"tldr\" style=\"font-family:var(--mono);font-size:.85em\"><b style=\"color:var(--pink)\">S</b>│<b style=\"color:var(--orange)\">EEEEE</b>│<b style=\"color:var(--green)\">MM</b><br><span style=\"color:var(--mute)\">1  ·  5 bits  ·  2 bits mantissa</span></p>       <p class=\"tldr\"><b>Range:</b> ±57,344 · <b>Precision:</b> ~1 digit.</p>       <p class=\"tldr\">Used for <b>backward pass</b>: gradients have much wider dynamic range (often 10⁻⁶ to 10³) so we trade mantissa for exponent. Paired with E4M3 in mixed-precision training.</p>       <span class=\"eg\">Two FP8 formats, one workload — that's the trick: use E4M3 where range is tight, E5M2 where range is wide.</span>",
+      "tags": [
+        "arithmetic",
+        "ai"
+      ]
+    },
+    {
+      "front": "The AI era: FP4 E2M1",
+      "back": "<p class=\"tldr\" style=\"font-family:var(--mono);font-size:.85em\"><b style=\"color:var(--pink)\">S</b>│<b style=\"color:var(--orange)\">EE</b>│<b style=\"color:var(--green)\">M</b><br><span style=\"color:var(--mute)\">1  ·  2 bits  ·  1 bit mantissa</span></p>       <p class=\"tldr\"><b>Range:</b> ±6 · <b>Only 16 distinct values total.</b></p>       <p class=\"tldr\">Ships on NVIDIA <b>Blackwell B200</b> (2024). Delivers <b>20 PFLOPS FP4</b> per chip — 2× FP8, 4× BF16. Lets you fit a 70B-parameter model in 35 GB instead of 140 GB. Inference only (no training).</p>       <span class=\"eg\">MXFP4 variant: 32 FP4 values share one 8-bit exponent scale → \"microscaled\" for accuracy.</span>",
+      "tags": [
+        "arithmetic",
+        "ai"
+      ]
+    },
+    {
+      "front": "The AI era: INT8 / INT4",
+      "back": "<p class=\"tldr\" style=\"font-family:var(--mono);font-size:.85em\">INT8: -128…127 · INT4: -8…7<br><span style=\"color:var(--mute)\">No sign/exp/mantissa — just plain integers + a scale</span></p>       <p class=\"tldr\">Store weights as integers with a per-tensor (or per-row) FP16 scale: <code>real = int × scale</code>. Used for <b>post-training quantization</b> with tools like GPTQ, AWQ, bitsandbytes.</p>       <span class=\"eg\">Llama-70B INT4 fits in 40 GB of VRAM on a single consumer GPU.</span>",
+      "tags": [
+        "arithmetic",
+        "ai"
+      ]
+    },
+    {
+      "front": "The AI era: BitNet b1.58",
+      "back": "<p class=\"tldr\" style=\"font-family:var(--mono);font-size:.85em\">Each weight ∈ {−1, 0, +1}<br><span style=\"color:var(--mute)\">log₂(3) ≈ 1.58 bits per weight</span></p>       <p class=\"tldr\">No multiplies needed — matrix multiply becomes <b>add/subtract/skip</b>. 10× less energy than FP16 LLMs of equal quality. Suggests the precision floor is far below what current hardware supports.</p>       <span class=\"eg\">If true at scale, future AI chips need only adders — no multipliers.</span>",
+      "tags": [
+        "arithmetic",
+        "ai"
+      ]
+    },
+    {
+      "front": "The AI era: Overflow",
+      "back": "<p class=\"tldr\">FP16 max is 65,504. One layer of a ResNet can easily output 10⁵ — boom, all infs. That's why BF16 (FP32 range) won over FP16.</p>",
+      "tags": [
+        "arithmetic",
+        "ai"
+      ]
+    },
+    {
+      "front": "The AI era: Underflow",
+      "back": "<p class=\"tldr\">Gradients near the input of a deep net are tiny (10⁻⁸). FP16 flushes them to zero. Training stalls. Loss scaling is the patch.</p>",
+      "tags": [
+        "arithmetic",
+        "ai"
+      ]
+    },
+    {
+      "front": "The AI era: Accuracy collapse",
+      "back": "<p class=\"tldr\">FP4 has only 16 values. A careless conversion from FP16 drops ~3% top-1 on ImageNet. Requires calibration (GPTQ, SmoothQuant) or QAT to recover.</p>",
+      "tags": [
+        "arithmetic",
+        "ai"
+      ]
+    },
+    {
+      "front": "The AI era: Outliers",
+      "back": "<p class=\"tldr\">Transformer attention has a few activations that are 100× larger than the rest. Naïve quantization clips them, ruining the model. Solutions: per-channel scales, outlier-aware quant (SmoothQuant, AWQ).</p>",
+      "tags": [
+        "arithmetic",
+        "ai"
+      ]
+    },
+    {
+      "front": "The AI era: Accumulation",
+      "back": "<p class=\"tldr\">Inputs can be FP8, but the <b>accumulator</b> inside the multiply-add must stay FP32 (or at least BF16). Otherwise tiny errors compound across thousands of multiplies in a single matmul.</p>",
+      "tags": [
+        "arithmetic",
+        "ai"
+      ]
+    },
+    {
+      "front": "The AI era: Calibration cost",
+      "back": "<p class=\"tldr\">Lower-bit formats need a small calibration dataset to pick scales. That's extra infrastructure. Simpler to train in BF16 and ship the model as-is.</p>",
+      "tags": [
+        "arithmetic",
+        "ai"
+      ]
+    },
+    {
+      "front": "Laws & Limits: Moore's Law",
+      "back": "<p class=\"tldr\" style=\"font-size:1.02em\"><b>\"The number of transistors on an integrated circuit doubles approximately every two years.\"</b> — the most successful quantitative prediction in the history of industry. For <b>60 years</b> it has guided R&amp;D budgets, pricing, Wall Street expectations, and national strategy.</p>        <h5 style=\"margin-top:12px;color:var(--blue)\">📜 The original paper</h5>       <p class=\"tldr\">In April 1965, <b>Gordon Moore</b> (then research director at Fairchild Semiconductor, 3 years before co-founding Intel) wrote a 4-page article titled <i>\"Cramming more components onto integrated circuits\"</i> for <i>Electronics Magazine</i>'s 35th-anniversary issue.</p>       <p class=\"tldr\">He plotted 5 data points (1959-1965) on a log scale, noticed components per chip had <b>doubled every year</b>, and predicted it would continue for \"at least 10 years\" — reaching <b>65,000 components per chip by 1975</b>. Nearly everyone thought he was crazy. He was off by only ~2×.</p>       <span class=\"eg\">\"Integrated circuits will lead to such wonders as home computers… automatic controls for automobiles… personal portable communications equipment.\" — Moore, 1965. He was writing this in a world where a computer filled a room.</span>        <h5 style=\"margin-top:14px;color:var(--blue)\">🔄 The 1975 revision</h5>       <p class=\"tldr\">By 1975, doubling had slipped to every <b>~18 months</b>, then <b>~2 years</b>. Moore officially revised the prediction to \"every two years\" in a 1975 IEDM speech. <b>Intel co-founder David House</b> later coined \"every 18 months for performance\" — which added frequency gains to transistor count. All three numbers are still quoted, and all three are called \"Moore's Law\" in the wild.</p>        <h5 style=\"margin-top:14px;color:var(--blue)\">📈 The 60-year data</h5>       <table class=\"t glossary\" style=\"margin-top:6px\">         <thead><tr><th>Year</th><th>Chip</th><th>Transistors</th><th>Process</th><th>× vs 1971</th></tr></thead>         <tbody>           <tr><td>1971</td><td>Intel 4004</td><td class=\"mono\">2,300</td><td>10,000 nm</td><td class=\"mono\">1×</td></tr>           <tr><td>1978</td><td>Intel 8086</td><td class=\"mono\">29,000</td><td>3,000 nm</td><td class=\"mono\">13×</td></tr>           <tr><td>1985</td><td>Intel 386</td><td class=\"mono\">275,000</td><td>1,500 nm</td><td class=\"mono\">120×</td></tr>           <tr><td>1993</td><td>Pentium</td><td class=\"mono\">3,100,000</td><td>800 nm</td><td class=\"mono\">1,350×</td></tr>           <tr><td>2000</td><td>Pentium 4</td><td class=\"mono\">42,000,000</td><td>180 nm</td><td class=\"mono\">18,000×</td></tr>           <tr><td>2006</td><td>Core 2 Duo</td><td class=\"mono\">291,000,000</td><td>65 nm</td><td class=\"mono\">127,000×</td></tr>           <tr><td>2012</td><td>Ivy Bridge</td><td class=\"mono\">1,400,000,000</td><td>22 nm</td><td class=\"mono\">610,000×</td></tr>           <tr><td>2017</td><td>Apple A11</td><td class=\"mono\">4,300,000,000</td><td>10 nm</td><td class=\"mono\">1,870,000×</td></tr>           <tr><td>2020</td><td>Apple M1</td><td class=\"mono\">16,000,000,000</td><td>5 nm</td><td class=\"mono\">7,000,000×</td></tr>           <tr><td>2022</td><td>NVIDIA H100</td><td class=\"mono\">80,000,000,000</td><td>4 nm</td><td class=\"mono\">35,000,000×</td></tr>           <tr><td>2024</td><td>NVIDIA B200</td><td class=\"mono\">208,000,000,000</td><td>4 nm (dual die)</td><td class=\"mono\">90,000,000×</td></tr>           <tr><td>2024</td><td>Cerebras WSE-3</td><td class=\"mono\">4,000,000,000,000</td><td>5 nm (whole wafer)</td><td class=\"mono\">1,740,000,000×</td></tr>         </tbody>       </table>       <p class=\"tldr\" style=\"margin-top:6px\"><b>Average doubling time over 53 years = 2.01 years.</b> Uncanny fidelity to Moore's original number, despite enormous technological reinventions along the way.</p>        <h5 style=\"margin-top:14px;color:var(--blue)\">⚙️ How it was sustained (the 5 eras)</h5>       <ol style=\"margin:4px 0 0;padding-left:22px\">         <li><b>Bipolar TTL era (1965-1975)</b> — photolithography from visible light, mask-align by hand.</li>         <li><b>CMOS planar era (1975-2003)</b> — Dennard scaling did the heavy lifting. Every 2 years: dimensions ×0.7, voltage ×0.7, speed ×1.4, density ×2.</li>         <li><b>Strained silicon / HKMG era (2003-2011)</b> — 90 nm onward. Added strained silicon (faster electrons), high-k/metal-gate (Intel 45 nm, 2007).</li>         <li><b>FinFET era (2011-2022)</b> — gate wraps 3 sides of channel (Intel 22 nm, 2011; TSMC 16 nm, 2014). Fights leakage; sustains scaling.</li>         <li><b>GAAFET / nanosheet era (2022+)</b> — gate wraps all 4 sides (Samsung 3 nm GAA, 2022; TSMC N2, 2025; Intel 20A / 18A with RibbonFET). Also 3D stacking (logic-on-logic), backside power, EUV double/triple patterning.</li>       </ol>       <p class=\"tldr\" style=\"margin-top:6px\"><b>Each era involved a whole-industry reinvention</b> — materials, photolithography (deep-UV → EUV in 2019), transistor architecture, fab tooling. Moore's Law is the result of dozens of different technologies handing the baton.</p>        <h5 style=\"margin-top:14px;color:var(--blue)\">💀 The three \"deaths\" of Moore's Law</h5>       <div class=\"def-grid\" style=\"margin-top:6px\">         <div class=\"def-card\" style=\"border-left-color:var(--pink)\"><p class=\"tldr\">Pentium 4 \"Tejas\" cancelled at 3.8 GHz. Clocks stopped climbing. Moore's Law continued on <i>transistor count</i>, but the \"your code gets faster for free\" era ended. Industry pivoted to multicore.</p></div>         <div class=\"def-card\" style=\"border-left-color:var(--pink)\"><p class=\"tldr\">Until ~28 nm, each new node made transistors <i>cheaper</i>. After 28 nm, fab costs rose faster than density gains. <b>Cost per transistor stopped falling</b>. Moore's Law is still alive physically but not economically — you need AI-scale volume to justify a 3 nm tape-out.</p></div>         <div class=\"def-card\" style=\"border-left-color:var(--pink)\"><p class=\"tldr\">At 1-2 nm gate length, quantum tunneling (see §Physics card 1) dominates and conventional CMOS approaches its floor. 2030s innovations (2D materials like MoS₂, carbon nanotubes, 3D stacking) may extend it — but classical Moore's Law probably ends around 2035-2040.</p></div>       </div>        <h5 style=\"margin-top:14px;color:var(--blue)\">🔭 What \"Moore's Law\" really tracks (in 2025)</h5>       <p class=\"tldr\">Because frequency died (2005) and cost-per-transistor stalled (~2014), the industry has <b>broadened the definition</b> to keep the curve alive:</p>       <ul style=\"margin:4px 0 0;padding-left:22px\">         <li><b>Transistor count per chip</b> — still doubling every ~2 years via 3D stacking, chiplets, dual-die.</li>         <li><b>Performance per watt</b> — Koomey's Law, still holding at ~2.6-yr doubling.</li>         <li><b>Performance per dollar of AI compute</b> — Huang's Law, doubling faster than Moore due to architecture + precision cuts.</li>         <li><b>Effective density</b> — TSMC now reports \"transistors per mm²\" instead of just gate length, because \"3 nm\" is marketing.</li>       </ul>        <h5 style=\"margin-top:14px;color:var(--blue)\">🌍 Why it matters — the cultural weight</h5>       <p class=\"tldr\">Moore's Law is <b>not a law of physics</b>. It's a <b>self-fulfilling industry coordination mechanism</b>. Intel told customers to expect 2× every 2 years; customers planned software around it; equipment makers planned roadmaps around it; investors priced stocks around it. Everyone ran their part of the race assuming everyone else would — and <b>because everyone did, it held</b>.</p>       <p class=\"tldr\">When Moore wrote his 1965 paper, he meant to describe a trend he'd seen for 6 years. It became an <b>economic contract with the future</b>. That's why \"the death of Moore's Law\" keeps being announced every few years, and yet transistor counts keep doubling. The industry refuses to let it die.</p>       <span class=\"eg\">\"I never said the doubling was going to happen forever. I just said, in 1965, 'this is going to happen for at least the next 10 years.'\" — Gordon Moore, 2005. He lived to see it last <b>60</b>.</span>        <h5 style=\"margin-top:14px;color:var(--blue)\">🔗 Related laws</h5>       <ul style=\"margin:4px 0 0;padding-left:22px;font-size:.9em\">         <li><b>Dennard Scaling</b> (below) — the physics that powered Moore 1974-2006.</li>         <li><b>Rock's Law</b> (Moore's 2nd Law) — cost of a fab doubles every 4 years. Sets the economic ceiling.</li>         <li><b>Koomey's Law</b> — energy per operation doubles in efficiency. Closely related, orthogonal axis.</li>         <li><b>Huang's Law</b> — the GPU / AI successor, doubling faster by stacking Moore + architecture + precision.</li>         <li><b>Amdahl's Law</b> — ceilings multi-core gains once frequency scaling died. Explains why Moore's gift stopped being \"free\" for serial code after 2005.</li>       </ul>        <div class=\"meta\" style=\"margin-top:12px\"><span>Empirical industry observation · self-fulfilling · 60 years and counting</span><a href=\"https://en.wikipedia.org/wiki/Moore%27s_law\">Wikipedia ↗</a></div>",
+      "tags": [
+        "arithmetic",
+        "laws"
+      ]
+    },
+    {
+      "front": "1. Frequency scaling — died 2004-2006",
+      "back": "<p class=\"tldr\">Pentium 4 \"Tejas\" cancelled at 3.8 GHz. Clocks stopped climbing. Moore's Law continued on <i>transistor count</i>, but the \"your code gets faster for free\" era ended. Industry pivoted to multicore.</p>",
+      "tags": [
+        "arithmetic",
+        "laws"
+      ]
+    },
+    {
+      "front": "2. Economic Moore — wobbled ~2014",
+      "back": "<p class=\"tldr\">Until ~28 nm, each new node made transistors <i>cheaper</i>. After 28 nm, fab costs rose faster than density gains. <b>Cost per transistor stopped falling</b>. Moore's Law is still alive physically but not economically — you need AI-scale volume to justify a 3 nm tape-out.</p>",
+      "tags": [
+        "arithmetic",
+        "laws"
+      ]
+    },
+    {
+      "front": "3. Physical Moore — struggling below ~2 nm",
+      "back": "<p class=\"tldr\">At 1-2 nm gate length, quantum tunneling (see §Physics card 1) dominates and conventional CMOS approaches its floor. 2030s innovations (2D materials like MoS₂, carbon nanotubes, 3D stacking) may extend it — but classical Moore's Law probably ends around 2035-2040.</p>",
+      "tags": [
+        "arithmetic",
+        "laws"
+      ]
+    },
+    {
+      "front": "Laws & Limits: Dennard Scaling",
+      "back": "<p class=\"tldr\"><b>Robert Dennard</b> (IBM, inventor of DRAM) proved: shrink a MOSFET's linear dimensions by factor k → voltage shrinks by k → transistor delay shrinks by k → power per gate shrinks by k² → <b>power density stays constant</b>. That's the miracle that let clocks rise from MHz to GHz.</p>       <p class=\"tldr\"><b>Why it broke (~2006):</b> below ~90 nm, threshold voltage stopped dropping because subthreshold leakage explodes. V_DD froze at ~1 V. Without falling V, shrinking gates raised power density — chips started melting.</p>       <span class=\"eg\">Intel Pentium 4 \"Tejas\" was designed for 10 GHz, cancelled 2004 at 3.8 GHz because it would have drawn 300 W. The pivot to multicore began right after.</span>       <p class=\"tldr\"><b>Consequence:</b> the end of Dennard killed <b>frequency scaling</b>. We've been stuck at 3-6 GHz ever since, winning performance through parallelism (multicore, SIMD, GPUs), specialization (tensor cores), and precision cuts (FP16/FP8/FP4).</p>       <div class=\"meta\"><span>Physical law while it held · dead since 2006</span><a href=\"https://en.wikipedia.org/wiki/Dennard_scaling\">Wikipedia ↗</a></div>",
+      "tags": [
+        "arithmetic",
+        "laws"
+      ]
+    },
+    {
+      "front": "Laws & Limits: Koomey's Law",
+      "back": "<p class=\"tldr\"><b>Jonathan Koomey</b> (Stanford) — \"computations per joule\" doubles every ~1.57 years (1950-2000), slowed to ~2.6 years after Dennard broke. Closely related to Moore's Law but orthogonal: Moore is about <i>count</i>, Koomey is about <i>efficiency</i>.</p>       <p class=\"tldr\"><b>Why it matters:</b> Koomey's Law is what makes battery-powered computing possible. The same work that took 1 kWh in 1985 takes &lt; 1 mJ in 2025. This is why your phone runs AI models that crashed supercomputers a decade ago.</p>       <span class=\"eg\">ENIAC (1946): ~500 FLOPS per 150 kW = 3 μFLOPS/W · M2 MacBook (2023): ~3 TFLOPS per 20 W = 150 GFLOPS/W — a 5 × 10¹⁶× efficiency gain.</span>       <div class=\"meta\"><span>Tracks compute efficiency · decoupled from clock speed</span><a href=\"https://en.wikipedia.org/wiki/Koomey%27s_law\">Wikipedia ↗</a></div>",
+      "tags": [
+        "arithmetic",
+        "laws"
+      ]
+    },
+    {
+      "front": "Laws & Limits: Landauer's Principle",
+      "back": "<p class=\"tldr\"><b>Rolf Landauer</b> (IBM) proved that <b>erasing 1 bit of information</b> in the presence of a heat bath must dissipate at least <code>kT ln 2</code> joules — about <b>2.85 × 10⁻²¹ J at room temperature</b>. Reversible computation has no such limit.</p>       <p class=\"tldr\"><b>Formula:</b> <code>E<sub>min</sub> = k<sub>B</sub> · T · ln 2</code></p>       <p class=\"tldr\"><b>Today we use ~10⁻¹⁴ J per bit operation</b> — about <b>10⁷× above Landauer</b>. So hardware has ~7 orders of magnitude left before physics stops us. That's 20-30 more Moore doublings, in principle.</p>       <span class=\"eg\">Experimental confirmation: Bérut et al., Nature 2012 — measured heat dissipated during a bit-erase on a single colloidal particle, matched kT ln 2 within experimental error.</span>       <div class=\"meta\"><span>Physical law · applies to any computation, anywhere</span><a href=\"https://en.wikipedia.org/wiki/Landauer%27s_principle\">Wikipedia ↗</a></div>",
+      "tags": [
+        "arithmetic",
+        "laws"
+      ]
+    },
+    {
+      "front": "Laws & Limits: Shannon-Hartley Theorem",
+      "back": "<p class=\"tldr\"><b>Claude Shannon</b>'s foundational theorem of information theory. The maximum error-free data rate over a noisy channel is:</p>       <p class=\"tldr\" style=\"font-family:var(--mono)\"><code>C = B · log₂(1 + S/N)</code></p>       <p class=\"tldr\">where B is bandwidth (Hz), S is signal power, N is noise power. Doubling bandwidth doubles capacity; doubling signal power adds only 1 bit per symbol. That's why going from 2-level to 4-level signaling (PAM-4) needs 4× the SNR to cover the same error rate.</p>       <span class=\"eg\">Governs Wi-Fi, 5G, PCIe 6.0 PAM-4, NAND flash TLC/QLC, and the \"why ternary is worse\" argument in §Physics.</span>       <div class=\"meta\"><span>Information-theoretic ceiling · 77 years old, still untouchable</span><a href=\"https://en.wikipedia.org/wiki/Shannon%E2%80%93Hartley_theorem\">Wikipedia ↗</a></div>",
+      "tags": [
+        "arithmetic",
+        "laws"
+      ]
+    },
+    {
+      "front": "Laws & Limits: Amdahl's Law",
+      "back": "<p class=\"tldr\"><b>Gene Amdahl</b> (IBM) — if fraction <b>s</b> of a program is serial and <b>p = 1 − s</b> is parallel, then speedup with N cores is bounded by:</p>       <p class=\"tldr\" style=\"font-family:var(--mono)\"><code>Speedup ≤ 1 / (s + p/N)</code></p>       <p class=\"tldr\">Even with infinite cores, max speedup is <b>1/s</b>. If 5% of your code is serial, you can never exceed 20× — no matter if you have 100 or 1 million cores.</p>       <span class=\"eg\">Example: 95% parallel, 5% serial, 16 cores → speedup ≈ 9.1×, not 16×. With 1024 cores → still only 19.8×.</span>       <p class=\"tldr\"><b>Consequence:</b> multicore-era performance comes from <i>removing serial bottlenecks</i>, not just adding cores. It's why lock-free data structures, SIMD, and cache-coherence protocols matter.</p>       <div class=\"meta\"><span>Mathematical ceiling on parallel speedup</span><a href=\"https://en.wikipedia.org/wiki/Amdahl%27s_law\">Wikipedia ↗</a></div>",
+      "tags": [
+        "arithmetic",
+        "laws"
+      ]
+    },
+    {
+      "front": "Laws & Limits: Gustafson's Law",
+      "back": "<p class=\"tldr\"><b>John Gustafson</b>'s counterpoint: in practice, people don't run the same-sized problem on more cores — they run <b>bigger problems</b>. If workload scales with cores, speedup is:</p>       <p class=\"tldr\" style=\"font-family:var(--mono)\"><code>Speedup = s + N · p</code></p>       <p class=\"tldr\">Linear in N, no ceiling. Explains why supercomputers and GPU clusters actually deliver near-linear speedup despite Amdahl: they're solving <b>larger</b> fluid-dynamics / weather / neural-net problems, not the same problem faster.</p>       <span class=\"eg\">LLM training scales to 10,000+ GPUs because you just use more tokens and parameters — \"strong scaling\" (fixed problem) would plateau.</span>       <div class=\"meta\"><span>Complements Amdahl · drives HPC &amp; AI scaling</span><a href=\"https://en.wikipedia.org/wiki/Gustafson%27s_law\">Wikipedia ↗</a></div>",
+      "tags": [
+        "arithmetic",
+        "laws"
+      ]
+    },
+    {
+      "front": "Laws & Limits: Little's Law",
+      "back": "<p class=\"tldr\"><b>John Little</b> — for any stable system: <code>L = λ · W</code>. Average items in system (L) = arrival rate (λ) × average time in system (W).</p>       <p class=\"tldr\">Used everywhere: CPU pipelines (instructions in flight = IPC × depth), queues, databases, networks, Starbucks lines. Derives \"requests in flight\" capacity for SSDs, NICs, memory controllers.</p>       <span class=\"eg\">Example: modern NVMe SSD, 100 μs latency, 1 M IOPS → 100 requests must be in flight (queue depth) to saturate it. Less = wasted bandwidth.</span>       <div class=\"meta\"><span>Distribution-independent · holds for any queuing system</span><a href=\"https://en.wikipedia.org/wiki/Little%27s_law\">Wikipedia ↗</a></div>",
+      "tags": [
+        "arithmetic",
+        "laws"
+      ]
+    },
+    {
+      "front": "Laws & Limits: Pollack's Rule",
+      "back": "<p class=\"tldr\"><b>Fred Pollack</b> (Intel) observed: single-core performance grows roughly as <b>√(transistor budget)</b>. Double the die area spent on one core → only ~40% faster.</p>       <p class=\"tldr\"><b>Why:</b> diminishing returns on bigger caches, wider issue, more OoO machinery, branch predictors. Each resource helps less than the last.</p>       <p class=\"tldr\"><b>Consequence:</b> if √2 ≈ 1.4 is all you get from doubling one core, <b>two cores (2×)</b> beat it. That's the architectural justification for the multicore pivot around 2005.</p>       <span class=\"eg\">Explains why CPUs stabilized at ~8-16 cores (sweet spot for desktops) and GPUs went to thousands of tiny cores (throughput wins).</span>       <div class=\"meta\"><span>Architectural rule of thumb · drove multicore era</span></div>",
+      "tags": [
+        "arithmetic",
+        "laws"
+      ]
+    },
+    {
+      "front": "Laws & Limits: Rent's Rule",
+      "back": "<p class=\"tldr\"><b>E. F. Rent</b> (IBM) observed that the number of I/O pins on a logic block grows as a <b>power of the number of gates inside</b>:</p>       <p class=\"tldr\" style=\"font-family:var(--mono)\"><code>P = k · Gᵖ</code>, where p ≈ 0.5 - 0.7</p>       <p class=\"tldr\">Means: as chips get larger, I/O pin count grows slower than internal gate count. That's why modern GPUs have huge internal bandwidth but relatively few external pins (6,912 pins on B200 package is a <i>lot</i> but trivial vs 208 B transistors).</p>       <span class=\"eg\">Drives the packaging crisis: HBM stacking, CoWoS, 2.5D interposers — all solve the \"not enough pins\" Rent's-rule problem.</span>       <div class=\"meta\"><span>Explains why memory bandwidth is always the bottleneck</span><a href=\"https://en.wikipedia.org/wiki/Rent%27s_rule\">Wikipedia ↗</a></div>",
+      "tags": [
+        "arithmetic",
+        "laws"
+      ]
+    },
+    {
+      "front": "Laws & Limits: Rock's Law (Moore's 2nd)",
+      "back": "<p class=\"tldr\"><b>Arthur Rock</b> — the cost of building a leading-edge fab <b>doubles every 4 years</b>. 1981: $100 M. 1995: $1 B. 2020: $10 B. TSMC's Arizona fab (2024): $65 B.</p>       <p class=\"tldr\"><b>Consequence:</b> only 3 companies left building leading-edge logic (TSMC, Samsung, Intel). Consolidation is not a business failure — it's Rock's Law eating the industry.</p>       <span class=\"eg\">One EUV lithography machine (ASML TWINSCAN NXE) costs $200 million. A fab needs 20+ of them.</span>       <div class=\"meta\"><span>Economic law · explains chip-industry consolidation</span><a href=\"https://en.wikipedia.org/wiki/Moore%27s_second_law\">Wikipedia ↗</a></div>",
+      "tags": [
+        "arithmetic",
+        "laws"
+      ]
+    },
+    {
+      "front": "Laws & Limits: Wirth's Law",
+      "back": "<p class=\"tldr\"><b>Niklaus Wirth</b> (inventor of Pascal, Modula, Oberon) — \"Software is getting slower more rapidly than hardware is becoming faster.\"</p>       <p class=\"tldr\">Every generation of hardware improvements is eaten by JavaScript frameworks, Electron apps, abstraction layers, bloated frameworks. A modern chat app uses more RAM than NASA had when they landed on the Moon.</p>       <span class=\"eg\">Gates's corollary: \"The speed of software halves every 18 months.\" Slack uses ~1 GB RAM; so does VS Code. Teams uses 1.5 GB.</span>       <div class=\"meta\"><span>Tongue-in-cheek but provable</span><a href=\"https://en.wikipedia.org/wiki/Wirth%27s_law\">Wikipedia ↗</a></div>",
+      "tags": [
+        "arithmetic",
+        "laws"
+      ]
+    },
+    {
+      "front": "Laws & Limits: Bell's Law",
+      "back": "<p class=\"tldr\"><b>Gordon Bell</b> — roughly every decade, a new class of computer emerges at ~100× lower price/size, reaching a new user base: mainframe (1960s) → minicomputer (1970s) → PC (1980s) → laptop (1990s) → smartphone (2000s) → smart-watch / AR (2010s) → ?</p>       <p class=\"tldr\"><b>Prediction:</b> next class ~2025-2030 — likely always-on AI-first wearables or neural-interface devices. The pattern holds.</p>       <div class=\"meta\"><span>Empirical pattern · 6 decades of validation</span><a href=\"https://en.wikipedia.org/wiki/Bell%27s_law_of_computer_classes\">Wikipedia ↗</a></div>",
+      "tags": [
+        "arithmetic",
+        "laws"
+      ]
+    },
+    {
+      "front": "Laws & Limits: Metcalfe's Law",
+      "back": "<p class=\"tldr\"><b>Robert Metcalfe</b> (Ethernet inventor) — the value of a network scales as <b>n²</b> where n is the number of users. Doubling users quadruples value.</p>       <p class=\"tldr\">Why: each user can connect to every other user, giving n(n-1)/2 possible connections.</p>       <span class=\"eg\">Explains winner-takes-all dynamics: WhatsApp &gt; Signal, not because tech is better, but because network effect compounds.</span>       <div class=\"meta\"><span>Contested (some argue n log n) · still drives tech economics</span><a href=\"https://en.wikipedia.org/wiki/Metcalfe%27s_law\">Wikipedia ↗</a></div>",
+      "tags": [
+        "arithmetic",
+        "laws"
+      ]
+    },
+    {
+      "front": "Laws & Limits: Kryder's Law",
+      "back": "<p class=\"tldr\"><b>Mark Kryder</b> (Seagate CTO) — HDD areal density doubles every ~13 months (1990s-2000s), slowed to every ~2-3 years after ~2010 (superparamagnetic limit).</p>       <p class=\"tldr\">HDDs hit 20 TB (2023) via CMR/SMR, pushing to 30-50 TB via HAMR (Heat-Assisted Magnetic Recording) and MAMR. SSDs track their own curve — NAND density doubles via 3D stacking (128 → 232 → 400+ layers).</p>       <div class=\"meta\"><span>Slowing · physical limits of magnetic domains</span><a href=\"https://en.wikipedia.org/wiki/Mark_Kryder#Kryder%27s_law_projection\">Wikipedia ↗</a></div>",
+      "tags": [
+        "arithmetic",
+        "laws"
+      ]
+    },
+    {
+      "front": "Laws & Limits: Huang's Law",
+      "back": "<p class=\"tldr\"><b>Jensen Huang</b> (NVIDIA CEO) — GPU performance for AI doubles every ~2 years, <b>faster than Moore's Law</b>. Tesla K80 (2014) → H100 (2022) → B200 (2024) delivered ~1000× raw AI throughput in a decade.</p>       <p class=\"tldr\"><b>How (when Moore is slowing):</b> architectural gains (tensor cores), precision cuts (FP32 → FP8 → FP4), better memory (HBM), software (CUDA, Transformer Engine). Four levers instead of one.</p>       <span class=\"eg\">Pascal P100 (2016, FP32): 9 TFLOPS · Blackwell B200 (2024, FP4): 20,000 TFLOPS — &gt;2000× in 8 years.</span>       <div class=\"meta\"><span>Marketing + engineering · beats Moore via architecture</span><a href=\"https://en.wikipedia.org/wiki/Huang%27s_law\">Wikipedia ↗</a></div>",
+      "tags": [
+        "arithmetic",
+        "laws"
+      ]
+    },
+    {
+      "front": "Laws & Limits: Chinchilla scaling",
+      "back": "<p class=\"tldr\">For LLMs, compute-optimal training uses <b>~20 tokens per parameter</b>. A 70 B model should see ~1.4 T tokens; a 1 T model should see ~20 T tokens.</p>       <p class=\"tldr\"><b>Before Chinchilla:</b> models like GPT-3 (175 B params, 300 B tokens) were under-trained — bigger didn't mean better. <b>After:</b> Llama-2 (70 B × 2 T tokens) beat GPT-3 despite being smaller, by being trained longer.</p>       <span class=\"eg\">Rule of thumb: if your model is bigger than your data budget allows, train it less and save compute for a smaller model trained more.</span>       <div class=\"meta\"><span>Modern LLM economics</span><a href=\"https://arxiv.org/abs/2203.15556\">Hoffmann et al. 2022 ↗</a></div>",
+      "tags": [
+        "arithmetic",
+        "laws"
+      ]
+    },
+    {
+      "front": "Laws & Limits: 🟢 Alive",
+      "back": "<p class=\"tldr\">Moore (slowly), Koomey, Landauer (untouchable floor), Shannon-Hartley, Amdahl, Gustafson, Little, Rent, Huang, Chinchilla.</p>",
+      "tags": [
+        "arithmetic",
+        "laws"
+      ]
+    },
+    {
+      "front": "Laws & Limits: 🟡 Strained",
+      "back": "<p class=\"tldr\">Kryder (slowing), Metcalfe (contested n log n), Pollack (still predictive but architecture differs).</p>",
+      "tags": [
+        "arithmetic",
+        "laws"
+      ]
+    },
+    {
+      "front": "Laws & Limits: 🔴 Dead / broken",
+      "back": "<p class=\"tldr\">Dennard (dead ~2006), Clock-frequency scaling (dead at ~5 GHz), Single-thread free lunch (dead since 2005).</p>",
+      "tags": [
+        "arithmetic",
+        "laws"
+      ]
+    },
+    {
+      "front": "Appendix: NOT (inverter)",
+      "back": "<p class=\"tldr\">Flips the input. Output is the opposite of the input.</p>       <div class=\"tt\">in:  0  1<br>out: <b>1</b>  <b>0</b></div>       <span class=\"eg\">¬A &nbsp; Ā &nbsp; !A · 2 transistors · symbol: triangle + bubble</span>       <div class=\"meta\"><span>Simplest gate</span><a href=\"https://en.wikipedia.org/wiki/Inverter_(logic_gate)\">Wikipedia ↗</a></div>",
+      "tags": [
+        "arithmetic",
+        "appendix"
+      ]
+    },
+    {
+      "front": "Appendix: AND",
+      "back": "<p class=\"tldr\">Output is 1 <b>only if both</b> inputs are 1. \"All must agree.\"</p>       <div class=\"tt\">00→0 · 01→0 · 10→0 · 11→<b>1</b></div>       <span class=\"eg\">A·B &nbsp; A∧B · 6 transistors in CMOS</span>       <div class=\"meta\"><span>Multiplication in Boolean algebra</span><a href=\"https://en.wikipedia.org/wiki/AND_gate\">Wikipedia ↗</a></div>",
+      "tags": [
+        "arithmetic",
+        "appendix"
+      ]
+    },
+    {
+      "front": "Appendix: OR",
+      "back": "<p class=\"tldr\">Output is 1 <b>if either</b> input is 1. \"Any is enough.\"</p>       <div class=\"tt\">00→0 · 01→<b>1</b> · 10→<b>1</b> · 11→<b>1</b></div>       <span class=\"eg\">A+B &nbsp; A∨B · 6 transistors in CMOS</span>       <div class=\"meta\"><span>Addition in Boolean algebra</span><a href=\"https://en.wikipedia.org/wiki/OR_gate\">Wikipedia ↗</a></div>",
+      "tags": [
+        "arithmetic",
+        "appendix"
+      ]
+    },
+    {
+      "front": "Appendix: NAND ★",
+      "back": "<p class=\"tldr\">NOT-AND. Output is 1 <b>except</b> when both inputs are 1. <b>Turing-complete alone</b> — you can build any logic from just NANDs.</p>       <div class=\"tt\">00→<b>1</b> · 01→<b>1</b> · 10→<b>1</b> · 11→0</div>       <span class=\"eg\">¬(A·B) · only 4 transistors · simplest CMOS gate</span>       <div class=\"meta\"><span>Cheapest + universal = favorite</span><a href=\"https://en.wikipedia.org/wiki/NAND_gate\">Wikipedia ↗</a></div>",
+      "tags": [
+        "arithmetic",
+        "appendix"
+      ]
+    },
+    {
+      "front": "Appendix: NOR ★",
+      "back": "<p class=\"tldr\">NOT-OR. Output is 1 <b>only</b> when both inputs are 0. <b>Also Turing-complete alone</b>.</p>       <div class=\"tt\">00→<b>1</b> · 01→0 · 10→0 · 11→0</div>       <span class=\"eg\">¬(A+B) · 4 transistors · dual of NAND</span>       <div class=\"meta\"><span>Apollo Guidance Computer used only NORs</span><a href=\"https://en.wikipedia.org/wiki/NOR_gate\">Wikipedia ↗</a></div>",
+      "tags": [
+        "arithmetic",
+        "appendix"
+      ]
+    },
+    {
+      "front": "Appendix: XOR",
+      "back": "<p class=\"tldr\">Exclusive-OR. Output is 1 <b>when inputs differ</b>. The arithmetic sum of 2 bits, ignoring carry.</p>       <div class=\"tt\">00→0 · 01→<b>1</b> · 10→<b>1</b> · 11→0</div>       <span class=\"eg\">A⊕B · 8–12 transistors · heart of a half-adder</span>       <div class=\"meta\"><span>Encryption, parity, addition</span><a href=\"https://en.wikipedia.org/wiki/XOR_gate\">Wikipedia ↗</a></div>",
+      "tags": [
+        "arithmetic",
+        "appendix"
+      ]
+    },
+    {
+      "front": "Appendix: XNOR",
+      "back": "<p class=\"tldr\">Exclusive-NOR. Output is 1 <b>when inputs match</b>. Equality test for 1 bit.</p>       <div class=\"tt\">00→<b>1</b> · 01→0 · 10→0 · 11→<b>1</b></div>       <span class=\"eg\">A⊙B · ¬(A⊕B) · 8–12 transistors</span>       <div class=\"meta\"><span>Equality comparators</span><a href=\"https://en.wikipedia.org/wiki/XNOR_gate\">Wikipedia ↗</a></div>",
+      "tags": [
+        "arithmetic",
+        "appendix"
+      ]
+    },
+    {
+      "front": "Appendix: Buffer",
+      "back": "<p class=\"tldr\">Pass-through. Output equals input — no logic, just <b>signal strengthening</b> so a weak signal can drive a big load.</p>       <div class=\"tt\">in:  0  1<br>out: 0  1</div>       <span class=\"eg\">2 back-to-back inverters · clock drivers, bus lines</span>       <div class=\"meta\"><span>Identity with muscle</span><a href=\"https://en.wikipedia.org/wiki/Digital_buffer\">Wikipedia ↗</a></div>",
+      "tags": [
+        "arithmetic",
+        "appendix"
+      ]
+    },
+    {
+      "front": "Appendix: SR latch",
+      "back": "<p class=\"tldr\">Two cross-coupled NAND/NOR gates. Has <b>Set</b> and <b>Reset</b> inputs. Remembers 1 bit indefinitely until told to change.</p>       <span class=\"eg\">Simplest memory cell · 4 transistors</span>       <div class=\"meta\"><span>Foundation of SRAM</span><a href=\"https://en.wikipedia.org/wiki/Flip-flop_(electronics)#SR_latch\">Wikipedia ↗</a></div>",
+      "tags": [
+        "arithmetic",
+        "appendix"
+      ]
+    },
+    {
+      "front": "Appendix: D flip-flop",
+      "back": "<p class=\"tldr\">Captures the <b>D</b> input on the rising edge of a clock signal, then holds it. Foundation of every CPU register and pipeline stage.</p>       <span class=\"eg\">~20 transistors · billions per modern CPU</span>       <div class=\"meta\"><span>Synchronous digital design</span><a href=\"https://en.wikipedia.org/wiki/Flip-flop_(electronics)#D_flip-flop\">Wikipedia ↗</a></div>",
+      "tags": [
+        "arithmetic",
+        "appendix"
+      ]
+    },
+    {
+      "front": "Appendix: Multiplexer (MUX)",
+      "back": "<p class=\"tldr\">Picks <b>one</b> of N inputs based on a selector. Like a software <code>switch</code> statement baked into hardware.</p>       <span class=\"eg\">2:1 MUX = (A·¬S) + (B·S) · routing, buses, conditionals</span>       <div class=\"meta\"><span>Bus arbitration, ALU function select</span><a href=\"https://en.wikipedia.org/wiki/Multiplexer\">Wikipedia ↗</a></div>",
+      "tags": [
+        "arithmetic",
+        "appendix"
+      ]
+    },
+    {
+      "front": "Appendix: Decoder",
+      "back": "<p class=\"tldr\">Activates <b>one</b> of 2ᴺ output lines based on an N-bit address. Lets memory \"find\" the right cell to read.</p>       <span class=\"eg\">10-bit decoder → 1024 output lines · DRAM row/col select</span>       <div class=\"meta\"><span>Memory addressing, instruction decode</span><a href=\"https://en.wikipedia.org/wiki/Binary_decoder\">Wikipedia ↗</a></div>",
+      "tags": [
+        "arithmetic",
+        "appendix"
+      ]
+    },
+    {
+      "front": "Appendix: Full adder",
+      "back": "<p class=\"tldr\">3 inputs (A, B, carry-in) → 2 outputs (sum, carry-out). Chain 64 of these together and you've built a <b>64-bit adder</b>.</p>       <span class=\"eg\">2 XORs + 2 ANDs + 1 OR · ~20 transistors</span>       <div class=\"meta\"><span>Core of every ALU</span><a href=\"https://en.wikipedia.org/wiki/Adder_(electronics)\">Wikipedia ↗</a></div>",
+      "tags": [
+        "arithmetic",
+        "appendix"
+      ]
+    },
+    {
+      "front": "Appendix: ALU",
+      "back": "<p class=\"tldr\">Arithmetic Logic Unit. The \"math brain\" of a CPU — does <b>+ − AND OR XOR shifts compare</b>, all selectable via a function-code input.</p>       <span class=\"eg\">~10k transistors for a 64-bit ALU · one per core (often many)</span>       <div class=\"meta\"><span>Every CPU has at least one</span><a href=\"https://en.wikipedia.org/wiki/Arithmetic_logic_unit\">Wikipedia ↗</a></div>",
+      "tags": [
+        "arithmetic",
+        "appendix"
+      ]
+    },
+    {
+      "front": "Appendix: FP64 (double)",
+      "back": "<p class=\"tldr\">IEEE 754 double precision. Up to <b>15-17 decimal digits</b> of accuracy. Range <code>±1.8×10³⁰⁸</code>.</p>       <div class=\"tt\"><b style=\"color:var(--pink)\">S</b>│<b style=\"color:var(--orange)\">EEEEEEEEEEE</b>│<b style=\"color:var(--green)\">MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM</b><br>1 / 11 / 52 bits</div>       <span class=\"eg\">Scientific computing, CFD, finance, astronomy, anywhere errors compound</span>       <div class=\"meta\"><span>Default for C <code>double</code>, Python <code>float</code></span><a href=\"https://en.wikipedia.org/wiki/Double-precision_floating-point_format\">Wikipedia ↗</a></div>",
+      "tags": [
+        "arithmetic",
+        "appendix"
+      ]
+    },
+    {
+      "front": "Appendix: FP32 (single)",
+      "back": "<p class=\"tldr\">IEEE 754 single precision. <b>7 decimal digits</b>. Range <code>±3.4×10³⁸</code>. The classic default.</p>       <div class=\"tt\"><b style=\"color:var(--pink)\">S</b>│<b style=\"color:var(--orange)\">EEEEEEEE</b>│<b style=\"color:var(--green)\">MMMMMMMMMMMMMMMMMMMMMMM</b><br>1 / 8 / 23 bits</div>       <span class=\"eg\">GPU graphics, game engines, classic ML before 2017</span>       <div class=\"meta\"><span>C <code>float</code>, GLSL highp</span><a href=\"https://en.wikipedia.org/wiki/Single-precision_floating-point_format\">Wikipedia ↗</a></div>",
+      "tags": [
+        "arithmetic",
+        "appendix"
+      ]
+    },
+    {
+      "front": "Appendix: FP16 (half)",
+      "back": "<p class=\"tldr\">Half-precision. <b>3-4 decimal digits</b>. Range <code>±65,504</code> — <em>small</em>, so overflow is easy.</p>       <div class=\"tt\"><b style=\"color:var(--pink)\">S</b>│<b style=\"color:var(--orange)\">EEEEE</b>│<b style=\"color:var(--green)\">MMMMMMMMMM</b><br>1 / 5 / 10 bits</div>       <span class=\"eg\">NN inference, mobile ML, image processing · 2× throughput vs FP32</span>       <div class=\"meta\"><span>IEEE 754-2008 standard</span><a href=\"https://en.wikipedia.org/wiki/Half-precision_floating-point_format\">Wikipedia ↗</a></div>",
+      "tags": [
+        "arithmetic",
+        "appendix"
+      ]
+    },
+    {
+      "front": "Appendix: BF16 (bfloat16)",
+      "back": "<p class=\"tldr\">\"Brain float\". Same <b>8-bit exponent as FP32</b> so it has the same range — but only 7 mantissa bits. Trades precision for range stability during NN training.</p>       <div class=\"tt\"><b style=\"color:var(--pink)\">S</b>│<b style=\"color:var(--orange)\">EEEEEEEE</b>│<b style=\"color:var(--green)\">MMMMMMM</b><br>1 / 8 / 7 bits</div>       <span class=\"eg\">Google TPU, NVIDIA Ampere+, modern training default</span>       <div class=\"meta\"><span>Invented at Google Brain, 2018</span><a href=\"https://en.wikipedia.org/wiki/Bfloat16_floating-point_format\">Wikipedia ↗</a></div>",
+      "tags": [
+        "arithmetic",
+        "appendix"
+      ]
+    },
+    {
+      "front": "Appendix: TF32",
+      "back": "<p class=\"tldr\">NVIDIA's hybrid: FP32's exponent (8 bits) + FP16's mantissa (10 bits). <b>Drop-in for FP32 code</b> on Ampere tensor cores, but 10× faster.</p>       <div class=\"tt\"><b style=\"color:var(--pink)\">S</b>│<b style=\"color:var(--orange)\">EEEEEEEE</b>│<b style=\"color:var(--green)\">MMMMMMMMMM</b><br>1 / 8 / 10 bits</div>       <span class=\"eg\">Ampere+ only · transparent to user code</span>       <div class=\"meta\"><span>NVIDIA proprietary</span><a href=\"https://blogs.nvidia.com/blog/tensorfloat-32-precision-format/\">NVIDIA blog ↗</a></div>",
+      "tags": [
+        "arithmetic",
+        "appendix"
+      ]
+    },
+    {
+      "front": "Appendix: FP8 E4M3",
+      "back": "<p class=\"tldr\">\"Expensive\" 8-bit float. More mantissa bits → better precision, smaller range <code>±448</code>. Used for <b>weights &amp; activations</b>.</p>       <div class=\"tt\"><b style=\"color:var(--pink)\">S</b>│<b style=\"color:var(--orange)\">EEEE</b>│<b style=\"color:var(--green)\">MMM</b><br>1 / 4 / 3 bits</div>       <span class=\"eg\">NVIDIA H100+, LLM inference · 2× vs FP16</span>       <div class=\"meta\"><span>NVIDIA/ARM/Intel joint spec 2022</span><a href=\"https://arxiv.org/abs/2209.05433\">FP8 paper ↗</a></div>",
+      "tags": [
+        "arithmetic",
+        "appendix"
+      ]
+    },
+    {
+      "front": "Appendix: FP8 E5M2",
+      "back": "<p class=\"tldr\">More <b>exponent</b>, less mantissa. Range <code>±57,344</code>, precision worse. Used for <b>gradients</b> during training (they span wider magnitudes).</p>       <div class=\"tt\"><b style=\"color:var(--pink)\">S</b>│<b style=\"color:var(--orange)\">EEEEE</b>│<b style=\"color:var(--green)\">MM</b><br>1 / 5 / 2 bits</div>       <span class=\"eg\">NN training · gradient path</span>       <div class=\"meta\"><span>Paired with E4M3 in H100 Transformer Engine</span><a href=\"https://arxiv.org/abs/2209.05433\">FP8 paper ↗</a></div>",
+      "tags": [
+        "arithmetic",
+        "appendix"
+      ]
+    },
+    {
+      "front": "Appendix: FP4 E2M1",
+      "back": "<p class=\"tldr\">Only <b>16 possible values</b>! Range <code>±6</code>, precision ~1 digit. Feels impossible, but works for LLM inference with careful scaling.</p>       <div class=\"tt\"><b style=\"color:var(--pink)\">S</b>│<b style=\"color:var(--orange)\">EE</b>│<b style=\"color:var(--green)\">M</b><br>1 / 2 / 1 bits</div>       <span class=\"eg\">NVIDIA Blackwell 2024 · 20 PFLOPS on B200</span>       <div class=\"meta\"><span>Cutting-edge LLM inference</span><a href=\"https://www.opencompute.org/documents/ocp-microscaling-formats-mx-v1-0-spec-final-pdf\">OCP MX spec ↗</a></div>",
+      "tags": [
+        "arithmetic",
+        "appendix"
+      ]
+    },
+    {
+      "front": "Appendix: IEEE 754",
+      "back": "<p class=\"tldr\">The 1985 standard (revised 2008, 2019) that defines <b>FP32/FP64 layouts, rounding modes, NaN/Inf, denormals</b>. Why <code>0.1 + 0.2 ≠ 0.3</code> the same way everywhere.</p>       <span class=\"eg\">Rounding modes: nearest-even (default), toward 0, toward +∞, toward −∞</span>       <div class=\"meta\"><span>The reason cross-platform float math works</span><a href=\"https://en.wikipedia.org/wiki/IEEE_754\">Wikipedia ↗</a></div>",
+      "tags": [
+        "arithmetic",
+        "appendix"
+      ]
+    },
+    {
+      "front": "Appendix: Denormal / subnormal",
+      "back": "<p class=\"tldr\">Tiny floats below the normal range. The leading mantissa bit is 0 instead of 1, gaining range near zero but <b>often 100× slower</b> on CPUs (hardware escape path).</p>       <span class=\"eg\">FP32 smallest normal: 1.2e-38 · smallest denormal: 1.4e-45</span>       <div class=\"meta\"><span>FTZ / DAZ flags disable them for speed</span><a href=\"https://en.wikipedia.org/wiki/Subnormal_number\">Wikipedia ↗</a></div>",
+      "tags": [
+        "arithmetic",
+        "appendix"
+      ]
+    },
+    {
+      "front": "Appendix: NaN / ±Inf",
+      "back": "<p class=\"tldr\">Special bit patterns. <b>NaN</b> (Not-a-Number) comes from <code>0/0, √−1, ∞−∞</code>. <b>Inf</b> from overflow (<code>1e308 × 10</code>).</p>       <span class=\"eg\">NaN ≠ NaN! &nbsp; Check with <code>isnan(x)</code> not <code>x == NaN</code></span>       <div class=\"meta\"><span>Propagates through arithmetic</span><a href=\"https://en.wikipedia.org/wiki/NaN\">Wikipedia ↗</a></div>",
+      "tags": [
+        "arithmetic",
+        "appendix"
+      ]
+    },
+    {
+      "front": "ISA — Instruction Set Architecture",
+      "back": "<p class=\"tldr\">The <b>language a CPU speaks</b>. An ISA specifies: (1) which operations exist (<code>ADD</code>, <code>MOV</code>, <code>JMP</code>, …), (2) what registers the CPU has, (3) exact bit patterns for every instruction. Once published, <u>many different chips</u> can implement the same ISA and all run the same software.</p>       <p class=\"tldr\" style=\"margin-top:8px\"><b>ISA vs microarchitecture:</b> ISA = the <i>specification</i>. Microarchitecture = how it's physically <i>built</i>. Intel Raptor Lake and AMD Zen 4 both speak x86-64 but are completely different chips inside. Apple M3 and Qualcomm Snapdragon both speak ARMv8, totally different internals.</p>       <span class=\"eg\">Why you can't run an iPhone app on a Windows laptop → different ISAs (ARM vs x86-64)</span>       <div class=\"meta\"><span>The most durable abstraction in computing</span><a href=\"https://en.wikipedia.org/wiki/Instruction_set_architecture\">Wikipedia ↗</a></div>",
+      "tags": [
+        "arithmetic",
+        "appendix"
+      ]
+    },
+    {
+      "front": "Appendix: x86 / x86-64",
+      "back": "<p class=\"tldr\">Intel &amp; AMD. <b>Complex instructions</b>, variable length (1–15 bytes). ~1,500 instructions total. Modern chips internally convert them to RISC-like micro-ops.</p>       <span class=\"eg\">Windows PCs · Linux servers · data centers · gaming</span>       <div class=\"meta\"><span>Duopoly (Intel + AMD)</span><a href=\"https://en.wikipedia.org/wiki/X86\">Wikipedia ↗</a></div>",
+      "tags": [
+        "arithmetic",
+        "appendix"
+      ]
+    },
+    {
+      "front": "Appendix: ARM / AArch64",
+      "back": "<p class=\"tldr\"><b>Simple fixed-length (4-byte) instructions</b>. Licensed, not open. Lower power-per-watt → won mobile, now winning laptops and servers.</p>       <span class=\"eg\">Every smartphone · Apple Silicon (M-series) · AWS Graviton · NVIDIA Grace</span>       <div class=\"meta\"><span>Hundreds of licensees</span><a href=\"https://en.wikipedia.org/wiki/ARM_architecture_family\">Wikipedia ↗</a></div>",
+      "tags": [
+        "arithmetic",
+        "appendix"
+      ]
+    },
+    {
+      "front": "Appendix: RISC-V",
+      "back": "<p class=\"tldr\">From UC Berkeley. <b>Completely open-source</b>, no royalties, anyone can design a chip. Modular: start with base 32-bit, add extensions as needed (M, A, F, D, V, …).</p>       <span class=\"eg\">SSD controllers · Western Digital · Alibaba · Tenstorrent · rising fast in embedded &amp; AI accelerators</span>       <div class=\"meta\"><span>The geopolitical dark horse</span><a href=\"https://en.wikipedia.org/wiki/RISC-V\">Wikipedia ↗</a></div>",
+      "tags": [
+        "arithmetic",
+        "appendix"
+      ]
+    },
+    {
+      "front": "Appendix: CISC vs RISC",
+      "back": "<p class=\"tldr\"><b>CISC</b> (x86): few complex instructions, \"one instruction does a lot.\" <b>RISC</b> (ARM, RISC-V): many simple instructions, \"let the compiler chain them.\"</p>       <p class=\"tldr\" style=\"margin-top:6px\">Modern reality: the line is <b>blurred</b>. x86 chips convert CISC instructions into internal RISC-like micro-ops. ARM keeps adding complex extensions. The ISA is often a facade over a different internal machine.</p>       <div class=\"meta\"><span>No winner — both are everywhere</span><a href=\"https://en.wikipedia.org/wiki/Reduced_instruction_set_computer\">Wikipedia ↗</a></div>",
+      "tags": [
+        "arithmetic",
+        "appendix"
+      ]
+    },
+    {
+      "front": "HBM — High Bandwidth Memory",
+      "back": "<p class=\"tldr\"><b>DRAM chips stacked vertically</b> like a skyscraper (8–12 layers), wired with thousands of microscopic holes straight down (<em>TSVs — through-silicon vias</em>), and placed on the same silicon slab as the GPU, ~5 mm away. Uses a <b>1024-bit wide bus per stack</b> (vs 64 bits in desktop DDR).</p>       <p class=\"tldr\" style=\"margin-top:8px\"><b>Why it exists:</b> a modern GPU with 20,000 cores eats data at ~8,000 GB/s. Regular DDR5 RAM delivers ~50 GB/s — the GPU would starve. HBM solves this with a <i>wider, shorter, taller</i> memory.</p>       <div class=\"tt\" style=\"margin-top:8px;font-family:var(--mono);white-space:pre;line-height:1.4;background:#0a0e14;padding:10px;border-radius:6px;color:#c9d1d9\">Traditional DDR:                 HBM: ┌─────┐     ┌──────┐           ┌──────────┐ │ CPU │◄64b►│ DRAM │           │   GPU    │ └─────┘     └──────┘           ├──────────┤  (far away · narrow)           │ ░ HBM ░  │ ← stack of 8–12                                │ ░ ░░░ ░  │   DRAM layers,                                │ ░ ░░░ ░  │   1024-bit bus,                                └──────────┘   ~5 mm from GPU</div>       <span class=\"eg\">NVIDIA B200 = 8 stacks × HBM3e = <b>8 TB/s aggregate</b> across 192 GB</span>       <div class=\"meta\"><span>SK Hynix · Samsung · Micron — 3 companies control AI's biggest bottleneck</span><a href=\"https://en.wikipedia.org/wiki/High_Bandwidth_Memory\">Wikipedia ↗</a></div>",
+      "tags": [
+        "arithmetic",
+        "appendix"
+      ]
+    },
+    {
+      "front": "Appendix: HBM generations",
+      "back": "<p class=\"tldr\">HBM1 (2015, 128 GB/s) · HBM2 (2016, 256 GB/s) · HBM2e (2019, 460 GB/s) · <b>HBM3</b> (2022, 819 GB/s) · <b>HBM3e</b> (2024, 1.2 TB/s) · HBM4 (2026, ~2 TB/s).</p>       <span class=\"eg\">H100 uses HBM3 · B200 uses HBM3e · 6-8 stacks per chip</span>       <div class=\"meta\"><span>~2× bandwidth every ~2 years</span><a href=\"https://en.wikipedia.org/wiki/High_Bandwidth_Memory\">Wikipedia ↗</a></div>",
+      "tags": [
+        "arithmetic",
+        "appendix"
+      ]
+    },
+    {
+      "front": "Appendix: Why AI is memory-bound",
+      "back": "<p class=\"tldr\">GPT-4-sized LLM (~1.7T params, 8-bit) = <b>1.7 TB of weights</b>. Generating one token = reading every weight once. At 8 TB/s HBM → 4–5 tokens/sec ceiling from <i>bandwidth alone</i>. Compute FLOPS don't help if data can't arrive fast enough.</p>       <span class=\"eg\">Everyone talks FLOPS, but bandwidth decides real speed</span>       <div class=\"meta\"><span>Why HBM matters more than cores</span><a href=\"https://en.wikipedia.org/wiki/Roofline_model\">Roofline ↗</a></div>",
+      "tags": [
+        "arithmetic",
+        "appendix"
+      ]
+    },
+    {
+      "front": "Appendix: DRAM vs SRAM",
+      "back": "<p class=\"tldr\"><b>DRAM:</b> 1 transistor + 1 capacitor per bit. Dense &amp; cheap but <i>must refresh every 64 ms</i>. Used for main memory, HBM. <b>SRAM:</b> 6 transistors per bit. Stable, fast, <i>huge</i> — used for CPU caches (L1/L2/L3).</p>       <span class=\"eg\">Same chip might have ~100 MB SRAM cache + 192 GB HBM + 1 TB DDR DRAM</span>       <div class=\"meta\"><span>Tradeoff: density vs speed</span><a href=\"https://en.wikipedia.org/wiki/Static_random-access_memory\">SRAM ↗</a></div>",
+      "tags": [
+        "arithmetic",
+        "appendix"
+      ]
+    },
+    {
+      "front": "Tuning-fork quartz",
+      "back": "<b>Frequency:</b> 32.768 kHz<br><b>Stability / drift:</b> ±20 ppm (~1 min/month)<br><b>Where it lives:</b> Watches, RTCs, sleep-mode timers",
+      "tags": [
+        "arithmetic",
+        "table",
+        "clocks"
+      ]
+    },
+    {
+      "front": "Motherboard crystal",
+      "back": "<b>Frequency:</b> 25 MHz<br><b>Stability / drift:</b> ±30 ppm<br><b>Where it lives:</b> Root clock for PC chipset",
+      "tags": [
+        "arithmetic",
+        "table",
+        "clocks"
+      ]
+    },
+    {
+      "front": "TCXO / OCXO",
+      "back": "<b>Frequency:</b> 10 MHz<br><b>Stability / drift:</b> ±0.01 ppm / ±0.0001 ppm<br><b>Where it lives:</b> Telecom, GPS receivers, labs",
+      "tags": [
+        "arithmetic",
+        "table",
+        "clocks"
+      ]
+    },
+    {
+      "front": "CPU core (via PLL)",
+      "back": "<b>Frequency:</b> 3–6 GHz<br><b>Stability / drift:</b> Derived from crystal × 200<br><b>Where it lives:</b> Your CPU, GPU, smartphone",
+      "tags": [
+        "arithmetic",
+        "table",
+        "clocks"
+      ]
+    },
+    {
+      "front": "Rubidium clock",
+      "back": "<b>Frequency:</b> 6.83 GHz<br><b>Stability / drift:</b> ~1 s in 300 years<br><b>Where it lives:</b> Cell towers, GPS satellites",
+      "tags": [
+        "arithmetic",
+        "table",
+        "clocks"
+      ]
+    },
+    {
+      "front": "Cesium atomic clock",
+      "back": "<b>Frequency:</b> 9,192,631,770 Hz<br><b>Stability / drift:</b> ~1 s in 30 million years<br><b>Where it lives:</b> Defines the SI second",
+      "tags": [
+        "arithmetic",
+        "table",
+        "clocks"
+      ]
+    },
+    {
+      "front": "Optical lattice clock",
+      "back": "<b>Frequency:</b> ~10¹⁵ Hz (visible light)<br><b>Stability / drift:</b> ~1 s in 30 billion years<br><b>Where it lives:</b> NIST, JILA research — redefines \"second\" soon",
+      "tags": [
+        "arithmetic",
+        "table",
+        "clocks"
+      ]
+    },
+    {
+      "front": "Unsigned",
+      "back": "<b>Value:</b> 0<br><b>Range:</b> 0 .. 255",
+      "tags": [
+        "arithmetic",
+        "table",
+        "integers"
+      ]
+    },
+    {
+      "front": "Sign–magnitude",
+      "back": "<b>Value:</b> 0<br><b>Range:</b> -127 .. +127 (two zeros)",
+      "tags": [
+        "arithmetic",
+        "table",
+        "integers"
+      ]
+    },
+    {
+      "front": "1's complement",
+      "back": "<b>Value:</b> 0<br><b>Range:</b> -127 .. +127 (two zeros)",
+      "tags": [
+        "arithmetic",
+        "table",
+        "integers"
+      ]
+    },
+    {
+      "front": "2's complement",
+      "back": "<b>Value:</b> 0<br><b>Range:</b> -128 .. +127 (unique zero)",
+      "tags": [
+        "arithmetic",
+        "table",
+        "integers"
+      ]
+    },
+    {
+      "front": "Hex",
+      "back": "<b>Value:</b> 0x00<br><b>Range:</b> 00 .. FF",
+      "tags": [
+        "arithmetic",
+        "table",
+        "integers"
+      ]
+    },
+    {
+      "front": "Sign",
+      "back": "+<br>1 bit",
+      "tags": [
+        "arithmetic",
+        "table",
+        "floats"
+      ]
+    },
+    {
+      "front": "Exponent (biased)",
+      "back": "—<br>8 bits, bias 127",
+      "tags": [
+        "arithmetic",
+        "table",
+        "floats"
+      ]
+    },
+    {
+      "front": "Mantissa",
+      "back": "—<br>23 bits, implicit leading 1",
+      "tags": [
+        "arithmetic",
+        "table",
+        "floats"
+      ]
+    },
+    {
+      "front": "Hex (raw bits)",
+      "back": "—<br>4 bytes",
+      "tags": [
+        "arithmetic",
+        "table",
+        "floats"
+      ]
+    },
+    {
+      "front": "Reconstructed value",
+      "back": "—<br>may differ from input!",
+      "tags": [
+        "arithmetic",
+        "table",
+        "floats"
+      ]
+    },
+    {
+      "front": "Absolute error",
+      "back": "—<br>quantization loss",
+      "tags": [
+        "arithmetic",
+        "table",
+        "floats"
+      ]
+    },
+    {
+      "front": "FP64 / double",
+      "back": "<b>Bits:</b> 64<br><b>Sign:</b> 1<br><b>Exp:</b> 11<br><b>Mantissa:</b> 52<br><b>Range:</b> ±10³⁰⁸<br><b>Decimal digits:</b> 15–17<br><b>Use:</b> Scientific, finance, defaults",
+      "tags": [
+        "arithmetic",
+        "table",
+        "floats"
+      ]
+    },
+    {
+      "front": "FP32 / float",
+      "back": "<b>Bits:</b> 32<br><b>Sign:</b> 1<br><b>Exp:</b> 8<br><b>Mantissa:</b> 23<br><b>Range:</b> ±10³⁸<br><b>Decimal digits:</b> 6–9<br><b>Use:</b> Graphics, most ML inference",
+      "tags": [
+        "arithmetic",
+        "table",
+        "floats"
+      ]
+    },
+    {
+      "front": "FP16 / half",
+      "back": "<b>Bits:</b> 16<br><b>Sign:</b> 1<br><b>Exp:</b> 5<br><b>Mantissa:</b> 10<br><b>Range:</b> ±65504<br><b>Decimal digits:</b> 3–4<br><b>Use:</b> ML training (mixed), graphics",
+      "tags": [
+        "arithmetic",
+        "table",
+        "floats"
+      ]
+    },
+    {
+      "front": "BF16 (Brain Float)",
+      "back": "<b>Bits:</b> 16<br><b>Sign:</b> 1<br><b>Exp:</b> 8<br><b>Mantissa:</b> 7<br><b>Range:</b> ±10³⁸<br><b>Decimal digits:</b> 2–3<br><b>Use:</b> ML training (TPU, modern GPU)",
+      "tags": [
+        "arithmetic",
+        "table",
+        "floats"
+      ]
+    },
+    {
+      "front": "TF32 (NVIDIA)",
+      "back": "<b>Bits:</b> 19<br><b>Sign:</b> 1<br><b>Exp:</b> 8<br><b>Mantissa:</b> 10<br><b>Range:</b> ±10³⁸<br><b>Decimal digits:</b> 3–4<br><b>Use:</b> Ampere+ tensor cores (matmul)",
+      "tags": [
+        "arithmetic",
+        "table",
+        "floats"
+      ]
+    },
+    {
+      "front": "FP8 E4M3",
+      "back": "<b>Bits:</b> 8<br><b>Sign:</b> 1<br><b>Exp:</b> 4<br><b>Mantissa:</b> 3<br><b>Range:</b> ±448<br><b>Decimal digits:</b> 1–2<br><b>Use:</b> LLM weights/activations (Hopper)",
+      "tags": [
+        "arithmetic",
+        "table",
+        "floats"
+      ]
+    },
+    {
+      "front": "FP8 E5M2",
+      "back": "<b>Bits:</b> 8<br><b>Sign:</b> 1<br><b>Exp:</b> 5<br><b>Mantissa:</b> 2<br><b>Range:</b> ±57344<br><b>Decimal digits:</b> 1<br><b>Use:</b> Gradients (wider range needed)",
+      "tags": [
+        "arithmetic",
+        "table",
+        "floats"
+      ]
+    },
+    {
+      "front": "FP4 E2M1",
+      "back": "<b>Bits:</b> 4<br><b>Sign:</b> 1<br><b>Exp:</b> 2<br><b>Mantissa:</b> 1<br><b>Range:</b> ±6<br><b>Decimal digits:</b> ~1<br><b>Use:</b> LLM inference (Blackwell 2024)",
+      "tags": [
+        "arithmetic",
+        "table",
+        "floats"
+      ]
+    },
+    {
+      "front": "Zero",
+      "back": "<b>Exponent bits:</b> 00000000<br><b>Mantissa bits:</b> 000…0<br><b>Meaning:</b> +0 or −0 (yes, signed zero!)<br><b>Example (FP32):</b> 0x00000000",
+      "tags": [
+        "arithmetic",
+        "table",
+        "ieee754"
+      ]
+    },
+    {
+      "front": "Subnormal",
+      "back": "<b>Exponent bits:</b> 00000000<br><b>Mantissa bits:</b> any non-zero<br><b>Meaning:</b> Gradual underflow. No implicit 1. Formula: ±0.M × 21−bias<br><b>Example (FP32):</b> 0x00000001 ≈ 1.4×10⁻⁴⁵",
+      "tags": [
+        "arithmetic",
+        "table",
+        "ieee754"
+      ]
+    },
+    {
+      "front": "Normalized",
+      "back": "<b>Exponent bits:</b> 1…254 (not all-0 or all-1)<br><b>Mantissa bits:</b> any<br><b>Meaning:</b> The usual case. Implicit leading 1. Formula above.<br><b>Example (FP32):</b> 0x40490FDB ≈ π",
+      "tags": [
+        "arithmetic",
+        "table",
+        "ieee754"
+      ]
+    },
+    {
+      "front": "Infinity",
+      "back": "<b>Exponent bits:</b> 11111111<br><b>Mantissa bits:</b> 000…0<br><b>Meaning:</b> ±∞. Result of 1/0, overflow, etc.<br><b>Example (FP32):</b> 0x7F800000 = +∞",
+      "tags": [
+        "arithmetic",
+        "table",
+        "ieee754"
+      ]
+    },
+    {
+      "front": "NaN",
+      "back": "<b>Exponent bits:</b> 11111111<br><b>Mantissa bits:</b> any non-zero<br><b>Meaning:</b> \"Not a Number\". 0/0, √−1, etc. NaN ≠ NaN.<br><b>Example (FP32):</b> 0x7FC00000 (quiet NaN)",
+      "tags": [
+        "arithmetic",
+        "table",
+        "ieee754"
+      ]
+    },
+    {
+      "front": "FP64",
+      "back": "<b>Total bits:</b> 64<br><b>Sign:</b> 1<br><b>Exponent:</b> 11<br><b>Mantissa:</b> 52<br><b>Bias:</b> 1023<br><b>Smallest normal:</b> 2.2×10⁻³⁰⁸<br><b>Largest:</b> 1.8×10³⁰⁸",
+      "tags": [
+        "arithmetic",
+        "table",
+        "ieee754"
+      ]
+    },
+    {
+      "front": "FP32",
+      "back": "<b>Total bits:</b> 32<br><b>Sign:</b> 1<br><b>Exponent:</b> 8<br><b>Mantissa:</b> 23<br><b>Bias:</b> 127<br><b>Smallest normal:</b> 1.2×10⁻³⁸<br><b>Largest:</b> 3.4×10³⁸",
+      "tags": [
+        "arithmetic",
+        "table",
+        "ieee754"
+      ]
+    },
+    {
+      "front": "FP16",
+      "back": "<b>Total bits:</b> 16<br><b>Sign:</b> 1<br><b>Exponent:</b> 5<br><b>Mantissa:</b> 10<br><b>Bias:</b> 15<br><b>Smallest normal:</b> 6.1×10⁻⁵<br><b>Largest:</b> 65504",
+      "tags": [
+        "arithmetic",
+        "table",
+        "ieee754"
+      ]
+    },
+    {
+      "front": "BF16",
+      "back": "<b>Total bits:</b> 16<br><b>Sign:</b> 1<br><b>Exponent:</b> 8<br><b>Mantissa:</b> 7<br><b>Bias:</b> 127<br><b>Smallest normal:</b> 1.2×10⁻³⁸<br><b>Largest:</b> 3.4×10³⁸",
+      "tags": [
+        "arithmetic",
+        "table",
+        "ieee754"
+      ]
+    },
+    {
+      "front": "FP8 E4M3",
+      "back": "<b>Total bits:</b> 8<br><b>Sign:</b> 1<br><b>Exponent:</b> 4<br><b>Mantissa:</b> 3<br><b>Bias:</b> 7<br><b>Smallest normal:</b> 2⁻⁶<br><b>Largest:</b> 448",
+      "tags": [
+        "arithmetic",
+        "table",
+        "ieee754"
+      ]
+    },
+    {
+      "front": "FP8 E5M2",
+      "back": "<b>Total bits:</b> 8<br><b>Sign:</b> 1<br><b>Exponent:</b> 5<br><b>Mantissa:</b> 2<br><b>Bias:</b> 15<br><b>Smallest normal:</b> 6.1×10⁻⁵<br><b>Largest:</b> 57344",
+      "tags": [
+        "arithmetic",
+        "table",
+        "ieee754"
+      ]
+    },
+    {
+      "front": "FP4 E2M1",
+      "back": "<b>Total bits:</b> 4<br><b>Sign:</b> 1<br><b>Exponent:</b> 2<br><b>Mantissa:</b> 1<br><b>Bias:</b> 1<br><b>Smallest normal:</b> 0.5<br><b>Largest:</b> 6",
+      "tags": [
+        "arithmetic",
+        "table",
+        "ieee754"
+      ]
+    },
+    {
+      "front": "0.1 + 0.2",
+      "back": "<b>Float (FP64):</b> 0.30000000000000004 ✗<br><b>Fixed-point:</b> 0.30 ✓ (at 2dp scale)<br><b>Rational:</b> 3/10 ✓<br><b>Decimal:</b> 0.3 ✓",
+      "tags": [
+        "arithmetic",
+        "table",
+        "fractions"
+      ]
+    },
+    {
+      "front": "1/3 × 3",
+      "back": "<b>Float (FP64):</b> 0.9999999999999999 ✗<br><b>Fixed-point:</b> depends on scale<br><b>Rational:</b> 1 ✓<br><b>Decimal:</b> 0.999...999 (bounded)",
+      "tags": [
+        "arithmetic",
+        "table",
+        "fractions"
+      ]
+    },
+    {
+      "front": "0.1 × 10 — 100 times",
+      "back": "<b>Float (FP64):</b> drifts ~10⁻¹³<br><b>Fixed-point:</b> stable ✓<br><b>Rational:</b> 10⁹⁹ × 1/10⁹⁹ ✓<br><b>Decimal:</b> stable ✓",
+      "tags": [
+        "arithmetic",
+        "table",
+        "fractions"
+      ]
+    },
+    {
+      "front": "Store √2",
+      "back": "<b>Float (FP64):</b> approx ✓<br><b>Fixed-point:</b> approx<br><b>Rational:</b> ✗ (irrational!)<br><b>Decimal:</b> approx ✓",
+      "tags": [
+        "arithmetic",
+        "table",
+        "fractions"
+      ]
+    },
+    {
+      "front": "Speed (ops/sec)",
+      "back": "<b>Float (FP64):</b> ~10⁹ (hardware)<br><b>Fixed-point:</b> ~10⁹ (hardware)<br><b>Rational:</b> ~10⁶ (software)<br><b>Decimal:</b> ~10⁷-10⁸",
+      "tags": [
+        "arithmetic",
+        "table",
+        "fractions"
+      ]
+    },
+    {
+      "front": "MMX",
+      "back": "<b>Year:</b> 1996<br><b>Width:</b> 64 b<br><b>FP32 lanes:</b> —<br><b>Peak use:</b> Integer multimedia",
+      "tags": [
+        "arithmetic",
+        "table",
+        "asm"
+      ]
+    },
+    {
+      "front": "SSE / SSE2",
+      "back": "<b>Year:</b> 1999<br><b>Width:</b> 128 b<br><b>FP32 lanes:</b> 4<br><b>Peak use:</b> Graphics, codecs",
+      "tags": [
+        "arithmetic",
+        "table",
+        "asm"
+      ]
+    },
+    {
+      "front": "AVX",
+      "back": "<b>Year:</b> 2011<br><b>Width:</b> 256 b<br><b>FP32 lanes:</b> 8<br><b>Peak use:</b> HPC, scientific",
+      "tags": [
+        "arithmetic",
+        "table",
+        "asm"
+      ]
+    },
+    {
+      "front": "AVX-512",
+      "back": "<b>Year:</b> 2016<br><b>Width:</b> 512 b<br><b>FP32 lanes:</b> 16<br><b>Peak use:</b> ML, video encode",
+      "tags": [
+        "arithmetic",
+        "table",
+        "asm"
+      ]
+    },
+    {
+      "front": "ARM SVE2",
+      "back": "<b>Year:</b> 2019<br><b>Width:</b> 128–2048 b<br><b>FP32 lanes:</b> 4–64<br><b>Peak use:</b> Scalable, server CPUs",
+      "tags": [
+        "arithmetic",
+        "table",
+        "asm"
+      ]
+    },
+    {
+      "front": "AMX (Intel)",
+      "back": "<b>Year:</b> 2020<br><b>Width:</b> tile<br><b>FP32 lanes:</b> 256 (BF16)<br><b>Peak use:</b> On-CPU matmul",
+      "tags": [
+        "arithmetic",
+        "table",
+        "asm"
+      ]
+    },
+    {
+      "front": "Constant folding",
+      "back": "<b>What it does:</b> 2 * 3.14 → 6.28 at compile time<br><b>Example speedup:</b> Free cycles",
+      "tags": [
+        "arithmetic",
+        "table",
+        "compiler"
+      ]
+    },
+    {
+      "front": "Strength reduction",
+      "back": "<b>What it does:</b> x * 4 → x << 2; x / 10 → multiply-hi trick<br><b>Example speedup:</b> 5–20×",
+      "tags": [
+        "arithmetic",
+        "table",
+        "compiler"
+      ]
+    },
+    {
+      "front": "Loop-invariant code motion",
+      "back": "<b>What it does:</b> Hoist sqrt(pi) outside the loop<br><b>Example speedup:</b> Depends on loop",
+      "tags": [
+        "arithmetic",
+        "table",
+        "compiler"
+      ]
+    },
+    {
+      "front": "Auto-vectorization",
+      "back": "<b>What it does:</b> Turn scalar loops into SIMD (SSE/AVX/NEON)<br><b>Example speedup:</b> 4–16×",
+      "tags": [
+        "arithmetic",
+        "table",
+        "compiler"
+      ]
+    },
+    {
+      "front": "Loop unrolling",
+      "back": "<b>What it does:</b> Reduce branch overhead, expose ILP<br><b>Example speedup:</b> 1.5–3×",
+      "tags": [
+        "arithmetic",
+        "table",
+        "compiler"
+      ]
+    },
+    {
+      "front": "FMA fusion",
+      "back": "<b>What it does:</b> a*b + c → single vfmadd instruction<br><b>Example speedup:</b> 2× + better precision",
+      "tags": [
+        "arithmetic",
+        "table",
+        "compiler"
+      ]
+    },
+    {
+      "front": "Inlining",
+      "back": "<b>What it does:</b> Replace call with body; enables further opts<br><b>Example speedup:</b> Variable, often large",
+      "tags": [
+        "arithmetic",
+        "table",
+        "compiler"
+      ]
+    },
+    {
+      "front": "Devirtualization",
+      "back": "<b>What it does:</b> Replace indirect call with direct<br><b>Example speedup:</b> 2–10×",
+      "tags": [
+        "arithmetic",
+        "table",
+        "compiler"
+      ]
+    },
+    {
+      "front": "First release",
+      "back": "<b>GCC:</b> 1987<br><b>LLVM/Clang:</b> 2003 (Clang 2007)",
+      "tags": [
+        "arithmetic",
+        "table",
+        "toolchain"
+      ]
+    },
+    {
+      "front": "Founder",
+      "back": "<b>GCC:</b> Richard Stallman (FSF)<br><b>LLVM/Clang:</b> Chris Lattner (UIUC → Apple)",
+      "tags": [
+        "arithmetic",
+        "table",
+        "toolchain"
+      ]
+    },
+    {
+      "front": "License",
+      "back": "<b>GCC:</b> GPLv3<br><b>LLVM/Clang:</b> Apache 2.0 + LLVM exception",
+      "tags": [
+        "arithmetic",
+        "table",
+        "toolchain"
+      ]
+    },
+    {
+      "front": "Architecture",
+      "back": "<b>GCC:</b> Monolithic<br><b>LLVM/Clang:</b> Library-based, reusable",
+      "tags": [
+        "arithmetic",
+        "table",
+        "toolchain"
+      ]
+    },
+    {
+      "front": "Intermediate rep",
+      "back": "<b>GCC:</b> GIMPLE + RTL (internal)<br><b>LLVM/Clang:</b> LLVM IR (public, first-class)",
+      "tags": [
+        "arithmetic",
+        "table",
+        "toolchain"
+      ]
+    },
+    {
+      "front": "Error messages",
+      "back": "<b>GCC:</b> Good<br><b>LLVM/Clang:</b> Excellent (introduced \"caret diagnostics\")",
+      "tags": [
+        "arithmetic",
+        "table",
+        "toolchain"
+      ]
+    },
+    {
+      "front": "Compile speed",
+      "back": "<b>GCC:</b> Slower<br><b>LLVM/Clang:</b> Faster (usually 20-40%)",
+      "tags": [
+        "arithmetic",
+        "table",
+        "toolchain"
+      ]
+    },
+    {
+      "front": "Runtime perf",
+      "back": "<b>GCC:</b> Slight edge on x86 int<br><b>LLVM/Clang:</b> Slight edge on ARM, SIMD, LTO",
+      "tags": [
+        "arithmetic",
+        "table",
+        "toolchain"
+      ]
+    },
+    {
+      "front": "Target breadth",
+      "back": "<b>GCC:</b> 40+ ISAs (widest)<br><b>LLVM/Clang:</b> ~20 ISAs (all major)",
+      "tags": [
+        "arithmetic",
+        "table",
+        "toolchain"
+      ]
+    },
+    {
+      "front": "Ecosystem role",
+      "back": "<b>GCC:</b> Unix/Linux tradition<br><b>LLVM/Clang:</b> Language-implementation platform",
+      "tags": [
+        "arithmetic",
+        "table",
+        "toolchain"
+      ]
+    },
+    {
+      "front": "-O0",
+      "back": "<b>Meaning:</b> No optimization. Fastest compile, preserves vars for debugger.<br><b>Typical use:</b> Dev builds, debugging",
+      "tags": [
+        "arithmetic",
+        "table",
+        "toolchain"
+      ]
+    },
+    {
+      "front": "-O1",
+      "back": "<b>Meaning:</b> Basic opts, no size/time bloat.<br><b>Typical use:</b> Quick builds",
+      "tags": [
+        "arithmetic",
+        "table",
+        "toolchain"
+      ]
+    },
+    {
+      "front": "-O2",
+      "back": "<b>Meaning:</b> Most safe opts. Default for production in Debian, Fedora, Homebrew.<br><b>Typical use:</b> Release binaries",
+      "tags": [
+        "arithmetic",
+        "table",
+        "toolchain"
+      ]
+    },
+    {
+      "front": "-O3",
+      "back": "<b>Meaning:</b> + aggressive inlining, auto-vectorization, loop unrolling. Can slow code occasionally (icache bloat).<br><b>Typical use:</b> Hot numerical code",
+      "tags": [
+        "arithmetic",
+        "table",
+        "toolchain"
+      ]
+    },
+    {
+      "front": "-Os / -Oz",
+      "back": "<b>Meaning:</b> Optimize for size. -Oz is Clang-only, even tighter.<br><b>Typical use:</b> Embedded, WASM, bootloaders",
+      "tags": [
+        "arithmetic",
+        "table",
+        "toolchain"
+      ]
+    },
+    {
+      "front": "-Ofast",
+      "back": "<b>Meaning:</b> -O3 + -ffast-math (breaks IEEE 754 strictness).<br><b>Typical use:</b> ML, graphics, games",
+      "tags": [
+        "arithmetic",
+        "table",
+        "toolchain"
+      ]
+    },
+    {
+      "front": "-march=native",
+      "back": "<b>Meaning:</b> Use every instruction your CPU supports (AVX-512, etc.).<br><b>Typical use:</b> Local builds only",
+      "tags": [
+        "arithmetic",
+        "table",
+        "toolchain"
+      ]
+    },
+    {
+      "front": "-flto",
+      "back": "<b>Meaning:</b> Link-time optimization across files.<br><b>Typical use:</b> Shipped binaries",
+      "tags": [
+        "arithmetic",
+        "table",
+        "toolchain"
+      ]
+    },
+    {
+      "front": "-fprofile-generate / -fprofile-use",
+      "back": "<b>Meaning:</b> Profile-guided optimization (PGO). Record real run, recompile.<br><b>Typical use:</b> Chrome, Firefox, DB engines",
+      "tags": [
+        "arithmetic",
+        "table",
+        "toolchain"
+      ]
+    },
+    {
+      "front": "FP64",
+      "back": "<b>Bits:</b> 64<br><b>Range:</b> ±10³⁰⁸<br><b>Precision:</b> ~16 digits<br><b>Speed vs FP32:</b> 0.5×<br><b>Memory vs FP32:</b> 2×<br><b>Typical role:</b> HPC, CFD, physics",
+      "tags": [
+        "arithmetic",
+        "table",
+        "ai"
+      ]
+    },
+    {
+      "front": "FP32",
+      "back": "<b>Bits:</b> 32<br><b>Range:</b> ±10³⁸<br><b>Precision:</b> ~7 digits<br><b>Speed vs FP32:</b> 1× (baseline)<br><b>Memory vs FP32:</b> 1× (baseline)<br><b>Typical role:</b> Graphics, classical ML",
+      "tags": [
+        "arithmetic",
+        "table",
+        "ai"
+      ]
+    },
+    {
+      "front": "TF32",
+      "back": "<b>Bits:</b> 19*<br><b>Range:</b> ±10³⁸<br><b>Precision:</b> ~4 digits<br><b>Speed vs FP32:</b> ~10×<br><b>Memory vs FP32:</b> 1× (stored as FP32)<br><b>Typical role:</b> Ampere matmul default",
+      "tags": [
+        "arithmetic",
+        "table",
+        "ai"
+      ]
+    },
+    {
+      "front": "FP16",
+      "back": "<b>Bits:</b> 16<br><b>Range:</b> ±65,504<br><b>Precision:</b> ~3 digits<br><b>Speed vs FP32:</b> ~30×<br><b>Memory vs FP32:</b> 0.5×<br><b>Typical role:</b> Inference, fragile training",
+      "tags": [
+        "arithmetic",
+        "table",
+        "ai"
+      ]
+    },
+    {
+      "front": "BF16",
+      "back": "<b>Bits:</b> 16<br><b>Range:</b> ±10³⁸<br><b>Precision:</b> ~2-3 digits<br><b>Speed vs FP32:</b> ~30×<br><b>Memory vs FP32:</b> 0.5×<br><b>Typical role:</b> Modern training default",
+      "tags": [
+        "arithmetic",
+        "table",
+        "ai"
+      ]
+    },
+    {
+      "front": "FP8 (E4M3)",
+      "back": "<b>Bits:</b> 8<br><b>Range:</b> ±448<br><b>Precision:</b> ~1-2 digits<br><b>Speed vs FP32:</b> ~60×<br><b>Memory vs FP32:</b> 0.25×<br><b>Typical role:</b> Forward: weights, acts",
+      "tags": [
+        "arithmetic",
+        "table",
+        "ai"
+      ]
+    },
+    {
+      "front": "FP8 (E5M2)",
+      "back": "<b>Bits:</b> 8<br><b>Range:</b> ±57,344<br><b>Precision:</b> ~1 digit<br><b>Speed vs FP32:</b> ~60×<br><b>Memory vs FP32:</b> 0.25×<br><b>Typical role:</b> Backward: gradients",
+      "tags": [
+        "arithmetic",
+        "table",
+        "ai"
+      ]
+    },
+    {
+      "front": "FP4 (E2M1)",
+      "back": "<b>Bits:</b> 4<br><b>Range:</b> ±6<br><b>Precision:</b> 16 values<br><b>Speed vs FP32:</b> ~120×<br><b>Memory vs FP32:</b> 0.125×<br><b>Typical role:</b> LLM inference (Blackwell)",
+      "tags": [
+        "arithmetic",
+        "table",
+        "ai"
+      ]
+    },
+    {
+      "front": "INT4",
+      "back": "<b>Bits:</b> 4<br><b>Range:</b> -8…7<br><b>Precision:</b> 16 values<br><b>Speed vs FP32:</b> ~120×<br><b>Memory vs FP32:</b> 0.125×<br><b>Typical role:</b> Post-training quant (GPTQ)",
+      "tags": [
+        "arithmetic",
+        "table",
+        "ai"
+      ]
+    },
+    {
+      "front": "BitNet 1.58",
+      "back": "<b>Bits:</b> 1.58<br><b>Range:</b> {-1,0,+1}<br><b>Precision:</b> 3 values<br><b>Speed vs FP32:</b> ~200× (add-only)<br><b>Memory vs FP32:</b> 0.05×<br><b>Typical role:</b> Ternary LLMs (research)",
+      "tags": [
+        "arithmetic",
+        "table",
+        "ai"
+      ]
+    },
+    {
+      "front": "TF32 (tensor)",
+      "back": "<b>Throughput (H100 TFLOPS):</b> 989<br><b>Typical use:</b> Training baselines, mixed precision",
+      "tags": [
+        "arithmetic",
+        "table",
+        "ai"
+      ]
+    },
+    {
+      "front": "BF16 / FP16 (tensor)",
+      "back": "<b>Throughput (H100 TFLOPS):</b> 1,979<br><b>Typical use:</b> Training, inference",
+      "tags": [
+        "arithmetic",
+        "table",
+        "ai"
+      ]
+    },
+    {
+      "front": "FP8 (tensor)",
+      "back": "<b>Throughput (H100 TFLOPS):</b> 3,958<br><b>Typical use:</b> Transformer Engine, LLM training/inference",
+      "tags": [
+        "arithmetic",
+        "table",
+        "ai"
+      ]
+    },
+    {
+      "front": "INT8 (tensor)",
+      "back": "<b>Throughput (H100 TFLOPS):</b> 3,958<br><b>Typical use:</b> Post-training quantized inference",
+      "tags": [
+        "arithmetic",
+        "table",
+        "ai"
+      ]
+    },
+    {
+      "front": "Intel 4004",
+      "back": "<b>Year:</b> 1971<br><b>Transistors:</b> 2,300<br><b>Think of it as…:</b> A village of switches · ran a pocket calculator",
+      "tags": [
+        "arithmetic",
+        "table",
+        "scale"
+      ]
+    },
+    {
+      "front": "Intel 8086",
+      "back": "<b>Year:</b> 1978<br><b>Transistors:</b> 29,000<br><b>Think of it as…:</b> A small town · first x86 chip (grandfather of today's PCs)",
+      "tags": [
+        "arithmetic",
+        "table",
+        "scale"
+      ]
+    },
+    {
+      "front": "Intel Pentium",
+      "back": "<b>Year:</b> 1993<br><b>Transistors:</b> 3.1 million<br><b>Think of it as…:</b> A mid-size city · ran Windows 95, Doom, early internet",
+      "tags": [
+        "arithmetic",
+        "table",
+        "scale"
+      ]
+    },
+    {
+      "front": "Pentium 4",
+      "back": "<b>Year:</b> 2000<br><b>Transistors:</b> 42 million<br><b>Think of it as…:</b> New York City's population · handled MP3s, DVDs, the 2000s web",
+      "tags": [
+        "arithmetic",
+        "table",
+        "scale"
+      ]
+    },
+    {
+      "front": "iPhone 5s chip (A7)",
+      "back": "<b>Year:</b> 2013<br><b>Transistors:</b> 1 billion<br><b>Think of it as…:</b> The whole population of China · in your pocket",
+      "tags": [
+        "arithmetic",
+        "table",
+        "scale"
+      ]
+    },
+    {
+      "front": "NVIDIA V100",
+      "back": "<b>Year:</b> 2017<br><b>Transistors:</b> 21 billion<br><b>Think of it as…:</b> 3 Earths' worth of people · trained early deep-learning models",
+      "tags": [
+        "arithmetic",
+        "table",
+        "scale"
+      ]
+    },
+    {
+      "front": "NVIDIA H100",
+      "back": "<b>Year:</b> 2022<br><b>Transistors:</b> 80 billion<br><b>Think of it as…:</b> 10 Earths · what GPT-4 was trained on",
+      "tags": [
+        "arithmetic",
+        "table",
+        "scale"
+      ]
+    },
+    {
+      "front": "NVIDIA B200",
+      "back": "<b>Year:</b> 2024<br><b>Transistors:</b> 208 billion<br><b>Think of it as…:</b> 26 Earths · today's frontier AI chip",
+      "tags": [
+        "arithmetic",
+        "table",
+        "scale"
+      ]
+    },
+    {
+      "front": "KFLOPS",
+      "back": "<b>Ops per second:</b> 10³ — thousand<br><b>Prefix:</b> kilo<br><b>Something at this scale:</b> Apollo Guidance Computer (1969) · ~14 KFLOPS",
+      "tags": [
+        "arithmetic",
+        "table",
+        "flops"
+      ]
+    },
+    {
+      "front": "MFLOPS",
+      "back": "<b>Ops per second:</b> 10⁶ — million<br><b>Prefix:</b> mega<br><b>Something at this scale:</b> Intel 486 DX (1989) · ~20 MFLOPS",
+      "tags": [
+        "arithmetic",
+        "table",
+        "flops"
+      ]
+    },
+    {
+      "front": "GFLOPS",
+      "back": "<b>Ops per second:</b> 10⁹ — billion<br><b>Prefix:</b> giga<br><b>Something at this scale:</b> Pentium 4 (2000) · ~6 GFLOPS · modern phone CPU",
+      "tags": [
+        "arithmetic",
+        "table",
+        "flops"
+      ]
+    },
+    {
+      "front": "TFLOPS",
+      "back": "<b>Ops per second:</b> 10¹² — trillion<br><b>Prefix:</b> tera<br><b>Something at this scale:</b> PlayStation 5 GPU (2020) · ~10 TFLOPS",
+      "tags": [
+        "arithmetic",
+        "table",
+        "flops"
+      ]
+    },
+    {
+      "front": "PFLOPS",
+      "back": "<b>Ops per second:</b> 10¹⁵ — quadrillion<br><b>Prefix:</b> peta<br><b>Something at this scale:</b> B200 · 20 PFLOPS FP4 · Top500 #1 in 2008 was 1 PFLOPS",
+      "tags": [
+        "arithmetic",
+        "table",
+        "flops"
+      ]
+    },
+    {
+      "front": "EFLOPS",
+      "back": "<b>Ops per second:</b> 10¹⁸ — quintillion<br><b>Prefix:</b> exa<br><b>Something at this scale:</b> Frontier supercomputer (2022) · 1.1 EFLOPS FP64",
+      "tags": [
+        "arithmetic",
+        "table",
+        "flops"
+      ]
+    },
+    {
+      "front": "ZFLOPS",
+      "back": "<b>Ops per second:</b> 10²¹ — sextillion<br><b>Prefix:</b> zetta<br><b>Something at this scale:</b> Projected ~2035 · AI factories, not yet built",
+      "tags": [
+        "arithmetic",
+        "table",
+        "flops"
+      ]
+    },
+    {
+      "front": "Algorithm (big-O)",
+      "back": "<b>Typical wins:</b> 10× – 10⁶×<br><b>Cost to achieve:</b> Hard — requires rethinking",
+      "tags": [
+        "arithmetic",
+        "table",
+        "perf"
+      ]
+    },
+    {
+      "front": "Data layout (cache-friendly, SoA)",
+      "back": "<b>Typical wins:</b> 2–10×<br><b>Cost to achieve:</b> Medium — restructure code",
+      "tags": [
+        "arithmetic",
+        "table",
+        "perf"
+      ]
+    },
+    {
+      "front": "Precision reduction (FP32→FP16/INT8)",
+      "back": "<b>Typical wins:</b> 2–4×<br><b>Cost to achieve:</b> Low — a cast + calibration",
+      "tags": [
+        "arithmetic",
+        "table",
+        "perf"
+      ]
+    },
+    {
+      "front": "Vectorization (SIMD / tensor cores)",
+      "back": "<b>Typical wins:</b> 4–32×<br><b>Cost to achieve:</b> Low if autovectorizer helps, else rewrite",
+      "tags": [
+        "arithmetic",
+        "table",
+        "perf"
+      ]
+    },
+    {
+      "front": "Parallelism (threads / GPU)",
+      "back": "<b>Typical wins:</b> 4–10,000×<br><b>Cost to achieve:</b> Medium — need work decomposition",
+      "tags": [
+        "arithmetic",
+        "table",
+        "perf"
+      ]
+    },
+    {
+      "front": "Compiler flags (-O3 -march=native)",
+      "back": "<b>Typical wins:</b> 1.5–3×<br><b>Cost to achieve:</b> Trivial",
+      "tags": [
+        "arithmetic",
+        "table",
+        "perf"
+      ]
+    },
+    {
+      "front": "Specialized silicon (TPU, ASIC)",
+      "back": "<b>Typical wins:</b> 10–100× perf/W<br><b>Cost to achieve:</b> High — inference-only, fixed shapes",
+      "tags": [
+        "arithmetic",
+        "table",
+        "perf"
+      ]
+    },
+    {
+      "front": "Moore's Law",
+      "back": "<b>Year · author:</b> 1965 · Gordon Moore<br><b>Statement:</b> Transistor count doubles every ~2 years.<br><b>Status 2025:</b> Slowing, alive on leading-edge nodes",
+      "tags": [
+        "arithmetic",
+        "table",
+        "laws"
+      ]
+    },
+    {
+      "front": "Dennard Scaling",
+      "back": "<b>Year · author:</b> 1974 · Robert Dennard<br><b>Statement:</b> Shrink transistor ½ → drop voltage ½ → same power density.<br><b>Status 2025:</b> Dead (since ~2006)",
+      "tags": [
+        "arithmetic",
+        "table",
+        "laws"
+      ]
+    },
+    {
+      "front": "Koomey's Law",
+      "back": "<b>Year · author:</b> 2011 · Jonathan Koomey<br><b>Statement:</b> Energy per computation halves every ~1.57 years.<br><b>Status 2025:</b> Slowing (~2.6 yr/2×)",
+      "tags": [
+        "arithmetic",
+        "table",
+        "laws"
+      ]
+    },
+    {
+      "front": "Landauer's Principle",
+      "back": "<b>Year · author:</b> 1961 · Rolf Landauer<br><b>Statement:</b> Erasing 1 bit dissipates ≥ kT ln 2 J (~10⁻²¹ J at room T).<br><b>Status 2025:</b> Physical floor",
+      "tags": [
+        "arithmetic",
+        "table",
+        "laws"
+      ]
+    },
+    {
+      "front": "Shannon-Hartley",
+      "back": "<b>Year · author:</b> 1948 · Claude Shannon<br><b>Statement:</b> Channel capacity C = B log₂(1+SNR).<br><b>Status 2025:</b> Information-theoretic ceiling",
+      "tags": [
+        "arithmetic",
+        "table",
+        "laws"
+      ]
+    },
+    {
+      "front": "Amdahl's Law",
+      "back": "<b>Year · author:</b> 1967 · Gene Amdahl<br><b>Statement:</b> Speedup ≤ 1 / (s + p/N). Serial fraction dominates.<br><b>Status 2025:</b> Core limit of parallelism",
+      "tags": [
+        "arithmetic",
+        "table",
+        "laws"
+      ]
+    },
+    {
+      "front": "Gustafson's Law",
+      "back": "<b>Year · author:</b> 1988 · John Gustafson<br><b>Statement:</b> If problem grows with cores, scaling is near-linear.<br><b>Status 2025:</b> Optimistic counterpart",
+      "tags": [
+        "arithmetic",
+        "table",
+        "laws"
+      ]
+    },
+    {
+      "front": "Little's Law",
+      "back": "<b>Year · author:</b> 1961 · John Little<br><b>Statement:</b> L = λ · W (queue length = arrival × wait).<br><b>Status 2025:</b> Universal in systems",
+      "tags": [
+        "arithmetic",
+        "table",
+        "laws"
+      ]
+    },
+    {
+      "front": "Pollack's Rule",
+      "back": "<b>Year · author:</b> 1999 · Fred Pollack<br><b>Statement:</b> Single-core perf ∝ √(area). Doubling a core → 1.4× speed.<br><b>Status 2025:</b> Why \"more cores\" won",
+      "tags": [
+        "arithmetic",
+        "table",
+        "laws"
+      ]
+    },
+    {
+      "front": "Rent's Rule",
+      "back": "<b>Year · author:</b> 1960s · E. F. Rent (IBM)<br><b>Statement:</b> #Pins = k · (gates)ᵖ, p ≈ 0.5-0.7.<br><b>Status 2025:</b> Why I/O is the bottleneck",
+      "tags": [
+        "arithmetic",
+        "table",
+        "laws"
+      ]
+    },
+    {
+      "front": "Rock's Law",
+      "back": "<b>Year · author:</b> 1965 · Arthur Rock<br><b>Statement:</b> Cost of a chip fab doubles every 4 years.<br><b>Status 2025:</b> $20B+ fabs today",
+      "tags": [
+        "arithmetic",
+        "table",
+        "laws"
+      ]
+    },
+    {
+      "front": "Wirth's Law",
+      "back": "<b>Year · author:</b> 1995 · Niklaus Wirth<br><b>Statement:</b> Software gets slower faster than hardware gets faster.<br><b>Status 2025:</b> Alive and well 🙃",
+      "tags": [
+        "arithmetic",
+        "table",
+        "laws"
+      ]
+    },
+    {
+      "front": "Bell's Law",
+      "back": "<b>Year · author:</b> 1972 · Gordon Bell<br><b>Statement:</b> Every ~10 years, a new cheaper computer class emerges.<br><b>Status 2025:</b> Mainframe→PC→phone→…",
+      "tags": [
+        "arithmetic",
+        "table",
+        "laws"
+      ]
+    },
+    {
+      "front": "Metcalfe's Law",
+      "back": "<b>Year · author:</b> 1980 · Robert Metcalfe<br><b>Statement:</b> Network value ∝ n² (users).<br><b>Status 2025:</b> Drives internet economics",
+      "tags": [
+        "arithmetic",
+        "table",
+        "laws"
+      ]
+    },
+    {
+      "front": "Kryder's Law",
+      "back": "<b>Year · author:</b> 2005 · Mark Kryder<br><b>Statement:</b> Storage density doubles every ~13 months.<br><b>Status 2025:</b> Slowing; HAMR/MAMR revival",
+      "tags": [
+        "arithmetic",
+        "table",
+        "laws"
+      ]
+    },
+    {
+      "front": "Huang's Law",
+      "back": "<b>Year · author:</b> 2018 · Jensen Huang<br><b>Statement:</b> GPU perf doubles every ~2 years (faster than Moore).<br><b>Status 2025:</b> Holding via architecture+precision",
+      "tags": [
+        "arithmetic",
+        "table",
+        "laws"
+      ]
+    },
+    {
+      "front": "Chinchilla scaling",
+      "back": "<b>Year · author:</b> 2022 · DeepMind<br><b>Statement:</b> LLM optimal compute: tokens ≈ 20× parameters.<br><b>Status 2025:</b> Defines training budgets",
+      "tags": [
+        "arithmetic",
+        "table",
+        "laws"
+      ]
+    },
+    {
+      "front": "1971",
+      "back": "<b>Chip:</b> Intel 4004<br><b>Transistors:</b> 2,300<br><b>Process:</b> 10,000 nm<br><b>× vs 1971:</b> 1×",
+      "tags": [
+        "arithmetic",
+        "table",
+        "laws"
+      ]
+    },
+    {
+      "front": "1978",
+      "back": "<b>Chip:</b> Intel 8086<br><b>Transistors:</b> 29,000<br><b>Process:</b> 3,000 nm<br><b>× vs 1971:</b> 13×",
+      "tags": [
+        "arithmetic",
+        "table",
+        "laws"
+      ]
+    },
+    {
+      "front": "1985",
+      "back": "<b>Chip:</b> Intel 386<br><b>Transistors:</b> 275,000<br><b>Process:</b> 1,500 nm<br><b>× vs 1971:</b> 120×",
+      "tags": [
+        "arithmetic",
+        "table",
+        "laws"
+      ]
+    },
+    {
+      "front": "1993",
+      "back": "<b>Chip:</b> Pentium<br><b>Transistors:</b> 3,100,000<br><b>Process:</b> 800 nm<br><b>× vs 1971:</b> 1,350×",
+      "tags": [
+        "arithmetic",
+        "table",
+        "laws"
+      ]
+    },
+    {
+      "front": "2000",
+      "back": "<b>Chip:</b> Pentium 4<br><b>Transistors:</b> 42,000,000<br><b>Process:</b> 180 nm<br><b>× vs 1971:</b> 18,000×",
+      "tags": [
+        "arithmetic",
+        "table",
+        "laws"
+      ]
+    },
+    {
+      "front": "2006",
+      "back": "<b>Chip:</b> Core 2 Duo<br><b>Transistors:</b> 291,000,000<br><b>Process:</b> 65 nm<br><b>× vs 1971:</b> 127,000×",
+      "tags": [
+        "arithmetic",
+        "table",
+        "laws"
+      ]
+    },
+    {
+      "front": "2012",
+      "back": "<b>Chip:</b> Ivy Bridge<br><b>Transistors:</b> 1,400,000,000<br><b>Process:</b> 22 nm<br><b>× vs 1971:</b> 610,000×",
+      "tags": [
+        "arithmetic",
+        "table",
+        "laws"
+      ]
+    },
+    {
+      "front": "2017",
+      "back": "<b>Chip:</b> Apple A11<br><b>Transistors:</b> 4,300,000,000<br><b>Process:</b> 10 nm<br><b>× vs 1971:</b> 1,870,000×",
+      "tags": [
+        "arithmetic",
+        "table",
+        "laws"
+      ]
+    },
+    {
+      "front": "2020",
+      "back": "<b>Chip:</b> Apple M1<br><b>Transistors:</b> 16,000,000,000<br><b>Process:</b> 5 nm<br><b>× vs 1971:</b> 7,000,000×",
+      "tags": [
+        "arithmetic",
+        "table",
+        "laws"
+      ]
+    },
+    {
+      "front": "2022",
+      "back": "<b>Chip:</b> NVIDIA H100<br><b>Transistors:</b> 80,000,000,000<br><b>Process:</b> 4 nm<br><b>× vs 1971:</b> 35,000,000×",
+      "tags": [
+        "arithmetic",
+        "table",
+        "laws"
+      ]
+    },
+    {
+      "front": "2024",
+      "back": "<b>Chip:</b> NVIDIA B200<br><b>Transistors:</b> 208,000,000,000<br><b>Process:</b> 4 nm (dual die)<br><b>× vs 1971:</b> 90,000,000×",
+      "tags": [
+        "arithmetic",
+        "table",
+        "laws"
+      ]
+    },
+    {
+      "front": "Transistor",
+      "back": "<b>Definition:</b> Voltage-controlled electronic switch. The fundamental building block of all digital logic since ~1960.<br><b>Reference:</b> Wikipedia ↗",
+      "tags": [
+        "arithmetic",
+        "table",
+        "appendix"
+      ]
+    },
+    {
+      "front": "MOSFET",
+      "back": "<b>Definition:</b> Metal-Oxide-Semiconductor Field-Effect Transistor · the specific type used in all modern chips.<br><b>Reference:</b> Wikipedia ↗",
+      "tags": [
+        "arithmetic",
+        "table",
+        "appendix"
+      ]
+    },
+    {
+      "front": "Source / Drain / Gate",
+      "back": "<b>Definition:</b> The 3 terminals of a MOSFET · electrons go from source to drain, gated by voltage on the gate terminal.<br><b>Reference:</b> Wikipedia ↗",
+      "tags": [
+        "arithmetic",
+        "table",
+        "appendix"
+      ]
+    },
+    {
+      "front": "NMOS / PMOS",
+      "back": "<b>Definition:</b> N-channel (conducts when gate is HIGH) / P-channel (conducts when gate is LOW) · paired in CMOS.<br><b>Reference:</b> Wikipedia ↗",
+      "tags": [
+        "arithmetic",
+        "table",
+        "appendix"
+      ]
+    },
+    {
+      "front": "CMOS",
+      "back": "<b>Definition:</b> Complementary Metal-Oxide-Semiconductor · uses both NMOS+PMOS so it draws ~zero static power.<br><b>Reference:</b> Wikipedia ↗",
+      "tags": [
+        "arithmetic",
+        "table",
+        "appendix"
+      ]
+    },
+    {
+      "front": "FinFET",
+      "back": "<b>Definition:</b> 3D fin-shaped transistor (2011+, Intel 22 nm onward) · better control than flat transistors.<br><b>Reference:</b> Wikipedia ↗",
+      "tags": [
+        "arithmetic",
+        "table",
+        "appendix"
+      ]
+    },
+    {
+      "front": "GAAFET",
+      "back": "<b>Definition:</b> Gate-All-Around FET · gate wraps around the channel on all 4 sides · used at 3 nm and below.<br><b>Reference:</b> Wikipedia ↗",
+      "tags": [
+        "arithmetic",
+        "table",
+        "appendix"
+      ]
+    },
+    {
+      "front": "Dennard scaling",
+      "back": "<b>Definition:</b> Rule (1974-2006) that shrinking transistors also reduced power density · broke ~2006, ending easy clock speedups.<br><b>Reference:</b> Wikipedia ↗",
+      "tags": [
+        "arithmetic",
+        "table",
+        "appendix"
+      ]
+    },
+    {
+      "front": "Moore's Law",
+      "back": "<b>Definition:</b> Observation (1965) that transistor count on a chip doubles every ~2 years.<br><b>Reference:</b> Wikipedia ↗",
+      "tags": [
+        "arithmetic",
+        "table",
+        "appendix"
+      ]
+    },
+    {
+      "front": "Landauer limit",
+      "back": "<b>Definition:</b> ~2.75 × 10⁻²¹ J · theoretical minimum energy to erase 1 bit at 300 K (thermodynamic floor).<br><b>Reference:</b> Wikipedia ↗",
+      "tags": [
+        "arithmetic",
+        "table",
+        "appendix"
+      ]
+    },
+    {
+      "front": "Quantum tunneling",
+      "back": "<b>Definition:</b> Electrons \"leak\" through thin insulators quantum-mechanically · limits how small gates can get.<br><b>Reference:</b> Wikipedia ↗",
+      "tags": [
+        "arithmetic",
+        "table",
+        "appendix"
+      ]
+    },
+    {
+      "front": "Reticle limit",
+      "back": "<b>Definition:</b> ~858 mm² · largest rectangle a photolithography scanner can print in one exposure · why B200 is dual-die.<br><b>Reference:</b> Wikipedia ↗",
+      "tags": [
+        "arithmetic",
+        "table",
+        "appendix"
+      ]
+    },
+    {
+      "front": "Process node",
+      "back": "<b>Definition:</b> Marketing name for a manufacturing generation (e.g. \"4 nm\") · loosely tied to feature size.<br><b>Reference:</b> Wikipedia ↗",
+      "tags": [
+        "arithmetic",
+        "table",
+        "appendix"
+      ]
+    },
+    {
+      "front": "EUV lithography",
+      "back": "<b>Definition:</b> Extreme-ultraviolet (13.5 nm wavelength) light used to print transistors ≤ 7 nm · only ASML makes the machines.<br><b>Reference:</b> Wikipedia ↗",
+      "tags": [
+        "arithmetic",
+        "table",
+        "appendix"
+      ]
+    },
+    {
+      "front": "Bit",
+      "back": "<b>Definition:</b> Single binary digit · 0 or 1 · smallest unit of information.<br><b>Reference:</b> Wikipedia ↗",
+      "tags": [
+        "arithmetic",
+        "table",
+        "appendix"
+      ]
+    },
+    {
+      "front": "Byte",
+      "back": "<b>Definition:</b> 8 bits · encodes values 0-255 (unsigned) or -128-127 (signed).<br><b>Reference:</b> Wikipedia ↗",
+      "tags": [
+        "arithmetic",
+        "table",
+        "appendix"
+      ]
+    },
+    {
+      "front": "Nibble",
+      "back": "<b>Definition:</b> 4 bits · one hex digit.<br><b>Reference:</b> Wikipedia ↗",
+      "tags": [
+        "arithmetic",
+        "table",
+        "appendix"
+      ]
+    },
+    {
+      "front": "Word / dword / qword",
+      "back": "<b>Definition:</b> Native CPU register size · typically 16/32/64 bits.<br><b>Reference:</b> Wikipedia ↗",
+      "tags": [
+        "arithmetic",
+        "table",
+        "appendix"
+      ]
+    },
+    {
+      "front": "Binary (base-2)",
+      "back": "<b>Definition:</b> Number system using 2 digits · matches on/off directly.<br><b>Reference:</b> Wikipedia ↗",
+      "tags": [
+        "arithmetic",
+        "table",
+        "appendix"
+      ]
+    },
+    {
+      "front": "Hexadecimal (base-16)",
+      "back": "<b>Definition:</b> 0-9,A-F · 1 hex digit = 4 bits · compact way to write binary.<br><b>Reference:</b> Wikipedia ↗",
+      "tags": [
+        "arithmetic",
+        "table",
+        "appendix"
+      ]
+    },
+    {
+      "front": "Octal (base-8)",
+      "back": "<b>Definition:</b> 0-7 · 1 octal digit = 3 bits · used for Unix file permissions.<br><b>Reference:</b> Wikipedia ↗",
+      "tags": [
+        "arithmetic",
+        "table",
+        "appendix"
+      ]
+    },
+    {
+      "front": "Sign-magnitude",
+      "back": "<b>Definition:</b> MSB = sign, rest = magnitude · has +0 and −0 (wasteful).<br><b>Reference:</b> Wikipedia ↗",
+      "tags": [
+        "arithmetic",
+        "table",
+        "appendix"
+      ]
+    },
+    {
+      "front": "One's complement",
+      "back": "<b>Definition:</b> Negate by flipping all bits · still has +0/−0.<br><b>Reference:</b> Wikipedia ↗",
+      "tags": [
+        "arithmetic",
+        "table",
+        "appendix"
+      ]
+    },
+    {
+      "front": "Two's complement ★",
+      "back": "<b>Definition:</b> Negate by flip + add 1 · single zero · same adder works for signed+unsigned · universal today.<br><b>Reference:</b> Wikipedia ↗",
+      "tags": [
+        "arithmetic",
+        "table",
+        "appendix"
+      ]
+    },
+    {
+      "front": "Endianness",
+      "back": "<b>Definition:</b> Byte-order of multi-byte values in memory · big-endian vs little-endian.<br><b>Reference:</b> Wikipedia ↗",
+      "tags": [
+        "arithmetic",
+        "table",
+        "appendix"
+      ]
+    },
+    {
+      "front": "ASCII / UTF-8",
+      "back": "<b>Definition:</b> Ways to encode text characters as bytes · UTF-8 is the internet standard.<br><b>Reference:</b> Wikipedia ↗",
+      "tags": [
+        "arithmetic",
+        "table",
+        "appendix"
+      ]
+    },
+    {
+      "front": "ISA",
+      "back": "<b>Definition:</b> Instruction Set Architecture · the contract between compiler and CPU (x86, ARM, RISC-V, MIPS, POWER).<br><b>Reference:</b> Wikipedia ↗",
+      "tags": [
+        "arithmetic",
+        "table",
+        "appendix"
+      ]
+    },
+    {
+      "front": "x86 / x86-64",
+      "back": "<b>Definition:</b> Intel/AMD family · CISC · dominant in desktop and server since 1978.<br><b>Reference:</b> Wikipedia ↗",
+      "tags": [
+        "arithmetic",
+        "table",
+        "appendix"
+      ]
+    },
+    {
+      "front": "ARM / ARM64 (AArch64)",
+      "back": "<b>Definition:</b> RISC family · dominant in mobile · Apple Silicon, AWS Graviton.<br><b>Reference:</b> Wikipedia ↗",
+      "tags": [
+        "arithmetic",
+        "table",
+        "appendix"
+      ]
+    },
+    {
+      "front": "RISC-V",
+      "back": "<b>Definition:</b> Open-source RISC ISA (2010) · royalty-free · rapidly gaining adoption.<br><b>Reference:</b> Wikipedia ↗",
+      "tags": [
+        "arithmetic",
+        "table",
+        "appendix"
+      ]
+    },
+    {
+      "front": "Register",
+      "back": "<b>Definition:</b> Tiny on-CPU storage slot (typically 16-32 per core) · fastest memory available.<br><b>Reference:</b> Wikipedia ↗",
+      "tags": [
+        "arithmetic",
+        "table",
+        "appendix"
+      ]
+    },
+    {
+      "front": "FMA",
+      "back": "<b>Definition:</b> Fused Multiply-Add · computes a×b + c in one instruction with one rounding · workhorse of AI/graphics.<br><b>Reference:</b> Wikipedia ↗",
+      "tags": [
+        "arithmetic",
+        "table",
+        "appendix"
+      ]
+    },
+    {
+      "front": "SIMD",
+      "back": "<b>Definition:</b> Single Instruction Multiple Data · one op on many numbers at once.<br><b>Reference:</b> Wikipedia ↗",
+      "tags": [
+        "arithmetic",
+        "table",
+        "appendix"
+      ]
+    },
+    {
+      "front": "MMX / SSE / AVX / AVX-512",
+      "back": "<b>Definition:</b> x86 SIMD generations · 64 → 128 → 256 → 512 bits wide.<br><b>Reference:</b> Wikipedia ↗",
+      "tags": [
+        "arithmetic",
+        "table",
+        "appendix"
+      ]
+    },
+    {
+      "front": "NEON / SVE / SVE2",
+      "back": "<b>Definition:</b> ARM SIMD extensions · SVE has variable vector length.<br><b>Reference:</b> Wikipedia ↗",
+      "tags": [
+        "arithmetic",
+        "table",
+        "appendix"
+      ]
+    },
+    {
+      "front": "AMX",
+      "back": "<b>Definition:</b> Advanced Matrix Extensions (Intel Sapphire Rapids, Apple M-series) · ISA-level matrix ops.<br><b>Reference:</b> Wikipedia ↗",
+      "tags": [
+        "arithmetic",
+        "table",
+        "appendix"
+      ]
+    },
+    {
+      "front": "Pipelining",
+      "back": "<b>Definition:</b> Breaking instruction execution into stages so multiple instructions overlap.<br><b>Reference:</b> Wikipedia ↗",
+      "tags": [
+        "arithmetic",
+        "table",
+        "appendix"
+      ]
+    },
+    {
+      "front": "Superscalar",
+      "back": "<b>Definition:</b> CPU that issues multiple instructions per clock cycle.<br><b>Reference:</b> Wikipedia ↗",
+      "tags": [
+        "arithmetic",
+        "table",
+        "appendix"
+      ]
+    },
+    {
+      "front": "Out-of-order execution",
+      "back": "<b>Definition:</b> CPU reorders instructions dynamically to hide memory latency.<br><b>Reference:</b> Wikipedia ↗",
+      "tags": [
+        "arithmetic",
+        "table",
+        "appendix"
+      ]
+    },
+    {
+      "front": "Branch prediction",
+      "back": "<b>Definition:</b> Guessing the outcome of if/while to keep the pipeline full.<br><b>Reference:</b> Wikipedia ↗",
+      "tags": [
+        "arithmetic",
+        "table",
+        "appendix"
+      ]
+    },
+    {
+      "front": "Speculative execution",
+      "back": "<b>Definition:</b> Running instructions before knowing if they're needed · source of Spectre/Meltdown.<br><b>Reference:</b> Wikipedia ↗",
+      "tags": [
+        "arithmetic",
+        "table",
+        "appendix"
+      ]
+    },
+    {
+      "front": "Compiler",
+      "back": "<b>Definition:</b> Program that translates source code into machine code.<br><b>Reference:</b> Wikipedia ↗",
+      "tags": [
+        "arithmetic",
+        "table",
+        "appendix"
+      ]
+    },
+    {
+      "front": "Interpreter",
+      "back": "<b>Definition:</b> Program that executes source code directly, without producing a standalone binary.<br><b>Reference:</b> Wikipedia ↗",
+      "tags": [
+        "arithmetic",
+        "table",
+        "appendix"
+      ]
+    },
+    {
+      "front": "JIT",
+      "back": "<b>Definition:</b> Just-In-Time compiler · compiles at runtime · V8 (JS), JVM (Java), PyPy.<br><b>Reference:</b> Wikipedia ↗",
+      "tags": [
+        "arithmetic",
+        "table",
+        "appendix"
+      ]
+    },
+    {
+      "front": "LLVM",
+      "back": "<b>Definition:</b> Compiler infrastructure used by Clang, Swift, Rust, Julia, many GPU toolchains.<br><b>Reference:</b> llvm.org ↗",
+      "tags": [
+        "arithmetic",
+        "table",
+        "appendix"
+      ]
+    },
+    {
+      "front": "GCC",
+      "back": "<b>Definition:</b> GNU Compiler Collection · C/C++/Fortran/Go · the OG open-source compiler.<br><b>Reference:</b> gcc.gnu.org ↗",
+      "tags": [
+        "arithmetic",
+        "table",
+        "appendix"
+      ]
+    },
+    {
+      "front": "IR (Intermediate Rep.)",
+      "back": "<b>Definition:</b> Middle language between source and machine code (e.g. LLVM IR) · where optimizations happen.<br><b>Reference:</b> Wikipedia ↗",
+      "tags": [
+        "arithmetic",
+        "table",
+        "appendix"
+      ]
+    },
+    {
+      "front": "SSA form",
+      "back": "<b>Definition:</b> Static Single Assignment · IR where each variable is assigned exactly once · makes analysis easier.<br><b>Reference:</b> Wikipedia ↗",
+      "tags": [
+        "arithmetic",
+        "table",
+        "appendix"
+      ]
+    },
+    {
+      "front": "Register allocation",
+      "back": "<b>Definition:</b> Mapping variables to the limited CPU registers · graph-coloring NP-hard.<br><b>Reference:</b> Wikipedia ↗",
+      "tags": [
+        "arithmetic",
+        "table",
+        "appendix"
+      ]
+    },
+    {
+      "front": "Auto-vectorization",
+      "back": "<b>Definition:</b> Compiler automatically turns a loop into SIMD instructions.<br><b>Reference:</b> Wikipedia ↗",
+      "tags": [
+        "arithmetic",
+        "table",
+        "appendix"
+      ]
+    },
+    {
+      "front": "-O0 / -O1 / -O2 / -O3",
+      "back": "<b>Definition:</b> Optimization levels · from \"don't optimize\" to \"optimize aggressively\".<br><b>Reference:</b> GCC docs ↗",
+      "tags": [
+        "arithmetic",
+        "table",
+        "appendix"
+      ]
+    },
+    {
+      "front": "L1 cache",
+      "back": "<b>What it is:</b> ~32 KB per core · SRAM<br><b>Typical latency:</b> ~1 ns<br><b>Reference:</b> Wikipedia ↗",
+      "tags": [
+        "arithmetic",
+        "table",
+        "appendix"
+      ]
+    },
+    {
+      "front": "L2 cache",
+      "back": "<b>What it is:</b> ~256 KB-1 MB per core · SRAM<br><b>Typical latency:</b> ~3-10 ns<br><b>Reference:</b> Wikipedia ↗",
+      "tags": [
+        "arithmetic",
+        "table",
+        "appendix"
+      ]
+    },
+    {
+      "front": "L3 cache",
+      "back": "<b>What it is:</b> ~4-100 MB shared · SRAM<br><b>Typical latency:</b> ~10-40 ns<br><b>Reference:</b> Wikipedia ↗",
+      "tags": [
+        "arithmetic",
+        "table",
+        "appendix"
+      ]
+    },
+    {
+      "front": "DRAM (main memory)",
+      "back": "<b>What it is:</b> 1-512 GB · capacitor+transistor cells · must refresh<br><b>Typical latency:</b> ~60-100 ns<br><b>Reference:</b> Wikipedia ↗",
+      "tags": [
+        "arithmetic",
+        "table",
+        "appendix"
+      ]
+    },
+    {
+      "front": "SRAM",
+      "back": "<b>What it is:</b> 6-transistor cells · fast, expensive · used for caches<br><b>Typical latency:</b> ~1 ns<br><b>Reference:</b> Wikipedia ↗",
+      "tags": [
+        "arithmetic",
+        "table",
+        "appendix"
+      ]
+    },
+    {
+      "front": "HBM (HBM2e/HBM3/HBM3e)",
+      "back": "<b>What it is:</b> High-Bandwidth Memory · stacked DRAM next to GPU die · 1-8 TB/s<br><b>Typical latency:</b> ~100 ns<br><b>Reference:</b> Wikipedia ↗",
+      "tags": [
+        "arithmetic",
+        "table",
+        "appendix"
+      ]
+    },
+    {
+      "front": "NVMe SSD",
+      "back": "<b>What it is:</b> Flash storage over PCIe · ~1-14 GB/s<br><b>Typical latency:</b> ~10-100 µs<br><b>Reference:</b> Wikipedia ↗",
+      "tags": [
+        "arithmetic",
+        "table",
+        "appendix"
+      ]
+    },
+    {
+      "front": "Flash (NAND)",
+      "back": "<b>What it is:</b> Trapped electrons in floating gate · non-volatile<br><b>Typical latency:</b> ~50 µs<br><b>Reference:</b> Wikipedia ↗",
+      "tags": [
+        "arithmetic",
+        "table",
+        "appendix"
+      ]
+    },
+    {
+      "front": "Cache line",
+      "back": "<b>What it is:</b> Unit of memory transfer · typically 64 bytes.<br><b>Typical latency:</b> —<br><b>Reference:</b> Wikipedia ↗",
+      "tags": [
+        "arithmetic",
+        "table",
+        "appendix"
+      ]
+    },
+    {
+      "front": "TLB",
+      "back": "<b>What it is:</b> Translation Lookaside Buffer · caches virtual→physical address mappings.<br><b>Typical latency:</b> —<br><b>Reference:</b> Wikipedia ↗",
+      "tags": [
+        "arithmetic",
+        "table",
+        "appendix"
+      ]
+    },
+    {
+      "front": "kilo (k)",
+      "back": "<b>Value:</b> 10³<br><b>Common usage:</b> KB, KFLOPS<br><b>Reference:</b> Metric prefix ↗",
+      "tags": [
+        "arithmetic",
+        "table",
+        "appendix"
+      ]
+    },
+    {
+      "front": "mega (M)",
+      "back": "<b>Value:</b> 10⁶<br><b>Common usage:</b> MB, MHz, MFLOPS",
+      "tags": [
+        "arithmetic",
+        "table",
+        "appendix"
+      ]
+    },
+    {
+      "front": "giga (G)",
+      "back": "<b>Value:</b> 10⁹<br><b>Common usage:</b> GB, GHz, GFLOPS",
+      "tags": [
+        "arithmetic",
+        "table",
+        "appendix"
+      ]
+    },
+    {
+      "front": "tera (T)",
+      "back": "<b>Value:</b> 10¹²<br><b>Common usage:</b> TB, TFLOPS",
+      "tags": [
+        "arithmetic",
+        "table",
+        "appendix"
+      ]
+    },
+    {
+      "front": "peta (P)",
+      "back": "<b>Value:</b> 10¹⁵<br><b>Common usage:</b> PFLOPS (one B200 at FP4)",
+      "tags": [
+        "arithmetic",
+        "table",
+        "appendix"
+      ]
+    },
+    {
+      "front": "exa (E)",
+      "back": "<b>Value:</b> 10¹⁸<br><b>Common usage:</b> EFLOPS (Frontier supercomputer)",
+      "tags": [
+        "arithmetic",
+        "table",
+        "appendix"
+      ]
+    },
+    {
+      "front": "zetta (Z)",
+      "back": "<b>Value:</b> 10²¹<br><b>Common usage:</b> Projected AI factories ~2035",
+      "tags": [
+        "arithmetic",
+        "table",
+        "appendix"
+      ]
+    },
+    {
+      "front": "kibi (Ki)",
+      "back": "<b>Value:</b> 2¹⁰ = 1024<br><b>Common usage:</b> KiB · IEC binary prefix (distinct from kB)<br><b>Reference:</b> Binary prefix ↗",
+      "tags": [
+        "arithmetic",
+        "table",
+        "appendix"
+      ]
+    },
+    {
+      "front": "FLOP / FLOPS",
+      "back": "<b>Value:</b> —<br><b>Common usage:</b> Floating-point Op / per second. \"S\" = seconds, not plural.<br><b>Reference:</b> Wikipedia ↗",
+      "tags": [
+        "arithmetic",
+        "table",
+        "appendix"
+      ]
+    },
+    {
+      "front": "MIPS",
+      "back": "<b>Value:</b> —<br><b>Common usage:</b> Million Instructions Per Second · older integer metric<br><b>Reference:</b> Wikipedia ↗",
+      "tags": [
+        "arithmetic",
+        "table",
+        "appendix"
+      ]
+    },
+    {
+      "front": "ns / µs / ms / ps",
+      "back": "<b>Value:</b> 10⁻⁹ / 10⁻⁶ / 10⁻³ / 10⁻¹²<br><b>Common usage:</b> Nanosecond, microsecond, millisecond, picosecond<br><b>Reference:</b> —",
+      "tags": [
+        "arithmetic",
+        "table",
+        "appendix"
+      ]
+    },
+    {
+      "front": "GPU",
+      "back": "<b>Definition:</b> Graphics Processing Unit · massively parallel many-core processor.<br><b>Reference:</b> Wikipedia ↗",
+      "tags": [
+        "arithmetic",
+        "table",
+        "appendix"
+      ]
+    },
+    {
+      "front": "CUDA",
+      "back": "<b>Definition:</b> NVIDIA's parallel programming platform · launched 2006 with G80.<br><b>Reference:</b> Wikipedia ↗",
+      "tags": [
+        "arithmetic",
+        "table",
+        "appendix"
+      ]
+    },
+    {
+      "front": "Tensor core",
+      "back": "<b>Definition:</b> Hardware unit for matrix-multiply-accumulate · introduced NVIDIA Volta (2017).<br><b>Reference:</b> Wikipedia ↗",
+      "tags": [
+        "arithmetic",
+        "table",
+        "appendix"
+      ]
+    },
+    {
+      "front": "TPU",
+      "back": "<b>Definition:</b> Tensor Processing Unit · Google's custom AI ASIC (2015+).<br><b>Reference:</b> Wikipedia ↗",
+      "tags": [
+        "arithmetic",
+        "table",
+        "appendix"
+      ]
+    },
+    {
+      "front": "NPU",
+      "back": "<b>Definition:</b> Neural Processing Unit · generic term for on-device AI accelerator (Apple Neural Engine, etc).<br><b>Reference:</b> Wikipedia ↗",
+      "tags": [
+        "arithmetic",
+        "table",
+        "appendix"
+      ]
+    },
+    {
+      "front": "Transformer engine",
+      "back": "<b>Definition:</b> NVIDIA Hopper/Blackwell subsystem that auto-chooses FP8/FP16 per tensor.<br><b>Reference:</b> NVIDIA blog ↗",
+      "tags": [
+        "arithmetic",
+        "table",
+        "appendix"
+      ]
+    },
+    {
+      "front": "NVLink",
+      "back": "<b>Definition:</b> NVIDIA's GPU-to-GPU interconnect · 900 GB/s in H100, 1.8 TB/s in B200.<br><b>Reference:</b> Wikipedia ↗",
+      "tags": [
+        "arithmetic",
+        "table",
+        "appendix"
+      ]
+    },
+    {
+      "front": "Quantization",
+      "back": "<b>Definition:</b> Converting FP32 weights to lower precision (INT8/FP8/FP4/int2) · shrinks model size 4-16×.<br><b>Reference:</b> Wikipedia ↗",
+      "tags": [
+        "arithmetic",
+        "table",
+        "appendix"
+      ]
+    },
+    {
+      "front": "PTQ",
+      "back": "<b>Definition:</b> Post-Training Quantization · quantize after training (simple, some accuracy loss).<br><b>Reference:</b> HF docs ↗",
+      "tags": [
+        "arithmetic",
+        "table",
+        "appendix"
+      ]
+    },
+    {
+      "front": "QAT",
+      "back": "<b>Definition:</b> Quantization-Aware Training · train with simulated low-precision · retains accuracy.<br><b>Reference:</b> PyTorch docs ↗",
+      "tags": [
+        "arithmetic",
+        "table",
+        "appendix"
+      ]
+    },
+    {
+      "front": "BitNet",
+      "back": "<b>Definition:</b> Microsoft (2024) · LLMs with 1.58-bit ternary weights (-1, 0, +1) · matches FP16 quality.<br><b>Reference:</b> arXiv ↗",
+      "tags": [
+        "arithmetic",
+        "table",
+        "appendix"
+      ]
+    },
+    {
+      "front": "Roofline model",
+      "back": "<b>Definition:</b> Performance analysis framework · compute-bound vs memory-bound regimes.<br><b>Reference:</b> Wikipedia ↗",
+      "tags": [
+        "arithmetic",
+        "table",
+        "appendix"
+      ]
+    },
+    {
+      "front": "Arithmetic intensity",
+      "back": "<b>Definition:</b> FLOPs per byte of memory moved · predicts if you're compute- or bandwidth-limited.<br><b>Reference:</b> NVIDIA ↗",
+      "tags": [
+        "arithmetic",
+        "table",
+        "appendix"
+      ]
+    }
+  ]
+}

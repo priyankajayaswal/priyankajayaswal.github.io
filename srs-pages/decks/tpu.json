@@ -1,0 +1,1204 @@
+{
+  "name": "TPU — Tensor Processing Units",
+  "description": "133 cards",
+  "cards": [
+    {
+      "front": "What is a TPU in one sentence?",
+      "back": "A Google-designed ASIC for accelerating neural-network <b>matrix multiplications</b>, built around a <b>systolic array</b> and high-bandwidth on-package memory.",
+      "tags": [
+        "tpu",
+        "def",
+        "core"
+      ]
+    },
+    {
+      "front": "Who designed and manufactures the TPU?",
+      "back": "<b>Google</b> designs it; foundry partners (e.g., TSMC, Samsung) fabricate the silicon.",
+      "tags": [
+        "tpu",
+        "def"
+      ]
+    },
+    {
+      "front": "What problem class do TPUs accelerate best?",
+      "back": "Dense <b>matrix multiply / accumulate (MAC)</b> heavy workloads — feed-forward layers, attention QKV projections, embeddings. Not great for sparse / branchy code.",
+      "tags": [
+        "tpu",
+        "def",
+        "fit"
+      ]
+    },
+    {
+      "front": "What does MXU stand for?",
+      "back": "<b>M</b>atrix <b>X</b> (multiply) <b>U</b>nit — the systolic array that does the heavy linear algebra.",
+      "tags": [
+        "tpu",
+        "def",
+        "acronym"
+      ]
+    },
+    {
+      "front": "What does VPU stand for in the TPU context?",
+      "back": "<b>V</b>ector <b>P</b>rocessing <b>U</b>nit — handles activations, reductions, softmax, and other element-wise / control-light ops the MXU can't.",
+      "tags": [
+        "tpu",
+        "def",
+        "acronym"
+      ]
+    },
+    {
+      "front": "What does HBM stand for?",
+      "back": "<b>H</b>igh <b>B</b>andwidth <b>M</b>emory — DRAM stacked on the same package as the chip, connected via wide silicon interposer.",
+      "tags": [
+        "tpu",
+        "def",
+        "acronym"
+      ]
+    },
+    {
+      "front": "What does ICI stand for?",
+      "back": "<b>I</b>nter-<b>C</b>hip <b>I</b>nterconnect — Google's point-to-point links between TPU chips inside a pod.",
+      "tags": [
+        "tpu",
+        "def",
+        "acronym"
+      ]
+    },
+    {
+      "front": "What does OCS stand for in TPU v4+?",
+      "back": "<b>O</b>ptical <b>C</b>ircuit <b>S</b>witch — reconfigures the 3D-torus topology of a pod in software, no rewiring.",
+      "tags": [
+        "tpu",
+        "def",
+        "acronym"
+      ]
+    },
+    {
+      "front": "What does XLA stand for?",
+      "back": "<b>A</b>ccelerated <b>L</b>inear <b>A</b>lgebra — the Google compiler that lowers JAX/TF/PyTorch ops to TPU instructions.",
+      "tags": [
+        "tpu",
+        "def",
+        "acronym"
+      ]
+    },
+    {
+      "front": "What is a \"systolic array\"?",
+      "back": "A 2-D grid of simple MAC units that pass data in a rhythmic, pipelined fashion (heartbeat) — operands stream in, partial sums march out, almost no register-file or memory access per cycle.",
+      "tags": [
+        "tpu",
+        "mechanism",
+        "core"
+      ]
+    },
+    {
+      "front": "Why is a systolic array more energy-efficient than a GPU for dense matmul?",
+      "back": "Data <b>moves locally</b> between adjacent cells instead of going through a large register file or shared memory each cycle. Local wires = ~10–100× less energy per op than long wires.",
+      "tags": [
+        "tpu",
+        "mechanism",
+        "compare"
+      ]
+    },
+    {
+      "front": "In weight-stationary dataflow, what stays put and what streams?",
+      "back": "<b>Weights</b> are pre-loaded and stay in their MAC cells; <b>activations</b> stream in horizontally; <b>partial sums</b> propagate vertically.",
+      "tags": [
+        "tpu",
+        "mechanism",
+        "dataflow"
+      ]
+    },
+    {
+      "front": "In output-stationary dataflow, what stays put?",
+      "back": "The <b>partial-sum accumulator</b> stays in each cell; both operands (weights and activations) stream through.",
+      "tags": [
+        "tpu",
+        "mechanism",
+        "dataflow"
+      ]
+    },
+    {
+      "front": "What is the pipeline-fill cost of an N×N systolic array running K-deep matmul?",
+      "back": "Roughly <b>K + 2N − 2</b> cycles (fill + drain bubble). For small K relative to N the bubble dominates utilization.",
+      "tags": [
+        "tpu",
+        "formula"
+      ]
+    },
+    {
+      "front": "For a 128×128 array and K=512, what is the fill cost?",
+      "back": "K + 2N − 2 = 512 + 256 − 2 = <b>766 cycles</b>. Useful work = 512 cycles → ~67% utilization on a single matmul of that shape.",
+      "tags": [
+        "tpu",
+        "numeric",
+        "formula"
+      ]
+    },
+    {
+      "front": "What were the MXU dimensions of TPU v1?",
+      "back": "A single <b>256×256 INT8</b> MXU. One big array, inference-only, no floating point.",
+      "tags": [
+        "tpu",
+        "numeric",
+        "history"
+      ]
+    },
+    {
+      "front": "What numeric format did TPU v1 use?",
+      "back": "<b>INT8</b> (quantized integer). Designed for serving, not training.",
+      "tags": [
+        "tpu",
+        "numeric",
+        "history"
+      ]
+    },
+    {
+      "front": "What were the MXU dimensions of TPU v2 (and v3)?",
+      "back": "<b>Two 128×128 MXUs per core</b>, BF16 multiply with FP32 accumulate. First TPU that could TRAIN, not just infer.",
+      "tags": [
+        "tpu",
+        "numeric",
+        "history"
+      ]
+    },
+    {
+      "front": "Why did Google move from one 256×256 MXU (v1) to two 128×128 MXUs (v2+)?",
+      "back": "Better utilization on smaller batch / smaller-matmul shapes; one big array stalls badly when M, N, or K < array dim. Two smaller arrays = finer-grained packing.",
+      "tags": [
+        "tpu",
+        "mechanism",
+        "compare"
+      ]
+    },
+    {
+      "front": "What is bfloat16's bit layout?",
+      "back": "<b>1 sign + 8 exponent + 7 mantissa</b> = 16 bits total. Same dynamic range as FP32, half the mantissa precision.",
+      "tags": [
+        "tpu",
+        "formula",
+        "numeric",
+        "core"
+      ]
+    },
+    {
+      "front": "What is FP16's bit layout?",
+      "back": "<b>1 sign + 5 exponent + 10 mantissa</b> = 16 bits. More precision than BF16 but much narrower dynamic range → frequent over/underflow in training.",
+      "tags": [
+        "tpu",
+        "formula",
+        "numeric",
+        "compare"
+      ]
+    },
+    {
+      "front": "Why is BF16 preferred over FP16 for neural-network training?",
+      "back": "BF16 keeps FP32's dynamic range (8-bit exponent), so gradients don't underflow during back-prop. FP16's 5-bit exponent forces loss-scaling tricks that BF16 avoids.",
+      "tags": [
+        "tpu",
+        "mechanism",
+        "compare",
+        "core"
+      ]
+    },
+    {
+      "front": "What is the standard multiply/accumulate precision combo on TPUs?",
+      "back": "<b>Multiply in BF16, accumulate in FP32.</b> Cheaper compute on the multiply, drift-resistant sum on the accumulator.",
+      "tags": [
+        "tpu",
+        "mechanism",
+        "formula"
+      ]
+    },
+    {
+      "front": "What HBM did TPU v2 use, and how much?",
+      "back": "First TPU with HBM — <b>8 GiB</b> of HBM, ~600 GB/s.",
+      "tags": [
+        "tpu",
+        "numeric",
+        "history"
+      ]
+    },
+    {
+      "front": "What HBM and capacity did TPU v4 use?",
+      "back": "<b>32 GiB of HBM2</b>, ~1.2 TB/s bandwidth.",
+      "tags": [
+        "tpu",
+        "numeric",
+        "history"
+      ]
+    },
+    {
+      "front": "What HBM and capacity does TPU v5p use?",
+      "back": "<b>HBM3</b>, up to <b>192 GiB</b> per chip, multi-TB/s bandwidth.",
+      "tags": [
+        "tpu",
+        "numeric",
+        "history"
+      ]
+    },
+    {
+      "front": "What is \"on-chip SRAM\" called on a TPU and who manages it?",
+      "back": "<b>VMEM</b> (and a few smaller buffers). It is a <b>software-managed scratchpad</b> — XLA explicitly decides what lives there. Unlike a CPU cache, there is no hardware replacement policy.",
+      "tags": [
+        "tpu",
+        "mechanism",
+        "core"
+      ]
+    },
+    {
+      "front": "Why does software-managed SRAM (VMEM) win over a hardware cache on a TPU?",
+      "back": "Deterministic latency, no thrashing, perfectly predictable for the compiler. Hardware caches help unpredictable workloads — neural-network kernels are highly predictable, so cache management overhead is pure waste.",
+      "tags": [
+        "tpu",
+        "mechanism",
+        "compare"
+      ]
+    },
+    {
+      "front": "What are the four main on-chip components of a modern TPU core?",
+      "back": "<b>MXU</b> (matrix multiply), <b>VPU</b> (vector), <b>scalar unit</b> (control), and <b>VMEM</b> (software-managed SRAM scratchpad).",
+      "tags": [
+        "tpu",
+        "def"
+      ]
+    },
+    {
+      "front": "Roughly how many ICI links does each TPU v4 chip have?",
+      "back": "<b>6 ICI links</b> per chip, enabling a 3-D torus topology.",
+      "tags": [
+        "tpu",
+        "numeric"
+      ]
+    },
+    {
+      "front": "What is the topology of a TPU v4 pod?",
+      "back": "A <b>3-D torus</b> reconfigured by Optical Circuit Switches (OCS), so the logical topology can match the workload (data-parallel ring vs. model-parallel mesh).",
+      "tags": [
+        "tpu",
+        "def",
+        "topology"
+      ]
+    },
+    {
+      "front": "What is a \"slice\" in TPU terminology?",
+      "back": "A contiguous, statically-allocated subset of a TPU pod (e.g., 2×2×2 = 8 chips), with its own ICI fabric carved out by OCS.",
+      "tags": [
+        "tpu",
+        "def"
+      ]
+    },
+    {
+      "front": "What is a \"multislice\" job?",
+      "back": "A job spanning multiple pod slices, stitched together over the slower <b>Data Center Network (DCN)</b> instead of ICI. Used when one slice isn't big enough.",
+      "tags": [
+        "tpu",
+        "def"
+      ]
+    },
+    {
+      "front": "Why does the OCS matter for multi-tenant scheduling?",
+      "back": "It lets the data center physically re-wire the topology per job in <b>software, in milliseconds</b>, so different shaped slices can coexist without fragmentation.",
+      "tags": [
+        "tpu",
+        "mechanism"
+      ]
+    },
+    {
+      "front": "What does \"data parallelism\" mean for TPU training?",
+      "back": "The same model is replicated on each chip; each replica processes a different mini-batch shard; gradients are <b>all-reduced</b> over ICI.",
+      "tags": [
+        "tpu",
+        "def",
+        "sharding"
+      ]
+    },
+    {
+      "front": "What does \"model parallelism\" mean for TPU training?",
+      "back": "The model's <b>parameters</b> are split across chips. Each chip holds a slice of the weights and only computes its piece of the forward / backward pass.",
+      "tags": [
+        "tpu",
+        "def",
+        "sharding"
+      ]
+    },
+    {
+      "front": "What does \"pipeline parallelism\" mean?",
+      "back": "The model is split <b>layer-by-layer</b> across chips. Micro-batches flow through the pipeline so multiple chips work simultaneously on different micro-batches at different layers.",
+      "tags": [
+        "tpu",
+        "def",
+        "sharding"
+      ]
+    },
+    {
+      "front": "What is the all-reduce operation, and why is it the dominant collective in training?",
+      "back": "Sum (or average) of a tensor across all chips, with the result broadcast back to each. Gradient averaging in data-parallel training requires an all-reduce after every backward pass.",
+      "tags": [
+        "tpu",
+        "mechanism",
+        "core"
+      ]
+    },
+    {
+      "front": "What ring-algorithm time does all-reduce take on N chips with tensor size B?",
+      "back": "Approximately <b>2(N−1)/N · B / bandwidth</b>. For large N this approaches <b>2B / bandwidth</b> regardless of N — bandwidth-bound, not latency-bound.",
+      "tags": [
+        "tpu",
+        "formula",
+        "numeric"
+      ]
+    },
+    {
+      "front": "What is JAX's \"pmap\" used for on TPUs?",
+      "back": "Single-program-multiple-data parallelism: replicate a function across all devices in a slice; each replica gets its own shard of the input.",
+      "tags": [
+        "tpu",
+        "def",
+        "jax"
+      ]
+    },
+    {
+      "front": "What is JAX's \"shard_map\" used for?",
+      "back": "Explicit, fine-grained sharding control: you specify the mesh axes and partition spec per tensor. Lower-level alternative to pjit's automatic sharding.",
+      "tags": [
+        "tpu",
+        "def",
+        "jax"
+      ]
+    },
+    {
+      "front": "What is XLA's main job in the TPU stack?",
+      "back": "Lower a high-level computation graph (HLO) into TPU instructions: <b>fuse ops</b>, allocate VMEM, schedule MXU/VPU/DMA, generate the explicit dataflow program.",
+      "tags": [
+        "tpu",
+        "mechanism",
+        "compiler",
+        "core"
+      ]
+    },
+    {
+      "front": "What is \"op fusion\" and why does XLA care about it?",
+      "back": "Combining adjacent ops (e.g., matmul → bias-add → ReLU) into a single kernel that keeps intermediate results in VMEM/registers, avoiding HBM round-trips. HBM round-trips dominate cost for memory-bound ops.",
+      "tags": [
+        "tpu",
+        "mechanism",
+        "compiler",
+        "core"
+      ]
+    },
+    {
+      "front": "What is the \"roofline model\" for accelerator performance?",
+      "back": "Performance is bounded by the minimum of <b>peak compute</b> and <b>operational intensity × peak bandwidth</b>. Plot FLOPs/byte on x-axis vs. achievable FLOP/s on y-axis to see whether a kernel is compute-bound or memory-bound.",
+      "tags": [
+        "tpu",
+        "mechanism",
+        "formula"
+      ]
+    },
+    {
+      "front": "For BF16 matmul, what is the operational intensity threshold above which you are compute-bound on a typical TPU?",
+      "back": "Roughly <b>FLOPs / byte ≥ peak_compute / peak_bandwidth</b>. For TPU v4 (~275 TFLOPs BF16, ~1.2 TB/s HBM) the ridge ≈ <b>230 FLOPs/byte</b>. Below that → memory-bound.",
+      "tags": [
+        "tpu",
+        "formula",
+        "numeric"
+      ]
+    },
+    {
+      "front": "What is \"weight rematerialization\" (recompute) and when do you use it?",
+      "back": "Re-running parts of the forward pass during the backward pass to avoid storing all activations. Trades extra compute for reduced HBM use — essential when sequence length × batch size doesn't fit in HBM.",
+      "tags": [
+        "tpu",
+        "mechanism",
+        "core"
+      ]
+    },
+    {
+      "front": "What is gradient checkpointing?",
+      "back": "Same idea as rematerialization — keep activations only at a few \"checkpoint\" boundaries, recompute the rest during backward. Cuts activation memory by ~√N for an N-layer network.",
+      "tags": [
+        "tpu",
+        "mechanism",
+        "core"
+      ]
+    },
+    {
+      "front": "What is \"FSDP\" (Fully Sharded Data Parallel)?",
+      "back": "Each chip holds only 1/N of the parameters, optimizer state, and gradients. Parameters are all-gathered just before they're needed, then released. Trades extra communication for massive memory savings.",
+      "tags": [
+        "tpu",
+        "mechanism",
+        "sharding"
+      ]
+    },
+    {
+      "front": "Why is FSDP attractive on TPUs?",
+      "back": "ICI bandwidth is high enough that the extra all-gather/reduce-scatter traffic is affordable, and HBM is the binding constraint on what model size fits per chip. FSDP lets you train 10× larger models per pod.",
+      "tags": [
+        "tpu",
+        "mechanism",
+        "sharding",
+        "compare"
+      ]
+    },
+    {
+      "front": "What is the difference between a \"step\" and a \"training step\" on a TPU pod?",
+      "back": "A single optimization step (forward + backward + optimizer apply) is a \"training step.\" Internally it may contain many <b>compiled XLA steps</b> if microbatching or gradient accumulation is used.",
+      "tags": [
+        "tpu",
+        "def"
+      ]
+    },
+    {
+      "front": "What does \"double-buffering\" mean in TPU DMA?",
+      "back": "Two HBM-to-VMEM transfers in flight at once — while the MXU computes on buffer A, DMA fills buffer B. Hides memory latency behind compute.",
+      "tags": [
+        "tpu",
+        "mechanism"
+      ]
+    },
+    {
+      "front": "How does the TPU host (CPU) talk to the TPU chip?",
+      "back": "Via <b>PCIe</b>. The host enqueues compiled XLA programs and shovels initial data; from then on the TPUs talk among themselves over ICI.",
+      "tags": [
+        "tpu",
+        "mechanism"
+      ]
+    },
+    {
+      "front": "Why are TPUs typically not used for graph neural networks or sparse models?",
+      "back": "Their MXU is optimized for dense matmul. Sparse / pointer-heavy / dynamic-shape workloads under-utilize the array and suffer DMA stalls. GPUs (with finer-grained scheduling) often win there.",
+      "tags": [
+        "tpu",
+        "compare",
+        "pitfall"
+      ]
+    },
+    {
+      "front": "Why do TPUs prefer static shapes?",
+      "back": "XLA must fully lay out the dataflow program at compile time; dynamic shapes force re-compilation or padding. Padding to a power-of-two batch / sequence dim is the common workaround.",
+      "tags": [
+        "tpu",
+        "pitfall",
+        "compiler"
+      ]
+    },
+    {
+      "front": "What is the canonical \"padding to multiples of 128\" rule on TPUs?",
+      "back": "Inputs to the MXU should have dimensions that are multiples of <b>128</b> (the MXU side length on v2+). Non-multiples are auto-padded by XLA, wasting compute.",
+      "tags": [
+        "tpu",
+        "pitfall",
+        "numeric",
+        "formula"
+      ]
+    },
+    {
+      "front": "What is \"loss scaling\" and is it needed with BF16?",
+      "back": "A trick to multiply the loss by a large constant so small FP16 gradients don't underflow. With <b>BF16 it is NOT needed</b> because BF16 has FP32's exponent range.",
+      "tags": [
+        "tpu",
+        "mechanism",
+        "compare",
+        "pitfall"
+      ]
+    },
+    {
+      "front": "What is the \"all-gather\" collective?",
+      "back": "Each chip starts with a shard of a tensor; all chips end up with the full concatenated tensor. Inverse of all-to-all-scatter; used in FSDP to materialize full weight tensors on-demand.",
+      "tags": [
+        "tpu",
+        "def",
+        "collective"
+      ]
+    },
+    {
+      "front": "What is the \"reduce-scatter\" collective?",
+      "back": "Each chip starts with the full tensor; result is summed and then sharded back so each chip ends up with 1/N of the reduced result. Pairs with all-gather to form an all-reduce.",
+      "tags": [
+        "tpu",
+        "def",
+        "collective"
+      ]
+    },
+    {
+      "front": "What is the identity: all-reduce = all-gather ∘ reduce-scatter?",
+      "back": "Two-step ring all-reduce: first <b>reduce-scatter</b> (each chip ends up with 1/N of the sum), then <b>all-gather</b> (every chip gets the full sum). Total volume is 2(N−1)/N · B.",
+      "tags": [
+        "tpu",
+        "formula",
+        "collective",
+        "core"
+      ]
+    },
+    {
+      "front": "For TPU v4, what is the peak BF16 throughput per chip?",
+      "back": "Approximately <b>275 BF16 TFLOPs</b>.",
+      "tags": [
+        "tpu",
+        "numeric"
+      ]
+    },
+    {
+      "front": "For TPU v5p, what is the peak BF16 throughput per chip?",
+      "back": "Approximately <b>459 BF16 TFLOPs</b>.",
+      "tags": [
+        "tpu",
+        "numeric"
+      ]
+    },
+    {
+      "front": "What is the difference between v5e and v5p?",
+      "back": "<b>v5e</b> = efficiency tier (smaller pods, lower cost / TFLOP, inference + small training). <b>v5p</b> = performance tier (large pods, highest TFLOPs/chip, large-model training).",
+      "tags": [
+        "tpu",
+        "compare"
+      ]
+    },
+    {
+      "front": "What was new in Trillium (TPU v6) vs v5p?",
+      "back": "~4.7× peak compute per chip vs v5e; doubled HBM bandwidth and capacity; SparseCore upgrades; better perf/$ for embedding-heavy workloads.",
+      "tags": [
+        "tpu",
+        "numeric",
+        "history"
+      ]
+    },
+    {
+      "front": "What is \"SparseCore\" on TPUs?",
+      "back": "A specialized on-chip accelerator for <b>embedding lookups and sparse gathers</b> — operations the dense MXU handles badly. Critical for ranking/recommendation models.",
+      "tags": [
+        "tpu",
+        "def"
+      ]
+    },
+    {
+      "front": "Why is the SparseCore separated from the MXU rather than integrated?",
+      "back": "Sparse lookups have wildly different memory-access patterns (random, latency-bound) from dense matmul (sequential, bandwidth-bound). Different silicon optimum for each.",
+      "tags": [
+        "tpu",
+        "mechanism",
+        "compare"
+      ]
+    },
+    {
+      "front": "What is the \"memory wall\" problem for neural-network accelerators?",
+      "back": "Compute throughput grows faster than memory bandwidth each generation, so kernels become increasingly bandwidth-bound. Mitigations: bigger on-chip SRAM, op fusion, lower precision (BF16/FP8/INT8), and shorter dependency chains.",
+      "tags": [
+        "tpu",
+        "mechanism",
+        "core"
+      ]
+    },
+    {
+      "front": "What is \"FP8\" and where does it appear in modern TPUs?",
+      "back": "An 8-bit floating-point format (variants E5M2 and E4M3) introduced in Trillium-era TPUs and H100-class GPUs. Halves memory and compute cost vs BF16, with accuracy losses manageable for many inference + some training workloads.",
+      "tags": [
+        "tpu",
+        "def",
+        "numeric"
+      ]
+    },
+    {
+      "front": "Why might E4M3 be preferred for weights and E5M2 for activations in FP8 training?",
+      "back": "Weights have a narrower dynamic range and benefit from extra mantissa (E4M3 = 4 exp bits, 3 mantissa). Activations and gradients have wider range and need more exponent (E5M2). Pairing them per tensor is standard.",
+      "tags": [
+        "tpu",
+        "mechanism",
+        "compare"
+      ]
+    },
+    {
+      "front": "What is \"quantization-aware training\" (QAT)?",
+      "back": "Train the network while simulating the low-precision arithmetic that will be used at inference, so the weights adapt to the quantization error instead of suffering it after the fact.",
+      "tags": [
+        "tpu",
+        "mechanism"
+      ]
+    },
+    {
+      "front": "What is \"post-training quantization\" (PTQ)?",
+      "back": "Train in BF16/FP32 normally, then quantize weights (and optionally activations) to INT8 / FP8 using a calibration set. Cheaper than QAT but accuracy loss is larger for sensitive models.",
+      "tags": [
+        "tpu",
+        "mechanism",
+        "compare"
+      ]
+    },
+    {
+      "front": "What is \"kernel fusion\" vs \"graph fusion\" in XLA?",
+      "back": "Kernel fusion = collapsing a chain of ops into one MXU/VPU program; graph fusion = at the HLO level, rewriting the computation graph (e.g., reorder + combine matmuls) before code generation. Both reduce HBM round-trips.",
+      "tags": [
+        "tpu",
+        "compare",
+        "compiler"
+      ]
+    },
+    {
+      "front": "What is the FLOP count of a (M, K) × (K, N) matrix multiplication?",
+      "back": "<b>2 · M · K · N</b> floating-point ops (one multiply + one add per element of the output).",
+      "tags": [
+        "tpu",
+        "formula",
+        "core"
+      ]
+    },
+    {
+      "front": "For a (1024, 1024, 1024) BF16 matmul, how many BF16 ops and how many bytes touched (no reuse)?",
+      "back": "Ops = 2·1024³ ≈ <b>2.15 GFLOPs</b>. Bytes (3 matrices × 1024²×2 bytes) ≈ <b>6.3 MB</b>. Operational intensity ≈ 340 FLOPs/byte → compute-bound on v4.",
+      "tags": [
+        "tpu",
+        "numeric",
+        "formula"
+      ]
+    },
+    {
+      "front": "Why is batch size a tuning knob on TPU training?",
+      "back": "Larger batch → better MXU utilization (less pipeline-fill waste) and amortized ICI all-reduce cost, but it also changes the optimizer dynamics (LR scaling rules apply).",
+      "tags": [
+        "tpu",
+        "mechanism"
+      ]
+    },
+    {
+      "front": "What is the \"linear LR scaling rule\" when batch size grows by k?",
+      "back": "Multiply the learning rate by <b>k</b> (and use a brief warmup) to keep the per-example gradient noise scale roughly constant. Holds up to a model-dependent critical batch size.",
+      "tags": [
+        "tpu",
+        "formula"
+      ]
+    },
+    {
+      "front": "Why does TPU pricing favor staying within ICI rather than spanning DCN?",
+      "back": "ICI bandwidth ≈ 10–100× DCN bandwidth, and DCN traffic adds variable latency. Jobs that fit in one slice are both <b>faster and cheaper per step</b>.",
+      "tags": [
+        "tpu",
+        "mechanism",
+        "numeric"
+      ]
+    },
+    {
+      "front": "What is \"host offload\" used for on TPU training?",
+      "back": "Spill activations or optimizer state from HBM to host DRAM over PCIe when HBM is the bottleneck. Pays a bandwidth penalty (PCIe ≪ HBM) but unblocks larger models.",
+      "tags": [
+        "tpu",
+        "mechanism"
+      ]
+    },
+    {
+      "front": "What is a typical reason a TPU job runs slower than its roofline predicts?",
+      "back": "Idle MXU cycles caused by <b>HBM stalls, ICI synchronization (all-reduce), padding waste, or recompile thrash</b>. Profile with XLA's HLO and step-time breakdown before assuming the model is the bottleneck.",
+      "tags": [
+        "tpu",
+        "pitfall",
+        "mechanism"
+      ]
+    },
+    {
+      "front": "What is \"JAX pjit\" for?",
+      "back": "A wrapper around XLA SPMD that automatically partitions arrays according to a declared sharding spec, hiding most of the manual collective calls. The default high-level API for multi-chip training.",
+      "tags": [
+        "tpu",
+        "def",
+        "jax"
+      ]
+    },
+    {
+      "front": "What is \"asynchronous dispatch\" in JAX, and why does it matter on TPUs?",
+      "back": "JAX returns futures from compiled functions; the actual work runs on TPU asynchronously while Python continues. Benchmarking requires `.block_until_ready()` or you'll time only the dispatch, not the compute.",
+      "tags": [
+        "tpu",
+        "pitfall",
+        "jax"
+      ]
+    },
+    {
+      "front": "What is \"XLA recompile thrash\" and how do you avoid it?",
+      "back": "When input shapes change frequently, XLA recompiles the program each time → minutes of overhead per step. Fix: <b>pad to fixed bucket shapes</b> and reuse compiled programs.",
+      "tags": [
+        "tpu",
+        "pitfall",
+        "compiler"
+      ]
+    },
+    {
+      "front": "What is the typical end-to-end latency budget for a token in transformer inference on TPU v5?",
+      "back": "A few ms for small models (< 7 B params, single chip), tens of ms for 70 B class with model parallelism, hundreds of ms for frontier models with multi-slice serving. Dominated by HBM bandwidth for the per-token weight reads.",
+      "tags": [
+        "tpu",
+        "numeric"
+      ]
+    },
+    {
+      "front": "What is \"KV-cache\" and why is it the biggest HBM consumer in long-context inference?",
+      "back": "The cached <b>K</b>ey and <b>V</b>alue projections for every previous token in every layer. Size = 2 × layers × heads × head_dim × seq_len × dtype_size. For 70 B / 128k context this dwarfs the model weights themselves.",
+      "tags": [
+        "tpu",
+        "mechanism",
+        "formula",
+        "core"
+      ]
+    },
+    {
+      "front": "For a 70 B model with 80 layers, 8 KV heads, head_dim=128, BF16, and 128k context, what is the KV-cache per request?",
+      "back": "2 · 80 · 8 · 128 · 128000 · 2 bytes ≈ <b>42 GB</b>. That's why long-context serving requires aggressive sharding, paged-attention, and/or KV quantization.",
+      "tags": [
+        "tpu",
+        "numeric",
+        "formula"
+      ]
+    },
+    {
+      "front": "What is \"paged attention\"?",
+      "back": "A KV-cache management scheme borrowed from OS virtual memory — store the cache in fixed-size blocks across HBM, look them up via a page table. Lets the scheduler pack many concurrent requests without contiguous-allocation waste.",
+      "tags": [
+        "tpu",
+        "def",
+        "core"
+      ]
+    },
+    {
+      "front": "What is \"speculative decoding\"?",
+      "back": "Use a small fast draft model to propose N tokens, then verify all N in a single forward pass of the big model. If most are accepted, latency drops by ~Nx without quality loss.",
+      "tags": [
+        "tpu",
+        "mechanism",
+        "inference"
+      ]
+    },
+    {
+      "front": "What is \"tensor-parallel\" sharding for a matmul?",
+      "back": "Split the matmul along its <b>contraction</b> (K) or <b>output</b> (N) dimension across chips. Each chip computes a partial result; an all-reduce or all-gather combines them. Standard for serving large transformer layers.",
+      "tags": [
+        "tpu",
+        "mechanism",
+        "sharding"
+      ]
+    },
+    {
+      "front": "What is the failure mode if you tensor-parallel a matmul whose N is smaller than the chip count?",
+      "back": "Each chip ends up with a tiny slice that under-utilizes its MXU (M, N, K must each be ≥ 128 for full BF16 utilization). The all-reduce overhead then dwarfs the actual compute → throughput collapses.",
+      "tags": [
+        "tpu",
+        "pitfall",
+        "sharding"
+      ]
+    },
+    {
+      "front": "Why is profiling a TPU job a different exercise than profiling a CPU program?",
+      "back": "No general-purpose instruction trace — XLA must emit specialized counters (MXU utilization, HBM read/write bytes, ICI bytes). Tools: <b>XProf / TensorBoard profiler / xla_dump</b>. Don't sample with Python time; use device timings.",
+      "tags": [
+        "tpu",
+        "pitfall",
+        "compiler"
+      ]
+    },
+    {
+      "front": "What does \"MXU utilization\" actually measure in XProf?",
+      "back": "The fraction of cycles the MXU was performing useful MAC ops (vs. waiting on HBM, ICI, padding, or VPU). Target ≥70%; below 40% means the workload is severely memory-bound or shape-misaligned.",
+      "tags": [
+        "tpu",
+        "numeric",
+        "core"
+      ]
+    },
+    {
+      "front": "What is the canonical first thing to check when a TPU training job is slow?",
+      "back": "<b>Step-time breakdown</b> in XProf: how much time was MXU active, how much was HBM read/write, how much was ICI all-reduce, how much was host (input pipeline). Optimize the largest slice first.",
+      "tags": [
+        "tpu",
+        "mechanism",
+        "core"
+      ]
+    },
+    {
+      "front": "What is \"input-pipeline starvation\"?",
+      "back": "The TPU sits idle waiting for the next batch because the host CPU + tf.data / grain pipeline can't keep up. Fix: bigger prefetch buffer, parallel parsing, on-device data loading where possible.",
+      "tags": [
+        "tpu",
+        "pitfall",
+        "mechanism"
+      ]
+    },
+    {
+      "front": "What is the \"two-axis sharding\" pattern in modern LLM training?",
+      "back": "One mesh axis for <b>data parallelism</b> (gradient all-reduce), another for <b>model/tensor parallelism</b> (within-step collectives). A 2-D mesh (e.g., 8 × 32 chips) gives both, and you tune the split per model size.",
+      "tags": [
+        "tpu",
+        "mechanism",
+        "sharding"
+      ]
+    },
+    {
+      "front": "Reference paper for TPU v1?",
+      "back": "Jouppi et al., \"In-Datacenter Performance Analysis of a Tensor Processing Unit,\" ISCA 2017.",
+      "tags": [
+        "tpu",
+        "reference"
+      ]
+    },
+    {
+      "front": "Reference paper for TPU v4?",
+      "back": "Jouppi et al., \"TPU v4: An Optically Reconfigurable Supercomputer for Machine Learning with Hardware Support for Embeddings,\" ISCA 2023.",
+      "tags": [
+        "tpu",
+        "reference"
+      ]
+    },
+    {
+      "front": "Canonical paper on the systolic-array idea (long before Google TPUs)?",
+      "back": "H. T. Kung & Charles E. Leiserson, \"Systolic Arrays (for VLSI),\" 1979 (CMU). Foundational for understanding the dataflow style TPUs revived.",
+      "tags": [
+        "tpu",
+        "reference",
+        "history"
+      ]
+    },
+    {
+      "front": "Canonical paper introducing bfloat16?",
+      "back": "Internal Google work, popularized via Wang et al., \"BFLOAT16: The secret to high performance on Cloud TPUs,\" Google Cloud Blog 2019. The format itself predates that — Intel's Nervana used it earlier.",
+      "tags": [
+        "tpu",
+        "reference"
+      ]
+    },
+    {
+      "front": "Recommended free hands-on resource for learning TPU programming?",
+      "back": "JAX tutorial series + Google Cloud TPU Research Cloud (TRC) free tier. Pair with Karpathy-style \"build it from scratch\" exercises (4×4 systolic in NumPy first, then JAX pmap on real TPUs).",
+      "tags": [
+        "tpu",
+        "reference",
+        "learning"
+      ]
+    },
+    {
+      "front": "What is the bfloat16 layout vs IEEE float16?",
+      "back": "<b>bfloat16</b>: 1 sign + 8 exponent + 7 mantissa (same dynamic range as fp32). <b>fp16</b>: 1 sign + 5 exponent + 10 mantissa (higher precision, narrow range). TPUs prefer bf16 because gradients don't underflow.",
+      "tags": [
+        "tpu",
+        "numerics",
+        "def",
+        "compare"
+      ]
+    },
+    {
+      "front": "Why does bfloat16 dominate over fp16 on TPUs?",
+      "back": "Same <b>exponent width</b> as fp32 → no loss scaling needed during training. fp16's narrow range causes underflow on gradient products.",
+      "tags": [
+        "tpu",
+        "numerics",
+        "mechanism"
+      ]
+    },
+    {
+      "front": "What is FP8 used for on modern TPUs/GPUs?",
+      "back": "Lower-precision training and inference. Two flavors: <b>E4M3</b> (more precision, used in forward pass) and <b>E5M2</b> (more range, used for gradients in backward).",
+      "tags": [
+        "tpu",
+        "numerics",
+        "def"
+      ]
+    },
+    {
+      "front": "What is \"loss scaling\" and when do you still need it?",
+      "back": "Multiplying the loss by a constant (e.g., 1024) before backward so small gradients don't underflow in fp16. <b>Not needed with bf16</b>; required with fp16; sometimes needed at extreme batch sizes in fp8.",
+      "tags": [
+        "tpu",
+        "numerics",
+        "mechanism",
+        "pitfall"
+      ]
+    },
+    {
+      "front": "What is INT8 KV-cache quantization?",
+      "back": "Storing the K and V tensors in 8-bit integers (with per-channel scales) instead of bf16 — cuts cache memory ~4×, almost no quality loss for most models. Critical for long-context inference.",
+      "tags": [
+        "tpu",
+        "inference",
+        "numerics",
+        "mechanism"
+      ]
+    },
+    {
+      "front": "What is the \"memory wall\" in attention?",
+      "back": "Attention scales O(N²) in sequence length for both compute AND memory; the memory cost dominates first because HBM is the bottleneck, not the MXU. FlashAttention is the standard fix.",
+      "tags": [
+        "tpu",
+        "attention",
+        "pitfall",
+        "mechanism"
+      ]
+    },
+    {
+      "front": "What does FlashAttention do at one level?",
+      "back": "Computes attention <b>tile-by-tile in SRAM</b> with online softmax — never materializes the full N×N attention matrix in HBM. Reduces memory from O(N²) to O(N).",
+      "tags": [
+        "tpu",
+        "attention",
+        "mechanism"
+      ]
+    },
+    {
+      "front": "What is the formula for self-attention?",
+      "back": "softmax(Q · Kᵀ / √d_k) · V, where Q, K, V are (N × d_k) projections of the input. The <b>1/√d_k</b> term keeps softmax temperature stable as d_k grows.",
+      "tags": [
+        "tpu",
+        "attention",
+        "formula"
+      ]
+    },
+    {
+      "front": "What is multi-head attention?",
+      "back": "Run attention <b>h times in parallel</b> with different learned Q/K/V projections, then concatenate. Lets the model attend to different subspaces simultaneously. Cost = roughly same as single head with d_k/h.",
+      "tags": [
+        "tpu",
+        "attention",
+        "mechanism"
+      ]
+    },
+    {
+      "front": "What is GQA (Grouped Query Attention)?",
+      "back": "Heads share K and V across groups (e.g., 8 query heads → 1 KV head). Cuts <b>KV cache by group_factor×</b> at small quality cost. Standard in Llama-3, Gemma, etc.",
+      "tags": [
+        "tpu",
+        "attention",
+        "mechanism",
+        "inference"
+      ]
+    },
+    {
+      "front": "What is MLA (Multi-head Latent Attention)?",
+      "back": "DeepSeek's trick: project K and V into a <b>low-rank latent</b> shared across heads. KV cache drops ~10× vs MHA; reconstructed on-the-fly per head. State-of-art for long context.",
+      "tags": [
+        "tpu",
+        "attention",
+        "mechanism",
+        "inference"
+      ]
+    },
+    {
+      "front": "Formula for the KV-cache memory of one layer?",
+      "back": "<b>2 × batch × seq_len × num_kv_heads × head_dim × bytes_per_elem</b>. Multiply by num_layers for the model. Memorize this — it dominates inference RAM.",
+      "tags": [
+        "tpu",
+        "inference",
+        "formula",
+        "numeric"
+      ]
+    },
+    {
+      "front": "Why is LLM inference \"two workloads in one kernel\"?",
+      "back": "<b>Prefill</b> = compute-bound (large batched matmul over the prompt). <b>Decode</b> = memory-bound (one token at a time, must reload weights and KV from HBM each step).",
+      "tags": [
+        "tpu",
+        "inference",
+        "mechanism",
+        "compare"
+      ]
+    },
+    {
+      "front": "What is \"continuous batching\" in serving?",
+      "back": "Dynamically inserting new requests into the decode batch as old ones finish, instead of waiting for a fixed batch to complete. ~3–5× throughput on serving systems like vLLM / JetStream.",
+      "tags": [
+        "tpu",
+        "inference",
+        "mechanism"
+      ]
+    },
+    {
+      "front": "What is speculative decoding?",
+      "back": "A small <b>draft model</b> proposes k tokens; the big model verifies them all in one parallel forward pass. Accept matches, restart at first mismatch. ~2–3× decode speedup.",
+      "tags": [
+        "tpu",
+        "inference",
+        "mechanism"
+      ]
+    },
+    {
+      "front": "What is the goal of \"tiling\" on TPU?",
+      "back": "Slice big matmuls into <b>SRAM-sized tiles</b> (typically 128×128 per MXU lane) so each tile fits in fast memory and gets reused across many MAC ops. This is how you actually hit high MFU.",
+      "tags": [
+        "tpu",
+        "tiling",
+        "mechanism"
+      ]
+    },
+    {
+      "front": "Why does the TPU prefer matrix shapes that are multiples of 128?",
+      "back": "The MXU is a <b>128×128 systolic array</b>; non-multiples cause padding waste. Always pad batch/feature dims to 128 (or 8 for some smaller MXUs).",
+      "tags": [
+        "tpu",
+        "tiling",
+        "pitfall",
+        "numeric"
+      ]
+    },
+    {
+      "front": "What is \"double buffering\" in TPU tiling?",
+      "back": "Overlap HBM→SRAM transfers of the <b>next tile</b> with MXU work on the <b>current tile</b>. Hides memory latency so the MXU never idles. XLA does this automatically when shapes allow.",
+      "tags": [
+        "tpu",
+        "tiling",
+        "mechanism"
+      ]
+    },
+    {
+      "front": "What is SparseCore on TPU?",
+      "back": "A separate compute unit optimized for <b>embedding-table lookups</b> (recommenders, retrieval). Handles the irregular gather/scatter pattern the MXU is bad at.",
+      "tags": [
+        "tpu",
+        "def",
+        "core"
+      ]
+    },
+    {
+      "front": "What is \"embedding sharding\" in recommender models?",
+      "back": "Splitting huge embedding tables (TB-scale) across SparseCores by row hash; lookup → all-to-all → dense network. Standard for ads/recsys at scale.",
+      "tags": [
+        "tpu",
+        "sharding",
+        "mechanism"
+      ]
+    },
+    {
+      "front": "What is XProf?",
+      "back": "Google's TPU profiler — captures op-level timing, HBM bandwidth, MXU utilization, communication overlap. Open via TensorBoard plugin. The first thing you reach for when MFU is low.",
+      "tags": [
+        "tpu",
+        "profiling",
+        "def"
+      ]
+    },
+    {
+      "front": "What does \"MFU\" tell you specifically?",
+      "back": "<b>Model FLOPS Utilization</b> = (useful FLOPs you performed) / (peak FLOPs the chip can do in the same wall time). >50% on training = excellent; <20% = something is wrong (often memory-bound, bad shapes, or comms-bound).",
+      "tags": [
+        "tpu",
+        "profiling",
+        "formula",
+        "numeric"
+      ]
+    },
+    {
+      "front": "What is \"goodput\" vs throughput?",
+      "back": "<b>Throughput</b> counts every step. <b>Goodput</b> counts only steps that produced useful, retained progress (excluded: hung steps, recovered failures, recomputed work). Goodput is the honest metric at scale.",
+      "tags": [
+        "tpu",
+        "profiling",
+        "def",
+        "compare"
+      ]
+    },
+    {
+      "front": "Top three reasons MFU is low on a fresh TPU training run?",
+      "back": "(1) Shapes not multiple of 128, (2) <b>too small a batch</b> per chip (memory-bound), (3) <b>comms not overlapped</b> with compute (check ICI usage in XProf).",
+      "tags": [
+        "tpu",
+        "profiling",
+        "pitfall"
+      ]
+    },
+    {
+      "front": "What is Orbax?",
+      "back": "JAX's <b>sharded checkpoint</b> library. Writes each shard from the chip that owns it, in parallel, to GCS. Async by default so training doesn't stall.",
+      "tags": [
+        "tpu",
+        "jax",
+        "def"
+      ]
+    },
+    {
+      "front": "What is a \"jaxpr\"?",
+      "back": "JAX's intermediate representation — a typed, traced graph of pure functions. Produced by <b>jax.make_jaxpr(fn)</b> after one trace. Sits between Python and StableHLO.",
+      "tags": [
+        "tpu",
+        "jax",
+        "compiler",
+        "def"
+      ]
+    },
+    {
+      "front": "What is StableHLO?",
+      "back": "A versioned, stable serialization of XLA's HLO IR. Lets you save a compiled program today and recompile it years later. The framework-agnostic on-disk format.",
+      "tags": [
+        "tpu",
+        "compiler",
+        "def"
+      ]
+    },
+    {
+      "front": "What is \"shard_map\" in JAX?",
+      "back": "Per-device explicit SPMD — you write the function as if running on one chip with sharded inputs, JAX adds collectives at the boundaries. More predictable than pjit's automatic partitioner.",
+      "tags": [
+        "tpu",
+        "jax",
+        "sharding",
+        "mechanism"
+      ]
+    },
+    {
+      "front": "What is a \"mesh\" in JAX?",
+      "back": "A logical n-D grid of devices with named axes (e.g., ('data', 'model')). Sharding specs reference axis names, decoupling math from physical topology.",
+      "tags": [
+        "tpu",
+        "jax",
+        "sharding",
+        "def"
+      ]
+    },
+    {
+      "front": "Difference between DCN and ICI?",
+      "back": "<b>ICI</b> = Inter-Chip Interconnect, within a pod, ~µs latency, hundreds of GB/s. <b>DCN</b> = Data Center Network, across pods (multislice), ~ms latency, ~tens of GB/s. Hierarchical collectives use both.",
+      "tags": [
+        "tpu",
+        "compare",
+        "topology"
+      ]
+    },
+    {
+      "front": "What is \"optical circuit switching\" on TPU v4+?",
+      "back": "Each pod has reconfigurable optical switches that can change the 3D-torus topology in software — pick the best wiring for your workload's collective pattern. Why TPU v4's paper title says \"optically reconfigurable.\"",
+      "tags": [
+        "tpu",
+        "topology",
+        "mechanism"
+      ]
+    },
+    {
+      "front": "What is JetStream?",
+      "back": "Google's open-source <b>LLM inference engine</b> for TPU — continuous batching, prefill/decode disaggregation, paged KV cache. The reference serving stack.",
+      "tags": [
+        "tpu",
+        "inference",
+        "def"
+      ]
+    },
+    {
+      "front": "What is \"prefill/decode disaggregation\"?",
+      "back": "Run the prefill workload on one pool of chips (compute-bound, good MFU) and decode on a separate pool (memory-bound, low MFU). Different pools sized differently. Major recent serving win.",
+      "tags": [
+        "tpu",
+        "inference",
+        "mechanism"
+      ]
+    },
+    {
+      "front": "What is the typical training recipe for fault recovery on a pod?",
+      "back": "<b>Async checkpoint to GCS</b> every N steps + <b>elastic restart</b> via the JAX coordinator. On chip failure, restart from last checkpoint on a smaller slice; resume when hardware recovers.",
+      "tags": [
+        "tpu",
+        "mechanism"
+      ]
+    },
+    {
+      "front": "Cardinal rule for picking TPU vs GPU?",
+      "back": "<b>Throughput at scale & JAX/XLA shop → TPU. Single-node max flexibility & PyTorch shop → GPU.</b> The compiler & sharding story is what actually differs, not raw FLOPs.",
+      "tags": [
+        "tpu",
+        "compare",
+        "fit"
+      ]
+    }
+  ]
+}

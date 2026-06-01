@@ -1,0 +1,1031 @@
+{
+  "name": "ml",
+  "description": "108 cards",
+  "cards": [
+    {
+      "front": "What does a single artificial neuron compute?",
+      "back": "<b>y = σ(Σ wᵢxᵢ + b)</b> — weighted sum of inputs plus bias, then a non-linearity σ.",
+      "tags": [
+        "ml",
+        "neuron",
+        "formula",
+        "def"
+      ]
+    },
+    {
+      "front": "Why is a non-linearity required between linear layers?",
+      "back": "Without it, stacking layers collapses to a single linear transform (composition of linear functions is linear). Non-linearity is what lets MLPs approximate arbitrary functions.",
+      "tags": [
+        "ml",
+        "neuron",
+        "mechanism"
+      ]
+    },
+    {
+      "front": "Parameters in a Linear(in, out) layer?",
+      "back": "<b>in × out + out</b> (weight matrix + bias vector). E.g., Linear(1024, 4096) = 4,198,400 params.",
+      "tags": [
+        "ml",
+        "neuron",
+        "numeric"
+      ]
+    },
+    {
+      "front": "What does a Conv2d layer compute?",
+      "back": "Spatial cross-correlation between a learned kernel and input feature map. <b>Translation-equivariant</b> by design — same pattern detected anywhere in the image.",
+      "tags": [
+        "ml",
+        "neuron",
+        "def"
+      ]
+    },
+    {
+      "front": "Why do residual (skip) connections matter?",
+      "back": "They let gradients flow directly past layers (<b>∂L/∂x = ∂L/∂y · (1 + ∂F/∂x)</b>), preventing vanishing gradients in deep nets. Enabled training networks 100+ layers deep (ResNet).",
+      "tags": [
+        "ml",
+        "neuron",
+        "mechanism",
+        "pitfall"
+      ]
+    },
+    {
+      "front": "LayerNorm formula",
+      "back": "<b>LN(x) = γ · (x − μ) / √(σ² + ε) + β</b> with μ,σ computed across the feature dim per token. Stabilizes activations independent of batch size.",
+      "tags": [
+        "ml",
+        "neuron",
+        "formula"
+      ]
+    },
+    {
+      "front": "BatchNorm vs LayerNorm — when to use which?",
+      "back": "<b>BatchNorm</b>: stats across the batch dim — fine for CNNs, bad for variable-length sequences and small batches. <b>LayerNorm</b>: stats per-sample across features — standard in Transformers.",
+      "tags": [
+        "ml",
+        "neuron",
+        "compare"
+      ]
+    },
+    {
+      "front": "Embedding layer — what is it?",
+      "back": "Lookup table mapping discrete IDs → dense vectors. <b>vocab_size × d_model</b> trainable params. For Llama-2-7B: 32k × 4096 ≈ 130M params just in embeddings.",
+      "tags": [
+        "ml",
+        "neuron",
+        "def",
+        "numeric"
+      ]
+    },
+    {
+      "front": "LSTM solved what problem of vanilla RNN?",
+      "back": "<b>Vanishing gradients over long sequences.</b> The gated cell state allows information to flow unchanged across many steps when the forget gate is open.",
+      "tags": [
+        "ml",
+        "neuron",
+        "pitfall",
+        "mechanism"
+      ]
+    },
+    {
+      "front": "Why did Transformers replace RNN/LSTM for language?",
+      "back": "RNNs are inherently sequential (step t needs step t-1). Transformers compute all positions in parallel via attention, fully exploiting GPU/TPU matmul throughput.",
+      "tags": [
+        "ml",
+        "neuron",
+        "compare"
+      ]
+    },
+    {
+      "front": "Sigmoid formula and range",
+      "back": "<b>σ(x) = 1 / (1 + e⁻ˣ)</b>, range (0, 1). Used as gates in LSTMs and as binary-classification output.",
+      "tags": [
+        "ml",
+        "activation",
+        "formula"
+      ]
+    },
+    {
+      "front": "Tanh vs Sigmoid — why prefer tanh in hidden layers?",
+      "back": "<b>Tanh</b> is zero-centered (range −1..1) so gradients don't systematically push weights in one direction. Sigmoid (range 0..1) causes zigzag updates.",
+      "tags": [
+        "ml",
+        "activation",
+        "compare"
+      ]
+    },
+    {
+      "front": "ReLU formula and main advantage",
+      "back": "<b>ReLU(x) = max(0, x)</b>. Gradient is exactly 0 or 1 → no vanishing in positive region, cheap to compute, sparse activations.",
+      "tags": [
+        "ml",
+        "activation",
+        "formula"
+      ]
+    },
+    {
+      "front": "\"Dying ReLU\" — what is it?",
+      "back": "A neuron whose inputs land in the negative region permanently outputs 0, and its gradient is 0 → never updates again. Fixes: Leaky ReLU, GELU, smaller LR, better init.",
+      "tags": [
+        "ml",
+        "activation",
+        "pitfall"
+      ]
+    },
+    {
+      "front": "GELU vs ReLU — why Transformers use GELU",
+      "back": "<b>GELU(x) ≈ x · Φ(x)</b> — smooth, non-monotonic, has small negative values that keep gradient flowing. Empirically ~0.5% perplexity improvement over ReLU at zero cost.",
+      "tags": [
+        "ml",
+        "activation",
+        "compare"
+      ]
+    },
+    {
+      "front": "SwiGLU formula and where it's used",
+      "back": "<b>SwiGLU(x) = (xW · σ(xV)) · xU</b> — three projections instead of two. Used in Llama, PaLM, Mistral FFN blocks. ~1% perplexity gain over GELU but +50% FFN params.",
+      "tags": [
+        "ml",
+        "activation",
+        "formula"
+      ]
+    },
+    {
+      "front": "What does backpropagation actually do?",
+      "back": "Applies the <b>chain rule</b> to compute ∂L/∂θ for every parameter θ in one backward pass through the computation graph. Time complexity equal to forward pass.",
+      "tags": [
+        "ml",
+        "backprop",
+        "mechanism"
+      ]
+    },
+    {
+      "front": "MSE loss formula",
+      "back": "<b>MSE = (1/N) Σ (ŷᵢ − yᵢ)²</b>. Standard for regression; penalizes large errors quadratically.",
+      "tags": [
+        "ml",
+        "loss",
+        "formula"
+      ]
+    },
+    {
+      "front": "Cross-entropy loss for classification",
+      "back": "<b>CE = −Σ yᵢ log(p̂ᵢ)</b>. Reduces to <b>−log p̂_correct</b> for one-hot labels. Pairs with softmax; gradient is simply (p̂ − y).",
+      "tags": [
+        "ml",
+        "loss",
+        "formula"
+      ]
+    },
+    {
+      "front": "Binary cross-entropy formula",
+      "back": "<b>BCE = −[y log p̂ + (1−y) log(1−p̂)]</b>. Used with sigmoid output for binary classification or multi-label.",
+      "tags": [
+        "ml",
+        "loss",
+        "formula"
+      ]
+    },
+    {
+      "front": "KL divergence — what does it measure and is it symmetric?",
+      "back": "<b>KL(P‖Q) = Σ P(x) log(P(x)/Q(x))</b> — extra bits needed to encode P using Q. <b>Asymmetric:</b> KL(P‖Q) ≠ KL(Q‖P).",
+      "tags": [
+        "ml",
+        "loss",
+        "def",
+        "pitfall"
+      ]
+    },
+    {
+      "front": "Focal loss — what problem does it solve?",
+      "back": "<b>Focal = −(1−p̂)^γ log p̂</b>. Down-weights easy examples (high p̂) so training focuses on hard ones. Used for class-imbalanced detection (RetinaNet).",
+      "tags": [
+        "ml",
+        "loss",
+        "pitfall"
+      ]
+    },
+    {
+      "front": "Why use the chain rule in vectorized form (Jacobian-vector products)?",
+      "back": "Full Jacobians for deep nets are too big to materialize (millions × millions). Reverse-mode autodiff computes <b>vᵀJ</b> directly, one row of the Jacobian at a time.",
+      "tags": [
+        "ml",
+        "backprop",
+        "mechanism"
+      ]
+    },
+    {
+      "front": "Gradient checkpointing — what does it trade?",
+      "back": "Trades <b>~30% extra FLOPs</b> for <b>~70% less activation memory</b>. Re-computes activations during backward pass instead of storing them. Essential for training 70B+ models.",
+      "tags": [
+        "ml",
+        "backprop",
+        "pitfall",
+        "numeric"
+      ]
+    },
+    {
+      "front": "Vanishing vs exploding gradients — fixes?",
+      "back": "<b>Vanishing:</b> ReLU/GELU, residual connections, LayerNorm, careful init (Xavier/He). <b>Exploding:</b> gradient clipping (typ. clip_grad_norm at 1.0).",
+      "tags": [
+        "ml",
+        "backprop",
+        "pitfall"
+      ]
+    },
+    {
+      "front": "Mixed precision training: what dtypes are typically used?",
+      "back": "<b>bf16 for forward/backward compute</b>, <b>fp32 for the optimizer state and gradient accumulation</b>. Bf16 keeps fp32's exponent range; fp16 doesn't and needs loss scaling.",
+      "tags": [
+        "ml",
+        "backprop",
+        "numeric",
+        "compare"
+      ]
+    },
+    {
+      "front": "Vanilla SGD update rule",
+      "back": "<b>θ ← θ − η · ∇L(θ)</b>. Simple, no state. Noisy gradients can help escape saddle points.",
+      "tags": [
+        "ml",
+        "optimizer",
+        "formula"
+      ]
+    },
+    {
+      "front": "SGD with momentum — what does momentum buy you?",
+      "back": "<b>v ← βv + ∇L; θ ← θ − ηv</b>. Smooths the gradient trajectory, dampens oscillation in narrow ravines, accelerates along consistent directions.",
+      "tags": [
+        "ml",
+        "optimizer",
+        "formula",
+        "mechanism"
+      ]
+    },
+    {
+      "front": "Adam update rule (high-level)",
+      "back": "Maintains running <b>1st moment m</b> (mean of grads) and <b>2nd moment v</b> (mean of grad²); update is <b>θ ← θ − η · m̂ / (√v̂ + ε)</b>. Per-parameter adaptive LR.",
+      "tags": [
+        "ml",
+        "optimizer",
+        "formula"
+      ]
+    },
+    {
+      "front": "AdamW vs Adam — what changes?",
+      "back": "<b>AdamW decouples weight decay from the gradient</b>: applies decay directly to weights instead of adding L2 to the gradient. Standard for Transformers since 2019.",
+      "tags": [
+        "ml",
+        "optimizer",
+        "compare"
+      ]
+    },
+    {
+      "front": "Adam optimizer state memory cost per parameter (fp32)",
+      "back": "<b>8 bytes/param</b> — 4 bytes for m, 4 bytes for v. Combined with fp32 weights (4) + grads (4) = 16 bytes/param. 70B model needs ~1 TB optimizer state alone.",
+      "tags": [
+        "ml",
+        "optimizer",
+        "numeric"
+      ]
+    },
+    {
+      "front": "Lion optimizer — what makes it cheap?",
+      "back": "Uses only <b>sign(gradient_momentum)</b> for the update. <b>4 bytes/param state</b> (half of Adam). Discovered via symbolic search (Chen et al. 2023). Often matches AdamW on LLMs.",
+      "tags": [
+        "ml",
+        "optimizer",
+        "numeric",
+        "compare"
+      ]
+    },
+    {
+      "front": "Adafactor — why use it instead of Adam at scale?",
+      "back": "Factorizes the 2nd moment matrix into row and column statistics → <b>O(d) instead of O(d²) memory</b>. Used in T5, PaLM. Standard on TPU.",
+      "tags": [
+        "ml",
+        "optimizer",
+        "numeric",
+        "mechanism"
+      ]
+    },
+    {
+      "front": "Typical LLM training schedule recipe",
+      "back": "<b>AdamW</b> (β₁=0.9, β₂=0.95, wd=0.1), linear <b>warmup over 1-2% of steps</b>, <b>cosine decay to 10%</b> of peak LR, gradient clipping at <b>1.0</b>.",
+      "tags": [
+        "ml",
+        "optimizer",
+        "numeric",
+        "pitfall"
+      ]
+    },
+    {
+      "front": "Why does Adam need warmup at the start of training?",
+      "back": "Early on, bias-correction of v̂ is unreliable (tiny denominator) → effective LR spikes → divergence. Warmup gives v̂ time to stabilize.",
+      "tags": [
+        "ml",
+        "optimizer",
+        "pitfall"
+      ]
+    },
+    {
+      "front": "What β₁ and β₂ control in Adam",
+      "back": "<b>β₁ (0.9)</b>: momentum decay for 1st moment (gradient mean). <b>β₂ (0.999 default, 0.95 for LLMs)</b>: decay for 2nd moment (gradient variance estimate).",
+      "tags": [
+        "ml",
+        "optimizer",
+        "numeric",
+        "def"
+      ]
+    },
+    {
+      "front": "Scaled dot-product attention formula",
+      "back": "<b>Attn(Q,K,V) = softmax(QKᵀ / √d_k) · V</b>. Q,K,V are projections of the input; √d_k prevents softmax saturation at large d.",
+      "tags": [
+        "ml",
+        "attention",
+        "formula"
+      ]
+    },
+    {
+      "front": "Why divide by √d_k in attention?",
+      "back": "For random Q,K with unit variance, QKᵀ has variance d_k. Without scaling, softmax inputs grow with d_k and saturate (gradient → 0).",
+      "tags": [
+        "ml",
+        "attention",
+        "mechanism",
+        "pitfall"
+      ]
+    },
+    {
+      "front": "Memory complexity of vanilla self-attention",
+      "back": "<b>O(N² · d)</b> activations for sequence length N — the QKᵀ matrix dominates. For N=8192, d=128, fp16: 256 MB just for one attention map.",
+      "tags": [
+        "ml",
+        "attention",
+        "numeric",
+        "pitfall"
+      ]
+    },
+    {
+      "front": "Multi-Head Attention (MHA) — why multiple heads?",
+      "back": "Each head learns different relationship types (syntax, coreference, position). With h heads of dim d_k = d_model/h, total params equal a single d_model×d_model projection.",
+      "tags": [
+        "ml",
+        "attention",
+        "mechanism"
+      ]
+    },
+    {
+      "front": "MQA vs GQA vs MHA — KV cache size?",
+      "back": "<b>MHA:</b> N heads of K,V → full cache. <b>MQA:</b> 1 shared K,V → N× smaller cache. <b>GQA:</b> groups of heads share K,V → tunable middle ground. Llama-2-70B uses GQA-8.",
+      "tags": [
+        "ml",
+        "attention",
+        "compare",
+        "numeric"
+      ]
+    },
+    {
+      "front": "FlashAttention — what does it do?",
+      "back": "Tiles attention into SRAM blocks and computes <b>softmax online</b> (running max + denom), avoiding materialization of the N×N attention matrix. <b>O(N) memory, ~2× speed</b>.",
+      "tags": [
+        "ml",
+        "attention",
+        "mechanism",
+        "numeric"
+      ]
+    },
+    {
+      "front": "Causal mask — why and how?",
+      "back": "For autoregressive LMs, position i can only attend to positions ≤ i. Implemented as adding <b>−∞</b> to softmax logits above the diagonal before softmax.",
+      "tags": [
+        "ml",
+        "attention",
+        "def"
+      ]
+    },
+    {
+      "front": "Sliding-window attention — what is it?",
+      "back": "Each token attends only to the last W tokens (Mistral uses W=4096). Reduces N² to N·W. Combined with global tokens (Longformer) or layer-wise W growth.",
+      "tags": [
+        "ml",
+        "attention",
+        "def",
+        "numeric"
+      ]
+    },
+    {
+      "front": "RoPE (Rotary Position Embedding) — basic idea",
+      "back": "Rotates Q and K vectors by an angle proportional to position before attention. <b>Relative position</b> emerges from the dot product. Standard in Llama, Mistral, Qwen.",
+      "tags": [
+        "ml",
+        "attention",
+        "def",
+        "mechanism"
+      ]
+    },
+    {
+      "front": "FFN block in a Transformer — params and shape",
+      "back": "Two linear layers with non-linearity: <b>d → 4d → d</b> (vanilla) or <b>d → 8d/3 → d</b> (SwiGLU). 8d² params dominate Transformer parameter count.",
+      "tags": [
+        "ml",
+        "attention",
+        "numeric",
+        "formula"
+      ]
+    },
+    {
+      "front": "Attention vs FFN — which has more params in modern LLMs?",
+      "back": "<b>FFN dominates</b> (~2/3 of params). For Llama-2-70B: attention ≈ 19B params, FFN ≈ 47B params.",
+      "tags": [
+        "ml",
+        "attention",
+        "numeric",
+        "compare"
+      ]
+    },
+    {
+      "front": "Pre-norm vs post-norm in Transformer blocks",
+      "back": "<b>Pre-norm</b> (LN before sublayer): trains stably without warmup, used in GPT-2+, Llama. <b>Post-norm</b> (original Transformer): better final quality but unstable, needs warmup.",
+      "tags": [
+        "ml",
+        "attention",
+        "compare"
+      ]
+    },
+    {
+      "front": "Why have a KV cache at all?",
+      "back": "Decoder is autoregressive — token t needs attention over tokens 1..t. Without cache, each new token re-computes K,V for all previous tokens → O(N²) per step.",
+      "tags": [
+        "ml",
+        "kvcache",
+        "mechanism"
+      ]
+    },
+    {
+      "front": "KV cache size formula (bytes)",
+      "back": "<b>2 · B · H · S · d_head · bytes(dtype)</b> — factor of 2 for K and V. For Llama-70B fp16 (B=1, H=64 GQA-8, S=4096, d=128): ~672 MB per request.",
+      "tags": [
+        "ml",
+        "kvcache",
+        "formula",
+        "numeric"
+      ]
+    },
+    {
+      "front": "Why is KV cache often the inference bottleneck?",
+      "back": "Per-token decode is <b>memory-bound</b> — must read full KV cache from HBM every step. Compute is small (one Q vector). Bandwidth, not FLOPs, sets throughput.",
+      "tags": [
+        "ml",
+        "kvcache",
+        "pitfall",
+        "mechanism"
+      ]
+    },
+    {
+      "front": "PagedAttention — what problem does it solve?",
+      "back": "KV cache fragmentation. Allocates KV in <b>fixed 16-token physical pages</b> with per-request virtual page tables (OS-style). ~4× more concurrent requests than contiguous allocation.",
+      "tags": [
+        "ml",
+        "kvcache",
+        "mechanism",
+        "numeric"
+      ]
+    },
+    {
+      "front": "Continuous batching — what is it?",
+      "back": "Instead of static batches, the server adds new requests and evicts finished ones <b>at every decode step</b>. Massive throughput win for variable-length generation.",
+      "tags": [
+        "ml",
+        "kvcache",
+        "mechanism"
+      ]
+    },
+    {
+      "front": "Prefix caching — when does it help?",
+      "back": "Reuses KV for shared prefixes (system prompt, few-shot examples). Saves prefill compute for every request sharing the prefix. Standard in vLLM, sgLang, TGI.",
+      "tags": [
+        "ml",
+        "kvcache",
+        "mechanism"
+      ]
+    },
+    {
+      "front": "Speculative decoding — basic mechanism",
+      "back": "A small \"draft\" model proposes N tokens; the big model verifies all N in <b>one forward pass</b> and accepts the longest matching prefix. 2-3× faster decode if draft is accurate.",
+      "tags": [
+        "ml",
+        "kvcache",
+        "mechanism",
+        "numeric"
+      ]
+    },
+    {
+      "front": "KV cache quantization to int8 — what do you save and lose?",
+      "back": "<b>2× smaller cache</b> at typically <b>0.1-0.3 ppl penalty</b>. Big throughput win for memory-bound decode. Common: per-tensor symmetric quantization, dequant in the attention kernel.",
+      "tags": [
+        "ml",
+        "kvcache",
+        "numeric",
+        "compare"
+      ]
+    },
+    {
+      "front": "vLLM, TGI, TensorRT-LLM, SGLang — which problem do they solve?",
+      "back": "High-throughput LLM serving: <b>continuous batching + PagedAttention + tensor parallelism + quantization</b>. Open-source: vLLM, TGI, SGLang. NVIDIA: TensorRT-LLM.",
+      "tags": [
+        "ml",
+        "kvcache",
+        "def"
+      ]
+    },
+    {
+      "front": "Prefill vs decode — what's the difference?",
+      "back": "<b>Prefill:</b> single forward pass over the full prompt, compute-bound, fills the KV cache. <b>Decode:</b> one token at a time, memory-bound, reads the cache.",
+      "tags": [
+        "ml",
+        "kvcache",
+        "compare",
+        "def"
+      ]
+    },
+    {
+      "front": "CUDA thread hierarchy",
+      "back": "<b>Thread → Warp (32) → Block (≤1024) → Grid</b>. A warp executes in lockstep on one SM. A block runs on one SM; multiple blocks form a grid.",
+      "tags": [
+        "ml",
+        "cuda",
+        "def",
+        "numeric"
+      ]
+    },
+    {
+      "front": "What is an SM (Streaming Multiprocessor)?",
+      "back": "A NVIDIA GPU's core compute unit. H100 has <b>132 SMs</b>; each has CUDA cores + tensor cores + warp schedulers + shared memory.",
+      "tags": [
+        "ml",
+        "cuda",
+        "def",
+        "numeric"
+      ]
+    },
+    {
+      "front": "HBM vs SRAM bandwidth (H100)",
+      "back": "HBM3: <b>~3 TB/s</b>. On-chip SRAM (shared memory + L1): <b>~33 TB/s per SM</b>. ~10× ratio explains why kernel fusion matters so much.",
+      "tags": [
+        "ml",
+        "cuda",
+        "numeric",
+        "compare"
+      ]
+    },
+    {
+      "front": "cuBLAS, cuDNN, NCCL — what does each do?",
+      "back": "<b>cuBLAS</b>: dense linear algebra (matmul). <b>cuDNN</b>: deep-learning primitives (conv, pool, attention). <b>NCCL</b>: collectives (all-reduce, all-gather) across GPUs/nodes.",
+      "tags": [
+        "ml",
+        "cuda",
+        "def"
+      ]
+    },
+    {
+      "front": "Triton — what is it and why use it?",
+      "back": "Python-embedded DSL for writing GPU kernels at <b>block-level</b> abstraction. Compiles to PTX. Used for FlashAttention, fused MoE, custom ops. Easier than raw CUDA C++.",
+      "tags": [
+        "ml",
+        "cuda",
+        "def"
+      ]
+    },
+    {
+      "front": "CUDA Graphs — what problem do they solve?",
+      "back": "Eliminates per-kernel <b>launch overhead</b> (~5-10 µs each) by recording a sequence of kernels and replaying as a single graph launch. Big win for small ops at low batch size.",
+      "tags": [
+        "ml",
+        "cuda",
+        "mechanism"
+      ]
+    },
+    {
+      "front": "TensorRT-LLM — what is it?",
+      "back": "NVIDIA's LLM inference engine: <b>fused kernels + in-flight batching + INT8/FP8 + speculative decoding</b>. Often fastest single-GPU serving for NVIDIA hardware.",
+      "tags": [
+        "ml",
+        "cuda",
+        "def"
+      ]
+    },
+    {
+      "front": "Tensor cores — what do they do?",
+      "back": "Hardware units that execute <b>4×4 or 16×16 matmul-accumulate per cycle</b>. H100 fp16: ~989 TFLOPS via tensor cores vs ~67 TFLOPS via CUDA cores. Use them or lose 15×.",
+      "tags": [
+        "ml",
+        "cuda",
+        "numeric",
+        "mechanism"
+      ]
+    },
+    {
+      "front": "CUTLASS — what is it for?",
+      "back": "NVIDIA's C++ template library for <b>composable matmul/conv kernels</b>. Building block for cuBLAS/cuDNN and custom high-performance code. Source-level access to tensor cores.",
+      "tags": [
+        "ml",
+        "cuda",
+        "def"
+      ]
+    },
+    {
+      "front": "Memory-bound vs compute-bound kernels — how to tell?",
+      "back": "Compare achieved <b>FLOP/byte to the device's ridge point</b> (arithmetic intensity, roofline). H100: ridge ≈ 989/3 ≈ 330 FLOP/byte. Below → memory-bound; above → compute-bound.",
+      "tags": [
+        "ml",
+        "cuda",
+        "mechanism",
+        "numeric"
+      ]
+    },
+    {
+      "front": "What is the MXU (Matrix eXtended Unit)?",
+      "back": "TPU's <b>systolic array</b> for matmul. v4: 128×128, v5p: 256×256. Streams data through PEs row-by-row, accumulating dot products with zero off-chip traffic during the matmul.",
+      "tags": [
+        "ml",
+        "tpu",
+        "def",
+        "numeric"
+      ]
+    },
+    {
+      "front": "bfloat16 — bit layout and why TPUs prefer it",
+      "back": "<b>1 sign + 8 exponent + 7 mantissa</b> bits. Same exponent range as fp32 → no loss scaling needed. Lower mantissa precision is fine for training.",
+      "tags": [
+        "ml",
+        "tpu",
+        "numeric",
+        "def"
+      ]
+    },
+    {
+      "front": "JAX, TensorFlow, PyTorch-XLA — what are they to TPUs?",
+      "back": "High-level frontends that lower to <b>XLA HLO</b> (intermediate representation) → TPU machine code. JAX is the de facto default for new TPU work.",
+      "tags": [
+        "ml",
+        "tpu",
+        "def"
+      ]
+    },
+    {
+      "front": "What is XLA?",
+      "back": "Accelerated Linear Algebra compiler. Takes HLO, performs whole-program <b>operator fusion + layout assignment + auto-sharding (GSPMD)</b>, emits device code for TPU/GPU/CPU.",
+      "tags": [
+        "ml",
+        "tpu",
+        "mechanism",
+        "def"
+      ]
+    },
+    {
+      "front": "Pallas — what is it?",
+      "back": "JAX's <b>Triton-like DSL</b> for writing custom TPU/GPU kernels in Python. Lowers to Mosaic (TPU) or Triton (GPU). Used when XLA fusion isn't aggressive enough.",
+      "tags": [
+        "ml",
+        "tpu",
+        "def"
+      ]
+    },
+    {
+      "front": "GSPMD — what does it do?",
+      "back": "<b>Auto-sharding</b>: propagates user-annotated sharding (on a few tensors) through the whole XLA graph. Enables data + tensor + pipeline parallel with minimal code.",
+      "tags": [
+        "ml",
+        "tpu",
+        "mechanism"
+      ]
+    },
+    {
+      "front": "TPU pod vs slice vs chip",
+      "back": "<b>Chip</b>: 1 device (2 TensorCores in v4). <b>Slice</b>: a contiguous subset of a pod, the unit you allocate. <b>Pod</b>: a full physical install (v4 = 4096 chips with optical interconnect).",
+      "tags": [
+        "ml",
+        "tpu",
+        "def",
+        "numeric"
+      ]
+    },
+    {
+      "front": "ICI vs NVLink — what are they?",
+      "back": "Inter-chip interconnects. <b>NVLink/NVSwitch</b> (NVIDIA): 900 GB/s all-to-all in an 8-GPU node. <b>ICI</b> (TPU): toroidal mesh, ~100 GB/s per link, scales to pod-wide 3D torus.",
+      "tags": [
+        "ml",
+        "tpu",
+        "compare",
+        "numeric"
+      ]
+    },
+    {
+      "front": "Nsight Systems vs Nsight Compute",
+      "back": "<b>Nsight Systems (nsys)</b>: timeline view, CPU+GPU+NCCL+CUDA API — find the bottleneck. <b>Nsight Compute (ncu)</b>: per-kernel deep dive — occupancy, memory throughput, instruction mix.",
+      "tags": [
+        "ml",
+        "profiler",
+        "compare",
+        "def"
+      ]
+    },
+    {
+      "front": "torch.profiler — what does it give you?",
+      "back": "PyTorch-native timeline: op-level CPU/GPU time, memory snapshots, stack traces. Exports Chrome trace JSON. Best first-pass tool before reaching for nsys.",
+      "tags": [
+        "ml",
+        "profiler",
+        "def"
+      ]
+    },
+    {
+      "front": "What does MFU mean and what's a good target on H100?",
+      "back": "<b>Model FLOPs Utilization</b> = achieved / peak dense FLOPs. H100 bf16 peak ≈ 989 TF/s. Target <b>≥ 50% (~500 TF/s sustained)</b> for healthy LLM training.",
+      "tags": [
+        "ml",
+        "profiler",
+        "numeric",
+        "formula"
+      ]
+    },
+    {
+      "front": "Roofline model — what does it tell you?",
+      "back": "Plots achievable performance vs arithmetic intensity. Below the ridge point (FLOP/byte = peak_FLOPS / peak_BW) → memory-bound; above → compute-bound. Diagnoses ceilings.",
+      "tags": [
+        "ml",
+        "profiler",
+        "mechanism"
+      ]
+    },
+    {
+      "front": "Why call torch.cuda.synchronize() before timing?",
+      "back": "CUDA kernel launches are <b>asynchronous</b>. Without sync, time.perf_counter measures launch-queue time, not work time. Always synchronize before t0 and before t1.",
+      "tags": [
+        "ml",
+        "profiler",
+        "pitfall"
+      ]
+    },
+    {
+      "front": "XLA Profiler / TensorBoard profile tab — what's it for?",
+      "back": "JAX/TF's equivalent of torch.profiler. Captures HLO ops, TPU MXU utilization, host↔device transfers. Reads through TensorBoard with profile plugin.",
+      "tags": [
+        "ml",
+        "profiler",
+        "def"
+      ]
+    },
+    {
+      "front": "Bandwidth hierarchy (rough order, fastest first)",
+      "back": "<b>HBM (~3 TB/s) > NVLink (~900 GB/s/node) > PCIe Gen5 (~64 GB/s) > InfiniBand NDR (~50 GB/s/port) > Ethernet (~12 GB/s for 100GbE)</b>.",
+      "tags": [
+        "ml",
+        "networking",
+        "numeric",
+        "compare"
+      ]
+    },
+    {
+      "front": "NVSwitch — what is it?",
+      "back": "NVIDIA's on-node crossbar that gives <b>all-to-all 900 GB/s</b> between 8 GPUs in a DGX. Without it, NVLink would be point-to-point ring.",
+      "tags": [
+        "ml",
+        "networking",
+        "def",
+        "numeric"
+      ]
+    },
+    {
+      "front": "Ring all-reduce — bandwidth optimality",
+      "back": "Each GPU sends only <b>2(N-1)/N · size</b> bytes regardless of N → bandwidth-optimal. NCCL's default for medium-size buffers across GPUs.",
+      "tags": [
+        "ml",
+        "networking",
+        "formula",
+        "mechanism"
+      ]
+    },
+    {
+      "front": "Tree all-reduce vs Ring all-reduce",
+      "back": "<b>Tree:</b> O(log N) latency, used for small messages. <b>Ring:</b> O(N) latency but bandwidth-optimal, used for large messages. NCCL picks per buffer size.",
+      "tags": [
+        "ml",
+        "networking",
+        "compare"
+      ]
+    },
+    {
+      "front": "InfiniBand NDR — bandwidth per port",
+      "back": "<b>400 Gb/s = 50 GB/s</b> per port. Rail-optimized fat-tree is the standard topology for AI training clusters.",
+      "tags": [
+        "ml",
+        "networking",
+        "numeric"
+      ]
+    },
+    {
+      "front": "RDMA — what is it and why required for training?",
+      "back": "<b>Remote Direct Memory Access</b>: NIC reads/writes peer memory bypassing OS and CPU. Zero-copy, sub-µs latency — required for fast collectives. Used by IB and RoCE.",
+      "tags": [
+        "ml",
+        "networking",
+        "def",
+        "mechanism"
+      ]
+    },
+    {
+      "front": "GPUDirect RDMA — what does it add?",
+      "back": "NIC reads/writes <b>GPU HBM directly</b> over PCIe, bypassing system memory. Required to fully exploit IB bandwidth for inter-node all-reduce.",
+      "tags": [
+        "ml",
+        "networking",
+        "mechanism"
+      ]
+    },
+    {
+      "front": "Tensor Parallel vs Pipeline Parallel vs Data Parallel",
+      "back": "<b>TP:</b> split one matmul across GPUs (high comm, intra-node). <b>PP:</b> split layers across GPUs (low comm, micro-batches). <b>DP:</b> replicate model, split batch.",
+      "tags": [
+        "ml",
+        "networking",
+        "compare",
+        "mechanism"
+      ]
+    },
+    {
+      "front": "FSDP / ZeRO-3 — what does it shard?",
+      "back": "<b>Params + grads + optimizer state are each sharded</b> across DP ranks. Each rank holds 1/N of everything. Materialized on-the-fly for compute via all-gather.",
+      "tags": [
+        "ml",
+        "networking",
+        "mechanism"
+      ]
+    },
+    {
+      "front": "OCS (Optical Circuit Switch) in TPU pods",
+      "back": "Reconfigurable optical interconnect — lets Google rewire the pod topology per job. Avoids fixed-topology bottlenecks and enables sub-pod slicing.",
+      "tags": [
+        "ml",
+        "networking",
+        "def"
+      ]
+    },
+    {
+      "front": "Perplexity formula",
+      "back": "<b>PPL = exp(−(1/N) Σ log p(xₜ | x&lt;ₜ))</b> — lower is better. Comparable only on the same dataset and tokenizer.",
+      "tags": [
+        "ml",
+        "eval",
+        "formula"
+      ]
+    },
+    {
+      "front": "Three tiers of LLM evaluation",
+      "back": "<b>(1) Intrinsic:</b> PPL, loss curves (cheap, noisy). <b>(2) Behavioral:</b> MMLU, HumanEval, MT-Bench (capability). <b>(3) Online:</b> human A/B, Arena (ground truth).",
+      "tags": [
+        "ml",
+        "eval",
+        "compare",
+        "def"
+      ]
+    },
+    {
+      "front": "LM-as-judge — what are the main biases?",
+      "back": "<b>Position bias</b> (judges prefer first / last), <b>length bias</b> (prefer longer), <b>self-bias</b> (GPT-4 prefers GPT-4-style). Mitigate: swap order + average, control length.",
+      "tags": [
+        "ml",
+        "eval",
+        "pitfall"
+      ]
+    },
+    {
+      "front": "Goodhart's Law in ML eval",
+      "back": "\"When a measure becomes a target, it ceases to be a good measure.\" Once a benchmark is optimized for, it stops predicting general capability. Rotate benchmarks.",
+      "tags": [
+        "ml",
+        "eval",
+        "pitfall",
+        "def"
+      ]
+    },
+    {
+      "front": "Train-test contamination — what is it and how to mitigate?",
+      "back": "Test items appear in pretraining corpus → model \"memorizes\" answers. Fixes: time-stamped benchmarks (LiveCodeBench), private held-out sets, contamination audits.",
+      "tags": [
+        "ml",
+        "eval",
+        "pitfall",
+        "mechanism"
+      ]
+    },
+    {
+      "front": "Why isn't lower perplexity always better?",
+      "back": "PPL only measures next-token likelihood. Saturates well before user-visible quality differences. Use behavioral evals (MMLU, MT-Bench) for real comparison.",
+      "tags": [
+        "ml",
+        "eval",
+        "pitfall"
+      ]
+    },
+    {
+      "front": "Online A/B testing — what statistical risks should you guard against?",
+      "back": "<b>Multiple-metric inflation</b> (Bonferroni or FDR correction), <b>peeking</b> (use sequential / always-valid tests), and <b>variance</b> (CUPED can reduce 30-50%).",
+      "tags": [
+        "ml",
+        "eval",
+        "pitfall",
+        "mechanism"
+      ]
+    },
+    {
+      "front": "Safety evaluation — what does HarmBench / JailbreakBench measure?",
+      "back": "Attack-success rate of adversarial prompts → harmful generations. Tradeoff with <b>over-refusal</b> measured by XSTest / OR-Bench (model refuses benign requests).",
+      "tags": [
+        "ml",
+        "eval",
+        "def",
+        "compare"
+      ]
+    },
+    {
+      "front": "MMLU — what does it test?",
+      "back": "<b>57 academic subjects, 4-choice MCQ, ~14k items</b> (Hendrycks 2020). Tests broad knowledge. Saturating: frontier models score 88-93%. Successor: <b>MMLU-Pro</b> (10 choices).",
+      "tags": [
+        "ml",
+        "benchmark",
+        "def",
+        "numeric"
+      ]
+    },
+    {
+      "front": "HumanEval — formula for pass@k",
+      "back": "<b>pass@k = 1 − C(n−c, k) / C(n, k)</b> where n = samples generated, c = correct ones. 164 hand-written Python problems (Chen 2021).",
+      "tags": [
+        "ml",
+        "benchmark",
+        "formula"
+      ]
+    },
+    {
+      "front": "GSM8K — what is it and roughly what scores do frontier models reach?",
+      "back": "<b>Grade-school math word problems</b>, 8.5k items, Cobbe 2021. Frontier ≈ 95%. Standard CoT + maj@N self-consistency.",
+      "tags": [
+        "ml",
+        "benchmark",
+        "def",
+        "numeric"
+      ]
+    },
+    {
+      "front": "Chatbot Arena — how does it produce a ranking?",
+      "back": "Crowd-sourced blind A/B pairwise votes → <b>Bradley-Terry → Elo rating</b>. Closest proxy to user preference. ~1M+ votes; new model needs weeks to stabilize.",
+      "tags": [
+        "ml",
+        "benchmark",
+        "mechanism",
+        "def"
+      ]
+    },
+    {
+      "front": "MT-Bench — what is it?",
+      "back": "<b>80 multi-turn prompts × 8 categories</b>, scored 1-10 by GPT-4 judge. Strong correlation with Arena Elo at fraction of the cost. (Zheng et al. 2023)",
+      "tags": [
+        "ml",
+        "benchmark",
+        "def",
+        "numeric"
+      ]
+    },
+    {
+      "front": "IFEval — what does it solve that MT-Bench doesn't?",
+      "back": "Tests <b>verifiable</b> instructions (\"answer in exactly 3 sentences\") with deterministic checker. Removes judge bias. Used in LLaMA-3 and Gemini reports.",
+      "tags": [
+        "ml",
+        "benchmark",
+        "def"
+      ]
+    },
+    {
+      "front": "Why prefer LiveCodeBench over HumanEval for new models?",
+      "back": "HumanEval (2021) is in CommonCrawl → contaminated. LiveCodeBench uses <b>time-stamped contest problems</b>, slice by submission date for leak-resistant eval.",
+      "tags": [
+        "ml",
+        "benchmark",
+        "pitfall",
+        "compare"
+      ]
+    },
+    {
+      "front": "MLPerf — what does it benchmark?",
+      "back": "<b>Hardware</b>: standardized models (BERT, GPT-3, LLaMA-2, ResNet) with audited time-to-target-accuracy (training) and qps@latency (inference). Apples-to-apples across vendors.",
+      "tags": [
+        "ml",
+        "benchmark",
+        "def"
+      ]
+    }
+  ]
+}
