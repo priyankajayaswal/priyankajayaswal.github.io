@@ -723,6 +723,7 @@
   <div id="toolbar-menu">
     <div class="tab-group" id="tab-group"></div>
     <div class="actions">
+      <button class="btn" id="btn-pdf" onclick="openReferencePdf()" style="display:none;background:transparent;border-color:#30363d;color:#8b949e;font-size:11px;padding:5px 9px" title="Open reference textbook PDF">📕 PDF</button>
       <button class="btn" onclick="toggleTracker()">📊 Tracker</button>
       <button class="btn" id="btn-path" onclick="togglePathPanel()" style="display:none;background:#1f6feb;border-color:#58a6ff;color:#fff">🧭 Learning Path</button>
     </div>
@@ -1421,6 +1422,7 @@ const COURSE_CONFIG = {
   course: { code: "PMPP 4e", title: "Programming Massively Parallel Processors", term: "Hwu · Kirk · El Hajj — 4th Edition · personal revision aid · perf numbers are illustrative — verify with Nsight before quoting" },
   storageKey: "pmpp",
   sourceLink: { url: "https://docs.nvidia.com/cuda/cuda-c-programming-guide/", label: "\u25b6 NVIDIA CUDA C++ Programming Guide" },
+  pdfReference: { path: "references/pmpp/Programming Massively Parallel Processors (Fourth Edition) - Wen-mei W. Hwu, David B. Kirk, Izzat El Hajj.pdf", label: "📕 Programming Massively Parallel Processors — Hwu, Kirk, El Hajj" },
   depthColors: ["#58a6ff", "#f778ba", "#7ee787", "#ffa657", "#d2a8ff", "#79c0ff"],
 
   mindmap: {
@@ -3803,6 +3805,21 @@ if (C.sourceLink) {
   sl.style.display = '';
 }
 
+// Reference PDF wire-up — exposes a header button that opens the local PDF
+// in the existing inline viewer (with scribble overlay).
+if (C.pdfReference && C.pdfReference.path) {
+  const btn = document.getElementById('btn-pdf');
+  if (btn) {
+    btn.style.display = '';
+    btn.title = C.pdfReference.label || 'Open reference PDF';
+  }
+}
+function openReferencePdf() {
+  if (C && C.pdfReference && C.pdfReference.path) {
+    openPdfViewer(C.pdfReference.path, C.pdfReference.label || '📕 Reference PDF');
+  }
+}
+
 // Show first tab
 let currentTab = tabs.length ? tabs[0].id : null;
 if (currentTab) document.getElementById('view-' + currentTab).classList.add('active');
@@ -3822,6 +3839,9 @@ function toggleMobileLegend(id) {
 }
 
 function switchTab(tab) {
+  // Close the PDF viewer if it's open — tabs should always navigate back to the page.
+  const pdfV = document.getElementById('pdf-viewer');
+  if (pdfV && pdfV.classList.contains('open')) closePdfViewer();
   currentTab = tab;
   document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.view === tab));
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
