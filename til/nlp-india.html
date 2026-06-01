@@ -1,0 +1,733 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>National Logistics Policy (India) — Scope, Status & Eastern Hubs</title>
+<style>
+  :root{
+    --bg:#0d1117; --panel:#161b22; --panel2:#1c2330; --border:#30363d;
+    --text:#e6edf3; --muted:#8b949e; --accent:#58a6ff; --accent2:#3fb950;
+    --warn:#d29922; --bad:#f85149; --chip:#21262d;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font:14px/1.55 -apple-system,Segoe UI,Roboto,Inter,sans-serif}
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+  header.hero{padding:32px 28px 22px;border-bottom:1px solid var(--border);background:linear-gradient(180deg,#0f1622,#0d1117)}
+  header.hero h1{margin:0 0 6px;font-size:26px;letter-spacing:-.3px}
+  header.hero p{margin:4px 0;color:var(--muted);max-width:920px}
+  .badges{margin-top:10px;display:flex;gap:8px;flex-wrap:wrap}
+  .badge{background:var(--chip);border:1px solid var(--border);padding:3px 9px;border-radius:999px;font-size:12px;color:var(--muted)}
+  nav.tabs{position:sticky;top:0;z-index:20;display:flex;flex-wrap:wrap;gap:2px;background:var(--bg);border-bottom:1px solid var(--border);padding:8px 18px}
+  nav.tabs button{background:transparent;color:var(--muted);border:1px solid transparent;padding:8px 13px;border-radius:8px 8px 0 0;font:inherit;cursor:pointer}
+  nav.tabs button:hover{color:var(--text);background:var(--panel)}
+  nav.tabs button.active{color:var(--text);background:var(--panel);border-color:var(--border);border-bottom-color:var(--panel)}
+  main{padding:24px 28px 60px;max-width:1280px;margin:0 auto}
+  section.view{display:none}
+  section.view.active{display:block}
+  h2{font-size:20px;margin:6px 0 14px;border-bottom:1px solid var(--border);padding-bottom:8px}
+  h3{font-size:16px;margin:18px 0 8px;color:#c9d1d9}
+  h4{font-size:14px;margin:14px 0 6px;color:var(--accent)}
+  .grid{display:grid;gap:14px}
+  .grid.cols-2{grid-template-columns:repeat(auto-fit,minmax(320px,1fr))}
+  .grid.cols-3{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+  .card{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:14px 16px}
+  .card.tight{padding:10px 12px}
+  .kpi{display:flex;flex-direction:column;gap:2px}
+  .kpi .n{font-size:22px;font-weight:600;color:var(--accent)}
+  .kpi .l{font-size:12px;color:var(--muted)}
+  .pillar{border-left:3px solid var(--accent);padding-left:10px;margin:8px 0}
+  ul.tight{margin:6px 0 6px 18px;padding:0}
+  ul.tight li{margin:3px 0}
+  table{border-collapse:collapse;width:100%;margin:8px 0;font-size:13px}
+  th,td{border:1px solid var(--border);padding:7px 9px;text-align:left;vertical-align:top}
+  th{background:var(--panel2);color:#c9d1d9}
+  tr:nth-child(even) td{background:#11161d}
+  .pill{display:inline-block;background:var(--chip);border:1px solid var(--border);color:var(--muted);font-size:11px;padding:2px 8px;border-radius:999px;margin:2px 4px 2px 0}
+  .pill.green{color:#7ee787;border-color:#2ea04333}
+  .pill.amber{color:#e3b341;border-color:#bb800933}
+  .pill.red{color:#ff7b72;border-color:#da363333}
+  .pill.blue{color:#79c0ff;border-color:#1f6feb44}
+  .controls{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 14px}
+  .chip-btn{background:var(--chip);border:1px solid var(--border);color:var(--muted);padding:5px 10px;border-radius:999px;font:inherit;cursor:pointer;font-size:12px}
+  .chip-btn.on{color:#fff;background:#1f6feb;border-color:#1f6feb}
+  .map-wrap{display:grid;grid-template-columns:minmax(320px,1fr) minmax(280px,1fr);gap:14px;margin-top:8px}
+  @media(max-width:900px){.map-wrap{grid-template-columns:1fr}}
+  svg.map{width:100%;height:auto;background:#0a1018;border:1px solid var(--border);border-radius:10px;display:block}
+  svg.map .state{fill:#1c2330;stroke:#30363d;stroke-width:1}
+  svg.map .state:hover{fill:#222b3a}
+  svg.map text.lbl{fill:#8b949e;font:11px sans-serif;pointer-events:none}
+  svg.map circle.hub{cursor:pointer;transition:r .15s}
+  svg.map circle.hub:hover{stroke:#fff;stroke-width:2}
+  svg.map circle.hub.selected{stroke:#fff;stroke-width:2.5}
+  .legend{display:flex;flex-wrap:wrap;gap:10px;margin:6px 0 0;font-size:12px;color:var(--muted)}
+  .legend .sw{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px;vertical-align:middle}
+  .hub-detail{min-height:100%}
+  .hub-detail h3{margin-top:0}
+  .hub-detail .row{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0}
+  .hub-detail .sec{margin:10px 0;padding-top:8px;border-top:1px dashed var(--border)}
+  .hub-detail .sec:first-of-type{border-top:none;padding-top:0}
+  .small{font-size:12px;color:var(--muted)}
+  details{background:var(--panel);border:1px solid var(--border);border-radius:8px;padding:8px 12px;margin:8px 0}
+  details>summary{cursor:pointer;font-weight:600;color:#c9d1d9;list-style:none}
+  details>summary::-webkit-details-marker{display:none}
+  details>summary::before{content:"▸";display:inline-block;margin-right:6px;color:var(--muted);transition:transform .15s}
+  details[open]>summary::before{transform:rotate(90deg)}
+  .accent{color:var(--accent)} .green{color:var(--accent2)} .warn{color:var(--warn)} .bad{color:var(--bad)}
+  .muted{color:var(--muted)}
+  .state-card{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin:10px 0}
+  .state-card .head{display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:6px}
+  .state-card h3{margin:0;font-size:17px;color:#fff}
+  .state-card .meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:6px;margin:8px 0;font-size:12px;color:var(--muted)}
+  .state-card .meta span b{color:#c9d1d9;font-weight:600}
+  .state-card.placeholder{opacity:.55;border-style:dashed}
+  .ref{font-size:12px;color:var(--muted);border-left:2px solid var(--border);padding:4px 10px;margin:6px 0}
+  footer{padding:18px 28px;border-top:1px solid var(--border);color:var(--muted);font-size:12px;text-align:center}
+  kbd{background:var(--chip);border:1px solid var(--border);border-bottom-width:2px;border-radius:4px;padding:0 5px;font:11px ui-monospace,monospace;color:#c9d1d9}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <h1>🇮🇳 National Logistics Policy — Scope, Status &amp; Eastern Hubs</h1>
+  <p>An interactive brief on India's NLP (launched 17 Sep 2022), its impact on the existing logistics ecosystem, and a deep dive into <b>Eastern India</b> (West Bengal, Bihar, Odisha) — emerging gems for the next wave of manufacturing.</p>
+  <div class="badges">
+    <span class="badge">Single-file HTML · No CDN</span>
+    <span class="badge">Sources: PIB, DPIIT, MoCI, MoPSW, news</span>
+    <span class="badge">Verified May 2026 — corrections applied</span>
+    <span class="badge">Keys: <kbd>1</kbd>–<kbd>8</kbd></span>
+  </div>
+</header>
+
+<nav class="tabs" id="tabs">
+  <button data-tab="overview" class="active">📘 Overview</button>
+  <button data-tab="pillars">🏛️ Pillars &amp; CLAP</button>
+  <button data-tab="status">📊 Status</button>
+  <button data-tab="impact">🌐 Ecosystem Impact</button>
+  <button data-tab="east">🗺️ Eastern India Gems</button>
+  <button data-tab="states">🏛️ State Actions</button>
+  <button data-tab="risks">⚠️ Challenges</button>
+  <button data-tab="refs">📚 References</button>
+</nav>
+
+<main>
+
+<!-- ============== OVERVIEW ============== -->
+<section class="view active" id="overview">
+  <h2>What is the National Logistics Policy?</h2>
+  <p>The <b>National Logistics Policy (NLP)</b> was launched by Prime Minister Narendra Modi on <b>17 September 2022</b> by the Department for Promotion of Industry and Internal Trade (DPIIT), Ministry of Commerce &amp; Industry. It complements the <b>PM GatiShakti National Master Plan</b> (Oct 2021) and aims to make India's logistics globally competitive by lowering costs, improving efficiency and digitising the ecosystem.</p>
+
+  <div class="grid cols-3" style="margin-top:14px">
+    <div class="card kpi"><span class="n">17 Sep 2022</span><span class="l">Launch by PM Modi (DPIIT, PIB PRID 1859893)</span></div>
+    <div class="card kpi"><span class="n">8% by 2030</span><span class="l">Target logistics cost as % of GDP (from ~13–14%)</span></div>
+    <div class="card kpi"><span class="n">Top 25</span><span class="l">Aspirational LPI rank (current rank 38, World Bank LPI 2023)</span></div>
+    <div class="card kpi"><span class="n">$1.6 T+</span><span class="l">Estimated logistics market in India by 2030</span></div>
+    <div class="card kpi"><span class="n">22M+</span><span class="l">People employed in the logistics sector (industry estimate)</span></div>
+    <div class="card kpi"><span class="n">3rd Anniv.</span><span class="l">PIB PRID 2167224 — 16 Sep 2025 progress release</span></div>
+  </div>
+
+  <h3>Key Vision Statement</h3>
+  <div class="card">
+    <p>"To drive economic growth, business competitiveness and trade through an integrated, seamless, efficient, reliable, green, sustainable and cost-effective logistics network leveraging best-in-class technology, processes and skilled manpower." — DPIIT</p>
+  </div>
+
+  <h3>Headline Targets</h3>
+  <ul class="tight">
+    <li>Reduce <b>logistics cost</b> to be globally comparable (current ~13–14% of GDP, target 8% by 2030).</li>
+    <li>Improve <b>Logistics Performance Index (LPI)</b> rank to top 25 (current: 38, up from 44 in 2018 — World Bank LPI 2023).</li>
+    <li>Build a <b>data-driven decision-support</b> mechanism (ULIP, LDB, LEADS).</li>
+    <li>Drive <b>multimodal integration</b> — rail, road, water, air, pipelines.</li>
+  </ul>
+</section>
+
+<!-- ============== PILLARS ============== -->
+<section class="view" id="pillars">
+  <h2>The Four Pillars &amp; the CLAP Action Plan</h2>
+  <p>NLP rests on <b>four pillars</b> and is operationalised via the <b>Comprehensive Logistics Action Plan (CLAP)</b> — eight inter-related action streams.</p>
+
+  <h3>The 4 Pillars</h3>
+  <div class="grid cols-2">
+    <div class="card"><div class="pillar"><b>1. Integrated Digital Logistics System (IDLS)</b><br><span class="muted">Single-window, paperless, API-driven. Cross-departmental data exchange via ULIP.</span></div></div>
+    <div class="card"><div class="pillar"><b>2. Standardisation of Physical Assets &amp; Benchmarking</b><br><span class="muted">Standard pallets, containers, warehousing classifications, KPIs.</span></div></div>
+    <div class="card"><div class="pillar"><b>3. Logistics Human Resources Development &amp; Capacity Building</b><br><span class="muted">Skill council, training, action plan for institutional capacity.</span></div></div>
+    <div class="card"><div class="pillar"><b>4. State Engagement</b><br><span class="muted">State Logistics Policies, City Logistics Plans, LEADS index ranking.</span></div></div>
+  </div>
+
+  <h3>The CLAP — 8 Action Areas</h3>
+  <table>
+    <tr><th>#</th><th>Action area</th><th>What it does</th></tr>
+    <tr><td>1</td><td>Integrated Digital Logistics Systems</td><td>ULIP integration of 30+ ministry systems &amp; 100+ APIs.</td></tr>
+    <tr><td>2</td><td>Standardisation of physical assets</td><td>Asset specs, container interoperability, pallet pooling.</td></tr>
+    <tr><td>3</td><td>Benchmarking service standards</td><td>KPI publication, service-level baselines.</td></tr>
+    <tr><td>4</td><td>Logistics HR &amp; skill</td><td>Curriculum, sector skill council, training partnerships.</td></tr>
+    <tr><td>5</td><td>State engagement</td><td>State Logistics Policies, City Logistics Plans, LEADS.</td></tr>
+    <tr><td>6</td><td>EXIM logistics</td><td>Trade facilitation, port-CFS-ICD integration.</td></tr>
+    <tr><td>7</td><td>Service Improvement Group (SIG)</td><td>Resolves user-flagged process bottlenecks.</td></tr>
+    <tr><td>8</td><td>Sectoral plan for efficient logistics (SPEL)</td><td>Sector-wise (auto, pharma, agri, etc.) playbooks.</td></tr>
+  </table>
+
+  <h3>Flagship Digital Platforms</h3>
+  <div class="grid cols-2">
+    <div class="card">
+      <h4>ULIP — Unified Logistics Interface Platform</h4>
+      <p class="small">A secure API gateway connecting 10+ ministries / 30+ systems &amp; 100+ APIs to give private LSPs access to verified govt data (vehicle, vessel, cargo, port, rail). Hundreds of private logistics companies onboarded; transactions in the order of 100s of crores reported by PIB (Sep 2025).</p>
+    </div>
+    <div class="card">
+      <h4>LDB — Logistics Data Bank</h4>
+      <p class="small">RFID-based EXIM container tracking across India's major ports + ICDs. Tens of millions of containers tracked annually; widely cited as a model for transparency in port-hinterland movement.</p>
+    </div>
+    <div class="card">
+      <h4>LEADS — Logistics Ease Across Different States</h4>
+      <p class="small">Annual perception + objective survey ranking states/UTs on logistics. Categories: <span class="pill green">Achievers</span> <span class="pill blue">Fast Movers</span> <span class="pill amber">Aspirers</span>. Drives state competition.</p>
+    </div>
+    <div class="card">
+      <h4>e-Handbook of Statistics on Indian Logistics</h4>
+      <p class="small">Consolidated statistics across modes, costs, infrastructure — released annually by DPIIT.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============== STATUS ============== -->
+<section class="view" id="status">
+  <h2>Implementation Status (as of late 2025)</h2>
+  <p>Per PIB release on the <b>3rd anniversary (PRID 2167224, 16 Sep 2025)</b>:</p>
+
+  <div class="grid cols-3">
+    <div class="card kpi"><span class="n">27+</span><span class="l">States/UTs with their own State Logistics Policy</span></div>
+    <div class="card kpi"><span class="n">100+ APIs</span><span class="l">on ULIP from 30+ govt systems / 10+ ministries</span></div>
+    <div class="card kpi"><span class="n">Top 25 goal</span><span class="l">LPI: 44 (2018) → 38 (2023). Trend rank improving.</span></div>
+    <div class="card kpi"><span class="n">Multi-modal</span><span class="l">DFCs, Sagarmala, Bharatmala, UDAN, NW operationalising.</span></div>
+    <div class="card kpi"><span class="n">PMG</span><span class="l">PM GatiShakti — 200+ infra projects de-bottlenecked.</span></div>
+    <div class="card kpi"><span class="n">e-LogS</span><span class="l">Logistics Skill Council expanded curricula and trainees.</span></div>
+  </div>
+
+  <h3>LPI Component Trend (World Bank, 2023)</h3>
+  <table>
+    <tr><th>Indicator</th><th>2018</th><th>2023</th><th>Δ</th></tr>
+    <tr><td>Customs</td><td>40</td><td>38</td><td class="green">+2</td></tr>
+    <tr><td>Infrastructure</td><td>52</td><td>47</td><td class="green">+5</td></tr>
+    <tr><td>International shipments</td><td>44</td><td>22</td><td class="green">+22</td></tr>
+    <tr><td>Logistics quality &amp; competence</td><td>52</td><td>48</td><td class="green">+4</td></tr>
+    <tr><td>Tracking &amp; tracing</td><td>54</td><td>35</td><td class="green">+19</td></tr>
+    <tr><td>Timeliness</td><td>44</td><td>52</td><td class="bad">−8</td></tr>
+    <tr><td><b>Overall LPI rank</b></td><td><b>44</b></td><td><b>38</b></td><td class="green">+6</td></tr>
+  </table>
+
+  <h3>Multi-modal flagship projects status</h3>
+  <ul class="tight">
+    <li><b>EDFC (Eastern Dedicated Freight Corridor)</b> — 1,337 km <b>Sahnewal (Ludhiana) → Sonnagar (Jharkhand)</b> commissioned. The <b>Sonnagar–Dankuni</b> stretch (~538 km) is being implemented under PPP, taking total EDFC to ~1,856 km.</li>
+    <li><b>WDFC (Western DFC)</b> — JNPT to Dadri largely commissioned; freight density rising.</li>
+    <li><b>NW-1 (Ganga / Haldia–Varanasi)</b> — Sahibganj Multi-modal Terminal commissioned <b>Nov 2019</b>; cargo movement scaled significantly.</li>
+    <li><b>Sagarmala</b> — 800+ projects across port modernisation, connectivity and coastal community.</li>
+    <li><b>Bharatmala Pariyojana</b> — Phase-I focused on national corridors / economic corridors / inter-corridor routes.</li>
+  </ul>
+</section>
+
+<!-- ============== IMPACT ============== -->
+<section class="view" id="impact">
+  <h2>Impact on India's Existing Logistics Ecosystem</h2>
+
+  <h3>Macro shifts being catalysed</h3>
+  <div class="grid cols-2">
+    <div class="card"><h4>📉 Cost rationalisation</h4><p>NCAER &amp; DPIIT working group estimates put India's logistics cost at ~13–14% of GDP (older estimates were higher). NLP targets convergence to ~8% by 2030, releasing massive competitiveness for manufacturing/exports.</p></div>
+    <div class="card"><h4>🚄 Modal mix rebalancing</h4><p>Rail share of freight historically declined to ~27%. With DFCs, multi-modal logistics parks (MMLPs) and inland waterways (NWs), the policy targets a structural shift back toward rail + waterways for bulk cargo.</p></div>
+    <div class="card"><h4>📡 Digital first</h4><p>ULIP-led API economy is letting startups &amp; LSPs build multi-modal visibility, dynamic routing, and ETA prediction on top of verified govt data.</p></div>
+    <div class="card"><h4>🟢 Greener logistics</h4><p>Coastal shipping + inland waterways + electrification of rail freight reduce per-tonne-km emissions; complemented by EV fleet incentives and FAME-II.</p></div>
+    <div class="card"><h4>🏗️ Infrastructure unlocks</h4><p>PM GatiShakti enables ministry-level infra de-confliction; warehousing modernisation, MMLPs at strategic nodes, port-rail-road integration.</p></div>
+    <div class="card"><h4>👷 Skill &amp; jobs</h4><p>Sectoral skilling, formalisation of trucking and warehousing — opens up scaled, structured employment.</p></div>
+  </div>
+
+  <h3>Who wins, who has to adapt</h3>
+  <table>
+    <tr><th>Stakeholder</th><th>Tailwind</th><th>What they must do</th></tr>
+    <tr><td>3PL/4PL providers</td><td>Standardised data, MMLP access</td><td>Adopt ULIP APIs; invest in multi-modal capability.</td></tr>
+    <tr><td>Manufacturers (auto, electronics, FMCG)</td><td>Lower inland cost, faster EXIM</td><td>Re-locate to corridor-adjacent hubs (DFC, AKIC, ECEC).</td></tr>
+    <tr><td>Ports &amp; shipping lines</td><td>Hinterland connectivity, LDB visibility</td><td>Deepen drafts; integrate ICDs/CFSs digitally.</td></tr>
+    <tr><td>Truckers &amp; small fleets</td><td>Formalisation, e-payments</td><td>Adopt FASTag/digital docs; fleet upgrade for efficiency.</td></tr>
+    <tr><td>Warehousing</td><td>Grade-A demand spike</td><td>Build to NLP standards; co-locate near MMLPs.</td></tr>
+    <tr><td>Tier-2/3 cities &amp; aspirational states</td><td>LEADS-driven competition; investment</td><td>Notify state policies; build city logistics plans.</td></tr>
+  </table>
+
+  <h3>Why this matters for Eastern India</h3>
+  <p>Eastern India contributes a relatively modest share of national GDP today, despite housing massive mineral, port, demographic and agricultural assets. NLP + DFC + Sagarmala + Inland Waterways converge here more than anywhere else in India — making the East the <b>biggest beneficiary corridor</b> of NLP-era infrastructure unlocks.</p>
+</section>
+
+<!-- ============== EAST ============== -->
+<section class="view" id="east">
+  <h2>Eastern India Gems — Click any hub on the map</h2>
+  <p>Filter by sector. Click a hub on the map (or in the list) to see anchors, throughput, recent 2024–25 announcements, corridor connectivity, and a manufacturing thesis.</p>
+
+  <div class="controls" id="sectorFilters">
+    <button class="chip-btn on" data-sector="all">All</button>
+    <button class="chip-btn" data-sector="port">⚓ Ports</button>
+    <button class="chip-btn" data-sector="steel">🏭 Steel/Metals</button>
+    <button class="chip-btn" data-sector="electronics">📱 Electronics/IT</button>
+    <button class="chip-btn" data-sector="auto">🚗 Auto/Rail</button>
+    <button class="chip-btn" data-sector="energy">⚡ Energy/Petrochem</button>
+    <button class="chip-btn" data-sector="agro">🌾 Agro/Leather/Textile</button>
+    <button class="chip-btn" data-sector="logistics">🚢 Logistics/MMLP</button>
+  </div>
+
+  <div class="legend">
+    <span><span class="sw" style="background:#79c0ff"></span>Ports</span>
+    <span><span class="sw" style="background:#f0883e"></span>Steel/Metals</span>
+    <span><span class="sw" style="background:#a371f7"></span>Electronics/IT</span>
+    <span><span class="sw" style="background:#ff7b72"></span>Auto/Rail</span>
+    <span><span class="sw" style="background:#3fb950"></span>Energy/Petrochem</span>
+    <span><span class="sw" style="background:#e3b341"></span>Agro/Leather/Textile</span>
+    <span><span class="sw" style="background:#8b949e"></span>Logistics/MMLP</span>
+  </div>
+
+  <div class="map-wrap">
+    <div>
+      <svg class="map" id="emap" viewBox="0 0 520 620" aria-label="Eastern India hub map">
+        <!-- Stylised state polygons (illustrative; not a survey-accurate map) -->
+        <polygon class="state" points="60,140 220,120 270,210 240,310 130,330 70,260" />
+        <text class="lbl" x="120" y="220">BIHAR</text>
+        <polygon class="state" points="240,310 360,300 380,400 280,430 230,400" />
+        <text class="lbl" x="290" y="370">JHARKHAND</text>
+        <polygon class="state" points="270,210 410,200 440,290 360,300 240,310" />
+        <text class="lbl" x="320" y="260">(N. WB / NB)</text>
+        <polygon class="state" points="360,300 470,310 480,460 380,470 380,400" />
+        <text class="lbl" x="400" y="390">WEST BENGAL</text>
+        <polygon class="state" points="230,400 380,470 360,580 220,560 200,470" />
+        <text class="lbl" x="260" y="510">ODISHA</text>
+        <text class="lbl" x="450" y="465" style="fill:#58a6ff">Bay of Bengal</text>
+      </svg>
+      <p class="small">Schematic map — positions are approximate for navigation. Click any dot.</p>
+    </div>
+    <div class="card hub-detail" id="hubDetail">
+      <h3>Pick a hub →</h3>
+      <p class="muted">Each card shows: <b>why it matters</b>, <b>anchor companies</b>, <b>throughput / scale</b>, <b>recent 2024–25 announcements</b>, <b>corridor connectivity</b>, and a <b>manufacturing thesis</b>.</p>
+    </div>
+  </div>
+
+  <h3 style="margin-top:24px">All hubs (filtered)</h3>
+  <div class="grid cols-3" id="hubGrid"></div>
+</section>
+
+<!-- ============== STATES ============== -->
+<section class="view" id="states">
+  <h2>State Actions — Logistics &amp; Industrial Push</h2>
+  <p>This section starts with <b>Bihar, West Bengal &amp; Odisha</b> (per request) and is structured to be <b>extended to all 28 states &amp; 8 UTs</b>. Each card shows LEADS standing, state logistics policy, single-window industrial portal, key institutions, headline target, recent flagships, and the upcoming pipeline.</p>
+
+  <div class="controls" id="stateFilters">
+    <button class="chip-btn on" data-region="all">All</button>
+    <button class="chip-btn" data-region="east">East</button>
+    <button class="chip-btn" data-region="west">West</button>
+    <button class="chip-btn" data-region="north">North</button>
+    <button class="chip-btn" data-region="south">South</button>
+    <button class="chip-btn" data-region="ne">North-East</button>
+    <button class="chip-btn" data-region="ut">UTs</button>
+  </div>
+
+  <div id="stateList"></div>
+
+  <h3 style="margin-top:18px">Roadmap for full coverage</h3>
+  <p class="small muted">Placeholder cards mark slots reserved for additional states/UTs (Maharashtra, Gujarat, Tamil Nadu, Karnataka, UP, Andhra Pradesh, Telangana, Madhya Pradesh, Rajasthan, Punjab, Haryana, Kerala, Chhattisgarh, Assam, the rest of NE7, J&amp;K, Ladakh, Delhi, Chandigarh, Puducherry, A&amp;N, Lakshadweep, etc.). Add an entry to the <code>STATES</code> array in this file to populate a card.</p>
+</section>
+
+<!-- ============== RISKS ============== -->
+<section class="view" id="risks">
+  <h2>Challenges &amp; Watch-outs</h2>
+  <div class="grid cols-2">
+    <div class="card"><h4>🏛️ Federal coordination</h4><p>States vary widely in policy maturity (LEADS Achievers vs Aspirers). Convergence of GST, e-way bill, vehicle/road regulations is still uneven.</p></div>
+    <div class="card"><h4>🚂 Last-mile &amp; first-mile</h4><p>Even with DFCs and ports, the rural &amp; semi-urban road first-mile remains weak; cold chain and agri-logistics gaps persist.</p></div>
+    <div class="card"><h4>💸 Capex intensity</h4><p>MMLPs, port deepening, DFC last-stretch (Sonnagar–Dankuni PPP) — long-gestation capex with execution risk.</p></div>
+    <div class="card"><h4>🛡️ Cyber &amp; data</h4><p>ULIP scale brings cyber resilience, data residency &amp; access-control questions.</p></div>
+    <div class="card"><h4>♻️ Green-transition</h4><p>Trucking decarbonisation (LNG/EV) is nascent; rail electrification is largely done but freight EV ecosystem needs scale.</p></div>
+    <div class="card"><h4>🧭 Skill gap</h4><p>Demand for trained logistics professionals (warehousing, cold chain, port ops) outstrips formal supply.</p></div>
+  </div>
+</section>
+
+<!-- ============== REFS ============== -->
+<section class="view" id="refs">
+  <h2>References</h2>
+  <p class="small muted">All claims verified May 2026 via primary sources where possible. Corrections applied per fact-check pass — see notes inline.</p>
+  <ul class="tight">
+    <li>PIB — NLP launch announcement (PRID 1859893, 17 Sep 2022). <a href="https://pib.gov.in/PressReleasePage.aspx?PRID=1859893" target="_blank" rel="noopener">pib.gov.in</a></li>
+    <li>PIB — NLP 3rd Anniversary release (PRID 2167224, 16 Sep 2025). <a href="https://pib.gov.in/PressReleasePage.aspx?PRID=2167224" target="_blank" rel="noopener">pib.gov.in</a></li>
+    <li>DPIIT — National Logistics Policy document. <a href="https://dpiit.gov.in/" target="_blank" rel="noopener">dpiit.gov.in</a></li>
+    <li>PM GatiShakti — National Master Plan (Oct 2021). <a href="https://pmgatishakti.gov.in/" target="_blank" rel="noopener">pmgatishakti.gov.in</a></li>
+    <li>World Bank Logistics Performance Index 2023. <a href="https://lpi.worldbank.org/" target="_blank" rel="noopener">lpi.worldbank.org</a></li>
+    <li>DFCCIL — EDFC/WDFC progress. <a href="https://dfccil.com/" target="_blank" rel="noopener">dfccil.com</a></li>
+    <li>Sagarmala Programme — MoPSW. <a href="https://sagarmala.gov.in/" target="_blank" rel="noopener">sagarmala.gov.in</a></li>
+    <li>LEADS — Logistics Ease Across Different States, DPIIT.</li>
+    <li>CII Eastern Region — East Tech 2025 / regional briefs. <a href="https://www.cnbctv18.com/" target="_blank" rel="noopener">cnbctv18.com</a></li>
+    <li>Wabtec / Marhowra (Bihar) — 6,000 HP WDG-6/WDP-5 diesel locos under 1,000-loco / 10-yr concession (2015 MoU).</li>
+    <li>Tata Steel Kalinganagar Phase-II inauguration — 22 May 2025 (8 MTPA; world's largest single blast furnace 5,870 m³).</li>
+    <li>HURL Barauni — operational since 2022–23; ~1.27 MMTPA neem-coated urea.</li>
+    <li>NIELIT × Tata Electronics ATMP skill MoU — Bhubaneswar, Jan 2025 (PIB PRID 2090018).</li>
+    <li>BGBS 2025 (West Bengal) — investment intentions; <i>$1T economy by 2035</i> aspiration stated by GoWB.</li>
+    <li>Utkarsh Odisha 2025 — investment summit MoUs (₹16.7 lakh cr stated).</li>
+    <li>Bihar Global Investors Summit 2023 — ₹50K+ cr commitments; HURL Barauni revival; Patna Metro under construction.</li>
+  </ul>
+  <div class="ref">Notes on corrections from v1: EDFC endpoint clarified as Sonnagar (not Dankuni for the 1,337 km segment); Wabtec corrected to 6,000 HP; TSK stated as 8 MTPA without unverified 16 MTPA claim; HURL Barauni stated as operational; Bantala leather export figures softened; Tata Electronics fab is in Jagiroad (Assam), not Bhubaneswar; Vedanta Jharsuguda smelter cited as ~1.75 MTPA.</div>
+</section>
+
+</main>
+
+<footer>
+  Built as a single-file static brief. <span class="muted">Use <kbd>1</kbd>–<kbd>8</kbd> to switch tabs.</span>
+</footer>
+
+<script>
+/* ---------- Tab switching ---------- */
+const tabs = document.querySelectorAll('nav.tabs button');
+const views = document.querySelectorAll('section.view');
+const tabOrder = ['overview','pillars','status','impact','east','states','risks','refs'];
+function activateTab(name){
+  tabs.forEach(b=>b.classList.toggle('active', b.dataset.tab===name));
+  views.forEach(v=>v.classList.toggle('active', v.id===name));
+}
+tabs.forEach(b=>b.addEventListener('click',()=>activateTab(b.dataset.tab)));
+document.addEventListener('keydown',e=>{
+  if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA') return;
+  const i = parseInt(e.key,10);
+  if(i>=1 && i<=tabOrder.length) activateTab(tabOrder[i-1]);
+});
+
+/* ---------- HUBS data (Eastern India) ---------- */
+const COLOR = {
+  port:'#79c0ff', steel:'#f0883e', electronics:'#a371f7',
+  auto:'#ff7b72', energy:'#3fb950', agro:'#e3b341', logistics:'#8b949e'
+};
+const HUBS = [
+  // ---------- WEST BENGAL ----------
+  { id:'kolkata-haldia', name:'Kolkata–Haldia Port Complex', state:'West Bengal', sector:'port', x:430, y:430,
+    why:'India\'s only major riverine port system; gateway to Bangladesh, Nepal, Bhutan and the entire NE region.',
+    anchors:['Syama Prasad Mookerjee Port Trust (SMP)','IOCL Haldia refinery','Tata Steel, MCC PTA, HPL'],
+    throughput:'~65–70 MMT combined cargo handled by SMP (KoPT + Haldia) annually.',
+    recent:['Haldia capacity augmentation under Sagarmala','Ro-Ro &amp; coastal services scale-up','Inland waterway connectivity to NW-1 strengthened'],
+    connectivity:'NH-16, NW-1 (Ganga), EDFC tail (Sonnagar–Dankuni PPP), proposed Eastern Coastal Economic Corridor (ECEC).',
+    thesis:'Best-positioned port for Eastern India + landlocked neighbours; constrained by Hooghly draft — hence Tajpur/Sagar deep-sea push.' },
+  { id:'tajpur', name:'Tajpur Deep-sea Port (planned)', state:'West Bengal', sector:'port', x:445, y:455,
+    why:'Will be West Bengal\'s first deep-draft port — addresses Haldia\'s draft constraint.',
+    anchors:['Adani Ports (LoA holder)','Govt of West Bengal / WBIDC'],
+    throughput:'Targeted ~54 MMT/yr capacity at full build.',
+    recent:['LoA awarded to Adani; environmental &amp; land processes underway as of 2024–25'],
+    connectivity:'NH-116B, planned rail spur to EDFC, near NH-16 / Kolkata–Chennai corridor.',
+    thesis:'If executed, unlocks capesize calls in eastern India and rebalances export-cost economics for steel/coal/containers.' },
+  { id:'bantala', name:'Bantala Leather Complex (Kolkata)', state:'West Bengal', sector:'agro', x:438, y:418,
+    why:'Asia\'s largest planned leather complex; ~300+ tanneries.',
+    anchors:['CLE member units','Calcutta Leather Complex (KMDA/WBIIDC)'],
+    throughput:'Annual leather exports from the complex are estimated in the ~₹4,000–8,000 cr range (CLE/MoCI data); ₹12,000 cr is an aspirational figure.',
+    recent:['Mega Leather Cluster expansion planning','Wage &amp; effluent infra upgrades'],
+    connectivity:'NH-12 / EM Bypass; close to Kolkata Port and airport.',
+    thesis:'Cluster economics favour expansion as global brands diversify away from China; ZLD compliance + skilling are the binding constraints.' },
+  { id:'durgapur-asansol', name:'Durgapur–Asansol Industrial Belt', state:'West Bengal', sector:'steel', x:380, y:390,
+    why:'Historic steel + coal + chemicals belt along NH-19 / Grand Trunk Road.',
+    anchors:['DSP (SAIL)','IISCO Burnpur (SAIL)','Bharat Coking Coal area linkages','Matix Fertilizers'],
+    throughput:'IISCO ~2.5 MTPA crude steel; DSP ~3.0+ MTPA; large coal-power footprint.',
+    recent:['Modernisation rounds at SAIL units','Industrial corridor planning along Andal–Dankuni'],
+    connectivity:'NH-19, EDFC trunk, Howrah–Delhi main line, Andal aerotropolis nearby.',
+    thesis:'Brownfield steel + DFC + coal proximity = compelling site for downstream metals &amp; engineering goods.' },
+  { id:'andal', name:'Kazi Nazrul Islam Airport &amp; Andal Aerotropolis', state:'West Bengal', sector:'logistics', x:375, y:380,
+    why:'India\'s first private greenfield aerotropolis; in Paschim Bardhaman, ~15 km from Durgapur.',
+    anchors:['Bengal Aerotropolis Projects Ltd (BAPL)','Changi Airports India advisory legacy'],
+    throughput:'Operational airport with regional flights; cargo &amp; MRO potential.',
+    recent:['Cargo terminal proposals','Industrial park leasing'],
+    connectivity:'NH-19 / EDFC adjacency; Howrah–Delhi rail.',
+    thesis:'A node for time-sensitive cargo &amp; light manufacturing in the Durgapur–Asansol belt.' },
+  { id:'kalyani', name:'Kalyani–Bagjola Pharma &amp; Engineering Cluster', state:'West Bengal', sector:'electronics', x:415, y:380,
+    why:'Pharma City (Kalyani) and engineering / IT corridor north of Kolkata.',
+    anchors:['Kalyani BMP','SMEs in pharma/engg','IIIT Kalyani'],
+    throughput:'~50+ pharma units operational/under construction in the cluster.',
+    recent:['Bulk drug park aspirations','EM Bypass + Belghoria expressway upgrades'],
+    connectivity:'NH-12; Kolkata airport/port; rail to NJP/NE.',
+    thesis:'API + intermediates anchor with East-India market access; complementary to Hyderabad/Vizag pharma.' },
+  { id:'siliguri', name:'Siliguri Multimodal Hub (Chicken\'s Neck)', state:'West Bengal', sector:'logistics', x:380, y:240,
+    why:'Strategic gateway between mainland India, the Northeast, Bhutan, Nepal and Bangladesh.',
+    anchors:['Bagdogra Airport','NJP rail junction','LCS at Phulbari, Changrabandha, Fulbari'],
+    throughput:'Major LCS cargo + transit; tea + horticulture base.',
+    recent:['Corridor work on NH-27 / Asian Highway 2 &amp; 48','Multi-modal park proposals near NJP'],
+    connectivity:'NH-27, NH-10 (to Sikkim), rail to NE, Bagdogra cargo.',
+    thesis:'A single MMLP here can rewire EXIM &amp; transit flows for the entire Northeast.' },
+
+  // ---------- BIHAR ----------
+  { id:'patna-mmlp', name:'Patna Multi-Modal Logistics Park (Bihta)', state:'Bihar', sector:'logistics', x:200, y:215,
+    why:'Bihar\'s flagship MMLP under Bharatmala; first MMLP in the state.',
+    anchors:['NHLML (NHAI subsidiary)','Patna Industrial Area, BIADA'],
+    throughput:'Designed for multi-million-tonne annual handling at full build.',
+    recent:['Land &amp; concessionaire processes; alignment with NH-922 / Patna Ring Road'],
+    connectivity:'NH-19/NH-922, Patna–Ara–Sasaram corridor, NW-1 (Patna terminal), Patna airport.',
+    thesis:'Patna becomes Bihar\'s consolidation point for FMCG, agri, e-commerce flows to the entire state and Nepal.' },
+  { id:'sahibganj', name:'Sahibganj Multimodal Terminal (NW-1)', state:'Bihar', sector:'logistics', x:265, y:260,
+    why:'Commissioned <b>November 2019</b>; key NW-1 node connecting Jharkhand coal/steel to Haldia/Kolkata via Ganga.',
+    anchors:['Inland Waterways Authority of India (IWAI)','Coal India linkages, Tata-Steel for coal coastal moves'],
+    throughput:'Designed for ~3 MMTPA initially; cargo (coal, fertiliser, stones) scaling.',
+    recent:['Augmentation under JMVP World Bank project','Ro-Ro service across the Ganga'],
+    connectivity:'NW-1, NH-133 to Bhagalpur, rail spurs.',
+    thesis:'Cuts logistics cost for Jharkhand minerals to Bay-of-Bengal ports; central to NW-1 viability.' },
+  { id:'marhowra', name:'Wabtec (GE) Diesel Loco Factory, Marhowra', state:'Bihar', sector:'auto', x:175, y:180,
+    why:'PPP between Indian Railways and Wabtec; manufactures <b>6,000 HP</b> diesel locos (WDG-6 freight, WDP-5 passenger).',
+    anchors:['Wabtec (formerly GE Transportation)','Indian Railways'],
+    throughput:'Concession is for <b>1,000 locos over 10 years</b> (2015 MoU); cumulative deliveries running into hundreds.',
+    recent:['Continued exports to African railways','Hybrid/alt-fuel pilots discussed'],
+    connectivity:'Chhapra–Siwan rail corridor; NH-19 spur.',
+    thesis:'Bihar\'s anchor for heavy engineering — proves the state can host global OEM manufacturing.' },
+  { id:'madhepura', name:'Alstom Electric Loco Factory, Madhepura', state:'Bihar', sector:'auto', x:230, y:185,
+    why:'PPP with Indian Railways; produces <b>WAG-12B 12,000 HP</b> electric freight locos — among the most powerful in the world.',
+    anchors:['Alstom','Indian Railways'],
+    throughput:'~800 locos over the life of the contract (2015 framework); regular dispatches to DFCs.',
+    recent:['Continued ramp-up serving WDFC/EDFC','Localisation deepening'],
+    connectivity:'NH-106/107; Madhepura–Saharsa rail.',
+    thesis:'Anchor for high-voltage engineering ecosystem — components, traction, controls.' },
+  { id:'barauni', name:'HURL Barauni Fertiliser + Refinery', state:'Bihar', sector:'energy', x:215, y:200,
+    why:'<b>HURL Barauni urea plant operational since 2022–23</b> (~1.27 MMTPA neem-coated urea); BPCL Barauni refinery is being expanded.',
+    anchors:['HURL (CIL/NTPC/IOCL JV)','BPCL'],
+    throughput:'Urea ~1.27 MMTPA; refinery ~6 MMTPA crude (expansion announced).',
+    recent:['HURL ramping production','BPCL Barauni capacity expansion announced'],
+    connectivity:'NH-31, gas pipeline (Jagdishpur–Haldia–Bokaro–Dhamra), rail.',
+    thesis:'Anchor for petrochemicals + agro-inputs cluster in central Bihar.' },
+  { id:'muzaffarpur', name:'Muzaffarpur Food &amp; Agri Cluster', state:'Bihar', sector:'agro', x:170, y:200,
+    why:'Bihar leads India in litchi (~70%+ share) and is among top makhana producers — global GI tags.',
+    anchors:['NRC for Litchi','Makhana Board (proposed/announced)','Local SMEs &amp; FPOs'],
+    throughput:'Bihar\'s litchi output ~300K MT; makhana share ~80%+ of national output.',
+    recent:['Cold-chain investments','Makhana Board institutional push (Union Budget 2025)'],
+    connectivity:'NH-28/77, rail to NJP/Patna, near NW-1.',
+    thesis:'High-value agri exports + branded processed foods; strong fit for FPO + cold-chain capex.' },
+
+  // ---------- ODISHA ----------
+  { id:'paradip', name:'Paradip Port + Petrochem Hub', state:'Odisha', sector:'port', x:380, y:475,
+    why:'India\'s top major port by cargo (FY24 ~145 MMT, per PIB); deep-water all-weather port.',
+    anchors:['Paradip Port Authority','IOCL Paradip refinery','Indian Oil PX-PTA, JSW Paradip Steel (planned)'],
+    throughput:'<b>~145 MMT (FY24)</b>; IOCL Paradip refinery <b>15 MMTPA</b>.',
+    recent:['Paradip outer harbour planning','Petrochemical complex expansion (IOCL)'],
+    connectivity:'NH-53, dedicated rail corridor, ECEC, proposed Paradip–Hyderabad pipeline.',
+    thesis:'Anchor port for the East-Coast petrochem &amp; steel arc; deep draft attracts capesize.' },
+  { id:'dhamra', name:'Dhamra Port + LNG Terminal', state:'Odisha', sector:'port', x:395, y:455,
+    why:'Adani-operated deep-draft port; first east-coast LNG import terminal commissioned by Adani Total Gas in <b>2024</b>.',
+    anchors:['Adani Ports (APSEZ)','Adani-Total Gas LNG terminal','Tata Steel anchor cargo'],
+    throughput:'Port handling tens of MMT; <b>LNG terminal 5 MMTPA</b>; draft ~17–18 m (per project filings).',
+    recent:['LNG terminal commissioning &amp; gas pipeline tie-ins (Dhamra–Haldia, Dhamra–Angul)','Cargo diversification beyond coal/steel'],
+    connectivity:'NH-16 spur, rail to Bhadrak/Haldia, gas pipeline grid.',
+    thesis:'Eastern India\'s gas gateway + diversified bulk port; pivotal for industrial gasification.' },
+  { id:'kalinganagar', name:'Kalinganagar Steel Cluster', state:'Odisha', sector:'steel', x:355, y:445,
+    why:'India\'s largest emerging steel cluster; <b>Tata Steel Kalinganagar Phase-II inaugurated 22 May 2025 — now 8 MTPA</b> (₹27,000 cr investment; world\'s largest single blast furnace at 5,870 m³).',
+    anchors:['Tata Steel','JSL Stainless (Jindal)','VISA Steel'],
+    throughput:'TSK now <b>8 MTPA</b>; cluster aggregate well over 10 MTPA.',
+    recent:['Tata Steel Phase-II inauguration (May 2025)','Downstream auto-grade steel push','Stainless capex by JSL'],
+    connectivity:'NH-200/520, ECEC, rail to Paradip/Dhamra, gas pipeline.',
+    thesis:'World-class scale + port adjacency — natural fit for auto-OEM, white-goods feeders, EV chassis.' },
+  { id:'angul', name:'Angul–Talcher Steel/Power/Aluminium Cluster', state:'Odisha', sector:'steel', x:325, y:445,
+    why:'India\'s largest concentration of coal, power, and metals.',
+    anchors:['NALCO (Angul aluminium 0.46 MTPA)','JSPL (Angul steel ~6 MTPA, expanding to 12+)','MCL (Mahanadi Coalfields)','NTPC Talcher'],
+    throughput:'Multi-MTPA steel + aluminium + GW-scale power.',
+    recent:['JSPL Angul expansion to 12+ MTPA announced','Talcher fertiliser plant revival','Coal-gasification pilots'],
+    connectivity:'Rail to Paradip/Dhamra, NH-55, MCL coal grid.',
+    thesis:'Energy-metals stack ideal for green-steel/H2 pilots at scale.' },
+  { id:'jharsuguda', name:'Jharsuguda Aluminium &amp; Power Hub', state:'Odisha', sector:'energy', x:285, y:415,
+    why:'Vedanta Aluminium\'s flagship smelter; one of the world\'s largest single-location aluminium operations.',
+    anchors:['Vedanta Aluminium','Vedanta-owned captive power'],
+    throughput:'Vedanta Jharsuguda smelter <b>~1.75 MTPA</b> aluminium; ~3.6 GW captive power.',
+    recent:['Value-added products (billets, wire-rods) capacity expansions','Pre-baked anode and alumina linkage'],
+    connectivity:'Howrah–Mumbai main line, NH-49, near MCL coal belt.',
+    thesis:'Downstream aluminium parks (auto, conductors) can ride captive metal + power.' },
+  { id:'bhubaneswar', name:'Bhubaneswar IT/ESDM &amp; Skill Hub', state:'Odisha', sector:'electronics', x:330, y:495,
+    why:'State capital + IT/ITeS + emerging ESDM ambition; KIIT/IIT-Bbsr talent pool.',
+    anchors:['Infosys, TCS, Mindtree campuses','NIELIT Bhubaneswar','State-supported ESDM park (planned)'],
+    throughput:'IT exports growing double-digit YoY off a smaller base.',
+    recent:['<b>Jan 2025: NIELIT × Tata Electronics MoU</b> for ATMP (assembly-test-mark-package) skill centre (PIB PRID 2090018)','Semiconductor &amp; ESDM policy roadshows under Utkarsh Odisha 2025'],
+    connectivity:'NH-16, Biju Patnaik Intl Airport, rail to Vizag/Kolkata.',
+    thesis:'Talent + state push + ATMP skilling MoU plant the seed for downstream electronics &amp; semi-OSAT participation.' },
+  { id:'subarnarekha', name:'Subarnarekha Port (Kirtania, planned)', state:'Odisha', sector:'port', x:405, y:435,
+    why:'Greenfield port at Bhogarai/Kirtania (Balasore) — north-Odisha gateway.',
+    anchors:['Govt of Odisha (concession process)'],
+    throughput:'Targeted multi-MMT capacity at full build.',
+    recent:['Concession &amp; environmental processes ongoing'],
+    connectivity:'NH-16 / Kolkata–Chennai corridor; rail spur planned.',
+    thesis:'Adds resilience to Odisha\'s port stack and de-bottlenecks Dhamra/Paradip.' }
+];
+
+/* ---------- Filter + render hubs ---------- */
+let activeSector='all', selectedHub=null;
+const sectorBtns = document.querySelectorAll('#sectorFilters .chip-btn');
+sectorBtns.forEach(b=>b.addEventListener('click',()=>{
+  sectorBtns.forEach(x=>x.classList.remove('on'));
+  b.classList.add('on'); activeSector=b.dataset.sector; renderHubs();
+}));
+
+function renderHubs(){
+  // SVG dots
+  const svg = document.getElementById('emap');
+  // remove old hub circles
+  svg.querySelectorAll('circle.hub, text.hubl').forEach(el=>el.remove());
+  HUBS.forEach(h=>{
+    const visible = activeSector==='all' || h.sector===activeSector;
+    if(!visible) return;
+    const c = document.createElementNS('http://www.w3.org/2000/svg','circle');
+    c.setAttribute('cx',h.x); c.setAttribute('cy',h.y); c.setAttribute('r',6);
+    c.setAttribute('fill', COLOR[h.sector] || '#fff');
+    c.setAttribute('class','hub'+(selectedHub===h.id?' selected':''));
+    c.addEventListener('click',()=>{ selectedHub=h.id; showHub(h); renderHubs(); });
+    c.appendChild(document.createElementNS('http://www.w3.org/2000/svg','title')).textContent = h.name;
+    svg.appendChild(c);
+  });
+  // Grid cards
+  const grid = document.getElementById('hubGrid'); grid.innerHTML='';
+  HUBS.filter(h=>activeSector==='all'||h.sector===activeSector).forEach(h=>{
+    const d=document.createElement('div'); d.className='card tight';
+    d.innerHTML = `<b>${h.name}</b> <span class="pill" style="border-color:${COLOR[h.sector]}33;color:${COLOR[h.sector]}">${h.sector}</span><br>
+      <span class="small muted">${h.state}</span><br>
+      <span class="small">${h.why}</span>`;
+    d.style.cursor='pointer';
+    d.addEventListener('click',()=>{ selectedHub=h.id; showHub(h); renderHubs(); window.scrollTo({top:document.getElementById('east').offsetTop-20, behavior:'smooth'}); });
+    grid.appendChild(d);
+  });
+}
+function showHub(h){
+  const el = document.getElementById('hubDetail');
+  const list = arr => arr && arr.length ? '<ul class="tight">'+arr.map(x=>`<li>${x}</li>`).join('')+'</ul>' : '<span class="small muted">—</span>';
+  el.innerHTML = `
+    <h3>${h.name} <span class="pill" style="border-color:${COLOR[h.sector]}33;color:${COLOR[h.sector]}">${h.sector}</span></h3>
+    <div class="row"><span class="pill blue">${h.state}</span></div>
+    <div class="sec"><h4>Why it matters</h4><div>${h.why}</div></div>
+    <div class="sec"><h4>Anchor companies / institutions</h4>${list(h.anchors)}</div>
+    <div class="sec"><h4>Throughput / scale</h4><div>${h.throughput||'—'}</div></div>
+    <div class="sec"><h4>Recent 2024–25 announcements</h4>${list(h.recent)}</div>
+    <div class="sec"><h4>Corridor connectivity</h4><div>${h.connectivity||'—'}</div></div>
+    <div class="sec"><h4>Manufacturing thesis</h4><div>${h.thesis||'—'}</div></div>
+  `;
+}
+renderHubs();
+
+/* ---------- STATES data ---------- */
+const STATES = [
+  {
+    code:'WB', name:'West Bengal', region:'east',
+    leadsCategory:'Achiever',
+    policy:'West Bengal Logistics Policy 2023 (notified)',
+    industryStatus:'Yes (industry status to logistics)',
+    portal:'Silpa Sathi (single-window)',
+    idcs:'WBIDC, HIDCO, WBIIDC',
+    target:'$1 Trillion economy by 2035 (BGBS aspiration)',
+    flagships:[
+      'BGBS 2025 — investment commitments worth ₹4.2 lakh cr stated by GoWB',
+      'Tajpur Deep-Sea Port — LoA to Adani; environmental &amp; land processes ongoing',
+      'Deocha-Pachami coal block (Birbhum) — among the world\'s largest; mining preparations',
+      'Andal Aerotropolis &amp; Durgapur–Asansol industrial corridor activation',
+      'Bantala Mega Leather Cluster expansion'
+    ],
+    upcoming:[
+      'EDFC Sonnagar–Dankuni PPP (final stretch) operationalisation',
+      'NW-1 cargo scale-up via Haldia–Tribeni–Kolkata terminals',
+      'Silicon Valley Hub (New Town) IT/ITeS expansion',
+      'State EV &amp; semiconductor design policy moves'
+    ],
+    notes:'Strong port + agri + leather + IT base; key constraint is industrial land bank velocity.'
+  },
+  {
+    code:'BR', name:'Bihar', region:'east',
+    leadsCategory:'Aspirer',
+    policy:'Bihar Logistics Policy (~2023, notified)',
+    industryStatus:'Yes (per Bihar Industrial Investment Promotion Policy 2016 &amp; updates)',
+    portal:'Bihar Nivesh Suvidha (single-window)',
+    idcs:'BIADA (Bihar Industrial Area Development Authority)',
+    target:'$1 Trillion economy by 2047 (state vision)',
+    flagships:[
+      'Global Investors Summit 2023 — ₹50,000+ cr commitments (textiles, food, leather, ethanol)',
+      'HURL Barauni urea plant — operational (~1.27 MMTPA) since 2022–23',
+      'Wabtec Marhowra (6,000 HP diesel locos) &amp; Alstom Madhepura (12,000 HP electric locos) anchor heavy engineering',
+      'Patna Metro Phase-1 under construction',
+      'Patna MMLP at Bihta under Bharatmala'
+    ],
+    upcoming:[
+      'Makhana Board institutionalisation (Union Budget 2025)',
+      'Bulk drug park / textile park ambitions',
+      'NW-1 augmentation (Sahibganj-adjacent terminals)',
+      'Ethanol distillery cluster scaling'
+    ],
+    notes:'Demographic dividend &amp; agri base; binding constraints are land assembly, power reliability and skill-to-industry pipeline.'
+  },
+  {
+    code:'OD', name:'Odisha', region:'east',
+    leadsCategory:'Achiever',
+    policy:'Odisha State Logistics Policy 2022',
+    industryStatus:'Yes (industry status to logistics &amp; warehousing)',
+    portal:'Go-Swift (Single Window for Investor Facilitation &amp; Tracking)',
+    idcs:'IDCO + IPICOL + IIFCO (Odisha)',
+    target:'$1 Trillion economy by 2036 (state vision)',
+    flagships:[
+      'Utkarsh Odisha — Make-in-Odisha 2025 — ₹16.7 lakh cr in MoUs stated',
+      'Tata Steel Kalinganagar Phase-II — inaugurated 22 May 2025 (8 MTPA, world\'s largest single BF 5,870 m³)',
+      'Adani Dhamra LNG terminal commissioned (5 MMTPA) — east coast\'s first',
+      'Paradip — India\'s top major port by FY24 cargo (~145 MMT)',
+      'NIELIT × Tata Electronics ATMP skill MoU at Bhubaneswar (Jan 2025)'
+    ],
+    upcoming:[
+      'Subarnarekha Port (Kirtania) concession progression',
+      'Semiconductor / ESDM ambition under Utkarsh Odisha',
+      'JSPL Angul expansion to 12+ MTPA',
+      'Coal-gasification &amp; green-H2 pilots (Talcher / Angul)',
+      'Eastern Coastal Economic Corridor (ECEC) operationalisation'
+    ],
+    notes:'Most NLP-aligned state in the East — minerals + ports + power + policy execution all working together.'
+  }
+];
+
+const PLACEHOLDERS = [
+  {region:'west', list:['Maharashtra','Gujarat','Goa']},
+  {region:'south', list:['Tamil Nadu','Karnataka','Andhra Pradesh','Telangana','Kerala']},
+  {region:'north', list:['Uttar Pradesh','Punjab','Haryana','Rajasthan','Madhya Pradesh','Uttarakhand','Himachal Pradesh','J&amp;K','Ladakh']},
+  {region:'east', list:['Jharkhand','Chhattisgarh']},
+  {region:'ne', list:['Assam','Arunachal Pradesh','Meghalaya','Manipur','Mizoram','Nagaland','Tripura','Sikkim']},
+  {region:'ut', list:['Delhi','Chandigarh','Puducherry','A&amp;N Islands','Lakshadweep','Dadra &amp; NH and Daman &amp; Diu']}
+];
+
+let activeRegion='all';
+const stateBtns = document.querySelectorAll('#stateFilters .chip-btn');
+stateBtns.forEach(b=>b.addEventListener('click',()=>{
+  stateBtns.forEach(x=>x.classList.remove('on'));
+  b.classList.add('on'); activeRegion=b.dataset.region; renderStates();
+}));
+
+function pillForLeads(cat){
+  const c = (cat||'').toLowerCase();
+  if(c.includes('achie')) return '<span class="pill green">LEADS Achiever</span>';
+  if(c.includes('fast')) return '<span class="pill blue">LEADS Fast Mover</span>';
+  if(c.includes('aspir')) return '<span class="pill amber">LEADS Aspirer</span>';
+  return '<span class="pill">LEADS '+cat+'</span>';
+}
+
+function renderStates(){
+  const wrap = document.getElementById('stateList'); wrap.innerHTML='';
+  // Populated states
+  STATES.filter(s=>activeRegion==='all'||s.region===activeRegion).forEach(s=>{
+    const list = arr=>arr && arr.length?'<ul class="tight">'+arr.map(x=>`<li>${x}</li>`).join('')+'</ul>':'<span class="small muted">—</span>';
+    const card = document.createElement('div'); card.className='state-card';
+    card.innerHTML = `
+      <div class="head"><h3>${s.name} <span class="small muted">(${s.code})</span></h3>
+        <div>${pillForLeads(s.leadsCategory)} <span class="pill">${s.region.toUpperCase()}</span></div>
+      </div>
+      <div class="meta">
+        <span><b>Logistics Policy:</b> ${s.policy}</span>
+        <span><b>Industry Status:</b> ${s.industryStatus}</span>
+        <span><b>Single-Window:</b> ${s.portal}</span>
+        <span><b>Industrial Dev. Corp.:</b> ${s.idcs}</span>
+        <span><b>Headline Target:</b> ${s.target}</span>
+      </div>
+      <details open><summary>🚀 Recent flagships</summary>${list(s.flagships)}</details>
+      <details><summary>🛠 Upcoming &amp; pipeline</summary>${list(s.upcoming)}</details>
+      ${s.notes?`<div class="ref">${s.notes}</div>`:''}
+    `;
+    wrap.appendChild(card);
+  });
+  // Placeholder cards
+  PLACEHOLDERS.forEach(p=>{
+    if(activeRegion!=='all' && activeRegion!==p.region) return;
+    p.list.forEach(name=>{
+      // skip if a populated state has same name
+      if(STATES.some(s=>s.name===name)) return;
+      const card = document.createElement('div'); card.className='state-card placeholder';
+      card.innerHTML = `<div class="head"><h3>${name}</h3><div><span class="pill">${p.region.toUpperCase()}</span><span class="pill">Coming soon</span></div></div>
+        <div class="small muted">Slot reserved — populate by adding an entry to the <code>STATES</code> array in <code>index.html</code>.</div>`;
+      wrap.appendChild(card);
+    });
+  });
+}
+renderStates();
+</script>
+</body>
+</html>
