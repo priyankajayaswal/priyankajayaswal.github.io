@@ -11,7 +11,7 @@
 // Editing a page on disk and reloading shows the new version immediately (no need to bump CACHE_NAME).
 // Bump CACHE_NAME only when changing this file's logic or evicting old CDN versions.
 
-const CACHE_NAME = 'studyhub-v7';
+const CACHE_NAME = 'studyhub-v8';
 
 // Precache: hub shell + the one external library every page needs.
 // (Cross-origin requests use { mode: 'no-cors' } so they store as opaque responses.)
