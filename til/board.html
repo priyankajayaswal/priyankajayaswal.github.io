@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Board</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="config.local.js" onerror="void 0"></script>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<style>
+  :root {
+    --bg: linear-gradient(135deg, #0079bf 0%, #5067c5 100%);
+    --list-bg: #f1f2f4;
+    --list-header: #172b4d;
+    --card-bg: #ffffff;
+    --card-shadow: 0 1px 0 rgba(9,30,66,0.25);
+    --card-shadow-hover: 0 4px 8px rgba(9,30,66,0.25);
+    --accent: #0079bf;
+    --ink: #172b4d;
+    --muted: #5e6c84;
+    --danger: #eb5a46;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; overflow: hidden; }
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    color: var(--ink);
+    background: var(--bg);
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+  }
+  /* TOP BAR */
+  .topbar {
+    height: 48px;
+    background: rgba(0,0,0,0.25);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    padding: 0 1rem;
+    gap: 0.75rem;
+    flex-shrink: 0;
+    backdrop-filter: blur(4px);
+  }
+  .topbar .logo {
+    font-weight: 800;
+    font-size: 1.05rem;
+    letter-spacing: -0.02em;
+  }
+  .topbar .board-title {
+    font-weight: 700;
+    margin-left: 0.5rem;
+    padding: 0.3rem 0.6rem;
+    border-radius: 4px;
+    background: transparent;
+    color: #fff;
+    border: 1px solid transparent;
+    font-size: 0.95rem;
+    min-width: 100px;
+    outline: none;
+  }
+  .topbar .board-title:hover { background: rgba(255,255,255,0.15); }
+  .topbar .board-title:focus { background: #fff; color: var(--ink); border-color: var(--accent); }
+  .topbar .spacer { flex: 1; }
+  .topbar button.bg-picker {
+    background: rgba(255,255,255,0.2);
+    color: #fff;
+    border: none;
+    padding: 0.4rem 0.7rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+  .topbar button.bg-picker:hover { background: rgba(255,255,255,0.35); }
+  .user-area {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+  }
+  .user-area img {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+  }
+  .user-area .signout {
+    background: rgba(255,255,255,0.2);
+    color: #fff;
+    border: none;
+    padding: 0.3rem 0.6rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+  .user-area .drive-btn {
+    background: #1a73e8;
+    color: #fff;
+    border: none;
+    padding: 0.3rem 0.7rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+  .user-area .drive-btn:hover { background: #1557b0; }
+  .sync-status {
+    font-size: 0.75rem;
+    opacity: 0.85;
+    padding: 0.2rem 0.5rem;
+    border-radius: 12px;
+    background: rgba(255,255,255,0.15);
+  }
+  .sync-status.syncing { animation: pulse 1.2s infinite; }
+  .sync-status.error { background: rgba(235,90,70,0.4); }
+  @keyframes pulse { 50% { opacity: 0.4; } }
+  #gsi-btn { display: flex; }
+
+  /* BOARD */
+  .board {
+    flex: 1;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 1rem;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+  .list {
+    flex-shrink: 0;
+    width: 280px;
+    max-height: calc(100vh - 80px);
+    background: var(--list-bg);
+    border-radius: 10px;
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+  }
+  .list.drag-over { background: #d6dde8; }
+  .list-header {
+    display: flex;
+    align-items: center;
+    padding: 0.4rem 0.5rem;
+    gap: 0.3rem;
+  }
+  .list-header input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--list-header);
+    padding: 0.25rem;
+    border-radius: 4px;
+    outline: none;
+    font-family: inherit;
+  }
+  .list-header input:hover { background: rgba(0,0,0,0.05); }
+  .list-header input:focus { background: #fff; box-shadow: inset 0 0 0 2px var(--accent); }
+  .list-header .list-delete {
+    background: none;
+    border: none;
+    color: var(--muted);
+    cursor: pointer;
+    font-size: 1rem;
+    padding: 0.25rem 0.4rem;
+    border-radius: 4px;
+    opacity: 0;
+    transition: opacity 0.15s;
+  }
+  .list:hover .list-delete { opacity: 1; }
+  .list-delete:hover { background: rgba(235,90,70,0.15); color: var(--danger); }
+
+  .cards {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0.25rem;
+    min-height: 8px;
+  }
+  .card {
+    background: var(--card-bg);
+    border-radius: 8px;
+    padding: 0.55rem 0.7rem;
+    margin-bottom: 0.4rem;
+    box-shadow: var(--card-shadow);
+    cursor: grab;
+    font-size: 0.88rem;
+    line-height: 1.35;
+    color: var(--ink);
+    word-wrap: break-word;
+    position: relative;
+    transition: box-shadow 0.15s, transform 0.05s;
+  }
+  .card:hover { box-shadow: var(--card-shadow-hover); }
+  .card.dragging { opacity: 0.4; cursor: grabbing; }
+  .card .card-text {
+    outline: none;
+    min-height: 1em;
+    white-space: pre-wrap;
+  }
+  .card .card-actions {
+    display: none;
+    gap: 0.2rem;
+    margin-top: 0.4rem;
+    padding-top: 0.4rem;
+    border-top: 1px solid #eee;
+  }
+  .card.editing .card-actions { display: flex; }
+  .card .card-actions button {
+    background: none;
+    border: none;
+    font-size: 0.75rem;
+    color: var(--muted);
+    cursor: pointer;
+    padding: 0.2rem 0.4rem;
+    border-radius: 3px;
+  }
+  .card .card-actions button:hover { background: #f4f5f7; color: var(--ink); }
+  .card .card-actions .del { color: var(--danger); }
+
+  .add-card {
+    background: transparent;
+    border: none;
+    color: var(--muted);
+    text-align: left;
+    padding: 0.5rem 0.7rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-family: inherit;
+    width: 100%;
+  }
+  .add-card:hover { background: rgba(0,0,0,0.07); color: var(--ink); }
+
+  .card-composer {
+    display: none;
+    flex-direction: column;
+    gap: 0.4rem;
+    padding: 0.25rem;
+  }
+  .card-composer.open { display: flex; }
+  .card-composer textarea {
+    border: none;
+    border-radius: 6px;
+    padding: 0.5rem 0.7rem;
+    background: #fff;
+    box-shadow: var(--card-shadow);
+    font-family: inherit;
+    font-size: 0.88rem;
+    line-height: 1.35;
+    resize: none;
+    outline: none;
+    min-height: 60px;
+  }
+  .card-composer .row {
+    display: flex;
+    gap: 0.4rem;
+    align-items: center;
+  }
+  .card-composer .add-btn {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    padding: 0.4rem 0.8rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.82rem;
+  }
+  .card-composer .cancel-btn {
+    background: none;
+    border: none;
+    color: var(--muted);
+    cursor: pointer;
+    font-size: 1.1rem;
+    padding: 0.2rem 0.5rem;
+  }
+
+  .add-list {
+    flex-shrink: 0;
+    width: 280px;
+    background: rgba(0,0,0,0.2);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 0.75rem;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-align: left;
+    backdrop-filter: blur(4px);
+  }
+  .add-list:hover { background: rgba(0,0,0,0.35); }
+  .add-list.composing {
+    background: var(--list-bg);
+    color: var(--ink);
+    padding: 0.5rem;
+    cursor: default;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+  .add-list input {
+    border: 2px solid var(--accent);
+    border-radius: 4px;
+    padding: 0.4rem 0.5rem;
+    font-family: inherit;
+    font-size: 0.9rem;
+    outline: none;
+  }
+  .add-list .row { display: flex; gap: 0.4rem; align-items: center; }
+
+  /* Setup banner */
+  .banner {
+    position: fixed;
+    bottom: 1rem; left: 1rem;
+    max-width: 360px;
+    background: rgba(0,0,0,0.85);
+    color: #fff;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    line-height: 1.45;
+    z-index: 100;
+  }
+  .banner code {
+    background: rgba(255,255,255,0.15);
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-size: 0.78rem;
+  }
+  .banner button {
+    background: none; border: none; color: #fff;
+    float: right;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-left: 0.5rem;
+  }
+
+  /* Background palette popover */
+  .bg-popover {
+    position: absolute;
+    top: 48px; right: 1rem;
+    background: #fff;
+    border-radius: 8px;
+    padding: 0.6rem;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    display: none;
+    grid-template-columns: repeat(4, 60px);
+    gap: 0.4rem;
+    z-index: 50;
+  }
+  .bg-popover.open { display: grid; }
+  .bg-swatch {
+    width: 60px; height: 40px;
+    border-radius: 4px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    background-size: cover;
+    background-position: center;
+  }
+  .bg-swatch:hover, .bg-swatch.active { border-color: var(--ink); }
+</style>
+</head>
+<body>
+  <header class="topbar">
+    <span class="logo">📋 Board</span>
+    <input class="board-title" id="board-title" value="My Board" />
+    <button class="bg-picker" id="bg-toggle">🎨 Background</button>
+    <div class="spacer"></div>
+    <div class="user-area" id="user-area">
+      <div id="gsi-btn"></div>
+    </div>
+  </header>
+
+  <div class="bg-popover" id="bg-popover"></div>
+
+  <main class="board" id="board"></main>
+
+  <div class="banner" id="setup-banner" style="display:none;">
+    <button id="banner-close">×</button>
+    To enable <strong>Google Sign-In</strong>, create an OAuth Client ID in Google Cloud Console
+    and replace <code>GOOGLE_CLIENT_ID</code> at the top of this file's &lt;script&gt;.
+    Add your GitHub Pages URL to <em>Authorized JavaScript origins</em>.
+    <br/><br/>The board works fully in <strong>guest mode</strong> without sign-in.
+  </div>
+
+<script>
+  // =============================================================
+  // CONFIG — Google OAuth Client ID
+  // The Client ID is NOT a secret (it's designed to ship in browser JS).
+  // Security comes from "Authorized JavaScript origins" in Google Cloud Console.
+  // Get one at: https://console.cloud.google.com/apis/credentials
+  // Add your GitHub Pages origin (e.g. https://USER.github.io) there.
+  //
+  // OPTIONAL: To keep the ID out of git, create config.local.js next to
+  // this file (add it to .gitignore) with:
+  //   window.APP_CONFIG = { googleClientId: '...apps.googleusercontent.com' };
+  // =============================================================
+  const GOOGLE_CLIENT_ID =
+    (window.APP_CONFIG && window.APP_CONFIG.googleClientId) ||
+    '92309043601-ktt8kff52lph3qlq5sk51dijmvr89jq3.apps.googleusercontent.com';
+
+  const BACKGROUNDS = [
+    { id: 'blue',   bg: 'linear-gradient(135deg, #0079bf 0%, #5067c5 100%)' },
+    { id: 'green',  bg: 'linear-gradient(135deg, #519839 0%, #2d8c4e 100%)' },
+    { id: 'orange', bg: 'linear-gradient(135deg, #d29034 0%, #b65d2f 100%)' },
+    { id: 'red',    bg: 'linear-gradient(135deg, #b04632 0%, #8b2e1c 100%)' },
+    { id: 'purple', bg: 'linear-gradient(135deg, #89609e 0%, #5a3d75 100%)' },
+    { id: 'pink',   bg: 'linear-gradient(135deg, #cd5a91 0%, #a23972 100%)' },
+    { id: 'teal',   bg: 'linear-gradient(135deg, #00aecc 0%, #0079a3 100%)' },
+    { id: 'navy',   bg: 'linear-gradient(135deg, #344563 0%, #172b4d 100%)' },
+  ];
+
+  // ---------- STORAGE ----------
+  let userKey = 'guest';
+  function storageKey(k) { return `board-${userKey}-${k}`; }
+  function loadState() {
+    const raw = localStorage.getItem(storageKey('state'));
+    if (raw) {
+      try { return JSON.parse(raw); } catch(e) {}
+    }
+    return defaultState();
+  }
+  function saveState() {
+    localStorage.setItem(storageKey('state'), JSON.stringify(state));
+    drive.scheduleSync();
+  }
+  function defaultState() {
+    return {
+      title: 'My Board',
+      bg: 'blue',
+      lists: [
+        { id: id(), title: 'To Do', cards: [
+          { id: id(), text: 'Welcome 👋 Drag cards between lists.' },
+          { id: id(), text: 'Click a card to edit it.' },
+          { id: id(), text: 'Add lists and cards with the + buttons.' },
+        ]},
+        { id: id(), title: 'Doing', cards: [] },
+        { id: id(), title: 'Done',  cards: [] },
+      ]
+    };
+  }
+  function id() { return Math.random().toString(36).slice(2, 10); }
+
+  let state = loadState();
+
+  // ---------- RENDER ----------
+  const $board = document.getElementById('board');
+  const $title = document.getElementById('board-title');
+
+  function applyBg() {
+    const b = BACKGROUNDS.find(x => x.id === state.bg) || BACKGROUNDS[0];
+    document.body.style.background = b.bg;
+  }
+
+  function render() {
+    $title.value = state.title;
+    applyBg();
+    $board.innerHTML = '';
+    state.lists.forEach(list => $board.appendChild(renderList(list)));
+    $board.appendChild(renderAddList());
+  }
+
+  function renderList(list) {
+    const el = document.createElement('div');
+    el.className = 'list';
+    el.dataset.listId = list.id;
+
+    const header = document.createElement('div');
+    header.className = 'list-header';
+    const titleInput = document.createElement('input');
+    titleInput.value = list.title;
+    titleInput.addEventListener('change', () => { list.title = titleInput.value; saveState(); });
+    const del = document.createElement('button');
+    del.className = 'list-delete';
+    del.textContent = '×';
+    del.title = 'Delete list';
+    del.addEventListener('click', () => {
+      if (confirm(`Delete list "${list.title}" and all its cards?`)) {
+        state.lists = state.lists.filter(l => l.id !== list.id);
+        saveState(); render();
+      }
+    });
+    header.append(titleInput, del);
+
+    const cards = document.createElement('div');
+    cards.className = 'cards';
+    list.cards.forEach(card => cards.appendChild(renderCard(card, list)));
+
+    // drag-drop targets
+    cards.addEventListener('dragover', e => { e.preventDefault(); el.classList.add('drag-over'); });
+    cards.addEventListener('dragleave', () => el.classList.remove('drag-over'));
+    cards.addEventListener('drop', e => {
+      e.preventDefault();
+      el.classList.remove('drag-over');
+      const cardId = e.dataTransfer.getData('text/card-id');
+      const fromListId = e.dataTransfer.getData('text/list-id');
+      moveCard(cardId, fromListId, list.id, getDropIndex(cards, e.clientY));
+    });
+
+    const composer = document.createElement('div');
+    composer.className = 'card-composer';
+    const ta = document.createElement('textarea');
+    ta.placeholder = 'Enter a title for this card…';
+    const row = document.createElement('div'); row.className = 'row';
+    const addBtn = document.createElement('button'); addBtn.className = 'add-btn'; addBtn.textContent = 'Add card';
+    const cancel = document.createElement('button'); cancel.className = 'cancel-btn'; cancel.textContent = '×';
+    row.append(addBtn, cancel);
+    composer.append(ta, row);
+
+    const addBtnOuter = document.createElement('button');
+    addBtnOuter.className = 'add-card';
+    addBtnOuter.textContent = '+ Add a card';
+    addBtnOuter.addEventListener('click', () => {
+      addBtnOuter.style.display = 'none';
+      composer.classList.add('open');
+      ta.focus();
+    });
+    function closeComposer() {
+      composer.classList.remove('open');
+      addBtnOuter.style.display = '';
+      ta.value = '';
+    }
+    addBtn.addEventListener('click', () => {
+      const text = ta.value.trim();
+      if (text) {
+        list.cards.push({ id: id(), text });
+        saveState(); render();
+      } else closeComposer();
+    });
+    cancel.addEventListener('click', closeComposer);
+    ta.addEventListener('keydown', e => {
+      if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); addBtn.click(); }
+      if (e.key === 'Escape') closeComposer();
+    });
+
+    el.append(header, cards, composer, addBtnOuter);
+    return el;
+  }
+
+  function renderCard(card, list) {
+    const el = document.createElement('div');
+    el.className = 'card';
+    el.draggable = true;
+    el.dataset.cardId = card.id;
+
+    const text = document.createElement('div');
+    text.className = 'card-text';
+    text.textContent = card.text;
+    el.appendChild(text);
+
+    const actions = document.createElement('div');
+    actions.className = 'card-actions';
+    const saveBtn = document.createElement('button'); saveBtn.textContent = 'Save';
+    const delBtn = document.createElement('button'); delBtn.className = 'del'; delBtn.textContent = 'Delete';
+    actions.append(saveBtn, delBtn);
+    el.appendChild(actions);
+
+    el.addEventListener('click', e => {
+      if (el.classList.contains('editing')) return;
+      el.classList.add('editing');
+      text.contentEditable = 'true';
+      text.focus();
+      const r = document.createRange(); r.selectNodeContents(text); r.collapse(false);
+      const s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+    });
+    saveBtn.addEventListener('click', e => {
+      e.stopPropagation();
+      card.text = text.textContent.trim() || card.text;
+      text.contentEditable = 'false';
+      el.classList.remove('editing');
+      saveState(); render();
+    });
+    delBtn.addEventListener('click', e => {
+      e.stopPropagation();
+      list.cards = list.cards.filter(c => c.id !== card.id);
+      saveState(); render();
+    });
+
+    el.addEventListener('dragstart', e => {
+      el.classList.add('dragging');
+      e.dataTransfer.setData('text/card-id', card.id);
+      e.dataTransfer.setData('text/list-id', list.id);
+      e.dataTransfer.effectAllowed = 'move';
+    });
+    el.addEventListener('dragend', () => el.classList.remove('dragging'));
+
+    return el;
+  }
+
+  function getDropIndex(cardsEl, y) {
+    const cards = [...cardsEl.querySelectorAll('.card:not(.dragging)')];
+    for (let i = 0; i < cards.length; i++) {
+      const r = cards[i].getBoundingClientRect();
+      if (y < r.top + r.height / 2) return i;
+    }
+    return cards.length;
+  }
+
+  function moveCard(cardId, fromListId, toListId, toIndex) {
+    const from = state.lists.find(l => l.id === fromListId);
+    const to   = state.lists.find(l => l.id === toListId);
+    if (!from || !to) return;
+    const idx = from.cards.findIndex(c => c.id === cardId);
+    if (idx < 0) return;
+    const [card] = from.cards.splice(idx, 1);
+    if (from === to && idx < toIndex) toIndex--;
+    to.cards.splice(toIndex, 0, card);
+    saveState(); render();
+  }
+
+  function renderAddList() {
+    const el = document.createElement('button');
+    el.className = 'add-list';
+    el.textContent = '+ Add another list';
+    el.addEventListener('click', () => {
+      el.classList.add('composing');
+      el.textContent = '';
+      const input = document.createElement('input');
+      input.placeholder = 'Enter list title…';
+      const row = document.createElement('div'); row.className = 'row';
+      const add = document.createElement('button'); add.className = 'add-btn'; add.textContent = 'Add list';
+      add.style.cssText = 'background:var(--accent);color:#fff;border:none;padding:0.4rem 0.8rem;border-radius:4px;cursor:pointer;font-weight:600;font-size:0.82rem;';
+      const cancel = document.createElement('button'); cancel.textContent = '×';
+      cancel.style.cssText = 'background:none;border:none;color:var(--muted);cursor:pointer;font-size:1.1rem;padding:0.2rem 0.5rem;';
+      row.append(add, cancel);
+      el.append(input, row);
+      input.focus();
+      function doAdd() {
+        const t = input.value.trim();
+        if (t) {
+          state.lists.push({ id: id(), title: t, cards: [] });
+          saveState(); render();
+        } else render();
+      }
+      add.addEventListener('click', doAdd);
+      cancel.addEventListener('click', () => render());
+      input.addEventListener('keydown', e => {
+        if (e.key === 'Enter') doAdd();
+        if (e.key === 'Escape') render();
+      });
+    });
+    return el;
+  }
+
+  $title.addEventListener('change', () => { state.title = $title.value; saveState(); });
+
+  // ---------- BACKGROUND PICKER ----------
+  const $bgPop = document.getElementById('bg-popover');
+  BACKGROUNDS.forEach(b => {
+    const sw = document.createElement('div');
+    sw.className = 'bg-swatch';
+    sw.style.background = b.bg;
+    sw.dataset.id = b.id;
+    sw.addEventListener('click', () => {
+      state.bg = b.id; saveState(); applyBg();
+      $bgPop.classList.remove('open');
+    });
+    $bgPop.appendChild(sw);
+  });
+  document.getElementById('bg-toggle').addEventListener('click', e => {
+    e.stopPropagation();
+    $bgPop.classList.toggle('open');
+  });
+  document.addEventListener('click', e => {
+    if (!$bgPop.contains(e.target) && e.target.id !== 'bg-toggle') $bgPop.classList.remove('open');
+  });
+
+  // ---------- GOOGLE SIGN-IN ----------
+  const $userArea = document.getElementById('user-area');
+  const $banner = document.getElementById('setup-banner');
+  document.getElementById('banner-close').addEventListener('click', () => $banner.style.display = 'none');
+
+  function parseJwt(token) {
+    try {
+      const base64 = token.split('.')[1].replace(/-/g,'+').replace(/_/g,'/');
+      return JSON.parse(decodeURIComponent(atob(base64).split('').map(c =>
+        '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)).join('')));
+    } catch(e) { return null; }
+  }
+
+  function onCredential(resp) {
+    const profile = parseJwt(resp.credential);
+    if (!profile) return;
+    const user = { sub: profile.sub, name: profile.name, email: profile.email, picture: profile.picture };
+    localStorage.setItem('board-user', JSON.stringify(user));
+    activateUser(user);
+  }
+
+  function activateUser(user) {
+    userKey = user.sub;
+    state = loadState();
+    render();
+    $userArea.innerHTML = '';
+    const img = document.createElement('img');
+    img.src = user.picture; img.alt = user.name;
+    const name = document.createElement('span'); name.textContent = user.name.split(' ')[0];
+
+    const status = document.createElement('span');
+    status.className = 'sync-status';
+    status.id = 'sync-status';
+    status.textContent = '⊘ local';
+    status.title = 'Click "Sync Drive" to enable cross-device sync';
+
+    const driveBtn = document.createElement('button');
+    driveBtn.className = 'drive-btn';
+    driveBtn.id = 'drive-btn';
+    driveBtn.textContent = '☁ Sync Drive';
+    driveBtn.addEventListener('click', connectDrive);
+
+    const out = document.createElement('button'); out.className = 'signout'; out.textContent = 'Sign out';
+    out.addEventListener('click', () => {
+      if (window.google?.accounts?.id) google.accounts.id.disableAutoSelect();
+      drive.token = null; drive.fileId = null;
+      localStorage.removeItem('board-user');
+      userKey = 'guest';
+      state = loadState();
+      render();
+      initGsi(true);
+    });
+    $userArea.append(img, name, status, driveBtn, out);
+
+    // try silent Drive reconnect if previously granted
+    if (localStorage.getItem('drive-granted-' + user.sub) === '1') {
+      connectDrive(true);
+    }
+  }
+
+  function initGsi(forceRender) {
+    const stored = localStorage.getItem('board-user');
+    if (stored && !forceRender) {
+      activateUser(JSON.parse(stored));
+      return;
+    }
+    if (!window.google?.accounts?.id) { setTimeout(() => initGsi(forceRender), 200); return; }
+    if (GOOGLE_CLIENT_ID.startsWith('YOUR_')) {
+      $banner.style.display = 'block';
+      $userArea.innerHTML = '<span style="opacity:0.8;font-size:0.8rem;">Guest mode</span>';
+      return;
+    }
+    try {
+      google.accounts.id.initialize({
+        client_id: GOOGLE_CLIENT_ID,
+        callback: onCredential,
+        auto_select: true,
+      });
+      $userArea.innerHTML = '<div id="gsi-btn"></div>';
+      google.accounts.id.renderButton(document.getElementById('gsi-btn'),
+        { theme: 'filled_black', size: 'medium', shape: 'pill', text: 'signin' });
+    } catch (e) {
+      console.error('GSI init failed', e);
+      $userArea.innerHTML = '<span style="opacity:0.8;font-size:0.8rem;">Guest mode</span>';
+    }
+  }
+
+  // ---------- GOOGLE DRIVE SYNC (appDataFolder) ----------
+  const DRIVE_SCOPE = 'https://www.googleapis.com/auth/drive.appdata';
+  const DRIVE_FILE = 'board.json';
+  const drive = {
+    token: null,
+    tokenClient: null,
+    fileId: null,
+    syncTimer: null,
+    setStatus(text, cls = '') {
+      const s = document.getElementById('sync-status');
+      if (!s) return;
+      s.textContent = text;
+      s.className = 'sync-status ' + cls;
+    },
+    scheduleSync() {
+      if (!this.token) return;
+      clearTimeout(this.syncTimer);
+      this.setStatus('⟳ syncing', 'syncing');
+      this.syncTimer = setTimeout(() => this.upload(), 1000);
+    },
+    async api(path, opts = {}) {
+      const headers = Object.assign({ 'Authorization': 'Bearer ' + this.token }, opts.headers || {});
+      const r = await fetch('https://www.googleapis.com/' + path, Object.assign({}, opts, { headers }));
+      if (r.status === 401) { this.token = null; throw new Error('token expired'); }
+      if (!r.ok) throw new Error('drive ' + r.status);
+      return r;
+    },
+    async findFile() {
+      const r = await this.api('drive/v3/files?spaces=appDataFolder&q=' +
+        encodeURIComponent(`name='${DRIVE_FILE}' and trashed=false`) + '&fields=files(id,modifiedTime)');
+      const j = await r.json();
+      return j.files && j.files[0] ? j.files[0] : null;
+    },
+    async download(fileId) {
+      const r = await this.api('drive/v3/files/' + fileId + '?alt=media');
+      return r.json();
+    },
+    async upload() {
+      if (!this.token) return;
+      try {
+        const body = JSON.stringify(state);
+        if (!this.fileId) {
+          // create with multipart upload
+          const boundary = '-------board' + Math.random().toString(36).slice(2);
+          const meta = { name: DRIVE_FILE, parents: ['appDataFolder'] };
+          const multipart =
+            `--${boundary}\r\nContent-Type: application/json; charset=UTF-8\r\n\r\n` +
+            JSON.stringify(meta) +
+            `\r\n--${boundary}\r\nContent-Type: application/json\r\n\r\n` +
+            body + `\r\n--${boundary}--`;
+          const r = await this.api('upload/drive/v3/files?uploadType=multipart&fields=id', {
+            method: 'POST',
+            headers: { 'Content-Type': 'multipart/related; boundary=' + boundary },
+            body: multipart,
+          });
+          const j = await r.json();
+          this.fileId = j.id;
+        } else {
+          await this.api('upload/drive/v3/files/' + this.fileId + '?uploadType=media', {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body,
+          });
+        }
+        this.setStatus('☁ synced', '');
+      } catch (e) {
+        console.error('upload failed', e);
+        this.setStatus('⚠ error', 'error');
+      }
+    },
+    async pull() {
+      try {
+        const f = await this.findFile();
+        if (f) {
+          this.fileId = f.id;
+          const remote = await this.download(f.id);
+          if (remote && remote.lists) {
+            state = remote;
+            localStorage.setItem(storageKey('state'), JSON.stringify(state));
+            render();
+          }
+        }
+        this.setStatus('☁ synced', '');
+      } catch (e) {
+        console.error('pull failed', e);
+        this.setStatus('⚠ error', 'error');
+      }
+    },
+  };
+
+  function connectDrive(silent = false) {
+    if (GOOGLE_CLIENT_ID.startsWith('YOUR_')) {
+      alert('Configure GOOGLE_CLIENT_ID first.');
+      return;
+    }
+    if (!window.google?.accounts?.oauth2) {
+      setTimeout(() => connectDrive(silent), 300);
+      return;
+    }
+    if (!drive.tokenClient) {
+      drive.tokenClient = google.accounts.oauth2.initTokenClient({
+        client_id: GOOGLE_CLIENT_ID,
+        scope: DRIVE_SCOPE,
+        callback: (resp) => {
+          if (resp.error) {
+            drive.setStatus('⚠ denied', 'error');
+            return;
+          }
+          drive.token = resp.access_token;
+          const user = JSON.parse(localStorage.getItem('board-user') || '{}');
+          if (user.sub) localStorage.setItem('drive-granted-' + user.sub, '1');
+          drive.setStatus('⟳ syncing', 'syncing');
+          drive.pull().then(() => {
+            // hide button once connected
+            const b = document.getElementById('drive-btn');
+            if (b) b.style.display = 'none';
+          });
+        },
+      });
+    }
+    drive.tokenClient.requestAccessToken({ prompt: silent ? '' : 'consent' });
+  }
+
+  // ---------- INIT ----------
+  render();
+  window.addEventListener('load', () => initGsi());
+</script>
+</body>
+</html>

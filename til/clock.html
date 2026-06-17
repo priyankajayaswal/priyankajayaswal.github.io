@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Clock</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Share+Tech+Mono&family=Orbitron:wght@500;700;900&family=Manrope:wght@800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --fg: #ffffff;
+    --accent: #ffffff;
+    --bg: #0a0e1a;
+    --font: 'Manrope', 'Inter', sans-serif;
+    --weight: 800;
+    --ls: -0.04em;
+    --shadow: none;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; overflow: hidden; }
+  body {
+    font-family: 'Inter', sans-serif;
+    color: var(--fg);
+    background: var(--bg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.4s;
+    position: relative;
+  }
+  /* photo theme overlay for readability */
+  body.photo::before {
+    content:'';
+    position: fixed; inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.55) 100%);
+    z-index: 0;
+  }
+
+  .clock {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    user-select: none;
+  }
+
+  /* ---------- LAYOUTS ---------- */
+  /* inline: HH:MM:SS in one line */
+  .clock.inline #time {
+    font-family: var(--font);
+    font-weight: var(--weight);
+    letter-spacing: var(--ls);
+    font-size: clamp(4rem, 18vw, 14rem);
+    color: var(--accent);
+    text-shadow: var(--shadow);
+    line-height: 0.95;
+  }
+  .clock.inline #seconds-inline { display: none; }
+
+  /* stacked: HH over MM, big */
+  .clock.stacked #time { display: none; }
+  .clock.stacked .stack {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .clock.stacked .stack span {
+    font-family: var(--font);
+    font-weight: var(--weight);
+    letter-spacing: var(--ls);
+    font-size: clamp(6rem, 28vw, 20rem);
+    color: var(--accent);
+    text-shadow: var(--shadow);
+    line-height: 0.9;
+  }
+  .clock.inline .stack { display: none; }
+
+  #ampm {
+    margin-top: 1rem;
+    font-family: var(--font);
+    font-weight: 700;
+    letter-spacing: 0.3em;
+    font-size: clamp(0.9rem, 2vw, 1.4rem);
+    color: var(--accent);
+    text-shadow: var(--shadow);
+    opacity: 0.95;
+  }
+  #date {
+    margin-top: 0.5rem;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: clamp(0.8rem, 1.6vw, 1.05rem);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    opacity: 0.75;
+    text-shadow: var(--shadow);
+  }
+
+  /* ---------- THEMES ---------- */
+  body.theme-led {
+    --bg: radial-gradient(ellipse at center, #14182a 0%, #04060d 70%, #000 100%);
+    --fg: #ff9b3d; --accent: #ff9b3d;
+    --font: 'Share Tech Mono', monospace;
+    --weight: 400;
+    --ls: 0.08em;
+    --shadow: 0 0 6px rgba(255,155,61,0.7), 0 0 18px rgba(255,155,61,0.45), 0 0 40px rgba(255,155,61,0.25);
+    background: var(--bg);
+  }
+  body.theme-minimal-dark {
+    --bg: #0a0a0a; --fg: #fff; --accent: #fff;
+    --font: 'Manrope', sans-serif; --weight: 800; --ls: -0.05em;
+    background: var(--bg);
+  }
+  body.theme-minimal-light {
+    --bg: #f5f5f5; --fg: #111; --accent: #111;
+    --font: 'Manrope', sans-serif; --weight: 800; --ls: -0.05em;
+    background: var(--bg);
+  }
+  body.theme-royal-blue {
+    --bg: #0033ff; --fg: #fff; --accent: #fff;
+    --font: 'Manrope', sans-serif; --weight: 800; --ls: -0.05em;
+    background: var(--bg);
+  }
+  body.theme-sage {
+    --bg: #3d5a5a; --fg: #d4e6e1; --accent: #d4e6e1;
+    --font: 'Manrope', sans-serif; --weight: 800; --ls: -0.04em;
+    background: var(--bg);
+  }
+  body.theme-cream {
+    --bg: #2a2418; --fg: #d4b896; --accent: #d4b896;
+    --font: 'Manrope', sans-serif; --weight: 800; --ls: -0.04em;
+    background: var(--bg);
+  }
+  body.theme-tricolor {
+    --bg: linear-gradient(180deg, #FF9933 0%, #ffffff 50%, #138808 100%);
+    --fg: #000080; --accent: #000080;
+    --font: 'Manrope', sans-serif; --weight: 900; --ls: -0.04em;
+    background: var(--bg);
+  }
+  body.theme-sunset {
+    --bg: linear-gradient(135deg, #ff6e7f 0%, #bfe9ff 100%);
+    --fg: #fff; --accent: #fff;
+    --font: 'Manrope', sans-serif; --weight: 800; --ls: -0.04em;
+    --shadow: 0 4px 30px rgba(0,0,0,0.25);
+    background: var(--bg);
+  }
+  body.theme-cyber {
+    --bg: linear-gradient(180deg, #0d0221 0%, #1a0838 100%);
+    --fg: #ff2bd6; --accent: #00f0ff;
+    --font: 'Orbitron', sans-serif; --weight: 900; --ls: 0.05em;
+    --shadow: 0 0 10px #00f0ff, 0 0 30px rgba(0,240,255,0.5);
+    background: var(--bg);
+  }
+  body.theme-forest {
+    --fg: #fff; --accent: #fff;
+    --font: 'Manrope', sans-serif; --weight: 900; --ls: -0.05em;
+    --shadow: 0 4px 30px rgba(0,0,0,0.5);
+    background: url('https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat, #1a1a1a;
+  }
+  body.theme-cherry {
+    --fg: #1d6b6b; --accent: #1d6b6b;
+    --font: 'Manrope', sans-serif; --weight: 900; --ls: -0.04em;
+    --shadow: 0 2px 20px rgba(255,255,255,0.5);
+    background: url('https://images.unsplash.com/photo-1522383225653-ed111181a951?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat, #bde0e0;
+  }
+  body.theme-mountain {
+    --fg: #ff4444; --accent: #ff4444;
+    --font: 'Manrope', sans-serif; --weight: 900; --ls: -0.04em;
+    --shadow: 0 2px 20px rgba(0,0,0,0.4);
+    background: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat, #4a6a8a;
+  }
+  body.theme-ocean {
+    --fg: #fff; --accent: #fff;
+    --font: 'Manrope', sans-serif; --weight: 900; --ls: -0.05em;
+    --shadow: 0 4px 30px rgba(0,0,0,0.4);
+    background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat, #2a4a6a;
+  }
+
+  /* ---------- CONTROLS ---------- */
+  .fab {
+    position: fixed;
+    bottom: 1.5rem; right: 1.5rem;
+    z-index: 10;
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.5);
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.2);
+    backdrop-filter: blur(10px);
+    font-size: 1.4rem;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: transform 0.2s, background 0.2s;
+  }
+  .fab:hover { transform: scale(1.08); background: rgba(0,0,0,0.7); }
+
+  .panel {
+    position: fixed;
+    top: 0; right: 0; bottom: 0;
+    width: min(380px, 90vw);
+    background: #0a0a0a;
+    color: #fff;
+    z-index: 20;
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+    overflow-y: auto;
+    padding: 1.5rem;
+    box-shadow: -10px 0 40px rgba(0,0,0,0.5);
+  }
+  .panel.open { transform: translateX(0); }
+  .panel h2 {
+    font-family: 'Manrope', sans-serif;
+    font-size: 1.3rem;
+    margin-bottom: 0.4rem;
+    font-weight: 800;
+  }
+  .panel h3 {
+    font-family: 'Manrope', sans-serif;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    opacity: 0.5;
+    margin: 1.4rem 0 0.7rem;
+  }
+  .close-x {
+    position: absolute;
+    top: 1rem; right: 1rem;
+    background: none; border: none;
+    color: #fff; font-size: 1.5rem;
+    cursor: pointer;
+    width: 36px; height: 36px;
+    border-radius: 50%;
+  }
+  .close-x:hover { background: rgba(255,255,255,0.1); }
+  .theme-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.7rem;
+  }
+  .theme-card {
+    aspect-ratio: 1 / 1.5;
+    border-radius: 10px;
+    border: 2px solid transparent;
+    overflow: hidden;
+    cursor: pointer;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Manrope', sans-serif;
+    font-weight: 900;
+    font-size: 1.4rem;
+    text-align: center;
+    line-height: 1;
+    background-size: cover;
+    background-position: center;
+    transition: transform 0.15s, border-color 0.15s;
+  }
+  .theme-card:hover { transform: translateY(-2px); }
+  .theme-card.active { border-color: #00f0ff; }
+  .theme-card span { z-index: 1; pointer-events: none; }
+  .theme-card::after {
+    content: attr(data-label);
+    position: absolute;
+    bottom: 4px; left: 0; right: 0;
+    font-size: 0.55rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #fff;
+    background: rgba(0,0,0,0.55);
+    padding: 2px 0;
+  }
+
+  .opt-row {
+    display: flex; gap: 0.5rem; flex-wrap: wrap;
+    margin-bottom: 0.5rem;
+  }
+  .opt-row button {
+    flex: 1;
+    background: #1a1a1a;
+    color: #fff;
+    border: 1px solid #333;
+    padding: 0.6rem 0.8rem;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-family: 'Manrope', sans-serif;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+  }
+  .opt-row button:hover { background: #222; }
+  .opt-row button.active { background: #fff; color: #000; border-color: #fff; }
+</style>
+</head>
+<body class="theme-minimal-dark inline">
+  <div class="clock inline">
+    <div id="time">--:--:--</div>
+    <div class="stack">
+      <span id="hh">--</span>
+      <span id="mm">--</span>
+    </div>
+    <div id="ampm"></div>
+    <div id="date">Loading…</div>
+  </div>
+
+  <button class="fab" id="open-panel" title="Themes">🎨</button>
+
+  <aside class="panel" id="panel">
+    <button class="close-x" id="close-panel">×</button>
+    <h2>Customize</h2>
+
+    <h3>Layout</h3>
+    <div class="opt-row" id="layout-opts">
+      <button data-layout="inline" class="active">HH:MM:SS</button>
+      <button data-layout="stacked">HH / MM</button>
+    </div>
+
+    <h3>Format</h3>
+    <div class="opt-row" id="format-opts">
+      <button data-format="12" class="active">12-hour</button>
+      <button data-format="24">24-hour</button>
+    </div>
+
+    <h3>Basic</h3>
+    <div class="theme-grid" id="basic-themes"></div>
+
+    <h3>Digital Art</h3>
+    <div class="theme-grid" id="photo-themes"></div>
+
+    <h3>Action</h3>
+    <div class="opt-row">
+      <button id="fs">Fullscreen</button>
+    </div>
+  </aside>
+
+<script>
+  const THEMES = {
+    basic: [
+      { id: 'minimal-dark',  label: 'Dark',     bg: '#0a0a0a', fg: '#fff' },
+      { id: 'minimal-light', label: 'Light',    bg: '#f5f5f5', fg: '#111' },
+      { id: 'royal-blue',    label: 'Royal',    bg: '#0033ff', fg: '#fff' },
+      { id: 'sage',          label: 'Sage',     bg: '#3d5a5a', fg: '#d4e6e1' },
+      { id: 'cream',         label: 'Cream',    bg: '#2a2418', fg: '#d4b896' },
+      { id: 'led',           label: 'LED',      bg: '#0a0e1a', fg: '#ff9b3d' },
+      { id: 'tricolor',      label: 'Tricolor', bg: 'linear-gradient(180deg,#FF9933,#fff 50%,#138808)', fg: '#000080' },
+      { id: 'sunset',        label: 'Sunset',   bg: 'linear-gradient(135deg,#ff6e7f,#bfe9ff)', fg: '#fff' },
+      { id: 'cyber',         label: 'Cyber',    bg: 'linear-gradient(180deg,#0d0221,#1a0838)', fg: '#00f0ff' },
+    ],
+    photo: [
+      { id: 'forest',   label: 'Forest',   img: 'https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=600&q=60', fg: '#fff' },
+      { id: 'cherry',   label: 'Sakura',   img: 'https://images.unsplash.com/photo-1522383225653-ed111181a951?auto=format&fit=crop&w=600&q=60', fg: '#1d6b6b' },
+      { id: 'mountain', label: 'Mountain', img: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=600&q=60', fg: '#ff4444' },
+      { id: 'ocean',    label: 'Ocean',    img: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=60', fg: '#fff' },
+    ]
+  };
+  const PHOTO_IDS = new Set(THEMES.photo.map(t => t.id));
+
+  const $body  = document.body;
+  const $clock = document.querySelector('.clock');
+  const $time  = document.getElementById('time');
+  const $hh    = document.getElementById('hh');
+  const $mm    = document.getElementById('mm');
+  const $ampm  = document.getElementById('ampm');
+  const $date  = document.getElementById('date');
+
+  const state = {
+    theme:  localStorage.getItem('clock-theme')  || 'minimal-dark',
+    layout: localStorage.getItem('clock-layout') || 'inline',
+    fmt:    localStorage.getItem('clock-fmt')    || '12',
+  };
+
+  function pad(n) { return n.toString().padStart(2, '0'); }
+
+  function tick() {
+    const now = new Date();
+    let h = now.getHours();
+    const m = now.getMinutes();
+    const s = now.getSeconds();
+    let suffix = '';
+    if (state.fmt === '12') {
+      suffix = h >= 12 ? 'PM' : 'AM';
+      h = h % 12 || 12;
+    }
+    const colon = s % 2 === 0 ? ':' : ':';
+    $time.textContent = `${pad(h)}${colon}${pad(m)}${colon}${pad(s)}`;
+    $hh.textContent = pad(h);
+    $mm.textContent = pad(m);
+    $ampm.textContent = suffix;
+    $date.textContent = now.toLocaleDateString(undefined, {
+      weekday: 'short', month: 'short', day: '2-digit'
+    });
+    document.title = `${pad(h)}:${pad(m)} ${suffix}`.trim();
+  }
+
+  function applyTheme() {
+    // strip existing theme- classes
+    [...$body.classList].forEach(c => { if (c.startsWith('theme-')) $body.classList.remove(c); });
+    $body.classList.add('theme-' + state.theme);
+    $body.classList.toggle('photo', PHOTO_IDS.has(state.theme));
+
+    // layout
+    $body.classList.remove('inline','stacked');
+    $body.classList.add(state.layout);
+    $clock.classList.remove('inline','stacked');
+    $clock.classList.add(state.layout);
+
+    // sync active states in panel
+    document.querySelectorAll('.theme-card').forEach(c =>
+      c.classList.toggle('active', c.dataset.theme === state.theme));
+    document.querySelectorAll('#layout-opts button').forEach(b =>
+      b.classList.toggle('active', b.dataset.layout === state.layout));
+    document.querySelectorAll('#format-opts button').forEach(b =>
+      b.classList.toggle('active', b.dataset.format === state.fmt));
+
+    localStorage.setItem('clock-theme', state.theme);
+    localStorage.setItem('clock-layout', state.layout);
+    localStorage.setItem('clock-fmt', state.fmt);
+    tick();
+  }
+
+  function buildThemes() {
+    const basicEl = document.getElementById('basic-themes');
+    const photoEl = document.getElementById('photo-themes');
+    THEMES.basic.forEach(t => {
+      const card = document.createElement('div');
+      card.className = 'theme-card';
+      card.dataset.theme = t.id;
+      card.dataset.label = t.label;
+      card.style.background = t.bg;
+      card.style.color = t.fg;
+      card.innerHTML = `<span>02<br>59</span>`;
+      card.addEventListener('click', () => { state.theme = t.id; applyTheme(); });
+      basicEl.appendChild(card);
+    });
+    THEMES.photo.forEach(t => {
+      const card = document.createElement('div');
+      card.className = 'theme-card';
+      card.dataset.theme = t.id;
+      card.dataset.label = t.label;
+      card.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.25),rgba(0,0,0,0.45)), url('${t.img}')`;
+      card.style.color = t.fg;
+      card.innerHTML = `<span>02<br>59</span>`;
+      card.addEventListener('click', () => { state.theme = t.id; applyTheme(); });
+      photoEl.appendChild(card);
+    });
+  }
+
+  document.getElementById('layout-opts').addEventListener('click', (e) => {
+    if (e.target.dataset.layout) { state.layout = e.target.dataset.layout; applyTheme(); }
+  });
+  document.getElementById('format-opts').addEventListener('click', (e) => {
+    if (e.target.dataset.format) { state.fmt = e.target.dataset.format; applyTheme(); }
+  });
+  document.getElementById('open-panel').addEventListener('click', () =>
+    document.getElementById('panel').classList.add('open'));
+  document.getElementById('close-panel').addEventListener('click', () =>
+    document.getElementById('panel').classList.remove('open'));
+  document.getElementById('fs').addEventListener('click', () => {
+    if (!document.fullscreenElement) document.documentElement.requestFullscreen();
+    else document.exitFullscreen();
+  });
+
+  buildThemes();
+  applyTheme();
+  setInterval(tick, 1000);
+</script>
+</body>
+</html>
