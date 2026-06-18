@@ -2073,12 +2073,37 @@ const COURSE_CONFIG = {
               '<div class="dd-spec"><span>Cores</span><b>900K</b></div>' +
               '<div class="dd-spec"><span>Strength</span><b>scale</b></div>' +
               '<p style="font-size:11px;color:#8b949e;margin-top:6px">Whole-wafer fabric \u2014 not strictly systolic, but the same dataflow philosophy at extreme scale.</p></div>' +
+            '<div class="dd-tile"><h4>FPED (FPGA / CGRA)</h4>' +
+              '<div class="dd-spec"><span>Substrate</span><b>FPGA fabric</b></div>' +
+              '<div class="dd-spec"><span>Dataflow</span><b>reconfigurable</b></div>' +
+              '<div class="dd-spec"><span>Strength</span><b>flexibility</b></div>' +
+              '<p style="font-size:11px;color:#8b949e;margin-top:6px">Field-Programmable / Flexible PE Datapath \u2014 PE count, bit-width and stationarity are synthesized per workload. Lower TOPS than a TPU, but mixed-precision and sparsity friendly.</p></div>' +
           '</div>' +
           '<div class="dd-links">' +
             '<a href="https://www.eecs.harvard.edu/~htk/publication/1982-kung-why-systolic-architecture.pdf" target="_blank">Kung 1982 \u2014 Why systolic?</a>' +
             '<a href="https://arxiv.org/abs/1704.04760" target="_blank">Jouppi et al. \u2014 TPU v1 ISCA 2017</a>' +
             '<a href="https://images.nvidia.com/aem-dam/Solutions/Data-Center/a100/nvidia-ampere-architecture-whitepaper.pdf" target="_blank">NVIDIA Ampere whitepaper (Tensor Cores)</a>' +
             '<a href="https://www.cerebras.ai/product-chip" target="_blank">Cerebras WSE-3</a>' +
+          '</div>'
+        },
+        { title: "FPED vs TPU systolic array \u2014 fixed silicon vs reconfigurable fabric", text:
+          'Both are 2D grids of MAC PEs running a stationary dataflow, but the substrate is different. The <b>TPU</b> bakes one shape, one dataflow and one numeric format into ASIC silicon for maximum throughput per watt. <b>FPED</b> (Field-Programmable / Flexible PE Datapath) synthesizes the same idea on FPGA or CGRA fabric so the PE count, bit-width, and stationarity can be re-tuned per workload \u2014 trading raw TOPS for flexibility.' +
+          '<table class="dd-table" style="margin-top:8px"><thead><tr><th>Axis</th><th>TPU systolic array</th><th>FPED systolic array</th></tr></thead><tbody>' +
+            '<tr><td>Substrate</td><td>ASIC (fixed silicon)</td><td>FPGA / CGRA (reconfigurable)</td></tr>' +
+            '<tr><td>Grid shape</td><td>Fixed (e.g. 128\u00d7128, 256\u00d7256)</td><td>Synthesized per design \u2014 any N\u00d7M that fits the fabric</td></tr>' +
+            '<tr><td>Dataflow</td><td>Weight-stationary (locked in HW)</td><td>Weight- / output- / input-stationary, switchable</td></tr>' +
+            '<tr><td>Numerics</td><td>INT8 / BF16 / FP8 (per generation)</td><td>Arbitrary: INT4, INT8, FP16, even ternary / binary</td></tr>' +
+            '<tr><td>Clock</td><td>~700 MHz \u2013 1+ GHz</td><td>~300 \u2013 700 MHz (routing overhead)</td></tr>' +
+            '<tr><td>Peak TOPS / mm\u00b2</td><td>Very high</td><td>Moderate (LUT/DSP overhead)</td></tr>' +
+            '<tr><td>Flexibility</td><td>Compiler tiles model to fixed grid</td><td>Re-synthesize fabric to fit model</td></tr>' +
+            '<tr><td>Sweet spot</td><td>Datacenter LLM/CNN at scale</td><td>Edge inference, signal processing, research, evolving ops</td></tr>' +
+            '<tr><td>Examples</td><td>Google TPU v1\u2013Ironwood, AWS Trainium</td><td>Xilinx Versal AI Engine, Intel Stratix DLA, academic CGRAs</td></tr>' +
+          '</tbody></table>' +
+          '<div class="dd-callout" style="margin-top:8px"><span class="dd-callout-icon">\ud83d\udca1</span><span><b>One-line takeaway:</b> a TPU is what you build when the workload is known and you want max perf/watt; FPED is what you build when the workload keeps changing and you need to re-shape the fabric for each new model.</span></div>' +
+          '<div class="dd-links">' +
+            '<a href="https://docs.amd.com/r/en-US/wp506-ai-engine" target="_blank">AMD/Xilinx Versal AI Engine WP506</a>' +
+            '<a href="https://www.intel.com/content/www/us/en/products/details/fpga/stratix/10/nx.html" target="_blank">Intel Stratix 10 NX (AI Tensor Blocks)</a>' +
+            '<a href="https://arxiv.org/abs/1807.07928" target="_blank">FINN: FPGA dataflow for QNNs</a>' +
           '</div>'
         }
       ],
@@ -2088,7 +2113,8 @@ const COURSE_CONFIG = {
         { title: "Deterministic latency", text: "Fixed pipeline depth (K + 2N \u2212 2 cycles) gives predictable, schedule-friendly execution." },
         { title: "Dense workloads only", text: "Best on big dense matmuls; sparse, irregular, or shape-changing work leaves PEs idle." },
         { title: "TPU evolution", text: "v1 = single 256\u00d7256 INT8 MXU; v2+ = dual 128\u00d7128 MXUs with BF16 multiply / FP32 accumulate." },
-        { title: "Same idea, smaller tiles", text: "NVIDIA Tensor Cores use the same dataflow at 4\u00d74\u00d74 warp scope \u2014 systolic ideas live everywhere." }
+        { title: "Same idea, smaller tiles", text: "NVIDIA Tensor Cores use the same dataflow at 4\u00d74\u00d74 warp scope \u2014 systolic ideas live everywhere." },
+        { title: "FPED = reconfigurable cousin", text: "FPGA/CGRA systolic arrays trade raw TOPS for synthesizable shape, dataflow and bit-width \u2014 flexibility over fixed-silicon throughput." }
       ]
     },
     {
