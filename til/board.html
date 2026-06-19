@@ -3,12 +3,14 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://accounts.google.com https://apis.google.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://accounts.google.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://www.googleapis.com https://accounts.google.com; frame-src https://accounts.google.com; object-src 'none'; base-uri 'self';">
 <title>Board</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <script src="config.local.js" onerror="void 0"></script>
 <script src="https://accounts.google.com/gsi/client" async defer></script>
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js"></script>
 <style>
   :root {
     --bg: linear-gradient(135deg, #0079bf 0%, #5067c5 100%);
@@ -107,6 +109,42 @@
     font-weight: 600;
   }
   .user-area .drive-btn:hover { background: #1557b0; }
+
+  /* Mobile: let the topbar scroll horizontally so all controls remain reachable */
+  @media (max-width: 640px) {
+    .topbar {
+      overflow-x: auto;
+      overflow-y: hidden;
+      flex-wrap: nowrap;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      padding: 0 0.6rem;
+      gap: 0.5rem;
+    }
+    .topbar::-webkit-scrollbar { display: none; }
+    .topbar > * { flex-shrink: 0; }
+    .topbar .spacer { flex: 0 0 0.25rem; min-width: 0.25rem; }
+    .topbar .board-title { min-width: 80px; max-width: 160px; }
+    .user-area { flex-wrap: nowrap; }
+    .user-area > * { flex-shrink: 0; }
+
+    /* Board: one list visible at a time, swipe between lists */
+    .board {
+      padding: 0.6rem;
+      gap: 0.6rem;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+    }
+    .list {
+      width: 86vw;
+      max-width: 320px;
+      scroll-snap-align: start;
+      max-height: calc(100vh - 96px);
+    }
+    .list-delete { opacity: 1 !important; }
+    .card { font-size: 0.95rem; padding: 0.7rem 0.8rem; }
+    .add-list { width: 86vw; max-width: 320px; }
+  }
   .sync-status {
     font-size: 0.75rem;
     opacity: 0.85;
@@ -197,6 +235,8 @@
   }
   .card:hover { box-shadow: var(--card-shadow-hover); }
   .card.dragging { opacity: 0.4; cursor: grabbing; }
+  .card-ghost { opacity: 0.5; background: #e4e8ee; }
+  .card-chosen { box-shadow: 0 4px 12px rgba(0,0,0,0.18); }
   .card .card-text {
     outline: none;
     min-height: 1em;
@@ -491,17 +531,26 @@
 
     const cards = document.createElement('div');
     cards.className = 'cards';
+    cards.dataset.listId = list.id;
     list.cards.forEach(card => cards.appendChild(renderCard(card, list)));
 
-    // drag-drop targets
-    cards.addEventListener('dragover', e => { e.preventDefault(); el.classList.add('drag-over'); });
-    cards.addEventListener('dragleave', () => el.classList.remove('drag-over'));
-    cards.addEventListener('drop', e => {
-      e.preventDefault();
-      el.classList.remove('drag-over');
-      const cardId = e.dataTransfer.getData('text/card-id');
-      const fromListId = e.dataTransfer.getData('text/list-id');
-      moveCard(cardId, fromListId, list.id, getDropIndex(cards, e.clientY));
+    // Touch + mouse drag via SortableJS — works on phones where HTML5 drag does not.
+    new Sortable(cards, {
+      group: 'cards',
+      animation: 150,
+      ghostClass: 'card-ghost',
+      chosenClass: 'card-chosen',
+      dragClass: 'dragging',
+      delay: 150,
+      delayOnTouchOnly: true,
+      touchStartThreshold: 5,
+      forceFallback: false,
+      onStart: () => el.classList.add('drag-over'),
+      onEnd: (evt) => {
+        el.classList.remove('drag-over');
+        syncStateFromDom();
+        saveState();
+      },
     });
 
     const composer = document.createElement('div');
@@ -547,7 +596,6 @@
   function renderCard(card, list) {
     const el = document.createElement('div');
     el.className = 'card';
-    el.draggable = true;
     el.dataset.cardId = card.id;
 
     const text = document.createElement('div');
@@ -583,24 +631,24 @@
       saveState(); render();
     });
 
-    el.addEventListener('dragstart', e => {
-      el.classList.add('dragging');
-      e.dataTransfer.setData('text/card-id', card.id);
-      e.dataTransfer.setData('text/list-id', list.id);
-      e.dataTransfer.effectAllowed = 'move';
-    });
-    el.addEventListener('dragend', () => el.classList.remove('dragging'));
-
     return el;
   }
 
-  function getDropIndex(cardsEl, y) {
-    const cards = [...cardsEl.querySelectorAll('.card:not(.dragging)')];
-    for (let i = 0; i < cards.length; i++) {
-      const r = cards[i].getBoundingClientRect();
-      if (y < r.top + r.height / 2) return i;
-    }
-    return cards.length;
+  // Rebuild state.lists[*].cards order from current DOM after a Sortable drop.
+  function syncStateFromDom() {
+    const byId = {};
+    state.lists.forEach(l => l.cards.forEach(c => { byId[c.id] = c; }));
+    const listEls = $board.querySelectorAll('.list');
+    const newLists = [];
+    listEls.forEach(listEl => {
+      const lid = listEl.dataset.listId;
+      const original = state.lists.find(l => l.id === lid);
+      if (!original) return;
+      const cardIds = [...listEl.querySelectorAll('.card')].map(c => c.dataset.cardId);
+      original.cards = cardIds.map(cid => byId[cid]).filter(Boolean);
+      newLists.push(original);
+    });
+    state.lists = newLists;
   }
 
   function moveCard(cardId, fromListId, toListId, toIndex) {
