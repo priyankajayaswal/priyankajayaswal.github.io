@@ -470,6 +470,27 @@
   buildThemes();
   applyTheme();
   setInterval(tick, 1000);
+
+  // Keep the screen awake while the clock is visible (Screen Wake Lock API).
+  // Works on Chrome/Edge/Safari on Android & iOS 16.4+. Silently no-ops elsewhere.
+  let wakeLock = null;
+  async function requestWakeLock() {
+    try {
+      if ('wakeLock' in navigator && document.visibilityState === 'visible') {
+        wakeLock = await navigator.wakeLock.request('screen');
+        wakeLock.addEventListener('release', () => { wakeLock = null; });
+      }
+    } catch (e) { /* user denied or unsupported */ }
+  }
+  requestWakeLock();
+  // Re-acquire after tab/window becomes visible again (lock is auto-released on hide).
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible' && wakeLock === null) requestWakeLock();
+  });
+  // Some browsers require a user gesture before granting the lock.
+  ['click','touchstart'].forEach(ev =>
+    document.addEventListener(ev, () => { if (!wakeLock) requestWakeLock(); }, { once: true, passive: true })
+  );
 </script>
 </body>
 </html>
