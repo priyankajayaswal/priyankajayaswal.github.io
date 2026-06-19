@@ -3802,12 +3802,12 @@ if (C.useCases && C.useCases.length) {
     card.onclick = () => showUseCase(idx);
     card.innerHTML = `
       <div class="dd-card-img" style="background:${uc.color}11">
-        <span style="font-size:64px">${uc.icon}</span>
+        <span style="font-size:64px">${uc.icon || '🔬'}</span>
       </div>
       <div class="dd-card-body">
         <div class="dd-card-num" style="color:${uc.color}">USE CASE ${idx + 1}</div>
-        <div class="dd-card-title">${uc.title}</div>
-        <div class="dd-card-desc">${uc.desc}</div>
+        <div class="dd-card-title">${uc.title || ''}</div>
+        <div class="dd-card-desc">${uc.desc || ''}</div>
       </div>
     `;
     ucGrid.appendChild(card);
@@ -3825,8 +3825,8 @@ function showUseCase(idx) {
 
   let html = '<div class="uc-flow">';
   html += '<button class="uc-back-btn" onclick="showUseCaseGrid()">← Back to All Use Cases</button>';
-  html += `<h2>${uc.icon} ${uc.title}</h2>`;
-  html += `<div class="uc-subtitle">${uc.desc}</div>`;
+  html += `<h2>${uc.icon || ''} ${uc.title || ''}</h2>`;
+  html += `<div class="uc-subtitle">${uc.desc || ''}</div>`;
   if (typeof uc.heroSvg === 'function') {
     html += `<div class="uc-hero" style="margin:14px 0 18px;border:1px solid #30363d;border-radius:10px;padding:12px;background:#0d1117">${uc.heroSvg()}</div>`;
   }
@@ -3848,9 +3848,12 @@ function showUseCase(idx) {
     html += `<div class="uc-step${i === 0 ? ' active' : ''}" id="uc-step-${i}" onclick="ucGoTo(${i})">`;
     html += `<div class="uc-badge">${i + 1}</div>`;
     html += '<div class="uc-body">';
-    html += `<div class="uc-title">${step.title}</div>`;
-    html += `<div class="uc-component">📍 ${step.component}</div>`;
-    let detailHtml = `<p>${step.detail}</p><span class="uc-proto">${step.proto}</span>`;
+    html += `<div class="uc-title">${step.title || ''}</div>`;
+    if (step.component) html += `<div class="uc-component">📍 ${step.component}</div>`;
+    let detailHtml = '';
+    const _stepDet = step.detail || step.prose || step.text || step.body;
+    if (_stepDet) detailHtml += `<p>${_stepDet}</p>`;
+    if (step.proto)  detailHtml += `<span class="uc-proto">${step.proto}</span>`;
     if (typeof step.svg === 'function') {
       detailHtml += `<div class="uc-step-svg" style="margin-top:10px;border:1px solid #30363d;border-radius:8px;padding:8px;background:#0d1117">${step.svg()}</div>`;
     }
@@ -4065,6 +4068,13 @@ if (C.youtube && C.youtube.videos && C.youtube.videos.length) {
 function buildAppendix() {
   const container = document.getElementById('appendix-container');
   const videos = C.youtube.videos;
+  // Normalize legacy schema {lesson,title,url} -> {id,topic,unit}
+  const parseYtId = (u) => { if(!u) return ''; const m = String(u).match(/[?&]v=([^&]+)|youtu\.be\/([^?&]+)/); return (m && (m[1] || m[2])) || ''; };
+  videos.forEach(v => {
+    if (!v.id && v.url) v.id = parseYtId(v.url);
+    if (!v.topic) v.topic = v.title || v.name || '';
+    if (v.unit == null) v.unit = v.lesson != null ? +v.lesson : 1;
+  });
   const unitNames = C.youtube.unitNames || {};
   const unitColors = ["","#58a6ff","#f778ba","#7ee787","#ffa657","#d2a8ff","#7ee787","#ffa657","#ff7b72","#c9d1d9"];
 
@@ -4531,14 +4541,14 @@ function renderGlossary() {
   rawData.forEach(d => { termToId.set((d.term || '').toLowerCase().trim(), d.id || slug(d.term)); });
   const data = rawData.map(d => {
     const id = d.id || slug(d.term);
-    const short = d.short || d.definition || '';
+    const short = d.short || d.definition || d.def || d.desc || '';
     const example = d.example || '';
     const long = d.long || '';
     let seeAlso = d.seeAlso;
     if (!seeAlso && Array.isArray(d.related)) {
       seeAlso = d.related.map(t => termToId.get(String(t).toLowerCase().trim()) || slug(t));
     }
-    return Object.assign({}, d, { id, short, long, example, seeAlso: seeAlso || [] });
+    return Object.assign({}, d, { id, short, long, example, seeAlso: seeAlso || [], category: d.category || 'general' });
   }).sort((a, b) =>
     a.term.toLowerCase().localeCompare(b.term.toLowerCase()));
   const list = document.getElementById('glossary-list');

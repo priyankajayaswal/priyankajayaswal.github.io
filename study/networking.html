@@ -3455,7 +3455,9 @@ function showDeepDive(idx) {
 
   html += `<div class="dd-section"><h3>📌 Key Points</h3><div class="dd-keypoints">`;
   dd.keypoints.forEach(kp => {
-    html += `<div class="dd-kp"><strong>${kp.title}</strong><span>${kp.text}</span></div>`;
+    const dot = kp.color ? `<span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:${kp.color};margin-right:6px;vertical-align:middle"></span>` : '';
+    const head = kp.title ? `<strong>${kp.title}</strong>` : '';
+    html += `<div class="dd-kp">${dot}${head}<span>${kp.text || kp.body || ''}</span></div>`;
   });
   html += `</div></div>`;
 
@@ -4180,12 +4182,12 @@ function buildUseCaseCards() {
     card.onclick = () => showUseCase(idx);
     card.innerHTML = `
       <div class="dd-card-img" style="background:${uc.color}11">
-        <span style="font-size:64px">${uc.icon}</span>
+        <span style="font-size:64px">${uc.icon || '🔬'}</span>
       </div>
       <div class="dd-card-body">
         <div class="dd-card-num" style="color:${uc.color}">USE CASE ${idx + 1}</div>
-        <div class="dd-card-title">${uc.title}</div>
-        <div class="dd-card-desc">${uc.desc}</div>
+        <div class="dd-card-title">${uc.title || ''}</div>
+        <div class="dd-card-desc">${uc.desc || ''}</div>
       </div>
     `;
     grid.appendChild(card);
@@ -4202,8 +4204,8 @@ function showUseCase(idx) {
 
   let html = '<div class="uc-flow">';
   html += '<button class="uc-back-btn" onclick="showUseCaseGrid()">← Back to All Use Cases</button>';
-  html += `<h2>${uc.icon} ${uc.title}</h2>`;
-  html += `<div class="uc-subtitle">${uc.desc}</div>`;
+  html += `<h2>${uc.icon || ''} ${uc.title || ''}</h2>`;
+  html += `<div class="uc-subtitle">${uc.desc || ''}</div>`;
   html += '<div class="uc-flow-controls">';
   html += '<button onclick="ucPrev()">← Previous</button>';
   html += '<button class="primary" onclick="ucNext()">Next Step →</button>';
@@ -4222,9 +4224,12 @@ function showUseCase(idx) {
     html += `<div class="uc-step${i === 0 ? ' active' : ''}" id="uc-step-${i}" onclick="ucGoTo(${i})">`;
     html += `<div class="uc-badge">${i + 1}</div>`;
     html += '<div class="uc-body">';
-    html += `<div class="uc-title">${step.title}</div>`;
-    html += `<div class="uc-component">📍 ${step.component}</div>`;
-    let detailHtml = `<p>${step.detail}</p><span class="uc-proto">${step.proto}</span>`;
+    html += `<div class="uc-title">${step.title || ''}</div>`;
+    if (step.component) html += `<div class="uc-component">📍 ${step.component}</div>`;
+    let detailHtml = '';
+    const _stepDet = step.detail || step.prose || step.text || step.body;
+    if (_stepDet) detailHtml += `<p>${_stepDet}</p>`;
+    if (step.proto)  detailHtml += `<span class="uc-proto">${step.proto}</span>`;
     if (step.code) detailHtml += `<pre class="uc-code">${step.code}</pre>`;
     if (step.refs && step.refs.length) {
       detailHtml += '<div class="uc-refs">' + step.refs.map(r => `<a href="${r.url}" target="_blank" rel="noopener">${r.label}</a>`).join('') + '</div>';

@@ -3131,7 +3131,11 @@ if (C.deepDives && C.deepDives.length) {
     }
     if (dd.keypoints && dd.keypoints.length) {
       fhtml += '<div class="dd-keypoints">';
-      dd.keypoints.forEach(kp => { fhtml += `<div class="dd-kp"><strong>${kp.title}</strong><span>${kp.text || kp.body || ''}</span></div>`; });
+      dd.keypoints.forEach(kp => {
+        const dot = kp.color ? `<span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:${kp.color};margin-right:6px;vertical-align:middle"></span>` : '';
+        const head = kp.title ? `<strong>${kp.title}</strong>` : '';
+        fhtml += `<div class="dd-kp">${dot}${head}<span>${kp.text || kp.body || ''}</span></div>`;
+      });
       fhtml += '</div>';
     }
     // References rendered last — after keypoints
@@ -3474,6 +3478,13 @@ if (C.youtube && C.youtube.videos && C.youtube.videos.length) {
 function buildAppendix() {
   const container = document.getElementById('appendix-container');
   const videos = C.youtube.videos;
+  // Normalize legacy schema {lesson,title,url} -> {id,topic,unit}
+  const parseYtId = (u) => { if(!u) return ''; const m = String(u).match(/[?&]v=([^&]+)|youtu\.be\/([^?&]+)/); return (m && (m[1] || m[2])) || ''; };
+  videos.forEach(v => {
+    if (!v.id && v.url) v.id = parseYtId(v.url);
+    if (!v.topic) v.topic = v.title || v.name || '';
+    if (v.unit == null) v.unit = v.lesson != null ? +v.lesson : 1;
+  });
   const unitNames = C.youtube.unitNames || {};
   const unitColors = ["","#58a6ff","#f778ba","#7ee787","#ffa657","#d2a8ff","#7ee787","#ffa657","#ff7b72","#c9d1d9"];
 
