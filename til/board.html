@@ -779,11 +779,27 @@
       this.setStatus('⟳ syncing', 'syncing');
       this.syncTimer = setTimeout(() => this.upload(), 1000);
     },
-    async api(path, opts = {}) {
+    async api(path, opts = {}, _retry = false) {
+      if (!this.token) {
+        const ok = await refreshDriveToken();
+        if (!ok) throw new Error('no token');
+      }
       const headers = Object.assign({ 'Authorization': 'Bearer ' + this.token }, opts.headers || {});
-      const r = await fetch('https://www.googleapis.com/' + path, Object.assign({}, opts, { headers }));
-      if (r.status === 401) { this.token = null; throw new Error('token expired'); }
-      if (!r.ok) throw new Error('drive ' + r.status);
+      const url = 'https://www.googleapis.com/' + path;
+      const r = await fetch(url, Object.assign({}, opts, { headers }));
+      if (r.status === 401 && !_retry) {
+        this.token = null;
+        const ok = await refreshDriveToken();
+        if (ok) return this.api(path, opts, true);
+        throw new Error('auth expired — click Reconnect');
+      }
+      if (!r.ok) {
+        let detail = '';
+        try { detail = (await r.clone().text()).slice(0, 200); } catch {}
+        const err = new Error('drive ' + r.status + ' on ' + path.split('?')[0] + (detail ? ': ' + detail : ''));
+        err.status = r.status;
+        throw err;
+      }
       return r;
     },
     async findFile() {
@@ -797,9 +813,17 @@
       return r.json();
     },
     async upload() {
-      if (!this.token) return;
+      if (!this.token) {
+        const ok = await refreshDriveToken();
+        if (!ok) { this.setStatus('⚠ reconnect', 'error'); showDriveBtn('☁ Reconnect'); return; }
+      }
       try {
         const body = JSON.stringify(state);
+        // Resolve fileId from Drive if we don't have one (handles fresh tab).
+        if (!this.fileId) {
+          const f = await this.findFile();
+          if (f) this.fileId = f.id;
+        }
         if (!this.fileId) {
           // create with multipart upload
           const boundary = '-------board' + Math.random().toString(36).slice(2);
@@ -807,7 +831,7 @@
           const multipart =
             `--${boundary}\r\nContent-Type: application/json; charset=UTF-8\r\n\r\n` +
             JSON.stringify(meta) +
-            `\r\n--${boundary}\r\nContent-Type: application/json\r\n\r\n` +
+            `\r\n--${boundary}\r\nContent-Type: application/json; charset=UTF-8\r\n\r\n` +
             body + `\r\n--${boundary}--`;
           const r = await this.api('upload/drive/v3/files?uploadType=multipart&fields=id', {
             method: 'POST',
@@ -817,16 +841,26 @@
           const j = await r.json();
           this.fileId = j.id;
         } else {
-          await this.api('upload/drive/v3/files/' + this.fileId + '?uploadType=media', {
-            method: 'PATCH',
-            headers: { 'Content-Type': 'application/json' },
-            body,
-          });
+          try {
+            await this.api('upload/drive/v3/files/' + this.fileId + '?uploadType=media', {
+              method: 'PATCH',
+              headers: { 'Content-Type': 'application/json' },
+              body,
+            });
+          } catch (e) {
+            if (e.status === 404) {
+              // File vanished — recreate.
+              this.fileId = null;
+              return this.upload();
+            }
+            throw e;
+          }
         }
         this.setStatus('☁ synced', '');
       } catch (e) {
         console.error('upload failed', e);
-        this.setStatus('⚠ error', 'error');
+        this.setStatus('⚠ ' + (e.message || 'error'), 'error');
+        showDriveBtn('☁ Reconnect');
       }
     },
     async pull() {
@@ -844,10 +878,35 @@
         this.setStatus('☁ synced', '');
       } catch (e) {
         console.error('pull failed', e);
-        this.setStatus('⚠ error', 'error');
+        this.setStatus('⚠ ' + (e.message || 'error'), 'error');
+        showDriveBtn('☁ Reconnect');
       }
     },
   };
+
+  function showDriveBtn(label) {
+    const b = document.getElementById('drive-btn');
+    if (b) { b.style.display = ''; if (label) b.textContent = label; }
+  }
+
+  // Silent token refresh — relies on prior consent stored in Google session.
+  function refreshDriveToken() {
+    return new Promise((resolve) => {
+      if (!drive.tokenClient) return resolve(false);
+      const prevCb = drive.tokenClient.callback;
+      drive.tokenClient.callback = (resp) => {
+        drive.tokenClient.callback = prevCb;
+        if (resp && resp.access_token) {
+          drive.token = resp.access_token;
+          resolve(true);
+        } else {
+          resolve(false);
+        }
+      };
+      try { drive.tokenClient.requestAccessToken({ prompt: '' }); }
+      catch { resolve(false); }
+    });
+  }
 
   function connectDrive(silent = false) {
     if (GOOGLE_CLIENT_ID.startsWith('YOUR_')) {
@@ -872,9 +931,9 @@
           if (user.sub) localStorage.setItem('drive-granted-' + user.sub, '1');
           drive.setStatus('⟳ syncing', 'syncing');
           drive.pull().then(() => {
-            // hide button once connected
+            // shrink button to a compact reconnect affordance
             const b = document.getElementById('drive-btn');
-            if (b) b.style.display = 'none';
+            if (b) b.textContent = '☁';
           });
         },
       });
