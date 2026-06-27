@@ -1,0 +1,389 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI Stack — Study Hub</title>
+<meta name="description" content="Curated learning path across AI hardware, frameworks, compilers, training stacks, inference, models, benchmarks, and evals.">
+<style>
+  :root {
+    --bg:#0d1117; --panel:#161b22; --border:#30363d; --ink:#c9d1d9; --muted:#8b949e;
+    --blue:#58a6ff; --pink:#f778ba; --green:#7ee787; --amber:#ffa657; --violet:#d2a8ff; --cyan:#79c0ff; --nvg:#76B900;
+  }
+  * { box-sizing:border-box }
+  html,body { margin:0; background:var(--bg); color:var(--ink); font:14px/1.55 "Segoe UI",Aptos,Calibri,-apple-system,BlinkMacSystemFont,sans-serif; }
+  a { color:var(--blue); text-decoration:none }
+  a:hover { text-decoration:underline }
+  header { padding:36px 24px 16px; max-width:1100px; margin:0 auto; }
+  header h1 { margin:0 0 6px; font-size:28px; letter-spacing:.2px; }
+  header h1 .accent { color:var(--green); }
+  header p { margin:0; color:var(--muted); max-width:780px; }
+  .crumbs { font-size:12px; color:var(--muted); margin-bottom:14px; }
+  .crumbs a { color:var(--muted); }
+  main { max-width:1100px; margin:0 auto; padding:8px 24px 60px; }
+  .stack-svg { display:block; width:100%; max-width:1000px; margin:18px auto 28px; background:var(--panel); border:1px solid var(--border); border-radius:10px; }
+  section.layer { margin:22px 0 6px; }
+  section.layer h2 { font-size:14px; text-transform:uppercase; letter-spacing:1.4px; color:var(--muted); margin:24px 0 10px; font-weight:600; }
+  section.layer h2 .pill { background:var(--panel); border:1px solid var(--border); color:var(--ink); padding:2px 8px; border-radius:10px; margin-right:8px; font-size:11px; letter-spacing:.5px; }
+  .grid { display:grid; gap:10px; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); }
+  .card { display:block; padding:12px 14px; background:var(--panel); border:1px solid var(--border); border-radius:8px; color:var(--ink); transition:transform .12s, border-color .12s; }
+  .card:hover { transform:translateY(-1px); border-color:var(--blue); text-decoration:none; }
+  .card .h { display:flex; align-items:center; gap:8px; font-weight:600; font-size:14px; margin-bottom:3px; }
+  .card .h .ic { font-size:18px; line-height:1; }
+  .card .h .nm { color:var(--ink); }
+  .card .d { font-size:12px; color:var(--muted); line-height:1.45; }
+  .card.blue:hover { border-color:var(--blue); } .card.pink:hover { border-color:var(--pink); } .card.green:hover { border-color:var(--green); } .card.amber:hover { border-color:var(--amber); } .card.violet:hover { border-color:var(--violet); } .card.cyan:hover { border-color:var(--cyan); } .card.nvg:hover { border-color:var(--nvg); }
+  .paths { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:12px; margin-top:10px; }
+  .path { padding:14px 16px; background:var(--panel); border:1px solid var(--border); border-radius:8px; }
+  .path h3 { margin:0 0 6px; font-size:13px; color:var(--green); letter-spacing:.3px; }
+  .path ol { margin:6px 0 0 18px; padding:0; font-size:12px; color:var(--muted); }
+  .path ol li { margin:2px 0; }
+  .path ol li a { color:var(--ink); }
+  footer { color:var(--muted); font-size:12px; margin-top:36px; padding-top:14px; border-top:1px solid var(--border); }
+  footer a { color:var(--muted); }
+</style>
+</head>
+<body>
+<header>
+  <div class="crumbs"><a href="../try.html">← Study Launcher</a></div>
+  <h1>The <span class="accent">AI Stack</span> — a curated learning hub</h1>
+  <p>One page that stitches together every AI-category study page in this site, from silicon to evaluation. Click any tile to dive in. Suggested learning paths below.</p>
+</header>
+
+<main>
+
+<svg class="stack-svg" viewBox="0 0 1000 520" xmlns="http://www.w3.org/2000/svg" aria-label="AI stack overview">
+  <defs>
+    <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#8b949e"/>
+    </marker>
+  </defs>
+  <style>
+    .ttl { font: 600 13px "Segoe UI",sans-serif; fill:#c9d1d9; }
+    .lab { font: 600 11px "Segoe UI",sans-serif; }
+    .sub { font: 11px "Segoe UI",sans-serif; fill:#8b949e; }
+    .lyr { fill:#161b22; stroke:#30363d; }
+    .arrow { stroke:#8b949e; stroke-width:1.4; fill:none; }
+  </style>
+
+  <!-- Layer headers -->
+  <text class="ttl" x="20" y="28">7. Evaluation</text>
+  <text class="ttl" x="20" y="98">6. Knowledge</text>
+  <text class="ttl" x="20" y="168">5. Inference</text>
+  <text class="ttl" x="20" y="238">4. Training stacks</text>
+  <text class="ttl" x="20" y="308">3. Compilers &amp; kernels</text>
+  <text class="ttl" x="20" y="378">2. Frameworks</text>
+  <text class="ttl" x="20" y="448">1. Hardware &amp; foundations</text>
+
+  <!-- Layer 7: Evaluation -->
+  <rect class="lyr" x="180" y="10" width="180" height="36" rx="6"/>
+  <text class="lab" x="270" y="33" text-anchor="middle" fill="#7ee787">🧪 Evals</text>
+  <rect class="lyr" x="380" y="10" width="200" height="36" rx="6"/>
+  <text class="lab" x="480" y="33" text-anchor="middle" fill="#f778ba">📏 Benchmarks</text>
+
+  <!-- Layer 6: Knowledge / Models -->
+  <rect class="lyr" x="180" y="80" width="400" height="36" rx="6"/>
+  <text class="lab" x="380" y="103" text-anchor="middle" fill="#76B900">🤖 Models · 15 OSS frontier models</text>
+
+  <!-- Layer 5: Inference -->
+  <rect class="lyr" x="180" y="150" width="180" height="36" rx="6"/>
+  <text class="lab" x="270" y="173" text-anchor="middle" fill="#79c0ff">🚀 vLLM</text>
+  <rect class="lyr" x="380" y="150" width="200" height="36" rx="6"/>
+  <text class="lab" x="480" y="173" text-anchor="middle" fill="#f778ba">🧩 ONNX Runtime</text>
+
+  <!-- Layer 4: Training stacks -->
+  <rect class="lyr" x="180" y="220" width="180" height="36" rx="6"/>
+  <text class="lab" x="270" y="243" text-anchor="middle" fill="#f0883e">📈 MaxText</text>
+  <rect class="lyr" x="380" y="220" width="200" height="36" rx="6"/>
+  <text class="lab" x="480" y="243" text-anchor="middle" fill="#58a6ff">🌊 DeepSpeed</text>
+
+  <!-- Layer 3: Compilers & kernels -->
+  <rect class="lyr" x="180" y="290" width="120" height="36" rx="6"/>
+  <text class="lab" x="240" y="313" text-anchor="middle" fill="#ffa657">🛠️ XLA</text>
+  <rect class="lyr" x="320" y="290" width="120" height="36" rx="6"/>
+  <text class="lab" x="380" y="313" text-anchor="middle" fill="#d2a8ff">⚡ Triton</text>
+  <rect class="lyr" x="460" y="290" width="180" height="36" rx="6"/>
+  <text class="lab" x="550" y="313" text-anchor="middle" fill="#7ee787">🎯 CUDA Graphs</text>
+  <rect class="lyr" x="660" y="290" width="170" height="36" rx="6"/>
+  <text class="lab" x="745" y="313" text-anchor="middle" fill="#d2a8ff">🔢 Quantization</text>
+
+  <!-- Layer 2: Frameworks -->
+  <rect class="lyr" x="180" y="360" width="120" height="36" rx="6"/>
+  <text class="lab" x="240" y="383" text-anchor="middle" fill="#7ee787">🧠 JAX</text>
+  <rect class="lyr" x="320" y="360" width="160" height="36" rx="6"/>
+  <text class="lab" x="400" y="383" text-anchor="middle" fill="#ee4c2c">🔥 PyTorch</text>
+  <rect class="lyr" x="500" y="360" width="180" height="36" rx="6"/>
+  <text class="lab" x="590" y="383" text-anchor="middle" fill="#ff6f00">🟧 TensorFlow</text>
+
+  <!-- Layer 1: Hardware & foundations -->
+  <rect class="lyr" x="180" y="430" width="120" height="36" rx="6"/>
+  <text class="lab" x="240" y="453" text-anchor="middle" fill="#58a6ff">🛰️ TPU</text>
+  <rect class="lyr" x="320" y="430" width="160" height="36" rx="6"/>
+  <text class="lab" x="400" y="453" text-anchor="middle" fill="#58a6ff">🧮 PMPP (GPU)</text>
+  <rect class="lyr" x="500" y="430" width="180" height="36" rx="6"/>
+  <text class="lab" x="590" y="453" text-anchor="middle" fill="#79c0ff">📚 ML foundations</text>
+
+  <!-- Connecting arrows (rough vertical flow) -->
+  <path class="arrow" d="M380 466 L380 396" marker-end="url(#ar)"/>
+  <path class="arrow" d="M380 360 L380 326" marker-end="url(#ar)"/>
+  <path class="arrow" d="M380 290 L380 256" marker-end="url(#ar)"/>
+  <path class="arrow" d="M380 220 L380 186" marker-end="url(#ar)"/>
+  <path class="arrow" d="M380 150 L380 116" marker-end="url(#ar)"/>
+  <path class="arrow" d="M380 80  L380 46"  marker-end="url(#ar)"/>
+
+  <text class="sub" x="700" y="28">measures →</text>
+  <text class="sub" x="700" y="103">deploys ←</text>
+  <text class="sub" x="700" y="243">trains ↓</text>
+  <text class="sub" x="700" y="313">compiles ↓</text>
+  <text class="sub" x="700" y="453">runs on ↓</text>
+</svg>
+
+<section class="layer">
+  <h2><span class="pill">7</span>Evaluation — how do you know it works?</h2>
+  <div class="grid">
+    <a class="card pink" href="./benchmarks.html"><div class="h"><span class="ic">📏</span><span class="nm">Benchmarks</span></div><div class="d">MMLU, GPQA, SWE-bench, Arena — what the scores actually measure.</div></a>
+    <a class="card green" href="./evals.html"><div class="h"><span class="ic">🧪</span><span class="nm">Evals</span></div><div class="d">lm-eval-harness, HELM, RAGAS, judge models, red-teaming.</div></a>
+  </div>
+</section>
+
+<section class="layer">
+  <h2><span class="pill">6</span>Models — what you actually deploy</h2>
+  <div class="grid">
+    <a class="card nvg" href="./models.html"><div class="h"><span class="ic">🤖</span><span class="nm">15 OSS Frontier Models</span></div><div class="d">Llama 3.1, DeepSeek-V3, Qwen, Mixtral, Phi-3, Flux, Whisper, AlphaFold 3 — architecture, quant, hardware.</div></a>
+  </div>
+</section>
+
+<section class="layer">
+  <h2><span class="pill">5</span>Inference — serving at scale</h2>
+  <div class="grid">
+    <a class="card cyan" href="./vllm.html"><div class="h"><span class="ic">🚀</span><span class="nm">vLLM</span></div><div class="d">PagedAttention, continuous batching, spec decoding.</div></a>
+    <a class="card pink" href="./onnxruntime.html"><div class="h"><span class="ic">🧩</span><span class="nm">ONNX Runtime</span></div><div class="d">Cross-platform — CUDA, DML, CoreML, QNN, WebGPU.</div></a>
+  </div>
+</section>
+
+<section class="layer">
+  <h2><span class="pill">4</span>Training stacks — scaling pretraining</h2>
+  <div class="grid">
+    <a class="card amber" href="./maxtext.html"><div class="h"><span class="ic">📈</span><span class="nm">MaxText</span></div><div class="d">High-MFU LLM training on TPU pods in JAX.</div></a>
+    <a class="card blue" href="./deepspeed.html"><div class="h"><span class="ic">🌊</span><span class="nm">DeepSpeed</span></div><div class="d">ZeRO 1/2/3, Ulysses, MoE, FastGen.</div></a>
+    <a class="card amber" href="./rl.html"><div class="h"><span class="ic">🎮</span><span class="nm">Reinforcement Learning</span></div><div class="d">From MDPs and DQN to PPO, SAC, DreamerV3, RLHF/DPO/GRPO, RLVR reasoning, robot learning (RT‑2, OpenVLA, π0).</div></a>
+  </div>
+</section>
+
+<section class="layer">
+  <h2><span class="pill">3</span>Compilers &amp; kernels — the magic floor</h2>
+  <div class="grid">
+    <a class="card amber" href="./xla.html"><div class="h"><span class="ic">🛠️</span><span class="nm">XLA</span></div><div class="d">HLO, StableHLO, GSPMD, PjRt — TPUs and GPUs.</div></a>
+    <a class="card violet" href="./triton.html"><div class="h"><span class="ic">⚡</span><span class="nm">Triton</span></div><div class="d">Python DSL for GPU kernels — FlashAttention, torch.compile backend.</div></a>
+    <a class="card green" href="./cuda-graphs.html"><div class="h"><span class="ic">🎯</span><span class="nm">CUDA Graphs</span></div><div class="d">Kill launch overhead — capture, instantiate, replay.</div></a>
+    <a class="card violet" href="./quantization.html"><div class="h"><span class="ic">🔢</span><span class="nm">Quantization</span></div><div class="d">Precision ladder, GPTQ/AWQ, QLoRA, FP8/INT4, GGUF, KV‑cache quant.</div></a>
+  </div>
+</section>
+
+<section class="layer">
+  <h2><span class="pill">2</span>Frameworks — where you write the code</h2>
+  <div class="grid">
+    <a class="card green" href="./jax.html"><div class="h"><span class="ic">🧠</span><span class="nm">JAX</span></div><div class="d">jit, grad, vmap, pmap — composable transformations.</div></a>
+    <a class="card" style="border-color:#ee4c2c44" href="./pytorch.html"><div class="h"><span class="ic">🔥</span><span class="nm" style="color:#ee4c2c">PyTorch</span></div><div class="d">Eager + torch.compile + FSDP + ExecuTorch.</div></a>
+    <a class="card" style="border-color:#ff6f0044" href="./tensorflow.html"><div class="h"><span class="ic">🟧</span><span class="nm" style="color:#ff6f00">TensorFlow</span></div><div class="d">tf.function, Grappler, Keras 3, TFLite, TFX.</div></a>
+  </div>
+</section>
+
+<section class="layer">
+  <h2><span class="pill">1</span>Hardware &amp; foundations — the silicon and the math</h2>
+  <div class="grid">
+    <a class="card blue" href="./tpu.html"><div class="h"><span class="ic">🛰️</span><span class="nm">TPU</span></div><div class="d">Google's accelerator — pods, MXU, sparsecore, ICI.</div></a>
+    <a class="card blue" href="./pmpp.html"><div class="h"><span class="ic">🧮</span><span class="nm">PMPP — Massively Parallel Programming</span></div><div class="d">CUDA, GPU patterns — Hwu · Kirk · El Hajj.</div></a>
+    <a class="card cyan" href="./ml.html"><div class="h"><span class="ic">📚</span><span class="nm">ML Foundations</span></div><div class="d">The math, the models, the training loop — before frameworks.</div></a>
+  </div>
+</section>
+
+<section class="layer">
+  <h2><span class="pill">⭐</span>Suggested learning paths</h2>
+  <div class="paths">
+    <div class="path">
+      <h3>I want to train a model</h3>
+      <ol>
+        <li><a href="./ml.html">ML foundations</a></li>
+        <li><a href="./pytorch.html">PyTorch</a> or <a href="./jax.html">JAX</a></li>
+        <li><a href="./pmpp.html">PMPP</a> / <a href="./tpu.html">TPU</a></li>
+        <li><a href="./deepspeed.html">DeepSpeed</a> or <a href="./maxtext.html">MaxText</a></li>
+        <li><a href="./evals.html">Evals</a> → ship</li>
+      </ol>
+    </div>
+    <div class="path">
+      <h3>I want to serve a model in prod</h3>
+      <ol>
+        <li><a href="./models.html">Models</a> — pick one</li>
+        <li><a href="./vllm.html">vLLM</a> or <a href="./onnxruntime.html">ONNX Runtime</a></li>
+        <li><a href="./cuda-graphs.html">CUDA Graphs</a> + <a href="./triton.html">Triton</a> for hot path</li>
+        <li><a href="./benchmarks.html">Benchmarks</a> + <a href="./evals.html">Evals</a> for SLOs</li>
+      </ol>
+    </div>
+    <div class="path">
+      <h3>I want to understand the compiler</h3>
+      <ol>
+        <li><a href="./pmpp.html">PMPP</a> — what GPUs actually do</li>
+        <li><a href="./triton.html">Triton</a> — write a kernel</li>
+        <li><a href="./xla.html">XLA</a> — see the lowering</li>
+        <li><a href="./cuda-graphs.html">CUDA Graphs</a> — runtime story</li>
+      </ol>
+    </div>
+    <div class="path">
+      <h3>I want to evaluate a model honestly</h3>
+      <ol>
+        <li><a href="./benchmarks.html">Benchmarks</a> — what they measure</li>
+        <li><a href="./evals.html">Evals</a> — harnesses + judges</li>
+        <li><a href="./models.html">Models</a> — read the cards critically</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<section class="layer">
+  <h2><span class="pill">$</span>Compute for research — apply, don't pay</h2>
+  <p style="margin:0 0 10px;color:var(--muted);font-size:12px;max-width:780px;">Free / heavily subsidised GPU, TPU and HPC time. Most accept independent researchers, students, open‑source maintainers, and small startups — not just credentialed academics. Read the eligibility carefully; turnaround is days to a few weeks.</p>
+  <div class="grid">
+    <a class="card blue" href="https://sites.research.google/trc/about/" target="_blank" rel="noopener">
+      <div class="h"><span class="ic">🛰️</span><span class="nm">Google TPU Research Cloud (TRC)</span></div>
+      <div class="d">Free preemptible v2/v3/v4/v5e + on‑demand v5p slices for researchers, in exchange for an open paper/blog/repo. Rolling apps; ~1‑2 wk review.</div>
+    </a>
+    <a class="card nvg" href="https://www.nvidia.com/en-us/industries/higher-education-research/academic-grant-program/" target="_blank" rel="noopener">
+      <div class="h"><span class="ic">🟩</span><span class="nm">NVIDIA Academic Hardware Grant</span></div>
+      <div class="d">Free A100/H100/RTX 6000 Ada workstations or DGX time for university research. Quarterly cycle.</div>
+    </a>
+    <a class="card nvg" href="https://www.nvidia.com/en-us/startups/" target="_blank" rel="noopener">
+      <div class="h"><span class="ic">🚀</span><span class="nm">NVIDIA Inception</span></div>
+      <div class="d">Free programme for AI startups — NGC catalogue access, $100k DGX Cloud credits, technical mentorship, GTC tickets.</div>
+    </a>
+    <a class="card amber" href="https://www.amd.com/en/corporate/university-program/ai-hpc-cluster.html" target="_blank" rel="noopener">
+      <div class="h"><span class="ic">🅰️</span><span class="nm">AMD AI & HPC Fund (Instinct cluster)</span></div>
+      <div class="d">Free remote access to MI210/MI250/MI300X clusters for academic and open‑source projects. Rolling.</div>
+    </a>
+    <a class="card cyan" href="https://www.intel.com/content/www/us/en/developer/tools/devcloud/services.html" target="_blank" rel="noopener">
+      <div class="h"><span class="ic">🟦</span><span class="nm">Intel Tiber Developer Cloud</span></div>
+      <div class="d">Free Gaudi 2 / Gaudi 3, Max GPU and Xeon time for testing. Standard sign‑up; larger allocations via Liftoff program.</div>
+    </a>
+    <a class="card violet" href="https://cerebras.ai/blog/cerebras-launches-fellows-program" target="_blank" rel="noopener">
+      <div class="h"><span class="ic">🟪</span><span class="nm">Cerebras Fellows / Inference free tier</span></div>
+      <div class="d">CS‑3 wafer‑scale time for selected fellows; public free inference API on Llama, Qwen, DeepSeek for everyone.</div>
+    </a>
+    <a class="card pink" href="https://groq.com/groqcloud" target="_blank" rel="noopener">
+      <div class="h"><span class="ic">⚡</span><span class="nm">GroqCloud (free tier)</span></div>
+      <div class="d">Generous free LPU inference tier on Llama, Qwen, DeepSeek‑R1 with sub‑100ms TTFT. Sign‑up only.</div>
+    </a>
+    <a class="card green" href="https://www.sambanova.ai/developers" target="_blank" rel="noopener">
+      <div class="h"><span class="ic">🧠</span><span class="nm">SambaNova Cloud (free tier)</span></div>
+      <div class="d">Free RDU‑backed inference on Llama 405B, DeepSeek‑R1 671B and Qwen. Sign‑up only.</div>
+    </a>
+
+    <a class="card blue" href="https://cloud.google.com/edu/researchers" target="_blank" rel="noopener">
+      <div class="h"><span class="ic">☁️</span><span class="nm">Google Cloud Research Credits</span></div>
+      <div class="d">Up to $5,000 (researchers) or $1,000 (students) on GCP — covers A100/H100/TPU. Application‑based.</div>
+    </a>
+    <a class="card amber" href="https://aws.amazon.com/government-education/research-and-technical-computing/cloud-credit-for-research/" target="_blank" rel="noopener">
+      <div class="h"><span class="ic">☁️</span><span class="nm">AWS Cloud Credit for Research</span></div>
+      <div class="d">Compute credits and Trainium/Inferentia/H200 access for academic projects. Also: AWS Activate ($1k–$100k) for startups.</div>
+    </a>
+    <a class="card cyan" href="https://www.microsoft.com/en-us/research/collaboration/awards/" target="_blank" rel="noopener">
+      <div class="h"><span class="ic">☁️</span><span class="nm">Microsoft AI for Good / Azure grants</span></div>
+      <div class="d">Azure credits + ND H100 v5 access via AI for Good, AI for Earth, Climate Research grants, and Microsoft Research Faculty Fellowship.</div>
+    </a>
+    <a class="card pink" href="https://huggingface.co/docs/hub/spaces-gpus#community-gpu-grants" target="_blank" rel="noopener">
+      <div class="h"><span class="ic">🤗</span><span class="nm">Hugging Face Community GPU Grants</span></div>
+      <div class="d">Free A10G/A100/H100 on a HF Space for compelling open demos and research artefacts. Apply via the Space settings.</div>
+    </a>
+    <a class="card violet" href="https://lambda.ai/research" target="_blank" rel="noopener">
+      <div class="h"><span class="ic">λ</span><span class="nm">Lambda 1‑Click & Research credits</span></div>
+      <div class="d">Discounted/free H100 hours for selected research labs and OSS maintainers; also generous on‑demand pricing.</div>
+    </a>
+    <a class="card green" href="https://www.coreweave.com/programs/research" target="_blank" rel="noopener">
+      <div class="h"><span class="ic">⚙️</span><span class="nm">CoreWeave Research</span></div>
+      <div class="d">Application‑based H100/H200/GB200 access for AI research labs, with bare‑metal SLURM if you need it.</div>
+    </a>
+    <a class="card blue" href="https://www.together.ai/research" target="_blank" rel="noopener">
+      <div class="h"><span class="ic">🤝</span><span class="nm">Together AI Research</span></div>
+      <div class="d">Discounted dedicated H100/H200 clusters and free credits for research collaborations and OSS model authors.</div>
+    </a>
+    <a class="card amber" href="https://modal.com/research" target="_blank" rel="noopener">
+      <div class="h"><span class="ic">📦</span><span class="nm">Modal Research credits</span></div>
+      <div class="d">$5k+ in serverless GPU credits for researchers, OSS maintainers and academic labs. Quick application.</div>
+    </a>
+
+    <a class="card green" href="https://openai.com/form/researcher-access-program/" target="_blank" rel="noopener">
+      <div class="h"><span class="ic">🟢</span><span class="nm">OpenAI Researcher Access Program</span></div>
+      <div class="d">API credits for safety, capability, evaluation, and societal‑impact research on GPT‑5 / o4‑class models.</div>
+    </a>
+    <a class="card amber" href="https://www.anthropic.com/research/external-researcher-access" target="_blank" rel="noopener">
+      <div class="h"><span class="ic">🅰️</span><span class="nm">Anthropic External Researcher Access</span></div>
+      <div class="d">Free Claude 4.5 API credits for alignment, evals, interpretability and societal‑impact research.</div>
+    </a>
+    <a class="card blue" href="https://deepmind.google/discover/blog/" target="_blank" rel="noopener">
+      <div class="h"><span class="ic">🧬</span><span class="nm">Google DeepMind Academic Programs</span></div>
+      <div class="d">PhD Fellowship + targeted research collaborations + AlphaFold Server free tier for biology research.</div>
+    </a>
+    <a class="card pink" href="https://www.meta.com/research/" target="_blank" rel="noopener">
+      <div class="h"><span class="ic">🅼</span><span class="nm">Meta FAIR Research Awards</span></div>
+      <div class="d">Grants and Llama Impact awards — partner access to research clusters and Llama 4 family models for academic teams.</div>
+    </a>
+    <a class="card cyan" href="https://x.ai/blog/api" target="_blank" rel="noopener">
+      <div class="h"><span class="ic">𝕏</span><span class="nm">xAI API research credits</span></div>
+      <div class="d">Free Grok 4 API credits for safety + reasoning research. Apply via x.ai contact form.</div>
+    </a>
+    <a class="card violet" href="https://mistral.ai/news/research-grants" target="_blank" rel="noopener">
+      <div class="h"><span class="ic">🇫🇷</span><span class="nm">Mistral AI Academic credits</span></div>
+      <div class="d">Free La Plateforme credits and discounted Mistral Large 3 access for academic research.</div>
+    </a>
+
+    <a class="card green" href="https://nairrpilot.org/opportunities" target="_blank" rel="noopener">
+      <div class="h"><span class="ic">🇺🇸</span><span class="nm">NAIRR Pilot (US National AI Research Resource)</span></div>
+      <div class="d">US researchers: H100, MI300X, TPU, Cerebras, SambaNova, Groq + curated datasets — one application, many providers.</div>
+    </a>
+    <a class="card blue" href="https://access-ci.org/get-started/for-researchers/" target="_blank" rel="noopener">
+      <div class="h"><span class="ic">🏛️</span><span class="nm">NSF ACCESS (formerly XSEDE)</span></div>
+      <div class="d">A100/H100 allocations across TACC, NCSA, SDSC, PSC. Explore tier (instant) → Discover → Accelerate → Maximize.</div>
+    </a>
+    <a class="card amber" href="https://www.doeleadershipcomputing.org/" target="_blank" rel="noopener">
+      <div class="h"><span class="ic">⚛️</span><span class="nm">DOE INCITE / ALCC</span></div>
+      <div class="d">Frontier (AMD MI250X), Aurora (Intel Max), Polaris/Perlmutter (NVIDIA) leadership‑class allocations. Annual + rolling calls.</div>
+    </a>
+    <a class="card cyan" href="https://eurohpc-ju.europa.eu/access-our-supercomputers_en" target="_blank" rel="noopener">
+      <div class="h"><span class="ic">🇪🇺</span><span class="nm">EuroHPC JU — LUMI, Leonardo, MareNostrum 5</span></div>
+      <div class="d">Tier‑0 EU supercomputers with H100 / MI250X partitions. Regular Access, Extreme Scale, Benchmark and AI calls.</div>
+    </a>
+    <a class="card pink" href="https://www.aisrf.org.uk/airr" target="_blank" rel="noopener">
+      <div class="h"><span class="ic">🇬🇧</span><span class="nm">UK AIRR (AI Research Resource)</span></div>
+      <div class="d">Free time on Isambard‑AI (5,448 GH200) and Dawn (Intel PVC) for UK‑led AI research. Pilot + Mainstream calls.</div>
+    </a>
+    <a class="card violet" href="https://www.r-ccs.riken.jp/en/fugaku/user-guide/" target="_blank" rel="noopener">
+      <div class="h"><span class="ic">🇯🇵</span><span class="nm">RIKEN Fugaku (A64FX) & TSUBAME</span></div>
+      <div class="d">Japan: ARM SVE‑based Fugaku + GPU‑heavy TSUBAME 4 / ABCI 3.0 (H200) via HPCI calls. Open to international collaborators.</div>
+    </a>
+    <a class="card green" href="https://aisingapore.org/research/" target="_blank" rel="noopener">
+      <div class="h"><span class="ic">🇸🇬</span><span class="nm">AI Singapore Compute</span></div>
+      <div class="d">National H100 cluster (Aspire 2A+) access for SG academia + SEA‑LION model collaborators.</div>
+    </a>
+    <a class="card blue" href="https://vectorinstitute.ai/programs/" target="_blank" rel="noopener">
+      <div class="h"><span class="ic">🇨🇦</span><span class="nm">Vector Institute & Mila compute</span></div>
+      <div class="d">Canada: shared A100/H100 clusters for affiliated researchers + Pan‑Canadian AI Compute Environment.</div>
+    </a>
+    <a class="card amber" href="https://alliancecan.ca/en/services/advanced-research-computing/accessing-resources" target="_blank" rel="noopener">
+      <div class="h"><span class="ic">🍁</span><span class="nm">Digital Research Alliance of Canada</span></div>
+      <div class="d">Free A100/H100 (Narval, Rorqual, Trillium) for Canadian academic research. Annual Resource Allocation Competition.</div>
+    </a>
+    <a class="card cyan" href="https://nci.org.au/users/how-access-nci" target="_blank" rel="noopener">
+      <div class="h"><span class="ic">🇦🇺</span><span class="nm">NCI Australia (Gadi)</span></div>
+      <div class="d">Australian researchers: H100 / A100 / V100 time via NCMAS national merit allocation.</div>
+    </a>
+  </div>
+  <p style="margin:10px 0 0;color:var(--muted);font-size:11px;">Tip: most programs reward <i>artefacts</i> (a paper, a model card, a public demo, an OSS contribution). A 1‑page proposal with a deliverable and timeline lands far more allocation than a vague research statement. Apply to several in parallel.</p>
+</section>
+
+<footer>
+  All pages are single-file, self-contained, work offline once cached. ·
+  <a href="../try.html">Full launcher</a> · <a href="https://github.com/priyankajayaswal/learning">source on GitHub</a>
+</footer>
+
+</main>
+</body>
+</html>

@@ -1668,7 +1668,11 @@ const COURSE_CONFIG = {
           "title": "Artifact",
           "text": "Reference artifacts: MaxText GitHub, Pathways paper, JetStream, Gemma report, Llama 3 paper."
         }
-      ]
+      ,
+        {
+          "title": "Visual recap",
+          "text": "<svg viewBox=\"0 0 720 300\" xmlns=\"http://www.w3.org/2000/svg\" style=\"background:#0d1117;border:1px solid #30363d;border-radius:6px;width:100%;max-width:720px;display:block;margin:12px auto;\"><text x=\"360\" y=\"34\" text-anchor=\"middle\" fill=\"#58a6ff\" font-family=\"Segoe UI,Arial,sans-serif\" font-size=\"18\" font-weight=\"700\">MFU and Goodput are separate gates</text><text x=\"360\" y=\"56\" text-anchor=\"middle\" fill=\"#8b949e\" font-family=\"Segoe UI,Arial,sans-serif\" font-size=\"12\">Reference quality only matters when measured at scale</text><g><rect x=\"160\" y=\"92\" width=\"640\" height=\"20\" rx=\"5\" fill=\"#58a6ff88\"/><text x=\"150\" y=\"107\" text-anchor=\"end\" fill=\"#c9d1d9\" font-family=\"Segoe UI,Arial,sans-serif\" font-size=\"12\">Peak BF16</text><text x=\"810\" y=\"107\" fill=\"#8b949e\" font-family=\"Segoe UI,Arial,sans-serif\" font-size=\"11\">100%</text><rect x=\"160\" y=\"128\" width=\"500\" height=\"20\" rx=\"5\" fill=\"#d2a8ff88\"/><text x=\"150\" y=\"143\" text-anchor=\"end\" fill=\"#c9d1d9\" font-family=\"Segoe UI,Arial,sans-serif\" font-size=\"12\">HFU</text><text x=\"670\" y=\"143\" fill=\"#8b949e\" font-family=\"Segoe UI,Arial,sans-serif\" font-size=\"11\">78%</text><rect x=\"160\" y=\"164\" width=\"420\" height=\"20\" rx=\"5\" fill=\"#7ee78788\"/><text x=\"150\" y=\"179\" text-anchor=\"end\" fill=\"#c9d1d9\" font-family=\"Segoe UI,Arial,sans-serif\" font-size=\"12\">MFU</text><text x=\"590\" y=\"179\" fill=\"#8b949e\" font-family=\"Segoe UI,Arial,sans-serif\" font-size=\"11\">65%</text><rect x=\"160\" y=\"200\" width=\"330\" height=\"20\" rx=\"5\" fill=\"#ffa65788\"/><text x=\"150\" y=\"215\" text-anchor=\"end\" fill=\"#c9d1d9\" font-family=\"Segoe UI,Arial,sans-serif\" font-size=\"12\">Goodput</text><text x=\"500\" y=\"215\" fill=\"#8b949e\" font-family=\"Segoe UI,Arial,sans-serif\" font-size=\"11\">51%</text></g><line x1=\"160\" y1=\"245\" x2=\"650\" y2=\"245\" stroke=\"#30363d\"/><text x=\"405\" y=\"270\" text-anchor=\"middle\" fill=\"#8b949e\" font-family=\"Segoe UI,Arial,sans-serif\" font-size=\"12\">Each lower bar subtracts real overhead: memory stalls, communication, input, checkpoint, restart.</text></svg>"
+        }]
     },
     {
       "id": "the2",
@@ -1713,7 +1717,11 @@ const COURSE_CONFIG = {
           "title": "Artifact",
           "text": "Reference artifacts: MaxText GitHub, Pathways paper, JetStream, Gemma report, Llama 3 paper."
         }
-      ]
+      ,
+        {
+          "title": "Visual recap",
+          "text": "<svg viewBox=\"0 0 720 300\" xmlns=\"http://www.w3.org/2000/svg\" style=\"background:#0d1117;border:1px solid #30363d;border-radius:6px;width:100%;max-width:720px;display:block;margin:12px auto;\"><defs><marker id=\"a\" viewBox=\"0 0 10 10\" refX=\"9\" refY=\"5\" markerWidth=\"6\" markerHeight=\"6\" orient=\"auto\"><path d=\"M0,0 L10,5 L0,10 z\" fill=\"#7ee787\"/></marker></defs><text x=\"360\" y=\"34\" text-anchor=\"middle\" fill=\"#7ee787\" font-family=\"Segoe UI,Arial,sans-serif\" font-size=\"18\" font-weight=\"700\">TPU pod slice to MaxText training step</text><text x=\"360\" y=\"56\" text-anchor=\"middle\" fill=\"#8b949e\" font-family=\"Segoe UI,Arial,sans-serif\" font-size=\"12\">RemoteIterator, host prefetch, device mesh, compiled step</text><g font-family=\"Segoe UI,Arial,sans-serif\" font-size=\"12\"><rect x=\"34\" y=\"96\" width=\"110\" height=\"52\" rx=\"10\" fill=\"#161b22\" stroke=\"#58a6ff\"/><text x=\"89\" y=\"118\" text-anchor=\"middle\" fill=\"#c9d1d9\" font-weight=\"700\">Dataset</text><text x=\"89\" y=\"136\" text-anchor=\"middle\" fill=\"#8b949e\">ArrayRecord</text><line x1=\"150\" y1=\"122\" x2=\"190\" y2=\"122\" stroke=\"#7ee787\" stroke-width=\"2\" marker-end=\"url(#a)\"/><rect x=\"196\" y=\"96\" width=\"112\" height=\"52\" rx=\"10\" fill=\"#161b22\" stroke=\"#7ee787\"/><text x=\"252\" y=\"118\" text-anchor=\"middle\" fill=\"#c9d1d9\" font-weight=\"700\">Host input</text><text x=\"252\" y=\"136\" text-anchor=\"middle\" fill=\"#8b949e\">Grain/tf.data</text><line x1=\"314\" y1=\"122\" x2=\"354\" y2=\"122\" stroke=\"#7ee787\" stroke-width=\"2\" marker-end=\"url(#a)\"/><rect x=\"360\" y=\"96\" width=\"112\" height=\"52\" rx=\"10\" fill=\"#161b22\" stroke=\"#ffa657\"/><text x=\"416\" y=\"118\" text-anchor=\"middle\" fill=\"#c9d1d9\" font-weight=\"700\">Device mesh</text><text x=\"416\" y=\"136\" text-anchor=\"middle\" fill=\"#8b949e\">prefetch shards</text><line x1=\"478\" y1=\"122\" x2=\"518\" y2=\"122\" stroke=\"#7ee787\" stroke-width=\"2\" marker-end=\"url(#a)\"/><rect x=\"524\" y=\"96\" width=\"138\" height=\"52\" rx=\"10\" fill=\"#161b22\" stroke=\"#d2a8ff\"/><text x=\"593\" y=\"118\" text-anchor=\"middle\" fill=\"#c9d1d9\" font-weight=\"700\">MaxText step</text><text x=\"593\" y=\"136\" text-anchor=\"middle\" fill=\"#8b949e\">jit + collectives</text><path d=\"M594 160 C570 225 158 225 92 160\" fill=\"none\" stroke=\"#30363d\" stroke-width=\"2\" stroke-dasharray=\"7 6\" marker-end=\"url(#a)\"/><text x=\"360\" y=\"250\" text-anchor=\"middle\" fill=\"#8b949e\">RemoteIterator overlap keeps TPU cores fed while the previous step finishes.</text></g></svg>"
+        }]
     },
     {
       "id": "sharding3",
@@ -1758,7 +1766,11 @@ const COURSE_CONFIG = {
           "title": "Artifact",
           "text": "Reference artifacts: MaxText GitHub, Pathways paper, JetStream, Gemma report, Llama 3 paper."
         }
-      ]
+      ,
+        {
+          "title": "Visual recap",
+          "text": "<svg viewBox=\"0 0 720 300\" xmlns=\"http://www.w3.org/2000/svg\" style=\"background:#0d1117;border:1px solid #30363d;border-radius:6px;width:100%;max-width:720px;display:block;margin:12px auto;\"><defs><marker id=\"s\" viewBox=\"0 0 10 10\" refX=\"9\" refY=\"5\" markerWidth=\"6\" markerHeight=\"6\" orient=\"auto\"><path d=\"M0,0 L10,5 L0,10 z\" fill=\"#d2a8ff\"/></marker></defs><text x=\"360\" y=\"34\" text-anchor=\"middle\" fill=\"#d2a8ff\" font-family=\"Segoe UI,Arial,sans-serif\" font-size=\"18\" font-weight=\"700\">FSDP vs tensor vs sequence parallel</text><text x=\"360\" y=\"56\" text-anchor=\"middle\" fill=\"#8b949e\" font-family=\"Segoe UI,Arial,sans-serif\" font-size=\"12\">Different sharding axes buy memory with different collectives</text><g font-family=\"Segoe UI,Arial,sans-serif\" font-size=\"11\"><text x=\"68\" y=\"95\" fill=\"#c9d1d9\" font-weight=\"700\">FSDP</text><rect x=\"120\" y=\"80\" width=\"90\" height=\"34\" fill=\"#58a6ff44\" stroke=\"#58a6ff\"/><rect x=\"212\" y=\"80\" width=\"90\" height=\"34\" fill=\"#58a6ff33\" stroke=\"#58a6ff\"/><rect x=\"304\" y=\"80\" width=\"90\" height=\"34\" fill=\"#58a6ff22\" stroke=\"#58a6ff\"/><text x=\"450\" y=\"101\" fill=\"#8b949e\">parameters/optimizer state split; all-gather around matmul</text><text x=\"68\" y=\"155\" fill=\"#c9d1d9\" font-weight=\"700\">Tensor</text><rect x=\"120\" y=\"140\" width=\"82\" height=\"34\" fill=\"#f778ba44\" stroke=\"#f778ba\"/><rect x=\"204\" y=\"140\" width=\"82\" height=\"34\" fill=\"#f778ba33\" stroke=\"#f778ba\"/><rect x=\"288\" y=\"140\" width=\"82\" height=\"34\" fill=\"#f778ba22\" stroke=\"#f778ba\"/><line x1=\"380\" y1=\"157\" x2=\"430\" y2=\"157\" stroke=\"#f778ba\" marker-end=\"url(#s)\"/><text x=\"450\" y=\"161\" fill=\"#8b949e\">matrix dimensions split; reduce-scatter/all-reduce</text><text x=\"68\" y=\"215\" fill=\"#c9d1d9\" font-weight=\"700\">Sequence</text><rect x=\"120\" y=\"200\" width=\"70\" height=\"34\" fill=\"#7ee78744\" stroke=\"#7ee787\"/><rect x=\"192\" y=\"200\" width=\"70\" height=\"34\" fill=\"#7ee78733\" stroke=\"#7ee787\"/><rect x=\"264\" y=\"200\" width=\"70\" height=\"34\" fill=\"#7ee78722\" stroke=\"#7ee787\"/><rect x=\"336\" y=\"200\" width=\"70\" height=\"34\" fill=\"#7ee78711\" stroke=\"#7ee787\"/><text x=\"450\" y=\"221\" fill=\"#8b949e\">tokens/context split; attention needs explicit exchange</text><text x=\"360\" y=\"276\" text-anchor=\"middle\" fill=\"#8b949e\">Pick the sharding that solves HBM first, then measure ICI and idle time.</text></g></svg>"
+        }]
     },
     {
       "id": "rope,4",
@@ -1803,7 +1815,11 @@ const COURSE_CONFIG = {
           "title": "Artifact",
           "text": "Reference artifacts: MaxText GitHub, Pathways paper, JetStream, Gemma report, Llama 3 paper."
         }
-      ]
+      ,
+        {
+          "title": "Visual recap",
+          "text": "<svg viewBox=\"0 0 720 300\" xmlns=\"http://www.w3.org/2000/svg\" style=\"background:#0d1117;border:1px solid #30363d;border-radius:6px;width:100%;max-width:720px;display:block;margin:12px auto;\"><text x=\"360\" y=\"34\" text-anchor=\"middle\" fill=\"#ffa657\" font-family=\"Segoe UI,Arial,sans-serif\" font-size=\"18\" font-weight=\"700\">MHA, GQA, and MQA attention variants</text><text x=\"360\" y=\"56\" text-anchor=\"middle\" fill=\"#8b949e\" font-family=\"Segoe UI,Arial,sans-serif\" font-size=\"12\">KV-cache cost falls as key/value heads are shared</text><g font-family=\"Segoe UI,Arial,sans-serif\"><text x=\"84\" y=\"92\" fill=\"#c9d1d9\" font-size=\"13\" font-weight=\"700\">MHA</text><g fill=\"#58a6ff\"><circle cx=\"145\" cy=\"88\" r=\"8\"/><circle cx=\"170\" cy=\"88\" r=\"8\"/><circle cx=\"195\" cy=\"88\" r=\"8\"/><circle cx=\"220\" cy=\"88\" r=\"8\"/></g><g fill=\"#f778ba\"><circle cx=\"145\" cy=\"118\" r=\"8\"/><circle cx=\"170\" cy=\"118\" r=\"8\"/><circle cx=\"195\" cy=\"118\" r=\"8\"/><circle cx=\"220\" cy=\"118\" r=\"8\"/></g><text x=\"315\" y=\"106\" fill=\"#8b949e\" font-size=\"12\">one KV head per query head: highest KV-cache bytes</text><text x=\"84\" y=\"162\" fill=\"#c9d1d9\" font-size=\"13\" font-weight=\"700\">GQA</text><g fill=\"#58a6ff\"><circle cx=\"145\" cy=\"158\" r=\"8\"/><circle cx=\"170\" cy=\"158\" r=\"8\"/><circle cx=\"195\" cy=\"158\" r=\"8\"/><circle cx=\"220\" cy=\"158\" r=\"8\"/></g><g fill=\"#7ee787\"><rect x=\"147\" y=\"184\" width=\"70\" height=\"16\" rx=\"8\"/></g><text x=\"315\" y=\"178\" fill=\"#8b949e\" font-size=\"12\">query groups share fewer KV heads: common Gemma/Llama serving tradeoff</text><text x=\"84\" y=\"232\" fill=\"#c9d1d9\" font-size=\"13\" font-weight=\"700\">MQA</text><g fill=\"#58a6ff\"><circle cx=\"145\" cy=\"228\" r=\"8\"/><circle cx=\"170\" cy=\"228\" r=\"8\"/><circle cx=\"195\" cy=\"228\" r=\"8\"/><circle cx=\"220\" cy=\"228\" r=\"8\"/></g><rect x=\"173\" y=\"254\" width=\"22\" height=\"16\" rx=\"8\" fill=\"#ffa657\"/><text x=\"315\" y=\"248\" fill=\"#8b949e\" font-size=\"12\">all queries share one KV set: smallest cache, strongest quality tradeoff</text></g></svg>"
+        }]
     },
     {
       "id": "moe5",
@@ -1848,7 +1864,11 @@ const COURSE_CONFIG = {
           "title": "Artifact",
           "text": "Reference artifacts: MaxText GitHub, Pathways paper, JetStream, Gemma report, Llama 3 paper."
         }
-      ]
+      ,
+        {
+          "title": "Visual recap",
+          "text": "<svg viewBox=\"0 0 720 300\" xmlns=\"http://www.w3.org/2000/svg\" style=\"background:#0d1117;border:1px solid #30363d;border-radius:6px;width:100%;max-width:720px;display:block;margin:12px auto;\"><defs><marker id=\"r\" viewBox=\"0 0 10 10\" refX=\"9\" refY=\"5\" markerWidth=\"6\" markerHeight=\"6\" orient=\"auto\"><path d=\"M0,0 L10,5 L0,10 z\" fill=\"#f778ba\"/></marker></defs><text x=\"360\" y=\"34\" text-anchor=\"middle\" fill=\"#f778ba\" font-family=\"Segoe UI,Arial,sans-serif\" font-size=\"18\" font-weight=\"700\">Expert-parallel MoE routing checklist</text><text x=\"360\" y=\"56\" text-anchor=\"middle\" fill=\"#8b949e\" font-family=\"Segoe UI,Arial,sans-serif\" font-size=\"12\">Tokens route through top-k experts; capacity controls drops</text><g font-family=\"Segoe UI,Arial,sans-serif\" font-size=\"12\"><rect x=\"78\" y=\"88\" width=\"146\" height=\"54\" rx=\"10\" fill=\"#161b22\" stroke=\"#58a6ff\"/><text x=\"151\" y=\"111\" text-anchor=\"middle\" fill=\"#c9d1d9\" font-weight=\"700\">JAX program</text><text x=\"151\" y=\"129\" text-anchor=\"middle\" fill=\"#8b949e\">sharded arrays</text><line x1=\"230\" y1=\"115\" x2=\"300\" y2=\"115\" stroke=\"#f778ba\" marker-end=\"url(#r)\"/><rect x=\"306\" y=\"76\" width=\"150\" height=\"78\" rx=\"10\" fill=\"#161b22\" stroke=\"#d2a8ff\"/><text x=\"381\" y=\"104\" text-anchor=\"middle\" fill=\"#c9d1d9\" font-weight=\"700\">Pathways</text><text x=\"381\" y=\"122\" text-anchor=\"middle\" fill=\"#8b949e\">resource scheduler</text><text x=\"381\" y=\"140\" text-anchor=\"middle\" fill=\"#8b949e\">dispatch + barriers</text><line x1=\"462\" y1=\"115\" x2=\"532\" y2=\"88\" stroke=\"#f778ba\" marker-end=\"url(#r)\"/><line x1=\"462\" y1=\"115\" x2=\"532\" y2=\"142\" stroke=\"#f778ba\" marker-end=\"url(#r)\"/><rect x=\"540\" y=\"54\" width=\"118\" height=\"48\" rx=\"8\" fill=\"#161b22\" stroke=\"#7ee787\"/><text x=\"599\" y=\"84\" text-anchor=\"middle\" fill=\"#c9d1d9\">TPU slice A</text><rect x=\"540\" y=\"128\" width=\"118\" height=\"48\" rx=\"8\" fill=\"#161b22\" stroke=\"#ffa657\"/><text x=\"599\" y=\"158\" text-anchor=\"middle\" fill=\"#c9d1d9\">TPU slice B</text><text x=\"360\" y=\"244\" text-anchor=\"middle\" fill=\"#8b949e\">The runtime turns one logical program into coordinated work across hosts and accelerators.</text></g></svg>"
+        }]
     },
     {
       "id": "checkpointing6",
@@ -1893,7 +1913,11 @@ const COURSE_CONFIG = {
           "title": "Artifact",
           "text": "Reference artifacts: MaxText GitHub, Pathways paper, JetStream, Gemma report, Llama 3 paper."
         }
-      ]
+      ,
+        {
+          "title": "Visual recap",
+          "text": "<svg viewBox=\"0 0 720 300\" xmlns=\"http://www.w3.org/2000/svg\" style=\"background:#0d1117;border:1px solid #30363d;border-radius:6px;width:100%;max-width:720px;display:block;margin:12px auto;\"><defs><marker id=\"c\" viewBox=\"0 0 10 10\" refX=\"9\" refY=\"5\" markerWidth=\"6\" markerHeight=\"6\" orient=\"auto\"><path d=\"M0,0 L10,5 L0,10 z\" fill=\"#79c0ff\"/></marker></defs><text x=\"360\" y=\"34\" text-anchor=\"middle\" fill=\"#79c0ff\" font-family=\"Segoe UI,Arial,sans-serif\" font-size=\"18\" font-weight=\"700\">Orbax async checkpoint flow</text><text x=\"360\" y=\"56\" text-anchor=\"middle\" fill=\"#8b949e\" font-family=\"Segoe UI,Arial,sans-serif\" font-size=\"12\">Separate train latency from host serialization and storage writes</text><g font-family=\"Segoe UI,Arial,sans-serif\" font-size=\"12\"><rect x=\"48\" y=\"92\" width=\"120\" height=\"48\" rx=\"8\" fill=\"#161b22\" stroke=\"#58a6ff\"/><text x=\"108\" y=\"121\" text-anchor=\"middle\" fill=\"#c9d1d9\" font-weight=\"700\">Train step N</text><line x1=\"174\" y1=\"116\" x2=\"244\" y2=\"116\" stroke=\"#79c0ff\" marker-end=\"url(#c)\"/><rect x=\"250\" y=\"92\" width=\"128\" height=\"48\" rx=\"8\" fill=\"#161b22\" stroke=\"#7ee787\"/><text x=\"314\" y=\"121\" text-anchor=\"middle\" fill=\"#c9d1d9\" font-weight=\"700\">Copy to host</text><line x1=\"384\" y1=\"116\" x2=\"454\" y2=\"116\" stroke=\"#79c0ff\" marker-end=\"url(#c)\"/><rect x=\"460\" y=\"92\" width=\"128\" height=\"48\" rx=\"8\" fill=\"#161b22\" stroke=\"#ffa657\"/><text x=\"524\" y=\"121\" text-anchor=\"middle\" fill=\"#c9d1d9\" font-weight=\"700\">Write async</text><path d=\"M108 160 V214 H524 V160\" fill=\"none\" stroke=\"#30363d\" stroke-dasharray=\"6 5\"/><text x=\"316\" y=\"235\" text-anchor=\"middle\" fill=\"#8b949e\">Foreground keeps training; background must drain before unsafe backlog accumulates.</text><rect x=\"96\" y=\"250\" width=\"420\" height=\"18\" rx=\"9\" fill=\"#161b22\" stroke=\"#30363d\"/><rect x=\"106\" y=\"254\" width=\"128\" height=\"10\" rx=\"5\" fill=\"#58a6ff\"/><rect x=\"240\" y=\"254\" width=\"128\" height=\"10\" rx=\"5\" fill=\"#7ee787\"/><rect x=\"374\" y=\"254\" width=\"128\" height=\"10\" rx=\"5\" fill=\"#ffa657\"/></g></svg>"
+        }]
     },
     {
       "id": "data7",
@@ -1938,7 +1962,11 @@ const COURSE_CONFIG = {
           "title": "Artifact",
           "text": "Reference artifacts: MaxText GitHub, Pathways paper, JetStream, Gemma report, Llama 3 paper."
         }
-      ]
+      ,
+        {
+          "title": "Visual recap",
+          "text": "<svg viewBox=\"0 0 720 300\" xmlns=\"http://www.w3.org/2000/svg\" style=\"background:#0d1117;border:1px solid #30363d;border-radius:6px;width:100%;max-width:720px;display:block;margin:12px auto;\"><defs><marker id=\"a\" viewBox=\"0 0 10 10\" refX=\"9\" refY=\"5\" markerWidth=\"6\" markerHeight=\"6\" orient=\"auto\"><path d=\"M0,0 L10,5 L0,10 z\" fill=\"#58a6ff\"/></marker></defs><text x=\"360\" y=\"34\" text-anchor=\"middle\" fill=\"#58a6ff\" font-family=\"Segoe UI,Arial,sans-serif\" font-size=\"18\" font-weight=\"700\">Grain/tf.data input path</text><text x=\"360\" y=\"56\" text-anchor=\"middle\" fill=\"#8b949e\" font-family=\"Segoe UI,Arial,sans-serif\" font-size=\"12\">Storage to host workers to prefetch queues to TPU devices</text><g font-family=\"Segoe UI,Arial,sans-serif\" font-size=\"12\"><rect x=\"34\" y=\"96\" width=\"110\" height=\"52\" rx=\"10\" fill=\"#161b22\" stroke=\"#58a6ff\"/><text x=\"89\" y=\"118\" text-anchor=\"middle\" fill=\"#c9d1d9\" font-weight=\"700\">Dataset</text><text x=\"89\" y=\"136\" text-anchor=\"middle\" fill=\"#8b949e\">ArrayRecord</text><line x1=\"150\" y1=\"122\" x2=\"190\" y2=\"122\" stroke=\"#58a6ff\" stroke-width=\"2\" marker-end=\"url(#a)\"/><rect x=\"196\" y=\"96\" width=\"112\" height=\"52\" rx=\"10\" fill=\"#161b22\" stroke=\"#7ee787\"/><text x=\"252\" y=\"118\" text-anchor=\"middle\" fill=\"#c9d1d9\" font-weight=\"700\">Host input</text><text x=\"252\" y=\"136\" text-anchor=\"middle\" fill=\"#8b949e\">Grain/tf.data</text><line x1=\"314\" y1=\"122\" x2=\"354\" y2=\"122\" stroke=\"#58a6ff\" stroke-width=\"2\" marker-end=\"url(#a)\"/><rect x=\"360\" y=\"96\" width=\"112\" height=\"52\" rx=\"10\" fill=\"#161b22\" stroke=\"#ffa657\"/><text x=\"416\" y=\"118\" text-anchor=\"middle\" fill=\"#c9d1d9\" font-weight=\"700\">Device mesh</text><text x=\"416\" y=\"136\" text-anchor=\"middle\" fill=\"#8b949e\">prefetch shards</text><line x1=\"478\" y1=\"122\" x2=\"518\" y2=\"122\" stroke=\"#58a6ff\" stroke-width=\"2\" marker-end=\"url(#a)\"/><rect x=\"524\" y=\"96\" width=\"138\" height=\"52\" rx=\"10\" fill=\"#161b22\" stroke=\"#d2a8ff\"/><text x=\"593\" y=\"118\" text-anchor=\"middle\" fill=\"#c9d1d9\" font-weight=\"700\">MaxText step</text><text x=\"593\" y=\"136\" text-anchor=\"middle\" fill=\"#8b949e\">jit + collectives</text><path d=\"M594 160 C570 225 158 225 92 160\" fill=\"none\" stroke=\"#30363d\" stroke-width=\"2\" stroke-dasharray=\"7 6\" marker-end=\"url(#a)\"/><text x=\"360\" y=\"250\" text-anchor=\"middle\" fill=\"#8b949e\">RemoteIterator overlap keeps TPU cores fed while the previous step finishes.</text></g></svg>"
+        }]
     },
     {
       "id": "profiling8",
@@ -1983,7 +2011,11 @@ const COURSE_CONFIG = {
           "title": "Artifact",
           "text": "Reference artifacts: MaxText GitHub, Pathways paper, JetStream, Gemma report, Llama 3 paper."
         }
-      ]
+      ,
+        {
+          "title": "Visual recap",
+          "text": "<svg viewBox=\"0 0 720 300\" xmlns=\"http://www.w3.org/2000/svg\" style=\"background:#0d1117;border:1px solid #30363d;border-radius:6px;width:100%;max-width:720px;display:block;margin:12px auto;\"><text x=\"360\" y=\"34\" text-anchor=\"middle\" fill=\"#f778ba\" font-family=\"Segoe UI,Arial,sans-serif\" font-size=\"18\" font-weight=\"700\">XProf bottleneck triage</text><text x=\"360\" y=\"56\" text-anchor=\"middle\" fill=\"#8b949e\" font-family=\"Segoe UI,Arial,sans-serif\" font-size=\"12\">Classify time as compute, HBM, ICI, input, compile, or checkpoint</text><g><rect x=\"160\" y=\"92\" width=\"640\" height=\"20\" rx=\"5\" fill=\"#58a6ff88\"/><text x=\"150\" y=\"107\" text-anchor=\"end\" fill=\"#c9d1d9\" font-family=\"Segoe UI,Arial,sans-serif\" font-size=\"12\">Peak BF16</text><text x=\"810\" y=\"107\" fill=\"#8b949e\" font-family=\"Segoe UI,Arial,sans-serif\" font-size=\"11\">100%</text><rect x=\"160\" y=\"128\" width=\"500\" height=\"20\" rx=\"5\" fill=\"#d2a8ff88\"/><text x=\"150\" y=\"143\" text-anchor=\"end\" fill=\"#c9d1d9\" font-family=\"Segoe UI,Arial,sans-serif\" font-size=\"12\">HFU</text><text x=\"670\" y=\"143\" fill=\"#8b949e\" font-family=\"Segoe UI,Arial,sans-serif\" font-size=\"11\">78%</text><rect x=\"160\" y=\"164\" width=\"420\" height=\"20\" rx=\"5\" fill=\"#7ee78788\"/><text x=\"150\" y=\"179\" text-anchor=\"end\" fill=\"#c9d1d9\" font-family=\"Segoe UI,Arial,sans-serif\" font-size=\"12\">MFU</text><text x=\"590\" y=\"179\" fill=\"#8b949e\" font-family=\"Segoe UI,Arial,sans-serif\" font-size=\"11\">65%</text><rect x=\"160\" y=\"200\" width=\"330\" height=\"20\" rx=\"5\" fill=\"#ffa65788\"/><text x=\"150\" y=\"215\" text-anchor=\"end\" fill=\"#c9d1d9\" font-family=\"Segoe UI,Arial,sans-serif\" font-size=\"12\">Goodput</text><text x=\"500\" y=\"215\" fill=\"#8b949e\" font-family=\"Segoe UI,Arial,sans-serif\" font-size=\"11\">51%</text></g><line x1=\"160\" y1=\"245\" x2=\"650\" y2=\"245\" stroke=\"#30363d\"/><text x=\"405\" y=\"270\" text-anchor=\"middle\" fill=\"#8b949e\" font-family=\"Segoe UI,Arial,sans-serif\" font-size=\"12\">Each lower bar subtracts real overhead: memory stalls, communication, input, checkpoint, restart.</text></svg>"
+        }]
     },
     {
       "id": "goodput9",
@@ -2028,7 +2060,11 @@ const COURSE_CONFIG = {
           "title": "Artifact",
           "text": "Reference artifacts: MaxText GitHub, Pathways paper, JetStream, Gemma report, Llama 3 paper."
         }
-      ]
+      ,
+        {
+          "title": "Visual recap",
+          "text": "<svg viewBox=\"0 0 720 300\" xmlns=\"http://www.w3.org/2000/svg\" style=\"background:#0d1117;border:1px solid #30363d;border-radius:6px;width:100%;max-width:720px;display:block;margin:12px auto;\"><text x=\"360\" y=\"34\" text-anchor=\"middle\" fill=\"#7ee787\" font-family=\"Segoe UI,Arial,sans-serif\" font-size=\"18\" font-weight=\"700\">MFU, HFU, and Goodput waterfall</text><text x=\"360\" y=\"56\" text-anchor=\"middle\" fill=\"#8b949e\" font-family=\"Segoe UI,Arial,sans-serif\" font-size=\"12\">Useful FLOPs shrink as real-system overheads are included</text><g><rect x=\"160\" y=\"92\" width=\"640\" height=\"20\" rx=\"5\" fill=\"#58a6ff88\"/><text x=\"150\" y=\"107\" text-anchor=\"end\" fill=\"#c9d1d9\" font-family=\"Segoe UI,Arial,sans-serif\" font-size=\"12\">Peak BF16</text><text x=\"810\" y=\"107\" fill=\"#8b949e\" font-family=\"Segoe UI,Arial,sans-serif\" font-size=\"11\">100%</text><rect x=\"160\" y=\"128\" width=\"500\" height=\"20\" rx=\"5\" fill=\"#d2a8ff88\"/><text x=\"150\" y=\"143\" text-anchor=\"end\" fill=\"#c9d1d9\" font-family=\"Segoe UI,Arial,sans-serif\" font-size=\"12\">HFU</text><text x=\"670\" y=\"143\" fill=\"#8b949e\" font-family=\"Segoe UI,Arial,sans-serif\" font-size=\"11\">78%</text><rect x=\"160\" y=\"164\" width=\"420\" height=\"20\" rx=\"5\" fill=\"#7ee78788\"/><text x=\"150\" y=\"179\" text-anchor=\"end\" fill=\"#c9d1d9\" font-family=\"Segoe UI,Arial,sans-serif\" font-size=\"12\">MFU</text><text x=\"590\" y=\"179\" fill=\"#8b949e\" font-family=\"Segoe UI,Arial,sans-serif\" font-size=\"11\">65%</text><rect x=\"160\" y=\"200\" width=\"330\" height=\"20\" rx=\"5\" fill=\"#ffa65788\"/><text x=\"150\" y=\"215\" text-anchor=\"end\" fill=\"#c9d1d9\" font-family=\"Segoe UI,Arial,sans-serif\" font-size=\"12\">Goodput</text><text x=\"500\" y=\"215\" fill=\"#8b949e\" font-family=\"Segoe UI,Arial,sans-serif\" font-size=\"11\">51%</text></g><line x1=\"160\" y1=\"245\" x2=\"650\" y2=\"245\" stroke=\"#30363d\"/><text x=\"405\" y=\"270\" text-anchor=\"middle\" fill=\"#8b949e\" font-family=\"Segoe UI,Arial,sans-serif\" font-size=\"12\">Each lower bar subtracts real overhead: memory stalls, communication, input, checkpoint, restart.</text></svg>"
+        }]
     },
     {
       "id": "pathways10",
@@ -2073,7 +2109,11 @@ const COURSE_CONFIG = {
           "title": "Artifact",
           "text": "Reference artifacts: MaxText GitHub, Pathways paper, JetStream, Gemma report, Llama 3 paper."
         }
-      ]
+      ,
+        {
+          "title": "Visual recap",
+          "text": "<svg viewBox=\"0 0 720 300\" xmlns=\"http://www.w3.org/2000/svg\" style=\"background:#0d1117;border:1px solid #30363d;border-radius:6px;width:100%;max-width:720px;display:block;margin:12px auto;\"><defs><marker id=\"r\" viewBox=\"0 0 10 10\" refX=\"9\" refY=\"5\" markerWidth=\"6\" markerHeight=\"6\" orient=\"auto\"><path d=\"M0,0 L10,5 L0,10 z\" fill=\"#d2a8ff\"/></marker></defs><text x=\"360\" y=\"34\" text-anchor=\"middle\" fill=\"#d2a8ff\" font-family=\"Segoe UI,Arial,sans-serif\" font-size=\"18\" font-weight=\"700\">Pathways runtime placement</text><text x=\"360\" y=\"56\" text-anchor=\"middle\" fill=\"#8b949e\" font-family=\"Segoe UI,Arial,sans-serif\" font-size=\"12\">One logical program dispatches onto many slices and hosts</text><g font-family=\"Segoe UI,Arial,sans-serif\" font-size=\"12\"><rect x=\"78\" y=\"88\" width=\"146\" height=\"54\" rx=\"10\" fill=\"#161b22\" stroke=\"#58a6ff\"/><text x=\"151\" y=\"111\" text-anchor=\"middle\" fill=\"#c9d1d9\" font-weight=\"700\">JAX program</text><text x=\"151\" y=\"129\" text-anchor=\"middle\" fill=\"#8b949e\">sharded arrays</text><line x1=\"230\" y1=\"115\" x2=\"300\" y2=\"115\" stroke=\"#d2a8ff\" marker-end=\"url(#r)\"/><rect x=\"306\" y=\"76\" width=\"150\" height=\"78\" rx=\"10\" fill=\"#161b22\" stroke=\"#d2a8ff\"/><text x=\"381\" y=\"104\" text-anchor=\"middle\" fill=\"#c9d1d9\" font-weight=\"700\">Pathways</text><text x=\"381\" y=\"122\" text-anchor=\"middle\" fill=\"#8b949e\">resource scheduler</text><text x=\"381\" y=\"140\" text-anchor=\"middle\" fill=\"#8b949e\">dispatch + barriers</text><line x1=\"462\" y1=\"115\" x2=\"532\" y2=\"88\" stroke=\"#d2a8ff\" marker-end=\"url(#r)\"/><line x1=\"462\" y1=\"115\" x2=\"532\" y2=\"142\" stroke=\"#d2a8ff\" marker-end=\"url(#r)\"/><rect x=\"540\" y=\"54\" width=\"118\" height=\"48\" rx=\"8\" fill=\"#161b22\" stroke=\"#7ee787\"/><text x=\"599\" y=\"84\" text-anchor=\"middle\" fill=\"#c9d1d9\">TPU slice A</text><rect x=\"540\" y=\"128\" width=\"118\" height=\"48\" rx=\"8\" fill=\"#161b22\" stroke=\"#ffa657\"/><text x=\"599\" y=\"158\" text-anchor=\"middle\" fill=\"#c9d1d9\">TPU slice B</text><text x=\"360\" y=\"244\" text-anchor=\"middle\" fill=\"#8b949e\">The runtime turns one logical program into coordinated work across hosts and accelerators.</text></g></svg>"
+        }]
     },
     {
       "id": "inference11",
@@ -2118,7 +2158,11 @@ const COURSE_CONFIG = {
           "title": "Artifact",
           "text": "Reference artifacts: MaxText GitHub, Pathways paper, JetStream, Gemma report, Llama 3 paper."
         }
-      ]
+      ,
+        {
+          "title": "Visual recap",
+          "text": "<svg viewBox=\"0 0 720 300\" xmlns=\"http://www.w3.org/2000/svg\" style=\"background:#0d1117;border:1px solid #30363d;border-radius:6px;width:100%;max-width:720px;display:block;margin:12px auto;\"><defs><marker id=\"a\" viewBox=\"0 0 10 10\" refX=\"9\" refY=\"5\" markerWidth=\"6\" markerHeight=\"6\" orient=\"auto\"><path d=\"M0,0 L10,5 L0,10 z\" fill=\"#79c0ff\"/></marker></defs><text x=\"360\" y=\"34\" text-anchor=\"middle\" fill=\"#79c0ff\" font-family=\"Segoe UI,Arial,sans-serif\" font-size=\"18\" font-weight=\"700\">JetStream handoff after training</text><text x=\"360\" y=\"56\" text-anchor=\"middle\" fill=\"#8b949e\" font-family=\"Segoe UI,Arial,sans-serif\" font-size=\"12\">Checkpoint restore leads into prefill, decode, and KV-cache pressure</text><g font-family=\"Segoe UI,Arial,sans-serif\" font-size=\"12\"><rect x=\"34\" y=\"96\" width=\"110\" height=\"52\" rx=\"10\" fill=\"#161b22\" stroke=\"#58a6ff\"/><text x=\"89\" y=\"118\" text-anchor=\"middle\" fill=\"#c9d1d9\" font-weight=\"700\">Dataset</text><text x=\"89\" y=\"136\" text-anchor=\"middle\" fill=\"#8b949e\">ArrayRecord</text><line x1=\"150\" y1=\"122\" x2=\"190\" y2=\"122\" stroke=\"#79c0ff\" stroke-width=\"2\" marker-end=\"url(#a)\"/><rect x=\"196\" y=\"96\" width=\"112\" height=\"52\" rx=\"10\" fill=\"#161b22\" stroke=\"#7ee787\"/><text x=\"252\" y=\"118\" text-anchor=\"middle\" fill=\"#c9d1d9\" font-weight=\"700\">Host input</text><text x=\"252\" y=\"136\" text-anchor=\"middle\" fill=\"#8b949e\">Grain/tf.data</text><line x1=\"314\" y1=\"122\" x2=\"354\" y2=\"122\" stroke=\"#79c0ff\" stroke-width=\"2\" marker-end=\"url(#a)\"/><rect x=\"360\" y=\"96\" width=\"112\" height=\"52\" rx=\"10\" fill=\"#161b22\" stroke=\"#ffa657\"/><text x=\"416\" y=\"118\" text-anchor=\"middle\" fill=\"#c9d1d9\" font-weight=\"700\">Device mesh</text><text x=\"416\" y=\"136\" text-anchor=\"middle\" fill=\"#8b949e\">prefetch shards</text><line x1=\"478\" y1=\"122\" x2=\"518\" y2=\"122\" stroke=\"#79c0ff\" stroke-width=\"2\" marker-end=\"url(#a)\"/><rect x=\"524\" y=\"96\" width=\"138\" height=\"52\" rx=\"10\" fill=\"#161b22\" stroke=\"#d2a8ff\"/><text x=\"593\" y=\"118\" text-anchor=\"middle\" fill=\"#c9d1d9\" font-weight=\"700\">MaxText step</text><text x=\"593\" y=\"136\" text-anchor=\"middle\" fill=\"#8b949e\">jit + collectives</text><path d=\"M594 160 C570 225 158 225 92 160\" fill=\"none\" stroke=\"#30363d\" stroke-width=\"2\" stroke-dasharray=\"7 6\" marker-end=\"url(#a)\"/><text x=\"360\" y=\"250\" text-anchor=\"middle\" fill=\"#8b949e\">RemoteIterator overlap keeps TPU cores fed while the previous step finishes.</text></g></svg>"
+        }]
     },
     {
       "id": "comparison12",
@@ -2163,7 +2207,11 @@ const COURSE_CONFIG = {
           "title": "Artifact",
           "text": "Reference artifacts: MaxText GitHub, Pathways paper, JetStream, Gemma report, Llama 3 paper."
         }
-      ]
+      ,
+        {
+          "title": "Visual recap",
+          "text": "<svg viewBox=\"0 0 720 300\" xmlns=\"http://www.w3.org/2000/svg\" style=\"background:#0d1117;border:1px solid #30363d;border-radius:6px;width:100%;max-width:720px;display:block;margin:12px auto;\"><text x=\"360\" y=\"34\" text-anchor=\"middle\" fill=\"#ffa657\" font-family=\"Segoe UI,Arial,sans-serif\" font-size=\"18\" font-weight=\"700\">Fair framework comparison controls</text><text x=\"360\" y=\"56\" text-anchor=\"middle\" fill=\"#8b949e\" font-family=\"Segoe UI,Arial,sans-serif\" font-size=\"12\">Hold model, topology, precision, batch, and checkpoint policy constant</text><g><rect x=\"160\" y=\"92\" width=\"640\" height=\"20\" rx=\"5\" fill=\"#58a6ff88\"/><text x=\"150\" y=\"107\" text-anchor=\"end\" fill=\"#c9d1d9\" font-family=\"Segoe UI,Arial,sans-serif\" font-size=\"12\">Peak BF16</text><text x=\"810\" y=\"107\" fill=\"#8b949e\" font-family=\"Segoe UI,Arial,sans-serif\" font-size=\"11\">100%</text><rect x=\"160\" y=\"128\" width=\"500\" height=\"20\" rx=\"5\" fill=\"#d2a8ff88\"/><text x=\"150\" y=\"143\" text-anchor=\"end\" fill=\"#c9d1d9\" font-family=\"Segoe UI,Arial,sans-serif\" font-size=\"12\">HFU</text><text x=\"670\" y=\"143\" fill=\"#8b949e\" font-family=\"Segoe UI,Arial,sans-serif\" font-size=\"11\">78%</text><rect x=\"160\" y=\"164\" width=\"420\" height=\"20\" rx=\"5\" fill=\"#7ee78788\"/><text x=\"150\" y=\"179\" text-anchor=\"end\" fill=\"#c9d1d9\" font-family=\"Segoe UI,Arial,sans-serif\" font-size=\"12\">MFU</text><text x=\"590\" y=\"179\" fill=\"#8b949e\" font-family=\"Segoe UI,Arial,sans-serif\" font-size=\"11\">65%</text><rect x=\"160\" y=\"200\" width=\"330\" height=\"20\" rx=\"5\" fill=\"#ffa65788\"/><text x=\"150\" y=\"215\" text-anchor=\"end\" fill=\"#c9d1d9\" font-family=\"Segoe UI,Arial,sans-serif\" font-size=\"12\">Goodput</text><text x=\"500\" y=\"215\" fill=\"#8b949e\" font-family=\"Segoe UI,Arial,sans-serif\" font-size=\"11\">51%</text></g><line x1=\"160\" y1=\"245\" x2=\"650\" y2=\"245\" stroke=\"#30363d\"/><text x=\"405\" y=\"270\" text-anchor=\"middle\" fill=\"#8b949e\" font-family=\"Segoe UI,Arial,sans-serif\" font-size=\"12\">Each lower bar subtracts real overhead: memory stalls, communication, input, checkpoint, restart.</text></svg>"
+        }]
     },
     {
       "id": "tech13",
@@ -2208,7 +2256,11 @@ const COURSE_CONFIG = {
           "title": "Artifact",
           "text": "Reference artifacts: MaxText GitHub, Pathways paper, JetStream, Gemma report, Llama 3 paper."
         }
-      ]
+      ,
+        {
+          "title": "Visual recap",
+          "text": "<svg viewBox=\"0 0 720 300\" xmlns=\"http://www.w3.org/2000/svg\" style=\"background:#0d1117;border:1px solid #30363d;border-radius:6px;width:100%;max-width:720px;display:block;margin:12px auto;\"><defs><marker id=\"t\" viewBox=\"0 0 10 10\" refX=\"9\" refY=\"5\" markerWidth=\"6\" markerHeight=\"6\" orient=\"auto\"><path d=\"M0,0 L10,5 L0,10 z\" fill=\"#58a6ff\"/></marker></defs><text x=\"360\" y=\"34\" text-anchor=\"middle\" fill=\"#58a6ff\" font-family=\"Segoe UI,Arial,sans-serif\" font-size=\"18\" font-weight=\"700\">Gemma, Llama, and Mixtral config tree</text><text x=\"360\" y=\"56\" text-anchor=\"middle\" fill=\"#8b949e\" font-family=\"Segoe UI,Arial,sans-serif\" font-size=\"12\">Model-family knobs become mesh, memory, and serving constraints</text><g font-family=\"Segoe UI,Arial,sans-serif\" font-size=\"12\"><rect x=\"292\" y=\"78\" width=\"136\" height=\"36\" rx=\"8\" fill=\"#161b22\" stroke=\"#58a6ff\"/><text x=\"360\" y=\"101\" text-anchor=\"middle\" fill=\"#c9d1d9\" font-weight=\"700\">MaxText config</text><line x1=\"360\" y1=\"114\" x2=\"180\" y2=\"154\" stroke=\"#58a6ff\" marker-end=\"url(#t)\"/><line x1=\"360\" y1=\"114\" x2=\"360\" y2=\"154\" stroke=\"#58a6ff\" marker-end=\"url(#t)\"/><line x1=\"360\" y1=\"114\" x2=\"540\" y2=\"154\" stroke=\"#58a6ff\" marker-end=\"url(#t)\"/><rect x=\"96\" y=\"158\" width=\"168\" height=\"58\" rx=\"8\" fill=\"#161b22\" stroke=\"#7ee787\"/><text x=\"180\" y=\"181\" text-anchor=\"middle\" fill=\"#c9d1d9\" font-weight=\"700\">Gemma</text><text x=\"180\" y=\"199\" text-anchor=\"middle\" fill=\"#8b949e\">GQA \u00b7 RMSNorm \u00b7 SwiGLU</text><rect x=\"276\" y=\"158\" width=\"168\" height=\"58\" rx=\"8\" fill=\"#161b22\" stroke=\"#ffa657\"/><text x=\"360\" y=\"181\" text-anchor=\"middle\" fill=\"#c9d1d9\" font-weight=\"700\">Llama</text><text x=\"360\" y=\"199\" text-anchor=\"middle\" fill=\"#8b949e\">RoPE \u00b7 GQA \u00b7 tokenizer</text><rect x=\"456\" y=\"158\" width=\"168\" height=\"58\" rx=\"8\" fill=\"#161b22\" stroke=\"#f778ba\"/><text x=\"540\" y=\"181\" text-anchor=\"middle\" fill=\"#c9d1d9\" font-weight=\"700\">Mixtral</text><text x=\"540\" y=\"199\" text-anchor=\"middle\" fill=\"#8b949e\">MoE \u00b7 top-k \u00b7 experts</text><text x=\"360\" y=\"262\" text-anchor=\"middle\" fill=\"#8b949e\">A model family is a bundle of dimensions, head counts, routing rules, and sharding pressure.</text></g></svg>"
+        }]
     }
   ],
   "useCases": [
@@ -2284,7 +2336,13 @@ const COURSE_CONFIG = {
             }
           ]
         }
-      ]
+      ,
+        {
+          "title": "Visual wrap-up",
+          "component": "End-state diagram",
+          "detail": "This additive visual recap closes the use case by tying the scenario back to concrete MaxText systems questions: where the tensors live, which hosts and accelerators coordinate, what gets saved for recovery, and which metric proves the production run improved.",
+          "svg": function() { return "<svg viewBox=\"0 0 720 300\" xmlns=\"http://www.w3.org/2000/svg\" style=\"background:#0d1117;border:1px solid #30363d;border-radius:6px;width:100%;max-width:720px;display:block;margin:12px auto;\"><defs><marker id=\"c\" viewBox=\"0 0 10 10\" refX=\"9\" refY=\"5\" markerWidth=\"6\" markerHeight=\"6\" orient=\"auto\"><path d=\"M0,0 L10,5 L0,10 z\" fill=\"#58a6ff\"/></marker></defs><text x=\"360\" y=\"34\" text-anchor=\"middle\" fill=\"#58a6ff\" font-family=\"Segoe UI,Arial,sans-serif\" font-size=\"18\" font-weight=\"700\">Restart-from-checkpoint timeline for 70B pretraining</text><text x=\"360\" y=\"56\" text-anchor=\"middle\" fill=\"#8b949e\" font-family=\"Segoe UI,Arial,sans-serif\" font-size=\"12\">Launch, train, async checkpoints, failure, restore, resume on the same mesh</text><g font-family=\"Segoe UI,Arial,sans-serif\" font-size=\"12\"><rect x=\"48\" y=\"92\" width=\"120\" height=\"48\" rx=\"8\" fill=\"#161b22\" stroke=\"#58a6ff\"/><text x=\"108\" y=\"121\" text-anchor=\"middle\" fill=\"#c9d1d9\" font-weight=\"700\">Train step N</text><line x1=\"174\" y1=\"116\" x2=\"244\" y2=\"116\" stroke=\"#58a6ff\" marker-end=\"url(#c)\"/><rect x=\"250\" y=\"92\" width=\"128\" height=\"48\" rx=\"8\" fill=\"#161b22\" stroke=\"#7ee787\"/><text x=\"314\" y=\"121\" text-anchor=\"middle\" fill=\"#c9d1d9\" font-weight=\"700\">Copy to host</text><line x1=\"384\" y1=\"116\" x2=\"454\" y2=\"116\" stroke=\"#58a6ff\" marker-end=\"url(#c)\"/><rect x=\"460\" y=\"92\" width=\"128\" height=\"48\" rx=\"8\" fill=\"#161b22\" stroke=\"#ffa657\"/><text x=\"524\" y=\"121\" text-anchor=\"middle\" fill=\"#c9d1d9\" font-weight=\"700\">Write async</text><path d=\"M108 160 V214 H524 V160\" fill=\"none\" stroke=\"#30363d\" stroke-dasharray=\"6 5\"/><text x=\"316\" y=\"235\" text-anchor=\"middle\" fill=\"#8b949e\">Foreground keeps training; background must drain before unsafe backlog accumulates.</text><rect x=\"96\" y=\"250\" width=\"420\" height=\"18\" rx=\"9\" fill=\"#161b22\" stroke=\"#30363d\"/><rect x=\"106\" y=\"254\" width=\"128\" height=\"10\" rx=\"5\" fill=\"#58a6ff\"/><rect x=\"240\" y=\"254\" width=\"128\" height=\"10\" rx=\"5\" fill=\"#7ee787\"/><rect x=\"374\" y=\"254\" width=\"128\" height=\"10\" rx=\"5\" fill=\"#ffa657\"/></g></svg>"; }
+        }]
     },
     {
       "id": "fine-tune-gemma-2-on-a-v5e-8-slice",
@@ -2358,7 +2416,13 @@ const COURSE_CONFIG = {
             }
           ]
         }
-      ]
+      ,
+        {
+          "title": "Visual wrap-up",
+          "component": "End-state diagram",
+          "detail": "This additive visual recap closes the use case by tying the scenario back to concrete MaxText systems questions: where the tensors live, which hosts and accelerators coordinate, what gets saved for recovery, and which metric proves the production run improved.",
+          "svg": function() { return "<svg viewBox=\"0 0 720 300\" xmlns=\"http://www.w3.org/2000/svg\" style=\"background:#0d1117;border:1px solid #30363d;border-radius:6px;width:100%;max-width:720px;display:block;margin:12px auto;\"><defs><marker id=\"s\" viewBox=\"0 0 10 10\" refX=\"9\" refY=\"5\" markerWidth=\"6\" markerHeight=\"6\" orient=\"auto\"><path d=\"M0,0 L10,5 L0,10 z\" fill=\"#7ee787\"/></marker></defs><text x=\"360\" y=\"34\" text-anchor=\"middle\" fill=\"#7ee787\" font-family=\"Segoe UI,Arial,sans-serif\" font-size=\"18\" font-weight=\"700\">Sequence packing on a v5e-8 fine-tune</text><text x=\"360\" y=\"56\" text-anchor=\"middle\" fill=\"#8b949e\" font-family=\"Segoe UI,Arial,sans-serif\" font-size=\"12\">Short examples are packed into fixed shapes to avoid recompiles and padding waste</text><g font-family=\"Segoe UI,Arial,sans-serif\" font-size=\"11\"><text x=\"68\" y=\"95\" fill=\"#c9d1d9\" font-weight=\"700\">FSDP</text><rect x=\"120\" y=\"80\" width=\"90\" height=\"34\" fill=\"#58a6ff44\" stroke=\"#58a6ff\"/><rect x=\"212\" y=\"80\" width=\"90\" height=\"34\" fill=\"#58a6ff33\" stroke=\"#58a6ff\"/><rect x=\"304\" y=\"80\" width=\"90\" height=\"34\" fill=\"#58a6ff22\" stroke=\"#58a6ff\"/><text x=\"450\" y=\"101\" fill=\"#8b949e\">parameters/optimizer state split; all-gather around matmul</text><text x=\"68\" y=\"155\" fill=\"#c9d1d9\" font-weight=\"700\">Tensor</text><rect x=\"120\" y=\"140\" width=\"82\" height=\"34\" fill=\"#f778ba44\" stroke=\"#f778ba\"/><rect x=\"204\" y=\"140\" width=\"82\" height=\"34\" fill=\"#f778ba33\" stroke=\"#f778ba\"/><rect x=\"288\" y=\"140\" width=\"82\" height=\"34\" fill=\"#f778ba22\" stroke=\"#f778ba\"/><line x1=\"380\" y1=\"157\" x2=\"430\" y2=\"157\" stroke=\"#f778ba\" marker-end=\"url(#s)\"/><text x=\"450\" y=\"161\" fill=\"#8b949e\">matrix dimensions split; reduce-scatter/all-reduce</text><text x=\"68\" y=\"215\" fill=\"#c9d1d9\" font-weight=\"700\">Sequence</text><rect x=\"120\" y=\"200\" width=\"70\" height=\"34\" fill=\"#7ee78744\" stroke=\"#7ee787\"/><rect x=\"192\" y=\"200\" width=\"70\" height=\"34\" fill=\"#7ee78733\" stroke=\"#7ee787\"/><rect x=\"264\" y=\"200\" width=\"70\" height=\"34\" fill=\"#7ee78722\" stroke=\"#7ee787\"/><rect x=\"336\" y=\"200\" width=\"70\" height=\"34\" fill=\"#7ee78711\" stroke=\"#7ee787\"/><text x=\"450\" y=\"221\" fill=\"#8b949e\">tokens/context split; attention needs explicit exchange</text><text x=\"360\" y=\"276\" text-anchor=\"middle\" fill=\"#8b949e\">Pick the sharding that solves HBM first, then measure ICI and idle time.</text></g></svg>"; }
+        }]
     },
     {
       "id": "moe-mixtral-training-with-expert-parallel",
@@ -2432,7 +2496,13 @@ const COURSE_CONFIG = {
             }
           ]
         }
-      ]
+      ,
+        {
+          "title": "Visual wrap-up",
+          "component": "End-state diagram",
+          "detail": "This additive visual recap closes the use case by tying the scenario back to concrete MaxText systems questions: where the tensors live, which hosts and accelerators coordinate, what gets saved for recovery, and which metric proves the production run improved.",
+          "svg": function() { return "<svg viewBox=\"0 0 720 300\" xmlns=\"http://www.w3.org/2000/svg\" style=\"background:#0d1117;border:1px solid #30363d;border-radius:6px;width:100%;max-width:720px;display:block;margin:12px auto;\"><defs><marker id=\"r\" viewBox=\"0 0 10 10\" refX=\"9\" refY=\"5\" markerWidth=\"6\" markerHeight=\"6\" orient=\"auto\"><path d=\"M0,0 L10,5 L0,10 z\" fill=\"#d2a8ff\"/></marker></defs><text x=\"360\" y=\"34\" text-anchor=\"middle\" fill=\"#d2a8ff\" font-family=\"Segoe UI,Arial,sans-serif\" font-size=\"18\" font-weight=\"700\">Expert-parallel all-to-all for Mixtral</text><text x=\"360\" y=\"56\" text-anchor=\"middle\" fill=\"#8b949e\" font-family=\"Segoe UI,Arial,sans-serif\" font-size=\"12\">Router assignments become ICI traffic, expert imbalance, padding, and dropped-token metrics</text><g font-family=\"Segoe UI,Arial,sans-serif\" font-size=\"12\"><rect x=\"78\" y=\"88\" width=\"146\" height=\"54\" rx=\"10\" fill=\"#161b22\" stroke=\"#58a6ff\"/><text x=\"151\" y=\"111\" text-anchor=\"middle\" fill=\"#c9d1d9\" font-weight=\"700\">JAX program</text><text x=\"151\" y=\"129\" text-anchor=\"middle\" fill=\"#8b949e\">sharded arrays</text><line x1=\"230\" y1=\"115\" x2=\"300\" y2=\"115\" stroke=\"#d2a8ff\" marker-end=\"url(#r)\"/><rect x=\"306\" y=\"76\" width=\"150\" height=\"78\" rx=\"10\" fill=\"#161b22\" stroke=\"#d2a8ff\"/><text x=\"381\" y=\"104\" text-anchor=\"middle\" fill=\"#c9d1d9\" font-weight=\"700\">Pathways</text><text x=\"381\" y=\"122\" text-anchor=\"middle\" fill=\"#8b949e\">resource scheduler</text><text x=\"381\" y=\"140\" text-anchor=\"middle\" fill=\"#8b949e\">dispatch + barriers</text><line x1=\"462\" y1=\"115\" x2=\"532\" y2=\"88\" stroke=\"#d2a8ff\" marker-end=\"url(#r)\"/><line x1=\"462\" y1=\"115\" x2=\"532\" y2=\"142\" stroke=\"#d2a8ff\" marker-end=\"url(#r)\"/><rect x=\"540\" y=\"54\" width=\"118\" height=\"48\" rx=\"8\" fill=\"#161b22\" stroke=\"#7ee787\"/><text x=\"599\" y=\"84\" text-anchor=\"middle\" fill=\"#c9d1d9\">TPU slice A</text><rect x=\"540\" y=\"128\" width=\"118\" height=\"48\" rx=\"8\" fill=\"#161b22\" stroke=\"#ffa657\"/><text x=\"599\" y=\"158\" text-anchor=\"middle\" fill=\"#c9d1d9\">TPU slice B</text><text x=\"360\" y=\"244\" text-anchor=\"middle\" fill=\"#8b949e\">The runtime turns one logical program into coordinated work across hosts and accelerators.</text></g></svg>"; }
+        }]
     }
   ],
   "problems": [
@@ -4557,6 +4627,15 @@ function buildAppendix() {
 (function initGlossaryMaps() {
   const gloss = (C && C.glossary) || [];
   if (!gloss.length) return;
+  // 0. Auto-fill missing ids from slugified term so cross-linking works
+  //    even when glossary entries omit an explicit id field.
+  gloss.forEach(g => {
+    if (!g.id && g.term) {
+      g.id = String(g.term).toLowerCase().trim()
+        .replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+    }
+  });
+
 
   // 1. Build id → entry maps and "label/aka" → id reverse map.
   const byId = {};
