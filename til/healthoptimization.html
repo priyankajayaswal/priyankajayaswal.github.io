@@ -150,12 +150,16 @@
   .stat-badge.good { background: #23863622; color: #7ee787; border-color: #23863666; }
 
   /* Source link */
+  .fixed-ref-link,
   #source-link {
     position: fixed; bottom: 16px; right: 16px; z-index: 10;
     background: rgba(22,27,34,0.92); border: 1px solid #30363d; border-radius: 8px;
     padding: 8px 14px; font-size: 11px; color: #8b949e;
   }
+  .fixed-ref-link { bottom: 56px; }
+  .fixed-ref-link a,
   #source-link a { color: #58a6ff; text-decoration: none; }
+  .fixed-ref-link a:hover,
   #source-link a:hover { text-decoration: underline; }
 
   /* ── Hormones Tab ── */
@@ -337,6 +341,11 @@
     overflow-y: auto; overflow-x: hidden;
     background: #0d1117; padding: 0;
   }
+  #view-capability {
+    position: fixed; top: 50px; left: 0; right: 0; bottom: 0;
+    overflow-y: auto; overflow-x: hidden;
+    background: #0d1117; padding: 0;
+  }
   .recs-container { max-width: 1200px; margin: 0 auto; padding: 24px 32px 80px; }
   .recs-goal-card {
     background: #161b22; border: 1px solid #30363d; border-radius: 12px;
@@ -405,6 +414,193 @@
   }
   .recs-filter-btn:hover { border-color: #58a6ff; color: #c9d1d9; }
   .recs-filter-btn.active { background: #388bfd26; border-color: #58a6ff; color: #58a6ff; }
+  .cap-wrap { max-width: 1180px; margin: 0 auto; padding: 28px 32px 80px; }
+  .cap-hero {
+    display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.8fr);
+    gap: 18px; align-items: stretch; margin-bottom: 18px;
+  }
+  .cap-panel {
+    background: #161b22; border: 1px solid #30363d; border-radius: 10px;
+    padding: 18px; box-shadow: 0 12px 28px rgba(0,0,0,.18);
+  }
+  .cap-panel h2 { color: #c9d1d9; font-size: 24px; margin-bottom: 8px; }
+  .cap-panel h3 { color: #58a6ff; font-size: 15px; margin-bottom: 10px; }
+  .cap-panel p, .cap-panel li { color: #8b949e; font-size: 13px; line-height: 1.6; }
+  .cap-kicker {
+    color: #7ee787; font-size: 11px; font-weight: 800; text-transform: uppercase;
+    letter-spacing: 1px; margin-bottom: 8px;
+  }
+  .cap-hero-line {
+    color: #c9d1d9; font-size: 16px; line-height: 1.55; margin: 12px 0 0;
+  }
+  .cap-score-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+  .cap-score {
+    background: #0d1117; border: 1px solid #30363d; border-left: 3px solid var(--accent);
+    border-radius: 8px; padding: 12px;
+  }
+  .cap-score-num { color: #c9d1d9; font-size: 22px; font-weight: 700; }
+  .cap-score-label { color: #8b949e; font-size: 11px; line-height: 1.35; margin-top: 3px; }
+  .cap-section-title {
+    color: #c9d1d9; font-size: 18px; font-weight: 700; margin: 28px 0 12px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .cap-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+  .cap-card {
+    background: #161b22; border: 1px solid #30363d; border-radius: 10px;
+    padding: 15px; border-top: 3px solid var(--accent, #58a6ff);
+  }
+  .cap-card-title { color: #c9d1d9; font-size: 14px; font-weight: 700; margin-bottom: 8px; }
+  .cap-card-body { color: #8b949e; font-size: 12px; line-height: 1.55; }
+  .cap-pill-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+  .cap-pill {
+    background: #21262d; color: #c9d1d9; border: 1px solid #30363d;
+    border-radius: 999px; padding: 3px 8px; font-size: 10px; font-weight: 600;
+  }
+  .cap-table {
+    width: 100%; border-collapse: collapse; overflow: hidden; border-radius: 10px;
+    background: #161b22; border: 1px solid #30363d;
+  }
+  .cap-table th, .cap-table td {
+    border-bottom: 1px solid #21262d; padding: 10px 12px; text-align: left;
+    font-size: 12px; line-height: 1.45;
+  }
+  .cap-table th { color: #58a6ff; background: #0d1117; font-weight: 700; }
+  .cap-table td { color: #c9d1d9; }
+  .cap-table tr:last-child td { border-bottom: none; }
+  .cap-muted { color: #8b949e; }
+  .cap-track {
+    display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px;
+  }
+  .cap-step {
+    background: #161b22; border: 1px solid #30363d; border-radius: 10px; padding: 14px;
+  }
+  .cap-step-num { color: #7ee787; font-weight: 700; font-size: 12px; margin-bottom: 6px; }
+  .cap-step-title { color: #c9d1d9; font-weight: 700; font-size: 13px; margin-bottom: 5px; }
+  .cap-step-body { color: #8b949e; font-size: 12px; line-height: 1.5; }
+  .cap-level-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+  .cap-level {
+    background: #161b22; border: 1px solid #30363d; border-radius: 10px;
+    padding: 14px; position: relative; overflow: hidden;
+  }
+  .cap-level::before {
+    content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: var(--accent, #58a6ff);
+  }
+  .cap-level-name { color: #c9d1d9; font-size: 14px; font-weight: 800; margin-bottom: 6px; }
+  .cap-level-body { color: #8b949e; font-size: 12px; line-height: 1.5; }
+  .cap-callout {
+    background: linear-gradient(135deg, rgba(88,166,255,.18), rgba(126,231,135,.10));
+    border: 1px solid #388bfd55; border-radius: 10px; padding: 16px; margin: 18px 0;
+    color: #c9d1d9; font-size: 14px; line-height: 1.55;
+  }
+  .cap-mission {
+    display: grid; grid-template-columns: 1.15fr .85fr; gap: 12px; margin: 18px 0;
+  }
+  .cap-mission-list { display: grid; gap: 8px; margin-top: 12px; }
+  .cap-mission-item {
+    display: grid; grid-template-columns: 34px minmax(0, 1fr); gap: 10px;
+    background: #0d1117; border: 1px solid #30363d; border-radius: 8px; padding: 10px;
+  }
+  .cap-mission-num {
+    width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center;
+    background: #23863633; color: #7ee787; font-weight: 800; font-size: 12px;
+  }
+  .cap-mission-title { color: #c9d1d9; font-size: 13px; font-weight: 800; margin-bottom: 3px; }
+  .cap-mission-body { color: #8b949e; font-size: 12px; line-height: 1.45; }
+  .cap-rank {
+    background: #0d1117; border: 1px solid #30363d; border-radius: 8px; padding: 12px;
+  }
+  .cap-rank-meter { height: 9px; background: #21262d; border-radius: 999px; overflow: hidden; margin: 10px 0; }
+  .cap-rank-fill { height: 100%; width: var(--w); background: linear-gradient(90deg, #58a6ff, #7ee787); border-radius: inherit; }
+  .cap-rank-label { display: flex; justify-content: space-between; color: #8b949e; font-size: 10px; }
+  .cap-roadmap { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+  .cap-road {
+    background: #161b22; border: 1px solid #30363d; border-radius: 10px; padding: 15px;
+    min-height: 172px; position: relative;
+  }
+  .cap-road-week {
+    color: #7ee787; font-size: 11px; font-weight: 800; text-transform: uppercase;
+    letter-spacing: .7px; margin-bottom: 7px;
+  }
+  .cap-road-title { color: #c9d1d9; font-size: 15px; font-weight: 800; margin-bottom: 7px; }
+  .cap-road-body { color: #8b949e; font-size: 12px; line-height: 1.5; }
+  .cap-road-focus { color: #ffa657; font-size: 11px; font-weight: 700; margin-top: 10px; }
+  .cap-week {
+    display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 8px;
+  }
+  .cap-day {
+    background: #161b22; border: 1px solid #30363d; border-radius: 9px; padding: 10px;
+    min-height: 132px;
+  }
+  .cap-day-name { color: #58a6ff; font-size: 11px; font-weight: 800; margin-bottom: 7px; }
+  .cap-day-main { color: #c9d1d9; font-size: 13px; font-weight: 800; margin-bottom: 5px; }
+  .cap-day-small { color: #8b949e; font-size: 11px; line-height: 1.4; }
+  .cap-badge-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; }
+  .cap-badge {
+    background: #161b22; border: 1px solid #30363d; border-radius: 10px; padding: 14px;
+    text-align: center;
+  }
+  .cap-badge-icon { font-size: 24px; margin-bottom: 6px; }
+  .cap-badge-name { color: #c9d1d9; font-size: 12px; font-weight: 800; margin-bottom: 4px; }
+  .cap-badge-body { color: #8b949e; font-size: 11px; line-height: 1.35; }
+  .cap-rule-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+  .cap-rule {
+    background: #0d1117; border: 1px solid #30363d; border-left: 3px solid var(--accent);
+    border-radius: 8px; padding: 12px;
+  }
+  .cap-rule-title { color: #c9d1d9; font-size: 13px; font-weight: 800; margin-bottom: 5px; }
+  .cap-rule-body { color: #8b949e; font-size: 12px; line-height: 1.45; }
+  .cap-peak-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+  .cap-peak-card {
+    background: #161b22; border: 1px solid #30363d; border-radius: 10px;
+    padding: 15px; border-left: 3px solid var(--accent, #58a6ff);
+  }
+  .cap-peak-top { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .cap-peak-icon { font-size: 22px; }
+  .cap-peak-title { color: #c9d1d9; font-size: 14px; font-weight: 800; }
+  .cap-peak-sub { color: #8b949e; font-size: 11px; margin-top: 2px; }
+  .cap-peak-body { color: #8b949e; font-size: 12px; line-height: 1.5; }
+  .cap-peak-action {
+    color: #7ee787; font-size: 11px; font-weight: 800; margin-top: 10px;
+    border-top: 1px solid #30363d; padding-top: 9px;
+  }
+  .cap-sex-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+  .cap-sex-card {
+    background: #161b22; border: 1px solid #30363d; border-radius: 10px;
+    padding: 15px; border-left: 3px solid var(--accent, #7ee787);
+  }
+  .cap-sex-card.male-card { --accent:#58a6ff; }
+  .cap-sex-card.female-card { --accent:#f778ba; }
+  .cap-sex-card.both-card { --accent:#7ee787; }
+  .cap-sex-title { color: var(--accent); font-size: 14px; font-weight: 800; margin-bottom: 6px; }
+  .cap-sex-main { color: #c9d1d9; font-size: 18px; font-weight: 800; margin-bottom: 5px; }
+  .cap-sex-body { color: #8b949e; font-size: 12px; line-height: 1.5; }
+  .cap-sex-tag {
+    display: inline-block; margin-top: 10px; padding: 2px 8px; border-radius: 999px;
+    background: #21262d; color: var(--accent); border: 1px solid #30363d;
+    font-size: 10px; font-weight: 800;
+  }
+  .cap-screen-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+  .cap-screen-card {
+    background: #161b22; border: 1px solid #30363d; border-radius: 10px;
+    padding: 15px; border-left: 3px solid var(--accent, #58a6ff);
+  }
+  .cap-screen-age {
+    color: var(--accent, #58a6ff); font-size: 11px; font-weight: 800;
+    text-transform: uppercase; letter-spacing: .7px; margin-bottom: 6px;
+  }
+  .cap-screen-title { color: #c9d1d9; font-size: 14px; font-weight: 800; margin-bottom: 7px; }
+  .cap-screen-body { color: #8b949e; font-size: 12px; line-height: 1.5; }
+  .cap-screen-body b { color: #c9d1d9; }
+  .cap-screen-alert {
+    background: #2a1517; border: 1px solid #ff7b7255; color: #ffb4ad;
+    border-radius: 10px; padding: 14px; font-size: 13px; line-height: 1.55;
+    margin-top: 12px;
+  }
+  .cap-screen-note {
+    background: #0d1117; border: 1px solid #30363d; border-radius: 10px;
+    padding: 14px; color: #8b949e; font-size: 12px; line-height: 1.55;
+  }
   /* ── Mobile Responsive ── */
   @media (max-width: 768px) {
     /* Toolbar: compact single row with hamburger */
@@ -500,12 +696,24 @@
     #toolbar h1 { font-size: 14px; }
     .tab { padding: 5px 10px; font-size: 11px; }
     .horm-hero h2 { font-size: 19px; }
-    .horm-container, .vita-container, .peak-container, .recs-container {
+    .horm-container, .vita-container, .peak-container, .recs-container, .cap-wrap {
       padding: 12px 10px 60px;
     }
+    .cap-hero, .cap-grid, .cap-track, .cap-level-grid, .cap-mission, .cap-roadmap, .cap-rule-list, .cap-peak-grid, .cap-sex-grid, .cap-screen-grid { grid-template-columns: 1fr; }
+    .cap-score-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .cap-week { grid-template-columns: 1fr; }
+    .cap-badge-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .cap-table,
+    .horm-compare-table { display: block; overflow-x: auto; }
     .horm-card { padding: 14px; }
     .recs-goal-header { padding: 12px 14px; }
     .recs-goal-chevron span { display: none; }
+    .fixed-ref-link,
+    #source-link {
+      left: 10px; right: 10px; bottom: 10px; padding: 8px 10px;
+      font-size: 10px; line-height: 1.35; text-align: center;
+    }
+    .fixed-ref-link { bottom: 50px; }
   }
 
 </style>
@@ -523,6 +731,7 @@
     <button class="tab" data-view="peakspan" onclick="switchTab('peakspan')">📈 Peak Span</button>
     <button class="tab" data-view="recs" onclick="switchTab('recs')">🎯 Recommendations</button>
     <button class="tab" data-view="exercise" onclick="switchTab('exercise')">🏃 Exercise</button>
+    <button class="tab" data-view="capability" onclick="switchTab('capability')">🏁 Capability</button>
   </div>
 </div>
 
@@ -2800,8 +3009,564 @@
 
 
 
-  </div>
+</div>
 </div><!-- /view-exercise -->
+
+<div id="view-capability" class="view">
+  <div class="cap-wrap">
+
+    <div class="cap-hero">
+      <div class="cap-panel">
+        <div class="cap-kicker">Build a body that gives you options</div>
+        <h2>🏁 The 35-Year-Old Capability Game</h2>
+        <p>
+          The goal is not looking fit in a mirror. The goal is a body that can hike, sprint, lift luggage,
+          sit on the floor, play a sport, recover fast, and say yes to life without negotiating with aches.
+        </p>
+        <div class="cap-hero-line">
+          Test your baseline, choose one weak link, train it for 8-12 weeks, then come back stronger.
+          This is health as a scoreboard for freedom.
+        </div>
+        <div class="cap-pill-row">
+          <span class="cap-pill">Carry heavy things</span>
+          <span class="cap-pill">Move without stiffness</span>
+          <span class="cap-pill">Recover fast</span>
+          <span class="cap-pill">Stay dangerous to decline</span>
+        </div>
+      </div>
+
+      <div class="cap-panel">
+        <h3>Your weekly non-negotiables</h3>
+        <ul>
+          <li><b>Walk:</b> 30 minutes most days, with 10-15 minutes after meals when possible.</li>
+          <li><b>Lift:</b> 3 full-body sessions if you want top-5% capability.</li>
+          <li><b>Mobilize:</b> 10 minutes daily so your joints keep permissions open.</li>
+          <li><b>Retest:</b> every 8-12 weeks. Progress needs receipts.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="cap-callout">
+      <b>North star:</b> become the kind of 35-year-old who can do hard physical things casually.
+      Not every day has to be intense. But the direction should be obvious: more capacity, more confidence,
+      more range, more energy.
+    </div>
+
+    <div class="cap-section-title">📚 Research Reference</div>
+    <div class="ex-pl-grid" style="margin-bottom:18px;">
+      <div class="ex-pl-card" style="--accent:#79c0ff;">
+        <div class="ex-pl-head">
+          <span class="ex-pl-emoji">📄</span>
+          <div>
+            <div class="ex-pl-title">Capability Research PDF</div>
+            <div class="ex-pl-sub">Detailed source for the Capability tab</div>
+          </div>
+        </div>
+        <ul class="ex-pl-list">
+          <li>
+            <a href="references/healthoptimization/35yo_human_capability_benchmarks.pdf" target="_blank" rel="noopener">35-Year-Old Human Capability Benchmarks</a>
+            <span class="ex-pl-meta">PDF · benchmarks · tests · stretching ranges</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="cap-section-title">📈 Peak Span: Why Capability Matters</div>
+    <div class="cap-panel" style="margin-bottom:12px;">
+      <div class="cap-kicker">Stay close to your best self for longer</div>
+      <p>
+        Lifespan asks how long you live. Health span asks how long you avoid disease.
+        <b>Peak span</b> asks a more athletic question: how long can you stay within ~90% of your peak function?
+        The Capability Game is how you turn that idea into weekly actions.
+      </p>
+    </div>
+    <div class="cap-peak-grid">
+      <div class="cap-peak-card" style="--accent:#58a6ff;">
+        <div class="cap-peak-top">
+          <div class="cap-peak-icon">❤️</div>
+          <div><div class="cap-peak-title">Cardiorespiratory</div><div class="cap-peak-sub">Peaks around 20-25</div></div>
+        </div>
+        <div class="cap-peak-body">This is your engine: VO2, recovery, stairs, hikes, sports, and how much life feels available.</div>
+        <div class="cap-peak-action">Action: 2 Zone 2 sessions + 1 short HIIT dose weekly.</div>
+      </div>
+      <div class="cap-peak-card" style="--accent:#7ee787;">
+        <div class="cap-peak-top">
+          <div class="cap-peak-icon">💪</div>
+          <div><div class="cap-peak-title">Musculoskeletal</div><div class="cap-peak-sub">Strength, muscle, bone peak ~25</div></div>
+        </div>
+        <div class="cap-peak-body">Muscle and bone are the retirement account of the body. Decline is negotiable if you lift and eat enough protein.</div>
+        <div class="cap-peak-action">Action: 3 strength days + visible protein each meal.</div>
+      </div>
+      <div class="cap-peak-card" style="--accent:#d2a8ff;">
+        <div class="cap-peak-top">
+          <div class="cap-peak-icon">🛡️</div>
+          <div><div class="cap-peak-title">Immune resilience</div><div class="cap-peak-sub">Peaks young, then trends down</div></div>
+        </div>
+        <div class="cap-peak-body">Sleep, low visceral fat, and regular movement keep inflammation from stealing energy from the rest of the system.</div>
+        <div class="cap-peak-action">Action: protect sleep, waist, and recovery.</div>
+      </div>
+      <div class="cap-peak-card" style="--accent:#ffa657;">
+        <div class="cap-peak-top">
+          <div class="cap-peak-icon">🧠</div>
+          <div><div class="cap-peak-title">Fluid cognition</div><div class="cap-peak-sub">Processing speed peaks ~25</div></div>
+        </div>
+        <div class="cap-peak-body">Aerobic work supports BDNF and brain plasticity. Movement is not just body maintenance; it is brain maintenance.</div>
+        <div class="cap-peak-action">Action: aerobic training + skill learning.</div>
+      </div>
+      <div class="cap-peak-card" style="--accent:#79c0ff;">
+        <div class="cap-peak-top">
+          <div class="cap-peak-icon">📚</div>
+          <div><div class="cap-peak-title">Crystallized cognition</div><div class="cap-peak-sub">Wisdom/patterns peak ~40-45</div></div>
+        </div>
+        <div class="cap-peak-body">Midlife can be a power zone: better pattern recognition, judgment, and accumulated skill if you keep learning.</div>
+        <div class="cap-peak-action">Action: learn languages, skills, sports, music, or deep craft.</div>
+      </div>
+      <div class="cap-peak-card" style="--accent:#ff7b72;">
+        <div class="cap-peak-top">
+          <div class="cap-peak-icon">☠️</div>
+          <div><div class="cap-peak-title">Decline accelerators</div><div class="cap-peak-sub">Visceral fat, poor sleep, toxins</div></div>
+        </div>
+        <div class="cap-peak-body">Endocrine disruptors, excess visceral fat, chronic sleep debt, and inactivity pull multiple systems down at once.</div>
+        <div class="cap-peak-action">Action: reduce plastic heat exposure, late meals, and sedentary default.</div>
+      </div>
+    </div>
+
+    <div class="cap-mission">
+      <div class="cap-panel">
+        <div class="cap-kicker">Start today, not someday</div>
+        <h3>Your first 45 minutes</h3>
+        <div class="cap-mission-list">
+          <div class="cap-mission-item">
+            <div class="cap-mission-num">1</div>
+            <div><div class="cap-mission-title">Take the baseline snapshot</div><div class="cap-mission-body">Do push-ups, plank, deep squat, single-leg balance, waist-to-height, and a 12-minute walk/run. Record without judgment.</div></div>
+          </div>
+          <div class="cap-mission-item">
+            <div class="cap-mission-num">2</div>
+            <div><div class="cap-mission-title">Choose the weakest link</div><div class="cap-mission-body">Pick one primary bottleneck: engine, armor, range, control, or body dashboard. This becomes your 8-week focus.</div></div>
+          </div>
+          <div class="cap-mission-item">
+            <div class="cap-mission-num">3</div>
+            <div><div class="cap-mission-title">Do the first deposit</div><div class="cap-mission-body">Walk 20 minutes, hold a deep squat for 60 seconds total, and do 3 easy sets of one push/pull/squat movement.</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="cap-panel">
+        <h3>Physical Freedom Score</h3>
+        <p>Use these as ranks, not identity. A low score is useful because it tells you exactly where the next upgrade lives.</p>
+        <div class="cap-rank">
+          <div class="cap-rank-label"><span>Wake Up</span><span>Capable</span></div>
+          <div class="cap-rank-meter"><div class="cap-rank-fill" style="--w:28%;"></div></div>
+          <div class="cap-rank-label"><span>Walk + mobility habit</span><span>baseline complete</span></div>
+        </div>
+        <div class="cap-rank" style="margin-top:10px;">
+          <div class="cap-rank-label"><span>Strong</span><span>P95+</span></div>
+          <div class="cap-rank-meter"><div class="cap-rank-fill" style="--w:72%;"></div></div>
+          <div class="cap-rank-label"><span>3-day strength rhythm</span><span>boss targets</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cap-score-grid">
+      <div class="cap-score" style="--accent:#58a6ff;"><div class="cap-score-num">12 min</div><div class="cap-score-label">prove your engine with a walk/run test</div></div>
+      <div class="cap-score" style="--accent:#7ee787;"><div class="cap-score-num">50</div><div class="cap-score-label">burpees in 5 min is a serious conditioning badge</div></div>
+      <div class="cap-score" style="--accent:#ffa657;"><div class="cap-score-num">5 min</div><div class="cap-score-label">deep squat hold means your joints still trust you</div></div>
+      <div class="cap-score" style="--accent:#f778ba;"><div class="cap-score-num">90%</div><div class="cap-score-label">peak span goal: stay close to your best function</div></div>
+    </div>
+
+    <div class="cap-section-title">🧗 The Levels</div>
+    <div class="cap-level-grid">
+      <div class="cap-level" style="--accent:#8b949e;">
+        <div class="cap-level-name">Level 1: Wake Up</div>
+        <div class="cap-level-body">Walk daily, do pain-free squats, hold a plank, touch the floor, and build the habit of showing up.</div>
+      </div>
+      <div class="cap-level" style="--accent:#58a6ff;">
+        <div class="cap-level-name">Level 2: Capable</div>
+        <div class="cap-level-body">Push, pull, squat, hinge, carry, balance, and move for 45 minutes without feeling destroyed.</div>
+      </div>
+      <div class="cap-level" style="--accent:#7ee787;">
+        <div class="cap-level-name">Level 3: Strong</div>
+        <div class="cap-level-body">Train 3 days/week, recover well, hit above-average benchmarks, and make stairs, bags, and travel feel easy.</div>
+      </div>
+      <div class="cap-level" style="--accent:#f778ba;">
+        <div class="cap-level-name">Level 4: P95+</div>
+        <div class="cap-level-body">A body with range and power: 50 burpees, serious carries, strict pull-ups, strong lifts, calm heart recovery.</div>
+      </div>
+    </div>
+
+    <div class="cap-section-title">🛣️ The 12-Week Road to P95</div>
+    <div class="cap-roadmap">
+      <div class="cap-road">
+        <div class="cap-road-week">Weeks 1-2</div>
+        <div class="cap-road-title">Wake the system</div>
+        <div class="cap-road-body">Walk daily, learn clean movement patterns, test gently, and make the routine too easy to skip.</div>
+        <div class="cap-road-focus">Focus: consistency before intensity</div>
+      </div>
+      <div class="cap-road">
+        <div class="cap-road-week">Weeks 3-6</div>
+        <div class="cap-road-title">Build the base</div>
+        <div class="cap-road-body">Three strength days, two cardio days, daily mobility. Add reps or load only when form stays clean.</div>
+        <div class="cap-road-focus">Focus: volume you can recover from</div>
+      </div>
+      <div class="cap-road">
+        <div class="cap-road-week">Weeks 7-10</div>
+        <div class="cap-road-title">Aim at badges</div>
+        <div class="cap-road-body">Push a target: 50 burpees, longer carries, pull-ups, faster 12-minute distance, deeper squat hold.</div>
+        <div class="cap-road-focus">Focus: one boss battle at a time</div>
+      </div>
+      <div class="cap-road">
+        <div class="cap-road-week">Weeks 11-12</div>
+        <div class="cap-road-title">Retest and level up</div>
+        <div class="cap-road-body">Deload slightly, retest, compare numbers, and choose the next bottleneck for the next cycle.</div>
+        <div class="cap-road-focus">Focus: proof, not vibes</div>
+      </div>
+    </div>
+
+    <div class="cap-section-title">🧪 First Quest: Test Your Body</div>
+    <div class="cap-grid">
+      <div class="cap-card" style="--accent:#58a6ff;">
+        <div class="cap-card-title">Engine</div>
+        <div class="cap-card-body">12-minute walk/run. How much distance can your heart and lungs buy you when the clock is honest?</div>
+      </div>
+      <div class="cap-card" style="--accent:#7ee787;">
+        <div class="cap-card-title">Armor</div>
+        <div class="cap-card-body">Push-ups, plank, squats, loaded carry. Can your body produce force and keep its shape?</div>
+      </div>
+      <div class="cap-card" style="--accent:#ffa657;">
+        <div class="cap-card-title">Range</div>
+        <div class="cap-card-body">Deep squat, ankle test, shoulder reach, floor-to-stand. Can you still access human positions?</div>
+      </div>
+      <div class="cap-card" style="--accent:#d2a8ff;">
+        <div class="cap-card-title">Control</div>
+        <div class="cap-card-body">Single-leg stance and tandem walk. Strength is louder, but balance quietly decides how athletic you feel.</div>
+      </div>
+      <div class="cap-card" style="--accent:#79c0ff;">
+        <div class="cap-card-title">Dashboard</div>
+        <div class="cap-card-body">Waist-to-height, resting heart rate, blood pressure, sleep. These are the gauges on the machine.</div>
+      </div>
+      <div class="cap-card" style="--accent:#ff7b72;">
+        <div class="cap-card-title">Red line</div>
+        <div class="cap-card-body">Sharp pain, dizziness, chest pain, unusual breathlessness: stop. The win is long-term capacity.</div>
+      </div>
+    </div>
+
+    <div class="cap-section-title">⚥ Sex-Specific Capability Benchmarks</div>
+    <div class="horm-toggle-row" style="margin-bottom:14px;">
+      <button class="horm-toggle both active" onclick="filterCapabilitySex('all')">⚥ All Benchmarks</button>
+      <button class="horm-toggle male" onclick="filterCapabilitySex('male')">♂ Male Targets</button>
+      <button class="horm-toggle female" onclick="filterCapabilitySex('female')">♀ Female Targets</button>
+    </div>
+    <div class="cap-sex-grid">
+      <div class="cap-sex-card male-card" data-cap-sex="male">
+        <div class="cap-sex-title">♂ Engine</div>
+        <div class="cap-sex-main">12-min run: 2.8+ km</div>
+        <div class="cap-sex-body">P90+ recreational target. Estimated VO2 max strong range: 50+ ml/kg/min.</div>
+        <span class="cap-sex-tag">Male cardio</span>
+      </div>
+      <div class="cap-sex-card female-card" data-cap-sex="female">
+        <div class="cap-sex-title">♀ Engine</div>
+        <div class="cap-sex-main">12-min run: 2.6+ km</div>
+        <div class="cap-sex-body">P90+ recreational target. Estimated VO2 max strong range: 38+ ml/kg/min.</div>
+        <span class="cap-sex-tag">Female cardio</span>
+      </div>
+      <div class="cap-sex-card male-card" data-cap-sex="male">
+        <div class="cap-sex-title">♂ Push Strength</div>
+        <div class="cap-sex-main">40-50 strict push-ups</div>
+        <div class="cap-sex-body">P95+ general-population target. Keep body line rigid and reps honest.</div>
+        <span class="cap-sex-tag">Male strength</span>
+      </div>
+      <div class="cap-sex-card female-card" data-cap-sex="female">
+        <div class="cap-sex-title">♀ Push Strength</div>
+        <div class="cap-sex-main">25-35 strict push-ups</div>
+        <div class="cap-sex-body">P95+ general-population target. Incline push-ups are the bridge if floor reps are not ready.</div>
+        <span class="cap-sex-tag">Female strength</span>
+      </div>
+      <div class="cap-sex-card male-card" data-cap-sex="male">
+        <div class="cap-sex-title">♂ Pull Strength</div>
+        <div class="cap-sex-main">12-15 strict pull-ups</div>
+        <div class="cap-sex-body">Full hang to chin over bar. Rows, hangs, assisted reps, and negatives build the path.</div>
+        <span class="cap-sex-tag">Male pull</span>
+      </div>
+      <div class="cap-sex-card female-card" data-cap-sex="female">
+        <div class="cap-sex-title">♀ Pull Strength</div>
+        <div class="cap-sex-main">5-8 strict pull-ups</div>
+        <div class="cap-sex-body">A serious top-tier target. Rows and assisted pull-ups count as the training path.</div>
+        <span class="cap-sex-tag">Female pull</span>
+      </div>
+      <div class="cap-sex-card male-card" data-cap-sex="male">
+        <div class="cap-sex-title">♂ Barbell Targets</div>
+        <div class="cap-sex-main">Squat 1.5-1.75x BW</div>
+        <div class="cap-sex-body">Deadlift 2.0-2.25x BW, bench 1.25-1.5x BW, strict press 0.75-0.9x BW.</div>
+        <span class="cap-sex-tag">Male lifting</span>
+      </div>
+      <div class="cap-sex-card female-card" data-cap-sex="female">
+        <div class="cap-sex-title">♀ Barbell Targets</div>
+        <div class="cap-sex-main">Squat 1.0-1.25x BW</div>
+        <div class="cap-sex-body">Deadlift 1.5-1.75x BW, bench 0.65-0.85x BW, strict press 0.45-0.6x BW.</div>
+        <span class="cap-sex-tag">Female lifting</span>
+      </div>
+      <div class="cap-sex-card both-card" data-cap-sex="both">
+        <div class="cap-sex-title">⚥ Shared Mobility</div>
+        <div class="cap-sex-main">5-min deep squat</div>
+        <div class="cap-sex-body">10-12+ cm ankle knee-to-wall, 45-60° thoracic rotation, floor-to-stand without hands.</div>
+        <span class="cap-sex-tag">Both sexes</span>
+      </div>
+    </div>
+
+    <table class="horm-compare-table" style="margin-top:16px;">
+      <thead>
+        <tr><th>Capability</th><th style="color:#79c0ff">♂ Male P95+ direction</th><th style="color:#f778ba">♀ Female P95+ direction</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Grip Strength</strong></td><td>58+ kg dominant hand</td><td>38+ kg dominant hand</td></tr>
+        <tr><td><strong>Loaded Carry</strong></td><td>0.75-1.0x bodyweight total for 60 sec</td><td>0.5-0.75x bodyweight total for 60 sec</td></tr>
+        <tr><td><strong>Plank</strong></td><td>3+ min with clean form</td><td>3+ min with clean form</td></tr>
+        <tr><td><strong>Waist Risk Flag</strong></td><td>Keep below 40 in; waist-to-height ideally under 0.5</td><td>Keep below 35 in; waist-to-height ideally under 0.5</td></tr>
+        <tr><td><strong>Training Caution</strong></td><td>Watch ego loading, sleep debt, and visceral fat/T decline loop</td><td>Watch energy availability, iron status, menstrual disruption, and menopause/perimenopause shifts</td></tr>
+      </tbody>
+    </table>
+
+    <div class="cap-section-title">🩺 India Cancer Screening Guide (2026)</div>
+    <div class="cap-screen-alert">
+      Early detection saves lives. This is the family WhatsApp version: simple enough to share, careful enough to act on.
+    </div>
+
+    <div class="cap-screen-grid">
+      <div class="cap-screen-card">
+        <div class="cap-screen-age">Start at 20+</div>
+        <div class="cap-screen-title">Self-awareness + prevention</div>
+        <div class="cap-screen-body">
+          Complete <b>HPV vaccination</b> if eligible and <b>Hepatitis B vaccination</b> if not already protected. Do monthly awareness checks: breasts for women, oral cavity for everyone, especially if tobacco, supari, gutkha, paan, or alcohol are in the picture.
+        </div>
+      </div>
+      <div class="cap-screen-card">
+        <div class="cap-screen-age">The 3-week rule</div>
+        <div class="cap-screen-title">Do not wait out persistent symptoms</div>
+        <div class="cap-screen-body">
+          Any new lump, mouth ulcer, white/red patch, voice change, cough, unexplained bleeding, swallowing trouble, or weight loss lasting <b>more than 3 weeks</b> deserves a doctor's visit. This is not panic; it is intelligent maintenance.
+        </div>
+      </div>
+      <div class="cap-screen-card">
+        <div class="cap-screen-age">Where to go</div>
+        <div class="cap-screen-title">Use the public system early</div>
+        <div class="cap-screen-body">
+          Ask at an <b>Ayushman Arogya Mandir</b>, government district hospital, NCD clinic, family physician, dentist, ENT, gynecologist, or oncologist. Free or low-cost screening access varies by state and facility, but the first step should be cheap and near you.
+        </div>
+      </div>
+    </div>
+
+    <table class="horm-compare-table" style="margin-top:16px;">
+      <thead>
+        <tr><th>Screen</th><th>Who / When</th><th>What to ask for</th><th>Clean reminder</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Oral cancer</strong></td><td>All adults 30+</td><td>Visual oral exam every 5 years; annually if tobacco/supari/gutkha/paan use</td><td>Check lips, tongue, cheek, gums, palate, throat; persistent white/red patches need review</td></tr>
+        <tr><td><strong>Breast cancer</strong></td><td>Women 30+</td><td>Clinical breast exam every 1-3 years; discuss mammography around 40-45 or earlier if high risk</td><td>Know your normal; report a lump, nipple discharge, skin dimpling, or one-sided change</td></tr>
+        <tr><td><strong>Cervical cancer</strong></td><td>Women / people with cervix 30+</td><td>HPV DNA test if available, or VIA/Pap as locally available; commonly every 5 years for HPV/VIA programs</td><td>HPV vaccination helps prevent, but screening still matters after age 30</td></tr>
+        <tr><td><strong>Colorectal cancer</strong></td><td>Average-risk adults 45+</td><td>Annual FIT/stool blood test or colonoscopy every 10 years</td><td>Start earlier with family history, blood in stool, anemia, bowel habit change, or IBD history</td></tr>
+        <tr><td><strong>Prostate cancer</strong></td><td>Men 50+</td><td>Discuss PSA blood test and pros/cons with a doctor</td><td>Urinary symptoms need evaluation, but PSA screening is a shared decision, not an automatic test for everyone</td></tr>
+        <tr><td><strong>Lung cancer</strong></td><td>Heavy smokers / recent ex-smokers 50+</td><td>Annual low-dose CT only if high risk</td><td>Not for general population screening; quitting tobacco is the highest-return move</td></tr>
+      </tbody>
+    </table>
+
+    <div class="cap-screen-note">
+      Family-history shortcut: if a parent, sibling, or child had cancer, ask your doctor whether to start screening about 10 years earlier than their diagnosis age. Gallbladder note for India: persistent "acidity," right-upper-abdominal pain, jaundice, or known gallstones should be medically evaluated; ultrasound is often the first test, but it is not a blanket screening test for everyone. Awareness only, not personal medical advice.
+    </div>
+
+    <div class="cap-section-title">📅 Follow This Week</div>
+    <div class="cap-week">
+      <div class="cap-day">
+        <div class="cap-day-name">MON</div>
+        <div class="cap-day-main">Strength A</div>
+        <div class="cap-day-small">Squat + bench + row + carry. Finish with 10 min mobility.</div>
+      </div>
+      <div class="cap-day">
+        <div class="cap-day-name">TUE</div>
+        <div class="cap-day-main">Engine</div>
+        <div class="cap-day-small">30-45 min brisk walk or Zone 2. Add post-meal walk.</div>
+      </div>
+      <div class="cap-day">
+        <div class="cap-day-name">WED</div>
+        <div class="cap-day-main">Strength B</div>
+        <div class="cap-day-small">Deadlift + overhead press + pull-up path + split squat.</div>
+      </div>
+      <div class="cap-day">
+        <div class="cap-day-name">THU</div>
+        <div class="cap-day-main">Range</div>
+        <div class="cap-day-small">20 min mobility: squat, ankles, 90/90, hamstrings, shoulders.</div>
+      </div>
+      <div class="cap-day">
+        <div class="cap-day-name">FRI</div>
+        <div class="cap-day-main">Strength C</div>
+        <div class="cap-day-small">Front squat/RDL + press variation + row + carry + core.</div>
+      </div>
+      <div class="cap-day">
+        <div class="cap-day-name">SAT</div>
+        <div class="cap-day-main">Play</div>
+        <div class="cap-day-small">Hike, sport, dance, bike, swim, long walk. Make fitness feel alive.</div>
+      </div>
+      <div class="cap-day">
+        <div class="cap-day-name">SUN</div>
+        <div class="cap-day-main">Reset</div>
+        <div class="cap-day-small">Easy walk, floor mobility, meal prep, review one number.</div>
+      </div>
+    </div>
+
+    <div class="cap-section-title">🏆 Boss Battles: P95+ Compound Targets</div>
+    <table class="cap-table">
+      <thead>
+        <tr><th>Pattern</th><th>Top-5% general-population target</th><th>Progression idea</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Burpees</td><td>50 clean reps in 5 min; aspirational 100 in 10-12 min</td><td>5x5 -> 10x5 -> 5x10 -> timed 50</td></tr>
+        <tr><td>Push-ups</td><td>Male: 40-50 strict; Female: 25-35 strict</td><td>Incline -> negatives -> floor reps -> deficit/weighted</td></tr>
+        <tr><td>Pull-ups</td><td>Male: 12-15 strict; Female: 5-8 strict</td><td>Rows -> dead hangs -> assisted reps -> negatives -> strict reps</td></tr>
+        <tr><td>Squat</td><td>Back squat 1.5-1.75x BW male; 1.0-1.25x BW female</td><td>Goblet -> front squat -> back squat; add load only with depth/control</td></tr>
+        <tr><td>Deadlift</td><td>2.0-2.25x BW male; 1.5-1.75x BW female</td><td>Hinge drill -> Romanian deadlift -> trap bar/conventional deadlift</td></tr>
+        <tr><td>Carry</td><td>Carry 50-100% bodyweight total for 60 sec</td><td>Groceries -> dumbbells -> heavier carries -> longer distance</td></tr>
+      </tbody>
+    </table>
+
+    <div class="cap-section-title">🎖️ Milestone Badges</div>
+    <div class="cap-badge-grid">
+      <div class="cap-badge"><div class="cap-badge-icon">🚶</div><div class="cap-badge-name">10K Walker</div><div class="cap-badge-body">10,000 steps or 75 min total walking in a day.</div></div>
+      <div class="cap-badge"><div class="cap-badge-icon">🤸</div><div class="cap-badge-name">Burpee 50</div><div class="cap-badge-body">50 clean burpees under 5 minutes.</div></div>
+      <div class="cap-badge"><div class="cap-badge-icon">🧱</div><div class="cap-badge-name">Carry Proof</div><div class="cap-badge-body">Farmer carry 50-75% bodyweight for 60 sec.</div></div>
+      <div class="cap-badge"><div class="cap-badge-icon">🧘</div><div class="cap-badge-name">Squat Calm</div><div class="cap-badge-body">5-minute deep squat hold with relaxed breathing.</div></div>
+      <div class="cap-badge"><div class="cap-badge-icon">🏔️</div><div class="cap-badge-name">Weekend Body</div><div class="cap-badge-body">Long hike, sport, or adventure without next-day collapse.</div></div>
+    </div>
+
+    <div class="cap-section-title">🏋️ Minimum Training Plan for a Powerful Body</div>
+    <div class="cap-track">
+      <div class="cap-step">
+        <div class="cap-step-num">Day A</div>
+        <div class="cap-step-title">Squat + bench</div>
+        <div class="cap-step-body">Squat 3-5x3-6, bench 3-5x3-8, row, carry, trunk.</div>
+      </div>
+      <div class="cap-step">
+        <div class="cap-step-num">Day B</div>
+        <div class="cap-step-title">Deadlift + press</div>
+        <div class="cap-step-body">Deadlift 3-5x2-5, overhead press 3-5x3-8, pull-up/pulldown, split squat.</div>
+      </div>
+      <div class="cap-step">
+        <div class="cap-step-num">Day C</div>
+        <div class="cap-step-title">Variation day</div>
+        <div class="cap-step-body">Front squat or RDL 3-4x5-8, incline/close-grip press, row, carry, core.</div>
+      </div>
+      <div class="cap-step">
+        <div class="cap-step-num">Rule</div>
+        <div class="cap-step-title">Earn the load</div>
+        <div class="cap-step-body">Add weight only after clean sets. Strong joints are part of the score.</div>
+      </div>
+    </div>
+
+    <div class="cap-section-title">📈 Progression Rules That Keep You Moving</div>
+    <div class="cap-rule-list">
+      <div class="cap-rule" style="--accent:#7ee787;">
+        <div class="cap-rule-title">One variable at a time</div>
+        <div class="cap-rule-body">Add reps, load, distance, range, or speed. Do not add all of them in the same week.</div>
+      </div>
+      <div class="cap-rule" style="--accent:#58a6ff;">
+        <div class="cap-rule-title">Leave 1-3 reps in reserve</div>
+        <div class="cap-rule-body">Most training should feel strong, not desperate. Save max tests for retest weeks.</div>
+      </div>
+      <div class="cap-rule" style="--accent:#ffa657;">
+        <div class="cap-rule-title">Pain changes the plan</div>
+        <div class="cap-rule-body">Muscle effort is fine. Sharp joint pain means regress the movement and rebuild.</div>
+      </div>
+      <div class="cap-rule" style="--accent:#f778ba;">
+        <div class="cap-rule-title">Earn intensity with sleep</div>
+        <div class="cap-rule-body">Bad sleep? Walk, mobilize, technique lift. Great sleep? Push the boss target.</div>
+      </div>
+      <div class="cap-rule" style="--accent:#d2a8ff;">
+        <div class="cap-rule-title">Retest, do not obsess</div>
+        <div class="cap-rule-body">Daily numbers are noisy. Eight-week trends tell the truth.</div>
+      </div>
+      <div class="cap-rule" style="--accent:#79c0ff;">
+        <div class="cap-rule-title">Minimum still counts</div>
+        <div class="cap-rule-body">On chaotic days: 20 min walk + 5 min mobility. The identity stays alive.</div>
+      </div>
+    </div>
+
+    <div class="cap-section-title">🧘 Mobility: Keep Your Permissions</div>
+    <table class="cap-table">
+      <thead>
+        <tr><th>Capability</th><th>Target</th><th>Daily progression</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Deep squat</td><td>5 min relaxed, heels down, breathing easy</td><td>30 sec -> 2 min -> prying squat + ankle rocks</td></tr>
+        <tr><td>Ankles</td><td>10-12+ cm knee-to-wall each side</td><td>Calf raises, bent-knee stretch, loaded ankle rocks</td></tr>
+        <tr><td>Hips</td><td>Comfortable 90/90 switches without hands</td><td>90/90 holds -> active switches -> lift-offs</td></tr>
+        <tr><td>Shoulders</td><td>Arms overhead with ribs down, pain-free</td><td>Wall slides, dead hangs, thoracic extension, overhead carries</td></tr>
+        <tr><td>Floor-to-stand</td><td>Stand from floor without hands, both sides</td><td>Half-kneeling get-ups -> shin box get-ups -> Turkish get-up pattern</td></tr>
+      </tbody>
+    </table>
+
+    <div class="cap-section-title">🇮🇳 Cultural Cheat Codes</div>
+    <div class="cap-grid">
+      <div class="cap-card" style="--accent:#7ee787;">
+        <div class="cap-card-title">Thali as dashboard</div>
+        <div class="cap-card-body">Make the plate do the thinking: vegetables first, protein visible, starch controlled, curd/dal as support.</div>
+      </div>
+      <div class="cap-card" style="--accent:#58a6ff;">
+        <div class="cap-card-title">Walk after meals</div>
+        <div class="cap-card-body">A 10-15 minute family walk after food is one of the lowest-friction glucose and digestion habits.</div>
+      </div>
+      <div class="cap-card" style="--accent:#ffa657;">
+        <div class="cap-card-title">Floor culture</div>
+        <div class="cap-card-body">Sitting, squatting, and rising from the floor keep hips, ankles, knees, trunk control, and balance alive.</div>
+      </div>
+    </div>
+
+    <div class="cap-section-title">🧯 When Life Gets Busy</div>
+    <div class="cap-grid">
+      <div class="cap-card" style="--accent:#58a6ff;">
+        <div class="cap-card-title">5-minute floor reset</div>
+        <div class="cap-card-body">60 sec squat, 60 sec hip switches, 60 sec hamstrings, 60 sec wall slides, 60 sec breathing. Keeps range alive.</div>
+      </div>
+      <div class="cap-card" style="--accent:#7ee787;">
+        <div class="cap-card-title">10-minute strength deposit</div>
+        <div class="cap-card-body">3 rounds: 10 squats, 8 push-ups/incline push-ups, 10 rows or towel pulls, 30 sec carry or plank.</div>
+      </div>
+      <div class="cap-card" style="--accent:#ffa657;">
+        <div class="cap-card-title">15-minute engine save</div>
+        <div class="cap-card-body">Walk briskly after a meal. If you can only do one thing for South Asian metabolic health, this is a very good default.</div>
+      </div>
+    </div>
+
+    <div class="cap-section-title">🗓️ The 8-12 Week Upgrade Loop</div>
+    <div class="cap-track">
+      <div class="cap-step">
+        <div class="cap-step-num">1</div>
+        <div class="cap-step-title">Take inventory</div>
+        <div class="cap-step-body">Run the baseline battery. No shame, just coordinates on the map.</div>
+      </div>
+      <div class="cap-step">
+        <div class="cap-step-num">2</div>
+        <div class="cap-step-title">Pick one enemy</div>
+        <div class="cap-step-body">Cardio, strength, mobility, balance, waist, or recovery. One focus wins faster.</div>
+      </div>
+      <div class="cap-step">
+        <div class="cap-step-num">3</div>
+        <div class="cap-step-title">Do boring magic</div>
+        <div class="cap-step-body">Repeat the minimum plan. Add reps, load, distance, or range one notch at a time.</div>
+      </div>
+      <div class="cap-step">
+        <div class="cap-step-num">4</div>
+        <div class="cap-step-title">Collect proof</div>
+        <div class="cap-step-body">Retest after 8-12 weeks. Keep what worked. Your confidence should have numbers.</div>
+      </div>
+    </div>
+
+    <div class="cap-panel" style="margin-top:18px;">
+      <h3>The promise</h3>
+      <p>
+        You do not need to become a professional athlete. You need enough strength to be useful, enough cardio
+        to feel alive, enough mobility to stay playful, and enough consistency that your future body trusts you.
+      </p>
+    </div>
+
+  </div>
+</div><!-- /view-capability -->
 
 <script>
 // ═══════════════════════════════════════════════════════════════════════
@@ -2951,6 +3716,7 @@
 </div>
 
 <!-- Source -->
+<div class="fixed-ref-link">Reference: <a href="references/healthoptimization/35yo_human_capability_benchmarks.pdf" target="_blank" rel="noopener">Capability research PDF</a></div>
 <div id="source-link">Source: <a href="https://www.youtube.com/watch?v=PyhmvAL-iYw" target="_blank">Diary of a CEO — Dr. Rhonda Patrick</a></div>
 
 <script src="https://d3js.org/d3.v7.min.js"></script>
@@ -3340,6 +4106,26 @@ function filterHormones(filter) {
       card.style.display = (sex === 'female' || sex === 'both') ? '' : 'none';
     } else if (filter === 'both') {
       card.style.display = (sex === 'both') ? '' : 'none';
+    }
+  });
+}
+
+function filterCapabilitySex(filter) {
+  document.querySelectorAll('#view-capability .horm-toggle').forEach(btn => btn.classList.remove('active'));
+  const activeSelector = filter === 'all'
+    ? '#view-capability .horm-toggle.both'
+    : `#view-capability .horm-toggle.${filter}`;
+  const active = document.querySelector(activeSelector);
+  if (active) active.classList.add('active');
+
+  document.querySelectorAll('#view-capability .cap-sex-card').forEach(card => {
+    const sex = card.getAttribute('data-cap-sex');
+    if (filter === 'all') {
+      card.style.display = '';
+    } else if (filter === 'male') {
+      card.style.display = (sex === 'male' || sex === 'both') ? '' : 'none';
+    } else if (filter === 'female') {
+      card.style.display = (sex === 'female' || sex === 'both') ? '' : 'none';
     }
   });
 }
