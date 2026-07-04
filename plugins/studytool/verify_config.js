@@ -191,21 +191,31 @@ function evalConfig(src) {
 }
 
 function applyKnownAugmenters(html, cfg) {
-  const start = html.search(/function\s+add[A-Za-z0-9_]*DeepDives\s*\(/);
-  if (start < 0) return;
-  const afterStart = html.slice(start);
-  const endRel = afterStart.search(/\/\/\s+[\S\s]{0,20}Sample data/);
-  if (endRel < 0) return;
-  const code = afterStart.slice(0, endRel);
   const sandbox = {
     COURSE_CONFIG: cfg,
     console: { log() {}, warn() {}, error() {} }
   };
-  try {
-    vm.runInNewContext(code, sandbox, { timeout: 1000 });
-  } catch (e) {
-    // Keep augmentation failures visible in normal page syntax/runtime checks;
-    // this verifier should still validate the base COURSE_CONFIG.
+  const names = [
+    'addGpuArchitectureGenerationDeepDives',
+    'addTpuVersionArchitectureDeepDives',
+    'enhanceGpuCoreHardwareDiagrams',
+    'enhanceTpuCoreHardwareDiagrams',
+    'ensureUseCaseRunnableCodeHooks',
+    'ensureStudyCuriosityHooks'
+  ];
+  for (const name of names) {
+    const start = html.indexOf(`function ${name}`);
+    if (start < 0) continue;
+    const call = html.indexOf(`${name}(COURSE_CONFIG);`, start);
+    if (call < 0) continue;
+    const end = call + `${name}(COURSE_CONFIG);`.length;
+    const code = html.slice(start, end);
+    try {
+      vm.runInNewContext(code, sandbox, { timeout: 1000 });
+    } catch (e) {
+      // Keep augmentation failures visible in normal page syntax/runtime checks;
+      // this verifier should still validate the base COURSE_CONFIG.
+    }
   }
 }
 
