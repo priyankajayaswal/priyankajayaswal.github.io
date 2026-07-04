@@ -4029,6 +4029,156 @@ function ensureUseCaseRunnableCodeHooks(cfg) {
 }
 if (typeof COURSE_CONFIG !== 'undefined') ensureUseCaseRunnableCodeHooks(COURSE_CONFIG);
 
+
+function ensureWhereUsedHowHooks(cfg) {
+  if (!cfg || !Array.isArray(cfg.deepDives)) return;
+  function esc(s) { return String(s || '').replace(/[&<>"']/g, function(c) { return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+  function field(dd) {
+    var t = [cfg.header, cfg.subtitle, cfg.course && cfg.course.title, dd && dd.id, dd && dd.title, dd && dd.desc].join(' ').toLowerCase();
+    var packs = [
+      [/benchmark|eval|judge|metric|score|red.?team|helm|ragas|mmlu|gpqa|swe|arena/, ['#d2a8ff', 'model and product evaluation', 'Offline leaderboards, CI regression gates, model release reviews, RAG quality dashboards, safety red-teaming, canary analysis, and product A/B tests.', 'Build a versioned dataset, run the candidate system, score outputs with rules or judges, slice failures by task/user/context, and block releases only on failures that map to real risk.', 'Use when you need evidence before changing a model, prompt, retrieval system, guardrail, or agent workflow.']],
+      [/vllm|inference|serving|onnx|runtime|quant|paged|kv|batch|latency|throughput|cuda graph/, ['#58a6ff', 'inference and serving systems', 'Chat APIs, batch document processing, local/offline assistants, edge inference, high-QPS ranking, multimodal extraction, and latency-sensitive agents.', 'Convert the model into a deployable artifact, choose precision and runtime, manage batching/KV cache/memory, expose an API, then monitor p50/p95 latency, cost per request, and failure traces.', 'Use when the bottleneck is serving cost, latency, portability, or memory rather than training quality.']],
+      [/gpu|tpu|pmpp|cuda|triton|kernel|tensor core|mxu|hbm|roofline|warp|sm|xla|compiler|hlo|jax|pytorch|tensorflow|maxtext|deepspeed|zero|fsdp|distributed/, ['#7ee787', 'accelerated training and kernels', 'Large-model pretraining, fine-tuning, custom attention kernels, recommender systems, simulation surrogates, distributed training, and hardware-aware inference.', 'Map the math to hardware: tile tensors, reduce memory traffic, shard parameters/activations, fuse kernels, overlap communication, and profile before optimizing.', 'Use when raw algorithmic correctness is not enough and throughput, memory bandwidth, device placement, or parallelism decides whether the system is practical.']],
+      [/rl|reinforcement|policy|reward|ppo|dpo|grpo|agent|robot|control|mdp/, ['#ffa657', 'decision-making and agent loops', 'Robotics, game agents, recommender policies, RLHF/RLAIF alignment, tool-use agents, traffic/control systems, and reasoning models trained with verifiable rewards.', 'Define states/actions/rewards, collect trajectories, optimize a policy, evaluate off-policy and online behavior, then wrap risky actions with constraints, simulators, and human review.', 'Use when the output is an action sequence and success depends on delayed consequences, exploration, or feedback from the environment.']],
+      [/model|llm|gpt|claude|gemini|llama|qwen|deepseek|mistral|moe|transformer|attention|ml\b|learning|training|gradient|optimizer/, ['#79c0ff', 'model building and adaptation', 'Foundation models, classifiers, recommenders, retrieval rerankers, copilots, multimodal assistants, forecasting systems, and task-specific fine-tunes.', 'Turn data into representations, train or adapt the model, evaluate it on realistic traces, package it behind an API or batch job, and keep a feedback loop for drift and errors.', 'Use when the system must learn patterns from data rather than rely only on hand-written rules.']],
+      [/cfd|fluid|navier|flow|turbulence|fea|finite element|stress|strain|mechanics|mesh|surrogate|operator/, ['#f778ba', 'engineering simulation and digital twins', 'Aerospace, automotive, energy, civil structures, thermal design, manufacturing, weather, medical devices, and AI surrogate simulation.', 'Discretize the physical domain, solve or approximate the governing equations, validate against experiments or trusted solvers, then use the result for design, optimization, or monitoring.', 'Use when physical constraints, geometry, boundary conditions, and numerical error matter as much as the ML model.']],
+      [/fpga|rtl|verilog|hls|lut|bitstream|hardware/, ['#ffa657', 'specialized hardware paths', 'Low-latency trading, packet processing, embedded AI, sensor pipelines, robotics, telecom, signal processing, and fixed-function inference accelerators.', 'Translate the computation into hardware structure, pipeline it, choose fixed-point widths, verify timing/area/power, and deploy as a bitstream or accelerator block.', 'Use when deterministic latency, power, or I/O proximity beats the flexibility of a CPU/GPU.']]
+    ];
+    for (var i = 0; i < packs.length; i++) if (packs[i][0].test(t)) return packs[i][1];
+    return ['#58a6ff', 'real production systems', 'Research prototypes, internal tools, production services, dashboards, automation jobs, and decision-support workflows.', 'Identify the input, transformation, output, owner, metric, failure mode, and rollback path; then connect the concept to a real workflow instead of memorizing it in isolation.', 'Use when you want to know why the concept exists and what job it performs in a larger system.'];
+  }
+  function miniSvg(color, domain) {
+    return '<svg viewBox="0 0 560 155" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:680px;display:block;margin:10px auto;background:#0d1117;border:1px solid #30363d;border-radius:6px">'
+      + '<defs><marker id="wuArr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="'+color+'"/></marker></defs>'
+      + '<text x="24" y="30" fill="'+color+'" font-size="14" font-weight="700">Where it shows up: '+esc(domain)+'</text>'
+      + '<rect x="28" y="58" width="104" height="46" rx="8" fill="#161b22" stroke="#58a6ff"/><text x="80" y="85" text-anchor="middle" fill="#c9d1d9" font-size="11">input</text>'
+      + '<rect x="166" y="58" width="104" height="46" rx="8" fill="#161b22" stroke="'+color+'"/><text x="218" y="85" text-anchor="middle" fill="#c9d1d9" font-size="11">concept</text>'
+      + '<rect x="304" y="58" width="104" height="46" rx="8" fill="#161b22" stroke="#7ee787"/><text x="356" y="85" text-anchor="middle" fill="#c9d1d9" font-size="11">system</text>'
+      + '<rect x="442" y="58" width="90" height="46" rx="8" fill="#161b22" stroke="#f778ba"/><text x="487" y="85" text-anchor="middle" fill="#c9d1d9" font-size="11">metric</text>'
+      + '<path d="M132 81 H166 M270 81 H304 M408 81 H442" stroke="'+color+'" stroke-width="2" marker-end="url(#wuArr)"/>'
+      + '<text x="280" y="132" text-anchor="middle" fill="#8b949e" font-size="11">Learning handle: always ask what workflow, constraint, owner, and failure mode this concept changes.</text>'
+      + '</svg>';
+  }
+  cfg.deepDives.forEach(function(dd) {
+    if (!dd) return;
+    dd.sections = dd.sections || [];
+    var exists = dd.sections.some(function(s) { return /where\s+it\s+is\s+used|used\s*&\s*how|used\s+and\s+how/i.test(String(s.title || '') + ' ' + String(s.text || '')); });
+    if (exists) return;
+    var p = field(dd);
+    var html = '<div style="line-height:1.6;background:#0d1117;border:1px solid #30363d;border-left:3px solid '+p[0]+';border-radius:8px;padding:12px 14px">'
+      + '<p style="margin:0 0 8px"><b style="color:'+p[0]+'">Used in:</b> '+esc(p[2])+'</p>'
+      + '<p style="margin:0 0 8px"><b>How it is used:</b> '+esc(p[3])+'</p>'
+      + '<p style="margin:0"><b>When to reach for it:</b> '+esc(p[4])+'</p>'
+      + miniSvg(p[0], p[1])
+      + '</div>';
+    var insertAt = dd.sections.findIndex(function(s) { return /intuition|mental model|overview|what it is|field lab/i.test(String(s.title || '')); });
+    insertAt = insertAt < 0 ? Math.min(1, dd.sections.length) : insertAt + 1;
+    dd.sections.splice(insertAt, 0, { title: 'Where It Is Used & How', text: html });
+    dd.keypoints = dd.keypoints || [];
+    var hasKey = dd.keypoints.some(function(k) { return /used in|where used|production use/i.test(typeof k === 'string' ? k : String((k && k.title) || '') + ' ' + String((k && k.text) || '')); });
+    if (!hasKey) dd.keypoints.push({ title: 'Used in practice', text: p[2] });
+  });
+}
+if (typeof COURSE_CONFIG !== 'undefined') ensureWhereUsedHowHooks(COURSE_CONFIG);
+
+
+function ensureStrongReferenceHooks(cfg) {
+  if (!cfg || !Array.isArray(cfg.deepDives)) return;
+  function esc(s) { return String(s || '').replace(/[&<>"']/g, function(c) { return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+  function refsFor(dd) {
+    var t = [cfg.header, cfg.subtitle, cfg.course && cfg.course.title, dd && dd.id, dd && dd.title, dd && dd.desc].join(' ').toLowerCase();
+    var packs = [
+      [/paged|vllm|kv cache|serving|batch|inference/, [
+        ['PagedAttention / vLLM paper', 'https://arxiv.org/abs/2309.06180', 'Canonical system paper for KV-cache paging and high-throughput LLM serving.'],
+        ['vLLM documentation', 'https://docs.vllm.ai/', 'Practical serving guide for batching, quantization, distributed inference, and OpenAI-compatible APIs.']
+      ]],
+      [/onnx|runtime|execution provider|directml|coreml|webgpu/, [
+        ['ONNX Runtime documentation', 'https://onnxruntime.ai/docs/', 'Official runtime docs for graph optimization, execution providers, deployment, and profiling.'],
+        ['ONNX operator specifications', 'https://onnx.ai/onnx/operators/', 'The source of truth for portable operator semantics and model interchange.']
+      ]],
+      [/quant|int4|int8|fp8|gptq|awq|qlora|gguf/, [
+        ['QLoRA paper', 'https://arxiv.org/abs/2305.14314', 'Best anchor for 4-bit finetuning, NF4, double quantization, and memory-quality tradeoffs.'],
+        ['GPTQ paper', 'https://arxiv.org/abs/2210.17323', 'Core reference for post-training quantization of large language models.']
+      ]],
+      [/cuda graph|cuda-graph|graph capture/, [
+        ['CUDA Graphs programming guide', 'https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#cuda-graphs', 'Official semantics for capture, instantiate, update, and replay.'],
+        ['PyTorch CUDA Graphs guide', 'https://pytorch.org/docs/stable/notes/cuda.html#cuda-graphs', 'Practical PyTorch integration details and gotchas.']
+      ]],
+      [/triton|kernel|pmpp|cuda|gpu|tensor core|warp|sm|roofline|hbm/, [
+        ['CUDA C Programming Guide', 'https://docs.nvidia.com/cuda/cuda-c-programming-guide/', 'Primary reference for CUDA execution model, memory hierarchy, warps, and tensor cores.'],
+        ['Triton language documentation', 'https://triton-lang.org/main/index.html', 'Primary reference for writing and tuning Python-authored GPU kernels.']
+      ]],
+      [/tpu|mxu|systolic|xla|hlo|jax|pallas|maxtext/, [
+        ['Cloud TPU system architecture', 'https://cloud.google.com/tpu/docs/system-architecture-tpu-vm', 'Official reference for TPU chips, MXUs, interconnect, memory, and execution model.'],
+        ['JAX distributed arrays and automatic parallelization', 'https://docs.jax.dev/en/latest/notebooks/Distributed_arrays_and_automatic_parallelization.html', 'Best practical guide for meshes, sharding, and XLA-backed SPMD thinking.']
+      ]],
+      [/deepspeed|zero|fsdp|shard|distributed|parallelism|optimizer state/, [
+        ['ZeRO paper', 'https://arxiv.org/abs/1910.02054', 'Foundational paper for partitioning optimizer state, gradients, and parameters across data-parallel workers.'],
+        ['DeepSpeed documentation', 'https://www.deepspeed.ai/docs/', 'Practical reference for ZeRO stages, config files, inference, and distributed training.']
+      ]],
+      [/pytorch|torch|autograd|compile|eager/, [
+        ['PyTorch documentation', 'https://pytorch.org/docs/stable/index.html', 'Official reference for tensors, autograd, modules, distributed, compilation, and CUDA behavior.'],
+        ['torch.compile tutorial', 'https://pytorch.org/tutorials/intermediate/torch_compile_tutorial.html', 'Practical entry point for Dynamo/Inductor compilation and performance tuning.']
+      ]],
+      [/tensorflow|keras|tf\.function|tflite|grappler/, [
+        ['TensorFlow guides', 'https://www.tensorflow.org/guide', 'Official guide for tensors, tf.function, data pipelines, distributed training, and deployment.'],
+        ['TensorFlow Lite guide', 'https://www.tensorflow.org/lite/guide', 'Practical reference for edge/mobile inference and model conversion.']
+      ]],
+      [/benchmark|leaderboard|helm|mmlu|gpqa|swe|arena|eval|judge|metric|red.?team|ragas/, [
+        ['HELM paper', 'https://arxiv.org/abs/2211.09110', 'Strong framework for broad, transparent model evaluation across scenarios and metrics.'],
+        ['lm-evaluation-harness', 'https://github.com/EleutherAI/lm-evaluation-harness', 'Widely used open-source harness for reproducible language-model benchmarks.']
+      ]],
+      [/rl|reinforcement|policy|reward|ppo|mdp|control|agent|dpo|grpo/, [
+        ['Sutton & Barto RL book', 'http://incompleteideas.net/book/the-book-2nd.html', 'The standard conceptual reference for MDPs, value functions, policy gradients, and control.'],
+        ['PPO paper', 'https://arxiv.org/abs/1707.06347', 'Canonical modern policy-gradient baseline for stable reinforcement-learning updates.']
+      ]],
+      [/transformer|attention|llm|bert|gpt|llama|qwen|deepseek|mistral|model|ml\b|neuron|optimizer|backprop|gradient|activation/, [
+        ['Deep Learning book', 'https://www.deeplearningbook.org/', 'Best broad reference for neural-network fundamentals, optimization, regularization, and representation learning.'],
+        ['Attention Is All You Need', 'https://arxiv.org/abs/1706.03762', 'Canonical paper for Transformer attention, residual blocks, and sequence modeling.']
+      ]],
+      [/cfd|fluid|navier|turbulence|finite volume|fno|pinn/, [
+        ['NASA CFD resources', 'https://www.grc.nasa.gov/www/k-12/airplane/nseqs.html', 'Clear reference for Navier-Stokes equations and physical meaning of CFD terms.'],
+        ['Fourier Neural Operator paper', 'https://arxiv.org/abs/2010.08895', 'Strong AI-for-CFD reference for neural operators on PDE families.']
+      ]],
+      [/fea|finite element|stress|strain|solid|mechanics|mesh/, [
+        ['FEniCS tutorial', 'https://jsdokken.com/dolfinx-tutorial/', 'Practical finite-element reference for weak forms, meshes, boundary conditions, and solvers.'],
+        ['The Finite Element Method: Linear Static and Dynamic Finite Element Analysis', 'https://link.springer.com/book/10.1007/978-0-486-13485-2', 'Classic reference for FEM formulation and structural analysis.']
+      ]],
+      [/fpga|rtl|verilog|hls|lut|bitstream|vivado|vitis/, [
+        ['Vitis HLS documentation', 'https://docs.amd.com/r/en-US/ug1399-vitis-hls', 'Official reference for turning C/C++ kernels into FPGA hardware pipelines.'],
+        ['Verilog HDL quick reference', 'https://sutherland-hdl.com/pdfs/verilog_2001_ref_guide.pdf', 'Compact syntax/reference guide for RTL-level Verilog.']
+      ]]
+    ];
+    for (var i = 0; i < packs.length; i++) if (packs[i][0].test(t)) return packs[i][1];
+    return [
+      ['Google Machine Learning Crash Course', 'https://developers.google.com/machine-learning/crash-course', 'Practical reference for ML concepts, data, training, and evaluation.'],
+      ['Deep Learning book', 'https://www.deeplearningbook.org/', 'Durable conceptual reference for neural-network foundations.']
+    ];
+  }
+  function usefulRefs(dd) {
+    var refs = Array.isArray(dd.refs) ? dd.refs : [];
+    var text = refs.map(function(r) { return String((r && r.url) || '') + ' ' + String((r && r.label) || ''); }).join(' ').toLowerCase();
+    if (!refs.length) return false;
+    if (/sample|example\.com|tools\.ietf\.org\/html\/rfc7231|mdn.*fetch|aws sns|rfc6376/.test(text)) return false;
+    return refs.some(function(r) { return r && /^https?:\/\//.test(String(r.url || '')); });
+  }
+  cfg.deepDives.forEach(function(dd) {
+    if (!dd) return;
+    dd.sections = dd.sections || [];
+    var hasSection = dd.sections.some(function(s) { return /strong references|references|further reading|source anchors/i.test(String(s.title || '') + ' ' + String(s.text || '')); });
+    if (hasSection || usefulRefs(dd)) return;
+    var refs = refsFor(dd).slice(0, 2);
+    var list = refs.map(function(r) {
+      return '<li><a href="' + esc(r[1]) + '" target="_blank" rel="noopener">' + esc(r[0]) + '</a><br><span style="color:#8b949e">' + esc(r[2]) + '</span></li>';
+    }).join('');
+    dd.sections.push({ title: 'Strong References', text: '<ul style="margin:8px 0 0 18px;line-height:1.65">' + list + '</ul>' });
+    dd.keypoints = dd.keypoints || [];
+    var hasKey = dd.keypoints.some(function(k) { return /reference|source/i.test(typeof k === 'string' ? k : String((k && k.title) || '') + ' ' + String((k && k.text) || '')); });
+    if (!hasKey) dd.keypoints.push({ title: 'Source anchors', text: refs.map(function(r) { return r[0]; }).join(' + ') });
+  });
+}
+if (typeof COURSE_CONFIG !== 'undefined') ensureStrongReferenceHooks(COURSE_CONFIG);
+
 function ensureStudyCuriosityHooks(cfg) {
   if (!cfg || !Array.isArray(cfg.deepDives)) return;
   function esc(s) { return String(s || '').replace(/[&<>"']/g, function(c) { return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }

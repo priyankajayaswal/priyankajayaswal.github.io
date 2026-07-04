@@ -153,6 +153,7 @@ const COURSE_CONFIG = {
       sections: [
         { title: "Intuition",       text: "Plain-language framing of the concept." },
         { title: "Mechanism",       text: "How it actually works, step by step." },
+        { title: "Where It Is Used & How", text: "Where this shows up in production/research, how it is wired into the workflow, what metric proves it helped, and what failure mode it changes." },
         { title: "Worked Example",  text: "Concrete numbers end-to-end (e.g., 'For p=23, g=5, a=6 → A=8...')." },
         { title: "Key Formula",     formula: "y = mx + b" },
         { title: "Pitfall & Tie-In",text: "The common mistake students make + the real-world system or paper this connects to." }
@@ -162,6 +163,10 @@ const COURSE_CONFIG = {
         { title: "Formula handle",  text: "T(n) = 2T(n/2) + O(n) → O(n log n)" },
         { title: "Pitfall flag",    text: "Off-by-one / nonce-reuse / sign-error to avoid." },
         { title: "Reference",       text: "RFC 6298 / CVE-2021-44228 / Cormen Ch. 4." }
+      ],
+      refs: [
+        { label: "Canonical paper / official docs", url: "https://example.com", note: "Why this is the best source anchor." },
+        { label: "Implementation or textbook reference", url: "https://example.com", note: "What to read here after the card." }
       ]
     }
   ],
@@ -423,16 +428,20 @@ must let a learner grasp the concept without leaving it.
   is worse than no SVG. Each diagram should map 1:1 to a sentence in the
   prose ("see the lowering pipeline below").
 
-**Recommended section order** — *Intuition → Mechanism → Worked Example →
-Pitfall + Tie-In*:
+**Recommended section order** — *Intuition → Mechanism → Where It Is Used
+& How → Worked Example → Pitfall + Tie-In*:
 
 1. **Intuition** — plain-language framing. Why does this exist?
 2. **Mechanism** or **Key Formula** — how it actually works, with the
    defining equation if one exists.
-3. **Worked Example** — concrete numbers end-to-end. The single most
+3. **Where It Is Used & How** — concrete domains and workflows where the
+   concept appears, how it is wired into a real system, which owner/metric
+   cares, and what failure mode it changes. This is required for every
+   deep dive so the card teaches practical transfer, not only definitions.
+4. **Worked Example** — concrete numbers end-to-end. The single most
    important section. e.g., *"Sentinel-2 pixel: NIR=0.42, Red=0.18 →
    NDVI=(0.42−0.18)/(0.42+0.18)=0.40 → moderate vegetation."*
-4. **Pitfall + Real-World Tie-In** — the common mistake (off-by-one,
+5. **Pitfall + Real-World Tie-In** — the common mistake (off-by-one,
    nonce-reuse, sign-error, base-rate fallacy) and where the concept
    shows up in production (CVE-NNNN, RFC NNNN, paper, real system).
 
@@ -440,6 +449,12 @@ Pitfall + Tie-In*:
 concrete artifact**: a number, a formula, a code line, or a real-world
 reference. "Sequencing matters" is weak; "RFC 6298: RTO = SRTT + 4·RTTVAR,
 floor 1 s, exponential backoff to 60 s" is strong.
+
+**Reference convention**: every deep dive needs **1–2 strong references**.
+Prefer a canonical paper, official docs, standard textbook, RFC/CVE/spec,
+or model/system card. Add them as `refs: [{ label, url, note }]` or as a
+short **Strong References** section. Avoid generic search links and weak
+blog summaries unless the blog is the primary project documentation.
 
 ### 2. SVG Cookbook
 

@@ -123,9 +123,14 @@ study-grade cards:
    flowchart). Drive geometry from the `(w,h)` args + a `viewBox` so the
    card stays crisp on resize.
 
-2. **Sections** — 4 sections, 60–150 words each, in this order:
+2. **Sections** — 5 sections, 60–150 words each, in this order:
    - **Intuition** — plain-language framing.
    - **Mechanism / Key Formula** — how it actually works.
+   - **Where It Is Used & How** — the production/workflow context:
+     concrete domains, the job this concept performs, what system owns it,
+     what metric proves it helped, and the failure mode it changes. This
+     section is required for every deep dive; it keeps the page from becoming
+     abstract notes detached from real usage.
    - **Worked Example** — concrete numbers end-to-end.
    - **Pitfall + Real-World Tie-In** — the common mistake + the CVE / RFC
      / paper / production system this connects to.
@@ -136,12 +141,19 @@ study-grade cards:
    (a number, formula, code line, or named reference like
    "RFC 6298" / "CVE-2021-44228" / "Cormen Ch. 4").
 
-4. **SVG idiom** — string concatenation (not template literals), one
+4. **Strong references** — every deep dive needs 1–2 source anchors:
+   canonical paper, official docs, respected textbook, RFC/CVE/spec, or
+   model/system card. Add them as `dd.refs` or a **Strong References**
+   section. Prefer primary sources over blog posts. If the card is already
+   dense, references can be short; if the card is thin, include one sentence
+   on why each reference is worth reading.
+
+5. **SVG idiom** — string concatenation (not template literals), one
    `<defs><marker>` per SVG, loops via
    `Array.from({length:N}).map((_,i)=>...).join('')` for repeated
    geometry. Cap primitives at ~50–80 to keep the SVG <3 KB.
 
-5. **Optional `mount(el)` for interactive dives** — for the rare card
+6. **Optional `mount(el)` for interactive dives** — for the rare card
    that needs a live stepper / slider / play-pause (e.g. a systolic
    array animation, a roofline knob, a sharding-mesh toy), add an
    `mount: function(el) { ... }` next to `svg`. It's called once,

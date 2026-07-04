@@ -200,6 +200,10 @@ function applyKnownAugmenters(html, cfg) {
     'addTpuVersionArchitectureDeepDives',
     'enhanceGpuCoreHardwareDiagrams',
     'enhanceTpuCoreHardwareDiagrams',
+    'addModelFamilyDeepDives',
+    'enrichModelDeepDives',
+    'ensureWhereUsedHowHooks',
+    'ensureStrongReferenceHooks',
     'ensureUseCaseRunnableCodeHooks',
     'ensureStudyCuriosityHooks'
   ];
@@ -288,7 +292,16 @@ function checkFile(filePath) {
           if (!s.title) issues.push(`${tag}.sections[${j}]: missing title`);
           if (!s.text && !s.formula) issues.push(`${tag}.sections[${j}]: needs either text or formula`);
         });
-        if (dd.sections.length < 3) issues.push(`${tag}: only ${dd.sections.length} section(s); aim for 4 (Intuition / Mechanism / Worked Example / Pitfall+Tie-In)`);
+        const hasWhereUsed = dd.sections.some((s) =>
+          /where\s+it\s+is\s+used|used\s*&\s*how|used\s+and\s+how/i.test(String(s.title || '') + ' ' + String(s.text || ''))
+        );
+        if (!hasWhereUsed) issues.push(`${tag}: missing required "Where It Is Used & How" section`);
+        if (dd.sections.length < 5) issues.push(`${tag}: only ${dd.sections.length} section(s); aim for 5 (Intuition / Mechanism / Where Used / Worked Example / Pitfall+Tie-In)`);
+        const hasReferencesSection = dd.sections.some((s) =>
+          /strong references|references|further reading|source anchors/i.test(String(s.title || '') + ' ' + String(s.text || ''))
+        );
+        const hasUsefulRefs = Array.isArray(dd.refs) && dd.refs.some((r) => /^https?:\/\//.test(String((r && r.url) || '')));
+        if (!hasReferencesSection && !hasUsefulRefs) issues.push(`${tag}: missing 1–2 strong references or a Strong References section`);
       } else {
         issues.push(`${tag}: missing sections[]`);
       }

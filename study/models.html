@@ -2923,6 +2923,253 @@ const SAMPLE_CONFIG = {
 };
 
 
+function addModelFamilyDeepDives(cfg) {
+  if (!cfg || !Array.isArray(cfg.deepDives)) return;
+  function has(id) { return cfg.deepDives.some(function(dd) { return dd && dd.id === id; }); }
+  function cardSvg(label, color, chips) {
+    return function(w, h) {
+      if (!w) w = 760;
+      if (!h) h = 330;
+      var safe = String(label || 'Model family').replace(/[<>&]/g, '');
+      var parts = chips || [];
+      var s = '<svg viewBox="0 0 '+w+' '+h+'" xmlns="http://www.w3.org/2000/svg" style="background:#0d1117;border:1px solid #30363d;border-radius:6px">';
+      s += '<defs><marker id="mfArr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="'+color+'"/></marker></defs>';
+      s += '<text x="26" y="38" fill="#c9d1d9" font-size="17" font-weight="700">'+safe+'</text>';
+      s += '<text x="26" y="60" fill="#8b949e" font-size="12">Read the family as a product surface plus a model surface: capability, context, tools, risk, and cost move together.</text>';
+      var boxes = [
+        ['prompt / media', 38, 116, '#58a6ff'],
+        ['policy + schema', 190, 86, '#f778ba'],
+        ['model core', 342, 116, color],
+        ['tools / retrieval', 494, 86, '#7ee787'],
+        ['answer + traces', 646, 116, '#d2a8ff']
+      ];
+      boxes.forEach(function(b, i) {
+        s += '<rect x="'+b[1]+'" y="'+b[2]+'" width="104" height="56" rx="8" fill="#161b22" stroke="'+b[3]+'"/>';
+        s += '<text x="'+(b[1]+52)+'" y="'+(b[2]+32)+'" text-anchor="middle" fill="#c9d1d9" font-size="11">'+b[0]+'</text>';
+        if (i < boxes.length - 1) s += '<line x1="'+(b[1]+104)+'" y1="'+(b[2]+28)+'" x2="'+(boxes[i+1][1]-8)+'" y2="'+(boxes[i+1][2]+28)+'" stroke="'+color+'" stroke-width="1.6" marker-end="url(#mfArr)"/>';
+      });
+      parts.forEach(function(chip, i) {
+        var x = 42 + (i % 4) * 176;
+        var y = 228 + Math.floor(i / 4) * 42;
+        s += '<rect x="'+x+'" y="'+y+'" width="148" height="30" rx="15" fill="#161b22" stroke="'+(i % 2 ? '#7ee787' : color)+'"/>';
+        s += '<text x="'+(x+74)+'" y="'+(y+20)+'" text-anchor="middle" fill="#c9d1d9" font-size="10">'+String(chip).replace(/[<>&]/g, '')+'</text>';
+      });
+      s += '</svg>';
+      return s;
+    };
+  }
+  var additions = [
+    {
+      id: 'openai-gpt-family',
+      title: 'OpenAI GPT / Reasoning Family',
+      desc: 'Closed API family deep dive: model routing, tool calls, structured outputs, context budgeting, eval replay, and migration from older GPT-4o-style agents.',
+      icon: '🧭',
+      color: '#58a6ff',
+      keypoints: [
+        'Treat the model name as one part of a system: prompts, tool schemas, retrieval, safety policy, and eval traces decide real quality.',
+        'For migrations, replay production conversations and inspect tool-call JSON, refusals, latency, and cost before switching traffic.',
+        'Reasoning-oriented tiers can improve hard tasks, but may need stricter stop conditions, budget caps, and trace-based debugging.',
+        'Structured output quality depends as much on schema design and repair strategy as on raw model intelligence.'
+      ],
+      svg: cardSvg('OpenAI GPT family selection map', '#58a6ff', ['schema strictness', 'tool replay', 'reasoning budget', 'latency tier', 'prompt cache', 'canary eval']),
+      sections: [
+        { title: 'Mental Model', text: '<p>Read a GPT-style deployment as an <b>agent runtime</b>, not just a chat box. The model predicts tokens, but the product behavior emerges from instructions, tools, schemas, retrieval, refusal policy, temperature, context packing, and retry loops.</p><p>The fun question: where does the intelligence live? In practice, some lives in weights, some in the prompt contract, and a surprising amount in the boring-looking glue code that decides what the model is allowed to see and call.</p>' },
+        { title: 'What To Inspect', text: '<ul style="margin:6px 0 0 18px;line-height:1.55"><li><b>Tool traces</b>: Does it call the right function with valid arguments, or does it narrate what it should have called?</li><li><b>Schema edge cases</b>: Empty arrays, nullable fields, enums, dates, citations, and partial failures are where migrations usually reveal themselves.</li><li><b>Reasoning budget</b>: Hard tasks may benefit from deeper reasoning; easy tasks may only pay extra latency.</li><li><b>Data boundary</b>: Decide what can enter the API, what must be redacted, and what should be retrieved locally.</li></ul>' },
+        { title: 'Try It', text: '<pre><code>// Eval the model family, not one happy prompt\nconst cases = [\"valid invoice\", \"missing date\", \"ambiguous vendor\", \"prompt injection\"];\nfor (const c of cases) {\n  // send the same schema, tools, and retrieval policy to each candidate tier\n  console.log({ case: c, checks: [\"json_valid\", \"tool_correct\", \"latency\", \"cost\"] });\n}</code></pre>' },
+        { title: 'Pitfall', text: 'Do not compare a new reasoning model against an old model with different prompts, tools, and retrieval. That measures your harness drift as much as model quality.' }
+      ]
+    },
+    {
+      id: 'anthropic-claude-family',
+      title: 'Claude Family For Long-Context Agents',
+      desc: 'Closed API family deep dive: long document review, agentic computer/tool use, citation discipline, and the tradeoff between workhorse and flagship tiers.',
+      icon: '📚',
+      color: '#f778ba',
+      keypoints: [
+        'Claude-style selection often starts with task shape: long reading, careful drafting, agent loop, or high-volume workhorse use.',
+        'Long context is not magic memory; anchor sections, quote evidence, and test recall across the beginning, middle, and end.',
+        'Agentic use needs action safety: permissions, screenshots/traces, rollback plans, and human review for irreversible actions.',
+        'Use hidden document sets, not vibes, to decide whether the flagship tier is worth the added latency and cost.'
+      ],
+      svg: cardSvg('Claude long-context workflow', '#f778ba', ['document map', 'quote audit', 'agent actions', 'workhorse tier', 'flagship tier', 'safety gate']),
+      sections: [
+        { title: 'Mental Model', text: '<p>Think of Claude-family models as strong <b>document-and-action partners</b>: they can carry lots of context, reason across messy prose, and follow nuanced instructions. The learning challenge is to separate true long-context use from simply dumping a giant file into the prompt.</p>' },
+        { title: 'What To Inspect', text: '<ul style="margin:6px 0 0 18px;line-height:1.55"><li><b>Needle tests</b>: Place facts at different depths and ask questions that require exact retrieval plus synthesis.</li><li><b>Citation behavior</b>: Require quote-backed claims and check whether citations actually support the sentence.</li><li><b>Agent permissions</b>: For computer/tool use, distinguish reversible exploration from irreversible writes, purchases, or sends.</li><li><b>Tiering</b>: Route routine drafting to a workhorse model and reserve the flagship for dense, risky, or very long cases.</li></ul>' },
+        { title: 'Curiosity Driver', text: 'Long context changes the bottleneck from "can the model fit it?" to "can the user and harness prove it used the right parts?" That is why quote audit and retrieval checks are part of the architecture.' },
+        { title: 'Pitfall', text: 'A million-token window can still miss the one paragraph that matters if the prompt does not create anchors, section names, or evidence requirements.' }
+      ]
+    },
+    {
+      id: 'google-gemini-family',
+      title: 'Gemini Family For Multimodal And Huge Context',
+      desc: 'Closed API family deep dive: multimodal extraction, video/image/audio reasoning, very long context, Flash-vs-Pro routing, and cost control.',
+      icon: '🎞️',
+      color: '#7ee787',
+      keypoints: [
+        'Gemini-style selection is often a modality and context decision: text-only, image-heavy, video, audio, document packs, or mixed media.',
+        'Flash-style tiers are useful when the bottleneck is volume; Pro-style tiers are useful when errors are expensive.',
+        'Multimodal evals should include bad scans, rotated pages, low contrast, charts, tables, screenshots, and adversarial layout.',
+        'Huge context still needs packing strategy: order, separators, page ids, timestamps, and citation targets matter.'
+      ],
+      svg: cardSvg('Gemini multimodal routing map', '#7ee787', ['images', 'video', 'audio', 'Flash route', 'Pro route', 'layout eval']),
+      sections: [
+        { title: 'Mental Model', text: '<p>Read Gemini-family models as a <b>multimodal context engine</b>. The interesting part is not only "can it see an image?" but whether your pipeline preserves the evidence: page numbers, timestamps, crop coordinates, OCR text, and uncertainty.</p>' },
+        { title: 'What To Inspect', text: '<ul style="margin:6px 0 0 18px;line-height:1.55"><li><b>Media preprocessing</b>: Resolution, compression, cropping, frame sampling, and OCR can decide the result before the model starts.</li><li><b>Cost ladder</b>: Route simple extraction to fast/cheap tiers and escalate uncertain or high-value samples.</li><li><b>Grounding</b>: Ask for page ids, cell coordinates, timestamps, or quoted spans instead of plain prose answers.</li><li><b>Failure sampling</b>: Review false positives, not just average accuracy.</li></ul>' },
+        { title: 'Try It', text: '<pre><code># Multimodal eval idea\n# 1. Build 20 documents: clean PDF, scan, table, chart, handwriting, screenshot.\n# 2. Ask each candidate for JSON plus page/span evidence.\n# 3. Score both extraction correctness and evidence correctness.</code></pre>' },
+        { title: 'Pitfall', text: 'If a multimodal pipeline silently downscales or crops evidence, a stronger model may look weak for a reason that lives outside the model.' }
+      ]
+    },
+    {
+      id: 'grok-realtime-family',
+      title: 'Grok / Realtime Tooling Family',
+      desc: 'Closed API family deep dive: realtime information access, tool-heavy workflows, freshness checks, and guardrails for fast-moving facts.',
+      icon: '⚡',
+      color: '#d2a8ff',
+      keypoints: [
+        'Realtime-connected models are useful when freshness is part of the task, but the system must separate retrieval evidence from model inference.',
+        'Tool reliability matters more than tool count: stale search, missing auth, or malformed outputs can dominate answer quality.',
+        'Fresh facts need timestamps, source labels, and conflict handling because the model may see multiple versions of the same story.',
+        'Use rate limits, cache policy, and citation requirements to keep fast workflows auditable.'
+      ],
+      svg: cardSvg('Realtime model-tool loop', '#d2a8ff', ['fresh search', 'source clock', 'tool errors', 'cache policy', 'citation trail', 'conflict check']),
+      sections: [
+        { title: 'Mental Model', text: '<p>Realtime model families are best viewed as <b>reasoners attached to moving sensors</b>. The sensor may be search, social streams, code execution, market data, or an internal API. The model is only as current as the tool call it actually made.</p>' },
+        { title: 'What To Inspect', text: '<ul style="margin:6px 0 0 18px;line-height:1.55"><li><b>Freshness contract</b>: Every answer about current events should carry an observation time and source trail.</li><li><b>Tool fallback</b>: Decide what happens when search times out, returns conflicts, or gives low-quality sources.</li><li><b>Injection surface</b>: Web and social text can contain instructions; retrieved content must be treated as data, not authority.</li><li><b>Auditability</b>: Preserve tool inputs/outputs so you can debug wrong answers after the moment has passed.</li></ul>' },
+        { title: 'Curiosity Driver', text: 'Freshness is a superpower with a tax: now the model can be wrong because it reasoned badly, because the source was wrong, or because the source changed five minutes later.' },
+        { title: 'Pitfall', text: 'Do not let "realtime" become a permission slip for uncited claims. Fresh information needs more provenance, not less.' }
+      ]
+    },
+    {
+      id: 'mistral-codestral-devstral-family',
+      title: 'Mistral / Codestral / Devstral Family',
+      desc: 'Open/commercial European model family deep dive: code specialists, deployable open weights, enterprise control, and EU-residency-friendly architecture choices.',
+      icon: '🛠️',
+      color: '#ffa657',
+      keypoints: [
+        'Mistral-family selection often balances deployability, code quality, data residency, latency, and licensing.',
+        'Code specialists should be evaluated with hidden tests, patch review, dependency constraints, and repository-specific style.',
+        'Open-weight deployment shifts responsibility to you: serving engine, quantization, safety layer, monitoring, and update cadence.',
+        'EU or regulated deployments need evidence about hosting location, retention, license terms, and guardrail behavior.'
+      ],
+      svg: cardSvg('Mistral code-and-control map', '#ffa657', ['code patches', 'EU hosting', 'open weights', 'license check', 'hidden tests', 'vLLM route']),
+      sections: [
+        { title: 'Mental Model', text: '<p>Read this family as a <b>control surface</b>: you may choose hosted APIs for speed, open weights for data boundary control, or code-specialist variants for software tasks. The right answer depends less on leaderboard rank and more on where the model must run.</p>' },
+        { title: 'What To Inspect', text: '<ul style="margin:6px 0 0 18px;line-height:1.55"><li><b>Repository eval</b>: Give the model failing tests, style constraints, and enough context to patch real code.</li><li><b>Serving path</b>: Confirm vLLM/TGI/TensorRT-LLM support, quantization quality, and KV-cache memory for your context length.</li><li><b>License and residency</b>: Check commercial rights, derivative use, hosted region, and data-retention guarantees.</li><li><b>Fallback</b>: Keep an escalation route for hard reasoning or multimodal cases if the specialist is too narrow.</li></ul>' },
+        { title: 'Try It', text: '<pre><code># Code-model eval skeleton\nrepos=(api_service data_pipeline frontend_app)\nfor r in \"${repos[@]}\"; do\n  echo \"Run hidden tests, ask model for patch, then review diff for $r\"\ndone</code></pre>' },
+        { title: 'Pitfall', text: 'A code model can pass visible tests while breaking hidden contracts. Always score patches with hidden tests plus human diff review.' }
+      ]
+    },
+    {
+      id: 'model-selection-eval-playbook',
+      title: 'Model Selection And Eval Playbook',
+      desc: 'Decision deep dive: how to choose among frontier models with task suites, cost curves, latency SLOs, safety tests, and rollback plans.',
+      icon: '🎯',
+      color: '#79c0ff',
+      keypoints: [
+        'Start with constraints: data boundary, modality, context, latency, cost, quality bar, and failure tolerance.',
+        'Build task suites from your product traces, then add adversarial cases, hidden tests, and temporal holdouts.',
+        'Measure quality and operations together: accuracy, citations, tool success, p95 latency, cost, refusal behavior, and incident rate.',
+        'Ship with canaries, monitoring, rollback, and a model-router policy instead of a one-time leaderboard decision.'
+      ],
+      svg: cardSvg('Model selection playbook', '#79c0ff', ['constraints', 'task suite', 'hidden tests', 'cost curve', 'canary', 'rollback']),
+      sections: [
+        { title: 'Mental Model', text: '<p>Model selection is not a beauty contest; it is <b>systems engineering under uncertainty</b>. A smaller or cheaper model that is excellent on your traces can beat a frontier flagship that wins general benchmarks but misses your schema, language, latency, or cost constraints.</p>' },
+        { title: 'The Five Gates', text: '<ol style="margin:6px 0 0 18px;line-height:1.55"><li><b>Constraint gate</b>: What cannot be violated?</li><li><b>Capability gate</b>: Can it solve representative tasks?</li><li><b>Reliability gate</b>: Does it fail safely and consistently?</li><li><b>Economics gate</b>: Does p95 latency and cost fit the business?</li><li><b>Operations gate</b>: Can you monitor, rollback, and retrain prompts/evals?</li></ol>' },
+        { title: 'Fun Fact / Curiosity Hook', text: 'The winning production model is often not the largest model. It is the one whose mistakes are cheapest to detect, explain, and route around.' },
+        { title: 'Pitfall', text: 'A public benchmark can tell you what to try. Your private eval tells you what to ship.' }
+      ]
+    }
+  ];
+  additions.forEach(function(dd) {
+    if (!has(dd.id)) cfg.deepDives.push(dd);
+  });
+}
+if (typeof COURSE_CONFIG !== 'undefined') addModelFamilyDeepDives(COURSE_CONFIG);
+
+function enrichModelDeepDives(cfg) {
+  if (!cfg || !Array.isArray(cfg.deepDives)) return;
+  function esc(s) { return String(s || '').replace(/[&<>"']/g, function(c) { return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+  function topic(dd) {
+    var t = [dd && dd.id, dd && dd.title, dd && dd.desc].join(' ').toLowerCase();
+    if (/architecture|layer/.test(t)) return {
+      color: '#ffa657',
+      label: 'Layer reader',
+      analogy: 'Read the layer like a factory line: attention moves information between tokens, the MLP transforms each token, and residuals keep a stable highway through depth.',
+      inspect: 'Tokenization, position method, attention type, MLP/MoE shape, normalization, residual path, output head.',
+      tryIt: 'Sketch one token flowing through norm, attention, residual, MLP, residual, logits. Then mark where memory is read and where compute is spent.'
+    };
+    if (/training|optimizer|gradient/.test(t)) return {
+      color: '#58a6ff',
+      label: 'Training lab',
+      analogy: 'Training is the same layer wearing a backpack: activations, gradients, optimizer moments, and distributed communication all ride along.',
+      inspect: 'Activation memory, checkpointing, optimizer state, data/tensor/pipeline/expert parallelism, loss signal.',
+      tryIt: 'For any model size, estimate weight memory, optimizer memory, activation memory, and KV cache separately. The biggest bucket tells you what to optimize first.'
+    };
+    if (/llama|mixtral|qwen|deepseek|mistral|gemma|nemotron|phi|open|moe/.test(t)) return {
+      color: '#7ee787',
+      label: 'Open-weight lab',
+      analogy: 'Open weights turn model choice into infrastructure choice: you gain control, but you inherit serving, safety, quantization, and upgrade work.',
+      inspect: 'License, total vs active parameters, context, tokenizer, precision, inference engine, safety layer, benchmark source.',
+      tryIt: 'Run the same 20 private prompts through BF16 and a quantized variant. Compare not only answers, but refusal drift, citations, and formatting.'
+    };
+    if (/gpt|claude|gemini|grok|api|closed|realtime/.test(t)) return {
+      color: '#d2a8ff',
+      label: 'Closed-API lab',
+      analogy: 'Closed APIs are fast to adopt because the vendor operates the stack; the art is making your prompts, tools, evals, and data policy portable.',
+      inspect: 'API surface, tool calling, structured output, context caching, data retention, region, latency tier, migration notes.',
+      tryIt: 'Replay one week of production traces through two candidate tiers in shadow mode. Score tool validity, answer quality, p95 latency, and cost.'
+    };
+    if (/eval|selection|benchmark|playbook|cost|latency/.test(t)) return {
+      color: '#79c0ff',
+      label: 'Selection lab',
+      analogy: 'A model eval is a wind tunnel: it does not prove the plane will survive every storm, but it reveals the shape of failure before passengers board.',
+      inspect: 'Representative traces, hidden tests, temporal holdouts, adversarial prompts, latency SLOs, cost-per-token, rollback.',
+      tryIt: 'Make a 3x3 matrix: three candidate models by three task families. Fill each cell with quality, cost, p95 latency, and top failure mode.'
+    };
+    return {
+      color: (dd && dd.color) || '#58a6ff',
+      label: 'Decision lab',
+      analogy: 'The useful question is what constraint this model relaxes: quality, latency, data boundary, context, modality, cost, or operational control.',
+      inspect: 'Inputs, outputs, failure modes, deployment boundary, monitoring signal, and the human review point.',
+      tryIt: 'Write the model decision as a reversible experiment with success metrics, canary traffic, and rollback criteria.'
+    };
+  }
+  function fieldSvg(p) {
+    return '<svg viewBox="0 0 520 150" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:620px;display:block;margin:10px auto;background:#0d1117;border:1px solid #30363d;border-radius:6px">'
+      + '<text x="24" y="30" fill="'+p.color+'" font-size="14" font-weight="700">'+esc(p.label)+'</text>'
+      + '<rect x="28" y="54" width="110" height="50" rx="8" fill="#161b22" stroke="#58a6ff"/><text x="83" y="84" text-anchor="middle" fill="#c9d1d9" font-size="11">constraints</text>'
+      + '<rect x="204" y="54" width="110" height="50" rx="8" fill="#161b22" stroke="'+p.color+'"/><text x="259" y="84" text-anchor="middle" fill="#c9d1d9" font-size="11">model choice</text>'
+      + '<rect x="380" y="54" width="110" height="50" rx="8" fill="#161b22" stroke="#7ee787"/><text x="435" y="84" text-anchor="middle" fill="#c9d1d9" font-size="11">evidence</text>'
+      + '<path d="M138 79 H204 M314 79 H380" stroke="'+p.color+'" stroke-width="2"/>'
+      + '<text x="259" y="128" text-anchor="middle" fill="#8b949e" font-size="11">Do not ask "best model?" Ask "best under which constraint?"</text></svg>';
+  }
+  cfg.deepDives.forEach(function(dd) {
+    if (!dd) return;
+    dd.sections = dd.sections || [];
+    var already = dd.sections.some(function(s) { return /field lab|decision lens/i.test(String(s.title || '')); });
+    if (!already) {
+      var p = topic(dd);
+      var html = '<div style="line-height:1.6;background:#0d1117;border:1px solid #30363d;border-left:3px solid '+p.color+';border-radius:8px;padding:12px 14px">'
+        + '<p style="margin:0 0 8px"><b style="color:'+p.color+'">Decision lens:</b> '+esc(p.analogy)+'</p>'
+        + '<p style="margin:0 0 8px"><b>Inspect:</b> '+esc(p.inspect)+'</p>'
+        + '<p style="margin:0"><b>Try it:</b> '+esc(p.tryIt)+'</p>'
+        + fieldSvg(p)
+        + '</div>';
+      var insertAt = Math.min(2, dd.sections.length);
+      dd.sections.splice(insertAt, 0, { title: 'Field Lab / Decision Lens', text: html });
+    }
+    dd.keypoints = dd.keypoints || [];
+    var hasHandle = dd.keypoints.some(function(k) {
+      return typeof k === 'string' ? /decision|inspect|field/i.test(k) : /decision|inspect|field/i.test(String(k.title || '') + ' ' + String(k.text || ''));
+    });
+    if (!hasHandle) {
+      var p2 = topic(dd);
+      dd.keypoints.push({ title: 'Decision handle', text: p2.inspect });
+    }
+  });
+}
+if (typeof COURSE_CONFIG !== 'undefined') enrichModelDeepDives(COURSE_CONFIG);
+
 function ensureUseCaseRunnableCodeHooks(cfg) {
   if (!cfg || !Array.isArray(cfg.useCases)) return;
   var course = ((cfg.course && (cfg.course.code + ' ' + cfg.course.title + ' ' + cfg.course.term)) || '').toLowerCase();
@@ -2957,6 +3204,156 @@ function ensureUseCaseRunnableCodeHooks(cfg) {
   });
 }
 if (typeof COURSE_CONFIG !== 'undefined') ensureUseCaseRunnableCodeHooks(COURSE_CONFIG);
+
+
+function ensureWhereUsedHowHooks(cfg) {
+  if (!cfg || !Array.isArray(cfg.deepDives)) return;
+  function esc(s) { return String(s || '').replace(/[&<>"']/g, function(c) { return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+  function field(dd) {
+    var t = [cfg.header, cfg.subtitle, cfg.course && cfg.course.title, dd && dd.id, dd && dd.title, dd && dd.desc].join(' ').toLowerCase();
+    var packs = [
+      [/benchmark|eval|judge|metric|score|red.?team|helm|ragas|mmlu|gpqa|swe|arena/, ['#d2a8ff', 'model and product evaluation', 'Offline leaderboards, CI regression gates, model release reviews, RAG quality dashboards, safety red-teaming, canary analysis, and product A/B tests.', 'Build a versioned dataset, run the candidate system, score outputs with rules or judges, slice failures by task/user/context, and block releases only on failures that map to real risk.', 'Use when you need evidence before changing a model, prompt, retrieval system, guardrail, or agent workflow.']],
+      [/vllm|inference|serving|onnx|runtime|quant|paged|kv|batch|latency|throughput|cuda graph/, ['#58a6ff', 'inference and serving systems', 'Chat APIs, batch document processing, local/offline assistants, edge inference, high-QPS ranking, multimodal extraction, and latency-sensitive agents.', 'Convert the model into a deployable artifact, choose precision and runtime, manage batching/KV cache/memory, expose an API, then monitor p50/p95 latency, cost per request, and failure traces.', 'Use when the bottleneck is serving cost, latency, portability, or memory rather than training quality.']],
+      [/gpu|tpu|pmpp|cuda|triton|kernel|tensor core|mxu|hbm|roofline|warp|sm|xla|compiler|hlo|jax|pytorch|tensorflow|maxtext|deepspeed|zero|fsdp|distributed/, ['#7ee787', 'accelerated training and kernels', 'Large-model pretraining, fine-tuning, custom attention kernels, recommender systems, simulation surrogates, distributed training, and hardware-aware inference.', 'Map the math to hardware: tile tensors, reduce memory traffic, shard parameters/activations, fuse kernels, overlap communication, and profile before optimizing.', 'Use when raw algorithmic correctness is not enough and throughput, memory bandwidth, device placement, or parallelism decides whether the system is practical.']],
+      [/rl|reinforcement|policy|reward|ppo|dpo|grpo|agent|robot|control|mdp/, ['#ffa657', 'decision-making and agent loops', 'Robotics, game agents, recommender policies, RLHF/RLAIF alignment, tool-use agents, traffic/control systems, and reasoning models trained with verifiable rewards.', 'Define states/actions/rewards, collect trajectories, optimize a policy, evaluate off-policy and online behavior, then wrap risky actions with constraints, simulators, and human review.', 'Use when the output is an action sequence and success depends on delayed consequences, exploration, or feedback from the environment.']],
+      [/model|llm|gpt|claude|gemini|llama|qwen|deepseek|mistral|moe|transformer|attention|ml\b|learning|training|gradient|optimizer/, ['#79c0ff', 'model building and adaptation', 'Foundation models, classifiers, recommenders, retrieval rerankers, copilots, multimodal assistants, forecasting systems, and task-specific fine-tunes.', 'Turn data into representations, train or adapt the model, evaluate it on realistic traces, package it behind an API or batch job, and keep a feedback loop for drift and errors.', 'Use when the system must learn patterns from data rather than rely only on hand-written rules.']],
+      [/cfd|fluid|navier|flow|turbulence|fea|finite element|stress|strain|mechanics|mesh|surrogate|operator/, ['#f778ba', 'engineering simulation and digital twins', 'Aerospace, automotive, energy, civil structures, thermal design, manufacturing, weather, medical devices, and AI surrogate simulation.', 'Discretize the physical domain, solve or approximate the governing equations, validate against experiments or trusted solvers, then use the result for design, optimization, or monitoring.', 'Use when physical constraints, geometry, boundary conditions, and numerical error matter as much as the ML model.']],
+      [/fpga|rtl|verilog|hls|lut|bitstream|hardware/, ['#ffa657', 'specialized hardware paths', 'Low-latency trading, packet processing, embedded AI, sensor pipelines, robotics, telecom, signal processing, and fixed-function inference accelerators.', 'Translate the computation into hardware structure, pipeline it, choose fixed-point widths, verify timing/area/power, and deploy as a bitstream or accelerator block.', 'Use when deterministic latency, power, or I/O proximity beats the flexibility of a CPU/GPU.']]
+    ];
+    for (var i = 0; i < packs.length; i++) if (packs[i][0].test(t)) return packs[i][1];
+    return ['#58a6ff', 'real production systems', 'Research prototypes, internal tools, production services, dashboards, automation jobs, and decision-support workflows.', 'Identify the input, transformation, output, owner, metric, failure mode, and rollback path; then connect the concept to a real workflow instead of memorizing it in isolation.', 'Use when you want to know why the concept exists and what job it performs in a larger system.'];
+  }
+  function miniSvg(color, domain) {
+    return '<svg viewBox="0 0 560 155" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:680px;display:block;margin:10px auto;background:#0d1117;border:1px solid #30363d;border-radius:6px">'
+      + '<defs><marker id="wuArr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="'+color+'"/></marker></defs>'
+      + '<text x="24" y="30" fill="'+color+'" font-size="14" font-weight="700">Where it shows up: '+esc(domain)+'</text>'
+      + '<rect x="28" y="58" width="104" height="46" rx="8" fill="#161b22" stroke="#58a6ff"/><text x="80" y="85" text-anchor="middle" fill="#c9d1d9" font-size="11">input</text>'
+      + '<rect x="166" y="58" width="104" height="46" rx="8" fill="#161b22" stroke="'+color+'"/><text x="218" y="85" text-anchor="middle" fill="#c9d1d9" font-size="11">concept</text>'
+      + '<rect x="304" y="58" width="104" height="46" rx="8" fill="#161b22" stroke="#7ee787"/><text x="356" y="85" text-anchor="middle" fill="#c9d1d9" font-size="11">system</text>'
+      + '<rect x="442" y="58" width="90" height="46" rx="8" fill="#161b22" stroke="#f778ba"/><text x="487" y="85" text-anchor="middle" fill="#c9d1d9" font-size="11">metric</text>'
+      + '<path d="M132 81 H166 M270 81 H304 M408 81 H442" stroke="'+color+'" stroke-width="2" marker-end="url(#wuArr)"/>'
+      + '<text x="280" y="132" text-anchor="middle" fill="#8b949e" font-size="11">Learning handle: always ask what workflow, constraint, owner, and failure mode this concept changes.</text>'
+      + '</svg>';
+  }
+  cfg.deepDives.forEach(function(dd) {
+    if (!dd) return;
+    dd.sections = dd.sections || [];
+    var exists = dd.sections.some(function(s) { return /where\s+it\s+is\s+used|used\s*&\s*how|used\s+and\s+how/i.test(String(s.title || '') + ' ' + String(s.text || '')); });
+    if (exists) return;
+    var p = field(dd);
+    var html = '<div style="line-height:1.6;background:#0d1117;border:1px solid #30363d;border-left:3px solid '+p[0]+';border-radius:8px;padding:12px 14px">'
+      + '<p style="margin:0 0 8px"><b style="color:'+p[0]+'">Used in:</b> '+esc(p[2])+'</p>'
+      + '<p style="margin:0 0 8px"><b>How it is used:</b> '+esc(p[3])+'</p>'
+      + '<p style="margin:0"><b>When to reach for it:</b> '+esc(p[4])+'</p>'
+      + miniSvg(p[0], p[1])
+      + '</div>';
+    var insertAt = dd.sections.findIndex(function(s) { return /intuition|mental model|overview|what it is|field lab/i.test(String(s.title || '')); });
+    insertAt = insertAt < 0 ? Math.min(1, dd.sections.length) : insertAt + 1;
+    dd.sections.splice(insertAt, 0, { title: 'Where It Is Used & How', text: html });
+    dd.keypoints = dd.keypoints || [];
+    var hasKey = dd.keypoints.some(function(k) { return /used in|where used|production use/i.test(typeof k === 'string' ? k : String((k && k.title) || '') + ' ' + String((k && k.text) || '')); });
+    if (!hasKey) dd.keypoints.push({ title: 'Used in practice', text: p[2] });
+  });
+}
+if (typeof COURSE_CONFIG !== 'undefined') ensureWhereUsedHowHooks(COURSE_CONFIG);
+
+
+function ensureStrongReferenceHooks(cfg) {
+  if (!cfg || !Array.isArray(cfg.deepDives)) return;
+  function esc(s) { return String(s || '').replace(/[&<>"']/g, function(c) { return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+  function refsFor(dd) {
+    var t = [cfg.header, cfg.subtitle, cfg.course && cfg.course.title, dd && dd.id, dd && dd.title, dd && dd.desc].join(' ').toLowerCase();
+    var packs = [
+      [/paged|vllm|kv cache|serving|batch|inference/, [
+        ['PagedAttention / vLLM paper', 'https://arxiv.org/abs/2309.06180', 'Canonical system paper for KV-cache paging and high-throughput LLM serving.'],
+        ['vLLM documentation', 'https://docs.vllm.ai/', 'Practical serving guide for batching, quantization, distributed inference, and OpenAI-compatible APIs.']
+      ]],
+      [/onnx|runtime|execution provider|directml|coreml|webgpu/, [
+        ['ONNX Runtime documentation', 'https://onnxruntime.ai/docs/', 'Official runtime docs for graph optimization, execution providers, deployment, and profiling.'],
+        ['ONNX operator specifications', 'https://onnx.ai/onnx/operators/', 'The source of truth for portable operator semantics and model interchange.']
+      ]],
+      [/quant|int4|int8|fp8|gptq|awq|qlora|gguf/, [
+        ['QLoRA paper', 'https://arxiv.org/abs/2305.14314', 'Best anchor for 4-bit finetuning, NF4, double quantization, and memory-quality tradeoffs.'],
+        ['GPTQ paper', 'https://arxiv.org/abs/2210.17323', 'Core reference for post-training quantization of large language models.']
+      ]],
+      [/cuda graph|cuda-graph|graph capture/, [
+        ['CUDA Graphs programming guide', 'https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#cuda-graphs', 'Official semantics for capture, instantiate, update, and replay.'],
+        ['PyTorch CUDA Graphs guide', 'https://pytorch.org/docs/stable/notes/cuda.html#cuda-graphs', 'Practical PyTorch integration details and gotchas.']
+      ]],
+      [/triton|kernel|pmpp|cuda|gpu|tensor core|warp|sm|roofline|hbm/, [
+        ['CUDA C Programming Guide', 'https://docs.nvidia.com/cuda/cuda-c-programming-guide/', 'Primary reference for CUDA execution model, memory hierarchy, warps, and tensor cores.'],
+        ['Triton language documentation', 'https://triton-lang.org/main/index.html', 'Primary reference for writing and tuning Python-authored GPU kernels.']
+      ]],
+      [/tpu|mxu|systolic|xla|hlo|jax|pallas|maxtext/, [
+        ['Cloud TPU system architecture', 'https://cloud.google.com/tpu/docs/system-architecture-tpu-vm', 'Official reference for TPU chips, MXUs, interconnect, memory, and execution model.'],
+        ['JAX distributed arrays and automatic parallelization', 'https://docs.jax.dev/en/latest/notebooks/Distributed_arrays_and_automatic_parallelization.html', 'Best practical guide for meshes, sharding, and XLA-backed SPMD thinking.']
+      ]],
+      [/deepspeed|zero|fsdp|shard|distributed|parallelism|optimizer state/, [
+        ['ZeRO paper', 'https://arxiv.org/abs/1910.02054', 'Foundational paper for partitioning optimizer state, gradients, and parameters across data-parallel workers.'],
+        ['DeepSpeed documentation', 'https://www.deepspeed.ai/docs/', 'Practical reference for ZeRO stages, config files, inference, and distributed training.']
+      ]],
+      [/pytorch|torch|autograd|compile|eager/, [
+        ['PyTorch documentation', 'https://pytorch.org/docs/stable/index.html', 'Official reference for tensors, autograd, modules, distributed, compilation, and CUDA behavior.'],
+        ['torch.compile tutorial', 'https://pytorch.org/tutorials/intermediate/torch_compile_tutorial.html', 'Practical entry point for Dynamo/Inductor compilation and performance tuning.']
+      ]],
+      [/tensorflow|keras|tf\.function|tflite|grappler/, [
+        ['TensorFlow guides', 'https://www.tensorflow.org/guide', 'Official guide for tensors, tf.function, data pipelines, distributed training, and deployment.'],
+        ['TensorFlow Lite guide', 'https://www.tensorflow.org/lite/guide', 'Practical reference for edge/mobile inference and model conversion.']
+      ]],
+      [/benchmark|leaderboard|helm|mmlu|gpqa|swe|arena|eval|judge|metric|red.?team|ragas/, [
+        ['HELM paper', 'https://arxiv.org/abs/2211.09110', 'Strong framework for broad, transparent model evaluation across scenarios and metrics.'],
+        ['lm-evaluation-harness', 'https://github.com/EleutherAI/lm-evaluation-harness', 'Widely used open-source harness for reproducible language-model benchmarks.']
+      ]],
+      [/rl|reinforcement|policy|reward|ppo|mdp|control|agent|dpo|grpo/, [
+        ['Sutton & Barto RL book', 'http://incompleteideas.net/book/the-book-2nd.html', 'The standard conceptual reference for MDPs, value functions, policy gradients, and control.'],
+        ['PPO paper', 'https://arxiv.org/abs/1707.06347', 'Canonical modern policy-gradient baseline for stable reinforcement-learning updates.']
+      ]],
+      [/transformer|attention|llm|bert|gpt|llama|qwen|deepseek|mistral|model|ml\b|neuron|optimizer|backprop|gradient|activation/, [
+        ['Deep Learning book', 'https://www.deeplearningbook.org/', 'Best broad reference for neural-network fundamentals, optimization, regularization, and representation learning.'],
+        ['Attention Is All You Need', 'https://arxiv.org/abs/1706.03762', 'Canonical paper for Transformer attention, residual blocks, and sequence modeling.']
+      ]],
+      [/cfd|fluid|navier|turbulence|finite volume|fno|pinn/, [
+        ['NASA CFD resources', 'https://www.grc.nasa.gov/www/k-12/airplane/nseqs.html', 'Clear reference for Navier-Stokes equations and physical meaning of CFD terms.'],
+        ['Fourier Neural Operator paper', 'https://arxiv.org/abs/2010.08895', 'Strong AI-for-CFD reference for neural operators on PDE families.']
+      ]],
+      [/fea|finite element|stress|strain|solid|mechanics|mesh/, [
+        ['FEniCS tutorial', 'https://jsdokken.com/dolfinx-tutorial/', 'Practical finite-element reference for weak forms, meshes, boundary conditions, and solvers.'],
+        ['The Finite Element Method: Linear Static and Dynamic Finite Element Analysis', 'https://link.springer.com/book/10.1007/978-0-486-13485-2', 'Classic reference for FEM formulation and structural analysis.']
+      ]],
+      [/fpga|rtl|verilog|hls|lut|bitstream|vivado|vitis/, [
+        ['Vitis HLS documentation', 'https://docs.amd.com/r/en-US/ug1399-vitis-hls', 'Official reference for turning C/C++ kernels into FPGA hardware pipelines.'],
+        ['Verilog HDL quick reference', 'https://sutherland-hdl.com/pdfs/verilog_2001_ref_guide.pdf', 'Compact syntax/reference guide for RTL-level Verilog.']
+      ]]
+    ];
+    for (var i = 0; i < packs.length; i++) if (packs[i][0].test(t)) return packs[i][1];
+    return [
+      ['Google Machine Learning Crash Course', 'https://developers.google.com/machine-learning/crash-course', 'Practical reference for ML concepts, data, training, and evaluation.'],
+      ['Deep Learning book', 'https://www.deeplearningbook.org/', 'Durable conceptual reference for neural-network foundations.']
+    ];
+  }
+  function usefulRefs(dd) {
+    var refs = Array.isArray(dd.refs) ? dd.refs : [];
+    var text = refs.map(function(r) { return String((r && r.url) || '') + ' ' + String((r && r.label) || ''); }).join(' ').toLowerCase();
+    if (!refs.length) return false;
+    if (/sample|example\.com|tools\.ietf\.org\/html\/rfc7231|mdn.*fetch|aws sns|rfc6376/.test(text)) return false;
+    return refs.some(function(r) { return r && /^https?:\/\//.test(String(r.url || '')); });
+  }
+  cfg.deepDives.forEach(function(dd) {
+    if (!dd) return;
+    dd.sections = dd.sections || [];
+    var hasSection = dd.sections.some(function(s) { return /strong references|references|further reading|source anchors/i.test(String(s.title || '') + ' ' + String(s.text || '')); });
+    if (hasSection || usefulRefs(dd)) return;
+    var refs = refsFor(dd).slice(0, 2);
+    var list = refs.map(function(r) {
+      return '<li><a href="' + esc(r[1]) + '" target="_blank" rel="noopener">' + esc(r[0]) + '</a><br><span style="color:#8b949e">' + esc(r[2]) + '</span></li>';
+    }).join('');
+    dd.sections.push({ title: 'Strong References', text: '<ul style="margin:8px 0 0 18px;line-height:1.65">' + list + '</ul>' });
+    dd.keypoints = dd.keypoints || [];
+    var hasKey = dd.keypoints.some(function(k) { return /reference|source/i.test(typeof k === 'string' ? k : String((k && k.title) || '') + ' ' + String((k && k.text) || '')); });
+    if (!hasKey) dd.keypoints.push({ title: 'Source anchors', text: refs.map(function(r) { return r[0]; }).join(' + ') });
+  });
+}
+if (typeof COURSE_CONFIG !== 'undefined') ensureStrongReferenceHooks(COURSE_CONFIG);
 
 function ensureStudyCuriosityHooks(cfg) {
   if (!cfg || !Array.isArray(cfg.deepDives)) return;

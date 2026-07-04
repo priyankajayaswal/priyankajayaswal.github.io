@@ -1026,6 +1026,7 @@ const SAMPLE_CONFIG = {
       sections: [
         { title: "Intuition",      text: "Plain-language framing — what concept alpha is and why it exists. Use this slot to anchor the learner before introducing notation." },
         { title: "Mechanism",      text: "How alpha actually works, step by step. State the inputs, the transformation, and the outputs. Reference the formula below." },
+        { title: "Where It Is Used & How", text: "Where alpha appears in a real workflow, how the concept is wired into the surrounding system, which metric proves it helped, and what failure mode it changes. This section is required for every deep dive." },
         { title: "Key Formula",    formula: "y = m·x + b" },
         { title: "Worked Example", text: "Concrete numbers end-to-end: with m=2, b=3, and x=5 we get y=13. This is the slot that converts a definition into intuition." },
         { title: "Pitfall & Tie-In", text: "Common mistake: students confuse alpha with a related concept beta. Real-world tie-in: alpha shows up in <RFC/CVE/paper/system> — a concrete handle worth remembering." }
@@ -1035,6 +1036,10 @@ const SAMPLE_CONFIG = {
         { title: "Formula handle",   text: "y − b = m·x — the form to memorise for fast mental math." },
         { title: "Common pitfall",   text: "Sign of m matters: a negative slope flips the direction of effect." },
         { title: "Real-world ref",   text: "Cited in Sample-Paper et al. 2020; appears in production system X." }
+      ],
+      refs: [
+        { label: "Canonical source for alpha", url: "https://example.com/alpha-paper", note: "Replace with the paper/spec/docs that define the concept." },
+        { label: "Implementation guide for alpha", url: "https://example.com/alpha-docs", note: "Replace with a practical reference that shows how it is used." }
       ]
     },
     {
@@ -1064,6 +1069,7 @@ const SAMPLE_CONFIG = {
       sections: [
         { title: "Intuition",      text: "Beta is best understood as a state machine: at any moment the system is in exactly one of N states, and external events drive transitions." },
         { title: "Mechanism",      text: "Walk through the transition table: which event in which state produces which next state. Note the invariants preserved at each step." },
+        { title: "Where It Is Used & How", text: "Beta appears anywhere a system must make explicit state transitions: protocols, workflow engines, UI state, control loops, and retries. Use it by naming the state, event, transition, invariant, owner, and metric for safe progress." },
         { title: "Worked Example", text: "Starting in Init, event 'go' moves to Active. From Active, event 'finish' moves to Done. Done is terminal — any further event is a no-op." },
         { title: "Pitfall & Tie-In", text: "Common mistake: forgetting to handle the impossible-event case explicitly (silent drop vs. assertion). Real-world tie-in: this is the same shape as a TCP connection lifecycle." }
       ],
@@ -1072,6 +1078,10 @@ const SAMPLE_CONFIG = {
         { title: "Transition rule", text: "δ: State × Event → State. Make it total to avoid silent failures." },
         { title: "Common pitfall",  text: "Unhandled events should fail loudly in tests, even if they're no-ops in production." },
         { title: "Real-world ref",  text: "TCP RFC 793 §3.2 — the canonical example of a connection-state FSM." }
+      ],
+      refs: [
+        { label: "TCP RFC 793", url: "https://www.rfc-editor.org/rfc/rfc793", note: "Classic real-world state-machine reference." },
+        { label: "Statecharts paper", url: "https://www.sciencedirect.com/science/article/pii/0167642387900359", note: "Durable reference for hierarchical state-machine thinking." }
       ]
     }
   ],
