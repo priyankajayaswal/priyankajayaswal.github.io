@@ -18,10 +18,29 @@
   header h1 { margin:0 0 6px; font-size:28px; letter-spacing:.2px; }
   header h1 .accent { color:var(--green); }
   header p { margin:0; color:var(--muted); max-width:780px; }
+  .hero-grid { display:grid; grid-template-columns:minmax(0,1fr) minmax(320px,420px); gap:18px; align-items:center; margin-top:18px; }
+  .hero-copy { min-width:0; }
+  .hero-copy h1 { font-size:32px; line-height:1.12; }
+  .hero-copy p { font-size:14px; line-height:1.6; }
+  .hero-art { background:var(--panel); border:1px solid var(--border); border-radius:8px; overflow:hidden; min-height:250px; }
+  .hero-art svg { width:100%; height:100%; display:block; }
+  .quick-jumps { display:flex; flex-wrap:wrap; gap:8px; margin-top:14px; }
+  .quick-jumps a { border:1px solid var(--border); background:var(--panel); color:var(--ink); border-radius:14px; padding:4px 10px; font-size:12px; }
+  .quick-jumps a:hover { border-color:var(--blue); text-decoration:none; color:var(--blue); }
   .crumbs { font-size:12px; color:var(--muted); margin-bottom:14px; }
   .crumbs a { color:var(--muted); }
   main { max-width:1100px; margin:0 auto; padding:8px 24px 60px; }
   .stack-svg { display:block; width:100%; max-width:1000px; margin:18px auto 28px; background:var(--panel); border:1px solid var(--border); border-radius:10px; }
+  .visual-band { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:12px; margin:18px 0 10px; }
+  .visual-tile { background:var(--panel); border:1px solid var(--border); border-radius:8px; padding:12px; min-height:170px; }
+  .visual-tile h3 { margin:0 0 8px; font-size:13px; color:var(--ink); }
+  .visual-tile p { margin:8px 0 0; font-size:12px; color:var(--muted); line-height:1.45; }
+  .visual-tile svg { width:100%; height:105px; display:block; background:#0d1117; border-radius:6px; }
+  .route-strip { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:10px; margin:14px 0 8px; }
+  .route { background:var(--panel); border:1px solid var(--border); border-radius:8px; padding:12px; }
+  .route b { display:block; color:var(--green); margin-bottom:4px; font-size:13px; }
+  .route span { color:var(--muted); font-size:12px; line-height:1.45; display:block; }
+  .scope-note { border-left:3px solid var(--green); background:var(--panel); padding:12px 14px; border-radius:6px; color:var(--muted); font-size:12px; line-height:1.55; margin:12px 0 20px; }
   section.layer { margin:22px 0 6px; }
   section.layer h2 { font-size:14px; text-transform:uppercase; letter-spacing:1.4px; color:var(--muted); margin:24px 0 10px; font-weight:600; }
   section.layer h2 .pill { background:var(--panel); border:1px solid var(--border); color:var(--ink); padding:2px 8px; border-radius:10px; margin-right:8px; font-size:11px; letter-spacing:.5px; }
@@ -41,16 +60,93 @@
   .path ol li a { color:var(--ink); }
   footer { color:var(--muted); font-size:12px; margin-top:36px; padding-top:14px; border-top:1px solid var(--border); }
   footer a { color:var(--muted); }
+  @media (max-width: 800px) {
+    .hero-grid { grid-template-columns:1fr; }
+    .hero-copy h1 { font-size:26px; }
+  }
 </style>
 </head>
 <body>
 <header>
   <div class="crumbs"><a href="../try.html">← Study Launcher</a></div>
-  <h1>The <span class="accent">AI Stack</span> — a curated learning hub</h1>
-  <p>One page that stitches together every AI-category study page in this site, from silicon to evaluation. Click any tile to dive in. Suggested learning paths below.</p>
+  <div class="hero-grid">
+    <div class="hero-copy">
+      <h1>The <span class="accent">AI Stack</span> — a single-source learning map</h1>
+      <p>Start at silicon, climb through kernels and frameworks, train or serve real models, then evaluate honestly. Every tile is meant to become a self-contained study page, not a bookmark dump.</p>
+      <div class="quick-jumps">
+        <a href="#hardware">Hardware</a>
+        <a href="#kernels">Kernels</a>
+        <a href="#training">Training</a>
+        <a href="#inference">Inference</a>
+        <a href="#evals">Evals</a>
+        <a href="#compute">Compute grants</a>
+      </div>
+    </div>
+    <div class="hero-art" aria-label="AI stack visual overview">
+      <svg viewBox="0 0 420 260" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="chipGlow" x1="0" x2="1"><stop stop-color="#58a6ff"/><stop offset="1" stop-color="#7ee787"/></linearGradient>
+          <marker id="heroArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#8b949e"/></marker>
+        </defs>
+        <rect width="420" height="260" fill="#0d1117"/>
+        <g transform="translate(24,22)">
+          <rect x="8" y="150" width="92" height="54" rx="8" fill="#58a6ff22" stroke="#58a6ff"/>
+          <text x="54" y="174" text-anchor="middle" fill="#58a6ff" font-size="13" font-weight="700">GPU / TPU</text>
+          <text x="54" y="191" text-anchor="middle" fill="#8b949e" font-size="10">HBM + matmul</text>
+          <rect x="128" y="126" width="96" height="54" rx="8" fill="#d2a8ff22" stroke="#d2a8ff"/>
+          <text x="176" y="150" text-anchor="middle" fill="#d2a8ff" font-size="13" font-weight="700">kernels</text>
+          <text x="176" y="167" text-anchor="middle" fill="#8b949e" font-size="10">CUDA · Triton · XLA</text>
+          <rect x="252" y="96" width="96" height="54" rx="8" fill="#ffa65722" stroke="#ffa657"/>
+          <text x="300" y="120" text-anchor="middle" fill="#ffa657" font-size="13" font-weight="700">frameworks</text>
+          <text x="300" y="137" text-anchor="middle" fill="#8b949e" font-size="10">PyTorch · JAX</text>
+          <rect x="128" y="42" width="96" height="54" rx="8" fill="#7ee78722" stroke="#7ee787"/>
+          <text x="176" y="66" text-anchor="middle" fill="#7ee787" font-size="13" font-weight="700">models</text>
+          <text x="176" y="83" text-anchor="middle" fill="#8b949e" font-size="10">LLM · vision · agents</text>
+          <rect x="252" y="24" width="96" height="54" rx="8" fill="#f778ba22" stroke="#f778ba"/>
+          <text x="300" y="48" text-anchor="middle" fill="#f778ba" font-size="13" font-weight="700">evals</text>
+          <text x="300" y="65" text-anchor="middle" fill="#8b949e" font-size="10">bench · red-team</text>
+          <path d="M100 174 C120 165,119 151,128 151" fill="none" stroke="#8b949e" marker-end="url(#heroArrow)"/>
+          <path d="M224 148 C240 140,240 126,252 124" fill="none" stroke="#8b949e" marker-end="url(#heroArrow)"/>
+          <path d="M300 96 C286 80,250 70,224 68" fill="none" stroke="#8b949e" marker-end="url(#heroArrow)"/>
+          <path d="M224 60 C238 48,238 48,252 48" fill="none" stroke="#8b949e" marker-end="url(#heroArrow)"/>
+          <circle cx="54" cy="34" r="22" fill="url(#chipGlow)" opacity=".18"/>
+          <path d="M37 34 h34 M54 17 v34 M42 23 l24 24 M66 23 l-24 24" stroke="url(#chipGlow)" stroke-width="2"/>
+          <text x="54" y="74" text-anchor="middle" fill="#8b949e" font-size="10">same math, many machines</text>
+        </g>
+      </svg>
+    </div>
+  </div>
 </header>
 
 <main>
+
+<div class="scope-note">
+  <strong style="color:var(--green)">Scope pass:</strong> every internal link in this hub currently resolves. The missing conceptual link was a dedicated GPU page, so this pass adds it and keeps PMPP as the CUDA programming textbook path.
+</div>
+
+<div class="visual-band" aria-label="Mental models">
+  <div class="visual-tile">
+    <h3>1. Hardware Decides The Budget</h3>
+    <svg viewBox="0 0 320 105" xmlns="http://www.w3.org/2000/svg"><rect width="320" height="105" fill="#0d1117"/><rect x="20" y="24" width="72" height="44" rx="6" fill="#58a6ff33" stroke="#58a6ff"/><text x="56" y="50" text-anchor="middle" fill="#58a6ff" font-size="12" font-weight="700">HBM</text><rect x="124" y="14" width="72" height="64" rx="6" fill="#7ee78733" stroke="#7ee787"/><text x="160" y="50" text-anchor="middle" fill="#7ee787" font-size="12" font-weight="700">FLOPs</text><rect x="228" y="34" width="72" height="34" rx="6" fill="#ffa65733" stroke="#ffa657"/><text x="264" y="55" text-anchor="middle" fill="#ffa657" font-size="12" font-weight="700">fabric</text><text x="160" y="96" text-anchor="middle" fill="#8b949e" font-size="10">speed = min(compute, memory, communication)</text></svg>
+    <p>Before choosing a model, know whether you are FLOP-bound, memory-bound, or network-bound.</p>
+  </div>
+  <div class="visual-tile">
+    <h3>2. The Same Model Has Two Lives</h3>
+    <svg viewBox="0 0 320 105" xmlns="http://www.w3.org/2000/svg"><rect width="320" height="105" fill="#0d1117"/><path d="M35 55 H130" stroke="#58a6ff" stroke-width="3"/><path d="M190 55 H285" stroke="#f778ba" stroke-width="3"/><circle cx="80" cy="55" r="25" fill="#58a6ff22" stroke="#58a6ff"/><text x="80" y="51" text-anchor="middle" fill="#58a6ff" font-size="12" font-weight="700">train</text><text x="80" y="66" text-anchor="middle" fill="#8b949e" font-size="10">throughput</text><circle cx="240" cy="55" r="25" fill="#f778ba22" stroke="#f778ba"/><text x="240" y="51" text-anchor="middle" fill="#f778ba" font-size="12" font-weight="700">serve</text><text x="240" y="66" text-anchor="middle" fill="#8b949e" font-size="10">latency</text><text x="160" y="30" text-anchor="middle" fill="#8b949e" font-size="10">same weights, different constraints</text></svg>
+    <p>Training optimizes tokens/sec and stability. Serving optimizes TTFT, throughput, cache memory, and cost.</p>
+  </div>
+  <div class="visual-tile">
+    <h3>3. Evals Close The Loop</h3>
+    <svg viewBox="0 0 320 105" xmlns="http://www.w3.org/2000/svg"><rect width="320" height="105" fill="#0d1117"/><path d="M90 25 C180 0,265 45,216 80 C165 116,64 86,90 25" fill="none" stroke="#7ee787" stroke-width="2"/><circle cx="96" cy="30" r="18" fill="#d2a8ff22" stroke="#d2a8ff"/><text x="96" y="34" text-anchor="middle" fill="#d2a8ff" font-size="10">data</text><circle cx="214" cy="32" r="18" fill="#58a6ff22" stroke="#58a6ff"/><text x="214" y="36" text-anchor="middle" fill="#58a6ff" font-size="10">model</text><circle cx="208" cy="78" r="18" fill="#ffa65722" stroke="#ffa657"/><text x="208" y="82" text-anchor="middle" fill="#ffa657" font-size="10">eval</text><circle cx="92" cy="76" r="18" fill="#f778ba22" stroke="#f778ba"/><text x="92" y="80" text-anchor="middle" fill="#f778ba" font-size="10">fix</text></svg>
+    <p>Benchmarks are not trophies. They are sensors for deciding what to train, retrieve, fine-tune, or refuse.</p>
+  </div>
+</div>
+
+<div class="route-strip">
+  <div class="route"><b>Build bottom-up</b><span>GPU/TPU → kernels → framework → training stack → model → evals.</span></div>
+  <div class="route"><b>Debug top-down</b><span>Bad answer → eval trace → retrieval/model issue → serving/kernel/hardware bottleneck.</span></div>
+  <div class="route"><b>Learn by shipping</b><span>Pick one model, serve it, evaluate it, profile it, then optimize the narrowest bottleneck.</span></div>
+</div>
 
 <svg class="stack-svg" viewBox="0 0 1000 520" xmlns="http://www.w3.org/2000/svg" aria-label="AI stack overview">
   <defs>
@@ -122,6 +218,8 @@
   <text class="lab" x="400" y="453" text-anchor="middle" fill="#58a6ff">🧮 PMPP (GPU)</text>
   <rect class="lyr" x="500" y="430" width="180" height="36" rx="6"/>
   <text class="lab" x="590" y="453" text-anchor="middle" fill="#79c0ff">📚 ML foundations</text>
+  <rect class="lyr" x="700" y="430" width="120" height="36" rx="6"/>
+  <text class="lab" x="760" y="453" text-anchor="middle" fill="#76B900">🟩 GPU</text>
 
   <!-- Connecting arrows (rough vertical flow) -->
   <path class="arrow" d="M380 466 L380 396" marker-end="url(#ar)"/>
@@ -139,7 +237,7 @@
 </svg>
 
 <section class="layer">
-  <h2><span class="pill">7</span>Evaluation — how do you know it works?</h2>
+  <h2 id="evals"><span class="pill">7</span>Evaluation — how do you know it works?</h2>
   <div class="grid">
     <a class="card pink" href="./benchmarks.html"><div class="h"><span class="ic">📏</span><span class="nm">Benchmarks</span></div><div class="d">MMLU, GPQA, SWE-bench, Arena — what the scores actually measure.</div></a>
     <a class="card green" href="./evals.html"><div class="h"><span class="ic">🧪</span><span class="nm">Evals</span></div><div class="d">lm-eval-harness, HELM, RAGAS, judge models, red-teaming.</div></a>
@@ -154,7 +252,7 @@
 </section>
 
 <section class="layer">
-  <h2><span class="pill">5</span>Inference — serving at scale</h2>
+  <h2 id="inference"><span class="pill">5</span>Inference — serving at scale</h2>
   <div class="grid">
     <a class="card cyan" href="./vllm.html"><div class="h"><span class="ic">🚀</span><span class="nm">vLLM</span></div><div class="d">PagedAttention, continuous batching, spec decoding.</div></a>
     <a class="card pink" href="./onnxruntime.html"><div class="h"><span class="ic">🧩</span><span class="nm">ONNX Runtime</span></div><div class="d">Cross-platform — CUDA, DML, CoreML, QNN, WebGPU.</div></a>
@@ -162,7 +260,7 @@
 </section>
 
 <section class="layer">
-  <h2><span class="pill">4</span>Training stacks — scaling pretraining</h2>
+  <h2 id="training"><span class="pill">4</span>Training stacks — scaling pretraining</h2>
   <div class="grid">
     <a class="card amber" href="./maxtext.html"><div class="h"><span class="ic">📈</span><span class="nm">MaxText</span></div><div class="d">High-MFU LLM training on TPU pods in JAX.</div></a>
     <a class="card blue" href="./deepspeed.html"><div class="h"><span class="ic">🌊</span><span class="nm">DeepSpeed</span></div><div class="d">ZeRO 1/2/3, Ulysses, MoE, FastGen.</div></a>
@@ -171,7 +269,7 @@
 </section>
 
 <section class="layer">
-  <h2><span class="pill">3</span>Compilers &amp; kernels — the magic floor</h2>
+  <h2 id="kernels"><span class="pill">3</span>Compilers &amp; kernels — the magic floor</h2>
   <div class="grid">
     <a class="card amber" href="./xla.html"><div class="h"><span class="ic">🛠️</span><span class="nm">XLA</span></div><div class="d">HLO, StableHLO, GSPMD, PjRt — TPUs and GPUs.</div></a>
     <a class="card violet" href="./triton.html"><div class="h"><span class="ic">⚡</span><span class="nm">Triton</span></div><div class="d">Python DSL for GPU kernels — FlashAttention, torch.compile backend.</div></a>
@@ -190,8 +288,9 @@
 </section>
 
 <section class="layer">
-  <h2><span class="pill">1</span>Hardware &amp; foundations — the silicon and the math</h2>
+  <h2 id="hardware"><span class="pill">1</span>Hardware &amp; foundations — the silicon and the math</h2>
   <div class="grid">
+    <a class="card nvg" href="./gpu.html"><div class="h"><span class="ic">🟩</span><span class="nm">GPU</span></div><div class="d">SMs, tensor cores, HBM, CUDA, NVLink, roofline thinking — a full interactive GPU study map.</div></a>
     <a class="card blue" href="./tpu.html"><div class="h"><span class="ic">🛰️</span><span class="nm">TPU</span></div><div class="d">Google's accelerator — pods, MXU, sparsecore, ICI.</div></a>
     <a class="card blue" href="./pmpp.html"><div class="h"><span class="ic">🧮</span><span class="nm">PMPP — Massively Parallel Programming</span></div><div class="d">CUDA, GPU patterns — Hwu · Kirk · El Hajj.</div></a>
     <a class="card cyan" href="./ml.html"><div class="h"><span class="ic">📚</span><span class="nm">ML Foundations</span></div><div class="d">The math, the models, the training loop — before frameworks.</div></a>
@@ -215,7 +314,7 @@
       <ol>
         <li><a href="./ml.html">ML foundations</a></li>
         <li><a href="./pytorch.html">PyTorch</a> or <a href="./jax.html">JAX</a></li>
-        <li><a href="./pmpp.html">PMPP</a> / <a href="./tpu.html">TPU</a></li>
+        <li><a href="./gpu.html">GPU</a> / <a href="./pmpp.html">PMPP</a> / <a href="./tpu.html">TPU</a></li>
         <li><a href="./deepspeed.html">DeepSpeed</a> or <a href="./maxtext.html">MaxText</a></li>
         <li><a href="./evals.html">Evals</a> → ship</li>
       </ol>
@@ -232,7 +331,8 @@
     <div class="path">
       <h3>I want to understand the compiler</h3>
       <ol>
-        <li><a href="./pmpp.html">PMPP</a> — what GPUs actually do</li>
+        <li><a href="./gpu.html">GPU</a> — hardware map and roofline intuition</li>
+        <li><a href="./pmpp.html">PMPP</a> — what CUDA programs actually do</li>
         <li><a href="./triton.html">Triton</a> — write a kernel</li>
         <li><a href="./xla.html">XLA</a> — see the lowering</li>
         <li><a href="./cuda-graphs.html">CUDA Graphs</a> — runtime story</li>
@@ -250,7 +350,7 @@
 </section>
 
 <section class="layer">
-  <h2><span class="pill">$</span>Compute for research — apply, don't pay</h2>
+  <h2 id="compute"><span class="pill">$</span>Compute for research — apply, don't pay</h2>
   <p style="margin:0 0 10px;color:var(--muted);font-size:12px;max-width:780px;">Free / heavily subsidised GPU, TPU and HPC time. Most accept independent researchers, students, open‑source maintainers, and small startups — not just credentialed academics. Read the eligibility carefully; turnaround is days to a few weeks.</p>
   <div class="grid">
     <a class="card blue" href="https://sites.research.google/trc/about/" target="_blank" rel="noopener">

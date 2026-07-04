@@ -5643,6 +5643,185 @@ while True:
   ]
 };
 
+function addTpuVersionArchitectureDeepDives(cfg) {
+  if (!cfg || !Array.isArray(cfg.deepDives)) return;
+  if (cfg.deepDives.some(function(dd) { return dd.id === 'tpu-version-ironwood-v7'; })) return;
+  function esc(s) { return String(s || '').replace(/[&<>"']/g, function(c) { return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+  function tpuVersionSvg(g) {
+    return function(w, h) {
+      var chipW = Math.max(380, w - 150), chipH = Math.max(166, h - 126);
+      var chipX = 70, chipY = 74;
+      var isV1 = /v1$|TPU v1/.test(g.id + ' ' + g.name);
+      var hasSparse = /Sparse|v4|v5p|Trillium|Ironwood/i.test(g.name + ' ' + g.thesis);
+      var hasPod = !/single PCIe/i.test(g.scale);
+      var mxuN = isV1 ? 8 : 6;
+      var s = '<svg viewBox="0 0 '+w+' '+h+'" xmlns="http://www.w3.org/2000/svg" style="background:#0d1117">';
+      s += '<defs><marker id="tpuArr'+g.id+'" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="'+g.color+'"/></marker></defs>';
+      s += '<text x="28" y="30" fill="'+g.color+'" font-size="18" font-weight="700">'+esc(g.name)+' TPU floorplan</text>';
+      s += '<text x="28" y="50" fill="#8b949e" font-size="11">'+esc(g.year+' · '+g.numeric+' · '+g.memory+' · '+g.scale)+'</text>';
+      s += '<rect x="'+chipX+'" y="'+chipY+'" width="'+chipW+'" height="'+chipH+'" rx="16" fill="'+g.color+'10" stroke="'+g.color+'" stroke-width="1.4"/>';
+      s += '<text x="'+(chipX+chipW/2)+'" y="'+(chipY+22)+'" text-anchor="middle" fill="'+g.color+'" font-size="12" font-weight="700">'+esc(g.computeShort)+'</text>';
+      var mxuX = chipX + 22, mxuY = chipY + 42, mxuW = chipW * 0.34, mxuH = chipH - 74;
+      s += '<rect x="'+mxuX+'" y="'+mxuY+'" width="'+mxuW+'" height="'+mxuH+'" rx="10" fill="#4285f41f" stroke="#4285f4"/>';
+      s += '<text x="'+(mxuX+mxuW/2)+'" y="'+(mxuY+18)+'" text-anchor="middle" fill="#4285f4" font-size="11" font-weight="700">MXU systolic array</text>';
+      for (var r = 0; r < mxuN; r++) {
+        for (var c = 0; c < mxuN; c++) {
+          var cell = Math.min((mxuW-30)/mxuN, (mxuH-42)/mxuN);
+          var x = mxuX + 15 + c * cell;
+          var y = mxuY + 28 + r * cell;
+          s += '<rect x="'+x+'" y="'+y+'" width="'+(cell-2)+'" height="'+(cell-2)+'" rx="2" fill="#4285f433" stroke="#4285f4" opacity="'+((r+c)%2 ? '.75' : '1')+'"/>';
+        }
+      }
+      s += '<path d="M'+(mxuX+8)+' '+(mxuY+mxuH-12)+' H'+(mxuX+mxuW-8)+'" stroke="#4285f4" marker-end="url(#tpuArr'+g.id+')" opacity=".8"/>';
+      s += '<path d="M'+(mxuX+10)+' '+(mxuY+34)+' V'+(mxuY+mxuH-18)+'" stroke="#4285f4" marker-end="url(#tpuArr'+g.id+')" opacity=".8"/>';
+      s += '<text x="'+(mxuX+mxuW/2)+'" y="'+(mxuY+mxuH-8)+'" text-anchor="middle" fill="#8b949e" font-size="8">weights / activations pulse through</text>';
+      var midX = chipX + chipW*0.42, midW = chipW*0.25;
+      [['VMEM / SRAM', '#9aa0a6', 'compiler-managed tiles'], ['VPU + scalar', '#7ee787', 'elementwise + reductions'], ['DMA / collectives', '#ffa657', 'feed MXU + ICI']].forEach(function(row, i) {
+        var y = chipY + 48 + i * 44;
+        s += '<rect x="'+midX+'" y="'+y+'" width="'+midW+'" height="32" rx="7" fill="'+row[1]+'22" stroke="'+row[1]+'"/>';
+        s += '<text x="'+(midX+midW/2)+'" y="'+(y+14)+'" text-anchor="middle" fill="#c9d1d9" font-size="9" font-weight="700">'+row[0]+'</text>';
+        s += '<text x="'+(midX+midW/2)+'" y="'+(y+26)+'" text-anchor="middle" fill="#8b949e" font-size="7">'+row[2]+'</text>';
+      });
+      if (hasSparse) {
+        s += '<rect x="'+midX+'" y="'+(chipY+chipH-36)+'" width="'+midW+'" height="24" rx="7" fill="#d2a8ff22" stroke="#d2a8ff"/>';
+        s += '<text x="'+(midX+midW/2)+'" y="'+(chipY+chipH-20)+'" text-anchor="middle" fill="#d2a8ff" font-size="9" font-weight="700">SparseCore / embeddings</text>';
+      }
+      var rightX = chipX + chipW*0.71, rightW = chipW*0.23;
+      for (var m = 0; m < 3; m++) {
+        var y = chipY + 48 + m * 38;
+        s += '<rect x="'+rightX+'" y="'+y+'" width="'+rightW+'" height="28" rx="6" fill="#9aa0a622" stroke="#9aa0a6"/>';
+        s += '<text x="'+(rightX+rightW/2)+'" y="'+(y+18)+'" text-anchor="middle" fill="#c9d1d9" font-size="9">'+esc(g.memory)+'</text>';
+      }
+      s += '<path d="M'+(rightX-12)+' '+(chipY+102)+' H'+rightX+'" stroke="#9aa0a6" stroke-width="2"/>';
+      s += '<rect x="'+(w-132)+'" y="'+(chipY+40)+'" width="92" height="72" rx="8" fill="#aecbfa22" stroke="#aecbfa"/>';
+      s += '<text x="'+(w-86)+'" y="'+(chipY+58)+'" text-anchor="middle" fill="#aecbfa" font-size="10" font-weight="700">'+(hasPod ? 'ICI mesh / pod' : 'PCIe host')+'</text>';
+      if (hasPod) {
+        for (var pr = 0; pr < 3; pr++) for (var pc = 0; pc < 3; pc++) {
+          var px = w - 116 + pc * 24, py = chipY + 70 + pr * 12;
+          s += '<circle cx="'+px+'" cy="'+py+'" r="3.5" fill="'+g.color+'"/>';
+          if (pc < 2) s += '<line x1="'+px+'" y1="'+py+'" x2="'+(px+24)+'" y2="'+py+'" stroke="#aecbfa" opacity=".55"/>';
+          if (pr < 2) s += '<line x1="'+px+'" y1="'+py+'" x2="'+px+'" y2="'+(py+12)+'" stroke="#aecbfa" opacity=".55"/>';
+        }
+      } else {
+        s += '<rect x="'+(w-112)+'" y="'+(chipY+72)+'" width="52" height="20" rx="5" fill="#1967d222" stroke="#1967d2"/>';
+        s += '<text x="'+(w-86)+'" y="'+(chipY+86)+'" text-anchor="middle" fill="#c9d1d9" font-size="8">host</text>';
+      }
+      s += '<path d="M'+(chipX+chipW)+' '+(chipY+88)+' H'+(w-132)+'" stroke="#aecbfa" stroke-width="2" marker-end="url(#tpuArr'+g.id+')"/>';
+      s += '<rect x="'+(w-132)+'" y="'+(chipY+128)+'" width="92" height="58" rx="8" fill="#161b22" stroke="#30363d"/>';
+      [['MXU','#4285f4'],['SRAM/HBM','#9aa0a6'],['ICI','#aecbfa']].forEach(function(row, i) {
+        s += '<circle cx="'+(w-116)+'" cy="'+(chipY+146+i*15)+'" r="4" fill="'+row[1]+'"/>';
+        s += '<text x="'+(w-106)+'" y="'+(chipY+150+i*15)+'" fill="#c9d1d9" font-size="8">'+row[0]+'</text>';
+      });
+      s += '<rect x="30" y="'+(h-38)+'" width="'+(w-60)+'" height="22" rx="6" fill="#161b22" stroke="#30363d"/>';
+      s += '<text x="'+(w/2)+'" y="'+(h-24)+'" text-anchor="middle" fill="#8b949e" font-size="9">'+esc(g.fun)+'</text>';
+      s += '</svg>';
+      return s;
+    };
+  }
+  var gens = [
+    { id:'v1', year:'2015', name:'TPU v1', color:'#8b949e', computeShort:'256x256 MXU', numeric:'INT8 inference', memory:'8 GiB DDR3', scale:'single PCIe card', thesis:'TPU v1 was built for Google production inference, especially latency-sensitive neural-net services. It used one huge 256x256 systolic array, INT8 arithmetic, a large on-chip unified buffer, and external DDR3 for weights.', trade:'The contract was intentionally narrow: no training, no floating point, no pod-scale mesh. That narrowness is why it could beat general hardware on perf/W for production inference.', fun:'v1 is the rare chip whose superpower came from saying no to almost everything.', examples:'Search ranking, voice, Photos, small-batch production inference.' },
+    { id:'v2', year:'2017', name:'TPU v2', color:'#58a6ff', computeShort:'2 TensorCores', numeric:'BF16 x FP32 accum', memory:'16 GiB HBM', scale:'256-chip pods', thesis:'TPU v2 turned TPU from an inference ASIC into a training accelerator. It introduced BF16, HBM, TensorCores with 128x128 MXUs, and an inter-chip interconnect so many chips could train one model together.', trade:'v2 made the compiler contract much more important. Users wrote TensorFlow/JAX graphs; XLA handled tiling, layout, and collectives across a pod.', fun:'BF16 is the format that quietly made large TPU training feel boring enough to rely on.', examples:'Large TensorFlow training jobs, early pod-scale model training, BF16 training adoption.' },
+    { id:'v3', year:'2018', name:'TPU v3', color:'#7ee787', computeShort:'more MXU throughput', numeric:'BF16 training', memory:'32 GiB HBM', scale:'1024-chip pods', thesis:'TPU v3 scaled the v2 idea: more memory, more compute, liquid cooling, and much larger pods. The architectural story is not a new programming model; it is v2 hardened and scaled for serious frontier-era training.', trade:'Bigger pods made collective efficiency and input pipelines more important. Once compute is abundant, feeding the pod and reducing gradients become the real bottlenecks.', fun:'v3 is where the TPU stops being a chip story and becomes a building story.', examples:'BERT-era training, AlphaFold-era workloads, large supervised and scientific models.' },
+    { id:'v4', year:'2021', name:'TPU v4', color:'#3fb950', computeShort:'MXU + SparseCore', numeric:'BF16 / INT8', memory:'32 GiB HBM2', scale:'4096-chip 3D torus', thesis:'TPU v4 introduced a much stronger system architecture: 3D torus ICI, optical circuit switching, SparseCore for embedding-heavy workloads, and a 4096-chip pod. It is the generation where pod topology became a major feature.', trade:'OCS makes the datacenter more flexible, but the user still has to think in meshes and shardings. Bad PartitionSpecs can waste the elegant network.', fun:'TPU v4 is the moment the network became part of the accelerator.', examples:'PaLM-class training, recommender systems, large diffusion and dense transformer runs.' },
+    { id:'v5e', year:'2023', name:'TPU v5e', color:'#ffa657', computeShort:'efficient TensorCore', numeric:'BF16 / INT8', memory:'16 GiB HBM', scale:'cost-efficient slices', thesis:'TPU v5e is the efficiency SKU: lower memory and lower peak than v5p, but strong cost/performance for inference, fine-tuning, and smaller training jobs. It separated the TPU lineup into efficiency and performance tracks.', trade:'The 16 GiB memory budget is the headline constraint. For LLM serving, KV cache and batch size become the planning exercise.', fun:'v5e is the TPU that asks: what if the best chip is the one you can afford to use a lot?', examples:'Inference fleets, fine-tuning, mid-size JAX training, cost-sensitive serving.' },
+    { id:'v5p', year:'2023', name:'TPU v5p', color:'#d2a8ff', computeShort:'flagship TensorCores', numeric:'BF16 / INT8', memory:'96 GiB HBM3', scale:'8960-chip pods', thesis:'TPU v5p is the flagship training generation: much more HBM capacity and bandwidth, larger pods, and a design aimed at Gemini-scale dense training. It exists for runs where memory, collectives, and GoodPut matter as much as per-chip FLOPs.', trade:'v5p makes enormous runs possible, but it raises the operational bar. Checkpointing, XProf, sharding, and failure recovery become part of the architecture.', fun:'v5p is what happens when a training run becomes a distributed-systems exam.', examples:'Gemini-scale training, MaxText, large dense transformers, long-running frontier jobs.' },
+    { id:'trillium-v6e', year:'2024', name:'TPU v6e / Trillium', color:'#79c0ff', computeShort:'FP8-era TensorCore', numeric:'BF16 + FP8', memory:'32 GiB HBM3', scale:'256-chip pods', thesis:'Trillium pushes the efficiency track forward with much higher per-chip performance, FP8 support, better energy efficiency, and newer SparseCore capabilities. It is aimed at training and inference workloads that want modern numerics without v5p-scale memory.', trade:'The page to watch is dtype and memory. FP8 improves throughput, but model quality and scaling recipes decide whether it is a clean win.', fun:'Trillium is where TPU numerics start looking like the FP8 transformer era around GPUs.', examples:'Efficient LLM training, inference, recommender workloads, cost/performance sweeps.' },
+    { id:'ironwood-v7', year:'2025', name:'TPU v7 / Ironwood', color:'#ff7b72', computeShort:'inference-scale TPU', numeric:'FP8 / INT8 focus', memory:'192 GiB HBM3e', scale:'9216-chip pods', thesis:'Ironwood is publicly positioned as an inference-focused TPU generation: very large HBM capacity, much higher memory bandwidth, and pod-scale systems aimed at serving increasingly large and long-context models efficiently.', trade:'For inference, FLOPs are not the whole story. KV cache, batch scheduling, memory bandwidth, all-to-all traffic, and tail latency decide whether the architecture wins.', fun:'Ironwood is the TPU clue that inference is now a planet-scale systems problem, not just a forward pass.', examples:'Long-context LLM serving, Gemini inference, JetStream-style serving, large-scale recommendation and ranking.' }
+  ];
+  gens.forEach(function(g, i) {
+    cfg.deepDives.push({
+      id: 'tpu-version-' + g.id,
+      num: 'TPU Version ' + (i + 1) + ' of ' + gens.length,
+      title: g.name + ' — Hardware Architecture Deep Dive',
+      desc: g.thesis,
+      color: g.color,
+      icon: '🧬',
+      svg: tpuVersionSvg(g),
+      sections: [
+        { title: 'Architecture thesis', text: '<div style="line-height:1.65"><p>'+esc(g.thesis)+'</p><p><strong>Numerics:</strong> '+esc(g.numeric)+'. <strong>Memory:</strong> '+esc(g.memory)+'. <strong>Scale unit:</strong> '+esc(g.scale)+'.</p></div>' },
+        { title: 'What changed from the previous generation', text: '<div style="line-height:1.65"><p>'+esc(g.trade)+'</p><table class="dd-table"><thead><tr><th>Axis</th><th>What to inspect</th></tr></thead><tbody><tr><td>Compute</td><td>MXU/TensorCore count, supported dtypes, SparseCore presence, shape alignment.</td></tr><tr><td>Memory</td><td>HBM capacity and bandwidth; whether activations, optimizer state, and KV cache fit.</td></tr><tr><td>Network</td><td>ICI topology, pod size, OCS support, and whether collectives overlap compute.</td></tr><tr><td>Software</td><td>XLA lowering quality, pjit/shard_map layout, Pallas escape hatches, profiler support.</td></tr></tbody></table></div>' },
+        { title: 'Workloads that teach the generation', text: '<div style="line-height:1.65"><p><strong>Canonical workloads:</strong> '+esc(g.examples)+'.</p><p>The best way to learn this generation is to ask what bottleneck it was built to relax: inference cost, BF16 training, pod scale, embedding sparsity, HBM capacity, FP8 throughput, or serving latency.</p></div>' },
+        { title: 'Fun Fact / Curiosity Hook', text: '<div style="line-height:1.65;background:#0d1117;border:1px solid #30363d;border-left:3px solid '+g.color+';border-radius:8px;padding:12px 14px"><strong style="color:'+g.color+'">Why this is fun:</strong> '+esc(g.fun)+'</div>' },
+        { title: 'How to remember it', text: '<table class="dd-table"><thead><tr><th>Memory cue</th><th>Answer</th></tr></thead><tbody><tr><td>Generation identity</td><td>'+esc(g.name+' = '+g.computeShort+' · '+g.numeric)+'</td></tr><tr><td>Primary constraint</td><td>'+esc(g.trade)+'</td></tr><tr><td>Performance trap</td><td>Thinking peak FLOPs matter before checking MXU fill, HBM traffic, sharding, and collective time in XProf.</td></tr></tbody></table>' }
+      ],
+      keypoints: [
+        { title: 'One-line memory', text: g.computeShort + ' · ' + g.numeric + ' · ' + g.memory },
+        { title: 'Why it matters', text: g.thesis },
+        { title: 'Scale clue', text: g.scale },
+        { title: 'Curiosity hook', text: g.fun }
+      ]
+    });
+  });
+}
+addTpuVersionArchitectureDeepDives(COURSE_CONFIG);
+
+function enhanceTpuCoreHardwareDiagrams(cfg) {
+  if (!cfg || !Array.isArray(cfg.deepDives)) return;
+  function esc(s) { return String(s || '').replace(/[&<>"']/g, function(c) { return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+  function box(x,y,w,h,label,sub,color) {
+    return '<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" rx="7" fill="'+color+'22" stroke="'+color+'"/>'
+      + '<text x="'+(x+w/2)+'" y="'+(y+17)+'" text-anchor="middle" fill="'+color+'" font-size="10" font-weight="700">'+esc(label)+'</text>'
+      + (sub ? '<text x="'+(x+w/2)+'" y="'+(y+31)+'" text-anchor="middle" fill="#8b949e" font-size="8">'+esc(sub)+'</text>' : '');
+  }
+  var byId = {};
+  cfg.deepDives.forEach(function(dd) { byId[dd.id] = dd; });
+  if (byId['dd-systolic']) byId['dd-systolic'].svg = function(w,h) {
+    var s = '<svg viewBox="0 0 '+w+' '+h+'" xmlns="http://www.w3.org/2000/svg" style="background:#0d1117"><defs><marker id="sysArr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#58a6ff"/></marker></defs>';
+    s += '<text x="28" y="30" fill="#58a6ff" font-size="18" font-weight="700">Systolic array: data pulses through compute cells</text>';
+    var x0=120,y0=62,cell=22,n=7;
+    for(var r=0;r<n;r++) for(var c=0;c<n;c++) s+='<rect x="'+(x0+c*cell)+'" y="'+(y0+r*cell)+'" width="'+(cell-3)+'" height="'+(cell-3)+'" rx="3" fill="#4285f433" stroke="#4285f4"/>';
+    for(var i=0;i<n;i++){s+='<path d="M44 '+(y0+i*cell+9)+' H'+x0+'" stroke="#7ee787" marker-end="url(#sysArr)"/><text x="28" y="'+(y0+i*cell+13)+'" fill="#7ee787" font-size="8">a'+i+'</text>'; s+='<path d="M'+(x0+i*cell+9)+' 44 V'+y0+'" stroke="#ffa657" marker-end="url(#sysArr)"/><text x="'+(x0+i*cell+4)+'" y="38" fill="#ffa657" font-size="8">w'+i+'</text>'; }
+    s += box(330,74,170,40,'MXU tile','128x128 or 256x256 MAC grid','#4285f4')+box(330,128,170,40,'pipeline fill','small matmuls waste the wavefront','#ffa657')+box(330,182,170,40,'reuse','each operand feeds many MACs','#7ee787');
+    s += '<text x="'+(w/2)+'" y="'+(h-18)+'" text-anchor="middle" fill="#8b949e" font-size="10">The picture to remember: operands move, simple cells stay, reuse comes from the rhythm.</text></svg>';
+    return s;
+  };
+  if (byId['dd-memory'] || byId['dd-hbm']) {
+    var memorySvg = function(w,h) {
+      var s = '<svg viewBox="0 0 '+w+' '+h+'" xmlns="http://www.w3.org/2000/svg" style="background:#0d1117"><defs><marker id="memTpuArr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#9aa0a6"/></marker></defs><text x="28" y="30" fill="#9aa0a6" font-size="18" font-weight="700">TPU memory ladder: HBM feeds compiler-managed SRAM</text>';
+      s += box(40,78,104,48,'HBM stacks','capacity + bandwidth','#9aa0a6')+box(190,72,122,60,'CMEM / VMEM','on-chip scratchpad','#58a6ff')+box(360,78,112,48,'MXU / VPU','compute consumes tiles','#4285f4');
+      s += '<path d="M144 102 H190 M312 102 H360" stroke="#9aa0a6" stroke-width="2" marker-end="url(#memTpuArr)"/>';
+      [['weights',66,152,'#d2a8ff'],['activations',196,152,'#7ee787'],['partials',336,152,'#ffa657'],['collectives',456,152,'#aecbfa']].forEach(function(p){s+=box(p[1],p[2],94,32,p[0],'lifetime matters',p[3]);});
+      s += '<text x="'+(w/2)+'" y="'+(h-18)+'" text-anchor="middle" fill="#8b949e" font-size="10">XLA wins by deciding which tensors live in HBM, VMEM, CMEM, or registers at each step.</text></svg>';
+      return s;
+    };
+    if (byId['dd-memory']) byId['dd-memory'].svg = memorySvg;
+    if (byId['dd-hbm']) byId['dd-hbm'].svg = memorySvg;
+  }
+  if (byId['dd-roofline']) byId['dd-roofline'].svg = function(w,h) {
+    var s = '<svg viewBox="0 0 '+w+' '+h+'" xmlns="http://www.w3.org/2000/svg" style="background:#0d1117"><text x="28" y="30" fill="#f778ba" font-size="18" font-weight="700">TPU roofline: MFU vs HBM pressure</text>';
+    var x0=76,y0=h-58,x1=w-56,roof=62,knee=w*0.55;
+    s += '<line x1="'+x0+'" y1="'+y0+'" x2="'+x1+'" y2="'+y0+'" stroke="#8b949e"/><line x1="'+x0+'" y1="'+y0+'" x2="'+x0+'" y2="'+roof+'" stroke="#8b949e"/><path d="M'+x0+' '+(y0-8)+' L'+knee+' '+roof+' H'+x1+'" stroke="#f778ba" stroke-width="3" fill="none"/>';
+    [['embedding lookup',x0+70,y0-30,'#d2a8ff'],['decode attention',x0+155,y0-74,'#79c0ff'],['big BF16 matmul',knee+76,roof+8,'#7ee787'],['all-reduce gap',knee-20,roof+56,'#ffa657']].forEach(function(p){s+='<circle cx="'+p[1]+'" cy="'+p[2]+'" r="5" fill="'+p[3]+'"/><text x="'+(p[1]+9)+'" y="'+(p[2]+4)+'" fill="'+p[3]+'" font-size="9">'+p[0]+'</text>';});
+    s += '<text x="'+(w/2)+'" y="'+(h-18)+'" text-anchor="middle" fill="#8b949e" font-size="10">High MFU needs MXU fill, HBM reuse, and collectives overlapped with compute.</text></svg>';
+    return s;
+  };
+  if (byId['dd-tiling']) byId['dd-tiling'].svg = function(w,h) {
+    var s = '<svg viewBox="0 0 '+w+' '+h+'" xmlns="http://www.w3.org/2000/svg" style="background:#0d1117"><text x="28" y="30" fill="#7ee787" font-size="18" font-weight="700">Tiling: reshape tensors into MXU-friendly blocks</text>';
+    s += box(42,68,118,42,'global tensors','large HBM arrays','#9aa0a6')+box(214,62,124,54,'BlockSpec','tile + index map','#ffa657')+box(392,68,118,42,'VMEM tiles','fit scratchpad','#58a6ff')+box(392,140,118,42,'MXU launch','aligned matmul','#4285f4');
+    s += '<path d="M160 89 H214 M338 89 H392 M451 110 V140" stroke="#7ee787" stroke-width="2" marker-end="url(#tileArr)"/><defs><marker id="tileArr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#7ee787"/></marker></defs>';
+    s += '<rect x="62" y="148" width="250" height="34" rx="7" fill="#161b22" stroke="#30363d"/><text x="187" y="169" text-anchor="middle" fill="#8b949e" font-size="10">Bad tile = padding, spills, or unfilled systolic wavefront.</text></svg>';
+    return s;
+  };
+  if (byId['dd-pod']) byId['dd-pod'].svg = function(w,h) {
+    var s = '<svg viewBox="0 0 '+w+' '+h+'" xmlns="http://www.w3.org/2000/svg" style="background:#0d1117"><text x="28" y="30" fill="#aecbfa" font-size="18" font-weight="700">TPU pod: chip mesh + optical reconfiguration</text>';
+    var x0=62,y0=62,dx=54,dy=38;
+    for(var z=0;z<2;z++) for(var r=0;r<3;r++) for(var c=0;c<4;c++){var x=x0+c*dx+z*22,y=y0+r*dy+z*18;s+='<circle cx="'+x+'" cy="'+y+'" r="7" fill="#58a6ff"/>'; if(c<3)s+='<line x1="'+x+'" y1="'+y+'" x2="'+(x+dx)+'" y2="'+y+'" stroke="#aecbfa" opacity=".6"/>'; if(r<2)s+='<line x1="'+x+'" y1="'+y+'" x2="'+x+'" y2="'+(y+dy)+'" stroke="#aecbfa" opacity=".6"/>'; if(z===0)s+='<line x1="'+x+'" y1="'+y+'" x2="'+(x+22)+'" y2="'+(y+18)+'" stroke="#d2a8ff" opacity=".45"/>'; }
+    s += box(350,70,150,38,'ICI torus','local neighbor bandwidth','#aecbfa')+box(350,124,150,38,'OCS','reroute / slice / repair','#d2a8ff')+box(350,178,150,38,'DCN multislice','between pods','#ffa657');
+    s += '<text x="'+(w/2)+'" y="'+(h-18)+'" text-anchor="middle" fill="#8b949e" font-size="10">At scale, the network is not plumbing; it is part of the accelerator.</text></svg>';
+    return s;
+  };
+  if (byId['dd-sharding']) byId['dd-sharding'].svg = function(w,h) {
+    var s = '<svg viewBox="0 0 '+w+' '+h+'" xmlns="http://www.w3.org/2000/svg" style="background:#0d1117"><text x="28" y="30" fill="#ffa657" font-size="18" font-weight="700">SPMD sharding: one program, many slices of tensors</text>';
+    s += box(46,66,110,42,'global array','logical full tensor','#58a6ff')+box(216,58,130,58,'PartitionSpec','batch x model axes','#ffa657')+box(404,66,112,42,'local shard','per TPU chip','#7ee787');
+    s += '<path d="M156 87 H216 M346 87 H404" stroke="#ffa657" stroke-width="2" marker-end="url(#shardArr)"/><defs><marker id="shardArr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#ffa657"/></marker></defs>';
+    for(var i=0;i<8;i++){var x=78+(i%4)*34,y=145+Math.floor(i/4)*30;s+='<rect x="'+x+'" y="'+y+'" width="26" height="22" rx="3" fill="#58a6ff22" stroke="#58a6ff"/>';}
+    for(var j=0;j<8;j++){var x2=396+(j%4)*34,y2=145+Math.floor(j/4)*30;s+='<rect x="'+x2+'" y="'+y2+'" width="26" height="22" rx="3" fill="#7ee78722" stroke="#7ee787"/>';}
+    s += '<text x="'+(w/2)+'" y="'+(h-18)+'" text-anchor="middle" fill="#8b949e" font-size="10">XLA inserts all-gather, reduce-scatter, and all-reduce so local shards produce the global result.</text></svg>';
+    return s;
+  };
+}
+enhanceTpuCoreHardwareDiagrams(COURSE_CONFIG);
+
 // ─── Sample data(remove when using real config) ─────────────────────
 const SAMPLE_CONFIG = {
   schemaVersion: 1,
@@ -5790,6 +5969,97 @@ const SAMPLE_CONFIG = {
     unitNames: { 1: "Unit 1: Foundations", 2: "Unit 2: Advanced" }
   }
 };
+
+
+function ensureUseCaseRunnableCodeHooks(cfg) {
+  if (!cfg || !Array.isArray(cfg.useCases)) return;
+  var course = ((cfg.course && (cfg.course.code + ' ' + cfg.course.title + ' ' + cfg.course.term)) || '').toLowerCase();
+  function hasCode(step) { return step && typeof step.code === 'string' && step.code.trim().length > 0; }
+  function pick(step, uc) {
+    var t = [course, uc && uc.title, uc && uc.id, step && step.title, step && step.component, step && step.detail, step && step.text, step && step.proto].join(' ').toLowerCase();
+    if (/vllm|serve|serving|inference|openai-compatible|paged|kv cache/.test(t)) return "# run a local OpenAI-compatible inference server\npython -m vllm.entrypoints.openai.api_server \\\n  --model meta-llama/Llama-3.1-8B-Instruct \\\n  --dtype auto --max-model-len 4096 --port 8000\n\n# smoke-test it\ncurl http://127.0.0.1:8000/v1/chat/completions \\\n  -H 'Content-Type: application/json' \\\n  -d '{\"model\":\"meta-llama/Llama-3.1-8B-Instruct\",\"messages\":[{\"role\":\"user\",\"content\":\"Explain KV cache in one paragraph\"}]}'";
+    if (/onnx|ort|runtime/.test(t)) return "# export a tiny PyTorch model, then run it with ONNX Runtime\npython - <<'PY'\nimport torch, onnxruntime as ort, numpy as np\nmodel = torch.nn.Sequential(torch.nn.Linear(4, 8), torch.nn.ReLU(), torch.nn.Linear(8, 2)).eval()\nx = torch.randn(1, 4)\ntorch.onnx.export(model, x, 'demo.onnx', input_names=['x'], output_names=['y'], opset_version=17)\nsess = ort.InferenceSession('demo.onnx', providers=['CPUExecutionProvider'])\nprint(sess.run(None, {'x': x.numpy().astype(np.float32)})[0])\nPY";
+    if (/triton|custom kernel/.test(t)) return "# minimal Triton vector-add kernel\npython - <<'PY'\nimport torch, triton, triton.language as tl\n@triton.jit\ndef add_kernel(x, y, z, n:tl.constexpr, BLOCK:tl.constexpr):\n    offs = tl.program_id(0) * BLOCK + tl.arange(0, BLOCK)\n    mask = offs < n\n    tl.store(z + offs, tl.load(x + offs, mask) + tl.load(y + offs, mask), mask)\nn = 1024; x=torch.randn(n,device='cuda'); y=torch.randn(n,device='cuda'); z=torch.empty_like(x)\nadd_kernel[(triton.cdiv(n,256),)](x,y,z,n,BLOCK=256)\nprint(torch.max(torch.abs(z-(x+y))).item())\nPY";
+    if (/cuda graph|cuda-graphs|graph capture/.test(t)) return "# profile a graph-captured PyTorch region\npython - <<'PY'\nimport torch\nmodel = torch.nn.Linear(4096, 4096).cuda().eval()\nx = torch.randn(32, 4096, device='cuda')\nstatic = torch.empty_like(x)\ng = torch.cuda.CUDAGraph()\nfor _ in range(3): model(x)\ntorch.cuda.synchronize()\nwith torch.cuda.graph(g):\n    static.copy_(model(x))\nfor _ in range(10): g.replay()\ntorch.cuda.synchronize(); print(static.norm().item())\nPY";
+    if (/gpu|cuda|nsight|profile|nccl|torchrun|h100|a100|blackwell/.test(t)) return "# quick GPU health + profiler starting point\nnvidia-smi\npython - <<'PY'\nimport torch, time\nprint('cuda?', torch.cuda.is_available(), torch.cuda.get_device_name(0) if torch.cuda.is_available() else 'cpu')\na=torch.randn(4096,4096,device='cuda'); b=torch.randn(4096,4096,device='cuda')\ntorch.cuda.synchronize(); t=time.time(); c=a@b; torch.cuda.synchronize()\nprint('matmul seconds', round(time.time()-t, 4), 'norm', c.norm().item())\nPY\n# deeper trace: nsys profile -t cuda,nvtx -o trace python train.py";
+    if (/deepspeed|zero|fsdp|distributed/.test(t)) return "# DeepSpeed ZeRO smoke-test launch skeleton\ncat > ds_config.json <<'JSON'\n{\"train_batch_size\":8,\"bf16\":{\"enabled\":true},\"zero_optimization\":{\"stage\":2}}\nJSON\ndeepseed --num_gpus=8 train.py --deepspeed --deepspeed_config ds_config.json\n# PyTorch alternative:\ntorchrun --nproc-per-node=8 train.py --config train.yaml".replace('deepseed','deepspeed');
+    if (/jax|xla|maxtext|tpu|pjit|shard|mesh|pallas/.test(t)) return "# JAX/XLA smoke test: compile, run, and inspect devices\npython - <<'PY'\nimport jax, jax.numpy as jnp\nprint('devices:', jax.devices())\n@jax.jit\ndef step(x, w):\n    return jnp.tanh(x @ w).sum()\nx = jnp.ones((1024, 1024), jnp.bfloat16)\nw = jnp.ones((1024, 1024), jnp.bfloat16)\nprint(step(x, w).block_until_ready())\nPY\n# TPU/JAX training: python MaxText/train.py MaxText/configs/base.yml run_name=demo";
+    if (/pytorch|torch|training|autograd|compile/.test(t)) return "# PyTorch runnable baseline\npython - <<'PY'\nimport torch\nmodel = torch.nn.Sequential(torch.nn.Linear(32,64), torch.nn.ReLU(), torch.nn.Linear(64,2))\nopt = torch.optim.AdamW(model.parameters(), lr=1e-3)\nx = torch.randn(128,32); y = torch.randint(0,2,(128,))\nfor step in range(20):\n    loss = torch.nn.functional.cross_entropy(model(x), y)\n    opt.zero_grad(); loss.backward(); opt.step()\nprint('loss', float(loss))\nPY";
+    if (/tensorflow|keras|tf\b/.test(t)) return "# TensorFlow/Keras runnable baseline\npython - <<'PY'\nimport tensorflow as tf\nmodel = tf.keras.Sequential([tf.keras.layers.Dense(64, activation='relu'), tf.keras.layers.Dense(2)])\nmodel.compile(optimizer='adam', loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True))\nx = tf.random.normal([128, 32]); y = tf.random.uniform([128], maxval=2, dtype=tf.int32)\nmodel.fit(x, y, epochs=2, verbose=1)\nPY";
+    if (/quant|awq|gptq|bitsandbytes|int8|int4|fp8/.test(t)) return "# try 8-bit loading with bitsandbytes + Transformers\npython - <<'PY'\nfrom transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig\nmodel_id='facebook/opt-125m'\nbnb=BitsAndBytesConfig(load_in_8bit=True)\ntok=AutoTokenizer.from_pretrained(model_id)\nmodel=AutoModelForCausalLM.from_pretrained(model_id, quantization_config=bnb, device_map='auto')\nids=tok('Quantization is useful because', return_tensors='pt').to(model.device)\nprint(tok.decode(model.generate(**ids, max_new_tokens=24)[0]))\nPY";
+    if (/eval|benchmark|helm|mmlu|gpqa|leaderboard|score/.test(t)) return "# run a small local benchmark with lm-eval-harness\npython -m pip install lm-eval -q\nlm_eval --model hf \\\n  --model_args pretrained=facebook/opt-125m \\\n  --tasks hellaswag \\\n  --num_fewshot 0 --limit 20 --batch_size auto";
+    if (/rag|retrieval|vector|embedding|index/.test(t)) return "# tiny retrieval demo with sentence-transformers + FAISS\npython - <<'PY'\nfrom sentence_transformers import SentenceTransformer\nimport faiss, numpy as np\ndocs=['TPUs use systolic arrays','GPUs expose CUDA kernels','RAG retrieves evidence before generation']\nmodel=SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2')\nemb=model.encode(docs, normalize_embeddings=True).astype('float32')\nidx=faiss.IndexFlatIP(emb.shape[1]); idx.add(emb)\nq=model.encode(['What hardware uses CUDA?'], normalize_embeddings=True).astype('float32')\nprint([docs[i] for i in idx.search(q,2)[1][0]])\nPY";
+    if (/rl|reinforcement|policy|reward|ppo|agent|gym/.test(t)) return "# minimal Gymnasium rollout\npython - <<'PY'\nimport gymnasium as gym\nenv = gym.make('CartPole-v1')\nobs, _ = env.reset(seed=0); total = 0\nfor _ in range(200):\n    action = env.action_space.sample()\n    obs, reward, terminated, truncated, _ = env.step(action)\n    total += reward\n    if terminated or truncated: break\nprint('random-policy return', total)\nPY";
+    if (/cfd|fluid|navier|flow/.test(t)) return "# tiny 2D diffusion step, a CFD building block\npython - <<'PY'\nimport numpy as np\nn=64; u=np.zeros((n,n)); u[n//2,n//2]=1.0; nu=0.1; dt=0.1; dx=1.0\nfor _ in range(100):\n    lap=np.roll(u,1,0)+np.roll(u,-1,0)+np.roll(u,1,1)+np.roll(u,-1,1)-4*u\n    u += nu*dt/dx**2 * lap\nprint('mass', u.sum(), 'peak', u.max())\nPY";
+    if (/fea|finite element|stress|strain|mesh/.test(t)) return "# tiny 1D finite-element bar solve\npython - <<'PY'\nimport numpy as np\nnel=8; k=np.zeros((nel+1,nel+1)); f=np.zeros(nel+1); f[-1]=1.0\nfor e in range(nel):\n    ke=np.array([[1,-1],[-1,1]],float)*nel\n    k[e:e+2,e:e+2]+=ke\nfree=np.arange(1,nel+1)\nu=np.zeros(nel+1); u[free]=np.linalg.solve(k[np.ix_(free,free)], f[free])\nprint('tip displacement', u[-1])\nPY";
+    if (/fpga|verilog|rtl|hls|lut|bitstream/.test(t)) return "# tiny Verilog module + open-source synthesis check\ncat > counter.v <<'VERILOG'\nmodule counter(input clk, input rst, output reg [7:0] y);\n  always @(posedge clk) begin\n    if (rst) y <= 0; else y <= y + 1;\n  end\nendmodule\nVERILOG\nyosys -p 'read_verilog counter.v; synth; stat'";
+    if (/model|transformer|bert|gpt|llama|ml\/sys|machine learning/.test(t)) return "# tiny Transformers inference smoke test\npython - <<'PY'\nfrom transformers import pipeline\ngen = pipeline('text-generation', model='sshleifer/tiny-gpt2')\nprint(gen('A transformer learns', max_new_tokens=20)[0]['generated_text'])\nPY";
+    return '';
+  }
+  cfg.useCases.forEach(function(uc) {
+    (uc.steps || []).forEach(function(step) {
+      if (!step || hasCode(step)) return;
+      var code = pick(step, uc);
+      if (code) step.code = code;
+    });
+  });
+}
+if (typeof COURSE_CONFIG !== 'undefined') ensureUseCaseRunnableCodeHooks(COURSE_CONFIG);
+
+function ensureStudyCuriosityHooks(cfg) {
+  if (!cfg || !Array.isArray(cfg.deepDives)) return;
+  function esc(s) { return String(s || '').replace(/[&<>"']/g, function(c) { return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+  function pick(title) {
+    var t = String(title || '').toLowerCase();
+    var rules = [
+      [/attention|transformer|flash|rope|alibi|query|key|value|kv|paged/, ['#d2a8ff', 'Attention is less like a spotlight and more like a programmable memory bus: the expensive part is often moving the K/V bytes, not multiplying the logits.', 'attention map']],
+      [/bert|mask|embedding|token|language|llm|gpt|llama|palm|bloom|opt|model/, ['#58a6ff', 'A language model is trained as a token game, but the side effect is a compressed simulator of syntax, facts, styles, and tool-use habits.', 'token flow']],
+      [/scaling|chinchilla|compute|law|benchmark|mmlu|gpqa|arena|score/, ['#7ee787', 'Scaling curves are useful because they turn huge training runs into something you can budget with small pilot experiments.', 'curve']],
+      [/eval|judge|red|safety|helm|ragas|metric/, ['#f778ba', 'A good eval is a sensor, not a trophy. The best ones tell you exactly what to fix next.', 'feedback loop']],
+      [/retrieval|rag|index|vector|search|document/, ['#79c0ff', 'RAG turns model updates into document updates: change the corpus and the model can answer from new evidence without retraining.', 'retrieval pipeline']],
+      [/lora|qlora|adapter|fine.?tune|preference|dpo|orpo|grpo|rlhf|constitutional|instruct/, ['#ffa657', 'Most adaptation does not need to move every weight. Often a small steering signal changes the behavior of a very large frozen model.', 'adapter']],
+      [/moe|expert|switch|deepseek|router|sparse/, ['#d2a8ff', 'MoE models are giant buildings where each token visits only a few rooms. Total parameters can be huge while active compute stays modest.', 'router']],
+      [/quant|int4|int8|fp8|precision|gguf|awq|gptq/, ['#7ee787', 'Quantization is not just making numbers smaller. The art is preserving the outliers the model secretly depends on.', 'bit ladder']],
+      [/cuda|gpu|triton|kernel|tensor core|gemm|roofline|memory|hbm|sm|warp|graph/, ['#76B900', 'GPU performance is often won by deleting memory traffic. The fastest byte is the one you never move from HBM.', 'gpu tiles']],
+      [/xla|jax|tensorflow|pytorch|compiler|hlo|graph|autograd|jit/, ['#ffa657', 'Compilers do not make slow math fast by magic. They win by seeing enough of the program to fuse, reorder, shard, and remove work.', 'compiler graph']],
+      [/deepspeed|zero|fsdp|distributed|parallel|nccl|all.?reduce|shard/, ['#79c0ff', 'Distributed training is a negotiation between math and plumbing: every saved byte of optimizer state changes what can fit and communicate.', 'shards']],
+      [/rl|policy|reward|ppo|value|actor|critic|agent/, ['#f778ba', 'Reinforcement learning is strange because the training data distribution changes as the model learns to act.', 'reward loop']],
+      [/onnx|runtime|inference|serve|latency|batch|scheduler/, ['#58a6ff', 'Inference systems are queueing systems wearing neural-network clothes: batching, cache layout, and tail latency can dominate model math.', 'serving queue']],
+      [/cfd|fluid|navier|turbulence|mesh|solver/, ['#79c0ff', 'Fluid simulation is hard because tiny local numerical choices can grow into global flow behavior.', 'flow field']],
+      [/fea|finite|stress|strain|mesh|element|solid/, ['#ffa657', 'FEA turns a continuous object into many small promises: each element is simple, but together they approximate a physical structure.', 'mesh']],
+      [/fpga|lut|rtl|hls|verilog|bitstream/, ['#d2a8ff', 'An FPGA does not run your program so much as become a temporary machine shaped like your program.', 'logic fabric']]
+    ];
+    for (var i = 0; i < rules.length; i++) if (rules[i][0].test(t)) return rules[i][1];
+    return ['#58a6ff', 'The useful question is not only what this concept is, but what constraint it relaxes: memory, compute, data, latency, supervision, or human effort.', 'concept map'];
+  }
+  function miniSvg(kind, color) {
+    if (/curve/.test(kind)) return '<svg viewBox="0 0 260 72" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:360px;height:72px;display:block;margin-top:8px;background:#0d1117;border:1px solid #30363d;border-radius:6px"><path d="M28 52 C84 48,118 30,214 18" fill="none" stroke="'+color+'" stroke-width="3"/><line x1="28" y1="58" x2="230" y2="58" stroke="#8b949e"/><line x1="28" y1="58" x2="28" y2="12" stroke="#8b949e"/><circle cx="118" cy="30" r="4" fill="#7ee787"/><text x="130" y="34" fill="#8b949e" font-size="10">scales smoothly</text></svg>';
+    if (/router|shards/.test(kind)) return '<svg viewBox="0 0 260 72" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:360px;height:72px;display:block;margin-top:8px;background:#0d1117;border:1px solid #30363d;border-radius:6px"><rect x="24" y="24" width="54" height="24" rx="5" fill="'+color+'33" stroke="'+color+'"/><text x="51" y="40" text-anchor="middle" fill="#c9d1d9" font-size="10">route</text><rect x="142" y="8" width="72" height="20" rx="4" fill="#58a6ff22" stroke="#58a6ff"/><rect x="142" y="44" width="72" height="20" rx="4" fill="#7ee78722" stroke="#7ee787"/><path d="M78 36 C106 20,116 18,142 18 M78 36 C106 52,116 54,142 54" stroke="'+color+'" fill="none"/><text x="178" y="41" text-anchor="middle" fill="#8b949e" font-size="10">pick paths</text></svg>';
+    if (/retrieval|serving/.test(kind)) return '<svg viewBox="0 0 260 72" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:360px;height:72px;display:block;margin-top:8px;background:#0d1117;border:1px solid #30363d;border-radius:6px"><rect x="16" y="22" width="42" height="26" rx="5" fill="'+color+'22" stroke="'+color+'"/><rect x="86" y="22" width="42" height="26" rx="5" fill="#58a6ff22" stroke="#58a6ff"/><rect x="156" y="22" width="42" height="26" rx="5" fill="#7ee78722" stroke="#7ee787"/><path d="M58 35 H86 M128 35 H156 M198 35 H236" stroke="'+color+'"/><text x="130" y="63" text-anchor="middle" fill="#8b949e" font-size="10">request -> select -> answer</text></svg>';
+    if (/gpu|bit|adapter/.test(kind)) return '<svg viewBox="0 0 260 72" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:360px;height:72px;display:block;margin-top:8px;background:#0d1117;border:1px solid #30363d;border-radius:6px"><rect x="28" y="16" width="72" height="40" rx="6" fill="'+color+'22" stroke="'+color+'"/><g fill="#30363d">'+Array.from({length:12}).map(function(_,i){return '<rect x="'+(116+(i%6)*14)+'" y="'+(16+Math.floor(i/6)*22)+'" width="10" height="14" rx="2"/>';}).join('')+'</g><path d="M100 36 H116" stroke="'+color+'"/><text x="63" y="40" text-anchor="middle" fill="#c9d1d9" font-size="10">matrix</text><text x="164" y="63" text-anchor="middle" fill="#8b949e" font-size="10">tiles / bits / adapters</text></svg>';
+    if (/compiler|feedback|reward/.test(kind)) return '<svg viewBox="0 0 260 72" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:360px;height:72px;display:block;margin-top:8px;background:#0d1117;border:1px solid #30363d;border-radius:6px"><path d="M70 20 H176 C212 20,212 52,176 52 H70 C34 52,34 20,70 20" fill="none" stroke="'+color+'" stroke-width="2"/><circle cx="70" cy="20" r="5" fill="#58a6ff"/><circle cx="176" cy="20" r="5" fill="#7ee787"/><circle cx="176" cy="52" r="5" fill="#ffa657"/><circle cx="70" cy="52" r="5" fill="#f778ba"/><text x="130" y="40" text-anchor="middle" fill="#8b949e" font-size="10">loop learns</text></svg>';
+    return '<svg viewBox="0 0 260 72" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:360px;height:72px;display:block;margin-top:8px;background:#0d1117;border:1px solid #30363d;border-radius:6px"><circle cx="78" cy="36" r="22" fill="'+color+'22" stroke="'+color+'"/><circle cx="182" cy="36" r="22" fill="#7ee78722" stroke="#7ee787"/><path d="M100 36 H160" stroke="'+color+'"/><text x="130" y="62" text-anchor="middle" fill="#8b949e" font-size="10">idea -> capability</text></svg>';
+  }
+  cfg.deepDives.forEach(function(dd) {
+    dd.sections = dd.sections || [];
+    var existing = dd.sections.some(function(s) { return /fun|curios|why this/i.test(String(s.title || '') + ' ' + String(s.text || '')); });
+    if (existing) return;
+    var picked = pick(dd.title || dd.id || '');
+    var html = '<div style="line-height:1.65;background:#0d1117;border:1px solid #30363d;border-left:3px solid '+picked[0]+';border-radius:8px;padding:12px 14px">'
+      + '<strong style="color:'+picked[0]+'">Why this is fun:</strong> ' + esc(picked[1])
+      + miniSvg(picked[2], picked[0])
+      + '</div>';
+    var insertAt = dd.sections.findIndex(function(s) { return /^pitfall/i.test(String(s.title || '')); });
+    if (insertAt < 0) insertAt = dd.sections.findIndex(function(s) { return /^references/i.test(String(s.title || '')); });
+    if (insertAt < 0) insertAt = dd.sections.length;
+    dd.sections.splice(insertAt, 0, { title: 'Fun Fact / Curiosity Hook', text: html });
+    dd.keypoints = dd.keypoints || [];
+    if (!dd.keypoints.some(function(k) { return /curiosity|fun/i.test(String(k.title || '')); })) {
+      dd.keypoints.push({ title: 'Curiosity hook', text: picked[1] });
+    }
+  });
+}
+if (typeof COURSE_CONFIG !== 'undefined') ensureStudyCuriosityHooks(COURSE_CONFIG);
 
 // Use real config if provided, else sample
 const C = (COURSE_CONFIG && COURSE_CONFIG.schemaVersion) ? COURSE_CONFIG : SAMPLE_CONFIG;

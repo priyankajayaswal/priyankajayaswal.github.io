@@ -3993,6 +3993,97 @@ const SAMPLE_CONFIG = {
   ]
 };
 
+
+function ensureUseCaseRunnableCodeHooks(cfg) {
+  if (!cfg || !Array.isArray(cfg.useCases)) return;
+  var course = ((cfg.course && (cfg.course.code + ' ' + cfg.course.title + ' ' + cfg.course.term)) || '').toLowerCase();
+  function hasCode(step) { return step && typeof step.code === 'string' && step.code.trim().length > 0; }
+  function pick(step, uc) {
+    var t = [course, uc && uc.title, uc && uc.id, step && step.title, step && step.component, step && step.detail, step && step.text, step && step.proto].join(' ').toLowerCase();
+    if (/vllm|serve|serving|inference|openai-compatible|paged|kv cache/.test(t)) return "# run a local OpenAI-compatible inference server\npython -m vllm.entrypoints.openai.api_server \\\n  --model meta-llama/Llama-3.1-8B-Instruct \\\n  --dtype auto --max-model-len 4096 --port 8000\n\n# smoke-test it\ncurl http://127.0.0.1:8000/v1/chat/completions \\\n  -H 'Content-Type: application/json' \\\n  -d '{\"model\":\"meta-llama/Llama-3.1-8B-Instruct\",\"messages\":[{\"role\":\"user\",\"content\":\"Explain KV cache in one paragraph\"}]}'";
+    if (/onnx|ort|runtime/.test(t)) return "# export a tiny PyTorch model, then run it with ONNX Runtime\npython - <<'PY'\nimport torch, onnxruntime as ort, numpy as np\nmodel = torch.nn.Sequential(torch.nn.Linear(4, 8), torch.nn.ReLU(), torch.nn.Linear(8, 2)).eval()\nx = torch.randn(1, 4)\ntorch.onnx.export(model, x, 'demo.onnx', input_names=['x'], output_names=['y'], opset_version=17)\nsess = ort.InferenceSession('demo.onnx', providers=['CPUExecutionProvider'])\nprint(sess.run(None, {'x': x.numpy().astype(np.float32)})[0])\nPY";
+    if (/triton|custom kernel/.test(t)) return "# minimal Triton vector-add kernel\npython - <<'PY'\nimport torch, triton, triton.language as tl\n@triton.jit\ndef add_kernel(x, y, z, n:tl.constexpr, BLOCK:tl.constexpr):\n    offs = tl.program_id(0) * BLOCK + tl.arange(0, BLOCK)\n    mask = offs < n\n    tl.store(z + offs, tl.load(x + offs, mask) + tl.load(y + offs, mask), mask)\nn = 1024; x=torch.randn(n,device='cuda'); y=torch.randn(n,device='cuda'); z=torch.empty_like(x)\nadd_kernel[(triton.cdiv(n,256),)](x,y,z,n,BLOCK=256)\nprint(torch.max(torch.abs(z-(x+y))).item())\nPY";
+    if (/cuda graph|cuda-graphs|graph capture/.test(t)) return "# profile a graph-captured PyTorch region\npython - <<'PY'\nimport torch\nmodel = torch.nn.Linear(4096, 4096).cuda().eval()\nx = torch.randn(32, 4096, device='cuda')\nstatic = torch.empty_like(x)\ng = torch.cuda.CUDAGraph()\nfor _ in range(3): model(x)\ntorch.cuda.synchronize()\nwith torch.cuda.graph(g):\n    static.copy_(model(x))\nfor _ in range(10): g.replay()\ntorch.cuda.synchronize(); print(static.norm().item())\nPY";
+    if (/gpu|cuda|nsight|profile|nccl|torchrun|h100|a100|blackwell/.test(t)) return "# quick GPU health + profiler starting point\nnvidia-smi\npython - <<'PY'\nimport torch, time\nprint('cuda?', torch.cuda.is_available(), torch.cuda.get_device_name(0) if torch.cuda.is_available() else 'cpu')\na=torch.randn(4096,4096,device='cuda'); b=torch.randn(4096,4096,device='cuda')\ntorch.cuda.synchronize(); t=time.time(); c=a@b; torch.cuda.synchronize()\nprint('matmul seconds', round(time.time()-t, 4), 'norm', c.norm().item())\nPY\n# deeper trace: nsys profile -t cuda,nvtx -o trace python train.py";
+    if (/deepspeed|zero|fsdp|distributed/.test(t)) return "# DeepSpeed ZeRO smoke-test launch skeleton\ncat > ds_config.json <<'JSON'\n{\"train_batch_size\":8,\"bf16\":{\"enabled\":true},\"zero_optimization\":{\"stage\":2}}\nJSON\ndeepseed --num_gpus=8 train.py --deepspeed --deepspeed_config ds_config.json\n# PyTorch alternative:\ntorchrun --nproc-per-node=8 train.py --config train.yaml".replace('deepseed','deepspeed');
+    if (/jax|xla|maxtext|tpu|pjit|shard|mesh|pallas/.test(t)) return "# JAX/XLA smoke test: compile, run, and inspect devices\npython - <<'PY'\nimport jax, jax.numpy as jnp\nprint('devices:', jax.devices())\n@jax.jit\ndef step(x, w):\n    return jnp.tanh(x @ w).sum()\nx = jnp.ones((1024, 1024), jnp.bfloat16)\nw = jnp.ones((1024, 1024), jnp.bfloat16)\nprint(step(x, w).block_until_ready())\nPY\n# TPU/JAX training: python MaxText/train.py MaxText/configs/base.yml run_name=demo";
+    if (/pytorch|torch|training|autograd|compile/.test(t)) return "# PyTorch runnable baseline\npython - <<'PY'\nimport torch\nmodel = torch.nn.Sequential(torch.nn.Linear(32,64), torch.nn.ReLU(), torch.nn.Linear(64,2))\nopt = torch.optim.AdamW(model.parameters(), lr=1e-3)\nx = torch.randn(128,32); y = torch.randint(0,2,(128,))\nfor step in range(20):\n    loss = torch.nn.functional.cross_entropy(model(x), y)\n    opt.zero_grad(); loss.backward(); opt.step()\nprint('loss', float(loss))\nPY";
+    if (/tensorflow|keras|tf\b/.test(t)) return "# TensorFlow/Keras runnable baseline\npython - <<'PY'\nimport tensorflow as tf\nmodel = tf.keras.Sequential([tf.keras.layers.Dense(64, activation='relu'), tf.keras.layers.Dense(2)])\nmodel.compile(optimizer='adam', loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True))\nx = tf.random.normal([128, 32]); y = tf.random.uniform([128], maxval=2, dtype=tf.int32)\nmodel.fit(x, y, epochs=2, verbose=1)\nPY";
+    if (/quant|awq|gptq|bitsandbytes|int8|int4|fp8/.test(t)) return "# try 8-bit loading with bitsandbytes + Transformers\npython - <<'PY'\nfrom transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig\nmodel_id='facebook/opt-125m'\nbnb=BitsAndBytesConfig(load_in_8bit=True)\ntok=AutoTokenizer.from_pretrained(model_id)\nmodel=AutoModelForCausalLM.from_pretrained(model_id, quantization_config=bnb, device_map='auto')\nids=tok('Quantization is useful because', return_tensors='pt').to(model.device)\nprint(tok.decode(model.generate(**ids, max_new_tokens=24)[0]))\nPY";
+    if (/eval|benchmark|helm|mmlu|gpqa|leaderboard|score/.test(t)) return "# run a small local benchmark with lm-eval-harness\npython -m pip install lm-eval -q\nlm_eval --model hf \\\n  --model_args pretrained=facebook/opt-125m \\\n  --tasks hellaswag \\\n  --num_fewshot 0 --limit 20 --batch_size auto";
+    if (/rag|retrieval|vector|embedding|index/.test(t)) return "# tiny retrieval demo with sentence-transformers + FAISS\npython - <<'PY'\nfrom sentence_transformers import SentenceTransformer\nimport faiss, numpy as np\ndocs=['TPUs use systolic arrays','GPUs expose CUDA kernels','RAG retrieves evidence before generation']\nmodel=SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2')\nemb=model.encode(docs, normalize_embeddings=True).astype('float32')\nidx=faiss.IndexFlatIP(emb.shape[1]); idx.add(emb)\nq=model.encode(['What hardware uses CUDA?'], normalize_embeddings=True).astype('float32')\nprint([docs[i] for i in idx.search(q,2)[1][0]])\nPY";
+    if (/rl|reinforcement|policy|reward|ppo|agent|gym/.test(t)) return "# minimal Gymnasium rollout\npython - <<'PY'\nimport gymnasium as gym\nenv = gym.make('CartPole-v1')\nobs, _ = env.reset(seed=0); total = 0\nfor _ in range(200):\n    action = env.action_space.sample()\n    obs, reward, terminated, truncated, _ = env.step(action)\n    total += reward\n    if terminated or truncated: break\nprint('random-policy return', total)\nPY";
+    if (/cfd|fluid|navier|flow/.test(t)) return "# tiny 2D diffusion step, a CFD building block\npython - <<'PY'\nimport numpy as np\nn=64; u=np.zeros((n,n)); u[n//2,n//2]=1.0; nu=0.1; dt=0.1; dx=1.0\nfor _ in range(100):\n    lap=np.roll(u,1,0)+np.roll(u,-1,0)+np.roll(u,1,1)+np.roll(u,-1,1)-4*u\n    u += nu*dt/dx**2 * lap\nprint('mass', u.sum(), 'peak', u.max())\nPY";
+    if (/fea|finite element|stress|strain|mesh/.test(t)) return "# tiny 1D finite-element bar solve\npython - <<'PY'\nimport numpy as np\nnel=8; k=np.zeros((nel+1,nel+1)); f=np.zeros(nel+1); f[-1]=1.0\nfor e in range(nel):\n    ke=np.array([[1,-1],[-1,1]],float)*nel\n    k[e:e+2,e:e+2]+=ke\nfree=np.arange(1,nel+1)\nu=np.zeros(nel+1); u[free]=np.linalg.solve(k[np.ix_(free,free)], f[free])\nprint('tip displacement', u[-1])\nPY";
+    if (/fpga|verilog|rtl|hls|lut|bitstream/.test(t)) return "# tiny Verilog module + open-source synthesis check\ncat > counter.v <<'VERILOG'\nmodule counter(input clk, input rst, output reg [7:0] y);\n  always @(posedge clk) begin\n    if (rst) y <= 0; else y <= y + 1;\n  end\nendmodule\nVERILOG\nyosys -p 'read_verilog counter.v; synth; stat'";
+    if (/model|transformer|bert|gpt|llama|ml\/sys|machine learning/.test(t)) return "# tiny Transformers inference smoke test\npython - <<'PY'\nfrom transformers import pipeline\ngen = pipeline('text-generation', model='sshleifer/tiny-gpt2')\nprint(gen('A transformer learns', max_new_tokens=20)[0]['generated_text'])\nPY";
+    return '';
+  }
+  cfg.useCases.forEach(function(uc) {
+    (uc.steps || []).forEach(function(step) {
+      if (!step || hasCode(step)) return;
+      var code = pick(step, uc);
+      if (code) step.code = code;
+    });
+  });
+}
+if (typeof COURSE_CONFIG !== 'undefined') ensureUseCaseRunnableCodeHooks(COURSE_CONFIG);
+
+function ensureStudyCuriosityHooks(cfg) {
+  if (!cfg || !Array.isArray(cfg.deepDives)) return;
+  function esc(s) { return String(s || '').replace(/[&<>"']/g, function(c) { return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+  function pick(title) {
+    var t = String(title || '').toLowerCase();
+    var rules = [
+      [/attention|transformer|flash|rope|alibi|query|key|value|kv|paged/, ['#d2a8ff', 'Attention is less like a spotlight and more like a programmable memory bus: the expensive part is often moving the K/V bytes, not multiplying the logits.', 'attention map']],
+      [/bert|mask|embedding|token|language|llm|gpt|llama|palm|bloom|opt|model/, ['#58a6ff', 'A language model is trained as a token game, but the side effect is a compressed simulator of syntax, facts, styles, and tool-use habits.', 'token flow']],
+      [/scaling|chinchilla|compute|law|benchmark|mmlu|gpqa|arena|score/, ['#7ee787', 'Scaling curves are useful because they turn huge training runs into something you can budget with small pilot experiments.', 'curve']],
+      [/eval|judge|red|safety|helm|ragas|metric/, ['#f778ba', 'A good eval is a sensor, not a trophy. The best ones tell you exactly what to fix next.', 'feedback loop']],
+      [/retrieval|rag|index|vector|search|document/, ['#79c0ff', 'RAG turns model updates into document updates: change the corpus and the model can answer from new evidence without retraining.', 'retrieval pipeline']],
+      [/lora|qlora|adapter|fine.?tune|preference|dpo|orpo|grpo|rlhf|constitutional|instruct/, ['#ffa657', 'Most adaptation does not need to move every weight. Often a small steering signal changes the behavior of a very large frozen model.', 'adapter']],
+      [/moe|expert|switch|deepseek|router|sparse/, ['#d2a8ff', 'MoE models are giant buildings where each token visits only a few rooms. Total parameters can be huge while active compute stays modest.', 'router']],
+      [/quant|int4|int8|fp8|precision|gguf|awq|gptq/, ['#7ee787', 'Quantization is not just making numbers smaller. The art is preserving the outliers the model secretly depends on.', 'bit ladder']],
+      [/cuda|gpu|triton|kernel|tensor core|gemm|roofline|memory|hbm|sm|warp|graph/, ['#76B900', 'GPU performance is often won by deleting memory traffic. The fastest byte is the one you never move from HBM.', 'gpu tiles']],
+      [/xla|jax|tensorflow|pytorch|compiler|hlo|graph|autograd|jit/, ['#ffa657', 'Compilers do not make slow math fast by magic. They win by seeing enough of the program to fuse, reorder, shard, and remove work.', 'compiler graph']],
+      [/deepspeed|zero|fsdp|distributed|parallel|nccl|all.?reduce|shard/, ['#79c0ff', 'Distributed training is a negotiation between math and plumbing: every saved byte of optimizer state changes what can fit and communicate.', 'shards']],
+      [/rl|policy|reward|ppo|value|actor|critic|agent/, ['#f778ba', 'Reinforcement learning is strange because the training data distribution changes as the model learns to act.', 'reward loop']],
+      [/onnx|runtime|inference|serve|latency|batch|scheduler/, ['#58a6ff', 'Inference systems are queueing systems wearing neural-network clothes: batching, cache layout, and tail latency can dominate model math.', 'serving queue']],
+      [/cfd|fluid|navier|turbulence|mesh|solver/, ['#79c0ff', 'Fluid simulation is hard because tiny local numerical choices can grow into global flow behavior.', 'flow field']],
+      [/fea|finite|stress|strain|mesh|element|solid/, ['#ffa657', 'FEA turns a continuous object into many small promises: each element is simple, but together they approximate a physical structure.', 'mesh']],
+      [/fpga|lut|rtl|hls|verilog|bitstream/, ['#d2a8ff', 'An FPGA does not run your program so much as become a temporary machine shaped like your program.', 'logic fabric']]
+    ];
+    for (var i = 0; i < rules.length; i++) if (rules[i][0].test(t)) return rules[i][1];
+    return ['#58a6ff', 'The useful question is not only what this concept is, but what constraint it relaxes: memory, compute, data, latency, supervision, or human effort.', 'concept map'];
+  }
+  function miniSvg(kind, color) {
+    if (/curve/.test(kind)) return '<svg viewBox="0 0 260 72" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:360px;height:72px;display:block;margin-top:8px;background:#0d1117;border:1px solid #30363d;border-radius:6px"><path d="M28 52 C84 48,118 30,214 18" fill="none" stroke="'+color+'" stroke-width="3"/><line x1="28" y1="58" x2="230" y2="58" stroke="#8b949e"/><line x1="28" y1="58" x2="28" y2="12" stroke="#8b949e"/><circle cx="118" cy="30" r="4" fill="#7ee787"/><text x="130" y="34" fill="#8b949e" font-size="10">scales smoothly</text></svg>';
+    if (/router|shards/.test(kind)) return '<svg viewBox="0 0 260 72" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:360px;height:72px;display:block;margin-top:8px;background:#0d1117;border:1px solid #30363d;border-radius:6px"><rect x="24" y="24" width="54" height="24" rx="5" fill="'+color+'33" stroke="'+color+'"/><text x="51" y="40" text-anchor="middle" fill="#c9d1d9" font-size="10">route</text><rect x="142" y="8" width="72" height="20" rx="4" fill="#58a6ff22" stroke="#58a6ff"/><rect x="142" y="44" width="72" height="20" rx="4" fill="#7ee78722" stroke="#7ee787"/><path d="M78 36 C106 20,116 18,142 18 M78 36 C106 52,116 54,142 54" stroke="'+color+'" fill="none"/><text x="178" y="41" text-anchor="middle" fill="#8b949e" font-size="10">pick paths</text></svg>';
+    if (/retrieval|serving/.test(kind)) return '<svg viewBox="0 0 260 72" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:360px;height:72px;display:block;margin-top:8px;background:#0d1117;border:1px solid #30363d;border-radius:6px"><rect x="16" y="22" width="42" height="26" rx="5" fill="'+color+'22" stroke="'+color+'"/><rect x="86" y="22" width="42" height="26" rx="5" fill="#58a6ff22" stroke="#58a6ff"/><rect x="156" y="22" width="42" height="26" rx="5" fill="#7ee78722" stroke="#7ee787"/><path d="M58 35 H86 M128 35 H156 M198 35 H236" stroke="'+color+'"/><text x="130" y="63" text-anchor="middle" fill="#8b949e" font-size="10">request -> select -> answer</text></svg>';
+    if (/gpu|bit|adapter/.test(kind)) return '<svg viewBox="0 0 260 72" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:360px;height:72px;display:block;margin-top:8px;background:#0d1117;border:1px solid #30363d;border-radius:6px"><rect x="28" y="16" width="72" height="40" rx="6" fill="'+color+'22" stroke="'+color+'"/><g fill="#30363d">'+Array.from({length:12}).map(function(_,i){return '<rect x="'+(116+(i%6)*14)+'" y="'+(16+Math.floor(i/6)*22)+'" width="10" height="14" rx="2"/>';}).join('')+'</g><path d="M100 36 H116" stroke="'+color+'"/><text x="63" y="40" text-anchor="middle" fill="#c9d1d9" font-size="10">matrix</text><text x="164" y="63" text-anchor="middle" fill="#8b949e" font-size="10">tiles / bits / adapters</text></svg>';
+    if (/compiler|feedback|reward/.test(kind)) return '<svg viewBox="0 0 260 72" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:360px;height:72px;display:block;margin-top:8px;background:#0d1117;border:1px solid #30363d;border-radius:6px"><path d="M70 20 H176 C212 20,212 52,176 52 H70 C34 52,34 20,70 20" fill="none" stroke="'+color+'" stroke-width="2"/><circle cx="70" cy="20" r="5" fill="#58a6ff"/><circle cx="176" cy="20" r="5" fill="#7ee787"/><circle cx="176" cy="52" r="5" fill="#ffa657"/><circle cx="70" cy="52" r="5" fill="#f778ba"/><text x="130" y="40" text-anchor="middle" fill="#8b949e" font-size="10">loop learns</text></svg>';
+    return '<svg viewBox="0 0 260 72" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:360px;height:72px;display:block;margin-top:8px;background:#0d1117;border:1px solid #30363d;border-radius:6px"><circle cx="78" cy="36" r="22" fill="'+color+'22" stroke="'+color+'"/><circle cx="182" cy="36" r="22" fill="#7ee78722" stroke="#7ee787"/><path d="M100 36 H160" stroke="'+color+'"/><text x="130" y="62" text-anchor="middle" fill="#8b949e" font-size="10">idea -> capability</text></svg>';
+  }
+  cfg.deepDives.forEach(function(dd) {
+    dd.sections = dd.sections || [];
+    var existing = dd.sections.some(function(s) { return /fun|curios|why this/i.test(String(s.title || '') + ' ' + String(s.text || '')); });
+    if (existing) return;
+    var picked = pick(dd.title || dd.id || '');
+    var html = '<div style="line-height:1.65;background:#0d1117;border:1px solid #30363d;border-left:3px solid '+picked[0]+';border-radius:8px;padding:12px 14px">'
+      + '<strong style="color:'+picked[0]+'">Why this is fun:</strong> ' + esc(picked[1])
+      + miniSvg(picked[2], picked[0])
+      + '</div>';
+    var insertAt = dd.sections.findIndex(function(s) { return /^pitfall/i.test(String(s.title || '')); });
+    if (insertAt < 0) insertAt = dd.sections.findIndex(function(s) { return /^references/i.test(String(s.title || '')); });
+    if (insertAt < 0) insertAt = dd.sections.length;
+    dd.sections.splice(insertAt, 0, { title: 'Fun Fact / Curiosity Hook', text: html });
+    dd.keypoints = dd.keypoints || [];
+    if (!dd.keypoints.some(function(k) { return /curiosity|fun/i.test(String(k.title || '')); })) {
+      dd.keypoints.push({ title: 'Curiosity hook', text: picked[1] });
+    }
+  });
+}
+if (typeof COURSE_CONFIG !== 'undefined') ensureStudyCuriosityHooks(COURSE_CONFIG);
+
 // Use real config if provided, else sample
 const C = (COURSE_CONFIG && COURSE_CONFIG.schemaVersion) ? COURSE_CONFIG : SAMPLE_CONFIG;
 

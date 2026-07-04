@@ -159,12 +159,53 @@ function sliceBalancedArray(html, startIdx, openIdx) {
 }
 
 function evalConfig(src) {
-  const sandbox = { COURSE_CONFIG: null };
+  const htmlEscape = (code) => String(code)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+  const sandbox = {
+    COURSE_CONFIG: null,
+    ddCode(lang, code) {
+      return `<pre data-lang="${lang}"><code>${htmlEscape(code)}</code></pre>`;
+    },
+    ddRevList(items) {
+      return `<ul>${(items || []).map((it) => `<li>${it}</li>`).join('')}</ul>`;
+    },
+    ddPractice(items) {
+      return `<div>${(items || []).map((it) => `<section><h4>${it.q || ''}</h4><p>${it.a || ''}</p></section>`).join('')}</div>`;
+    },
+    chapTile(w = 360, h = 210, ch = 1, color = '#58a6ff', icon = '', title = '', bullets = []) {
+      const safeTitle = String(title).replace(/[<>&]/g, '');
+      const rows = (bullets || []).slice(0, 4).map((b, i) =>
+        `<text x="24" y="${72 + i * 20}" fill="#c9d1d9" font-size="12">${String(b).replace(/[<>&]/g, '')}</text>`
+      ).join('');
+      return `<svg viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg"><rect width="${w}" height="${h}" fill="#0d1117"/><text x="24" y="36" fill="${color}" font-size="18">${icon} ${safeTitle || `Chapter ${ch}`}</text>${rows}</svg>`;
+    }
+  };
   try {
     vm.runInNewContext(src + '\nthis.COURSE_CONFIG = COURSE_CONFIG;', sandbox, { timeout: 1000 });
     return { ok: true, cfg: sandbox.COURSE_CONFIG };
   } catch (e) {
     return { ok: false, err: e.message };
+  }
+}
+
+function applyKnownAugmenters(html, cfg) {
+  const start = html.search(/function\s+add[A-Za-z0-9_]*DeepDives\s*\(/);
+  if (start < 0) return;
+  const afterStart = html.slice(start);
+  const endRel = afterStart.search(/\/\/\s+[\S\s]{0,20}Sample data/);
+  if (endRel < 0) return;
+  const code = afterStart.slice(0, endRel);
+  const sandbox = {
+    COURSE_CONFIG: cfg,
+    console: { log() {}, warn() {}, error() {} }
+  };
+  try {
+    vm.runInNewContext(code, sandbox, { timeout: 1000 });
+  } catch (e) {
+    // Keep augmentation failures visible in normal page syntax/runtime checks;
+    // this verifier should still validate the base COURSE_CONFIG.
   }
 }
 
@@ -209,6 +250,7 @@ function checkFile(filePath) {
     return { filePath, checks };
   }
   const cfg = evalRes.cfg;
+  applyKnownAugmenters(html, cfg);
   pass('config-evaluates', 'COURSE_CONFIG parsed cleanly');
 
   // ── Check 3: Deep Dive shape ──
@@ -255,17 +297,20 @@ function checkFile(filePath) {
   // ── Check 4: Use Cases shape ──
   if (Array.isArray(cfg.useCases) && cfg.useCases.length > 0) {
     const issues = [];
+    let totalSteps = 0, codedSteps = 0;
     cfg.useCases.forEach((uc, i) => {
       const tag = `useCases[${i}] (${uc.id || uc.title || '?'})`;
       if (!Array.isArray(uc.steps) || uc.steps.length === 0) {
         issues.push(`${tag}: missing or empty steps[]`);
       } else {
         uc.steps.forEach((s, j) => {
+          totalSteps++;
+          if (s && typeof s.code === 'string' && s.code.trim()) codedSteps++;
           if (!s.title) issues.push(`${tag}.steps[${j}]: missing title`);
         });
       }
     });
-    if (issues.length === 0) pass('usecase-shape', `${cfg.useCases.length} cases, all healthy`);
+    if (issues.length === 0) pass('usecase-shape', `${cfg.useCases.length} cases, all healthy; ${codedSteps}/${totalSteps} steps have runnable code`);
     else fail('usecase-shape', issues.join('\n      '));
 
     // ── Check 4b: Use Cases are wired into the host page ──
