@@ -2433,6 +2433,584 @@ const SAMPLE_CONFIG = {
   ]
 };
 
+function lineageFunFact(item) {
+  const facts = {
+    "attention-is-all-you-need": "The famous title was partly a dare: the model removed both recurrence and convolution, then won machine translation with pure attention.",
+    bert: "BERT's [MASK] token is useful during pretraining but almost never appears in real downstream text, creating one of the most famous train-test mismatches in NLP.",
+    "gpt-1": "GPT-1 was only about 117M parameters, small enough that today it feels like a classroom model, yet it introduced the recipe behind much larger GPT systems.",
+    "gpt-2": "GPT-2's staged release became a turning point in how the field talks about model capability, misuse, and responsible release.",
+    "scaling-laws": "A few dozen small training runs can predict the loss of a giant run surprisingly well; that is why scaling laws feel almost like weather forecasts for LLM labs.",
+    "gpt-3": "In-context learning means the model can appear to learn a task while every weight stays frozen; the 'learning' lives in activations.",
+    "the-pile": "Changing the data mixture can feel like changing the model's personality: GitHub, arXiv, books, and forums all leave different fingerprints.",
+    chinchilla: "Chinchilla's lesson was counterintuitive at the time: many impressive models were too big for the amount of text they had seen.",
+    palm: "PaLM was as much an infrastructure paper as a model paper: the training system was part of the scientific result.",
+    opt: "OPT made large-model failure logs unusually visible; the training notes were almost as valuable as the weights.",
+    bloom: "BLOOM was built by a public collaboration of hundreds of researchers, making the social process part of the model artifact.",
+    llama: "LLaMA's biggest impact may be ecosystem gravity: it became the base layer for thousands of fine-tunes, quantizations, and local inference tools.",
+    instructgpt: "The surprising result was that a much smaller preference-tuned model could be preferred by humans over a larger raw language model.",
+    "constitutional-ai": "The constitution turns alignment into something you can inspect and argue about, not just a hidden pile of labels.",
+    "self-instruct": "Self-Instruct is a bootstrap loop: the model helps write the homework used to train its successor.",
+    lora: "LoRA works because useful fine-tuning updates often behave as if they live in a much smaller subspace than the full weight matrix.",
+    qlora: "QLoRA made 65B-class fine-tuning feel almost unfair: freeze a 4-bit giant, train tiny adapters, and still get strong behavior.",
+    flashattention: "FlashAttention did not make attention approximate; it made the exact same math respect the GPU memory hierarchy.",
+    "flashattention-2": "FlashAttention-2 is a reminder that 'same algorithm' can still get much faster when the GPU work partition changes.",
+    rope: "RoPE hides relative position inside complex-plane rotations, so a dot product quietly becomes position-aware.",
+    alibi: "ALiBi is almost suspiciously simple: add a distance penalty to attention logits and length extrapolation improves.",
+    mqa: "MQA is a serving hack that became architecture: share K/V heads because the KV cache, not the math, is often the bottleneck.",
+    gqa: "GQA is the peace treaty between MHA quality and MQA speed: several query heads share each K/V head.",
+    "speculative-decoding": "Speculative decoding can speed generation without changing the target distribution, if the accept/reject math is exact.",
+    pagedattention: "PagedAttention treats a model's KV cache like an operating system treats memory pages.",
+    rag: "RAG turns model updating into document updating: edit the corpus, rebuild the index, and the answer source changes without retraining.",
+    "chain-of-thought": "Reasoning tokens are test-time compute; making the model write intermediate steps gives it more serial work to spend on a problem.",
+    "tree-of-thoughts": "Tree of Thoughts changes prompting from 'write the answer' to 'search a space of possible thoughts.'",
+    react: "ReAct made tool use feel like a loop: think, act, observe, and revise.",
+    dpo: "DPO's charm is that a preference-learning problem collapses into a supervised-looking loss.",
+    orpo: "ORPO asks whether you can fold instruction tuning and preference pressure into one training objective.",
+    grpo: "GRPO compares sibling answers to the same prompt, so the model learns from relative wins without a separate critic.",
+    "switch-transformer": "MoE models can have enormous total parameter counts while only activating a small fraction per token.",
+    deepseekmoe: "DeepSeekMoE makes experts finer-grained, like replacing a few big departments with many specialized desks.",
+    "kv-cache-compression": "At long context, the model may fit but the conversation history may not; KV cache becomes the real memory bill.",
+    "test-time-scaling": "Test-time scaling shifts intelligence from 'one answer' to 'try, verify, search, and spend more compute on hard cases.'",
+    muon: "Muon treats some optimizer updates like geometry objects, nudging matrix updates toward orthogonal directions."
+  };
+  return facts[item.id] || "The deeper pattern: this idea changed either what models can learn, how cheaply they run, or how humans steer them.";
+}
+
+function lineageSvg(item, idx, color, w, h) {
+  const id = item.id;
+  const label = item.short || item.title;
+  const head = '<svg viewBox="0 0 ' + w + ' ' + h + '" xmlns="http://www.w3.org/2000/svg" style="background:#0d1117">'
+    + '<defs><marker id="linArrow' + idx + '" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="' + color + '"/></marker></defs>'
+    + '<rect x="18" y="18" width="' + (w - 36) + '" height="' + (h - 36) + '" rx="14" fill="' + color + '12" stroke="' + color + '" stroke-opacity=".55"/>'
+    + '<text x="34" y="48" fill="' + color + '" font-size="16" font-weight="700">' + label + '</text>'
+    + '<text x="34" y="68" fill="#8b949e" font-size="11">' + item.year + ' · ' + item.family + '</text>';
+  const foot = '<text x="' + (w / 2) + '" y="' + (h - 28) + '" text-anchor="middle" fill="#8b949e" font-size="10">' + item.tagline + '</text></svg>';
+  if (["attention-is-all-you-need","rope","alibi","mqa","gqa","flashattention","flashattention-2"].includes(id)) {
+    const cells = Array.from({length: 36}).map(function(_, i) {
+      const r = Math.floor(i / 6), c = i % 6, x = 62 + c * 34, y = 92 + r * 24;
+      const strong = id === "alibi" ? Math.max(0.05, 0.8 - Math.abs(c - r) * 0.18) : (c <= r ? 0.22 + (c + r) * 0.045 : 0.04);
+      return '<rect x="' + x + '" y="' + y + '" width="30" height="20" fill="' + color + '" fill-opacity="' + strong.toFixed(2) + '" stroke="#30363d"/>';
+    }).join('');
+    return head + '<text x="62" y="86" fill="#c9d1d9" font-size="11">attention pattern</text>' + cells
+      + '<rect x="' + (w - 205) + '" y="92" width="58" height="46" rx="6" fill="#58a6ff22" stroke="#58a6ff"/><text x="' + (w - 176) + '" y="119" text-anchor="middle" fill="#58a6ff" font-size="11">Q</text>'
+      + '<rect x="' + (w - 132) + '" y="92" width="58" height="46" rx="6" fill="#7ee78722" stroke="#7ee787"/><text x="' + (w - 103) + '" y="119" text-anchor="middle" fill="#7ee787" font-size="11">K/V</text>'
+      + '<line x1="' + (w - 147) + '" y1="115" x2="' + (w - 132) + '" y2="115" stroke="' + color + '" marker-end="url(#linArrow' + idx + ')"/>'
+      + '<text x="' + (w - 132) + '" y="165" text-anchor="middle" fill="#8b949e" font-size="10">' + (id === "flashattention" || id === "flashattention-2" ? "tile through SRAM" : "route token information") + '</text>' + foot;
+  }
+  if (["bert","gpt-1","gpt-2","gpt-3","llama","palm","opt","bloom"].includes(id)) {
+    const toks = ["The","model","[MASK]","learns","from","text"];
+    const causal = id.startsWith("gpt") || id === "llama" || id === "palm" || id === "opt" || id === "bloom";
+    return head + toks.map(function(t, i) {
+      const x = 48 + i * 74, y = 112;
+      const fill = t === "[MASK]" && id === "bert" ? "#f778ba33" : color + "22";
+      const stroke = t === "[MASK]" && id === "bert" ? "#f778ba" : color;
+      return '<rect x="' + x + '" y="' + y + '" width="62" height="32" rx="7" fill="' + fill + '" stroke="' + stroke + '"/><text x="' + (x + 31) + '" y="' + (y + 21) + '" text-anchor="middle" fill="#c9d1d9" font-size="10">' + t + '</text>';
+    }).join('')
+      + (causal ? '<path d="M54 164 H426" stroke="' + color + '" stroke-width="2" marker-end="url(#linArrow' + idx + ')"/><text x="240" y="186" text-anchor="middle" fill="#8b949e" font-size="10">left-to-right next-token prediction</text>'
+        : '<path d="M54 164 H426 M240 164 L240 148" stroke="' + color + '" stroke-width="2" marker-end="url(#linArrow' + idx + ')"/><text x="240" y="186" text-anchor="middle" fill="#8b949e" font-size="10">bidirectional context predicts masked token</text>') + foot;
+  }
+  if (["scaling-laws","chinchilla","test-time-scaling"].includes(id)) {
+    const curve = id === "test-time-scaling" ? "M70 185 C150 130,230 98,430 76" : "M70 76 C145 95,220 138,430 185";
+    return head + '<line x1="70" y1="194" x2="450" y2="194" stroke="#8b949e"/><line x1="70" y1="194" x2="70" y2="78" stroke="#8b949e"/>'
+      + '<path d="' + curve + '" fill="none" stroke="' + color + '" stroke-width="4"/>'
+      + '<circle cx="150" cy="' + (id === "test-time-scaling" ? 130 : 95) + '" r="6" fill="#58a6ff"/><circle cx="300" cy="' + (id === "test-time-scaling" ? 92 : 160) + '" r="6" fill="#7ee787"/>'
+      + '<text x="260" y="218" text-anchor="middle" fill="#8b949e" font-size="10">' + (id === "test-time-scaling" ? "more inference compute -> better solved tasks" : "more compute/data/params -> lower loss") + '</text>' + foot;
+  }
+  if (id === "the-pile") {
+    const parts = [["Books","#58a6ff"],["GitHub","#7ee787"],["arXiv","#d2a8ff"],["PubMed","#ffa657"],["Web","#f778ba"],["Forums","#79c0ff"]];
+    return head + parts.map(function(p, i) { const x = 55 + (i % 3) * 142, y = 94 + Math.floor(i / 3) * 54; return '<rect x="' + x + '" y="' + y + '" width="112" height="34" rx="7" fill="' + p[1] + '22" stroke="' + p[1] + '"/><text x="' + (x + 56) + '" y="' + (y + 22) + '" text-anchor="middle" fill="' + p[1] + '" font-size="11">' + p[0] + '</text>'; }).join('') + '<text x="260" y="218" text-anchor="middle" fill="#8b949e" font-size="10">data mixture is an architecture choice in disguise</text>' + foot;
+  }
+  if (["instructgpt","constitutional-ai","dpo","orpo","grpo"].includes(id)) {
+    const steps = id === "constitutional-ai" ? ["answer","critique","revise","prefer"] : id === "grpo" ? ["sample group","score","normalize","update"] : ["chosen","rejected","loss","policy"];
+    return head + steps.map(function(s, i) { const x = 50 + i * 112; return '<rect x="' + x + '" y="106" width="86" height="42" rx="8" fill="' + color + '22" stroke="' + color + '"/><text x="' + (x + 43) + '" y="131" text-anchor="middle" fill="#c9d1d9" font-size="10">' + s + '</text>' + (i < 3 ? '<line x1="' + (x + 86) + '" y1="127" x2="' + (x + 112) + '" y2="127" stroke="' + color + '" marker-end="url(#linArrow' + idx + ')"/>' : ''); }).join('') + '<text x="260" y="192" text-anchor="middle" fill="#8b949e" font-size="10">alignment turns preferences into gradients</text>' + foot;
+  }
+  if (["lora","qlora","muon"].includes(id)) {
+    return head + '<rect x="70" y="88" width="120" height="96" fill="#58a6ff22" stroke="#58a6ff"/><text x="130" y="139" text-anchor="middle" fill="#58a6ff" font-size="14">W</text>'
+      + '<text x="218" y="139" text-anchor="middle" fill="#8b949e" font-size="22">+</text>'
+      + '<rect x="260" y="102" width="42" height="70" fill="#7ee78722" stroke="#7ee787"/><rect x="302" y="122" width="100" height="30" fill="#ffa65722" stroke="#ffa657"/>'
+      + '<text x="331" y="196" text-anchor="middle" fill="#8b949e" font-size="10">' + (id === "muon" ? "orthogonalized matrix update" : "low-rank adapter update") + '</text>' + foot;
+  }
+  if (["switch-transformer","deepseekmoe"].includes(id)) {
+    return head + '<rect x="52" y="112" width="88" height="40" rx="8" fill="#58a6ff22" stroke="#58a6ff"/><text x="96" y="136" text-anchor="middle" fill="#58a6ff" font-size="11">token</text><rect x="190" y="104" width="80" height="56" rx="8" fill="' + color + '22" stroke="' + color + '"/><text x="230" y="136" text-anchor="middle" fill="' + color + '" font-size="11">router</text>'
+      + Array.from({length:4}).map(function(_, i) { const x = 330 + (i % 2) * 88, y = 86 + Math.floor(i / 2) * 58; return '<rect x="' + x + '" y="' + y + '" width="66" height="34" rx="7" fill="#7ee78722" stroke="#7ee787"/><text x="' + (x + 33) + '" y="' + (y + 21) + '" text-anchor="middle" fill="#7ee787" font-size="10">expert ' + (i + 1) + '</text><line x1="270" y1="132" x2="' + x + '" y2="' + (y + 17) + '" stroke="' + color + '" stroke-opacity=".55"/>'; }).join('') + foot;
+  }
+  if (id === "rag") {
+    const steps = ["query","embed","retrieve","rerank","answer"];
+    return head + steps.map(function(s, i) { const x = 35 + i * 92; return '<rect x="' + x + '" y="112" width="70" height="38" rx="8" fill="' + color + '22" stroke="' + color + '"/><text x="' + (x + 35) + '" y="135" text-anchor="middle" fill="#c9d1d9" font-size="10">' + s + '</text>' + (i < 4 ? '<line x1="' + (x + 70) + '" y1="131" x2="' + (x + 92) + '" y2="131" stroke="' + color + '" marker-end="url(#linArrow' + idx + ')"/>' : ''); }).join('') + '<text x="260" y="190" text-anchor="middle" fill="#8b949e" font-size="10">external memory enters at inference time</text>' + foot;
+  }
+  if (["chain-of-thought","tree-of-thoughts","react"].includes(id)) {
+    if (id === "tree-of-thoughts") {
+      return head + '<circle cx="260" cy="86" r="18" fill="' + color + '33" stroke="' + color + '"/><text x="260" y="90" text-anchor="middle" fill="#c9d1d9" font-size="10">start</text>' + [170,260,350].map(function(x) { return '<line x1="260" y1="104" x2="' + x + '" y2="146" stroke="' + color + '"/><circle cx="' + x + '" cy="160" r="18" fill="#58a6ff22" stroke="#58a6ff"/>'; }).join('') + '<text x="260" y="210" text-anchor="middle" fill="#8b949e" font-size="10">branch, score, prune, continue</text>' + foot;
+    }
+    const steps = id === "react" ? ["thought","action","observe","revise"] : ["step 1","step 2","step 3","answer"];
+    return head + steps.map(function(s, i) { const x = 55 + i * 104; return '<circle cx="' + x + '" cy="130" r="28" fill="' + color + '22" stroke="' + color + '"/><text x="' + x + '" y="134" text-anchor="middle" fill="#c9d1d9" font-size="10">' + s + '</text>' + (i < 3 ? '<line x1="' + (x + 28) + '" y1="130" x2="' + (x + 76) + '" y2="130" stroke="' + color + '" marker-end="url(#linArrow' + idx + ')"/>' : ''); }).join('') + foot;
+  }
+  if (["pagedattention","kv-cache-compression","speculative-decoding"].includes(id)) {
+    if (id === "speculative-decoding") {
+      return head + '<rect x="56" y="104" width="110" height="42" rx="8" fill="#7ee78722" stroke="#7ee787"/><text x="111" y="129" text-anchor="middle" fill="#7ee787" font-size="11">draft tokens</text><rect x="230" y="92" width="120" height="66" rx="8" fill="' + color + '22" stroke="' + color + '"/><text x="290" y="129" text-anchor="middle" fill="' + color + '" font-size="11">target verifies</text><rect x="406" y="104" width="70" height="42" rx="8" fill="#ffa65722" stroke="#ffa657"/><text x="441" y="129" text-anchor="middle" fill="#ffa657" font-size="11">accept</text><line x1="166" y1="125" x2="230" y2="125" stroke="' + color + '" marker-end="url(#linArrow' + idx + ')"/><line x1="350" y1="125" x2="406" y2="125" stroke="' + color + '" marker-end="url(#linArrow' + idx + ')"/>' + foot;
+    }
+    return head + Array.from({length:12}).map(function(_, i) { const x = 58 + (i % 6) * 54, y = 92 + Math.floor(i / 6) * 48; const active = (i % 4 !== 1); return '<rect x="' + x + '" y="' + y + '" width="42" height="34" rx="5" fill="' + (active ? color + '33' : '#30363d') + '" stroke="' + (active ? color : '#484f58') + '"/><text x="' + (x + 21) + '" y="' + (y + 22) + '" text-anchor="middle" fill="#c9d1d9" font-size="9">KV</text>'; }).join('') + '<text x="385" y="132" fill="#8b949e" font-size="11">page, share, evict, compress</text>' + foot;
+  }
+  return head + '<circle cx="140" cy="132" r="42" fill="' + color + '22" stroke="' + color + '"/><text x="140" y="136" text-anchor="middle" fill="' + color + '" font-size="12">idea</text><line x1="182" y1="132" x2="306" y2="132" stroke="' + color + '" marker-end="url(#linArrow' + idx + ')"/><circle cx="350" cy="132" r="42" fill="#7ee78722" stroke="#7ee787"/><text x="350" y="136" text-anchor="middle" fill="#7ee787" font-size="12">practice</text>' + foot;
+}
+
+function makeLineageDeepDive(item, idx) {
+  const color = item.color || ["#58a6ff", "#f778ba", "#7ee787", "#ffa657", "#d2a8ff", "#79c0ff"][idx % 6];
+  const refs = (item.refs || []).map(r => `<li><a href="${r.url}" target="_blank" rel="noopener" style="color:#58a6ff">${r.label}</a></li>`).join("");
+  return {
+    id: "dd-lineage-" + item.id,
+    num: "Paper lineage " + (idx + 1) + " of 37",
+    title: item.title,
+    desc: item.tagline,
+    color,
+    icon: item.icon || "📄",
+    svg: function(w, h) { return lineageSvg(item, idx, color, w, h); },
+    sections: [
+      { title: "Core Idea", text: item.core },
+      { title: "Mechanism", text: item.mechanism },
+      { title: "Why It Mattered", text: item.impact },
+      { title: "Implementation Details", text: item.impl },
+      { title: "Fun Fact / Curiosity Hook", text: "<div style='line-height:1.65;background:#0d1117;border:1px solid #30363d;border-left:3px solid " + color + ";border-radius:8px;padding:12px 14px'><strong style='color:" + color + "'>Why this is fun:</strong> " + lineageFunFact(item) + "</div>" },
+      { title: "Pitfalls & Edge Cases", text: item.pitfall },
+      { title: "References & Further Reading", text: "<ul style=\"margin:8px 0 0 18px;line-height:1.6\">" + refs + "</ul>" }
+    ],
+    keypoints: (item.keypoints || []).map(k => ({ title: k[0], text: k[1] })).concat([{ title: "Curiosity hook", text: lineageFunFact(item) }])
+  };
+}
+
+const PAPER_LINEAGE_DEEP_DIVES = [
+  {
+    id: "attention-is-all-you-need", short: "Transformer", year: "2017", family: "architecture", title: "Attention Is All You Need (Transformers)", tagline: "The decoder-only LLM family tree begins with scaled dot-product attention plus residual blocks.", visual: "<b>Think of attention as a differentiable routing table.</b> Each token writes keys/values into a tiny content-addressable memory; every query asks which previous tokens matter right now, then blends their values.",
+    core: "<div style='line-height:1.65'><p style='margin:0 0 8px'>The Transformer replaced recurrence with attention, letting every token directly read every other token in a sequence. That single move changed both modeling and systems: sequence positions no longer had to be processed one at a time, so training became giant matrix multiplication instead of a long recurrent dependency chain.</p><p style='margin:0'>The original paper introduced an encoder-decoder machine-translation model, but the lasting primitive is the block: attention for communication across tokens, an MLP for per-token computation, residual paths for gradient flow, LayerNorm for stability, and positional information so the model knows order.</p></div>",
+    mechanism: "<div style='line-height:1.65'><p style='margin:0 0 8px'>Given hidden states X, each head forms Q=XWq, K=XWk, V=XWv and computes <code>softmax(QK^T / sqrt(d_head) + mask + position_bias) V</code>. The <code>sqrt(d_head)</code> term keeps logits from exploding as dimension grows; the mask makes decoder attention causal.</p><svg viewBox='0 0 760 185' xmlns='http://www.w3.org/2000/svg' style='background:#0d1117;border:1px solid #30363d;border-radius:8px;width:100%;max-width:760px;margin:10px 0'><defs><marker id='tfmRichA' viewBox='0 0 10 10' refX='9' refY='5' markerWidth='6' markerHeight='6' orient='auto'><path d='M0,0 L10,5 L0,10 z' fill='#58a6ff'/></marker></defs><text x='22' y='26' fill='#7ee787' font-size='14' font-weight='700'>One decoder block: communication, then computation</text><g font-size='12' font-family='Segoe UI, sans-serif'><rect x='35' y='62' width='105' height='42' rx='8' fill='#1f6feb33' stroke='#58a6ff'/><text x='87' y='87' text-anchor='middle' fill='#c9d1d9'>tokens X</text><rect x='180' y='46' width='100' height='30' rx='6' fill='#161b22' stroke='#d2a8ff'/><text x='230' y='66' text-anchor='middle' fill='#d2a8ff'>Q,K,V</text><rect x='180' y='90' width='100' height='30' rx='6' fill='#161b22' stroke='#f778ba'/><text x='230' y='110' text-anchor='middle' fill='#f778ba'>RoPE / mask</text><rect x='330' y='62' width='135' height='42' rx='8' fill='#d2a8ff22' stroke='#d2a8ff'/><text x='398' y='87' text-anchor='middle' fill='#d2a8ff'>attention mix</text><rect x='515' y='62' width='105' height='42' rx='8' fill='#ffa65722' stroke='#ffa657'/><text x='568' y='87' text-anchor='middle' fill='#ffa657'>MLP / SwiGLU</text><rect x='655' y='62' width='70' height='42' rx='8' fill='#23863633' stroke='#7ee787'/><text x='690' y='87' text-anchor='middle' fill='#7ee787'>next X</text><line x1='140' y1='83' x2='180' y2='61' stroke='#58a6ff' marker-end='url(#tfmRichA)'/><line x1='140' y1='83' x2='180' y2='105' stroke='#58a6ff' marker-end='url(#tfmRichA)'/><line x1='280' y1='61' x2='330' y2='77' stroke='#58a6ff' marker-end='url(#tfmRichA)'/><line x1='280' y1='105' x2='330' y2='90' stroke='#58a6ff' marker-end='url(#tfmRichA)'/><line x1='465' y1='83' x2='515' y2='83' stroke='#58a6ff' marker-end='url(#tfmRichA)'/><line x1='620' y1='83' x2='655' y2='83' stroke='#58a6ff' marker-end='url(#tfmRichA)'/><path d='M86 111 C 125 155, 645 155, 688 111' fill='none' stroke='#7ee787' stroke-dasharray='5 4'/><text x='385' y='170' text-anchor='middle' fill='#8b949e' font-size='11'>residual stream carries information around every sublayer</text></g></svg><p style='margin:0'>Multi-head attention repeats this with several smaller subspaces, then concatenates heads and projects back to <code>d_model</code>. In modern LLMs, the block is usually pre-norm: normalize before each sublayer so very deep stacks train stably.</p></div>",
+    impact: "<div style='line-height:1.65'><p style='margin:0 0 8px'>Transformers became the common language for BERT, GPT, T5, ViT, Whisper, AlphaFold-style pair attention, diffusion U-Nets with cross-attention, code models, multimodal models, and retrieval-augmented systems. The architecture was generic enough that progress could compound: better data, larger scale, better tokenizers, better kernels, and better alignment methods all plug into the same basic block.</p><p style='margin:0'>Systems-wise, it moved the bottleneck to dense linear algebra and memory movement. That is why the later papers in this page matter: FlashAttention attacks attention IO, RoPE/ALiBi improve positions, MQA/GQA shrink the KV cache, and PagedAttention makes serving memory schedulable.</p></div>",
+    impl: "<div style='line-height:1.65'><ul style='margin:0 0 8px 20px;padding:0'><li><b>Training shapes:</b> attention scores are <code>B x H x T x T</code>; MLP activations are often the larger memory cost for training, while attention dominates long context.</li><li><b>Inference shapes:</b> decode one new token at a time, so compute is mostly projections plus attention against cached K/V. KV bytes/token = <code>2 * layers * kv_heads * d_head * bytes</code>.</li><li><b>Default modern block:</b> RMSNorm or LayerNorm, RoPE, SwiGLU/GEGLU MLP, GQA, FlashAttention, residual scaling or careful initialization, bf16/fp8 training kernels where available.</li><li><b>Implementation check:</b> verify mask orientation, cache position offsets, Q/K rotary dimensions, dtype casts around softmax, and whether your framework silently fell back from FlashAttention to naive attention.</li></ul><pre style='margin:0;background:#0d1117;border:1px solid #30363d;border-left:3px solid #7ee787;border-radius:6px;padding:10px;color:#c9d1d9;overflow:auto'>scores = (q @ k.transpose(-2, -1)) * (1 / sqrt(d_head))\nscores = scores + causal_mask + position_bias\np = softmax(scores, dim=-1)\nout = p @ v</pre></div>",
+    pitfall: "<div style='line-height:1.65'><p style='margin:0 0 8px'><b>Common conceptual trap:</b> attention is not explanation. A high attention weight tells you where information flowed in that layer/head, not why the final answer was produced. Different heads specialize, residual streams mix signals, and MLPs store much of the model's knowledge.</p><p style='margin:0 0 8px'><b>Common systems trap:</b> counting FLOPs alone misses the real bottleneck. Naive attention writes the T x T matrix to HBM; FlashAttention wins by avoiding that write. During serving, weights may fit but the KV cache may not, so GQA/PagedAttention/KV compression become architecture decisions.</p><p style='margin:0'><b>Common long-context trap:</b> training at 4k and serving at 128k is not free. RoPE scaling, retrieval layout, cache eviction, and evaluation on long-context tasks all matter.</p></div>",
+    refs: [{ label: "Vaswani et al., 2017 - Attention Is All You Need", url: "https://arxiv.org/abs/1706.03762" }, { label: "Xiong et al., 2020 - On Layer Normalization in the Transformer Architecture", url: "https://arxiv.org/abs/2002.04745" }, { label: "Dao et al., 2022 - FlashAttention", url: "https://arxiv.org/abs/2205.14135" }, { label: "Su et al., 2021 - RoPE / RoFormer", url: "https://arxiv.org/abs/2104.09864" }, { label: "Ainslie et al., 2023 - Grouped-Query Attention", url: "https://arxiv.org/abs/2305.13245" }, { label: "Kwon et al., 2023 - vLLM / PagedAttention", url: "https://arxiv.org/abs/2309.06180" }],
+    keypoints: [["Attention formula", "softmax((QK^T / sqrt(d_head)) + mask + pos_bias)V is the core operation."], ["Training parallelism", "All T positions train in parallel; the dependency chain moved from time steps to matrix ops."], ["Memory wall", "Naive attention materializes B*H*T*T scores; FlashAttention keeps tiles on-chip."], ["Decode wall", "Autoregressive inference is dominated by KV-cache reads and output projection."], ["Modern default", "Pre-norm, RoPE, SwiGLU, GQA, FlashAttention, bf16/fp8 kernels."], ["Do not overread heads", "Attention weights are routing signals, not faithful explanations by themselves."]]
+  },
+  {
+    id: "bert", short: "BERT", year: "2018", family: "pretraining", title: "BERT", tagline: "Bidirectional masked-language pretraining made Transformers useful for understanding tasks.", visual: "Mask some input tokens, encode the whole sequence bidirectionally, and predict the missing pieces from both left and right context.",
+    core: "BERT showed that a Transformer encoder pretrained with self-supervision could become a strong universal text representation. Unlike GPT-style causal models, BERT reads both directions at once, which is ideal for classification, extraction, and ranking tasks.",
+    mechanism: "Training combines masked language modeling with, in the original paper, next-sentence prediction. At fine-tuning time, a small task head is attached to the [CLS] representation or token representations. The same pretrained body adapts to sentiment, NER, QA, entailment, and retrieval reranking.",
+    impact: "BERT transformed NLP from feature engineering to pretrain-then-fine-tune. It also made clear that scale, data quality, and objective choice could produce reusable linguistic features without supervised labels for every task.",
+    impl: "Use WordPiece tokenization, segment embeddings when sentence pairs matter, and full attention over the entire input. Fine-tuning is sensitive to learning rate, warmup, sequence length, and class imbalance. For retrieval reranking, cross-encoder BERT is accurate but slower than embedding models.",
+    pitfall: "Masked tokens create a train-test mismatch because [MASK] rarely appears downstream. BERT is also poor for open-ended generation because it is not trained autoregressively. For long documents, full bidirectional attention is expensive and needs chunking or sparse variants.",
+    refs: [{ label: "Devlin et al., 2018 - BERT", url: "https://arxiv.org/abs/1810.04805" }],
+    keypoints: [["Objective", "Predict masked tokens from bidirectional context."], ["Best at", "Understanding, extraction, ranking, classification."], ["Weak at", "Autoregressive generation."], ["Legacy", "The pretrain/fine-tune recipe became standard."]]
+  },
+  {
+    id: "gpt-1", short: "GPT", year: "2018", family: "pretraining", title: "GPT (Improving Language Understanding by Generative Pre-Training)", tagline: "Causal pretraining plus supervised fine-tuning introduced the GPT recipe.", visual: "Train next-token prediction on broad text, then adapt the same decoder to downstream tasks.",
+    core: "GPT-1 established that a left-to-right Transformer decoder pretrained on unlabeled text could transfer to supervised language understanding tasks. Its central bet was that next-token prediction forces the model to internalize syntax, facts, and task-relevant abstractions.",
+    mechanism: "The model uses causal self-attention, absolute position embeddings, residual MLP blocks, and next-token cross-entropy. Downstream tasks are converted into text sequences with delimiters; the final token representation feeds a classifier during fine-tuning.",
+    impact: "The paper connected generative pretraining to transfer learning and set up the later GPT-2/GPT-3 scaling story. It also foreshadowed prompt formatting: tasks can be represented as text rather than custom architectures.",
+    impl: "A GPT block is straightforward: token embedding plus position embedding, repeated masked self-attention and MLP, final LM head. For fine-tuning, the separator and task formatting are part of the model interface, not cosmetic details. Small changes in formatting can change accuracy.",
+    pitfall: "GPT-1 still relied heavily on supervised fine-tuning and was small by later standards. Causal context cannot see future tokens, so it is less natural than BERT for some span-extraction tasks unless reformulated.",
+    refs: [{ label: "Radford et al., 2018 - Improving Language Understanding by Generative Pre-Training", url: "https://cdn.openai.com/research-covers/language-unsupervised/language_understanding_paper.pdf" }],
+    keypoints: [["Training", "Next-token prediction on unlabeled text."], ["Architecture", "Decoder-only Transformer."], ["Transfer", "Fine-tune the same body for many tasks."], ["Prompt seed", "Task formatting became a first-class tool."]]
+  },
+  {
+    id: "gpt-2", short: "GPT-2", year: "2019", family: "scaling", title: "GPT-2 (Scaling + Zero-Shot)", tagline: "Bigger causal LMs began doing tasks from natural-language prompts.", visual: "Scale parameters and web text; ask the model in plain language; observe zero-shot behavior.",
+    core: "GPT-2 argued that language models trained at sufficient scale begin to perform downstream tasks without gradient updates. It reframed many NLP tasks as conditional text generation.",
+    mechanism: "The model is a larger decoder-only Transformer trained on WebText with the same next-token objective. A prompt provides task instructions and examples implicitly through context, and the model continues the text.",
+    impact: "GPT-2 made zero-shot evaluation a serious research object. It also changed public expectations: a single LM could summarize, translate, answer questions, and write coherent long text without task-specific heads.",
+    impl: "Prompt design matters: the model has no explicit task boundary beyond tokens. Decoding choices such as temperature, top-k/top-p, repetition penalties, and max tokens strongly affect perceived quality. Evaluation must separate memorization, likelihood, and actual task success.",
+    pitfall: "Zero-shot competence is brittle at this scale; it often follows superficial prompt cues. Web-scale data also introduces duplication, contamination, unsafe content, and hard-to-debug biases.",
+    refs: [{ label: "Radford et al., 2019 - Language Models are Unsupervised Multitask Learners", url: "https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf" }],
+    keypoints: [["Zero-shot", "Do tasks from the prompt, no fine-tuning."], ["Interface", "Text in, text out."], ["Decode", "Sampling settings are part of behavior."], ["Risk", "Dataset contamination becomes harder to rule out."]]
+  },
+  {
+    id: "scaling-laws", short: "Scaling laws", year: "2020", family: "scaling", title: "Scaling Laws for Neural Language Models", tagline: "Loss follows predictable power laws with model size, data, and compute.", visual: "Increase parameters, tokens, or compute; validation loss falls smoothly until the bottleneck changes.",
+    core: "Scaling laws showed that language-model loss varies smoothly and predictably with model parameters, dataset size, and training compute. This turned model planning into an engineering discipline rather than a guess.",
+    mechanism: "Fit empirical power laws L(N,D,C) over many training runs. The key practical idea is that under a fixed compute budget, you can estimate the best allocation between parameter count and number of training tokens.",
+    impact: "The result justified very large pretraining runs because extrapolation suggested continued returns. It also created the vocabulary for compute-optimal training and helped teams budget clusters, data pipelines, and run sizes.",
+    impl: "Run small proxy experiments across sizes, keep optimizer and data distribution consistent, fit log-log curves, then extrapolate. Track irreducible loss separately from reducible loss. Use held-out validation that matches the target distribution.",
+    pitfall: "Scaling laws are conditional on architecture, tokenizer, data quality, and optimization. They predict loss better than product quality; small loss gains can matter a lot or not at all depending on downstream use.",
+    refs: [{ label: "Kaplan et al., 2020 - Scaling Laws", url: "https://arxiv.org/abs/2001.08361" }],
+    keypoints: [["Power law", "Loss drops predictably on log-log plots."], ["Budgeting", "Allocate compute across params and tokens."], ["Proxy runs", "Small experiments guide giant runs."], ["Caution", "Loss is not the same as usefulness or safety."]]
+  },
+  {
+    id: "gpt-3", short: "GPT-3", year: "2020", family: "few-shot", title: "GPT-3 (Few-Shot Learning)", tagline: "In-context examples became a general-purpose programming interface for LMs.", visual: "Give several demonstrations in the prompt; the frozen model infers the pattern and completes the next case.",
+    core: "GPT-3 showed that a sufficiently large LM can learn many tasks in context from natural-language instructions and examples, without updating weights. This made prompting feel like lightweight programming.",
+    mechanism: "The model is a 175B-parameter decoder trained with next-token prediction. Few-shot prompts concatenate instructions and input-output examples. The model conditions on the whole prefix and continues with the expected answer format.",
+    impact: "GPT-3 moved the field from fine-tuning-first to prompt-first workflows. It opened the door to instruction tuning, chain-of-thought prompting, tool use, and API-based application development.",
+    impl: "Prompt examples should be representative, consistently formatted, and ordered carefully. Keep labels unambiguous and put the answer where the decoder naturally continues. For production, evaluate prompt variants on held-out examples because tiny wording changes can alter behavior.",
+    pitfall: "In-context learning is not guaranteed symbolic reasoning; it can be pattern matching, retrieval, or heuristic induction. Longer prompts cost latency and context budget, and examples can leak spurious correlations.",
+    refs: [{ label: "Brown et al., 2020 - Language Models are Few-Shot Learners", url: "https://arxiv.org/abs/2005.14165" }],
+    keypoints: [["Few-shot", "Examples in context replace gradient updates."], ["Frozen weights", "Adaptation happens through activations."], ["Prompt quality", "Formatting is part of the algorithm."], ["Foundation", "Instruction tuning builds on this interface."]]
+  },
+  {
+    id: "the-pile", short: "The Pile", year: "2020", family: "data", title: "The Pile (Large-Scale Training Data)", tagline: "A heterogeneous open dataset made data mixture a visible scaling variable.", visual: "Books, GitHub, PubMed, arXiv, StackExchange, web text, and more become a mixed pretraining diet.",
+    core: "The Pile made large-scale language-model data composition explicit by aggregating many high-value corpora into one open training mixture. It helped researchers reproduce and study data effects outside closed labs.",
+    mechanism: "The dataset combines filtered web data with domain-specific sources such as arXiv, PubMed, GitHub, StackExchange, books, and legal text. Models sample from the mixture during pretraining, so each component changes capabilities and failure modes.",
+    impact: "The Pile shifted attention from model size alone to dataset quality, deduplication, domain mix, licensing, and benchmark contamination. Many open LMs used it or used its design as a reference point.",
+    impl: "Build a data pipeline with normalization, language filtering, document deduplication, near-deduplication, quality scoring, and mixture weights. Keep provenance metadata so you can audit sources and ablate components.",
+    pitfall: "A giant mixture is not automatically good: low-quality or duplicated text can waste compute, memorization can inflate benchmarks, and license/PII concerns can block deployment.",
+    refs: [{ label: "Gao et al., 2020 - The Pile", url: "https://arxiv.org/abs/2101.00027" }],
+    keypoints: [["Mixture matters", "Capabilities follow data sources."], ["Dedup", "Removes memorization and wasted compute."], ["Provenance", "Needed for audits and ablations."], ["Tradeoff", "Open data enables study but carries legal and privacy risk."]]
+  },
+  {
+    id: "chinchilla", short: "Chinchilla", year: "2022", family: "scaling", title: "Chinchilla (Compute-Optimal Scaling)", tagline: "Many LMs were too large and undertrained; train smaller models on more tokens.", visual: "For a fixed compute budget, move along the curve toward more data and fewer parameters.",
+    core: "Chinchilla revised the compute-optimal recipe: prior large models were often parameter-heavy and token-light. Under a fixed training compute budget, a smaller model trained on many more tokens can outperform a larger undertrained model.",
+    mechanism: "DeepMind trained a grid of model sizes and token budgets, then fit new scaling relationships. The practical heuristic became roughly balanced growth of model parameters and training tokens, with far more tokens than earlier GPT-3-era recipes used.",
+    impact: "The result changed frontier training plans and made data quantity/quality even more central. Models like LLaMA followed the lesson by training relatively smaller models for many more tokens.",
+    impl: "Estimate available FLOPs, choose N and D jointly, and avoid stopping just because a large model is expensive. Use high-throughput data loaders and deduped corpora because the recipe consumes huge token counts.",
+    pitfall: "Compute-optimal for pretraining loss is not always deployment-optimal. Smaller models are cheaper to serve, but more tokens may be unavailable, low quality, copyrighted, or contaminated.",
+    refs: [{ label: "Hoffmann et al., 2022 - Training Compute-Optimal Large Language Models", url: "https://arxiv.org/abs/2203.15556" }],
+    keypoints: [["Undertraining", "Many early LLMs had too few tokens."], ["Rule", "Scale params and tokens together."], ["Data pressure", "Quality data became the constraint."], ["Serving", "Smaller well-trained models can be easier to deploy."]]
+  },
+  {
+    id: "palm", short: "PaLM", year: "2022", family: "scale", title: "PaLM", tagline: "A 540B dense Transformer showed strong reasoning and multilingual gains from scale.", visual: "Scale a dense decoder on TPU pods; evaluate reasoning, code, translation, and knowledge tasks.",
+    core: "PaLM demonstrated that very large dense decoder-only Transformers could achieve strong performance across language, reasoning, and code benchmarks. It was also a showcase for TPU-scale training infrastructure.",
+    mechanism: "PaLM used a standard decoder Transformer with architectural refinements, trained at massive scale with Pathways-style TPU orchestration. The model's capabilities were evaluated with prompting rather than per-task architecture changes.",
+    impact: "PaLM strengthened the argument that general capabilities emerge from scale plus data. It also influenced later Google models and highlighted infrastructure as a first-class research ingredient.",
+    impl: "At this scale, the system is the model: sharding, input pipelines, checkpointing, optimizer state, collective communication, and failure recovery dominate implementation complexity. Evaluation must include contamination checks and prompt sensitivity.",
+    pitfall: "Dense 540B inference is expensive; high benchmark scores can hide latency, serving cost, and safety issues. Scaling also amplifies dataset artifacts.",
+    refs: [{ label: "Chowdhery et al., 2022 - PaLM", url: "https://arxiv.org/abs/2204.02311" }],
+    keypoints: [["Dense scale", "540B parameters, decoder-only."], ["Infrastructure", "TPU pods and distributed runtime are core."], ["Capability", "Reasoning and code improve with scale."], ["Cost", "Serving dense giants is hard."]]
+  },
+  {
+    id: "opt", short: "OPT", year: "2022", family: "open models", title: "OPT", tagline: "Meta released GPT-3-class model weights and training notes for open research.", visual: "Open weights plus logs let researchers inspect, reproduce, and fine-tune a large decoder model.",
+    core: "OPT was important less because it beat closed models and more because it opened a GPT-3-like model family to researchers. The release included model weights, training details, and lessons from the run.",
+    mechanism: "OPT is a decoder-only Transformer trained with causal language modeling. It follows the GPT-style recipe but emphasizes reproducibility: model sizes, checkpoints, and training notes support external analysis.",
+    impact: "Open weights enabled work on fine-tuning, safety, interpretability, compression, and serving that would be impossible with API-only models. OPT helped normalize responsible open model releases.",
+    impl: "Fine-tune with parameter-efficient methods when GPU memory is limited. For inference, use tensor parallelism or quantization for the largest checkpoints. Pay attention to tokenizer compatibility and generation settings.",
+    pitfall: "Open weights make misuse easier and also expose training weaknesses. Reproducing the run still requires enormous compute; open release does not mean cheap training.",
+    refs: [{ label: "Zhang et al., 2022 - OPT", url: "https://arxiv.org/abs/2205.01068" }],
+    keypoints: [["Open weights", "Enabled independent research at scale."], ["Architecture", "GPT-style decoder Transformer."], ["Use", "Fine-tuning, compression, interpretability."], ["Limit", "Training remains expensive."]]
+  },
+  {
+    id: "bloom", short: "BLOOM", year: "2022", family: "open multilingual", title: "BLOOM", tagline: "A multilingual open LLM built through a large public collaboration.", visual: "Many languages, many institutions, one transparent training project.",
+    core: "BLOOM showed that large language models could be built as an open collaborative science project rather than only inside companies. Its multilingual focus made it especially valuable beyond English-centric benchmarks.",
+    mechanism: "BLOOM is a decoder-only Transformer trained on the ROOTS corpus, a multilingual dataset built with community governance. The project documented data decisions, model architecture, training, and evaluation.",
+    impact: "It broadened the open LLM ecosystem and foregrounded language coverage, dataset governance, and compute access. It also provided a testbed for multilingual prompting and fine-tuning.",
+    impl: "Multilingual tokenization and mixture weights matter: underrepresented languages need enough tokens and appropriate normalization. Evaluation should be language-specific rather than relying only on translated English benchmarks.",
+    pitfall: "Multilingual does not mean equally good in every language. Low-resource data may be noisy, politically sensitive, or unevenly represented.",
+    refs: [{ label: "Scao et al., 2022 - BLOOM", url: "https://arxiv.org/abs/2211.05100" }],
+    keypoints: [["Collaboration", "BigScience coordinated an open training run."], ["Data", "ROOTS corpus emphasized multilingual provenance."], ["Access", "Open checkpoints supported global research."], ["Caution", "Quality varies by language and domain."]]
+  },
+  {
+    id: "llama", short: "LLaMA", year: "2023", family: "efficient open models", title: "LLaMA", tagline: "Smaller models trained longer became the open-source baseline.", visual: "Chinchilla-style token budget plus efficient Transformer choices produce strong small and mid-size models.",
+    core: "LLaMA proved that carefully trained smaller models could be highly competitive. It used more tokens, strong data, and efficient architectural choices rather than simply maximizing parameter count.",
+    mechanism: "LLaMA uses a decoder-only Transformer with pre-norm RMSNorm, SwiGLU feed-forward layers, RoPE positions, and efficient attention variants in later releases. It was trained on trillions of tokens from public data sources.",
+    impact: "LLaMA became the base model for a huge ecosystem: Alpaca, Vicuna, QLoRA fine-tunes, llama.cpp, GGUF quantization, and many production open deployments.",
+    impl: "For local serving, quantize to 4-bit or 8-bit and use llama.cpp, vLLM, or TensorRT-LLM depending on hardware. For adaptation, use LoRA/QLoRA rather than full fine-tuning unless you control large GPU memory.",
+    pitfall: "The leaked/open ecosystem moved faster than evaluation discipline. Fine-tunes can overfit preference datasets, lose base capabilities, or inherit license constraints.",
+    refs: [{ label: "Touvron et al., 2023 - LLaMA", url: "https://arxiv.org/abs/2302.13971" }],
+    keypoints: [["Architecture", "RMSNorm, SwiGLU, RoPE became common defaults."], ["Training", "More tokens, smaller sizes."], ["Ecosystem", "The open model stack formed around it."], ["Adaptation", "LoRA/QLoRA made fine-tuning accessible."]]
+  },
+  {
+    id: "instructgpt", short: "InstructGPT", year: "2022", family: "alignment", title: "InstructGPT (RLHF)", tagline: "Human preference training made models follow instructions more helpfully.", visual: "Supervised demos, reward model, PPO optimization: three stages turn a base LM into an assistant.",
+    core: "InstructGPT showed that smaller models aligned with human preferences could be preferred over much larger base models. The key distinction is optimizing for helpful instruction following, not just next-token likelihood.",
+    mechanism: "The pipeline has three stages: supervised fine-tuning on demonstrations, train a reward model from ranked outputs, then optimize the policy with PPO against the reward while controlling KL drift from the reference model.",
+    impact: "RLHF created the modern assistant behavior: following instructions, refusing unsafe requests, formatting answers, and asking clarifying questions. It directly influenced ChatGPT-style products.",
+    impl: "You need high-quality preference data, a reward model that generalizes, KL penalties to prevent reward hacking, and careful evaluation. PPO implementation details matter: advantage estimates, clipping, reward normalization, and rollout sampling can destabilize training.",
+    pitfall: "Reward models are exploitable proxies. RLHF can make models verbose, sycophantic, or over-refusing. It can also hide rather than remove base-model failures.",
+    refs: [{ label: "Ouyang et al., 2022 - Training language models to follow instructions with human feedback", url: "https://arxiv.org/abs/2203.02155" }],
+    keypoints: [["Pipeline", "SFT -> reward model -> PPO."], ["Preference", "Optimize what humans prefer, not pure likelihood."], ["KL", "Keeps the policy near the base model."], ["Failure", "Reward hacking and sycophancy."]]
+  },
+  {
+    id: "constitutional-ai", short: "Constitutional AI", year: "2022", family: "alignment", title: "Constitutional AI", tagline: "AI feedback guided by written principles reduces dependence on human labels.", visual: "Generate answer, critique with a constitution, revise, then train preference models from AI comparisons.",
+    core: "Constitutional AI replaces some human preference labeling with model-generated critiques and revisions guided by a set of principles. The goal is to make harmlessness training more scalable and explicit.",
+    mechanism: "A model first produces responses, critiques them according to constitutional rules, and revises them. Then reinforcement learning from AI feedback can train preferences where the AI judge compares outputs using those rules.",
+    impact: "It made alignment instructions more inspectable: the constitution is an artifact that can be debated, edited, and audited. It also shaped modern refusal behavior and safety fine-tuning.",
+    impl: "The constitution should be specific enough to guide behavior but not so rigid that it blocks harmless use. Use adversarial prompts and held-out red-team sets to check whether principles generalize.",
+    pitfall: "AI feedback inherits the judge model's biases and blind spots. A written principle can sound reasonable while producing brittle behavior in edge cases.",
+    refs: [{ label: "Bai et al., 2022 - Constitutional AI", url: "https://arxiv.org/abs/2212.08073" }],
+    keypoints: [["Principles", "Alignment rules are written down."], ["RLAIF", "AI feedback supplements human feedback."], ["Auditability", "The constitution can be inspected."], ["Risk", "Judge-model bias becomes training signal."]]
+  },
+  {
+    id: "self-instruct", short: "Self-Instruct", year: "2022", family: "instruction data", title: "Self-Instruct", tagline: "A strong model can bootstrap instruction data for fine-tuning.", visual: "Seed tasks generate new instructions, inputs, and outputs; filter; fine-tune; repeat.",
+    core: "Self-Instruct showed that instruction-following datasets can be expanded by prompting a model to generate new tasks and answers. It is a data bootstrapping method for turning base models into instruction followers.",
+    mechanism: "Start with a small set of seed instructions. Prompt the model to create diverse new instructions, optionally generate inputs, produce outputs, filter invalid or duplicate examples, and supervised fine-tune on the resulting dataset.",
+    impact: "The idea powered many open instruction datasets and Alpaca-style fine-tunes. It made instruction tuning accessible even without large proprietary human-labeled corpora.",
+    impl: "Diversity filtering is crucial: use embedding similarity, keyword constraints, task-type balancing, and quality checks. Keep held-out real tasks to detect synthetic-data overfitting.",
+    pitfall: "Synthetic data can amplify the teacher's mistakes, style, and blind spots. Models may learn to imitate answer format without improving factuality or reasoning.",
+    refs: [{ label: "Wang et al., 2022 - Self-Instruct", url: "https://arxiv.org/abs/2212.10560" }],
+    keypoints: [["Bootstrap", "Generate instruction data from a seed set."], ["Filter", "Dedup and quality checks matter."], ["Open impact", "Enabled many Alpaca-style datasets."], ["Risk", "Teacher errors become student behavior."]]
+  },
+  {
+    id: "lora", short: "LoRA", year: "2021", family: "fine-tuning", title: "LoRA", tagline: "Low-rank adapters fine-tune big models with tiny trainable matrices.", visual: "Freeze W; learn ΔW = BA where rank r is small; merge at inference if desired.",
+    core: "LoRA observes that fine-tuning updates often live in a low-dimensional subspace. Instead of updating a full weight matrix W, train a low-rank update ΔW = BA while keeping W frozen.",
+    mechanism: "For a linear layer y=Wx, LoRA computes y=Wx + (alpha/r)BAx, where A and B are trainable rank-r matrices. This reduces trainable parameters and optimizer memory dramatically.",
+    impact: "LoRA made personalized and domain-specific fine-tuning practical on consumer or single-GPU hardware. It also enabled adapter sharing, composition experiments, and efficient multi-tenant serving.",
+    impl: "Common injection targets are attention Q,V or Q,K,V,O and sometimes MLP projections. Choose rank r, alpha, dropout, and target modules based on task complexity. Merge adapters into base weights for simple inference, or load them dynamically for multi-adapter serving.",
+    pitfall: "Too-low rank underfits; too-high rank loses the memory benefit. LoRA does not magically add knowledge absent from data, and adapter composition can interfere.",
+    refs: [{ label: "Hu et al., 2021 - LoRA", url: "https://arxiv.org/abs/2106.09685" }],
+    keypoints: [["Formula", "ΔW = BA, rank r << d."], ["Memory", "Freeze base weights and optimizer state."], ["Targets", "Attention projections are common."], ["Serving", "Adapters can be merged or switched."]]
+  },
+  {
+    id: "qlora", short: "QLoRA", year: "2023", family: "fine-tuning", title: "QLoRA", tagline: "4-bit base weights plus LoRA adapters put 65B fine-tuning on one GPU.", visual: "Quantize frozen weights to NF4, backprop through them, train LoRA adapters in higher precision.",
+    core: "QLoRA combines quantized frozen base weights with LoRA adapters, allowing very large models to be fine-tuned with much less memory. The base model is stored in 4-bit precision while adapter updates remain trainable.",
+    mechanism: "It uses NF4 quantization, double quantization of scale constants, paged optimizers to handle memory spikes, and backpropagation through dequantized weights into LoRA parameters.",
+    impact: "QLoRA democratized high-quality instruction tuning for large open models. It also established 4-bit adaptation as a serious default rather than a hack.",
+    impl: "Load the base in 4-bit, pick LoRA targets, use bf16 compute when possible, and monitor sequence length because activation memory can dominate. Use paged AdamW and gradient checkpointing for tight GPUs.",
+    pitfall: "Quantization can hurt rare knowledge, math, or multilingual behavior. Bad calibration or incompatible kernels can erase the theoretical memory savings.",
+    refs: [{ label: "Dettmers et al., 2023 - QLoRA", url: "https://arxiv.org/abs/2305.14314" }],
+    keypoints: [["NF4", "4-bit datatype tuned for normally distributed weights."], ["Adapters", "Only LoRA weights train."], ["Paged optimizer", "Avoids memory spikes."], ["Tradeoff", "Quantization quality still matters."]]
+  },
+  {
+    id: "flashattention", short: "FlashAttention", year: "2022", family: "kernels", title: "FlashAttention", tagline: "Exact attention made fast by tiling and avoiding HBM writes of the score matrix.", visual: "Tile Q, K, V through SRAM; maintain online softmax statistics; never materialize T x T attention.",
+    core: "FlashAttention is an IO-aware exact attention algorithm. It speeds attention not by approximating it, but by reducing slow high-bandwidth-memory traffic.",
+    mechanism: "The kernel tiles Q, K, and V into SRAM/shared memory. It computes attention blocks, maintains numerically stable online softmax max/sum values, and accumulates outputs without storing the full attention matrix.",
+    impact: "It made longer context and faster training practical, and it became a default kernel in modern Transformer stacks. It also taught the field to think in IO complexity, not just FLOPs.",
+    impl: "Use supported head dimensions, causal/non-causal variants, and compatible dtypes. The kernel is most valuable when attention memory traffic dominates. Framework integrations include PyTorch scaled_dot_product_attention, xFormers, Triton kernels, and model-specific fused paths.",
+    pitfall: "It is exact attention, not linear attention; asymptotic compute remains quadratic. Performance depends on GPU architecture, head dimension, sequence length, and kernel dispatch path.",
+    refs: [{ label: "Dao et al., 2022 - FlashAttention", url: "https://arxiv.org/abs/2205.14135" }],
+    keypoints: [["Exact", "No approximation to attention values."], ["IO-aware", "Avoid T x T HBM materialization."], ["Online softmax", "Keeps numerical stability per tile."], ["Limit", "Still O(T^2) compute."]]
+  },
+  {
+    id: "flashattention-2", short: "FlashAttention-2", year: "2023", family: "kernels", title: "FlashAttention-2", tagline: "Better work partitioning raises attention throughput toward GEMM efficiency.", visual: "Parallelize across sequence blocks and heads; reduce non-matmul FLOPs; improve occupancy.",
+    core: "FlashAttention-2 improves the original algorithm by reducing overhead and improving parallelism. The focus is better GPU utilization, especially for long sequences and common head dimensions.",
+    mechanism: "It partitions work more effectively across thread blocks, reduces rescaling and masking overhead, and reorganizes the backward pass. More time is spent in tensor-core-friendly matrix multiply rather than scalar bookkeeping.",
+    impact: "It made FlashAttention a practical default for more training regimes and helped close the gap between attention kernels and ideal GEMM performance.",
+    impl: "Use FA2 when your model's head dimensions and dtype are supported. Benchmark end-to-end rather than assuming every sequence length wins. Watch dropout, causal masking, and grouped-query support in your framework version.",
+    pitfall: "Kernel availability changes by GPU and library release. A fallback path may silently use slower attention, so profile actual kernels.",
+    refs: [{ label: "Dao, 2023 - FlashAttention-2", url: "https://arxiv.org/abs/2307.08691" }],
+    keypoints: [["Optimization", "Less non-matmul overhead."], ["Parallelism", "Better occupancy across sequence/head blocks."], ["Backward", "More efficient gradient computation."], ["Verify", "Profile the actual dispatched kernel."]]
+  },
+  {
+    id: "rope", short: "RoPE", year: "2021", family: "position", title: "RoPE (Rotary Position Embeddings)", tagline: "Encode positions by rotating Q and K so relative offsets appear in dot products.", visual: "Pair dimensions become 2D planes; each token position rotates vectors by a frequency-dependent angle.",
+    core: "RoPE injects position information directly into attention by rotating query and key vectors. Its key property is that the dot product naturally depends on relative position offsets.",
+    mechanism: "Split hidden dimensions into pairs and apply a rotation matrix with angle position * frequency. Apply the same scheme to Q and K before attention; V is not rotated.",
+    impact: "RoPE became the default positional method for many decoder LLMs because it is simple, efficient, and works well with long-context extensions.",
+    impl: "Precompute sin/cos tables or generate them on the fly. Use correct base frequency, scaling strategy, and dimension pairing. Long-context variants include NTK scaling, YaRN, linear scaling, and model-specific interpolation.",
+    pitfall: "Naive extrapolation far beyond training context can fail. Wrong rotary dimension, base, or cache offset causes subtle generation degradation.",
+    refs: [{ label: "Su et al., 2021 - RoFormer / RoPE", url: "https://arxiv.org/abs/2104.09864" }],
+    keypoints: [["Where", "Apply to Q and K."], ["Property", "Relative position emerges in QK dot products."], ["Cost", "Cheap sin/cos rotations."], ["Long context", "Needs careful scaling beyond training length."]]
+  },
+  {
+    id: "alibi", short: "ALiBi", year: "2021", family: "position", title: "ALiBi", tagline: "Linear attention biases replace learned position embeddings and extrapolate cleanly.", visual: "Add a head-specific negative slope times token distance to attention logits.",
+    core: "ALiBi adds a simple distance penalty to attention scores instead of adding position embeddings to token representations. More distant tokens receive more negative bias.",
+    mechanism: "For each attention head, add -m_h * distance(i,j) to the QK logits before softmax. Different heads use different slopes, letting some heads focus locally and others attend farther.",
+    impact: "ALiBi showed that positional inductive bias could be extremely simple and still improve length extrapolation. It influenced long-context model design and comparisons against RoPE.",
+    impl: "Implement as an additive mask/bias broadcast over batch and heads. It is naturally compatible with causal attention. Slopes are usually fixed rather than learned.",
+    pitfall: "ALiBi is not a universal replacement for RoPE; some model families perform better with rotary positions. Bias shape errors are easy to miss because outputs still look plausible.",
+    refs: [{ label: "Press et al., 2021 - Train Short, Test Long: ALiBi", url: "https://arxiv.org/abs/2108.12409" }],
+    keypoints: [["Formula", "logits += -slope_head * distance."], ["No embeddings", "Position is a bias, not a vector addition."], ["Extrapolation", "Often works beyond train length."], ["Heads", "Different slopes create different ranges."]]
+  },
+  {
+    id: "mqa", short: "MQA", year: "2019", family: "attention efficiency", title: "Multi-Query Attention (MQA)", tagline: "Share one K/V head across many query heads to shrink KV cache.", visual: "Many Q heads point at a single shared K and V stream.",
+    core: "MQA keeps multiple query heads but shares key and value projections across heads. This dramatically reduces KV-cache memory and bandwidth during autoregressive decoding.",
+    mechanism: "Instead of H separate K and V heads, use one K head and one V head while keeping H query heads. Attention still produces multiple query-specific score patterns, but all heads read the same K/V memory.",
+    impact: "MQA made large-model decoding faster and cheaper, especially for long contexts and high concurrency serving. It influenced PaLM and later production LLM architectures.",
+    impl: "The KV cache shape changes from layers x heads x tokens x head_dim to layers x 1 x tokens x head_dim. During attention, broadcast shared K/V across query heads. Kernels must support this layout efficiently.",
+    pitfall: "Sharing all K/V heads can reduce quality compared with full MHA, especially in smaller models or difficult tasks. GQA is a compromise.",
+    refs: [{ label: "Shazeer, 2019 - Fast Transformer Decoding: One Write-Head is All You Need", url: "https://arxiv.org/abs/1911.02150" }],
+    keypoints: [["KV savings", "Reduce K/V heads from H to 1."], ["Serving", "Less memory bandwidth per token."], ["Tradeoff", "Possible quality loss."], ["Successor", "GQA generalizes the compromise."]]
+  },
+  {
+    id: "gqa", short: "GQA", year: "2023", family: "attention efficiency", title: "Grouped-Query Attention (GQA)", tagline: "Several query heads share each K/V head: most of MQA's speed with less quality loss.", visual: "Group query heads into clusters; each cluster shares one K/V pair.",
+    core: "GQA sits between MHA and MQA. It groups query heads so each group shares a K/V head, reducing cache size while preserving more expressivity than a single shared K/V.",
+    mechanism: "If H query heads and G key-value heads are used, each K/V head serves H/G query heads. LLaMA-2 70B uses far fewer K/V heads than query heads, greatly reducing memory per token.",
+    impact: "GQA became a standard inference-efficiency choice for large open models. It is one of the reasons modern 70B-class models are practical to serve at long context.",
+    impl: "Choose n_kv_heads as an architecture hyperparameter. Attention kernels need repeat/broadcast semantics for K/V. KV-cache capacity improves by roughly H/G compared with full MHA.",
+    pitfall: "Changing MHA to GQA after pretraining is nontrivial unless using uptraining. Too few K/V heads can hurt tasks needing diverse attention patterns.",
+    refs: [{ label: "Ainslie et al., 2023 - GQA", url: "https://arxiv.org/abs/2305.13245" }],
+    keypoints: [["Compromise", "Between MHA quality and MQA speed."], ["Cache", "KV memory scales with n_kv_heads."], ["Serving", "Major throughput improvement."], ["Design", "n_q_heads and n_kv_heads are separate."]]
+  },
+  {
+    id: "speculative-decoding", short: "Spec decode", year: "2023", family: "inference", title: "Speculative Decoding", tagline: "A cheap draft model proposes tokens; the large model verifies them in parallel.", visual: "Draft k tokens, score them with the target model, accept the longest valid prefix, repeat.",
+    core: "Speculative decoding speeds autoregressive generation by using a smaller model to guess multiple future tokens, then using the target model to verify them in one forward pass.",
+    mechanism: "The draft model samples a block of candidate tokens. The target model computes probabilities for the block. A rejection-sampling rule accepts tokens that match the target distribution and falls back when they do not.",
+    impact: "It reduces latency without changing the output distribution, assuming the algorithm is implemented exactly. It became a major serving optimization in vLLM, TensorRT-LLM, and custom stacks.",
+    impl: "Speedup depends on draft cost, target cost, block length, and acceptance rate. Good draft models are small but behaviorally close to the target. Variants use n-gram drafts, Medusa heads, lookahead decoding, or prompt-lookup drafts.",
+    pitfall: "If acceptance is low, overhead can erase gains. Approximate implementations may alter sampling distribution. Memory and scheduler complexity increase because two models or draft heads are involved.",
+    refs: [{ label: "Leviathan et al., 2023 - Fast Inference from Transformers via Speculative Decoding", url: "https://arxiv.org/abs/2211.17192" }, { label: "Chen et al., 2023 - Accelerating Large Language Model Decoding", url: "https://arxiv.org/abs/2302.01318" }],
+    keypoints: [["Draft", "Small model proposes multiple tokens."], ["Verify", "Large model checks in parallel."], ["Exactness", "Can preserve target distribution."], ["Bottleneck", "Acceptance rate drives speedup."]]
+  },
+  {
+    id: "pagedattention", short: "PagedAttention", year: "2023", family: "serving", title: "PagedAttention (vLLM)", tagline: "Treat KV cache like virtual memory to reduce fragmentation and raise serving throughput.", visual: "Requests own logical token blocks; a block table maps them to physical KV pages.",
+    core: "PagedAttention solves a practical serving problem: KV caches have variable lengths and waste memory when allocated contiguously. vLLM stores KV in fixed-size blocks and maps requests through page tables.",
+    mechanism: "Like OS virtual memory, each sequence has logical blocks pointing to physical KV blocks. Blocks can be shared for prefixes, allocated incrementally, and freed without moving the rest of the cache.",
+    impact: "This enabled much higher throughput and concurrency for LLM serving, especially with heterogeneous prompt and generation lengths. vLLM became a dominant open serving engine.",
+    impl: "The scheduler batches active decode steps while the block manager handles allocation. Attention kernels must read K/V through block tables. Prefix caching and beam search can exploit shared blocks.",
+    pitfall: "Paged cache improves memory utilization but does not remove KV memory cost. Bad block size, fragmentation patterns, or scheduler policies can still hurt latency.",
+    refs: [{ label: "Kwon et al., 2023 - vLLM / PagedAttention", url: "https://arxiv.org/abs/2309.06180" }],
+    keypoints: [["Virtual memory", "Logical tokens map to physical KV blocks."], ["Throughput", "More concurrent requests fit."], ["Scheduler", "Continuous batching is the partner technique."], ["Limit", "KV cache still scales with tokens."]]
+  },
+  {
+    id: "rag", short: "RAG", year: "2020+", family: "retrieval", title: "Retrieval-Augmented Generation (RAG)", tagline: "Fetch external evidence at inference time, then generate grounded answers.", visual: "Query -> embed -> retrieve passages -> rerank -> stuff context -> generate with citations.",
+    core: "RAG augments a language model with a retrieval system so the model can condition on external documents. It separates parametric memory in weights from non-parametric memory in an index.",
+    mechanism: "A query is embedded, nearest documents are retrieved from a vector or hybrid index, optional rerankers reorder passages, and the selected context is inserted into the prompt for generation.",
+    impact: "RAG became the default architecture for enterprise QA and knowledge assistants because it can update knowledge without retraining and cite source documents.",
+    impl: "Chunk documents with overlap, store metadata, use hybrid lexical+vector search when exact terms matter, rerank with a cross-encoder or LLM judge, and evaluate faithfulness separately from answer fluency. Use context budgeting and dedup retrieved chunks.",
+    pitfall: "RAG fails silently when retrieval misses the right document or brings distractors. The generator may ignore evidence or fabricate citations. Evaluation needs retrieval recall, answer correctness, and groundedness metrics.",
+    refs: [{ label: "Lewis et al., 2020 - Retrieval-Augmented Generation", url: "https://arxiv.org/abs/2005.11401" }],
+    keypoints: [["Two memories", "Weights plus external index."], ["Pipeline", "Retrieve, rerank, generate."], ["Update", "Change docs without retraining."], ["Failure", "Bad retrieval produces confident wrong answers."]]
+  },
+  {
+    id: "chain-of-thought", short: "CoT", year: "2022", family: "prompting", title: "Chain-of-Thought Prompting", tagline: "Intermediate reasoning examples improve multi-step problem solving.", visual: "Prompt includes worked rationales; model learns to produce an answer through steps.",
+    core: "Chain-of-thought prompting elicits intermediate reasoning traces before final answers. It works especially well for arithmetic, symbolic reasoning, and multi-hop tasks in sufficiently large models.",
+    mechanism: "Few-shot examples include rationales, or zero-shot prompts ask the model to reason step by step. The generated reasoning tokens give the model more computation and help decompose the task.",
+    impact: "CoT changed prompting from direct answer extraction to process elicitation. It inspired self-consistency, tool-augmented reasoning, scratchpads, and reasoning-focused RL.",
+    impl: "Use clear answer delimiters, sample multiple reasoning paths for self-consistency, and score only final answers when explanations may be noisy. For production, prefer concise private reasoning summaries or verifiable tool calls when possible.",
+    pitfall: "A fluent rationale can be unfaithful to the model's actual decision process. CoT can leak sensitive reasoning, increase cost, and amplify hallucinated intermediate claims.",
+    refs: [{ label: "Wei et al., 2022 - Chain-of-Thought Prompting", url: "https://arxiv.org/abs/2201.11903" }],
+    keypoints: [["Rationales", "Examples include intermediate steps."], ["Compute", "More tokens act like more test-time work."], ["Self-consistency", "Sample many paths, vote on answers."], ["Caution", "Explanations can be unfaithful."]]
+  },
+  {
+    id: "tree-of-thoughts", short: "Tree of Thoughts", year: "2023", family: "prompting search", title: "Tree of Thoughts", tagline: "Search over reasoning states instead of committing to one chain.", visual: "Generate candidate thoughts, evaluate them, expand promising branches, prune weak ones.",
+    core: "Tree of Thoughts treats reasoning as a search problem. Instead of one linear chain, the model proposes multiple intermediate states and uses evaluation to choose which branches to explore.",
+    mechanism: "At each step, generate candidate thoughts, score them with the model or a verifier, then apply BFS/DFS/beam search. The state can be a partial solution, plan, equation, or board configuration.",
+    impact: "It made test-time compute explicit: better answers can come from exploring and evaluating alternatives without changing weights.",
+    impl: "Define state representation, proposal prompt, evaluator prompt, branching factor, depth, and stopping rule. Use external verifiers when the domain permits, because self-evaluation can be weak.",
+    pitfall: "Search is expensive and can chase plausible but wrong branches. If the evaluator is biased, more search just amplifies the bias.",
+    refs: [{ label: "Yao et al., 2023 - Tree of Thoughts", url: "https://arxiv.org/abs/2305.10601" }],
+    keypoints: [["Search", "Reasoning becomes tree exploration."], ["Evaluator", "Scores partial thoughts."], ["Test-time scaling", "More compute can improve answers."], ["Cost", "Branching grows quickly."]]
+  },
+  {
+    id: "react", short: "ReAct", year: "2022", family: "agents", title: "ReAct", tagline: "Interleave reasoning traces with actions against tools or environments.", visual: "Thought -> Action -> Observation -> Thought, repeated until final answer.",
+    core: "ReAct combines reasoning and acting in one loop. The model writes a thought, chooses an action such as search or calculator, observes the result, and updates its plan.",
+    mechanism: "Prompts demonstrate trajectories with Thought, Action, Observation, and Answer fields. The environment executes actions and returns observations; the model conditions on the growing trace.",
+    impact: "ReAct became the basic mental model for tool-using agents. It connects LLMs to search, APIs, code execution, databases, and browser automation.",
+    impl: "Define a small tool schema, validate arguments, cap iterations, handle tool errors, and preserve observations exactly. Add stop conditions and guardrails so the agent cannot loop or call unsafe tools.",
+    pitfall: "The model may hallucinate observations, misuse tools, or over-plan instead of acting. Tool output injection is a serious security risk.",
+    refs: [{ label: "Yao et al., 2022 - ReAct", url: "https://arxiv.org/abs/2210.03629" }],
+    keypoints: [["Loop", "Thought, action, observation."], ["Grounding", "Tools provide external evidence."], ["Agents", "Foundation of many LLM agent frameworks."], ["Security", "Tool outputs can inject instructions."]]
+  },
+  {
+    id: "dpo", short: "DPO", year: "2023", family: "preference optimization", title: "Direct Preference Optimization (DPO)", tagline: "Train from preference pairs without an explicit reward model or PPO loop.", visual: "Given chosen and rejected answers, increase the policy odds of chosen relative to rejected.",
+    core: "DPO simplifies preference tuning by deriving a classification-style loss directly from the RLHF objective. It uses preference pairs but avoids separately training a reward model and running PPO.",
+    mechanism: "For each prompt with chosen and rejected responses, DPO compares log-probability ratios under the policy and a reference model. The loss pushes the policy to prefer chosen outputs while staying near the reference.",
+    impact: "DPO became a popular alignment method because it is stable, simple, and easy to implement with supervised fine-tuning infrastructure.",
+    impl: "Prepare high-quality chosen/rejected pairs, keep a frozen reference model, tune beta, and train on full response logprobs. Monitor length bias and validation win rate, not just loss.",
+    pitfall: "DPO quality is bounded by preference data quality. It can over-optimize style preferences and degrade factuality or diversity if the rejected samples are poorly constructed.",
+    refs: [{ label: "Rafailov et al., 2023 - DPO", url: "https://arxiv.org/abs/2305.18290" }],
+    keypoints: [["No PPO", "Direct loss on preference pairs."], ["Reference", "Controls policy drift."], ["Beta", "Strength of preference optimization."], ["Data", "Pair quality dominates outcome."]]
+  },
+  {
+    id: "orpo", short: "ORPO", year: "2024", family: "preference optimization", title: "ORPO", tagline: "Odds-ratio preference tuning combines SFT and preference alignment in one objective.", visual: "Train on chosen answers while penalizing odds assigned to rejected answers.",
+    core: "ORPO tries to simplify alignment further by adding an odds-ratio penalty to supervised fine-tuning. It removes the separate reference model used by DPO.",
+    mechanism: "The objective combines negative log-likelihood on chosen responses with a term that increases the odds of chosen responses over rejected responses. This turns preference alignment into a single-stage fine-tuning run.",
+    impact: "ORPO is attractive for practical fine-tuning pipelines because it reduces memory and implementation complexity compared with reference-model methods.",
+    impl: "Use paired preference data but train with one policy model. Tune the odds-ratio coefficient carefully. It fits well when you already have SFT-format chosen responses plus rejected alternatives.",
+    pitfall: "Removing the reference model can make regularization less explicit. Results depend on coefficient choice and pair construction; noisy rejected answers can mislead the odds penalty.",
+    refs: [{ label: "Hong et al., 2024 - ORPO", url: "https://arxiv.org/abs/2403.07691" }],
+    keypoints: [["Single model", "No separate reference model."], ["Objective", "SFT plus odds-ratio penalty."], ["Practical", "Lower memory than DPO-style setups."], ["Tuning", "Coefficient choice matters."]]
+  },
+  {
+    id: "grpo", short: "GRPO", year: "2024", family: "reasoning RL", title: "GRPO", tagline: "Group-relative rewards train reasoning policies without a value model.", visual: "Sample multiple answers per prompt; normalize rewards within the group; update policy toward winners.",
+    core: "GRPO is a reinforcement-learning method popularized for reasoning models. It avoids a learned critic/value model by comparing multiple sampled outputs for the same prompt.",
+    mechanism: "For each prompt, sample a group of completions, score them with a verifier or reward function, normalize rewards within the group, and apply a policy-gradient update with KL regularization.",
+    impact: "GRPO made RL for verifiable reasoning more memory-efficient and helped popularize RLVR-style training for math, code, and logic tasks.",
+    impl: "You need reliable rewards: exact-match math, unit tests for code, or strong verifiers. Batch by prompt groups, control KL to the reference model, and watch for reward hacking against the verifier.",
+    pitfall: "Group-relative rewards can overfit to narrow verifiers. If all samples are bad or reward is sparse, learning signal is weak.",
+    refs: [{ label: "DeepSeekMath, 2024 - GRPO", url: "https://arxiv.org/abs/2402.03300" }],
+    keypoints: [["No critic", "Avoids separate value model."], ["Group", "Rewards normalized among samples per prompt."], ["Best for", "Verifiable math/code tasks."], ["Risk", "Verifier hacking."]]
+  },
+  {
+    id: "switch-transformer", short: "Switch / MoE", year: "2021", family: "sparse models", title: "Mixture of Experts (Switch Transformer)", tagline: "Route each token to a small subset of experts to scale parameters without equal compute.", visual: "Router chooses expert 1 of N; only selected FFN runs for each token.",
+    core: "Mixture-of-Experts models increase total parameter count while keeping per-token compute modest. Switch Transformer made the router simple by sending each token to one expert.",
+    mechanism: "A router scores experts for each token, dispatches tokens to selected expert feed-forward networks, then combines outputs. Auxiliary losses encourage load balancing so experts do not collapse.",
+    impact: "MoE opened a route to trillion-parameter models with manageable compute. It influenced Switch, GLaM, Mixtral, DeepSeekMoE, and many modern sparse LLMs.",
+    impl: "Implement token dispatch/all-to-all communication, capacity factors, load-balancing loss, expert parallelism, and router precision carefully. MoE is often communication-bound at scale.",
+    pitfall: "Expert imbalance, dropped tokens, router instability, and all-to-all overhead can erase gains. MoE serving is harder than dense serving because active experts vary by token.",
+    refs: [{ label: "Fedus et al., 2021 - Switch Transformers", url: "https://arxiv.org/abs/2101.03961" }],
+    keypoints: [["Sparse compute", "Many parameters, few active per token."], ["Router", "Chooses expert(s) per token."], ["Aux loss", "Balances load."], ["Hard part", "All-to-all communication."]]
+  },
+  {
+    id: "deepseekmoe", short: "DeepSeekMoE", year: "2024", family: "sparse models", title: "DeepSeekMoE", tagline: "Fine-grained and shared experts improve MoE specialization and efficiency.", visual: "Split experts into smaller pieces; combine shared experts with routed experts.",
+    core: "DeepSeekMoE refines sparse expert design by using many fine-grained experts plus shared experts. The goal is better specialization without starving common knowledge.",
+    mechanism: "Instead of a few large experts, use more smaller experts and route tokens to multiple selected experts. Shared experts are always active, while routed experts specialize on token-dependent patterns.",
+    impact: "The design influenced later DeepSeek models and the broader open MoE ecosystem. It showed that MoE quality depends on expert granularity and routing design, not only number of experts.",
+    impl: "Tune number of shared experts, routed experts, top-k routing, capacity, and load balancing. Monitor expert utilization histograms and communication time. Serving needs kernels and schedulers that handle sparse expert activation efficiently.",
+    pitfall: "MoE metrics can look great while individual experts are undertrained or redundant. Debugging requires per-expert stats, not just aggregate loss.",
+    refs: [{ label: "Dai et al., 2024 - DeepSeekMoE", url: "https://arxiv.org/abs/2401.06066" }],
+    keypoints: [["Fine-grained", "More smaller experts can specialize better."], ["Shared experts", "Always-on path for common knowledge."], ["Routing", "Top-k expert selection per token."], ["Debug", "Watch utilization and expert collapse."]]
+  },
+  {
+    id: "kv-cache-compression", short: "KV compression", year: "2023+", family: "long context", title: "KV Cache Compression & Optimization", tagline: "Long-context serving is often limited by KV memory, not weights.", visual: "Keep important past K/V, evict or compress low-value tokens, and quantize cache blocks.",
+    core: "In autoregressive decoding, every generated token stores K and V tensors for every layer. At long context and high concurrency, this KV cache can dominate GPU memory.",
+    mechanism: "Optimization techniques include GQA/MQA to reduce heads, paged allocation to reduce fragmentation, KV quantization, sliding windows, attention sinks, heavy-hitter eviction, low-rank compression, and prefix caching.",
+    impact: "KV optimization is central to practical long-context products. It determines how many users, how much context, and what latency a serving system can support.",
+    impl: "Compute per-token KV bytes as 2 x layers x kv_heads x head_dim x bytes_per_elem. Budget memory separately for weights, activations, CUDA graphs, fragmentation, and cache. Evaluate compression on long-context benchmarks like RULER or Needle-in-a-Haystack.",
+    pitfall: "Evicting the wrong tokens breaks retrieval and reasoning. Synthetic needle tests can miss real workloads where many small details matter.",
+    refs: [{ label: "Kwon et al., 2023 - vLLM", url: "https://arxiv.org/abs/2309.06180" }, { label: "Xiao et al., 2023 - StreamingLLM", url: "https://arxiv.org/abs/2309.17453" }],
+    keypoints: [["Formula", "KV bytes/token = 2*L*H_kv*d_head*bytes."], ["Levers", "GQA, quantization, eviction, paging."], ["Serving", "Concurrency is cache-limited."], ["Quality", "Compression must be benchmarked on long-context tasks."]]
+  },
+  {
+    id: "test-time-scaling", short: "Test-time scaling", year: "2024+", family: "reasoning", title: "Test-Time Scaling", tagline: "Spend more inference compute on search, sampling, verification, and tool use.", visual: "Generate many attempts, verify or rank them, refine, and allocate compute adaptively.",
+    core: "Test-time scaling improves outputs by spending more compute during inference rather than changing weights. The extra compute may be longer reasoning, multiple samples, search trees, verifiers, tools, or iterative refinement.",
+    mechanism: "Common patterns include self-consistency voting, best-of-N sampling, process reward models, verifier-guided search, Tree of Thoughts, agent loops, and RL-trained reasoning traces.",
+    impact: "It reframed inference as an optimization budget. For verifiable domains like math and code, more attempts plus a good verifier can outperform a single larger-sounding answer.",
+    impl: "Define a compute policy: when to sample more, when to stop, how to rank outputs, and how to charge latency. Use cheap verifiers first and expensive judges only near the end. Cache tool results and partial evaluations.",
+    pitfall: "More compute can amplify wrong heuristics if the verifier is poor. It also increases latency, cost, and attack surface for prompt injection or tool misuse.",
+    refs: [{ label: "Snell et al., 2024 - Scaling LLM Test-Time Compute", url: "https://arxiv.org/abs/2408.03314" }],
+    keypoints: [["Axis", "Inference compute is a scaling dimension."], ["Verifier", "Quality depends on scoring attempts."], ["Adaptive", "Hard prompts deserve more budget."], ["Tradeoff", "Cost and latency rise."]]
+  },
+  {
+    id: "muon", short: "Muon", year: "2024+", family: "optimization", title: "Muon Optimizer", tagline: "Momentum updates are orthogonalized to improve neural-network training dynamics.", visual: "Compute momentum update, reshape matrix parameters, orthogonalize approximately, then step.",
+    core: "Muon is an optimizer family that modifies momentum updates by orthogonalizing matrix-shaped parameter updates. The intuition is to improve conditioning and avoid updates that collapse into correlated directions.",
+    mechanism: "For suitable 2D parameters, Muon computes momentum and applies an approximate matrix orthogonalization step, often via Newton-Schulz iterations, before updating weights. Embeddings, biases, and normalization parameters may use AdamW or another fallback.",
+    impact: "Muon became interesting because it offered strong empirical training efficiency in some transformer settings with a relatively simple implementation. It is part of a broader search for optimizers beyond AdamW.",
+    impl: "Apply only to matrix weights where the shape interpretation makes sense. Keep separate parameter groups for embeddings, scalar/bias/norm parameters, and matrix weights. Benchmark against AdamW with matched schedule and tokens.",
+    pitfall: "Optimizer wins are workload-sensitive. Orthogonalization adds compute and numerical considerations, and a bad parameter grouping can make results worse than AdamW.",
+    refs: [{ label: "Muon optimizer repository", url: "https://github.com/KellerJordan/Muon" }],
+    keypoints: [["Idea", "Orthogonalize momentum updates for matrices."], ["Fallback", "Use AdamW-like handling for non-matrix params."], ["Compare", "Match schedules before claiming speedup."], ["Risk", "Empirical gains may not transfer."]]
+  }
+].map(makeLineageDeepDive);
+
+if (COURSE_CONFIG && COURSE_CONFIG.deepDives) {
+  COURSE_CONFIG.deepDives = COURSE_CONFIG.deepDives.concat(PAPER_LINEAGE_DEEP_DIVES);
+}
+
+
+function ensureStudyCuriosityHooks(cfg) {
+  if (!cfg || !Array.isArray(cfg.deepDives)) return;
+  function esc(s) { return String(s || '').replace(/[&<>"']/g, function(c) { return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+  function pick(title) {
+    var t = String(title || '').toLowerCase();
+    var rules = [
+      [/attention|transformer|flash|rope|alibi|query|key|value|kv|paged/, ['#d2a8ff', 'Attention is less like a spotlight and more like a programmable memory bus: the expensive part is often moving the K/V bytes, not multiplying the logits.', 'attention map']],
+      [/bert|mask|embedding|token|language|llm|gpt|llama|palm|bloom|opt|model/, ['#58a6ff', 'A language model is trained as a token game, but the side effect is a compressed simulator of syntax, facts, styles, and tool-use habits.', 'token flow']],
+      [/scaling|chinchilla|compute|law|benchmark|mmlu|gpqa|arena|score/, ['#7ee787', 'Scaling curves are useful because they turn huge training runs into something you can budget with small pilot experiments.', 'curve']],
+      [/eval|judge|red|safety|helm|ragas|metric/, ['#f778ba', 'A good eval is a sensor, not a trophy. The best ones tell you exactly what to fix next.', 'feedback loop']],
+      [/retrieval|rag|index|vector|search|document/, ['#79c0ff', 'RAG turns model updates into document updates: change the corpus and the model can answer from new evidence without retraining.', 'retrieval pipeline']],
+      [/lora|qlora|adapter|fine.?tune|preference|dpo|orpo|grpo|rlhf|constitutional|instruct/, ['#ffa657', 'Most adaptation does not need to move every weight. Often a small steering signal changes the behavior of a very large frozen model.', 'adapter']],
+      [/moe|expert|switch|deepseek|router|sparse/, ['#d2a8ff', 'MoE models are giant buildings where each token visits only a few rooms. Total parameters can be huge while active compute stays modest.', 'router']],
+      [/quant|int4|int8|fp8|precision|gguf|awq|gptq/, ['#7ee787', 'Quantization is not just making numbers smaller. The art is preserving the outliers the model secretly depends on.', 'bit ladder']],
+      [/cuda|gpu|triton|kernel|tensor core|gemm|roofline|memory|hbm|sm|warp|graph/, ['#76B900', 'GPU performance is often won by deleting memory traffic. The fastest byte is the one you never move from HBM.', 'gpu tiles']],
+      [/xla|jax|tensorflow|pytorch|compiler|hlo|graph|autograd|jit/, ['#ffa657', 'Compilers do not make slow math fast by magic. They win by seeing enough of the program to fuse, reorder, shard, and remove work.', 'compiler graph']],
+      [/deepspeed|zero|fsdp|distributed|parallel|nccl|all.?reduce|shard/, ['#79c0ff', 'Distributed training is a negotiation between math and plumbing: every saved byte of optimizer state changes what can fit and communicate.', 'shards']],
+      [/rl|policy|reward|ppo|value|actor|critic|agent/, ['#f778ba', 'Reinforcement learning is strange because the training data distribution changes as the model learns to act.', 'reward loop']],
+      [/onnx|runtime|inference|serve|latency|batch|scheduler/, ['#58a6ff', 'Inference systems are queueing systems wearing neural-network clothes: batching, cache layout, and tail latency can dominate model math.', 'serving queue']],
+      [/cfd|fluid|navier|turbulence|mesh|solver/, ['#79c0ff', 'Fluid simulation is hard because tiny local numerical choices can grow into global flow behavior.', 'flow field']],
+      [/fea|finite|stress|strain|mesh|element|solid/, ['#ffa657', 'FEA turns a continuous object into many small promises: each element is simple, but together they approximate a physical structure.', 'mesh']],
+      [/fpga|lut|rtl|hls|verilog|bitstream/, ['#d2a8ff', 'An FPGA does not run your program so much as become a temporary machine shaped like your program.', 'logic fabric']]
+    ];
+    for (var i = 0; i < rules.length; i++) if (rules[i][0].test(t)) return rules[i][1];
+    return ['#58a6ff', 'The useful question is not only what this concept is, but what constraint it relaxes: memory, compute, data, latency, supervision, or human effort.', 'concept map'];
+  }
+  function miniSvg(kind, color) {
+    if (/curve/.test(kind)) return '<svg viewBox="0 0 260 72" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:360px;height:72px;display:block;margin-top:8px;background:#0d1117;border:1px solid #30363d;border-radius:6px"><path d="M28 52 C84 48,118 30,214 18" fill="none" stroke="'+color+'" stroke-width="3"/><line x1="28" y1="58" x2="230" y2="58" stroke="#8b949e"/><line x1="28" y1="58" x2="28" y2="12" stroke="#8b949e"/><circle cx="118" cy="30" r="4" fill="#7ee787"/><text x="130" y="34" fill="#8b949e" font-size="10">scales smoothly</text></svg>';
+    if (/router|shards/.test(kind)) return '<svg viewBox="0 0 260 72" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:360px;height:72px;display:block;margin-top:8px;background:#0d1117;border:1px solid #30363d;border-radius:6px"><rect x="24" y="24" width="54" height="24" rx="5" fill="'+color+'33" stroke="'+color+'"/><text x="51" y="40" text-anchor="middle" fill="#c9d1d9" font-size="10">route</text><rect x="142" y="8" width="72" height="20" rx="4" fill="#58a6ff22" stroke="#58a6ff"/><rect x="142" y="44" width="72" height="20" rx="4" fill="#7ee78722" stroke="#7ee787"/><path d="M78 36 C106 20,116 18,142 18 M78 36 C106 52,116 54,142 54" stroke="'+color+'" fill="none"/><text x="178" y="41" text-anchor="middle" fill="#8b949e" font-size="10">pick paths</text></svg>';
+    if (/retrieval|serving/.test(kind)) return '<svg viewBox="0 0 260 72" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:360px;height:72px;display:block;margin-top:8px;background:#0d1117;border:1px solid #30363d;border-radius:6px"><rect x="16" y="22" width="42" height="26" rx="5" fill="'+color+'22" stroke="'+color+'"/><rect x="86" y="22" width="42" height="26" rx="5" fill="#58a6ff22" stroke="#58a6ff"/><rect x="156" y="22" width="42" height="26" rx="5" fill="#7ee78722" stroke="#7ee787"/><path d="M58 35 H86 M128 35 H156 M198 35 H236" stroke="'+color+'"/><text x="130" y="63" text-anchor="middle" fill="#8b949e" font-size="10">request -> select -> answer</text></svg>';
+    if (/gpu|bit|adapter/.test(kind)) return '<svg viewBox="0 0 260 72" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:360px;height:72px;display:block;margin-top:8px;background:#0d1117;border:1px solid #30363d;border-radius:6px"><rect x="28" y="16" width="72" height="40" rx="6" fill="'+color+'22" stroke="'+color+'"/><g fill="#30363d">'+Array.from({length:12}).map(function(_,i){return '<rect x="'+(116+(i%6)*14)+'" y="'+(16+Math.floor(i/6)*22)+'" width="10" height="14" rx="2"/>';}).join('')+'</g><path d="M100 36 H116" stroke="'+color+'"/><text x="63" y="40" text-anchor="middle" fill="#c9d1d9" font-size="10">matrix</text><text x="164" y="63" text-anchor="middle" fill="#8b949e" font-size="10">tiles / bits / adapters</text></svg>';
+    if (/compiler|feedback|reward/.test(kind)) return '<svg viewBox="0 0 260 72" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:360px;height:72px;display:block;margin-top:8px;background:#0d1117;border:1px solid #30363d;border-radius:6px"><path d="M70 20 H176 C212 20,212 52,176 52 H70 C34 52,34 20,70 20" fill="none" stroke="'+color+'" stroke-width="2"/><circle cx="70" cy="20" r="5" fill="#58a6ff"/><circle cx="176" cy="20" r="5" fill="#7ee787"/><circle cx="176" cy="52" r="5" fill="#ffa657"/><circle cx="70" cy="52" r="5" fill="#f778ba"/><text x="130" y="40" text-anchor="middle" fill="#8b949e" font-size="10">loop learns</text></svg>';
+    return '<svg viewBox="0 0 260 72" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:360px;height:72px;display:block;margin-top:8px;background:#0d1117;border:1px solid #30363d;border-radius:6px"><circle cx="78" cy="36" r="22" fill="'+color+'22" stroke="'+color+'"/><circle cx="182" cy="36" r="22" fill="#7ee78722" stroke="#7ee787"/><path d="M100 36 H160" stroke="'+color+'"/><text x="130" y="62" text-anchor="middle" fill="#8b949e" font-size="10">idea -> capability</text></svg>';
+  }
+  cfg.deepDives.forEach(function(dd) {
+    dd.sections = dd.sections || [];
+    var existing = dd.sections.some(function(s) { return /fun|curios|why this/i.test(String(s.title || '') + ' ' + String(s.text || '')); });
+    if (existing) return;
+    var picked = pick(dd.title || dd.id || '');
+    var html = '<div style="line-height:1.65;background:#0d1117;border:1px solid #30363d;border-left:3px solid '+picked[0]+';border-radius:8px;padding:12px 14px">'
+      + '<strong style="color:'+picked[0]+'">Why this is fun:</strong> ' + esc(picked[1])
+      + miniSvg(picked[2], picked[0])
+      + '</div>';
+    var insertAt = dd.sections.findIndex(function(s) { return /^pitfall/i.test(String(s.title || '')); });
+    if (insertAt < 0) insertAt = dd.sections.findIndex(function(s) { return /^references/i.test(String(s.title || '')); });
+    if (insertAt < 0) insertAt = dd.sections.length;
+    dd.sections.splice(insertAt, 0, { title: 'Fun Fact / Curiosity Hook', text: html });
+    dd.keypoints = dd.keypoints || [];
+    if (!dd.keypoints.some(function(k) { return /curiosity|fun/i.test(String(k.title || '')); })) {
+      dd.keypoints.push({ title: 'Curiosity hook', text: picked[1] });
+    }
+  });
+}
+if (typeof COURSE_CONFIG !== 'undefined') ensureStudyCuriosityHooks(COURSE_CONFIG);
+
 // Use real config if provided, else sample
 const C = (COURSE_CONFIG && COURSE_CONFIG.schemaVersion) ? COURSE_CONFIG : SAMPLE_CONFIG;
 
