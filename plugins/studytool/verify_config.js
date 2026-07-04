@@ -297,17 +297,20 @@ function checkFile(filePath) {
   // ── Check 4: Use Cases shape ──
   if (Array.isArray(cfg.useCases) && cfg.useCases.length > 0) {
     const issues = [];
+    let totalSteps = 0, codedSteps = 0;
     cfg.useCases.forEach((uc, i) => {
       const tag = `useCases[${i}] (${uc.id || uc.title || '?'})`;
       if (!Array.isArray(uc.steps) || uc.steps.length === 0) {
         issues.push(`${tag}: missing or empty steps[]`);
       } else {
         uc.steps.forEach((s, j) => {
+          totalSteps++;
+          if (s && typeof s.code === 'string' && s.code.trim()) codedSteps++;
           if (!s.title) issues.push(`${tag}.steps[${j}]: missing title`);
         });
       }
     });
-    if (issues.length === 0) pass('usecase-shape', `${cfg.useCases.length} cases, all healthy`);
+    if (issues.length === 0) pass('usecase-shape', `${cfg.useCases.length} cases, all healthy; ${codedSteps}/${totalSteps} steps have runnable code`);
     else fail('usecase-shape', issues.join('\n      '));
 
     // ── Check 4b: Use Cases are wired into the host page ──
