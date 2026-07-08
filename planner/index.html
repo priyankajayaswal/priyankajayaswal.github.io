@@ -1,0 +1,501 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Planner - What To Do Today</title>
+<meta name="theme-color" content="#0d1117">
+<style>
+  :root{
+    --bg:#0d1117;
+    --panel:#161b22;
+    --panel2:#10161f;
+    --ink:#e6edf3;
+    --text:#c9d1d9;
+    --muted:#8b949e;
+    --faint:#6e7681;
+    --line:#30363d;
+    --line2:#21262d;
+    --blue:#58a6ff;
+    --green:#7ee787;
+    --pink:#f778ba;
+    --violet:#d2a8ff;
+    --amber:#ffa657;
+    --cyan:#79c0ff;
+    --red:#f85149;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+    line-height:1.5;
+    min-height:100vh;
+    padding:24px 18px 72px;
+  }
+  a{color:var(--blue);text-decoration:none}
+  a:hover{text-decoration:underline}
+  button,input{font:inherit}
+  .wrap{width:min(960px,100%);margin:0 auto}
+  header{
+    display:grid;
+    gap:16px;
+    margin-bottom:18px;
+  }
+  .hero,.panel,details{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:8px;
+  }
+  .hero{
+    padding:22px;
+    display:grid;
+    gap:14px;
+  }
+  .eyebrow{
+    color:var(--green);
+    font-size:.72rem;
+    text-transform:uppercase;
+    letter-spacing:.9px;
+    font-weight:800;
+  }
+  h1{
+    font-size:clamp(2rem,6vw,3.6rem);
+    line-height:1.02;
+    max-width:780px;
+  }
+  .lead{
+    color:var(--muted);
+    max-width:760px;
+    font-size:1rem;
+  }
+  .today-line{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    align-items:center;
+  }
+  .pill{
+    display:inline-flex;
+    align-items:center;
+    min-height:28px;
+    padding:4px 10px;
+    border:1px solid color-mix(in srgb,var(--c,var(--blue)) 48%,transparent);
+    background:color-mix(in srgb,var(--c,var(--blue)) 12%,transparent);
+    color:var(--c,var(--blue));
+    border-radius:16px;
+    font-size:.78rem;
+    font-weight:700;
+  }
+  .actions{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+    gap:8px;
+  }
+  .btn{
+    min-height:40px;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    border:1px solid var(--line);
+    background:var(--panel2);
+    color:var(--text);
+    border-radius:6px;
+    padding:9px 12px;
+    font-size:.86rem;
+    font-weight:700;
+    cursor:pointer;
+    text-align:center;
+  }
+  .btn:hover{border-color:var(--c,var(--blue));color:var(--c,var(--blue));text-decoration:none}
+  .btn.primary{background:var(--green);border-color:var(--green);color:#0d1117}
+  .btn.primary:hover{color:#0d1117;filter:brightness(1.05)}
+  .panel{padding:16px;margin-top:14px}
+  .section-head{
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:12px;
+    margin-bottom:12px;
+  }
+  h2{font-size:1.12rem;line-height:1.2}
+  .note{color:var(--muted);font-size:.84rem;max-width:650px}
+  .now-box{
+    border:1px solid var(--green);
+    background:#10200d;
+    border-radius:8px;
+    padding:14px;
+    margin-bottom:12px;
+    display:grid;
+    grid-template-columns:minmax(0,1fr) auto;
+    gap:12px;
+    align-items:center;
+  }
+  .now-box .label{
+    color:var(--green);
+    font-size:.7rem;
+    text-transform:uppercase;
+    letter-spacing:.8px;
+    font-weight:800;
+    margin-bottom:4px;
+  }
+  .now-box b{display:block;font-size:1.05rem}
+  .now-box p{color:var(--muted);font-size:.84rem;margin-top:3px}
+  .progressbar{
+    height:8px;
+    border:1px solid var(--line);
+    background:#0d1117;
+    border-radius:6px;
+    overflow:hidden;
+    margin-bottom:14px;
+  }
+  .progressbar span{
+    display:block;
+    height:100%;
+    width:0;
+    background:linear-gradient(90deg,var(--green),var(--blue));
+    transition:width .2s;
+  }
+  .plan-list{
+    display:grid;
+    gap:8px;
+  }
+  .step{
+    display:grid;
+    grid-template-columns:30px minmax(0,1fr) auto;
+    gap:10px;
+    align-items:start;
+    background:var(--panel2);
+    border:1px solid var(--line);
+    border-left:3px solid var(--c,var(--blue));
+    border-radius:8px;
+    padding:11px 12px;
+  }
+  .step.done{opacity:.62}
+  .step input{margin-top:5px;accent-color:var(--green)}
+  .step b{display:block;color:var(--ink);font-size:.94rem}
+  .step small{display:block;color:var(--muted);font-size:.76rem;margin-top:2px}
+  .step .output{
+    color:var(--text);
+    background:#0d1117;
+    border:1px solid var(--line2);
+    border-radius:5px;
+    padding:6px 8px;
+    min-width:135px;
+    font-size:.76rem;
+  }
+  .two-col{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+  }
+  .simple-list{
+    display:grid;
+    gap:8px;
+  }
+  .row{
+    display:grid;
+    grid-template-columns:138px minmax(0,1fr) auto;
+    gap:12px;
+    align-items:center;
+    border:1px solid var(--line);
+    border-left:3px solid var(--c,var(--blue));
+    background:var(--panel2);
+    border-radius:8px;
+    padding:10px 12px;
+  }
+  .row .key{
+    color:var(--c,var(--blue));
+    font-size:.72rem;
+    text-transform:uppercase;
+    letter-spacing:.7px;
+    font-weight:800;
+  }
+  .row b{display:block;color:var(--ink);font-size:.9rem}
+  .row span{display:block;color:var(--muted);font-size:.78rem}
+  .row .open{
+    color:var(--blue);
+    font-size:.78rem;
+    font-weight:800;
+    white-space:nowrap;
+  }
+  details{margin-top:12px;overflow:hidden}
+  summary{
+    list-style:none;
+    cursor:pointer;
+    padding:13px 15px;
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+    align-items:center;
+    font-weight:800;
+  }
+  summary::-webkit-details-marker{display:none}
+  summary:after{content:"Open";color:var(--muted);font-size:.72rem;font-weight:700}
+  details[open] summary{border-bottom:1px solid var(--line2)}
+  details[open] summary:after{content:"Close"}
+  .details-body{padding:14px 15px}
+  .method{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:8px;
+  }
+  .method div{
+    border:1px solid var(--line);
+    border-top:3px solid var(--c,var(--blue));
+    background:var(--panel2);
+    border-radius:8px;
+    padding:11px;
+    min-height:112px;
+  }
+  .method b{display:block;color:var(--c,var(--blue));font-size:.84rem;margin-bottom:5px}
+  .method span{display:block;color:var(--muted);font-size:.76rem;line-height:1.36}
+  footer{
+    color:var(--faint);
+    text-align:center;
+    font-size:.78rem;
+    margin-top:26px;
+  }
+  @media (max-width:760px){
+    body{padding:14px 10px 64px}
+    .hero,.panel{padding:14px}
+    .now-box,.step,.row{grid-template-columns:1fr}
+    .step .output{min-width:0}
+    .two-col,.method{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <section class="hero">
+      <div>
+        <div class="eyebrow">Planner one pager</div>
+        <h1>What should I do today?</h1>
+        <p class="lead">Do the five steps below. Everything else is reference. This page is intentionally simple: check the next box, produce the output, then move on.</p>
+      </div>
+      <div class="today-line">
+        <span class="pill" style="--c:var(--green)" id="cycle-day">Study cycle day --</span>
+        <span class="pill" style="--c:var(--blue)" id="weekday-lane">Lane --</span>
+        <span class="pill" style="--c:var(--amber)">Output over browsing</span>
+      </div>
+      <div class="actions">
+        <a class="btn primary" href="#today">Start checklist</a>
+        <a class="btn" style="--c:var(--cyan)" href="dayview.html">Full day view</a>
+        <a class="btn" style="--c:var(--blue)" href="studyday.html">Study task list</a>
+        <a class="btn" style="--c:var(--green)" href="daily.html">Upskill task list</a>
+      </div>
+    </section>
+  </header>
+
+  <main>
+    <section class="panel" id="today">
+      <div class="section-head">
+        <div>
+          <h2>Today: Follow These In Order</h2>
+          <p class="note">If the day goes sideways, finish steps 1, 2, and 5. That still counts.</p>
+        </div>
+        <button class="btn" id="reset-checks" type="button">Reset</button>
+      </div>
+
+      <div class="now-box">
+        <div>
+          <div class="label">Do this now</div>
+          <b id="next-title">Start with health</b>
+          <p id="next-detail">Complete the first unchecked step below.</p>
+        </div>
+        <span class="pill" style="--c:var(--green)" id="done-count">0/5 done</span>
+      </div>
+
+      <div class="progressbar" aria-label="Daily progress"><span id="today-progress"></span></div>
+
+      <div class="plan-list" id="checks">
+        <label class="step" style="--c:var(--green)">
+          <input type="checkbox" data-key="health">
+          <span><b>1. Stabilize the body</b><small>Water, movement, food/protein, no-sugar decision, and sleep protection.</small></span>
+          <span class="output">Output: energy protected</span>
+        </label>
+        <label class="step" style="--c:var(--pink)">
+          <input type="checkbox" data-key="deep">
+          <span><b>2. Do one hard work push</b><small>Pick the most important office/build item and work on it before scattered work.</small></span>
+          <span class="output">Output: task moved</span>
+        </label>
+        <label class="step" style="--c:var(--blue)">
+          <input type="checkbox" data-key="lane">
+          <span><b>3. Do today's learning lane</b><small id="lane-detail">Use the weekday lane. Add studyday if you have extra capacity.</small></span>
+          <span class="output">Output: note or artifact</span>
+        </label>
+        <label class="step" style="--c:var(--amber)">
+          <input type="checkbox" data-key="ship">
+          <span><b>4. Leave visible evidence</b><small>Commit, benchmark, writeup, checklist, diagram, flashcards, or tiny prototype.</small></span>
+          <span class="output">Output: trail left</span>
+        </label>
+        <label class="step" style="--c:var(--cyan)">
+          <input type="checkbox" data-key="close">
+          <span><b>5. Close the loop</b><small>Reflection or spiritual anchor, then choose tomorrow's deep-work task.</small></span>
+          <span class="output">Output: tomorrow chosen</span>
+        </label>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="section-head">
+        <div>
+          <h2>What Is Today's Lane?</h2>
+          <p class="note">Use this when step 3 asks for the learning lane.</p>
+        </div>
+      </div>
+      <div class="simple-list">
+        <div class="row" style="--c:var(--blue)"><span class="key">Monday</span><span><b>Networking</b><span>Capture packets, annotate a handshake, or trace DNS/TLS/BGP.</span></span><a class="open" href="daily.html">Tasks</a></div>
+        <div class="row" style="--c:var(--green)"><span class="key">Tuesday</span><span><b>Performance</b><span>Profile something real. Look for USE/RED signals and tail latency.</span></span><a class="open" href="daily.html">Tasks</a></div>
+        <div class="row" style="--c:var(--amber)"><span class="key">Wednesday</span><span><b>Security</b><span>Do a lab, write the payload or threat model, and note the defense.</span></span><a class="open" href="daily.html">Tasks</a></div>
+        <div class="row" style="--c:var(--cyan)"><span class="key">Thursday</span><span><b>AI tools</b><span>Build or evaluate RAG, agents, prompts, embeddings, cost, or latency.</span></span><a class="open" href="daily.html">Tasks</a></div>
+        <div class="row" style="--c:var(--violet)"><span class="key">Friday</span><span><b>Code reading</b><span>Trace one feature in Redis, SQLite, CPython, Go stdlib, or office code.</span></span><a class="open" href="daily.html">Tasks</a></div>
+        <div class="row" style="--c:var(--pink)"><span class="key">Weekend</span><span><b>Project / review</b><span>Convert the week into one artifact and one recovery pass.</span></span><a class="open" href="studyday.html">Tasks</a></div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="section-head">
+        <div>
+          <h2>Deep Study Cycle</h2>
+          <p class="note">Optional after the weekday lane. Use this when you want the 15-topic study rotation.</p>
+        </div>
+      </div>
+      <div class="simple-list">
+        <div class="row" style="--c:var(--blue)"><span class="key">Cycle day 1</span><span><b>Systems, crypto, script</b><span>Distributed systems, security fundamentals, Sanskrit.</span></span><a class="open" href="studyday.html">Open</a></div>
+        <div class="row" style="--c:var(--pink)"><span class="key">Cycle day 2</span><span><b>Hardware, rockets, curves</b><span>TPU architecture, rocket propulsion, differential geometry.</span></span><a class="open" href="studyday.html">Open</a></div>
+        <div class="row" style="--c:var(--green)"><span class="key">Cycle day 3</span><span><b>Compilers, radar, biogas</b><span>Language tooling, radar systems, biomass conversion.</span></span><a class="open" href="studyday.html">Open</a></div>
+        <div class="row" style="--c:var(--violet)"><span class="key">Cycle day 4</span><span><b>PL, sensing, batteries</b><span>Programming languages, satellite imaging, energy storage.</span></span><a class="open" href="studyday.html">Open</a></div>
+        <div class="row" style="--c:var(--amber)"><span class="key">Cycle day 5</span><span><b>Particles, metallurgy, exploits</b><span>Nuclear physics, gold extraction, postgraduate security.</span></span><a class="open" href="studyday.html">Open</a></div>
+        <div class="row" style="--c:var(--cyan)"><span class="key">Cycle day 6</span><span><b>Project and review</b><span>Ship one small artifact and compress the cycle into notes.</span></span><a class="open" href="studyday.html">Open</a></div>
+      </div>
+    </section>
+
+    <details>
+      <summary>Open only if you are stuck</summary>
+      <div class="details-body">
+        <div class="simple-list">
+          <a class="row" style="--c:var(--pink)" href="restore-plan.html"><span class="key">Need direction</span><span><b>restore-plan.html</b><span>North star, anchors, office leverage, AI stack, and weekly shipping.</span></span><span class="open">Open</span></a>
+          <a class="row" style="--c:var(--cyan)" href="dayview.html"><span class="key">Need schedule</span><span><b>dayview.html</b><span>Full 22-habit day, water, reflection, timeline, and streaks.</span></span><span class="open">Open</span></a>
+          <a class="row" style="--c:var(--violet)" href="learn.html"><span class="key">Need method</span><span><b>learn.html</b><span>Active recall, spacing, Feynman, interleaving, concept maps, calibration.</span></span><span class="open">Open</span></a>
+          <a class="row" style="--c:var(--blue)" href="pla.md"><span class="key">Need resources</span><span><b>pla.md</b><span>Verified course playlist and PDF pairings.</span></span><span class="open">Open</span></a>
+        </div>
+      </div>
+    </details>
+
+    <details>
+      <summary>Learning rule for every session</summary>
+      <div class="details-body">
+        <div class="method">
+          <div style="--c:var(--green)"><b>Retrieve</b><span>Close the source and write what you remember before checking.</span></div>
+          <div style="--c:var(--blue)"><b>Explain</b><span>Use plain language. If you hand-wave, that is the next study target.</span></div>
+          <div style="--c:var(--amber)"><b>Produce</b><span>End with a card, diagram, toy implementation, benchmark, or writeup.</span></div>
+        </div>
+      </div>
+    </details>
+
+    <details>
+      <summary>All planner links</summary>
+      <div class="details-body">
+        <div class="actions">
+          <a class="btn" style="--c:var(--pink)" href="restore-plan.html">restore-plan.html</a>
+          <a class="btn" style="--c:var(--cyan)" href="dayview.html">dayview.html</a>
+          <a class="btn" style="--c:var(--blue)" href="studyday.html">studyday.html</a>
+          <a class="btn" style="--c:var(--green)" href="daily.html">daily.html</a>
+          <a class="btn" style="--c:var(--violet)" href="learn.html">learn.html</a>
+          <a class="btn" style="--c:var(--amber)" href="upskill.html">upskill.html</a>
+          <a class="btn" style="--c:var(--blue)" href="pla.md">pla.md</a>
+          <a class="btn" style="--c:var(--green)" href="../try.html">try.html hub</a>
+        </div>
+      </div>
+    </details>
+  </main>
+
+  <footer>Simple mode: do the checklist first, open references second. Progress is saved locally for today.</footer>
+</div>
+
+<script>
+const launchDate = new Date('2026-05-16T00:00:00');
+const dayMs = 86400000;
+const now = new Date();
+const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
+const daysSince = Math.max(0, Math.floor((todayStart - launchDate.getTime()) / dayMs));
+const cycleDay = (daysSince % 30) + 1;
+const cycleSlot = ((cycleDay - 1) % 6) + 1;
+
+const laneByDay = [
+  {name:'Weekend project/review', detail:'Make one artifact from the week.', color:'#f778ba'},
+  {name:'Networking', detail:'Capture packets or annotate a protocol flow.', color:'#58a6ff'},
+  {name:'Performance', detail:'Profile something real and write what is hot.', color:'#7ee787'},
+  {name:'Security', detail:'Do a lab and record the payload plus defense.', color:'#ffa657'},
+  {name:'AI tools', detail:'Build or evaluate a small AI workflow.', color:'#79c0ff'},
+  {name:'Code reading', detail:'Trace one real feature through source.', color:'#d2a8ff'},
+  {name:'Weekend project/review', detail:'Make one artifact from the week.', color:'#f778ba'}
+];
+const lane = laneByDay[now.getDay()];
+
+document.getElementById('cycle-day').textContent = 'Study cycle day ' + cycleDay + ' / slot ' + cycleSlot;
+const lanePill = document.getElementById('weekday-lane');
+lanePill.textContent = lane.name;
+lanePill.style.setProperty('--c', lane.color);
+document.getElementById('lane-detail').textContent = lane.detail + ' Add studyday slot ' + cycleSlot + ' if you have extra capacity.';
+
+const key = 'planner_simple_checks_' + new Date().toISOString().slice(0,10);
+const checks = Array.from(document.querySelectorAll('#checks input[type="checkbox"]'));
+const steps = Array.from(document.querySelectorAll('#checks .step'));
+const bar = document.getElementById('today-progress');
+const doneCount = document.getElementById('done-count');
+const nextTitle = document.getElementById('next-title');
+const nextDetail = document.getElementById('next-detail');
+
+function loadChecks(){
+  try { return JSON.parse(localStorage.getItem(key) || '{}'); }
+  catch { return {}; }
+}
+
+function saveChecks(){
+  const values = {};
+  checks.forEach(check => values[check.dataset.key] = check.checked);
+  localStorage.setItem(key, JSON.stringify(values));
+}
+
+function updateProgress(){
+  const done = checks.filter(check => check.checked).length;
+  const pct = Math.round(done / checks.length * 100);
+  bar.style.width = pct + '%';
+  doneCount.textContent = done + '/' + checks.length + ' done';
+  steps.forEach((step, index) => step.classList.toggle('done', checks[index].checked));
+
+  const nextIndex = checks.findIndex(check => !check.checked);
+  if (nextIndex === -1) {
+    nextTitle.textContent = 'Done for today';
+    nextDetail.textContent = 'Keep it light now. Tomorrow is easier because you closed the loop.';
+  } else {
+    const stepText = steps[nextIndex].querySelector('b').textContent;
+    const detailText = steps[nextIndex].querySelector('small').textContent;
+    nextTitle.textContent = stepText;
+    nextDetail.textContent = detailText;
+  }
+}
+
+const saved = loadChecks();
+checks.forEach(check => {
+  check.checked = Boolean(saved[check.dataset.key]);
+  check.addEventListener('change', () => {
+    saveChecks();
+    updateProgress();
+  });
+});
+
+document.getElementById('reset-checks').addEventListener('click', () => {
+  checks.forEach(check => check.checked = false);
+  saveChecks();
+  updateProgress();
+});
+
+updateProgress();
+</script>
+</body>
+</html>
