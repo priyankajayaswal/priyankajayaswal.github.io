@@ -710,18 +710,52 @@
     return board;
   }
 
+  function isQuotaError(err) {
+    return err && (
+      err.name === 'QuotaExceededError' ||
+      err.code === 22 ||
+      err.code === 1014 ||
+      /quota/i.test(String(err.message || ''))
+    );
+  }
+
+  function clearLegacyStateCopies() {
+    localStorage.removeItem(storageKey('state'));
+    localStorage.removeItem(storageKey('state-shadow'));
+  }
+
   function saveAppState(options = {}) {
     const sync = options.sync !== false;
+    const legacy = options.legacy !== false;
+    const appRaw = JSON.stringify(appState);
     const activeRaw = JSON.stringify(state);
-    localStorage.setItem(storageKey('boards'), JSON.stringify(appState));
-    localStorage.setItem(storageKey('state'), activeRaw);
-    localStorage.setItem(storageKey('state-shadow'), activeRaw);
+
+    try {
+      localStorage.setItem(storageKey('boards'), appRaw);
+    } catch (err) {
+      if (!isQuotaError(err)) throw err;
+      clearLegacyStateCopies();
+      localStorage.setItem(storageKey('boards'), appRaw);
+    }
+
+    if (legacy) {
+      try {
+        localStorage.setItem(storageKey('state'), activeRaw);
+        localStorage.setItem(storageKey('state-shadow'), activeRaw);
+      } catch (err) {
+        clearLegacyStateCopies();
+        if (!isQuotaError(err)) throw err;
+      }
+    } else {
+      clearLegacyStateCopies();
+    }
+
     if (sync) drive.scheduleSync();
   }
 
   function saveState() {
     state.updatedAt = new Date().toISOString();
-    saveAppState();
+    saveAppState({ legacy: false });
   }
 
   function switchBoard(boardId) {
@@ -1151,10 +1185,44 @@
       imported.importedAt = new Date().toISOString();
       return imported;
     });
+    const previousAppState = clone(appState);
+    const previousState = state;
     appState.boards.push(...boards);
     appState.activeBoardId = boards[0].id;
     state = boards[0];
-    saveAppState();
+    try {
+      saveAppState({ legacy: false });
+    } catch (err) {
+      appState = previousAppState;
+      state = previousState;
+      if (isQuotaError(err)) {
+        const replace = confirm(
+          'This import includes embedded images and does not fit alongside your existing local boards. Replace local boards with the imported board file?'
+        );
+        if (replace) {
+          appState = { version: 2, activeBoardId: boards[0].id, boards };
+          state = boards[0];
+          try {
+            saveAppState({ legacy: false });
+            render();
+            return;
+          } catch (replaceErr) {
+            appState = previousAppState;
+            state = previousState;
+            if (isQuotaError(replaceErr)) {
+              alert('This import is too large for browser storage on this origin.');
+              render();
+              return;
+            }
+            throw replaceErr;
+          }
+        }
+        alert('Not enough browser storage to import that board alongside the current boards.');
+        render();
+        return;
+      }
+      throw err;
+    }
     render();
     if (incoming.length > boards.length) {
       alert(`Imported ${boards.length} board(s). ${incoming.length - boards.length} skipped because the limit is ${MAX_BOARDS}.`);
@@ -1252,9 +1320,11 @@
     });
     $userArea.append(img, name, status, driveBtn, out);
 
-    // try silent Drive reconnect if previously granted
+    // Drive reconnect is user-initiated so refresh never opens account selection.
     if (localStorage.getItem('drive-granted-' + user.sub) === '1') {
-      connectDrive(true);
+      status.textContent = '☁ reconnect';
+      status.title = 'Click "Reconnect" to sync with Drive';
+      driveBtn.textContent = '☁ Reconnect';
     }
   }
 
@@ -1274,7 +1344,7 @@
       google.accounts.id.initialize({
         client_id: GOOGLE_CLIENT_ID,
         callback: onCredential,
-        auto_select: true,
+        auto_select: false,
       });
       $userArea.innerHTML = '<div id="gsi-btn"></div>';
       google.accounts.id.renderButton(document.getElementById('gsi-btn'),
