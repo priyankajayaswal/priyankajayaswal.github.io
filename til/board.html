@@ -758,6 +758,22 @@
     saveAppState({ legacy: false });
   }
 
+  function needsDriveUploadKey() {
+    return storageKey('needs-drive-upload');
+  }
+
+  function hasPendingDriveUpload() {
+    return localStorage.getItem(needsDriveUploadKey()) === '1';
+  }
+
+  function markPendingDriveUpload() {
+    localStorage.setItem(needsDriveUploadKey(), '1');
+  }
+
+  function clearPendingDriveUpload() {
+    localStorage.removeItem(needsDriveUploadKey());
+  }
+
   function switchBoard(boardId) {
     if (!appState.boards.some(b => b.id === boardId)) return;
     appState.activeBoardId = boardId;
@@ -1204,6 +1220,7 @@
           state = boards[0];
           try {
             saveAppState({ legacy: false });
+            markPendingDriveUpload();
             render();
             return;
           } catch (replaceErr) {
@@ -1223,6 +1240,7 @@
       }
       throw err;
     }
+    markPendingDriveUpload();
     render();
     if (incoming.length > boards.length) {
       alert(`Imported ${boards.length} board(s). ${incoming.length - boards.length} skipped because the limit is ${MAX_BOARDS}.`);
@@ -1321,7 +1339,11 @@
     $userArea.append(img, name, status, driveBtn, out);
 
     // Drive reconnect is user-initiated so refresh never opens account selection.
-    if (localStorage.getItem('drive-granted-' + user.sub) === '1') {
+    if (hasPendingDriveUpload()) {
+      status.textContent = '↑ upload';
+      status.title = 'Click "Upload Local" to upload this local board to Drive';
+      driveBtn.textContent = '☁ Upload Local';
+    } else if (localStorage.getItem('drive-granted-' + user.sub) === '1') {
       status.textContent = '☁ reconnect';
       status.title = 'Click "Reconnect" to sync with Drive';
       driveBtn.textContent = '☁ Reconnect';
@@ -1449,17 +1471,19 @@
     async upload() {
       if (!this.token) {
         const ok = await refreshDriveToken();
-        if (!ok) { this.setStatus('⚠ reconnect', 'error'); showDriveBtn('☁ Reconnect'); return; }
+        if (!ok) { this.setStatus('⚠ reconnect', 'error'); showDriveBtn('☁ Reconnect'); return false; }
       }
       try {
         await this.uploadJson(DRIVE_MULTI_FILE, JSON.stringify(appState), 'fileId');
         // Keep the old single-board Drive file fresh for older copies of this page.
         await this.uploadJson(DRIVE_FILE, JSON.stringify(state), 'legacyFileId');
         this.setStatus('☁ synced', '');
+        return true;
       } catch (e) {
         console.error('upload failed', e);
         this.setStatus('⚠ ' + (e.message || 'error'), 'error');
         showDriveBtn('☁ Reconnect');
+        return false;
       }
     },
     async pull() {
@@ -1488,10 +1512,12 @@
           }
         }
         this.setStatus('☁ synced', '');
+        return true;
       } catch (e) {
         console.error('pull failed', e);
         this.setStatus('⚠ ' + (e.message || 'error'), 'error');
         showDriveBtn('☁ Reconnect');
+        return false;
       }
     },
   };
@@ -1542,7 +1568,10 @@
           const user = JSON.parse(localStorage.getItem('board-user') || '{}');
           if (user.sub) localStorage.setItem('drive-granted-' + user.sub, '1');
           drive.setStatus('⟳ syncing', 'syncing');
-          drive.pull().then(() => {
+          const sync = hasPendingDriveUpload()
+            ? drive.upload().then(ok => { if (ok) clearPendingDriveUpload(); return ok; })
+            : drive.pull();
+          sync.then(() => {
             // shrink button to a compact reconnect affordance
             const b = document.getElementById('drive-btn');
             if (b) b.textContent = '☁';
