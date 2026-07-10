@@ -77,6 +77,40 @@
     font-weight: 600;
   }
   .topbar button.bg-picker:hover { background: rgba(255,255,255,0.35); }
+  .board-switcher {
+    background: rgba(255,255,255,0.18);
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 4px;
+    padding: 0.35rem 0.5rem;
+    font-family: inherit;
+    font-size: 0.82rem;
+    font-weight: 600;
+    max-width: 180px;
+    outline: none;
+  }
+  .board-switcher option { color: var(--ink); background: #fff; }
+  .topbar .tool-btn {
+    background: rgba(255,255,255,0.2);
+    color: #fff;
+    border: none;
+    padding: 0.4rem 0.6rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.78rem;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+  .topbar .tool-btn:hover { background: rgba(255,255,255,0.35); }
+  .topbar .tool-btn.danger:hover { background: rgba(235,90,70,0.85); }
+  .board-count {
+    font-size: 0.72rem;
+    opacity: 0.82;
+    padding: 0.2rem 0.45rem;
+    border-radius: 12px;
+    background: rgba(255,255,255,0.15);
+    white-space: nowrap;
+  }
   .user-area {
     display: flex;
     align-items: center;
@@ -242,6 +276,57 @@
     min-height: 1em;
     white-space: pre-wrap;
   }
+  .card-image {
+    margin-top: 0.55rem;
+    border: 1px solid #dfe1e6;
+    border-radius: 7px;
+    overflow: hidden;
+    background: #f4f5f7;
+  }
+  .card-image img {
+    display: block;
+    width: 100%;
+    max-height: 190px;
+    object-fit: cover;
+  }
+  .card-attachments {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    margin-top: 0.5rem;
+  }
+  .attachment-row {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    border: 1px solid #dfe1e6;
+    background: #f4f5f7;
+    border-radius: 6px;
+    padding: 0.35rem 0.45rem;
+    font-size: 0.76rem;
+  }
+  .attachment-row a {
+    flex: 1;
+    min-width: 0;
+    color: var(--ink);
+    text-decoration: none;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .attachment-row a:hover { color: var(--accent); text-decoration: underline; }
+  .attachment-row small { color: var(--muted); white-space: nowrap; }
+  .attachment-remove {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--danger);
+    cursor: pointer;
+    border-radius: 3px;
+    padding: 0.1rem 0.25rem;
+  }
+  .card.editing .attachment-remove { display: inline-flex; }
+  .attachment-remove:hover { background: rgba(235,90,70,0.12); }
   .card .card-actions {
     display: none;
     gap: 0.2rem;
@@ -410,8 +495,15 @@
 <body>
   <header class="topbar">
     <span class="logo">📋 Board</span>
+    <select class="board-switcher" id="board-switcher" title="Switch board"></select>
+    <span class="board-count" id="board-count">0/0</span>
+    <button class="tool-btn" id="new-board">+ Board</button>
+    <button class="tool-btn danger" id="delete-board">Delete</button>
     <input class="board-title" id="board-title" value="My Board" />
     <button class="bg-picker" id="bg-toggle">🎨 Background</button>
+    <button class="tool-btn" id="export-board">Export</button>
+    <button class="tool-btn" id="import-board">Import</button>
+    <input type="file" id="import-file" accept="application/json,.json" hidden>
     <div class="spacer"></div>
     <div class="user-area" id="user-area">
       <div id="gsi-btn"></div>
@@ -458,22 +550,20 @@
   ];
 
   // ---------- STORAGE ----------
+  // Backward compatibility:
+  //   board-USER-state  = active board only (legacy shape; old board.html can still read it)
+  //   board-USER-boards = multi-board collection (new shape)
+  const MAX_BOARDS = 50;
+  const MAX_CARD_IMAGE_BYTES = 750 * 1024;
+  const MAX_CARD_ATTACHMENT_BYTES = 1024 * 1024;
+  const MAX_ATTACHMENTS_PER_CARD = 5;
   let userKey = 'guest';
+  let appState;
   function storageKey(k) { return `board-${userKey}-${k}`; }
-  function loadState() {
-    const raw = localStorage.getItem(storageKey('state'));
-    if (raw) {
-      try { return JSON.parse(raw); } catch(e) {}
-    }
-    return defaultState();
-  }
-  function saveState() {
-    localStorage.setItem(storageKey('state'), JSON.stringify(state));
-    drive.scheduleSync();
-  }
-  function defaultState() {
+  function defaultBoard(title = 'My Board') {
     return {
-      title: 'My Board',
+      id: id(),
+      title,
       bg: 'blue',
       lists: [
         { id: id(), title: 'To Do', cards: [
@@ -488,11 +578,168 @@
   }
   function id() { return Math.random().toString(36).slice(2, 10); }
 
-  let state = loadState();
+  function clone(obj) {
+    return JSON.parse(JSON.stringify(obj));
+  }
+
+  function normalizeBoard(raw, fallbackTitle = 'My Board', keepId = true) {
+    const base = raw && typeof raw === 'object' ? raw : {};
+    const board = {
+      id: keepId && base.id ? String(base.id) : id(),
+      title: String(base.title || fallbackTitle || 'My Board').slice(0, 120),
+      bg: BACKGROUNDS.some(b => b.id === base.bg) ? base.bg : 'blue',
+      lists: Array.isArray(base.lists) ? base.lists : [],
+    };
+    board.lists = board.lists.map((list, i) => ({
+      id: list && list.id ? String(list.id) : id(),
+      title: String((list && list.title) || `List ${i + 1}`).slice(0, 120),
+      cards: Array.isArray(list && list.cards)
+        ? list.cards.map(normalizeCard).filter(card => card.text.trim() || card.attachments.length)
+        : [],
+    }));
+    if (!board.lists.length) board.lists = defaultBoard(board.title).lists;
+    return board;
+  }
+
+  function normalizeCard(card) {
+    const normalized = {
+      id: card && card.id ? String(card.id) : id(),
+      text: String((card && card.text) || '').slice(0, 20000),
+      attachments: [],
+    };
+    if (Array.isArray(card && card.attachments)) {
+      normalized.attachments = card.attachments
+        .map(normalizeAttachment)
+        .filter(Boolean)
+        .slice(0, MAX_ATTACHMENTS_PER_CARD);
+    }
+    const legacyImage = normalizeAttachment(card && card.image);
+    if (legacyImage && !normalized.attachments.some(a => a.dataUrl === legacyImage.dataUrl)) {
+      normalized.attachments.unshift(legacyImage);
+      normalized.attachments = normalized.attachments.slice(0, MAX_ATTACHMENTS_PER_CARD);
+    }
+    return normalized;
+  }
+
+  function normalizeAttachment(att) {
+    if (!att) return null;
+    if (typeof att === 'string') att = { dataUrl: att };
+    const dataUrl = att.dataUrl || att.src || att.url || '';
+    if (typeof dataUrl !== 'string') return null;
+    const isDataImage = /^data:image\/(png|jpe?g|gif|webp);base64,/i.test(dataUrl);
+    const isDataFile = /^data:[a-z0-9][a-z0-9.+-]*\/[a-z0-9.+-]+;base64,/i.test(dataUrl);
+    const isRemoteFile = /^https:\/\//i.test(dataUrl);
+    if (!isDataFile && !isRemoteFile) return null;
+    const type = String(att.type || dataUrl.match(/^data:([^;]+)/i)?.[1] || 'application/octet-stream').slice(0, 120);
+    if (isDataImage && dataUrl.length > MAX_CARD_IMAGE_BYTES * 1.5) return null;
+    if (isDataFile && !isDataImage && dataUrl.length > MAX_CARD_ATTACHMENT_BYTES * 1.5) return null;
+    return {
+      id: att.id ? String(att.id) : id(),
+      name: String(att.name || (isDataImage ? 'card-image' : 'attachment')).slice(0, 160),
+      type,
+      size: Number.isFinite(att.size) ? Math.max(0, Math.round(att.size)) : 0,
+      dataUrl,
+    };
+  }
+
+  function isImageAttachment(att) {
+    return att && /^image\/(png|jpe?g|gif|webp)$/i.test(att.type || '') && /^data:image\//i.test(att.dataUrl || '');
+  }
+
+  function normalizeAppState(raw) {
+    if (raw && Array.isArray(raw.boards)) {
+      const seen = new Set();
+      const boards = raw.boards.slice(0, MAX_BOARDS).map((b, i) => {
+        const board = normalizeBoard(b, `Board ${i + 1}`);
+        while (seen.has(board.id)) board.id = id();
+        seen.add(board.id);
+        return board;
+      });
+      if (boards.length) {
+        const activeBoardId = boards.some(b => b.id === raw.activeBoardId)
+          ? raw.activeBoardId
+          : boards[0].id;
+        return { version: 2, activeBoardId, boards };
+      }
+    }
+    const legacy = raw && raw.lists ? normalizeBoard(raw, raw.title || 'My Board') : defaultBoard();
+    return { version: 2, activeBoardId: legacy.id, boards: [legacy] };
+  }
+
+  function loadAppState() {
+    const multiRaw = localStorage.getItem(storageKey('boards'));
+    if (multiRaw) {
+      try {
+        const app = normalizeAppState(JSON.parse(multiRaw));
+        const legacyRaw = localStorage.getItem(storageKey('state'));
+        const legacyShadow = localStorage.getItem(storageKey('state-shadow'));
+        if (legacyRaw && legacyRaw !== legacyShadow) {
+          try {
+            const legacyParsed = JSON.parse(legacyRaw);
+            if (legacyParsed && legacyParsed.lists) {
+              const legacyBoard = normalizeBoard(legacyParsed, legacyParsed.title || 'My Board');
+              const exactIdx = app.boards.findIndex(b => b.id === legacyBoard.id);
+              if (exactIdx >= 0) {
+                app.boards[exactIdx] = legacyBoard;
+                app.activeBoardId = legacyBoard.id;
+              } else {
+                const activeIdx = Math.max(0, app.boards.findIndex(b => b.id === app.activeBoardId));
+                legacyBoard.id = app.boards[activeIdx].id;
+                app.boards[activeIdx] = legacyBoard;
+              }
+            }
+          } catch(e) {}
+        }
+        return app;
+      } catch(e) {}
+    }
+    const legacyRaw = localStorage.getItem(storageKey('state'));
+    if (legacyRaw) {
+      try { return normalizeAppState(JSON.parse(legacyRaw)); } catch(e) {}
+    }
+    return normalizeAppState(null);
+  }
+
+  function activeBoard() {
+    let board = appState.boards.find(b => b.id === appState.activeBoardId);
+    if (!board) {
+      board = appState.boards[0] || defaultBoard();
+      if (!appState.boards.length) appState.boards.push(board);
+      appState.activeBoardId = board.id;
+    }
+    return board;
+  }
+
+  function saveAppState(options = {}) {
+    const sync = options.sync !== false;
+    const activeRaw = JSON.stringify(state);
+    localStorage.setItem(storageKey('boards'), JSON.stringify(appState));
+    localStorage.setItem(storageKey('state'), activeRaw);
+    localStorage.setItem(storageKey('state-shadow'), activeRaw);
+    if (sync) drive.scheduleSync();
+  }
+
+  function saveState() {
+    state.updatedAt = new Date().toISOString();
+    saveAppState();
+  }
+
+  function switchBoard(boardId) {
+    if (!appState.boards.some(b => b.id === boardId)) return;
+    appState.activeBoardId = boardId;
+    state = activeBoard();
+    saveAppState({ sync: false });
+    render();
+  }
+
+  appState = loadAppState();
+  let state = activeBoard();
 
   // ---------- RENDER ----------
   const $board = document.getElementById('board');
   const $title = document.getElementById('board-title');
+  const $switcher = document.getElementById('board-switcher');
+  const $boardCount = document.getElementById('board-count');
 
   function applyBg() {
     const b = BACKGROUNDS.find(x => x.id === state.bg) || BACKGROUNDS[0];
@@ -500,11 +747,27 @@
   }
 
   function render() {
+    state = activeBoard();
     $title.value = state.title;
     applyBg();
+    renderBoardSwitcher();
     $board.innerHTML = '';
     state.lists.forEach(list => $board.appendChild(renderList(list)));
     $board.appendChild(renderAddList());
+  }
+
+  function renderBoardSwitcher() {
+    $switcher.innerHTML = '';
+    appState.boards.forEach((board, i) => {
+      const opt = document.createElement('option');
+      opt.value = board.id;
+      opt.textContent = board.title || `Board ${i + 1}`;
+      $switcher.appendChild(opt);
+    });
+    $switcher.value = state.id;
+    $boardCount.textContent = `${appState.boards.length}/${MAX_BOARDS}`;
+    document.getElementById('new-board').disabled = appState.boards.length >= MAX_BOARDS;
+    document.getElementById('delete-board').disabled = appState.boards.length <= 1;
   }
 
   function renderList(list) {
@@ -603,11 +866,59 @@
     text.textContent = card.text;
     el.appendChild(text);
 
+    const attachments = Array.isArray(card.attachments) ? card.attachments : [];
+    attachments.filter(isImageAttachment).forEach(att => {
+      const imageWrap = document.createElement('div');
+      imageWrap.className = 'card-image';
+      const img = document.createElement('img');
+      img.src = att.dataUrl;
+      img.alt = att.name || 'Card image';
+      imageWrap.appendChild(img);
+      el.appendChild(imageWrap);
+    });
+
+    if (attachments.length) {
+      const attachList = document.createElement('div');
+      attachList.className = 'card-attachments';
+      attachments.forEach(att => {
+        const row = document.createElement('div');
+        row.className = 'attachment-row';
+        const icon = document.createElement('span');
+        icon.textContent = isImageAttachment(att) ? 'Image' : 'File';
+        const link = document.createElement('a');
+        link.href = att.dataUrl;
+        link.download = att.name || 'attachment';
+        link.textContent = att.name || 'attachment';
+        link.addEventListener('click', e => e.stopPropagation());
+        const size = document.createElement('small');
+        size.textContent = att.size ? formatBytes(att.size) : '';
+        const remove = document.createElement('button');
+        remove.className = 'attachment-remove';
+        remove.type = 'button';
+        remove.textContent = '×';
+        remove.title = 'Remove attachment';
+        remove.addEventListener('click', e => {
+          e.stopPropagation();
+          card.attachments = (card.attachments || []).filter(a => a.id !== att.id);
+          saveState(); render();
+        });
+        row.append(icon, link, size, remove);
+        attachList.appendChild(row);
+      });
+      el.appendChild(attachList);
+    }
+
     const actions = document.createElement('div');
     actions.className = 'card-actions';
     const saveBtn = document.createElement('button'); saveBtn.textContent = 'Save';
+    const attachBtn = document.createElement('button'); attachBtn.textContent = 'Add attachment';
+    const attachInput = document.createElement('input');
+    attachInput.type = 'file';
+    attachInput.accept = 'image/png,image/jpeg,image/gif,image/webp,application/pdf,text/plain,text/markdown,text/csv,application/json';
+    attachInput.multiple = true;
+    attachInput.hidden = true;
     const delBtn = document.createElement('button'); delBtn.className = 'del'; delBtn.textContent = 'Delete';
-    actions.append(saveBtn, delBtn);
+    actions.append(saveBtn, attachBtn, delBtn, attachInput);
     el.appendChild(actions);
 
     el.addEventListener('click', e => {
@@ -625,6 +936,28 @@
       el.classList.remove('editing');
       saveState(); render();
     });
+    attachBtn.addEventListener('click', e => {
+      e.stopPropagation();
+      attachInput.click();
+    });
+    attachInput.addEventListener('change', async e => {
+      e.stopPropagation();
+      const files = Array.from(e.target.files || []);
+      e.target.value = '';
+      if (!files.length) return;
+      try {
+        const existing = Array.isArray(card.attachments) ? card.attachments : [];
+        const openSlots = MAX_ATTACHMENTS_PER_CARD - existing.length;
+        if (openSlots <= 0) throw new Error(`Each card can keep up to ${MAX_ATTACHMENTS_PER_CARD} attachments.`);
+        const next = [];
+        for (const file of files.slice(0, openSlots)) next.push(await readAttachmentFile(file));
+        card.attachments = existing.concat(next);
+        saveState(); render();
+        if (files.length > openSlots) alert(`Added ${openSlots} attachment(s). ${files.length - openSlots} skipped because the per-card limit is ${MAX_ATTACHMENTS_PER_CARD}.`);
+      } catch (err) {
+        alert(err.message || 'Could not add that attachment.');
+      }
+    });
     delBtn.addEventListener('click', e => {
       e.stopPropagation();
       list.cards = list.cards.filter(c => c.id !== card.id);
@@ -632,6 +965,42 @@
     });
 
     return el;
+  }
+
+  function readAttachmentFile(file) {
+    return new Promise((resolve, reject) => {
+      const type = file.type || 'application/octet-stream';
+      const isAllowed =
+        /^image\/(png|jpe?g|gif|webp)$/i.test(type) ||
+        /^text\/(plain|markdown|csv)$/i.test(type) ||
+        /^application\/(pdf|json)$/i.test(type);
+      if (!isAllowed) {
+        reject(new Error('Use PNG, JPEG, GIF, WebP, PDF, TXT, Markdown, CSV, or JSON files.'));
+        return;
+      }
+      const maxBytes = /^image\//i.test(type) ? MAX_CARD_IMAGE_BYTES : MAX_CARD_ATTACHMENT_BYTES;
+      if (file.size > maxBytes) {
+        reject(new Error(`"${file.name}" is too large. Keep ${/^image\//i.test(type) ? 'images' : 'attachments'} under ${Math.round(maxBytes / 1024)} KB for this HTML/localStorage board.`));
+        return;
+      }
+      const reader = new FileReader();
+      reader.onerror = () => reject(new Error('Could not read that attachment.'));
+      reader.onload = () => resolve({
+        id: id(),
+        name: file.name || 'attachment',
+        type,
+        size: file.size || 0,
+        dataUrl: String(reader.result || ''),
+      });
+      reader.readAsDataURL(file);
+    });
+  }
+
+  function formatBytes(n) {
+    if (!n) return '';
+    if (n < 1024) return `${n} B`;
+    if (n < 1024 * 1024) return `${Math.round(n / 1024)} KB`;
+    return `${(n / (1024 * 1024)).toFixed(1)} MB`;
   }
 
   // Rebuild state.lists[*].cards order from current DOM after a Sortable drop.
@@ -697,7 +1066,114 @@
     return el;
   }
 
-  $title.addEventListener('change', () => { state.title = $title.value; saveState(); });
+  $switcher.addEventListener('change', () => switchBoard($switcher.value));
+
+  $title.addEventListener('change', () => {
+    state.title = $title.value.trim() || 'Untitled Board';
+    saveState();
+    renderBoardSwitcher();
+  });
+
+  document.getElementById('new-board').addEventListener('click', () => {
+    if (appState.boards.length >= MAX_BOARDS) {
+      alert(`This HTML/localStorage version is capped at ${MAX_BOARDS} boards. Export or delete old boards before adding more.`);
+      return;
+    }
+    const name = prompt('Board name?', `Board ${appState.boards.length + 1}`);
+    if (name === null) return;
+    const board = defaultBoard((name.trim() || `Board ${appState.boards.length + 1}`).slice(0, 120));
+    appState.boards.push(board);
+    appState.activeBoardId = board.id;
+    state = board;
+    saveAppState();
+    render();
+  });
+
+  document.getElementById('delete-board').addEventListener('click', () => {
+    if (appState.boards.length <= 1) {
+      alert('Keep at least one board.');
+      return;
+    }
+    const current = state;
+    if (!confirm(`Delete board "${current.title}" and all of its lists/cards?`)) return;
+    const idx = appState.boards.findIndex(b => b.id === current.id);
+    appState.boards = appState.boards.filter(b => b.id !== current.id);
+    const next = appState.boards[Math.max(0, idx - 1)] || appState.boards[0];
+    appState.activeBoardId = next.id;
+    state = next;
+    saveAppState();
+    render();
+  });
+
+  function safeFileName(s) {
+    return String(s || 'board').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 60) || 'board';
+  }
+
+  function exportActiveBoard() {
+    const payload = {
+      type: 'board-export',
+      version: 1,
+      exportedAt: new Date().toISOString(),
+      board: clone(state),
+    };
+    const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${safeFileName(state.title)}.board.json`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  }
+
+  function boardsFromImportPayload(payload) {
+    if (payload && payload.board && payload.board.lists) return [payload.board];
+    if (payload && payload.lists) return [payload];
+    if (payload && Array.isArray(payload.boards)) return payload.boards;
+    return [];
+  }
+
+  function importBoardsFromPayload(payload) {
+    const incoming = boardsFromImportPayload(payload);
+    if (!incoming.length) {
+      alert('No board found in that JSON file.');
+      return;
+    }
+    const available = MAX_BOARDS - appState.boards.length;
+    if (available <= 0) {
+      alert(`Board limit reached (${MAX_BOARDS}). Delete or export old boards first.`);
+      return;
+    }
+    const boards = incoming.slice(0, available).map((board, i) => {
+      const imported = normalizeBoard(board, board.title || `Imported Board ${i + 1}`, false);
+      imported.title = imported.title + ' (imported)';
+      imported.importedAt = new Date().toISOString();
+      return imported;
+    });
+    appState.boards.push(...boards);
+    appState.activeBoardId = boards[0].id;
+    state = boards[0];
+    saveAppState();
+    render();
+    if (incoming.length > boards.length) {
+      alert(`Imported ${boards.length} board(s). ${incoming.length - boards.length} skipped because the limit is ${MAX_BOARDS}.`);
+    }
+  }
+
+  document.getElementById('export-board').addEventListener('click', exportActiveBoard);
+  document.getElementById('import-board').addEventListener('click', () => document.getElementById('import-file').click());
+  document.getElementById('import-file').addEventListener('change', async e => {
+    const file = e.target.files && e.target.files[0];
+    e.target.value = '';
+    if (!file) return;
+    try {
+      const payload = JSON.parse(await file.text());
+      importBoardsFromPayload(payload);
+    } catch (err) {
+      alert('Could not import that JSON file.');
+    }
+  });
 
   // ---------- BACKGROUND PICKER ----------
   const $bgPop = document.getElementById('bg-popover');
@@ -743,7 +1219,8 @@
 
   function activateUser(user) {
     userKey = user.sub;
-    state = loadState();
+    appState = loadAppState();
+    state = activeBoard();
     render();
     $userArea.innerHTML = '';
     const img = document.createElement('img');
@@ -765,10 +1242,11 @@
     const out = document.createElement('button'); out.className = 'signout'; out.textContent = 'Sign out';
     out.addEventListener('click', () => {
       if (window.google?.accounts?.id) google.accounts.id.disableAutoSelect();
-      drive.token = null; drive.fileId = null;
+      drive.token = null; drive.fileId = null; drive.legacyFileId = null;
       localStorage.removeItem('board-user');
       userKey = 'guest';
-      state = loadState();
+      appState = loadAppState();
+      state = activeBoard();
       render();
       initGsi(true);
     });
@@ -809,11 +1287,13 @@
 
   // ---------- GOOGLE DRIVE SYNC (appDataFolder) ----------
   const DRIVE_SCOPE = 'https://www.googleapis.com/auth/drive.appdata';
-  const DRIVE_FILE = 'board.json';
+  const DRIVE_FILE = 'board.json';       // legacy active-board mirror
+  const DRIVE_MULTI_FILE = 'boards.json'; // multi-board collection
   const drive = {
     token: null,
     tokenClient: null,
     fileId: null,
+    legacyFileId: null,
     syncTimer: null,
     setStatus(text, cls = '') {
       const s = document.getElementById('sync-status');
@@ -850,9 +1330,9 @@
       }
       return r;
     },
-    async findFile() {
+    async findFile(name = DRIVE_MULTI_FILE) {
       const r = await this.api('drive/v3/files?spaces=appDataFolder&q=' +
-        encodeURIComponent(`name='${DRIVE_FILE}' and trashed=false`) + '&fields=files(id,modifiedTime)');
+        encodeURIComponent(`name='${name}' and trashed=false`) + '&fields=files(id,modifiedTime)');
       const j = await r.json();
       return j.files && j.files[0] ? j.files[0] : null;
     },
@@ -860,50 +1340,51 @@
       const r = await this.api('drive/v3/files/' + fileId + '?alt=media');
       return r.json();
     },
+    async uploadJson(name, body, idProp) {
+      if (!this[idProp]) {
+        const f = await this.findFile(name);
+        if (f) this[idProp] = f.id;
+      }
+      if (!this[idProp]) {
+        const boundary = '-------board' + Math.random().toString(36).slice(2);
+        const meta = { name, parents: ['appDataFolder'] };
+        const multipart =
+          `--${boundary}\r\nContent-Type: application/json; charset=UTF-8\r\n\r\n` +
+          JSON.stringify(meta) +
+          `\r\n--${boundary}\r\nContent-Type: application/json; charset=UTF-8\r\n\r\n` +
+          body + `\r\n--${boundary}--`;
+        const r = await this.api('upload/drive/v3/files?uploadType=multipart&fields=id', {
+          method: 'POST',
+          headers: { 'Content-Type': 'multipart/related; boundary=' + boundary },
+          body: multipart,
+        });
+        const j = await r.json();
+        this[idProp] = j.id;
+      } else {
+        try {
+          await this.api('upload/drive/v3/files/' + this[idProp] + '?uploadType=media', {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body,
+          });
+        } catch (e) {
+          if (e.status === 404) {
+            this[idProp] = null;
+            return this.uploadJson(name, body, idProp);
+          }
+          throw e;
+        }
+      }
+    },
     async upload() {
       if (!this.token) {
         const ok = await refreshDriveToken();
         if (!ok) { this.setStatus('⚠ reconnect', 'error'); showDriveBtn('☁ Reconnect'); return; }
       }
       try {
-        const body = JSON.stringify(state);
-        // Resolve fileId from Drive if we don't have one (handles fresh tab).
-        if (!this.fileId) {
-          const f = await this.findFile();
-          if (f) this.fileId = f.id;
-        }
-        if (!this.fileId) {
-          // create with multipart upload
-          const boundary = '-------board' + Math.random().toString(36).slice(2);
-          const meta = { name: DRIVE_FILE, parents: ['appDataFolder'] };
-          const multipart =
-            `--${boundary}\r\nContent-Type: application/json; charset=UTF-8\r\n\r\n` +
-            JSON.stringify(meta) +
-            `\r\n--${boundary}\r\nContent-Type: application/json; charset=UTF-8\r\n\r\n` +
-            body + `\r\n--${boundary}--`;
-          const r = await this.api('upload/drive/v3/files?uploadType=multipart&fields=id', {
-            method: 'POST',
-            headers: { 'Content-Type': 'multipart/related; boundary=' + boundary },
-            body: multipart,
-          });
-          const j = await r.json();
-          this.fileId = j.id;
-        } else {
-          try {
-            await this.api('upload/drive/v3/files/' + this.fileId + '?uploadType=media', {
-              method: 'PATCH',
-              headers: { 'Content-Type': 'application/json' },
-              body,
-            });
-          } catch (e) {
-            if (e.status === 404) {
-              // File vanished — recreate.
-              this.fileId = null;
-              return this.upload();
-            }
-            throw e;
-          }
-        }
+        await this.uploadJson(DRIVE_MULTI_FILE, JSON.stringify(appState), 'fileId');
+        // Keep the old single-board Drive file fresh for older copies of this page.
+        await this.uploadJson(DRIVE_FILE, JSON.stringify(state), 'legacyFileId');
         this.setStatus('☁ synced', '');
       } catch (e) {
         console.error('upload failed', e);
@@ -913,14 +1394,27 @@
     },
     async pull() {
       try {
-        const f = await this.findFile();
+        const f = await this.findFile(DRIVE_MULTI_FILE);
         if (f) {
           this.fileId = f.id;
           const remote = await this.download(f.id);
-          if (remote && remote.lists) {
-            state = remote;
-            localStorage.setItem(storageKey('state'), JSON.stringify(state));
+          if (remote && Array.isArray(remote.boards)) {
+            appState = normalizeAppState(remote);
+            state = activeBoard();
+            saveAppState({ sync: false });
             render();
+          }
+        } else {
+          const legacy = await this.findFile(DRIVE_FILE);
+          if (legacy) {
+            this.legacyFileId = legacy.id;
+            const remote = await this.download(legacy.id);
+            if (remote && remote.lists) {
+              appState = normalizeAppState(remote);
+              state = activeBoard();
+              saveAppState({ sync: false });
+              render();
+            }
           }
         }
         this.setStatus('☁ synced', '');
