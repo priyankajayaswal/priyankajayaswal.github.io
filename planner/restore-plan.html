@@ -1,0 +1,615 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Restore Plan - Health, Deep Tech, Build</title>
+<meta name="theme-color" content="#0d1117">
+<style>
+  :root{
+    --bg:#0d1117; --panel:#161b22; --panel2:#0d1117; --line:#30363d; --line2:#21262d;
+    --ink:#e6edf3; --text:#c9d1d9; --muted:#8b949e; --faint:#6e7681;
+    --blue:#58a6ff; --green:#7ee787; --pink:#f778ba; --violet:#d2a8ff; --amber:#ffa657; --cyan:#79c0ff; --red:#f85149;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;min-height:100vh;padding:32px 20px 72px;display:flex;justify-content:center;overflow-x:hidden}
+  a{color:var(--blue);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{width:100%;max-width:1280px}
+  .top-head{display:flex;flex-direction:column;align-items:center;gap:7px;margin:76px 0 28px;text-align:center}
+  h1{font-size:2.45rem;line-height:1.05;background:linear-gradient(135deg,var(--blue),var(--violet),var(--pink));-webkit-background-clip:text;-webkit-text-fill-color:transparent;max-width:100%;overflow-wrap:break-word;text-align:center}
+  .subtitle{color:var(--muted);font-size:1rem;max-width:100%;overflow-wrap:break-word}
+  .stats-line{font-size:.82rem;color:var(--muted);display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:center}
+  .stats-line .sep{color:var(--line)}
+  .stats-line .v{color:var(--text);font-weight:700}
+  .stats-line .hot{color:var(--green)}
+  .companions{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:18px;width:100%}
+  .companions a,.chip{font-size:.82rem;padding:7px 14px;border-radius:18px;background:var(--panel);border:1px solid var(--line);color:var(--text);display:inline-flex;align-items:center;gap:7px;transition:all .15s;max-width:100%;min-width:0}
+  .companions a:hover,.chip:hover{border-color:var(--hc,var(--blue));color:var(--hc,var(--blue));transform:translateY(-1px);text-decoration:none}
+  .tag{font-size:.68rem;color:var(--faint);background:var(--panel2);border:1px solid var(--line2);padding:1px 8px;border-radius:10px;font-family:"SFMono-Regular",Consolas,monospace;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .companions a:hover .tag{color:var(--hc,var(--blue));border-color:var(--hc,var(--blue))}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:18px 20px;margin-bottom:16px}
+  .panel-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:14px}
+  h2{font-size:1.08rem;color:var(--ink);font-weight:650;display:flex;align-items:center;gap:8px}
+  h3{font-size:1.24rem;margin:34px 0 13px;background:linear-gradient(135deg,var(--green),var(--blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+  .note{font-size:.85rem;color:var(--muted);line-height:1.55;max-width:780px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:10px}
+  .card{background:var(--panel2);border:1px solid var(--line);border-left:3px solid var(--c,var(--blue));border-radius:8px;padding:13px 14px;min-height:118px;display:flex;flex-direction:column;gap:8px}
+  .card.linkcard{color:inherit;text-decoration:none;transition:transform .15s,border-color .15s,background .15s}
+  .card.linkcard:hover{transform:translateY(-2px);border-color:var(--c,var(--blue));background:#1c2128}
+  .card .k{font-size:.68rem;text-transform:uppercase;letter-spacing:.8px;font-weight:750;color:var(--c,var(--blue))}
+  .card .t{font-size:.95rem;font-weight:650;color:var(--ink);line-height:1.25}
+  .card p{font-size:.83rem;color:var(--muted);line-height:1.48}
+  .card strong{color:var(--text)}
+  .card ul{list-style:none;display:flex;flex-direction:column;gap:5px;margin-top:2px}
+  .card li{font-size:.82rem;color:var(--text);line-height:1.4;display:flex;gap:8px}
+  .card li:before{content:"";width:6px;height:6px;border-radius:50%;background:var(--c,var(--blue));margin-top:.55em;flex:none;opacity:.9}
+  .minirow{display:grid;grid-template-columns:34px 1fr auto;gap:10px;align-items:center;padding:9px 12px;background:var(--panel2);border:1px solid var(--line);border-left:3px solid var(--c,var(--blue));border-radius:8px;color:inherit}
+  .minirow:hover{border-color:var(--c,var(--blue));text-decoration:none;background:#1c2128}
+  .minirow .ic{font-size:1.35rem;line-height:1;text-align:center}
+  .minirow .title{font-size:.9rem;font-weight:650;color:var(--ink);line-height:1.25}
+  .minirow .desc{font-size:.73rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .minirow .right{display:flex;flex-direction:column;align-items:flex-end;gap:4px}
+  .meter{height:4px;width:82px;border-radius:3px;background:var(--line2);overflow:hidden}
+  .meter span{display:block;height:100%;width:var(--w,0%);background:var(--c,var(--blue))}
+  .phase-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:8px}
+  .phase{background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:12px;border-top:3px solid var(--c,var(--blue))}
+  .phase b{display:block;color:var(--c,var(--blue));font-size:.84rem;margin-bottom:4px}
+  .phase span{display:block;color:var(--muted);font-size:.78rem;line-height:1.45}
+  .timeline{background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:14px;overflow-x:auto;max-width:100%}
+  .timeline svg{display:block;width:930px;max-width:none;height:252px}
+  .week{display:flex;gap:8px;overflow-x:auto;padding-bottom:3px;max-width:100%}
+  .day{background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:12px;min-height:180px;border-top:3px solid var(--c,var(--line));flex:0 0 145px}
+  .day .d{font-size:.76rem;font-weight:800;letter-spacing:.8px;text-transform:uppercase;color:var(--c,var(--muted));margin-bottom:7px}
+  .day .main{font-size:.9rem;font-weight:700;color:var(--ink);line-height:1.25;margin-bottom:8px}
+  .day ul{list-style:none;display:flex;flex-direction:column;gap:6px}
+  .day li{font-size:.78rem;color:var(--muted);line-height:1.35}
+  .day.admin{background:#1c1610;border-color:#5d4422;border-top-color:var(--amber)}
+  .day.admin .main,.day.admin .d{color:var(--amber)}
+  .habit-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px}
+  label.check{display:flex;gap:10px;align-items:flex-start;background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:10px 12px;cursor:pointer;min-height:64px}
+  label.check:hover{border-color:var(--c,var(--blue))}
+  label.check input{margin-top:3px;accent-color:var(--green);flex:none}
+  label.check span{display:block;font-size:.84rem;color:var(--text);line-height:1.36}
+  label.check small{display:block;font-size:.72rem;color:var(--muted);margin-top:2px}
+  .progressbar{height:9px;background:var(--panel2);border:1px solid var(--line);border-radius:6px;overflow:hidden;min-width:180px}
+  .progressbar .fill{height:100%;width:0;background:linear-gradient(90deg,var(--green),var(--blue));transition:width .25s}
+  .pill{display:inline-flex;align-items:center;gap:5px;font-size:.72rem;padding:3px 9px;border-radius:12px;background:color-mix(in srgb,var(--c,var(--blue)) 14%,transparent);border:1px solid color-mix(in srgb,var(--c,var(--blue)) 42%,transparent);color:var(--c,var(--blue));font-weight:650;white-space:nowrap}
+  .path-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:10px}
+  .path{background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:13px 15px}
+  .path h4{font-size:.92rem;color:var(--green);margin-bottom:8px}
+  .path ol{margin-left:19px;color:var(--muted);font-size:.82rem;line-height:1.55}
+  .path li{margin:3px 0}
+  details{background:var(--panel);border:1px solid var(--line);border-radius:10px;margin-bottom:12px;overflow:hidden}
+  summary{list-style:none;cursor:pointer;padding:14px 18px;font-size:.95rem;font-weight:700;display:flex;gap:8px;align-items:center}
+  summary::-webkit-details-marker{display:none}
+  summary:before{content:"▸";color:var(--muted);transition:transform .2s}
+  details[open] summary:before{transform:rotate(90deg)}
+  .details-body{border-top:1px solid var(--line2);padding:16px 18px}
+  .commandments{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:8px}
+  .commandments div{background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:11px 13px;font-size:.84rem;color:var(--text);line-height:1.45}
+  .commandments b{color:var(--ink)}
+  .sticky{position:sticky;bottom:0;background:rgba(22,27,34,.96);border:1px solid var(--line);border-radius:10px;padding:10px 14px;display:flex;align-items:center;gap:12px;box-shadow:0 -6px 22px rgba(0,0,0,.35);backdrop-filter:blur(8px);z-index:10;margin-top:18px}
+  .sticky .grow{flex:1;min-width:0}
+  .sticky .topic{font-size:.9rem;font-weight:700;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .sticky .sub{font-size:.74rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .btn{border:1px solid var(--line);background:var(--panel2);color:var(--text);border-radius:6px;padding:7px 12px;font:inherit;font-size:.82rem;cursor:pointer}
+  .btn:hover{border-color:var(--green);color:var(--green)}
+  footer{margin-top:34px;color:var(--faint);font-size:.78rem;text-align:center}
+  @media (max-width:720px){
+    body{padding:22px 12px 90px}
+    .top-head{margin-top:28px}
+    h1{font-size:1.5rem;line-height:1.14}
+    .subtitle{font-size:.86rem;line-height:1.4}
+    .companions a,.chip{font-size:.76rem;padding:6px 10px}
+    .tag{max-width:110px}
+    .panel-head{flex-direction:column}
+    .week{display:grid;grid-template-columns:1fr;overflow-x:visible}
+    .day{flex:auto}
+    .sticky{left:12px;right:12px;flex-wrap:wrap}
+    .sticky .grow{flex-basis:100%}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top-head">
+    <h1>🧭 Restore Operating Plan</h1>
+    <p class="subtitle">health first · deep tech appetite · AI stack mastery · office leverage · spiritual base · build and deliver</p>
+    <div class="stats-line">
+      <span>🌱 <span class="v hot" id="done-count">0</span>/<span class="v" id="total-count">0</span> today</span>
+      <span class="sep">·</span>
+      <span>🧠 papers <span class="v">3/wk</span></span>
+      <span class="sep">·</span>
+      <span>📘 review <span class="v">5 tracks</span></span>
+      <span class="sep">·</span>
+      <span>🛠️ ship <span class="v">1/wk</span></span>
+      <span class="sep">·</span>
+      <span>🕉️ spiritual <span class="v">daily</span></span>
+    </div>
+    <nav class="companions" aria-label="Plan navigation">
+      <a href="#today" style="--hc:#7ee787">✅ today <span class="tag">anchors</span></a>
+      <a href="#week" style="--hc:#ffa657">📅 monday admin <span class="tag">weekly chunk</span></a>
+      <a href="#hub-systems" style="--hc:#a371f7">🧩 hub systems <span class="tag">try links</span></a>
+      <a href="#reviewing" style="--hc:#79c0ff">📘 reviewing <span class="tag">5 tracks</span></a>
+      <a href="#ai-stack" style="--hc:#58a6ff">🗺️ ai-stack <span class="tag">children</span></a>
+      <a href="#projects" style="--hc:#f778ba">🛠️ zenusers <span class="tag">subdomains</span></a>
+      <a href="#office" style="--hc:#d2a8ff">💼 office <span class="tag">next challenge</span></a>
+      <a href="#stick" style="--hc:#7ee787">🌱 stick <span class="tag">tracking</span></a>
+      <a href="#critique" style="--hc:#79c0ff">🔎 critique <span class="tag">tighten</span></a>
+    </nav>
+  </header>
+
+  <section class="panel">
+    <div class="panel-head">
+      <div>
+        <h2>🎯 North Star</h2>
+        <p class="note">Become the kind of builder who is visibly healthier, spiritually steadier, technically sharper, and shipping artifacts that make people say: this person creates value every week.</p>
+      </div>
+      <div class="progressbar" title="Today checklist progress"><div class="fill" id="top-progress"></div></div>
+    </div>
+    <div class="grid">
+      <div class="card" style="--c:var(--green)"><div class="k">1 · Health</div><div class="t">Protect energy before ambition</div><p>Sleep, strength, food, sunlight, and recovery are the platform. No heroic plan survives a tired body.</p></div>
+      <div class="card" style="--c:var(--blue)"><div class="k">2 · Deep Tech</div><div class="t">Read hard papers without shame</div><p>Use a ladder: abstract skim, diagram, one theorem/system claim, one reproduction note, one explain-back.</p></div>
+      <div class="card" style="--c:var(--violet)"><div class="k">3 · AI Stack</div><div class="t">Work through ai.html and every child</div><p>Move bottom-up from hardware and ML foundations to kernels, training, serving, models, benchmarks, and evals.</p></div>
+      <div class="card" style="--c:var(--cyan)"><div class="k">4 · Reviewing</div><div class="t">Design systems + distributed services</div><p>Convert both courses into reusable notes, checklists, diagrams, and implementation patterns.</p></div>
+      <div class="card" style="--c:var(--pink)"><div class="k">5 · Build</div><div class="t">Fill zenusers.com with useful subdomains</div><p>Every project gets a tiny public demo, a one-page writeup, and an opinionated reason to exist.</p></div>
+      <div class="card" style="--c:var(--amber)"><div class="k">6 · Office</div><div class="t">Take the next important challenge</div><p>Choose work with leverage: ambiguity, architecture, reliability, performance, customer pain, or team enablement.</p></div>
+      <div class="card" style="--c:var(--cyan)"><div class="k">7 · Spirit</div><div class="t">Keep the inner operating system clean</div><p>Daily stillness, reflection, and service orientation. Motivation is easier when the mind has less noise.</p></div>
+    </div>
+  </section>
+
+  <h3 id="today">✅ Daily Anchors</h3>
+  <section class="panel">
+    <div class="panel-head">
+      <div>
+        <h2>Today is a win if these are touched</h2>
+        <p class="note">This checklist is intentionally small. Do it even on chaotic days; extend only after the base is stable.</p>
+      </div>
+      <span class="pill" style="--c:var(--green)">local progress saved</span>
+    </div>
+    <div class="habit-grid" id="checks">
+      <label class="check" style="--c:var(--green)"><input type="checkbox" data-key="health"><span>Health anchor<small>Workout/walk + protein + sleep protection. Minimum: 25 min movement.</small></span></label>
+      <label class="check" style="--c:var(--cyan)"><input type="checkbox" data-key="spirit"><span>Spiritual anchor<small>15-30 min meditation, murli, japa, prayer, reflection, or silent walk.</small></span></label>
+      <label class="check" style="--c:var(--blue)"><input type="checkbox" data-key="paper"><span>Deep-tech appetite<small>Read one section of a paper and write a 5-line explain-back.</small></span></label>
+      <label class="check" style="--c:var(--cyan)"><input type="checkbox" data-key="reviewing"><span>Reviewing track<small>Touch courses, daily tech, PR/design review, or maths love; extract one reusable pattern.</small></span></label>
+      <label class="check" style="--c:var(--violet)"><input type="checkbox" data-key="ai"><span>AI stack progress<small>One page/child from ai.html: notes, diagram, or cards.</small></span></label>
+      <label class="check" style="--c:var(--amber)"><input type="checkbox" data-key="office"><span>Office leverage<small>Move the most important work item forward before scattered work.</small></span></label>
+      <label class="check" style="--c:var(--pink)"><input type="checkbox" data-key="build"><span>Build/deliver<small>One commit, prototype, demo, writeup, bugfix, or shipped page.</small></span></label>
+    </div>
+  </section>
+
+  <h3>🧱 Day Shape</h3>
+  <section class="panel">
+    <div class="timeline" aria-label="Daily time blocks">
+      <svg viewBox="0 0 960 252" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#8b949e"/></marker>
+        </defs>
+        <rect x="0" y="0" width="960" height="252" rx="8" fill="#0d1117"/>
+        <text x="22" y="31" fill="#c9d1d9" font-size="14" font-weight="700">Daily rhythm: protect the base, then push one hard thing</text>
+        <g font-family="SFMono-Regular,Consolas,monospace" font-size="10" fill="#6e7681">
+          <text x="48" y="220">wake</text><text x="170" y="220">deep</text><text x="315" y="220">office</text><text x="500" y="220">learn</text><text x="650" y="220">build</text><text x="806" y="220">restore</text>
+        </g>
+        <g font-size="12" font-weight="700">
+          <rect x="42" y="72" width="112" height="58" rx="8" fill="#7ee78722" stroke="#7ee787"/><text x="98" y="98" text-anchor="middle" fill="#7ee787">Health</text><text x="98" y="116" text-anchor="middle" fill="#8b949e" font-size="10">move + food</text>
+          <rect x="174" y="64" width="142" height="74" rx="8" fill="#f778ba22" stroke="#f778ba"/><text x="245" y="96" text-anchor="middle" fill="#f778ba">Important Work</text><text x="245" y="116" text-anchor="middle" fill="#8b949e" font-size="10">office challenge</text>
+          <rect x="338" y="72" width="126" height="58" rx="8" fill="#58a6ff22" stroke="#58a6ff"/><text x="401" y="98" text-anchor="middle" fill="#58a6ff">Paper</text><text x="401" y="116" text-anchor="middle" fill="#8b949e" font-size="10">explain-back</text>
+          <rect x="486" y="64" width="136" height="74" rx="8" fill="#d2a8ff22" stroke="#d2a8ff"/><text x="554" y="96" text-anchor="middle" fill="#d2a8ff">AI Stack</text><text x="554" y="116" text-anchor="middle" fill="#8b949e" font-size="10">child page</text>
+          <rect x="644" y="72" width="126" height="58" rx="8" fill="#ffa65722" stroke="#ffa657"/><text x="707" y="98" text-anchor="middle" fill="#ffa657">Build</text><text x="707" y="116" text-anchor="middle" fill="#8b949e" font-size="10">artifact</text>
+          <rect x="792" y="72" width="126" height="58" rx="8" fill="#79c0ff22" stroke="#79c0ff"/><text x="855" y="98" text-anchor="middle" fill="#79c0ff">Spirit</text><text x="855" y="116" text-anchor="middle" fill="#8b949e" font-size="10">quiet mind</text>
+        </g>
+        <path d="M154 101 H174" stroke="#8b949e" marker-end="url(#arr)"/>
+        <path d="M316 101 H338" stroke="#8b949e" marker-end="url(#arr)"/>
+        <path d="M464 101 H486" stroke="#8b949e" marker-end="url(#arr)"/>
+        <path d="M622 101 H644" stroke="#8b949e" marker-end="url(#arr)"/>
+        <path d="M770 101 H792" stroke="#8b949e" marker-end="url(#arr)"/>
+        <text x="42" y="170" fill="#8b949e" font-size="12">Minimum viable day: health + spirit + one real work push + one learning breadcrumb + one build breadcrumb.</text>
+      </svg>
+    </div>
+  </section>
+
+  <h3 id="week">📅 Weekly Cadence</h3>
+  <section class="panel">
+    <div class="panel-head">
+      <div>
+        <h2>Monday Admin Day is a chunk, not a vibe</h2>
+        <p class="note">Monday has a protected admin block so the rest of the week is cleaner. It is for planning, inboxes, bills, calendar, backlog pruning, health logistics, and choosing the office challenge.</p>
+      </div>
+      <span class="pill" style="--c:var(--amber)">admin day concept included</span>
+    </div>
+    <div class="week">
+      <div class="day admin"><div class="d">Monday</div><div class="main">Admin + Setup</div><ul><li>60-90 min admin chunk</li><li>Pick office challenge of week</li><li>Schedule workouts and meals</li><li>Choose 3 papers + 1 build target</li><li>Pick course module to review</li><li>Pick 5 trusted daily tech sources</li><li>Choose PR/design doc review targets</li><li>Pick one maths idea to enjoy</li><li>Pick one hub system to emphasize</li></ul></div>
+      <div class="day" style="--c:var(--green)"><div class="d">Tuesday</div><div class="main">Health + Deep Work</div><ul><li>Hard office block</li><li>Design system course review</li><li>AI stack child page</li><li>Paper section with diagram</li></ul></div>
+      <div class="day" style="--c:var(--blue)"><div class="d">Wednesday</div><div class="main">Paper + Project</div><ul><li>Read one deep-tech paper</li><li>Commit to zenusers demo</li><li>Explain-back in notes</li></ul></div>
+      <div class="day" style="--c:var(--violet)"><div class="d">Thursday</div><div class="main">Office Leverage</div><ul><li>Distributed services course review</li><li>Architecture/reliability/perf push</li><li>Ask for feedback or unblocker</li><li>Document one decision</li></ul></div>
+      <div class="day" style="--c:var(--pink)"><div class="d">Friday</div><div class="main">Ship Small</div><ul><li>Demo something visible</li><li>Clean one loose end</li><li>Write weekly brag log</li></ul></div>
+      <div class="day" style="--c:var(--amber)"><div class="d">Saturday</div><div class="main">Long Build Block</div><ul><li>2-4 h personal project</li><li>Turn learning into artifact</li><li>Publish or stage a subdomain</li></ul></div>
+      <div class="day" style="--c:var(--cyan)"><div class="d">Sunday</div><div class="main">Spiritual + Review</div><ul><li>Long quiet block</li><li>Weekly reflection</li><li>No new overload: consolidate</li></ul></div>
+    </div>
+  </section>
+
+  <h3 id="hub-systems">🧩 Study Hub Companion Systems</h3>
+  <section class="panel">
+    <div class="panel-head">
+      <div>
+        <h2>Use the top-layer links as operating modes</h2>
+        <p class="note">These are not separate plans competing with Restore. Each link gets one job: either run the day, deepen study, improve technique, or feed build energy.</p>
+      </div>
+      <a class="chip" style="--hc:#a371f7" href="https://priyankajayaswal.github.io/try" target="_blank" rel="noopener">open try hub <span class="tag">source layer</span></a>
+    </div>
+    <div class="grid">
+      <a class="card linkcard" style="--c:#f778ba" href="https://priyankajayaswal.github.io/planner/dayview.html" target="_blank" rel="noopener">
+        <div class="k">dayview · daily operating shell</div>
+        <div class="t">Use for health, streak, and day structure</div>
+        <p>Make this the morning launch page when the day feels fuzzy. It maps directly to Health, Spirit, and Daily Anchors.</p>
+      </a>
+      <a class="card linkcard" style="--c:#58a6ff" href="https://priyankajayaswal.github.io/planner/studyday.html" target="_blank" rel="noopener">
+        <div class="k">studyday · study rotation</div>
+        <div class="t">Use for breadth without chaos</div>
+        <p>Use 2-3 times a week to rotate through study folders. It supports AI-stack depth without abandoning other intellectual roots.</p>
+      </a>
+      <a class="card linkcard" style="--c:#7ee787" href="https://priyankajayaswal.github.io/planner/daily.html" target="_blank" rel="noopener">
+        <div class="k">daily · 30-day upskill</div>
+        <div class="t">Use as the daily tech reviewing feed</div>
+        <p>Map this into Track 3: networking, performance, security, AI, code reading, and tech trends become 3-bullet daily review notes.</p>
+      </a>
+      <a class="card linkcard" style="--c:#d2a8ff" href="https://priyankajayaswal.github.io/planner/upskill.html" target="_blank" rel="noopener">
+        <div class="k">upskill · reference shelf</div>
+        <div class="t">Use on Monday admin and blocked moments</div>
+        <p>Do not browse it randomly. Use it to pick next resources for office leverage, review tracks, and zenusers build ideas.</p>
+      </a>
+      <a class="card linkcard" style="--c:#a371f7" href="https://priyankajayaswal.github.io/planner/learn.html" target="_blank" rel="noopener">
+        <div class="k">learn · learning technique</div>
+        <div class="t">Use when effort stops converting into retention</div>
+        <p>Pull one technique per week: active recall, spaced repetition, interleaving, Feynman, deliberate practice, or reading systems.</p>
+      </a>
+      <a class="card linkcard" style="--c:#f0c000" href="https://github.com/codecrafters-io/build-your-own-x" target="_blank" rel="noopener">
+        <div class="k">build-your-own-x · artifact seed</div>
+        <div class="t">Use for Saturday build energy</div>
+        <p>Pick one tiny build that matches the week: database, compiler, shell, neural net, git, browser, or distributed primitive.</p>
+      </a>
+      <a class="card linkcard" style="--c:#f778ba" href="https://priyankajayaswal.github.io/srs-pages/index.html" target="_blank" rel="noopener">
+        <div class="k">anki-srs-hub · retention</div>
+        <div class="t">Use after paper/course/AI-stack study</div>
+        <p>Any concept you want to own becomes cards. This keeps deep tech from evaporating after a good session.</p>
+      </a>
+      <a class="card linkcard" style="--c:#7ee787" href="https://priyankajayaswal.github.io/study/ai.html" target="_blank" rel="noopener">
+        <div class="k">ai-stack · mastery map</div>
+        <div class="t">Use as the main deep-tech spine</div>
+        <p>This remains the central technical curriculum: foundations, hardware, kernels, training, inference, models, benchmarks, evals.</p>
+      </a>
+    </div>
+  </section>
+
+  <h3 id="papers">📄 Deep Tech Paper Appetite</h3>
+  <section class="panel">
+    <div class="panel-head">
+      <div>
+        <h2>Read papers like an engineer, not like you are being judged</h2>
+        <p class="note">Feeling dumb is usually a missing scaffold, not a verdict. The target is appetite: curiosity, repeated exposure, and small reproductions.</p>
+      </div>
+      <span class="pill" style="--c:var(--blue)">3 paper touches / week</span>
+    </div>
+    <div class="phase-grid">
+      <div class="phase" style="--c:var(--cyan)"><b>Monday intake · 20 min</b><span>Scan arXiv, Papers with Code, company research blogs, conference proceedings, and trusted newsletters. Keep only 3 papers in this week's queue.</span></div>
+      <div class="phase" style="--c:var(--green)"><b>Pass 1 · 12 min</b><span>Read title, abstract, figures, conclusion. Write: what problem, what claim, why it matters.</span></div>
+      <div class="phase" style="--c:var(--blue)"><b>Pass 2 · 25 min</b><span>Trace one figure or system diagram. Define all unknown terms in a scratch glossary.</span></div>
+      <div class="phase" style="--c:var(--violet)"><b>Pass 3 · 45 min</b><span>Study one core section deeply. Ignore the rest without guilt. Depth beats fake completion.</span></div>
+      <div class="phase" style="--c:var(--amber)"><b>Pass 4 · 60-120 min</b><span>Reproduce one tiny result, benchmark, proof step, toy kernel, eval, or diagram.</span></div>
+      <div class="phase" style="--c:var(--pink)"><b>Output</b><span>A 10-line note: claim, method, limitations, what to steal, what to build next.</span></div>
+    </div>
+  </section>
+
+  <h3 id="reviewing">📘 Reviewing Courses</h3>
+  <section class="panel">
+    <div class="panel-head">
+      <div>
+        <h2>Turn course review into reusable engineering judgment</h2>
+        <p class="note">Do not merely re-watch. Each review block should extract a pattern, a checklist, a diagram, or a tiny implementation that can improve your real work and zenusers projects.</p>
+      </div>
+      <span class="pill" style="--c:var(--cyan)">5 review tracks</span>
+    </div>
+    <div class="grid">
+      <div class="card" style="--c:var(--cyan)">
+        <div class="k">Course 1 · Design System</div>
+        <div class="t">Build taste, consistency, and UI leverage</div>
+        <ul>
+          <li>Review one module every Tuesday or Saturday.</li>
+          <li>Extract components, tokens, spacing rules, states, accessibility notes.</li>
+          <li>Apply one lesson to a real page: restore plan, Study Hub, or a zenusers subdomain.</li>
+          <li>Output: one component note + one before/after screenshot or checklist.</li>
+        </ul>
+      </div>
+      <div class="card" style="--c:var(--violet)">
+        <div class="k">Course 2 · Distributed Services</div>
+        <div class="t">Build intuition for reliability, scale, and failure</div>
+        <ul>
+          <li>Review one module every Thursday or Sunday.</li>
+          <li>Extract service boundary, data flow, failure mode, SLO, and observability lessons.</li>
+          <li>Map each lesson to office systems: latency, queues, retries, idempotency, backpressure.</li>
+          <li>Output: one architecture sketch + one production checklist item.</li>
+        </ul>
+      </div>
+      <div class="card" style="--c:var(--blue)">
+        <div class="k">Track 3 · Daily Tech Reviewing</div>
+        <div class="t">Stay sharp with current engineering movement</div>
+        <ul>
+          <li>Review one credible technical source daily: release notes, engineering blog, paper thread, RFC, changelog, or architecture post.</li>
+          <li>Capture one signal: new capability, breaking change, emerging pattern, performance lesson, or tool worth testing.</li>
+          <li>Route it into the right bucket: office leverage, AI stack, zenusers idea, paper queue, or ignore.</li>
+          <li>Output: 3 bullets max. No doom-scrolling, no endless tabs.</li>
+        </ul>
+      </div>
+      <div class="card" style="--c:var(--amber)">
+        <div class="k">Track 4 · PR + Design Doc Review</div>
+        <div class="t">Train judgment on real engineering artifacts</div>
+        <ul>
+          <li>Review one PR or design doc daily, preferably from your office context or a strong open-source project.</li>
+          <li>Look for correctness, missing tests, API boundaries, migration risk, rollout plan, observability, and operational failure modes.</li>
+          <li>Write one high-signal comment you would actually leave: specific, kind, grounded in behavior.</li>
+          <li>Output: one review note with risk, suggested change, and what you learned about taste.</li>
+        </ul>
+      </div>
+      <div class="card" style="--c:var(--pink)">
+        <div class="k">Track 5 · Review My Love for Maths</div>
+        <div class="t">Rebuild mathematical appetite through beauty and use</div>
+        <ul>
+          <li>Spend 20-30 min on one elegant idea: linear algebra, probability, optimization, geometry, calculus, number theory, or discrete math.</li>
+          <li>Do one problem by hand before reading the solution. Let the struggle be part of the affection.</li>
+          <li>Connect it to AI, distributed systems, graphics, finance, physics, or an everyday intuition.</li>
+          <li>Output: one beautiful equation, one solved problem, or one plain-English explanation.</li>
+        </ul>
+      </div>
+      <div class="card" style="--c:var(--green)">
+        <div class="k">Review Method</div>
+        <div class="t">Watch less, produce more</div>
+        <ul>
+          <li>10 min recap: what do I already know?</li>
+          <li>35 min focused review: pause at every strong claim.</li>
+          <li>15 min compression: one diagram, one checklist, one reusable rule.</li>
+          <li>5 min routing: office, zenusers, or AI-stack application.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <h3 id="ai-stack">🗺️ AI Stack Mastery</h3>
+  <section class="panel">
+    <div class="panel-head">
+      <div>
+        <h2>Work through ai.html and every child page</h2>
+        <p class="note">Recommended order: foundations → frameworks → hardware → kernels → training → inference → models → evals. Every page earns a note, a diagram/card, and one tiny code or reading artifact.</p>
+      </div>
+      <a class="chip" style="--hc:var(--green)" href="https://priyankajayaswal.github.io/study/ai.html" target="_blank" rel="noopener">open ai.html <span class="tag">web</span></a>
+    </div>
+    <div class="grid">
+      <a class="minirow" style="--c:#79c0ff" href="https://priyankajayaswal.github.io/study/ml.html" target="_blank" rel="noopener"><span class="ic">📚</span><span><span class="title">ML Foundations</span><span class="desc">math, models, training loop</span></span><span class="right"><span class="tag">base</span><span class="meter"><span style="--w:10%"></span></span></span></a>
+      <a class="minirow" style="--c:#7ee787" href="https://priyankajayaswal.github.io/study/jax.html" target="_blank" rel="noopener"><span class="ic">🧠</span><span><span class="title">JAX</span><span class="desc">jit, grad, vmap, pmap</span></span><span class="right"><span class="tag">framework</span><span class="meter"><span style="--w:0%"></span></span></span></a>
+      <a class="minirow" style="--c:#ee4c2c" href="https://priyankajayaswal.github.io/study/pytorch.html" target="_blank" rel="noopener"><span class="ic">🔥</span><span><span class="title">PyTorch</span><span class="desc">eager, compile, FSDP</span></span><span class="right"><span class="tag">framework</span><span class="meter"><span style="--w:0%"></span></span></span></a>
+      <a class="minirow" style="--c:#ff6f00" href="https://priyankajayaswal.github.io/study/tensorflow.html" target="_blank" rel="noopener"><span class="ic">🟧</span><span><span class="title">TensorFlow</span><span class="desc">tf.function, Keras, TFLite</span></span><span class="right"><span class="tag">framework</span><span class="meter"><span style="--w:0%"></span></span></span></a>
+      <a class="minirow" style="--c:#76B900" href="https://priyankajayaswal.github.io/study/gpu.html" target="_blank" rel="noopener"><span class="ic">🟩</span><span><span class="title">GPU</span><span class="desc">SMs, tensor cores, roofline</span></span><span class="right"><span class="tag">hardware</span><span class="meter"><span style="--w:0%"></span></span></span></a>
+      <a class="minirow" style="--c:#58a6ff" href="https://priyankajayaswal.github.io/study/tpu.html" target="_blank" rel="noopener"><span class="ic">🛰️</span><span><span class="title">TPU</span><span class="desc">systolic arrays, pods, XLA</span></span><span class="right"><span class="tag">hardware</span><span class="meter"><span style="--w:0%"></span></span></span></a>
+      <a class="minirow" style="--c:#58a6ff" href="https://priyankajayaswal.github.io/study/pmpp.html" target="_blank" rel="noopener"><span class="ic">🧮</span><span><span class="title">PMPP</span><span class="desc">CUDA patterns and parallel programming</span></span><span class="right"><span class="tag">hardware</span><span class="meter"><span style="--w:0%"></span></span></span></a>
+      <a class="minirow" style="--c:#ffa657" href="https://priyankajayaswal.github.io/study/xla.html" target="_blank" rel="noopener"><span class="ic">🛠️</span><span><span class="title">XLA</span><span class="desc">HLO, StableHLO, GSPMD</span></span><span class="right"><span class="tag">compiler</span><span class="meter"><span style="--w:0%"></span></span></span></a>
+      <a class="minirow" style="--c:#d2a8ff" href="https://priyankajayaswal.github.io/study/triton.html" target="_blank" rel="noopener"><span class="ic">⚡</span><span><span class="title">Triton</span><span class="desc">GPU kernels in Python DSL</span></span><span class="right"><span class="tag">kernel</span><span class="meter"><span style="--w:0%"></span></span></span></a>
+      <a class="minirow" style="--c:#7ee787" href="https://priyankajayaswal.github.io/study/cuda-graphs.html" target="_blank" rel="noopener"><span class="ic">🎯</span><span><span class="title">CUDA Graphs</span><span class="desc">capture, instantiate, replay</span></span><span class="right"><span class="tag">runtime</span><span class="meter"><span style="--w:0%"></span></span></span></a>
+      <a class="minirow" style="--c:#d2a8ff" href="https://priyankajayaswal.github.io/study/quantization.html" target="_blank" rel="noopener"><span class="ic">🔢</span><span><span class="title">Quantization</span><span class="desc">FP8, INT4, QLoRA, KV cache</span></span><span class="right"><span class="tag">optimize</span><span class="meter"><span style="--w:0%"></span></span></span></a>
+      <a class="minirow" style="--c:#f0883e" href="https://priyankajayaswal.github.io/study/maxtext.html" target="_blank" rel="noopener"><span class="ic">📈</span><span><span class="title">MaxText</span><span class="desc">high-MFU LLM training on TPU</span></span><span class="right"><span class="tag">train</span><span class="meter"><span style="--w:0%"></span></span></span></a>
+      <a class="minirow" style="--c:#58a6ff" href="https://priyankajayaswal.github.io/study/deepspeed.html" target="_blank" rel="noopener"><span class="ic">🌊</span><span><span class="title">DeepSpeed</span><span class="desc">ZeRO, Ulysses, MoE, FastGen</span></span><span class="right"><span class="tag">train</span><span class="meter"><span style="--w:0%"></span></span></span></a>
+      <a class="minirow" style="--c:#ee4c2c" href="https://priyankajayaswal.github.io/study/rl.html" target="_blank" rel="noopener"><span class="ic">🎮</span><span><span class="title">Reinforcement Learning</span><span class="desc">MDPs, PPO, RLHF, GRPO, robots</span></span><span class="right"><span class="tag">train</span><span class="meter"><span style="--w:0%"></span></span></span></a>
+      <a class="minirow" style="--c:#79c0ff" href="https://priyankajayaswal.github.io/study/vllm.html" target="_blank" rel="noopener"><span class="ic">🚀</span><span><span class="title">vLLM</span><span class="desc">PagedAttention, batching, serving</span></span><span class="right"><span class="tag">serve</span><span class="meter"><span style="--w:0%"></span></span></span></a>
+      <a class="minirow" style="--c:#f778ba" href="https://priyankajayaswal.github.io/study/onnxruntime.html" target="_blank" rel="noopener"><span class="ic">🧩</span><span><span class="title">ONNX Runtime</span><span class="desc">CUDA, CoreML, QNN, WebGPU</span></span><span class="right"><span class="tag">serve</span><span class="meter"><span style="--w:0%"></span></span></span></a>
+      <a class="minirow" style="--c:#76B900" href="https://priyankajayaswal.github.io/study/models.html" target="_blank" rel="noopener"><span class="ic">🤖</span><span><span class="title">Models</span><span class="desc">OSS frontier models across verticals</span></span><span class="right"><span class="tag">deploy</span><span class="meter"><span style="--w:0%"></span></span></span></a>
+      <a class="minirow" style="--c:#f778ba" href="https://priyankajayaswal.github.io/study/benchmarks.html" target="_blank" rel="noopener"><span class="ic">📏</span><span><span class="title">Benchmarks</span><span class="desc">MMLU, GPQA, SWE-bench, Arena</span></span><span class="right"><span class="tag">measure</span><span class="meter"><span style="--w:0%"></span></span></span></a>
+      <a class="minirow" style="--c:#7ee787" href="https://priyankajayaswal.github.io/study/evals.html" target="_blank" rel="noopener"><span class="ic">🧪</span><span><span class="title">Evals</span><span class="desc">harnesses, judges, production evals</span></span><span class="right"><span class="tag">measure</span><span class="meter"><span style="--w:0%"></span></span></span></a>
+      <a class="minirow" style="--c:#58a6ff" href="https://priyankajayaswal.github.io/study/cfd.html" target="_blank" rel="noopener"><span class="ic">🌊</span><span><span class="title">CFD</span><span class="desc">AI surrogate simulations</span></span><span class="right"><span class="tag">adjacent</span><span class="meter"><span style="--w:0%"></span></span></span></a>
+      <a class="minirow" style="--c:#ffa657" href="https://priyankajayaswal.github.io/study/fea.html" target="_blank" rel="noopener"><span class="ic">🏗️</span><span><span class="title">FEA</span><span class="desc">mechanics and AI-for-FEA</span></span><span class="right"><span class="tag">adjacent</span><span class="meter"><span style="--w:0%"></span></span></span></a>
+      <a class="minirow" style="--c:#ee4c2c" href="https://priyankajayaswal.github.io/study/fpga.html" target="_blank" rel="noopener"><span class="ic">🔌</span><span><span class="title">FPGA</span><span class="desc">low-latency reconfigurable inference</span></span><span class="right"><span class="tag">adjacent</span><span class="meter"><span style="--w:0%"></span></span></span></a>
+    </div>
+  </section>
+
+  <h3 id="projects">🛠️ Personal Projects: Fill zenusers.com</h3>
+  <section class="panel">
+    <div class="panel-head">
+      <div>
+        <h2>Subdomains as shipping lanes</h2>
+        <p class="note">Each subdomain should teach, automate, visualize, or help someone decide. Avoid portfolio clutter. Build things that can be used in five minutes.</p>
+      </div>
+      <span class="pill" style="--c:var(--pink)">1 visible artifact / week</span>
+    </div>
+    <div class="grid">
+      <div class="card" style="--c:var(--pink)"><div class="k">learn.zenusers.com</div><div class="t">Interactive study tools</div><ul><li>Paper explain-back templates</li><li>AI stack flashcards</li><li>Concept maps from your notes</li></ul></div>
+      <div class="card" style="--c:var(--blue)"><div class="k">bench.zenusers.com</div><div class="t">Tiny benchmarks and evals</div><ul><li>Latency/cost dashboards</li><li>Model eval sandboxes</li><li>Reproducible microbenchmarks</li></ul></div>
+      <div class="card" style="--c:var(--green)"><div class="k">health.zenusers.com</div><div class="t">Personal health systems</div><ul><li>Habit heatmaps</li><li>Meal/workout planner</li><li>Recovery score journal</li></ul></div>
+      <div class="card" style="--c:var(--violet)"><div class="k">office.zenusers.com</div><div class="t">Work leverage toolkit</div><ul><li>Decision log generator</li><li>Incident review template</li><li>Architecture critique checklist</li></ul></div>
+      <div class="card" style="--c:var(--amber)"><div class="k">papers.zenusers.com</div><div class="t">Paper reading OS</div><ul><li>Claim-method-limit cards</li><li>Figure tracing gallery</li><li>Reproduction backlog</li></ul></div>
+      <div class="card" style="--c:var(--cyan)"><div class="k">spirit.zenusers.com</div><div class="t">Reflection and stillness</div><ul><li>Daily reflection prompts</li><li>Values tracker</li><li>Quiet streak without gamified anxiety</li></ul></div>
+    </div>
+  </section>
+
+  <h3 id="office">💼 Office Challenge</h3>
+  <section class="panel">
+    <div class="panel-head">
+      <div>
+        <h2>Work on what is important, not just what is loud</h2>
+        <p class="note">Every Monday, choose one challenge that increases trust. By Friday, ship evidence: a doc, prototype, metric movement, incident prevention, or unblocked team path.</p>
+      </div>
+      <span class="pill" style="--c:var(--violet)">weekly challenge selected Monday</span>
+    </div>
+    <div class="path-list">
+      <div class="path"><h4>Challenge selector</h4><ol><li>Where is the team slow, fragile, or unclear?</li><li>What would my manager be relieved to see solved?</li><li>What customer pain has repeated twice?</li><li>What system risk is everyone avoiding?</li></ol></div>
+      <div class="path"><h4>Execution loop</h4><ol><li>Define one measurable outcome.</li><li>Write a short proposal or decision note.</li><li>Build the smallest proof.</li><li>Share progress before being asked.</li></ol></div>
+      <div class="path"><h4>Friday evidence</h4><ol><li>Demo, PR, architecture note, benchmark, or runbook.</li><li>What changed?</li><li>What did we learn?</li><li>What is the next useful step?</li></ol></div>
+    </div>
+  </section>
+
+  <h3 id="stick">🌱 Make It Stick</h3>
+  <section class="panel">
+    <div class="panel-head">
+      <div>
+        <h2>Tracking should create momentum, not homework</h2>
+        <p class="note">The system sticks when it is visible, forgiving, and useful in under two minutes. Track evidence of motion, protect recovery, and use misses as debugging data.</p>
+      </div>
+      <span class="pill" style="--c:var(--green)">2 min daily · 20 min weekly</span>
+    </div>
+    <div class="grid">
+      <div class="card" style="--c:var(--green)">
+        <div class="k">Daily scoreboard</div>
+        <div class="t">Seven checkboxes, one visible next action</div>
+        <ul>
+          <li>Use the top checklist as the only daily score.</li>
+          <li>Winning day: 4/7 anchors, not perfection.</li>
+          <li>Golden day: health + spirit + office + build.</li>
+          <li>Never add more than one new daily checkbox per month.</li>
+        </ul>
+      </div>
+      <div class="card" style="--c:var(--blue)">
+        <div class="k">Weekly evidence log</div>
+        <div class="t">One line per output</div>
+        <ul>
+          <li>Health: workouts, sleep average, weight/energy note.</li>
+          <li>Deep tech: papers touched, AI pages, review tracks.</li>
+          <li>Office: decision, PR, doc, metric, unblock, or shipped work.</li>
+          <li>Build: demo, commit, page, prototype, or writeup.</li>
+        </ul>
+      </div>
+      <div class="card" style="--c:var(--amber)">
+        <div class="k">Monday reset ritual</div>
+        <div class="t">Admin day makes the plan runnable</div>
+        <ul>
+          <li>Clear inboxes and calendar friction first.</li>
+          <li>Pick one office challenge and one personal artifact.</li>
+          <li>Choose papers, review tracks, and one hub system.</li>
+          <li>Pre-decide the minimum viable day for a busy week.</li>
+        </ul>
+      </div>
+      <div class="card" style="--c:var(--pink)">
+        <div class="k">Fallback protocol</div>
+        <div class="t">When the day breaks, shrink the plan</div>
+        <ul>
+          <li>10 min walk or mobility.</li>
+          <li>5 min spiritual quiet.</li>
+          <li>10 min office next-action cleanup.</li>
+          <li>5 min learning breadcrumb or one flashcard.</li>
+        </ul>
+      </div>
+      <div class="card" style="--c:var(--violet)">
+        <div class="k">Sustainability rules</div>
+        <div class="t">Keep ambition metabolizable</div>
+        <ul>
+          <li>Two intense learning days need one lighter consolidation day.</li>
+          <li>Do not punish a missed day with double workload.</li>
+          <li>Sleep debt overrides optional study, never health/spirit.</li>
+          <li>Projects must ship small before they grow large.</li>
+        </ul>
+      </div>
+      <div class="card" style="--c:var(--cyan)">
+        <div class="k">Review questions</div>
+        <div class="t">Sunday asks, Monday adjusts</div>
+        <ul>
+          <li>What gave energy? What drained it?</li>
+          <li>Which track produced reusable output?</li>
+          <li>What should be deleted, delayed, or delegated?</li>
+          <li>What is the one thing next week must protect?</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <details open>
+    <summary>🔥 Motivation Engine</summary>
+    <div class="details-body">
+      <div class="commandments">
+        <div><b>Identity:</b> I am a healthy builder. I create proof, not just intention.</div>
+        <div><b>Rule:</b> Motivation follows motion. Start with 10 minutes, then let appetite arrive.</div>
+        <div><b>Reward:</b> Every completed day gets one visible mark: note, commit, card, or shipped improvement.</div>
+        <div><b>Anti-shame:</b> Confusion is a signal to draw a diagram, not a signal to quit.</div>
+        <div><b>Delivery:</b> If it helped me, package it so it can help someone else.</div>
+        <div><b>Spiritual base:</b> Keep the mind clean enough that ambition does not become agitation.</div>
+      </div>
+    </div>
+  </details>
+
+  <details id="critique" open>
+    <summary>🔎 Critique Pass</summary>
+    <div class="details-body">
+      <div class="commandments">
+        <div><b>Risk:</b> Too many domains can become identity buffet. Fix: the daily anchors are small and the weekly output is singular.</div>
+        <div><b>Risk:</b> AI stack mastery can become passive clicking. Fix: every page requires a note, diagram/card, and tiny artifact.</div>
+        <div><b>Risk:</b> Health can get sacrificed when work heats up. Fix: health is first in the daily win definition, not a bonus.</div>
+        <div><b>Risk:</b> Monday admin can expand forever. Fix: 60-90 minute chunk, then stop and execute.</div>
+        <div><b>Risk:</b> Personal projects can sprawl. Fix: one subdomain, one useful demo, one week at a time.</div>
+        <div><b>Risk:</b> Motivation can become hype. Fix: use a scoreboard of delivered value, not mood.</div>
+      </div>
+    </div>
+  </details>
+
+  <div class="sticky">
+    <div class="grow">
+      <div class="topic" id="focus-topic">Next action: pick one checkbox and start a 25-minute block</div>
+      <div class="sub" id="focus-sub">Best default today: health anchor → office leverage → AI stack child → build breadcrumb → spiritual close</div>
+    </div>
+    <button class="btn" id="reset">Reset today</button>
+  </div>
+
+  <footer>
+    Built as a local companion to the Study Hub aesthetic. Save progress lives in this browser only.
+  </footer>
+</div>
+
+<script>
+  const KEY = "restore-plan-checks-v1";
+  const checks = [...document.querySelectorAll("#checks input[type=checkbox]")];
+  const doneCount = document.getElementById("done-count");
+  const totalCount = document.getElementById("total-count");
+  const progress = document.getElementById("top-progress");
+  const focusTopic = document.getElementById("focus-topic");
+  const focusSub = document.getElementById("focus-sub");
+
+  function todayKey(){
+    return new Date().toISOString().slice(0,10);
+  }
+  function load(){
+    try{
+      const raw = JSON.parse(localStorage.getItem(KEY) || "{}");
+      return raw.date === todayKey() ? raw.values || {} : {};
+    }catch{
+      return {};
+    }
+  }
+  function save(){
+    const values = {};
+    checks.forEach(c => values[c.dataset.key] = c.checked);
+    localStorage.setItem(KEY, JSON.stringify({date:todayKey(), values}));
+  }
+  function update(){
+    const done = checks.filter(c => c.checked).length;
+    doneCount.textContent = done;
+    totalCount.textContent = checks.length;
+    progress.style.width = Math.round(done / checks.length * 100) + "%";
+    const next = checks.find(c => !c.checked);
+    if(next){
+      const label = next.closest("label").querySelector("span");
+      focusTopic.textContent = "Next action: " + label.childNodes[0].textContent.trim();
+      focusSub.textContent = label.querySelector("small").textContent.trim();
+    }else{
+      focusTopic.textContent = "Day complete: you touched health, spirit, learning, office, and build";
+      focusSub.textContent = "Close with a short reflection: what worked, what resisted, what gets protected tomorrow.";
+    }
+  }
+  const values = load();
+  checks.forEach(c => {
+    c.checked = Boolean(values[c.dataset.key]);
+    c.addEventListener("change", () => { save(); update(); });
+  });
+  document.getElementById("reset").addEventListener("click", () => {
+    checks.forEach(c => c.checked = false);
+    save();
+    update();
+  });
+  update();
+</script>
+</body>
+</html>
