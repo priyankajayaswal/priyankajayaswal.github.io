@@ -2571,7 +2571,7 @@ function lineageCategoryLabel(family) {
     "fine-tuning": "Fine-Tuning",
     "kernels": "Inference",
     "position": "Architecture",
-    "attention efficiency": "Inference",
+    "attention efficiency": "Architecture",
     "inference": "Inference",
     "serving": "Serving",
     "retrieval": "Retrieval",
@@ -2586,6 +2586,20 @@ function lineageCategoryLabel(family) {
     "optimization": "Optimization"
   };
   return labels[raw] || raw.replace(/\b\w/g, c => c.toUpperCase());
+}
+
+function lineageStoryOrder(item) {
+  const order = [
+    "attention-is-all-you-need", "rope", "alibi", "mqa", "gqa", "switch-transformer", "deepseekmoe",
+    "bert", "gpt-1", "the-pile", "gpt-2", "scaling-laws", "gpt-3", "chinchilla", "palm",
+    "opt", "bloom", "llama",
+    "self-instruct", "lora", "qlora", "instructgpt", "constitutional-ai", "dpo", "orpo", "grpo",
+    "flashattention", "flashattention-2", "speculative-decoding", "pagedattention", "kv-cache-compression",
+    "rag", "chain-of-thought", "tree-of-thoughts", "react", "test-time-scaling",
+    "muon"
+  ];
+  const rank = order.indexOf(item && item.id);
+  return rank === -1 ? 999 : rank;
 }
 
 function makeLineageDeepDive(item, idx) {
@@ -2611,6 +2625,38 @@ function makeLineageDeepDive(item, idx) {
     keypoints: (item.keypoints || []).map(k => ({ title: k[0], text: k[1] })).concat([{ title: "Curiosity hook", text: lineageFunFact(item) }])
   };
 }
+
+const LINEAGE_ORIENTATION_DEEP_DIVE = {
+  id: "dd-lineage-map",
+  num: "Reading Guide",
+  title: "Modern LLM Evolution Map",
+  desc: "How the 37 paper deep dives connect across architecture, data, scaling, open models, alignment, inference, agents, and optimization.",
+  color: "#56d4dd",
+  icon: "🗺️",
+  svg: function(w, h) {
+    const width = w || 760, height = h || 260;
+    return '<svg viewBox="0 0 ' + width + ' ' + height + '" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;background:#0d1117"><defs><marker id="mapArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#56d4dd"/></marker></defs><text x="24" y="30" fill="#56d4dd" font-size="18" font-weight="800">One lineage, seven connected tracks</text><g font-family="Segoe UI, sans-serif" font-size="12"><path d="M70 130 C 170 70, 270 70, 370 130 S 570 190, 690 130" fill="none" stroke="#56d4dd" stroke-width="4" stroke-linecap="round"/><path d="M180 130 C 210 165, 250 190, 310 202" fill="none" stroke="#7ee787" stroke-width="3" stroke-linecap="round" marker-end="url(#mapArrow)"/><path d="M300 130 C 340 92, 405 72, 470 78" fill="none" stroke="#ffa657" stroke-width="3" stroke-linecap="round" marker-end="url(#mapArrow)"/><path d="M430 130 C 470 165, 535 190, 600 196" fill="none" stroke="#f778ba" stroke-width="3" stroke-linecap="round" marker-end="url(#mapArrow)"/><path d="M555 130 C 595 98, 645 82, 706 84" fill="none" stroke="#d2a8ff" stroke-width="3" stroke-linecap="round" marker-end="url(#mapArrow)"/>' + [
+      [70,130,"Architecture","#58a6ff"], [180,130,"Pretraining","#7ee787"], [300,130,"Scaling","#ffa657"], [430,130,"Open models","#79c0ff"], [555,130,"Alignment","#f778ba"], [690,130,"Serving","#d2a8ff"], [600,196,"Agents + reasoning","#f778ba"], [310,202,"Data + fine-tuning","#7ee787"], [470,78,"Efficiency","#ffa657"], [706,84,"Optimization","#d2a8ff"]
+    ].map(function(n) { return '<circle cx="' + n[0] + '" cy="' + n[1] + '" r="8" fill="' + n[3] + '"/><rect x="' + (n[0] - 58) + '" y="' + (n[1] - 36) + '" width="116" height="24" rx="6" fill="' + n[3] + '22" stroke="' + n[3] + '"/><text x="' + n[0] + '" y="' + (n[1] - 20) + '" text-anchor="middle" fill="#c9d1d9" font-size="11" font-weight="700">' + n[2] + '</text>'; }).join("") + '<text x="' + (width / 2) + '" y="' + (height - 24) + '" text-anchor="middle" fill="#8b949e" font-size="12">Read it as a system: better blocks enable scale; scale exposes alignment; alignment and serving turn models into products.</text></g></svg>';
+  },
+  sections: [
+    { title: "How To Read The Lineage", text: "<div style='line-height:1.65'><p style='margin:0 0 8px'>The 37 papers are not a flat reading list. They are a system story: architecture makes training possible, data and scaling make capability predictable, open models make the recipe inspectable, alignment changes the model's behavior, inference systems make it usable, and reasoning/agent methods spend test-time compute on harder problems.</p><p style='margin:0'>Use this card as the route map. Each later card is a stop on one of these tracks, and the interesting part is how tracks feed each other.</p></div>" },
+    { title: "1. Architecture Track", text: "<div style='line-height:1.65'>Transformers provide the core block. Position methods such as RoPE and ALiBi teach the block where tokens live. MQA/GQA, MoE, and related efficiency choices change what the block costs at scale. This is the hardware-facing side of model design.</div>" },
+    { title: "2. Pretraining, Data, And Scaling Track", text: "<div style='line-height:1.65'>BERT and GPT split the world into bidirectional understanding and causal generation. The Pile makes data mixture visible. GPT-2, GPT-3, Scaling Laws, Chinchilla, and PaLM show that capability follows model size, data, and compute in surprisingly regular ways.</div>" },
+    { title: "3. Open Models Track", text: "<div style='line-height:1.65'>OPT, BLOOM, and LLaMA turn frontier recipes into shared artifacts. Once weights are inspectable, the community can fine-tune, quantize, serve, benchmark, and modify models rather than only read papers about them.</div>" },
+    { title: "4. Alignment And Fine-Tuning Track", text: "<div style='line-height:1.65'>Self-Instruct creates instruction data. LoRA and QLoRA make adaptation cheap. InstructGPT, Constitutional AI, DPO, ORPO, and GRPO move from predicting text to shaping preferences, helpfulness, safety, and reasoning behavior.</div>" },
+    { title: "5. Inference, Serving, And Reasoning Track", text: "<div style='line-height:1.65'>FlashAttention, speculative decoding, PagedAttention, and KV-cache compression attack latency and memory. RAG, chain-of-thought, Tree of Thoughts, ReAct, and test-time scaling add retrieval, search, tools, and extra inference compute on top of the base model.</div>" },
+    { title: "Curiosity Hook", text: "<div style='line-height:1.65;background:#0d1117;border:1px solid #30363d;border-left:3px solid #56d4dd;border-radius:8px;padding:12px 14px'><strong style='color:#56d4dd'>The fun pattern:</strong> nearly every later breakthrough is a pressure valve for an earlier bottleneck. Transformers created the compute shape; scaling made data and clusters the bottleneck; open models made adaptation the bottleneck; alignment made preference data the bottleneck; serving made memory bandwidth the bottleneck; agents made verification the bottleneck.</div>" }
+  ],
+  keypoints: [
+    { title: "Architecture", text: "The block decides what kind of compute and memory the model needs." },
+    { title: "Scaling", text: "Data, parameters, and compute form the capability ladder." },
+    { title: "Open models", text: "Shared weights turn papers into ecosystems." },
+    { title: "Alignment", text: "Preference and instruction data convert base models into assistants." },
+    { title: "Serving", text: "KV cache, kernels, and batching decide whether capability can reach users." },
+    { title: "Reasoning", text: "Retrieval, tools, search, and verification spend extra compute at inference time." }
+  ]
+};
 
 const PAPER_LINEAGE_DEEP_DIVES = [
   {
@@ -2983,10 +3029,12 @@ const PAPER_LINEAGE_DEEP_DIVES = [
     refs: [{ label: "Muon optimizer repository", url: "https://github.com/KellerJordan/Muon" }],
     keypoints: [["Idea", "Orthogonalize momentum updates for matrices."], ["Fallback", "Use AdamW-like handling for non-matrix params."], ["Compare", "Match schedules before claiming speedup."], ["Risk", "Empirical gains may not transfer."]]
   }
-].map(makeLineageDeepDive);
+].sort(function(a, b) {
+  return lineageStoryOrder(a) - lineageStoryOrder(b);
+}).map(makeLineageDeepDive);
 
 if (COURSE_CONFIG && COURSE_CONFIG.deepDives) {
-  COURSE_CONFIG.deepDives = COURSE_CONFIG.deepDives.concat(PAPER_LINEAGE_DEEP_DIVES);
+  COURSE_CONFIG.deepDives = COURSE_CONFIG.deepDives.concat([LINEAGE_ORIENTATION_DEEP_DIVE], PAPER_LINEAGE_DEEP_DIVES);
 }
 
 
