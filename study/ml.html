@@ -2554,12 +2554,46 @@ function lineageSvg(item, idx, color, w, h) {
   return head + '<circle cx="140" cy="132" r="42" fill="' + color + '22" stroke="' + color + '"/><text x="140" y="136" text-anchor="middle" fill="' + color + '" font-size="12">idea</text><line x1="182" y1="132" x2="306" y2="132" stroke="' + color + '" marker-end="url(#linArrow' + idx + ')"/><circle cx="350" cy="132" r="42" fill="#7ee78722" stroke="#7ee787"/><text x="350" y="136" text-anchor="middle" fill="#7ee787" font-size="12">practice</text>' + foot;
 }
 
+function lineageCategoryLabel(family) {
+  const raw = (family || "concept").toLowerCase();
+  const labels = {
+    "architecture": "Architecture",
+    "pretraining": "Pretraining",
+    "scaling": "Scaling",
+    "few-shot": "Scaling",
+    "scale": "Scaling",
+    "data": "Data",
+    "open models": "Open Models",
+    "open multilingual": "Open Models",
+    "efficient open models": "Open Models",
+    "alignment": "Alignment",
+    "instruction data": "Fine-Tuning",
+    "fine-tuning": "Fine-Tuning",
+    "kernels": "Inference",
+    "position": "Architecture",
+    "attention efficiency": "Inference",
+    "inference": "Inference",
+    "serving": "Serving",
+    "retrieval": "Retrieval",
+    "prompting": "Prompting",
+    "prompting search": "Reasoning",
+    "agents": "Agents",
+    "preference optimization": "Alignment",
+    "reasoning rl": "Alignment",
+    "sparse models": "Architecture",
+    "long context": "Inference",
+    "reasoning": "Reasoning",
+    "optimization": "Optimization"
+  };
+  return labels[raw] || raw.replace(/\b\w/g, c => c.toUpperCase());
+}
+
 function makeLineageDeepDive(item, idx) {
   const color = item.color || ["#58a6ff", "#f778ba", "#7ee787", "#ffa657", "#d2a8ff", "#79c0ff"][idx % 6];
   const refs = (item.refs || []).map(r => `<li><a href="${r.url}" target="_blank" rel="noopener" style="color:#58a6ff">${r.label}</a></li>`).join("");
   return {
     id: "dd-lineage-" + item.id,
-    num: "Paper lineage " + (idx + 1) + " of 37",
+    num: lineageCategoryLabel(item.family) + " · Paper Lineage " + (idx + 1) + " of 37",
     title: item.title,
     desc: item.tagline,
     color,
