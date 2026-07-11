@@ -1890,6 +1890,27 @@ const COURSE_CONFIG = {
   ],
   "deepDives": [
     {
+      "id": "pytorch-learning-map",
+      "num": "Learning Guide",
+      "title": "PyTorch Learning Map — eager first, compiler when needed",
+      "desc": "A route through PyTorch: tensors/autograd, modules/state, compilation, distributed training, precision, export, and deployment.",
+      "color": "#ee4c2c",
+      "icon": "🗺️",
+      "svg": function(w,h){return '<svg viewBox="0 0 '+w+' '+h+'" xmlns="http://www.w3.org/2000/svg" style="background:#0d1117"><defs><marker id="ptMapA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#ee4c2c"/></marker></defs><text x="'+(w/2)+'" y="28" text-anchor="middle" fill="#ee4c2c" font-size="16" font-weight="800">PyTorch grows from eager tensors into compiled/distributed systems</text>'+["Tensor","Autograd","Module","compile","FSDP/TP","export"].map(function(t,i){var x=46+i*((w-92)/5);return '<rect x="'+(x-36)+'" y="'+(h/2-24)+'" width="72" height="48" rx="8" fill="#ee4c2c22" stroke="#ee4c2c"/><text x="'+x+'" y="'+(h/2+4)+'" text-anchor="middle" fill="#c9d1d9" font-size="10" font-weight="700">'+t+'</text>'+(i<5?'<line x1="'+(x+38)+'" y1="'+h/2+'" x2="'+(46+(i+1)*((w-92)/5)-38)+'" y2="'+h/2+'" stroke="#ee4c2c" marker-end="url(#ptMapA)"/>':'')}).join("")+'<text x="'+(w/2)+'" y="'+(h-22)+'" text-anchor="middle" fill="#8b949e" font-size="11">When something breaks, ask whether it is eager Python, autograd, Dynamo guards, kernels, or distributed state.</text></svg>';},
+      "sections": [
+        { "title": "Learning order", "text": "Begin with tensor metadata and autograd. Then learn nn.Module state, torch.compile/Dynamo, AOTAutograd/Inductor, distributed sharding, precision/quantization, and finally export or on-device deployment." },
+        { "title": "Mental model", "text": "PyTorch optimizes for productive eager execution, then selectively captures graphs for speed. The art is knowing when Python dynamism is helpful and when it becomes a graph break, synchronization, or distributed-state bug." },
+        { "title": "Self-study loop", "text": "For every topic, classify the failure mode: eager Python behavior, autograd graph, compiler guard, kernel/runtime performance, distributed placement, or export contract. This makes PyTorch debugging feel like a map instead of a pile of stack traces." },
+        { "title": "Gap this card fills", "text": "The later cards are intentionally detailed. This guide gives the order: understand the dynamic runtime first, then the compiler, then the multi-device and deployment contracts." }
+      ],
+      "keypoints": [
+        { "title": "Eager contract", "text": "Python executes real ops immediately unless captured." },
+        { "title": "Autograd", "text": "Backward walks a dynamic DAG built by actual forward execution." },
+        { "title": "Compiler stack", "text": "Dynamo guards Python, AOTAutograd separates graphs, Inductor lowers kernels." },
+        { "title": "Scale", "text": "FSDP/TP/PP turn model state into a placement problem." }
+      ]
+    },
+    {
       "id": "dd-1",
       "num": "Concept 1 of 14",
       "title": "Tensor and autograd internals (tape-based reverse-mode AD)",

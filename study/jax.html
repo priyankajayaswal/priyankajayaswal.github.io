@@ -1565,6 +1565,27 @@ const COURSE_CONFIG = {
   },
   "deepDives": [
     {
+      "id": "jax-learning-map",
+      "num": "Learning Guide",
+      "title": "JAX Learning Map — transformations before APIs",
+      "desc": "A route through JAX: pure functions first, then tracing, autodiff, batching, sharding, export, and production debugging.",
+      "color": "#56d4dd",
+      "icon": "🗺️",
+      "svg": function(w, h) { return '<svg viewBox="0 0 '+w+' '+h+'" xmlns="http://www.w3.org/2000/svg" style="background:#0d1117"><defs><marker id="jaxMapA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#56d4dd"/></marker></defs><text x="'+(w/2)+'" y="28" text-anchor="middle" fill="#56d4dd" font-size="16" font-weight="800">JAX is a compiler-friendly function transformation stack</text>'+["pure fn","trace","grad/jvp/vjp","vmap","jit/shard","export/debug"].map(function(t,i){var x=42+i*((w-84)/5);return '<rect x="'+(x-34)+'" y="'+(h/2-24)+'" width="68" height="48" rx="8" fill="#56d4dd22" stroke="#56d4dd"/><text x="'+x+'" y="'+(h/2+4)+'" text-anchor="middle" fill="#c9d1d9" font-size="10" font-weight="700">'+t+'</text>'+(i<5?'<line x1="'+(x+36)+'" y1="'+h/2+'" x2="'+(42+(i+1)*((w-84)/5)-36)+'" y2="'+h/2+'" stroke="#56d4dd" marker-end="url(#jaxMapA)"/>':'')}).join("")+'<text x="'+(w/2)+'" y="'+(h-22)+'" text-anchor="middle" fill="#8b949e" font-size="11">Read every later card as: what does this transform require, produce, cache, and compile?</text></svg>'; },
+      "sections": [
+        { "title": "Learning order", "text": "Start with explicit state and PRNG keys, because purity is what makes JAX transformable. Then learn tracing and jaxpr, then autodiff, then vmap batching, then jit/sharding, then export and debugging." },
+        { "title": "Mental model", "text": "JAX is not just NumPy on accelerators. It is a small set of composable transformations over array programs. The most useful question is: which values are known to Python, which are abstract tracers, and which are device buffers?" },
+        { "title": "Self-study loop", "text": "For each transform, answer four questions: what does it trace, what does it cache, what must stay static, and what shape/dtype contract reaches XLA? If you can predict recompilation and tracer errors, you are learning JAX the useful way." },
+        { "title": "Gap this card fills", "text": "Without this map, jit, grad, vmap, pmap, PyTrees, and PJRT can feel like separate APIs. They are one pipeline: write a pure function, transform it, lower it, run it, and debug the boundary." }
+      ],
+      "keypoints": [
+        { "title": "Purity", "text": "Explicit state makes transforms reliable." },
+        { "title": "Tracing", "text": "Python runs once to build an abstract program." },
+        { "title": "Composition", "text": "grad, vmap, jit, and sharding compose when shapes/state are explicit." },
+        { "title": "Debug boundary", "text": "Most errors are Python-vs-tracer-vs-device-buffer confusion." }
+      ]
+    },
+    {
       "id": "pure-functions",
       "num": "Concept 1 of 13",
       "title": "Pure Functions and Functional Programming",

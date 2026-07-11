@@ -1646,6 +1646,24 @@ const COURSE_CONFIG = {
 
   deepDives: [
     {
+      id: "tf-learning-map", num: "Learning Guide", title: "TensorFlow Learning Map — artifact-first production ML",
+      desc: "A route through TensorFlow: eager code, traced graphs, data pipelines, Keras, distribution, SavedModel, TFX, edge runtimes, and migration choices.",
+      color: "#ff6f00", icon: "🗺️",
+      svg: function(w,h){return '<svg viewBox="0 0 '+w+' '+h+'" xmlns="http://www.w3.org/2000/svg" style="background:#0d1117"><defs><marker id="tfMapA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#ff6f00"/></marker></defs><text x="'+(w/2)+'" y="28" text-anchor="middle" fill="#ff6f00" font-size="16" font-weight="800">TensorFlow is best read as artifact contracts</text>'+["eager","tf.function","tf.data","Keras","SavedModel","Serving/Edge"].map(function(t,i){var x=46+i*((w-92)/5);return '<rect x="'+(x-40)+'" y="'+(h/2-24)+'" width="80" height="48" rx="8" fill="#ff6f0022" stroke="#ff6f00"/><text x="'+x+'" y="'+(h/2+4)+'" text-anchor="middle" fill="#c9d1d9" font-size="10" font-weight="700">'+t+'</text>'+(i<5?'<line x1="'+(x+42)+'" y1="'+h/2+'" x2="'+(46+(i+1)*((w-92)/5)-42)+'" y2="'+h/2+'" stroke="#ff6f00" marker-end="url(#tfMapA)"/>':'')}).join("")+'<text x="'+(w/2)+'" y="'+(h-22)+'" text-anchor="middle" fill="#8b949e" font-size="11">Name the artifact crossing each boundary: TensorSpec, ConcreteFunction, SavedModel, FlatBuffer, or pipeline component.</text></svg>';},
+      sections: [
+        { title: "Learning order", text: "Start with eager vs graph mode, then GradientTape, tf.data, Keras 3, distribution, SavedModel/Serving, LiteRT/TF.js, XLA, quantization, and TFX production pipelines." },
+        { title: "Mental model", text: "TensorFlow is a production artifact machine. Python code is only the authoring surface; the durable contracts are signatures, graphs, SavedModels, TFX artifacts, FlatBuffers, and serving versions." },
+        { title: "Self-study loop", text: "For every card, name the artifact, the runtime, and the failure mode. Example: ConcreteFunction runs under graph execution; failure may be retracing. SavedModel runs under Serving; failure may be signature or train/serve skew." },
+        { title: "Gap this card fills", text: "TensorFlow can feel like many products bolted together. This guide turns the page into one route: author, trace, package, deploy, monitor, and migrate when the framework choice changes." }
+      ],
+      keypoints: [
+        { title: "Boundary", text: "Always ask which artifact crosses into the next runtime." },
+        { title: "Tracing", text: "tf.function cache/retrace behavior affects correctness and latency." },
+        { title: "Production", text: "Serving, TFX, LiteRT, and TF.js each have different contracts." },
+        { title: "Framework choice", text: "TensorFlow remains strong in production even where PyTorch dominates research." }
+      ]
+    },
+    {
       id: "dd-eager-graph", num: "Concept 1 of 14", title: "Eager vs graph mode — tf.function and AutoGraph",
       desc: "TensorFlow 2 starts in eager mode, which makes debugging feel like normal Python, but production often needs graph mode because graphs are optimizable, serializable, portable, and ...", color: "#58a6ff", icon: "⚙️",
       svg: function(w, h) { var labels=["Python call|eager","Trace|TensorSpec","ConcreteFunction|cache","Graph execute|device","Retrace?|new shape"], color="#ff6f00", s='<svg viewBox="0 0 760 260" xmlns="http://www.w3.org/2000/svg" style="background:#0d1117;border:1px solid #30363d;border-radius:6px;width:100%">'; s+='<defs><marker id="dd-eager-graph-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="'+color+'"/></marker></defs>'; s+='<text x="380" y="26" text-anchor="middle" fill="#c9d1d9" font-size="14" font-weight="700">tf.function trace / retrace flow</text>'; var pad=70,step=(760-pad*2)/(labels.length-1),y=128; labels.forEach(function(v,i){var parts=v.split('|'),x=pad+i*step; s+='<rect x="'+(x-55)+'" y="'+(y-30)+'" width="110" height="60" rx="10" fill="'+color+'22" stroke="'+color+'" stroke-width="1.5"/><text x="'+x+'" y="'+(y-5)+'" text-anchor="middle" fill="#e6edf3" font-size="12" font-weight="700">'+parts[0]+'</text><text x="'+x+'" y="'+(y+14)+'" text-anchor="middle" fill="#8b949e" font-size="10">'+(parts[1]||'')+'</text>'; if(i<labels.length-1)s+='<line x1="'+(x+58)+'" y1="'+y+'" x2="'+(pad+(i+1)*step-58)+'" y2="'+y+'" stroke="'+color+'" stroke-width="1.6" marker-end="url(#dd-eager-graph-a)"/>'; }); s+='<text x="380" y="244" text-anchor="middle" fill="#8b949e" font-size="11">First call traces; matching signatures reuse cache; shape/Python drift retraces.</text></svg>'; return s; },
